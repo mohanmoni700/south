@@ -1,0 +1,50 @@
+# This is a sample build configuration for PHP.
+# Check our guides at https://confluence.atlassian.com/x/e8YWN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: python:3.5.2
+
+#clone:
+#  depth: full              # SonarCloud scanner needs the full history to assign issues properly
+
+#definitions:
+#  caches:
+#    sonar: ~/.sonar/cache  # Caching SonarCloud artifacts will speed up your build
+#  steps:
+#    - step: &build-test-sonarcloud
+#        size: 2x
+#        name: Build, test and analyze on SonarCloud
+#        caches:
+#          - sonar
+#        script:
+#          - pipe: sonarsource/sonarcloud-scan:1.2.0
+#            variables:
+#              SONAR_TOKEN: ${SONAR_TOKEN}
+#              EXTRA_ARGS: '-Dsonar.sources=./app/code -Dsonar.eslint.eslintconfigpath=./conf/sonar/.eslintrc'
+#  services:
+#    docker:
+#      memory: 4096
+
+pipelines:
+  custom:
+    deploy_staging:
+    - step:
+        name: Deploy to Staging Instance
+        deployment: STAGING
+        script:
+          - bash -xe deploy-scripts/custom_dev_deploy.sh environment/staging
+    deploy_prod:
+    - step:
+        name: Deploy to Production Instance
+        deployment: PROD
+        script:
+#          - bash -xe deploy-scripts/pause-pingdom.sh
+          - bash -xe deploy-scripts/custom_dev_deploy.sh production
+#          - bash -xe deploy-scripts/unpause-pingdom.sh
+
+#    sonar-cloud-scan:
+#          - step: *build-test-sonarcloud
+#    pull-requests:
+#        '**':
+#          - step: *build-test-sonarcloud
