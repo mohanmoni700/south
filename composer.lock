@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "af34760e1dc52a88275dea6adf98ff1e",
+    "content-hash": "c750f8b4efd332f0b9792a16e385fa97",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -21865,6 +21865,72 @@
                 }
             ],
             "time": "2021-05-28T08:32:12+00:00"
+        },
+        {
+            "name": "msp/cmsimportexport",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magespecialist/m2-MSP_CmsImportExport.git",
+                "reference": "3847872cebe1b0b7cfb62e7c216a04971a8f8678"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magespecialist/m2-MSP_CmsImportExport/zipball/3847872cebe1b0b7cfb62e7c216a04971a8f8678",
+                "reference": "3847872cebe1b0b7cfb62e7c216a04971a8f8678",
+                "shasum": ""
+            },
+            "require": {
+                "magento/magento-composer-installer": "*",
+                "msp/common": "*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "MSP\\CmsImportExport\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "time": "2019-05-09T15:00:19+00:00"
+        },
+        {
+            "name": "msp/common",
+            "version": "0.1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magespecialist/m2-MSP_Common.git",
+                "reference": "c05b806a925e9cf56e91af3bb33e393d48f5b136"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magespecialist/m2-MSP_Common/zipball/c05b806a925e9cf56e91af3bb33e393d48f5b136",
+                "reference": "c05b806a925e9cf56e91af3bb33e393d48f5b136",
+                "shasum": ""
+            },
+            "require": {
+                "magento/magento-composer-installer": "*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "MSP\\Common\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0"
+            ],
+            "time": "2019-12-03T09:01:47+00:00"
         },
         {
             "name": "mtdowling/jmespath.php",
