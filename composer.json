@@ -12,9 +12,15 @@
         "repo": {
             "type": "composer",
             "url": "https://repo.magento.com"
+        },
+        "private-packagist": {
+            "type": "composer",
+            "url": "https://corratech.repo.packagist.com/al-fakher/"
         }
     },
     "require": {
+        "corra/log": "^1.3",
+        "corra/log-cloud-support": "^2.0",
         "magento/composer-root-update-plugin": "~1.1",
         "magento/magento-cloud-metapackage": ">=2.4.3 <2.4.4",
         "msp/cmsimportexport": "^1.1"
