@@ -5,26 +5,26 @@
 # You can specify a custom docker image from Docker Hub as your build environment.
 image: python:3.5.2
 
-#clone:
-#  depth: full              # SonarCloud scanner needs the full history to assign issues properly
+clone:
+  depth: full              # SonarCloud scanner needs the full history to assign issues properly
 
-#definitions:
-#  caches:
-#    sonar: ~/.sonar/cache  # Caching SonarCloud artifacts will speed up your build
-#  steps:
-#    - step: &build-test-sonarcloud
-#        size: 2x
-#        name: Build, test and analyze on SonarCloud
-#        caches:
-#          - sonar
-#        script:
-#          - pipe: sonarsource/sonarcloud-scan:1.2.0
-#            variables:
-#              SONAR_TOKEN: ${SONAR_TOKEN}
-#              EXTRA_ARGS: '-Dsonar.sources=./app/code -Dsonar.eslint.eslintconfigpath=./conf/sonar/.eslintrc'
-#  services:
-#    docker:
-#      memory: 4096
+definitions:
+  caches:
+    sonar: ~/.sonar/cache  # Caching SonarCloud artifacts will speed up your build
+  steps:
+    - step: &build-test-sonarcloud
+        size: 2x
+        name: Build, test and analyze on SonarCloud
+        caches:
+          - sonar
+        script:
+          - pipe: sonarsource/sonarcloud-scan:1.2.0
+            variables:
+              SONAR_TOKEN: ${SONAR_TOKEN}
+              EXTRA_ARGS: '-Dsonar.sources=./app/code'
+  services:
+    docker:
+      memory: 4096
 
 pipelines:
   custom:
@@ -43,8 +43,8 @@ pipelines:
           - bash -xe deploy-scripts/custom_dev_deploy.sh production
 #          - bash -xe deploy-scripts/unpause-pingdom.sh
 
-#    sonar-cloud-scan:
-#          - step: *build-test-sonarcloud
-#    pull-requests:
-#        '**':
-#          - step: *build-test-sonarcloud
+    sonar-cloud-scan:
+          - step: *build-test-sonarcloud
+    pull-requests:
+        '**':
+          - step: *build-test-sonarcloud
