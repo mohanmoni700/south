@@ -434,7 +434,6 @@ return [
         'Amazon_Core' => 1,
         'Amazon_Login' => 1,
         'Amazon_Payment' => 1,
-        'ClassyLlama_AvaTax' => 1,
         'Corra_Log' => 1,
         'Corra_LogCloudSupport' => 1,
         'Dotdigitalgroup_Email' => 1,
