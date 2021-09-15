@@ -434,6 +434,7 @@ return [
         'Amazon_Core' => 1,
         'Amazon_Login' => 1,
         'Amazon_Payment' => 1,
+        'Auctane_Api' => 1,
         'Corra_Log' => 1,
         'Corra_LogCloudSupport' => 1,
         'Dotdigitalgroup_Email' => 1,
@@ -452,6 +453,7 @@ return [
         'MSP_CmsImportExport' => 1,
         'PayPal_Braintree' => 1,
         'PayPal_BraintreeGraphQl' => 1,
+        'Signifyd_Connect' => 1,
         'Temando_ShippingRemover' => 1,
         'Vertex_Tax' => 1,
         'Vertex_AddressValidationApi' => 1,
@@ -459,6 +461,7 @@ return [
         'Vertex_RequestLogging' => 1,
         'Vertex_AddressValidation' => 1,
         'Vertex_TaxStaging' => 1,
+        'Yotpo_Loyalty' => 1,
         'Yotpo_Yotpo' => 1
     ]
 ];
