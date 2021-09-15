@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "af34760e1dc52a88275dea6adf98ff1e",
+    "content-hash": "52f11a18fb12b21a6724f29be02423d3",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -1279,6 +1279,97 @@
             "homepage": "https://github.com/container-interop/container-interop",
             "abandoned": "psr/container",
             "time": "2017-02-14T19:40:03+00:00"
+        },
+        {
+            "name": "corra/log",
+            "version": "1.3.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/log/1.3.3.0/907e2732ca280a003b0cd61365d89fc25664c3b3.zip",
+                "reference": "907e2732ca280a003b0cd61365d89fc25664c3b3",
+                "mirrors": [
+                    {
+                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "graylog2/gelf-php": "~1.0",
+                "magento/framework": ">=101.0.0",
+                "magento/framework-message-queue": ">=100.2.1",
+                "magento/module-backend": ">=100.2.0",
+                "magento/module-config": ">=101.0.0",
+                "php": "7.0.2|7.0.4|~7.0.6|~7.1.0|~7.2.0|~7.3.0|^7.4",
+                "psr/log": ">=1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "psr-4": {
+                    "Corra\\Log\\": ""
+                },
+                "files": [
+                    "registration.php"
+                ]
+            },
+            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "CORRA"
+                }
+            ],
+            "description": "Corra Log",
+            "homepage": "https://bitbucket.org/corratech/log",
+            "support": {
+                "source": "https://bitbucket.org/corratech/log/src/907e2732ca280a003b0cd61365d89fc25664c3b3/?at=1.3.3"
+            },
+            "time": "2021-06-03T13:52:13+00:00"
+        },
+        {
+            "name": "corra/log-cloud-support",
+            "version": "2.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/log-cloud-support/2.0.0.0/d6beadf67f6298540af11e083ebc42158316fa21.zip",
+                "reference": "d6beadf67f6298540af11e083ebc42158316fa21",
+                "mirrors": [
+                    {
+                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "magento/magento-cloud-metapackage": ">=2.3.3"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "psr-4": {
+                    "Corra\\LogCloudSupport\\": ""
+                },
+                "files": [
+                    "registration.php"
+                ]
+            },
+            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
+            "license": [
+                "OSL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Corra",
+                    "email": "support@corra.com"
+                }
+            ],
+            "homepage": "https://bitbucket.org/corratech/logcloudsupport",
+            "support": {
+                "source": "https://bitbucket.org/corratech/logcloudsupport/src/d6beadf67f6298540af11e083ebc42158316fa21/?at=master"
+            },
+            "time": "2019-10-25T10:52:19+00:00"
         },
         {
             "name": "dasprid/enum",
@@ -21865,6 +21956,72 @@
                 }
             ],
             "time": "2021-05-28T08:32:12+00:00"
+        },
+        {
+            "name": "msp/cmsimportexport",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magespecialist/m2-MSP_CmsImportExport.git",
+                "reference": "3847872cebe1b0b7cfb62e7c216a04971a8f8678"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magespecialist/m2-MSP_CmsImportExport/zipball/3847872cebe1b0b7cfb62e7c216a04971a8f8678",
+                "reference": "3847872cebe1b0b7cfb62e7c216a04971a8f8678",
+                "shasum": ""
+            },
+            "require": {
+                "magento/magento-composer-installer": "*",
+                "msp/common": "*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "MSP\\CmsImportExport\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "time": "2019-05-09T15:00:19+00:00"
+        },
+        {
+            "name": "msp/common",
+            "version": "0.1.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magespecialist/m2-MSP_Common.git",
+                "reference": "c05b806a925e9cf56e91af3bb33e393d48f5b136"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magespecialist/m2-MSP_Common/zipball/c05b806a925e9cf56e91af3bb33e393d48f5b136",
+                "reference": "c05b806a925e9cf56e91af3bb33e393d48f5b136",
+                "shasum": ""
+            },
+            "require": {
+                "magento/magento-composer-installer": "*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "MSP\\Common\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0"
+            ],
+            "time": "2019-12-03T09:01:47+00:00"
         },
         {
             "name": "mtdowling/jmespath.php",
