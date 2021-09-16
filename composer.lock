@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "913f4e9fcd490724f15ba44675d45d31",
+    "content-hash": "889a6ead9ebf8133fdaf6de7533a7b92",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -1397,6 +1397,50 @@
                 "source": "https://bitbucket.org/corratech/logcloudsupport/src/d6beadf67f6298540af11e083ebc42158316fa21/?at=master"
             },
             "time": "2019-10-25T10:52:19+00:00"
+        },
+        {
+            "name": "corra/module-signifyd-graph-ql",
+            "version": "1.0.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-signifyd-graph-ql/1.0.2.0/6484fdcf28608e840cf0142b767656d2261540ba.zip",
+                "reference": "6484fdcf28608e840cf0142b767656d2261540ba",
+                "mirrors": [
+                    {
+                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "signifyd/module-connect": "*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Corra\\SignifydGraphQl\\": ""
+                }
+            },
+            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "CORRA"
+                }
+            ],
+            "description": "Adding GraphQl support to Signifyd module",
+            "homepage": "https://bitbucket.org/corratech/signifydgraphql",
+            "support": {
+                "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/1938030702/SignifydGraphQl",
+                "source": "https://bitbucket.org/corratech/signifydgraphql/src/6484fdcf28608e840cf0142b767656d2261540ba/?at=1.0.2"
+            },
+            "time": "2020-11-30T07:53:30+00:00"
         },
         {
             "name": "dasprid/enum",
@@ -27734,16 +27778,10 @@
         {
             "name": "yotpo/magento2-module-yotpo-loyalty",
             "version": "1.2.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/YotpoLtd/magento2-module-yotpo-loyalty.git",
-                "reference": "30bb8e18bc0c9c713db0bbbefecdd75d6541ec07"
-            },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/YotpoLtd/magento2-module-yotpo-loyalty/zipball/30bb8e18bc0c9c713db0bbbefecdd75d6541ec07",
-                "reference": "30bb8e18bc0c9c713db0bbbefecdd75d6541ec07",
-                "shasum": ""
+                "url": "https://repo.magento.com/archives/yotpo/magento2-module-yotpo-loyalty/yotpo-magento2-module-yotpo-loyalty-1.2.5.0.zip",
+                "shasum": "a95004d2824a7fbc65b5ba542849eefa071de827"
             },
             "require": {
                 "magento/framework": ">=100.1.0",
@@ -27759,13 +27797,11 @@
                     "Yotpo\\Loyalty\\": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "OSL-3.0",
                 "AFL-3.0"
             ],
-            "description": "Magento 2 module for integration with Yotpo",
-            "time": "2021-05-13T06:46:30+00:00"
+            "description": "Magento 2 module for integration with Yotpo"
         },
         {
             "name": "yotpo/magento2-module-yotpo-reviews",
