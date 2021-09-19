@@ -445,6 +445,7 @@ return [
         'Dotdigitalgroup_Enterprise' => 1,
         'Dotdigitalgroup_Sms' => 1,
         'Fastly_Cdn' => 1,
+        'HookahShisha_OrderGraphQl' => 1,
         'Klarna_Core' => 1,
         'Klarna_Ordermanagement' => 1,
         'Klarna_Kp' => 1,
