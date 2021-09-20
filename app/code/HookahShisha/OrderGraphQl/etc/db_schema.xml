@@ -1,0 +1,6 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sales_order" resource="sales" comment="Sales Order">
+        <column name="alfa_consent" nullable="true" xsi:type="boolean" comment="Consent to verify age"/>
+    </table>
+</schema>
