@@ -457,6 +457,7 @@ return [
         'PayPal_BraintreeGraphQl' => 1,
         'Corra_SignifydGraphQl' => 1,
         'Temando_ShippingRemover' => 1,
+        'Veratad_AgeVerification' => 1,
         'Vertex_Tax' => 1,
         'Vertex_AddressValidationApi' => 1,
         'Vertex_RequestLoggingApi' => 1,
