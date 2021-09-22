@@ -444,6 +444,7 @@ return [
         'Dotdigitalgroup_EmailGraphQl' => 1,
         'Dotdigitalgroup_Enterprise' => 1,
         'Dotdigitalgroup_Sms' => 1,
+        'Eyemagine_HubSpot' => 1,
         'Fastly_Cdn' => 1,
         'HookahShisha_OrderGraphQl' => 1,
         'Klarna_Core' => 1,
