@@ -32,7 +32,7 @@ class PlaceOrder
     }
 
     /**
-     *  Valiadate 'alfa_consent' before placing order.
+     *  Validate 'alfa_consent' & 'veratad_dob' before placing order.
      *
      * @param MagentoPlaceOrder $subject
      * @param Field $field
@@ -55,21 +55,39 @@ class PlaceOrder
                 __('Required parameter "alfa_consent" is missing / "alfa_consent" should be true to place the order ')
             );
         }
+        if (empty($args['input']['veratad_dob']) || !$args['input']['veratad_dob']) {
+            throw new GraphQlInputException(
+                __('Required parameter "veratad_dob" is missing')
+            );
+        }
     }
 
     /**
-     * Save 'alfa_consent' value when order is placed.
+     * Save 'alfa_consent' & 'veratad_dob' value when order is placed.
      *
      * @param MagentoPlaceOrder $subject
      * @param array $return
+     * @param Field $field
+     * @param ContextInterface $context
+     * @param ResolveInfo $info
+     * @param array|null $value
+     * @param array|null $args
      * @return mixed
      */
-    public function afterResolve(MagentoPlaceOrder $subject, $return)
-    {
+    public function afterResolve(
+        MagentoPlaceOrder $subject,
+        $return,
+        Field $field,
+        $context,
+        ResolveInfo $info,
+        array $value = null,
+        array $args = null
+    ) {
         $orderFactory = $this->orderFactory->create();
         $order = $orderFactory->loadByIncrementId($return['order']['order_number'] ?? '');
         if ($order) {
             $order->setData('alfa_consent', true);
+            $order->setData('veratad_dob', $args['input']['veratad_dob']);
             $this->orderRepositoryInterfaceFactory->create()->save($order);
         }
         return $return;
