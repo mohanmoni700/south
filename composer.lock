@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2e754d5274e4efd9decc23cd73d3a5b6",
+    "content-hash": "ca47ab4dcb170883a8bfb0151a316943",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -292,6 +292,102 @@
                 "AFL-3.0"
             ],
             "description": "ShipStation is a web-based shipping solution that is integrated with the Magento API for retrieving order information and updating shipping details."
+        },
+        {
+            "name": "avalara/avatax-magento",
+            "version": "2.2.5",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/avalara/avatax-magento/avalara-avatax-magento-2.2.5.0.zip",
+                "shasum": "bcde71e0246b150111e27c674c67fc5319f0c062"
+            },
+            "require": {
+                "avalara/avataxclient": "^20.12.1",
+                "laminas/laminas-serializer": "^2.8",
+                "magento/framework": "^100.1.0|101.0.*|>=102.0.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "ClassyLlama\\AvaTax\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0"
+            ],
+            "description": "Magento module for Avalara's AvaTax suite of business tax calculation and processing services. Uses the AvaTax REST v2 API."
+        },
+        {
+            "name": "avalara/avataxclient",
+            "version": "20.12.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/avadev/AvaTax-REST-V2-PHP-SDK.git",
+                "reference": "bf2f65121d8f1e73485b10ebfe121e58eb8c23e2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/avadev/AvaTax-REST-V2-PHP-SDK/zipball/bf2f65121d8f1e73485b10ebfe121e58eb8c23e2",
+                "reference": "bf2f65121d8f1e73485b10ebfe121e58eb8c23e2",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6",
+                "php": ">=5.5.9"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.7"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "src/"
+                ],
+                "exclude-from-classmap": [
+                    "src/AvaTaxClient.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Avalara Developer Relations",
+                    "homepage": "https://developer.avalara.com"
+                },
+                {
+                    "name": "Community Developer Forum",
+                    "homepage": "https://community.avalara.com"
+                },
+                {
+                    "name": "Ted Spence",
+                    "email": "ted.spence@avalara.com"
+                },
+                {
+                    "name": "Bob Maidens",
+                    "email": "bob.maidens@avalara.com"
+                },
+                {
+                    "name": "Genevieve Conty",
+                    "email": "genevieve.conty@avalara.com"
+                }
+            ],
+            "description": "Client library for Avalara's AvaTax suite of business tax calculation and processing services. Uses the REST v2 API.",
+            "homepage": "https://developer.avalara.com/",
+            "keywords": [
+                "AvaTax",
+                "avalara",
+                "ecommerce",
+                "sales compliance",
+                "tax",
+                "tax calculation",
+                "taxes"
+            ],
+            "time": "2020-12-18T01:59:57+00:00"
         },
         {
             "name": "aws/aws-sdk-php",
@@ -4509,6 +4605,69 @@
                 }
             ],
             "time": "2021-04-19T16:06:00+00:00"
+        },
+        {
+            "name": "laminas/laminas-serializer",
+            "version": "2.10.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/laminas/laminas-serializer.git",
+                "reference": "254cf6a17b46d98808c0810939268f63538dcc0c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/laminas/laminas-serializer/zipball/254cf6a17b46d98808c0810939268f63538dcc0c",
+                "reference": "254cf6a17b46d98808c0810939268f63538dcc0c",
+                "shasum": ""
+            },
+            "require": {
+                "laminas/laminas-json": "^3.1",
+                "laminas/laminas-stdlib": "^3.2",
+                "laminas/laminas-zendframework-bridge": "^1.0",
+                "php": "^7.3 || ~8.0.0"
+            },
+            "replace": {
+                "zendframework/zend-serializer": "^2.9.1"
+            },
+            "require-dev": {
+                "laminas/laminas-coding-standard": "~1.0.0",
+                "laminas/laminas-math": "^3.3",
+                "laminas/laminas-servicemanager": "^3.6",
+                "phpunit/phpunit": "^9.3"
+            },
+            "suggest": {
+                "laminas/laminas-math": "(^3.3) To support Python Pickle serialization",
+                "laminas/laminas-servicemanager": "(^3.6) To support plugin manager support"
+            },
+            "type": "library",
+            "extra": {
+                "laminas": {
+                    "component": "Laminas\\Serializer",
+                    "config-provider": "Laminas\\Serializer\\ConfigProvider"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Laminas\\Serializer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Serialize and deserialize PHP structures to a variety of representations",
+            "homepage": "https://laminas.dev",
+            "keywords": [
+                "laminas",
+                "serializer"
+            ],
+            "funding": [
+                {
+                    "url": "https://funding.communitybridge.org/projects/laminas-project",
+                    "type": "community_bridge"
+                }
+            ],
+            "time": "2021-02-18T14:21:13+00:00"
         },
         {
             "name": "laminas/laminas-server",
