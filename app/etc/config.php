@@ -458,6 +458,8 @@ return [
         'Klarna_KpGraphQl' => 1,
         'MSP_Common' => 1,
         'MSP_CmsImportExport' => 1,
+        'Magenest_Core' => 1,
+        'Magenest_QuickBooksOnline' => 1,
         'PCAPredict_Tag' => 1,
         'PayPal_Braintree' => 1,
         'PayPal_BraintreeGraphQl' => 1,

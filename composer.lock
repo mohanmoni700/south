@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06045523c9cc65b5c1e0c3adc3848a01",
+    "content-hash": "5248a34a0869a4af2fb087b8a21886d2",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -5758,6 +5758,66 @@
                 }
             ],
             "time": "2021-01-18T20:58:21+00:00"
+        },
+        {
+            "name": "magenest/core",
+            "version": "1.2.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magenest-dev/module-core.git",
+                "reference": "1bf028edb6558ae7c7bce41a02253e9d8e5508af"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magenest-dev/module-core/zipball/1bf028edb6558ae7c7bce41a02253e9d8e5508af",
+                "reference": "1bf028edb6558ae7c7bce41a02253e9d8e5508af",
+                "shasum": ""
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magenest\\Core\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0"
+            ],
+            "description": "Magenest Core",
+            "support": {
+                "issues": "https://github.com/magenest-dev/module-core/issues",
+                "source": "https://github.com/magenest-dev/module-core/tree/master"
+            },
+            "time": "2020-06-29T04:19:21+00:00"
+        },
+        {
+            "name": "magenest/module-quickbooksonline",
+            "version": "2.5.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/magenest/module-quickbooksonline/magenest-module-quickbooksonline-2.5.1.0.zip",
+                "shasum": "a0db3eb0085382ae5e2732f1ee6c2af6f482865b"
+            },
+            "require": {
+                "magenest/core": ">=1.2.1"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magenest\\QuickBooksOnline\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "proprietary"
+            ],
+            "description": "QuickBooks Online extension by Magenest"
         },
         {
             "name": "magento/adobe-ims",
