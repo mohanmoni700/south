@@ -449,6 +449,7 @@ return [
         'Dotdigitalgroup_Sms' => 1,
         'Eyemagine_HubSpot' => 1,
         'Fastly_Cdn' => 1,
+        'Yotpo_Loyalty' => 1,
         'HookahShisha_Order' => 1,
         'Veratad_AgeVerification' => 1,
         'Klarna_Core' => 1,
@@ -472,7 +473,7 @@ return [
         'Vertex_RequestLogging' => 1,
         'Vertex_AddressValidation' => 1,
         'Vertex_TaxStaging' => 1,
-        'Yotpo_Loyalty' => 1,
+        'HookahShisha_Base' => 1,
         'Yotpo_Yotpo' => 1
     ]
 ];
