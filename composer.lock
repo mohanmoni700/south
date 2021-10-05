@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5248a34a0869a4af2fb087b8a21886d2",
+    "content-hash": "9e9badccad5ac223bd25778f659f29fd",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -1683,6 +1683,48 @@
                 "issues": "https://bitbucket.org/corratech/signifydgraphql/issues"
             },
             "time": "2021-09-17T06:39:40+00:00"
+        },
+        {
+            "name": "corra/module-yotpo-loyalty-extended",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-yotpo-loyalty-extended/1.0.0.0/f14e2d295fc4c367cf41920cb4815375bd228f03.zip",
+                "reference": "f14e2d295fc4c367cf41920cb4815375bd228f03",
+                "mirrors": [
+                    {
+                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Corra\\YotpoLoyaltyExtended\\": ""
+                }
+            },
+            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "CORRA"
+                }
+            ],
+            "description": "Extended GraphQl support for Yotpo Loyalty Module",
+            "homepage": "https://bitbucket.org/corratech/yotpoloyaltyextended",
+            "support": {
+                "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/3538944002/Yotpo+Loyalty+Extended",
+                "source": "https://bitbucket.org/corratech/yotpoloyaltyextended/src/f14e2d295fc4c367cf41920cb4815375bd228f03/?at=1.0.0",
+                "issues": "https://bitbucket.org/corratech/yotpoloyaltyextended/issues"
+            },
+            "time": "2021-10-05T07:04:58+00:00"
         },
         {
             "name": "dasprid/enum",
@@ -28786,5 +28828,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "1.1.0"
 }

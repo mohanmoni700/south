@@ -441,6 +441,7 @@ return [
         'Corra_LogCloudSupport' => 1,
         'Corra_LoqateTagGraphQl' => 1,
         'Signifyd_Connect' => 1,
+        'Yotpo_Loyalty' => 1,
         'Dotdigitalgroup_Email' => 1,
         'Dotdigitalgroup_Chat' => 1,
         'Dotdigitalgroup_ChatGraphQl' => 1,
@@ -472,7 +473,7 @@ return [
         'Vertex_RequestLogging' => 1,
         'Vertex_AddressValidation' => 1,
         'Vertex_TaxStaging' => 1,
-        'Yotpo_Loyalty' => 1,
+        'Corra_YotpoLoyaltyExtended' => 1,
         'Yotpo_Yotpo' => 1
     ]
 ];
