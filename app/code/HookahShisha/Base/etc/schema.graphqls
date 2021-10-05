@@ -1,9 +1,0 @@
-type Customer {
-    yotpo_identification: YotpoCustomerIdentification @resolver(class: "\\HookahShisha\\Base\\Model\\Resolver\\YotpoCustomerDetail") @doc(description: "The contents of the customer's compare list")
-}
-
-type YotpoCustomerIdentification {
-    identity: ID
-    token: String
-    tags: String
-}
