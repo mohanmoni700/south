@@ -1,3 +1,9 @@
-type StoreConfig {
-    yotpo_loyalty_guid: String @doc(description: "yotpo loyality guid")
+type Customer {
+    yotpo_identification: YotpoCustomerIdentification @resolver(class: "\\HookahShisha\\Base\\Model\\Resolver\\YotpoCustomerDetail") @doc(description: "The contents of the customer's compare list")
+}
+
+type YotpoCustomerIdentification {
+    identity: ID
+    token: String
+    tags: String
 }
