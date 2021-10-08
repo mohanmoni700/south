@@ -451,7 +451,7 @@ return [
         'Eyemagine_HubSpot' => 1,
         'Fastly_Cdn' => 1,
         'HookahShisha_Order' => 1,
-        'Veratad_AgeVerification' => 1,
+        'Veratad_AgeVerification' => 0,
         'Klarna_Core' => 1,
         'Klarna_Ordermanagement' => 1,
         'Klarna_Kp' => 1,
