@@ -1,0 +1,3 @@
+interface ProductInterface @typeResolver(class: "Magento\\CatalogGraphQl\\Model\\ProductInterfaceTypeResolverComposite") @doc(description: "The ProductInterface contains attributes that are common to all types of products. Note that descriptions may not be available for custom and EAV attributes.") {
+    details_tab: String @doc(description: "List of downloads in html for products") @resolver(class: "HookahShisha\\CatalogGraphQl\\Model\\Resolver\\Product\\DetailsTab")
+}
