@@ -439,7 +439,6 @@ return [
         'ClassyLlama_AvaTax' => 1,
         'Corra_Log' => 1,
         'Corra_LogCloudSupport' => 1,
-        'Corra_LoqateTagGraphQl' => 1,
         'Signifyd_Connect' => 1,
         'Yotpo_Loyalty' => 1,
         'Dotdigitalgroup_Email' => 1,
