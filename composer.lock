@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0bbe9c96d315812500ae82c5991b62c8",
+    "content-hash": "e431d8737b84597621332f9c78003615",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -22351,6 +22351,122 @@
                 "framework"
             ],
             "time": "2020-12-02T21:12:59+00:00"
+        },
+        {
+            "name": "mageplaza/module-core",
+            "version": "1.4.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mageplaza/module-core.git",
+                "reference": "45cf1e6a79ca82acc1fe82372bbb4e83ea308b6b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mageplaza/module-core/zipball/45cf1e6a79ca82acc1fe82372bbb4e83ea308b6b",
+                "reference": "45cf1e6a79ca82acc1fe82372bbb4e83ea308b6b",
+                "shasum": ""
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Mageplaza\\Core\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Mageplaza",
+                    "email": "support@mageplaza.com",
+                    "homepage": "https://www.mageplaza.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "Mageplaza Core for Magento 2",
+            "time": "2021-07-21T06:58:49+00:00"
+        },
+        {
+            "name": "mageplaza/module-product-labels",
+            "version": "4.0.1",
+            "source": {
+                "type": "git",
+                "url": "git@gitlab.com:mageplaza/uranus/module-product-labels.git",
+                "reference": "7fd3ce0934b4b476ceb6fd6df14b8e67040ef08e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.mageplaza.com/public/dist/mageplaza/module-product-labels/mageplaza-module-product-labels-7fd3ce0934b4b476ceb6fd6df14b8e67040ef08e-zip-e4d0a2.zip",
+                "reference": "7fd3ce0934b4b476ceb6fd6df14b8e67040ef08e",
+                "shasum": "af09821033da07802daf010686d99ef9b51b1733"
+            },
+            "require": {
+                "mageplaza/module-core": "^1.4.5"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Mageplaza\\ProductLabels\\": ""
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Mageplaza",
+                    "email": "support@mageplaza.com",
+                    "homepage": "https://www.mageplaza.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "Magento 2 Product Labels Extension",
+            "time": "2021-04-07T10:33:45+00:00"
+        },
+        {
+            "name": "mageplaza/module-product-labels-graphql",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mageplaza/magento-2-product-labels-graphql.git",
+                "reference": "5c4e1aca53a698187fe214ec771448898eeca938"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-product-labels-graphql/zipball/5c4e1aca53a698187fe214ec771448898eeca938",
+                "reference": "5c4e1aca53a698187fe214ec771448898eeca938",
+                "shasum": ""
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Mageplaza\\ProductLabelsGraphQl\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Mageplaza",
+                    "email": "support@mageplaza.com",
+                    "homepage": "https://www.mageplaza.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "Mageplaza Magento 2 Product Labels GraphQl",
+            "time": "2020-03-09T10:04:22+00:00"
         },
         {
             "name": "monolog/monolog",
