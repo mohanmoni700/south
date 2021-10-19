@@ -437,6 +437,7 @@ return [
         'Amazon_Payment' => 1,
         'Auctane_Api' => 1,
         'ClassyLlama_AvaTax' => 1,
+        'Corra_AttributesGraphQl' => 1,
         'Corra_Log' => 1,
         'Corra_LogCloudSupport' => 1,
         'Signifyd_Connect' => 1,
