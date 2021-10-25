@@ -1,9 +1,9 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
+ * 
+ * Corra
  */
 
 use Magento\Framework\Component\ComponentRegistrar;
 
-ComponentRegistrar::register(ComponentRegistrar::THEME, 'frontend/Magento/luma', __DIR__);
+ComponentRegistrar::register(ComponentRegistrar::THEME, 'frontend/Corra/alfakher', __DIR__);
