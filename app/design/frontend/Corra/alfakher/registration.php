@@ -1,7 +1,6 @@
 <?php
 /**
- * 
- * Corra
+ * CORRA
  */
 
 use Magento\Framework\Component\ComponentRegistrar;
