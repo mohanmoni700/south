@@ -18,6 +18,38 @@
     background-color: @email__background-color;
     padding: @email-body__padding;
 }
+// Custom styles
+.main-content {
+    .button {
+        .inner-wrapper {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            td {
+                .lib-css(border-radius, @button__border-radius, 1);
+                background-color: @button-primary__background;
+
+                a {
+                    .lib-css(border-radius, @button__border-radius, 1);
+                    border: 1px solid @button-primary__background;
+                    color: @button-primary__color;
+                    display: inline-block;
+                    font-size: @button__font-size;
+                    padding: @button__padding;
+                    text-decoration: none;
+                    font-weight: @button__font-weight;
+                    text-transform: @button__text-transform;
+                }
+                &:hover {
+                    background-color: @button-primary__hover__background !important;
+                    border: 0!important;
+                    a {
+                        border: 0 !important;
+                    }
+                }
+            }
+        }
+    }
+}
 
 .footer {
     background-color: @email__background-color;
