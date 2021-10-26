@@ -18,55 +18,48 @@
     background-color: @email__background-color;
     padding: @email-body__padding;
 }
-// Custom styles
+
+/// Custom styles
 .main-content {
-    * {
-        letter-spacing: -0.512px;
-    }
+    padding-left: 40px;
+    padding-right: 40px;
     a {
         color: #000;
         text-decoration: underline;
-        font-weight: 500;
+        font-weight: 400;
         &:hover {
-            color: #fc5e67;
+            color: #26bfbf
         }
     }
-    a.links {
-        color: #000 !important;
-        text-decoration: underline;
-        font-weight: 500 !important;
-        &:hover {
-            color: #fc5e67 !important;
-        }
+    small {
+        font-size:14px;
+        line-height: 1.5
     }
     .button {
         .inner-wrapper {
             margin-top: 10px;
             margin-bottom: 10px;
             td {
-                .lib-css(border-radius, @button__border-radius, 50);
-                background-color: @button-primary__background;
+                .lib-css(border-radius, @button__border-radius, 1);
+                background: @button-primary__background;
 
                 a {
-                    .lib-css(border-radius, @button__border-radius, 50);
-                    border: 0;
+                    .lib-css(border-radius, @button__border-radius, 1);
+                    border: 0 solid @button-primary__background;
                     color: @button-primary__color;
                     display: inline-block;
                     font-size: @button__font-size;
-                    text-decoration: none;
-                    font-weight: 800;
-                    text-transform: uppercase;
-                    letter-spacing: 1.92px;
                     padding: @button__padding;
+                    text-decoration: none;
+                    text-transform: uppercase;
                 }
                 &:hover {
-                    background: @button-primary__bg-hover;
-                    border: 0 !important;
+                    background: @button-primary__hover__background !important;
+                    border-color: @button-primary__hover__background !important;
                     a {
-                        background: @button-primary__bg-hover;
-                        border: 0 !important;
+                        border-color: @button-primary__hover__background !important;
                     }
-                }
+                }    
             }
         }
     }
