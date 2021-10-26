@@ -20,6 +20,9 @@
 }
 // Custom styles
 .main-content {
+    * {
+        letter-spacing: -0.512px;
+    }
     .button {
         .inner-wrapper {
             margin-top: 10px;
@@ -41,10 +44,10 @@
                     letter-spacing: @button__letter-spacing;
                 }
                 &:hover {
-                    background-color: @button-primary__bg-hover !important;
+                    background: @button-primary__bg-hover !important;
                     border: 0!important;
                     a {
-                        background-color: @button-primary__bg-hover !important;
+                        background: @button-primary__bg-hover !important;
                         border: 0 !important;
                     }
                 }
