@@ -20,16 +20,17 @@
 }
 // Custom styles
 .main-content {
-    * {
-        letter-spacing: -0.512px;
-    }
     a {
-        color: #000 !important;
+        color: #000;
         text-decoration: underline;
         font-weight: 500;
         &:hover {
-            color: #fc5e67 !important;
+            color: #fc5e67
         }
+    }
+    small {
+        font-size:14px;
+        line-height: 1.5
     }
     .button {
         .inner-wrapper {
@@ -41,24 +42,21 @@
 
                 a {
                     .lib-css(border-radius, @button__border-radius, 50);
-                    border: 0;
+                    border: 0 solid @button-primary__background;
                     color: @button-primary__color;
                     display: inline-block;
                     font-size: @button__font-size;
                     padding: @button__padding;
                     text-decoration: none;
-                    font-weight: 800;
                     text-transform: uppercase;
-                    letter-spacing: 1.92px;
                 }
                 &:hover {
-                    background: @button-primary__bg-hover;
-                    border: 0 !important;
+                    background-color: linear-gradient(89.02deg, #FAA36B 33.01%, #FC5E67 87.18%); !important;
+                    border-color: @button-primary__hover__background !important;
                     a {
-                        background: @button-primary__bg-hover;
-                        border: 0 !important;
+                        border-color: @button-primary__hover__background !important;
                     }
-                }
+                }    
             }
         }
     }
