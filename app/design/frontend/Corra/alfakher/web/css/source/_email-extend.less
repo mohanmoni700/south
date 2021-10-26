@@ -30,7 +30,7 @@
 
                 a {
                     .lib-css(border-radius, @button__border-radius, 1);
-                    border: 1px solid @button-primary__background;
+                    border: 0 !important;
                     color: @button-primary__color;
                     display: inline-block;
                     font-size: @button__font-size;
@@ -38,6 +38,7 @@
                     text-decoration: none;
                     font-weight: @button__font-weight;
                     text-transform: @button__text-transform;
+                    letter-spacing: @button__letter-spacing;
                 }
                 &:hover {
                     background-color: @button-primary__hover__background !important;
