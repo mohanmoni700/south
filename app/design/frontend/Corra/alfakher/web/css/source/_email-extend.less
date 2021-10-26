@@ -23,12 +23,16 @@
 .main-content {
     padding-left: 40px;
     padding-right: 40px;
+    * {
+        font-size: 14px;
+        letter-spacing: -0.512px;
+    }
     a {
-        color: #000;
+        color: #000 !important;
         text-decoration: underline;
         font-weight: 500;
         &:hover {
-            color: #fc5e67;
+            color: #fc5e67 !important;
         }
     }
     .links {
@@ -56,7 +60,7 @@
                 a {
                     .lib-css(border-radius, @button__border-radius, 1);
                     border: 0 solid @button-primary__background;
-                    color: @button-primary__color;
+                    color: @button-primary__color !important;
                     display: inline-block;
                     font-size: @button__font-size;
                     padding: @button__padding;
@@ -68,8 +72,10 @@
                 &:hover {
                     background: @button-primary__hover__background !important;
                     border-color: @button-primary__hover__background !important;
+                    color: @button-primary__color !important;
                     a {
                         border-color: @button-primary__hover__background !important;
+                        color: @button-primary__color !important;
                     }
                 }    
             }
