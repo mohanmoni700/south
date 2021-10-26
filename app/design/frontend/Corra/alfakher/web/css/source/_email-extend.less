@@ -36,12 +36,12 @@
             margin-top: 10px;
             margin-bottom: 10px;
             td {
-                .lib-css(border-radius, @button__border-radius, 1);
+                .lib-css(border-radius, @button__border-radius, 50);
                 background-color: @button-primary__background;
 
                 a {
-                    .lib-css(border-radius, @button__border-radius, 1);
-                    border: 0 !important;
+                    .lib-css(border-radius, @button__border-radius, 50);
+                    border: 0;
                     color: @button-primary__color;
                     display: inline-block;
                     font-size: @button__font-size;
@@ -52,10 +52,10 @@
                     letter-spacing: @button__letter-spacing;
                 }
                 &:hover {
-                    background: @button-primary__bg-hover !important;
-                    border: 0!important;
+                    background: @button-primary__bg-hover;
+                    border: 0 !important;
                     a {
-                        background: @button-primary__bg-hover !important;
+                        background: @button-primary__bg-hover;
                         border: 0 !important;
                     }
                 }
