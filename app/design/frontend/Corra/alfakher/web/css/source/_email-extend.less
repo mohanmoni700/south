@@ -31,7 +31,7 @@
             color: #fc5e67;
         }
     }
-    .links{
+    .links {
         a {
             color: #000;
             text-decoration: underline;
@@ -50,11 +50,11 @@
             margin-top: 10px;
             margin-bottom: 10px;
             td {
-                .lib-css(border-radius, @button__border-radius, 50);
+                .lib-css(border-radius, @button__border-radius, 50px);
                 background: @button-primary__background;
 
                 a {
-                    .lib-css(border-radius, @button__border-radius, 50);
+                    .lib-css(border-radius, @button__border-radius, 50px);
                     border: 0 solid @button-primary__background;
                     color: @button-primary__color;
                     display: inline-block;
@@ -62,6 +62,8 @@
                     padding: @button__padding;
                     text-decoration: none;
                     text-transform: uppercase;
+                    font-weight: 800;
+                    letter-spacing: 1.92px;
                 }
                 &:hover {
                     background: @button-primary__hover__background !important;
