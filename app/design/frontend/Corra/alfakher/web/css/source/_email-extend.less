@@ -26,9 +26,19 @@
     a {
         color: #000;
         text-decoration: underline;
-        font-weight: 400;
+        font-weight: 500;
         &:hover {
-            color: #26bfbf
+            color: #fc5e67;
+        }
+    }
+    .links{
+        a {
+            color: #000;
+            text-decoration: underline;
+            font-weight: 500;
+            &:hover {
+                color: #fc5e67;
+            }
         }
     }
     small {
@@ -40,11 +50,11 @@
             margin-top: 10px;
             margin-bottom: 10px;
             td {
-                .lib-css(border-radius, @button__border-radius, 1);
+                .lib-css(border-radius, @button__border-radius, 50);
                 background: @button-primary__background;
 
                 a {
-                    .lib-css(border-radius, @button__border-radius, 1);
+                    .lib-css(border-radius, @button__border-radius, 50);
                     border: 0 solid @button-primary__background;
                     color: @button-primary__color;
                     display: inline-block;
