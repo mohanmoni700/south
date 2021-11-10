@@ -450,7 +450,6 @@ return [
         'Eyemagine_HubSpot' => 1,
         'Fastly_Cdn' => 1,
         'HookahShisha_Catalog' => 1,
-        'HookahShisha_CatalogGraphQl' => 1,
         'HookahShisha_Order' => 1,
         'Veratad_AgeVerification' => 0,
         'HookahShisha_RelatedProductGraphQl' => 1,

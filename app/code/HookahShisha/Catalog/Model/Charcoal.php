@@ -71,7 +71,7 @@ class Charcoal extends DataObject
      * @param Product $currentProduct
      * @return array
      */
-    public function getCharcoalProductIds(Product $currentProduct)
+    public function getCharcoalProductIds(Product $currentProduct): array
     {
         if (!$this->hasCharcoalProductIds()) {
             $ids = [];
