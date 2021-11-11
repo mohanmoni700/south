@@ -12,7 +12,7 @@ use Magento\Catalog\Model\ProductLink\CollectionProviderInterface;
 use HookahShisha\Catalog\Model\Charcoal as CharcoalModel;
 
 /**
- * Class CharcoalModel
+ * Charcoal collection provider
  */
 class Charcoal implements CollectionProviderInterface
 {
@@ -31,7 +31,7 @@ class Charcoal implements CollectionProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getLinkedProducts(Product $product): array
     {

@@ -11,9 +11,6 @@ use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\Product\CopyConstructorInterface;
 use Magento\Catalog\Model\Product\Link;
 
-/**
- * Class Charcoal
- */
 class Charcoal implements CopyConstructorInterface
 {
     /**

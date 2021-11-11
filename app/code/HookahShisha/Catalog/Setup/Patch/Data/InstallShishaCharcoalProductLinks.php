@@ -12,8 +12,7 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 use HookahShisha\Catalog\Model\Product\Link;
 
 /**
- * Class InstallShishaCharcoalProductLinks
- * @package HookahShisha\Catalog\Setup\Patch\Data
+ * Class InstallShishaCharcoalProductLinks for installing Shisha and Charcoal product types
  */
 class InstallShishaCharcoalProductLinks implements DataPatchInterface
 {
@@ -22,13 +21,16 @@ class InstallShishaCharcoalProductLinks implements DataPatchInterface
      */
     private $moduleDataSetup;
 
+    /**
+     * @param ModuleDataSetupInterface $moduleDataSetup
+     */
     public function __construct(ModuleDataSetupInterface $moduleDataSetup)
     {
         $this->moduleDataSetup = $moduleDataSetup;
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function apply()
     {
@@ -72,7 +74,7 @@ class InstallShishaCharcoalProductLinks implements DataPatchInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getDependencies(): array
     {
@@ -80,7 +82,7 @@ class InstallShishaCharcoalProductLinks implements DataPatchInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAliases(): array
     {

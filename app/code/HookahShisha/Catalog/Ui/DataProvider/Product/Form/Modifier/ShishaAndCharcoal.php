@@ -11,7 +11,7 @@ use Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Related;
 use Magento\Ui\Component\Form\Fieldset;
 
 /**
- * Class ShishaAndCharcoal
+ * Data provider for Shisha/Charcoal panel
  */
 class ShishaAndCharcoal extends Related
 {
@@ -30,7 +30,7 @@ class ShishaAndCharcoal extends Related
     private static $sortOrder = 90;
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function modifyMeta(array $meta): array
     {
@@ -45,7 +45,9 @@ class ShishaAndCharcoal extends Related
                     'arguments' => [
                         'data' => [
                             'config' => [
-                                'label' => __('Related Products, Up-Sells, Cross-Sells, Shisha Products and Charcoal Products'),
+                                'label' => __(
+                                    'Related Products, Up-Sells, Cross-Sells,Shisha Products and Charcoal Products'
+                                ),
                                 'collapsible' => true,
                                 'componentType' => Fieldset::NAME,
                                 'dataScope' => static::DATA_SCOPE,
@@ -83,7 +85,10 @@ class ShishaAndCharcoal extends Related
     }
 
     /**
+     * Returns field set for Shisha/Charcoal product type
+     *
      * @param string $dataScope
+     *
      * @return array
      */
     private function getFieldSet(string $dataScope): array

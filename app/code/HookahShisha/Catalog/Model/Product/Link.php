@@ -6,10 +6,11 @@
  */
 
 namespace HookahShisha\Catalog\Model\Product;
+
 use Magento\Catalog\Model\Product\Link as SourceLink;
 
 /**
- * Class Link
+ * Catalog product link model for Shisha and Charcoal products
  */
 class Link extends SourceLink
 {
@@ -18,6 +19,8 @@ class Link extends SourceLink
     const LINK_TYPE_CHARCOAL = 8;
 
     /**
+     * Sets Shisha link type id
+     *
      * @return $this
      */
     public function useShishaLinks()
@@ -27,6 +30,8 @@ class Link extends SourceLink
     }
 
     /**
+     * Sets Charcoal link type id
+     *
      * @return $this
      */
     public function useCharCoalLinks()

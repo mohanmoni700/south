@@ -12,7 +12,7 @@ use Magento\Catalog\Model\ProductLink\CollectionProviderInterface;
 use HookahShisha\Catalog\Model\Shisha as ShishaModel;
 
 /**
- * Class Shisha
+ * Shisha collection provider
  */
 class Shisha implements CollectionProviderInterface
 {
@@ -31,7 +31,7 @@ class Shisha implements CollectionProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getLinkedProducts(Product $product): array
     {

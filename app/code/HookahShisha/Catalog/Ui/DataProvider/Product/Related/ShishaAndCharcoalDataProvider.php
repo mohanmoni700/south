@@ -12,12 +12,12 @@ use Magento\Catalog\Ui\DataProvider\Product\Related\AbstractDataProvider;
 use Magento\Ui\DataProvider\AbstractDataProvider as SourceAbstractDataProvider;
 
 /**
- * Class ShishaAndCharcoalDataProvider
+ * Class ShishaAndCharcoalDataProvider for providing product data
  */
 class ShishaAndCharcoalDataProvider extends AbstractDataProvider
 {
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     protected function getLinkType()
     {
@@ -25,14 +25,14 @@ class ShishaAndCharcoalDataProvider extends AbstractDataProvider
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      * @since 101.0.0
      */
     public function getCollection()
     {
         // Allow access only to simple products
         /** @var Collection $collection */
-        $collection = SourceAbstractDataProvider::getCollection()->addFilter('type_id', 'simple');;
+        $collection = SourceAbstractDataProvider::getCollection()->addFilter('type_id', 'simple');
         $collection->addAttributeToSelect('status');
 
         if ($this->getStore()) {

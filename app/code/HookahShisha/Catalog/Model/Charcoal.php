@@ -13,7 +13,7 @@ use Magento\Framework\DataObject;
 use HookahShisha\Catalog\Model\Product\Link;
 
 /**
- * Class Charcoal
+ * Charcoal Model
  */
 class Charcoal extends DataObject
 {
