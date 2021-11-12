@@ -451,6 +451,7 @@ return [
         'Fastly_Cdn' => 1,
         'HookahShisha_Order' => 1,
         'Veratad_AgeVerification' => 0,
+        'HookahShisha_SalesGraphQl' => 1,
         'Klarna_Core' => 1,
         'Klarna_Ordermanagement' => 1,
         'Klarna_Kp' => 1,
