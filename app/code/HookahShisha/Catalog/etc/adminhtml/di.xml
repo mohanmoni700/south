@@ -17,4 +17,12 @@
             </argument>
         </arguments>
     </virtualType>
+
+    <preference for="Magento\Catalog\Ui\DataProvider\Product\Related\RelatedDataProvider"
+                type="HookahShisha\CatalogGraphQl\Plugin\Ui\DataProvider\Product\Related\RelatedDataProvider"/>
+
+    <type name="Magento\Catalog\Controller\Adminhtml\Product\Save">
+        <plugin name="validate_related_product_before_save" type="HookahShisha\CatalogGraphQl\Plugin\ValidateRelatedProduct" />
+    </type>
+
 </config>
