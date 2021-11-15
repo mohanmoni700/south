@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace HookahShisha\CatalogGraphQl\Plugin;
+namespace HookahShisha\Catalog\Plugin;
 
 use Magento\Catalog\Controller\Adminhtml\Product\Save;
 use Magento\Framework\Controller\Result\Redirect;
@@ -34,7 +34,7 @@ class ValidateRelatedProduct
      */
     public function aroundExecute(Save $subject, callable $proceed)
     {
-        $relatedProducts = $subject->getRequest()->getParam('links')['related'];
+        $relatedProducts = $subject->getRequest()->getParam('links')['related'] ?? [];
         if (count($relatedProducts) > 3) {
             $this->messageManager
                ->addErrorMessage(

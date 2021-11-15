@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace HookahShisha\CatalogGraphQl\Plugin\Ui\DataProvider\Product\Related;
+namespace HookahShisha\Catalog\Plugin\Ui\DataProvider\Product\Related;
 
 use Magento\Catalog\Api\Data\ProductLinkInterface;
 use Magento\Catalog\Api\ProductLinkRepositoryInterface;
