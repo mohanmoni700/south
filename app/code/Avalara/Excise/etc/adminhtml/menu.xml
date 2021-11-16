@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Avalara_Excise::avatax_excise" title="AvaTax Excise" translate="title" module="Avalara_Excise" sortOrder="15" parent="Magento_Backend::stores" resource="Magento_Backend::stores_other_settings"/>
+        <add id="Avalara_Excise::avatax_log" title="Logs" module="Avalara_Excise" sortOrder="32" parent="Avalara_Excise::avatax_excise" action="excise/log" resource="Avalara_Excise::manage_avatax"/>
+        <add id="Avalara_Excise::excise_queue" title="Queue" module="Avalara_Excise" sortOrder="30" parent="Avalara_Excise::avatax_excise" action="excise/log/queue" resource="Avalara_Excise::manage_avatax"/>
+    </menu>
+</config>
