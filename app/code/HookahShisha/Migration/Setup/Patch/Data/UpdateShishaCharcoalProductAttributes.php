@@ -13,6 +13,7 @@ use Magento\Eav\Model\Entity\Attribute\Source\Table;
 use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
+use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
 
 /**
  * Will update necessary product attributes for Shisha and Charcoal products
@@ -36,9 +37,12 @@ class UpdateShishaCharcoalProductAttributes implements DataPatchInterface
      */
     private array $attributes = [
         'flavour' => [
-            'apply_to' => 'simple',
             'source_model' => Table::class,
-            'backend_type' => 'int'
+            'backend_type' => 'int',
+            'apply_to' => 'simple,virtual,configurable',
+            'is_global' => true,
+            'additional_data' => '{"swatch_input_type": "text","update_product_preview_image":"0",
+            "use_product_image_for_swatch":"0"}'
         ],
         'charcoal_short_detail' => [
             'apply_to' => 'simple'
