@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "96a308b80b9cdf1a4eb2d43d8c2ef164",
+    "content-hash": "93d53c7a74c8ea6947881714b34a1b70",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -28388,6 +28388,84 @@
             "time": "2020-12-11T19:33:31+00:00"
         },
         {
+            "name": "wyomind/framework",
+            "version": "7.0.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.wyomind.com/wyomind-framework-7.0.7.zip",
+                "reference": ""
+            },
+            "require": {
+                "magento/framework": ">=100.0.0",
+                "php": "~5.5.0|~5.6.0|>=7.0.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Wyomind\\Framework\\": ""
+                }
+            },
+            "license": [
+                "Commercial License - Copyright 2021  - WYOMIND  - Purchasing any product (Software) from the  wyomind.com web-site means buyer agree to the following statements (see LICENSE.TXT)"
+            ]
+        },
+        {
+            "name": "wyomind/massproductimport",
+            "version": "8.4.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.wyomind.com/wyomind-massproductimport-8.4.6.zip",
+                "reference": ""
+            },
+            "require": {
+                "magento/framework": ">=100.0.0",
+                "php": "~5.5.0|~5.6.0|>=7.0.0",
+                "wyomind/framework": ">=5.0.0",
+                "wyomind/massstockupdate": ">=9.2.0.0,<=11.2.3"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Wyomind\\MassProductImport\\": ""
+                }
+            },
+            "license": [
+                "Commercial License - Copyright 2021  - WYOMIND  - Purchasing any product (Software) from the  wyomind.com web-site means buyer agree to the following statements (see LICENSE.TXT)"
+            ]
+        },
+        {
+            "name": "wyomind/massstockupdate",
+            "version": "11.2.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.wyomind.com/wyomind-massstockupdate-11.2.3.zip",
+                "reference": ""
+            },
+            "require": {
+                "magento/framework": ">=100.0.0",
+                "php": "~5.5.0|~5.6.0|>=7.0.0",
+                "wyomind/framework": ">=5.0.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Wyomind\\MassStockUpdate\\": ""
+                }
+            },
+            "license": [
+                "Commercial License - Copyright 2021  - WYOMIND  - Purchasing any product (Software) from the  wyomind.com web-site means buyer agree to the following statements (see LICENSE.TXT)"
+            ]
+        },
+        {
             "name": "yotpo/magento2-module-yotpo-loyalty",
             "version": "1.2.5",
             "dist": {
@@ -28535,5 +28613,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.1.0"
 }
