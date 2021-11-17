@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e77e11fdcdf32843aef78c730c432dc9",
+    "content-hash": "96a308b80b9cdf1a4eb2d43d8c2ef164",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -1485,6 +1485,50 @@
                 "source": "https://bitbucket.org/corratech/logcloudsupport/src/d6beadf67f6298540af11e083ebc42158316fa21/?at=master"
             },
             "time": "2019-10-25T10:52:19+00:00"
+        },
+        {
+            "name": "corra/module-page-builder-customisation",
+            "version": "1.0.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-page-builder-customisation/1.0.7.0/8ca69b4fb1720e79369cbd5f67a4f1dbd4c8e731.zip",
+                "reference": "8ca69b4fb1720e79369cbd5f67a4f1dbd4c8e731",
+                "mirrors": [
+                    {
+                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "magento/module-page-builder": "*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Corra\\PageBuilderCustomisation\\": ""
+                }
+            },
+            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "CORRA"
+                }
+            ],
+            "description": "Module for adding additional height and width attributes for PageBuilder Images",
+            "homepage": "https://bitbucket.org/corratech/pagebuildercustomisation",
+            "support": {
+                "source": "https://bitbucket.org/corratech/pagebuildercustomisation/src/8ca69b4fb1720e79369cbd5f67a4f1dbd4c8e731/?at=1.0.7",
+                "issues": "https://bitbucket.org/corratech/pagebuildercustomisation/issues"
+            },
+            "time": "2021-08-14T04:10:27+00:00"
         },
         {
             "name": "corra/module-signifyd-graph-ql",
