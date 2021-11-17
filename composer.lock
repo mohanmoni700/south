@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "79b2b2d154f8168b7c548a7cb764b5e71ae22b7d",
+    "content-hash": "5aa5c7dfb33a3d3e91de362c1eaa9dd2",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -306,6 +306,45 @@
             "description": "ShipStation is a web-based shipping solution that is integrated with the Magento API for retrieving order information and updating shipping details."
         },
         {
+            "name": "avalara/excise",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/avalara/excise/1.0.0.0/38ba4ee2824006f69e9acbdeb1aa1f005913e17c.zip",
+                "reference": "38ba4ee2824006f69e9acbdeb1aa1f005913e17c",
+                "mirrors": [
+                    {
+                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6",
+                "magento/framework": "^100.1.0|^101.0.0|>=102.0.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Avalara\\Excise\\": ""
+                }
+            },
+            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
+            "license": [
+                "OSL-3.0"
+            ],
+            "description": "Magento module for Avalara's Excise Tax suite of business tax calculation and processing services. Uses the AvaTax REST API.",
+            "homepage": "https://bitbucket.org/corratech/avalara_excise",
+            "support": {
+                "source": "https://bitbucket.org/corratech/avalara_excise/src/38ba4ee2824006f69e9acbdeb1aa1f005913e17c/?at=1.0.0",
+                "issues": "https://bitbucket.org/corratech/avalara_excise/issues"
+            },
+            "time": "2021-11-08T06:22:45+00:00"
+        },
+        {
             "name": "aws/aws-crt-php",
             "version": "v1.0.2",
             "source": {
@@ -357,16 +396,16 @@
         },
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.203.0",
+            "version": "3.203.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "498f2466114bc8f3583b1db6943a3e291dd9ee70"
+                "reference": "63be45bbf3d2a325017f92fcad6764ebd98bb266"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/498f2466114bc8f3583b1db6943a3e291dd9ee70",
-                "reference": "498f2466114bc8f3583b1db6943a3e291dd9ee70",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/63be45bbf3d2a325017f92fcad6764ebd98bb266",
+                "reference": "63be45bbf3d2a325017f92fcad6764ebd98bb266",
                 "shasum": ""
             },
             "require": {
@@ -442,9 +481,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.203.0"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.203.1"
             },
-            "time": "2021-11-15T20:32:57+00:00"
+            "time": "2021-11-16T19:23:28+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -2465,16 +2504,16 @@
         },
         {
             "name": "ezimuel/ringphp",
-            "version": "1.1.2",
+            "version": "1.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ezimuel/ringphp.git",
-                "reference": "0b78f89d8e0bb9e380046c31adfa40347e9f663b"
+                "reference": "92b8161404ab1ad84059ebed41d9f757e897ce74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ezimuel/ringphp/zipball/0b78f89d8e0bb9e380046c31adfa40347e9f663b",
-                "reference": "0b78f89d8e0bb9e380046c31adfa40347e9f663b",
+                "url": "https://api.github.com/repos/ezimuel/ringphp/zipball/92b8161404ab1ad84059ebed41d9f757e897ce74",
+                "reference": "92b8161404ab1ad84059ebed41d9f757e897ce74",
                 "shasum": ""
             },
             "require": {
@@ -2482,9 +2521,12 @@
                 "php": ">=5.4.0",
                 "react/promise": "~2.0"
             },
+            "replace": {
+                "guzzlehttp/ringphp": "self.version"
+            },
             "require-dev": {
                 "ext-curl": "*",
-                "phpunit/phpunit": "~4.0"
+                "phpunit/phpunit": "~9.0"
             },
             "suggest": {
                 "ext-curl": "Guzzle will use specific adapters if cURL is present"
@@ -2513,9 +2555,9 @@
             ],
             "description": "Fork of guzzle/RingPHP (abandoned) to be used with elasticsearch-php",
             "support": {
-                "source": "https://github.com/ezimuel/ringphp/tree/1.1.2"
+                "source": "https://github.com/ezimuel/ringphp/tree/1.2.0"
             },
-            "time": "2020-02-14T23:51:21+00:00"
+            "time": "2021-11-16T11:51:30+00:00"
         },
         {
             "name": "fastly/magento2",
