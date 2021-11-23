@@ -3,12 +3,4 @@
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <plugin name="grid_custom_column" type="HookahShisha\Order\Plugin\GridJoinCollection" sortOrder="5" />
     </type>
-    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
-        <plugin name="custom_attribute_quote_to_order_item" type="HookahShisha\Order\Plugin\CustomAttributeQuoteToOrderItem"/>
-    </type>
-    <preference for="Magento\Quote\Model\Cart\AddProductsToCart" type="HookahShisha\Order\Model\Quote\Cart\AddProductsToCart" />
-    <preference for="Magento\Quote\Model\Cart\Data\CartItemFactory" type="HookahShisha\Order\Model\Quote\Cart\Data\CartItemFactory" />
-    <preference for="Magento\Quote\Model\Cart\Data\CartItem" type="HookahShisha\Order\Model\Quote\Cart\Data\CartItem" />
-    <preference for="Magento\QuoteGraphQl\Model\Resolver\AddProductsToCart" type="HookahShisha\Order\Model\Quote\Resolver\AddProductsToCart" />
-
 </config>
