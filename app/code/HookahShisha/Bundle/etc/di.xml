@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+        <plugin name="custom_attribute_quote_to_order_item" type="HookahShisha\Bundle\Plugin\CustomAttributeQuoteToOrderItem"/>
+    </type>
+    <preference for="Magento\Quote\Model\Cart\AddProductsToCart" type="HookahShisha\Bundle\Model\Quote\Cart\AddProductsToCart" />
+    <preference for="Magento\Quote\Model\Cart\Data\CartItemFactory" type="HookahShisha\Bundle\Model\Quote\Cart\Data\CartItemFactory" />
+    <preference for="Magento\Quote\Model\Cart\Data\CartItem" type="HookahShisha\Bundle\Model\Quote\Cart\Data\CartItem" />
+    <preference for="Magento\QuoteGraphQl\Model\Resolver\AddProductsToCart" type="HookahShisha\Bundle\Model\Quote\Resolver\AddProductsToCart" />
+</config>
