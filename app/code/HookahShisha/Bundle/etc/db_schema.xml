@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="quote_item" resource="checkout" comment="Sales Flat Quote Item">
+        <column xsi:type="text" name="alfa_is_bundle" nullable="true" comment="Alfa Is Bundle"/>
+    </table>
+    <table name="sales_order_item" resource="sales" comment="Sales Flat Order Item">
+        <column xsi:type="text" name="alfa_is_bundle" nullable="true" comment="Alfa Is Bundle"/>
+    </table>
+</schema>
