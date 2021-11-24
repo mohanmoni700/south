@@ -7,6 +7,7 @@ declare (strict_types = 1);
 
 namespace HookahShisha\Bundle\Model\QuoteGraphQl\Cart;
 
+use HookahShisha\Bundle\Model\QuoteGraphQl\Cart\Data\CartItem;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Message\MessageInterface;
@@ -128,7 +129,7 @@ class AddProductsToCart extends \Magento\Quote\Model\Cart\AddProductsToCart
      * @param \HookahShisha\Bundle\Model\QuoteGraphQl\Cart\Data\CartItem $cartItem
      * @param int $cartItemPosition
      */
-    private function addItemToCart(CartInterface $cart, \HookahShisha\Bundle\Model\QuoteGraphQl\Cart\Data\CartItem $cartItem, int $cartItemPosition): void
+    private function addItemToCart(CartInterface $cart, CartItem $cartItem, int $cartItemPosition): void
     {
         $sku = $cartItem->getSku();
 
@@ -148,16 +149,10 @@ class AddProductsToCart extends \Magento\Quote\Model\Cart\AddProductsToCart
 
             return;
         }
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $logger = $objectManager->get('\Psr\Log\LoggerInterface');
-        $logger->addDebug("==========addItemToCart_bv");
-        $logger->addDebug($cartItem->getAlfaIsBundle());
 
         try {
             $result = $cart->addProduct($product, $this->requestBuilder->build($cartItem));
-            $logger->addDebug("==");
             $result->setAlfaIsBundle($cartItem->getAlfaIsBundle());
-            $logger->addDebug("==");
             $this->cartRepository->save($cart);
         } catch (\Throwable $e) {
             $this->addError(
