@@ -7,6 +7,7 @@ type Cart {
 
 type Mutation {
     addProductsToCart(cartId: String!, cartItems: [CartItemInput!]!): AddProductsToCartOutput @doc(description:"Add any type of product to the cart") @resolver(class: "HookahShisha\\Bundle\\Model\\QuoteGraphQl\\Resolver\\AddProductsToCart")
+    removeItemFromCart(input: RemoveItemFromCartInput): RemoveItemFromCartOutput @resolver(class: "HookahShisha\\Bundle\\Model\\QuoteGraphQl\\Resolver\\RemoveItemsFromCart")
 }
 
 interface CartItemInterface @typeResolver(class: "Magento\\QuoteGraphQl\\Model\\Resolver\\CartItemTypeResolver") {
@@ -25,4 +26,10 @@ input CartItemInput {
     parent_sku: String @doc(description: "For child products, the SKU of its parent product")
     selected_options: [ID!] @doc(description: "The selected options for the base product, such as color or size with  unique ID for a `CustomizableRadioOption`, `CustomizableDropDownOption`, `ConfigurableProductOptionsValues`, etc. objects")
     entered_options: [EnteredOptionInput!] @doc(description: "An array of entered options for the base product, such as personalization text")
+}
+
+input RemoveItemFromCartInput {
+    cart_id: String!
+    cart_item_id: [Int] @doc(description: "Deprecated. Use `cart_item_uid` instead.")
+    cart_item_uid: ID @doc(description: "Required field. The unique ID for a `CartItemInterface` object")
 }
