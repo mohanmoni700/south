@@ -31,5 +31,5 @@ input CartItemInput {
 input RemoveItemFromCartInput {
     cart_id: String!
     cart_item_id: [Int] @doc(description: "Deprecated. Use `cart_item_uid` instead.")
-    cart_item_uid: ID @doc(description: "Required field. The unique ID for a `CartItemInterface` object")
+    cart_item_uid: [ID] @doc(description: "Required field. The unique ID for a `CartItemInterface` object")
 }
