@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "08f0c5b23fc3abc4b79c20fa4d6d20fd",
+    "content-hash": "c8128f440eec3d7c52cd9468c7d6d8ac",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -1791,6 +1791,51 @@
                 "issues": "https://bitbucket.org/corratech/yotpoloyaltyextended/issues"
             },
             "time": "2021-10-05T08:48:13+00:00"
+        },
+        {
+            "name": "corra/new-relic-reporting-graph-ql",
+            "version": "1.0.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/new-relic-reporting-graph-ql/1.0.3.0/c07118af21695684714e7c1b6989925c22a4c263.zip",
+                "reference": "c07118af21695684714e7c1b6989925c22a4c263",
+                "mirrors": [
+                    {
+                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "magento/module-new-relic-reporting": "*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Corra\\NewRelicReportingGraphql\\": ""
+                }
+            },
+            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "CORRA"
+                }
+            ],
+            "description": "NewRelic Reporting Support for GraphQl",
+            "homepage": "https://bitbucket.org/corratech/newrelicreportinggraphql",
+            "support": {
+                "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/2058158729/NewRelic+Reporting+of+GraphQl+Transactions",
+                "source": "https://bitbucket.org/corratech/newrelicreportinggraphql/src/c07118af21695684714e7c1b6989925c22a4c263/?at=1.0.3",
+                "issues": "https://bitbucket.org/corratech/newrelicreportinggraphql/issues"
+            },
+            "time": "2021-10-22T10:04:40+00:00"
         },
         {
             "name": "dasprid/enum",
@@ -29230,7 +29275,7 @@
         },
         {
             "name": "wyomind/framework",
-           "version": "7.0.7",
+            "version": "7.0.7",
             "dist": {
                 "type": "zip",
                 "url": "https://repo.wyomind.com/wyomind-framework-7.0.7.zip",
