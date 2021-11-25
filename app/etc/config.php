@@ -451,6 +451,7 @@ return [
         'Dotdigitalgroup_Sms' => 1,
         'Eyemagine_HubSpot' => 1,
         'Fastly_Cdn' => 1,
+        'HookahShisha_Bundle' => 1,
         'HookahShisha_Catalog' => 1,
         'HookahShisha_Migration' => 1,
         'HookahShisha_Order' => 1,
