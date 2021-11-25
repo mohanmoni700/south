@@ -73,12 +73,12 @@ return [
                     'type' => 'server_side_compilation'
                 ],
                 'template' => [
-                    'allow_symlink' => NULL,
+                    'allow_symlink' => null,
                     'minify_html' => '0'
                 ],
                 'js' => [
                     'merge_files' => '0',
-                    'enable_js_bundling' => NULL,
+                    'enable_js_bundling' => null,
                     'minify_files' => '0',
                     'move_script_to_bottom' => '0',
                     'translate_strategy' => 'dictionary',
@@ -89,7 +89,7 @@ return [
                     ]
                 ],
                 'css' => [
-                    'merge_css_files' => NULL,
+                    'merge_css_files' => null,
                     'minify_files' => '0',
                     'use_css_critical_path' => '0',
                     'minify_exclude' => [
