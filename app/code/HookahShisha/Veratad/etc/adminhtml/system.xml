@@ -16,6 +16,11 @@
                     <comment>Enable the Veratad module here.</comment>
                     <tooltip>Once enabled the Veratad module will work for all stores.</tooltip>
                 </field>
+                <field id="to_verify" type="select" translate="label,comment,tooltip" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Address to Verify</label>
+                    <source_model>HookahShisha\Veratad\Model\Config\Source\VerificationType</source_model>
+                    <comment>Select which address to verify.</comment>
+                </field>
                 <field id="test_mode" type="select" translate="label,comment,tooltip" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Test Mode</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -121,14 +126,14 @@
                     <comment>Text a user will see when they have no more attempts.</comment>
                 </field>
             </group>
-            <!--<group id="customer_groups_veratad" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="customer_groups_veratad" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Customer Groups</label>
                 <comment>Select groups to exclude from verification.</comment>
                 <field id="customer_group_list_veratad" translate="label" type="multiselect" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Groups</label>
-                    <source_model>Veratad\AgeVerification\Model\Config\Source\Group\Multiselect</source_model>
+                    <source_model>HookahShisha\Veratad\Model\Config\Source\Group\Multiselect</source_model>
                 </field>
-            </group>-->
+            </group>
         </section>
         <section id="verated_state_ages" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
             <class>separator-top sd-general-admin-tab-general</class>

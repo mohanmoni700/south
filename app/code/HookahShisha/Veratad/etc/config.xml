@@ -1,26 +1,36 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <veratad_settings>
-          <general>
-            <enabled>1</enabled>
-          </general>
-          <agematch>
-            <url>https://production.idresponse.com/process/comprehensive/gateway</url>
-              <agematchservice>AgeMatch5.0</agematchservice>
-            <agematchattempts>2</agematchattempts>
-          </agematch>
-          <content>
-            <agematch_fail_subtitle>We were unable to verify your age. Please edit your details below and try again.</agematch_fail_subtitle>
-            <agematch_success_subtitle>You are age verified! There is nothing more for you to do. Your order is on the way.</agematch_success_subtitle>
-            <agematch_failure_subtitle>We are still having problems verifying your age. Make sure you DOB and/or SSN are correct and try an alternate address.</agematch_failure_subtitle>
-            <agematch_exceeded_subtitle>You no longer have any attempts. Please contact customer service at 888-888-8888.</agematch_exceeded_subtitle>
-          </content>
+            <general>
+                <enabled>1</enabled>
+                <to_verify>auto_detect</to_verify>
+            </general>
+            <agematch>
+                <url>https://production.idresponse.com/process/comprehensive/gateway</url>
+                <agematchservice>AgeMatch5.0</agematchservice>
+                <agematchattempts>2</agematchattempts>
+            </agematch>
+            <content>
+                <agematch_fail_subtitle>We were unable to verify your age. Please edit your details below and try
+                    again.
+                </agematch_fail_subtitle>
+                <agematch_success_subtitle>You are age verified! There is nothing more for you to do. Your order is on
+                    the way.
+                </agematch_success_subtitle>
+                <agematch_failure_subtitle>We are still having problems verifying your age. Make sure you DOB and/or SSN
+                    are correct and try an alternate address.
+                </agematch_failure_subtitle>
+                <agematch_exceeded_subtitle>You no longer have any attempts. Please contact customer service at
+                    888-888-8888.
+                </agematch_exceeded_subtitle>
+            </content>
         </veratad_settings>
         <verated_state_ages>
-        <global>
+            <global>
                 <global_age>21+</global_age>
-        </global>
-      </verated_state_ages>
+            </global>
+        </verated_state_ages>
     </default>
 </config>
