@@ -8,6 +8,9 @@ namespace HookahShisha\Veratad\Model\Config\Source;
 
 class VerificationType implements \Magento\Framework\Option\ArrayInterface
 {
+    /**
+     * @inheritdoc
+     */
     public function toOptionArray()
     {
         return [

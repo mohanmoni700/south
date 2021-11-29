@@ -1,4 +1,7 @@
 <?php
+/**
+ * @author  CORRA
+ */
 
 namespace HookahShisha\Veratad\Helper;
 
@@ -11,14 +14,18 @@ use Magento\Framework\HTTP\ZendClientFactory;
  */
 class Api extends \Magento\Framework\App\Helper\AbstractHelper
 {
+    /**
+     * @var array
+     */
     private $baseParams;
+
     /**
      * @var ZendClientFactory
      */
     protected $httpClientFactory;
 
     /**
-     * Oauth constructor.
+     * Api constructor.
      * @param Context $context
      * @param ZendClientFactory $httpClientFactory
      */
@@ -31,6 +38,8 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
+     *  Get the HttpClient
+     *
      * @return ZendClient
      */
     public function getClient()
@@ -39,23 +48,25 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * @param $key
-     * @param null $storeId
+     * Getting the storeConfigValues
+     *
+     * @param string $key
+     * @param null|int $storeId
      * @return mixed
      */
     public function getKey($key, $storeId = null)
     {
         return $this->scopeConfig->getValue(
-             $key,
+            $key,
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
             $storeId
         );
     }
 
-
     /**
      * Get parameters used in all API calls
-     * return array
+     *
+     * @return array
      */
     private function getBaseParams()
     {
@@ -73,7 +84,8 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper
 
     /**
      * Make POST requests
-     * @param $params
+     *
+     * @param array|mixed $postParams
      * @return bool|mixed
      */
     public function apiPost($postParams)
@@ -85,7 +97,7 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper
 
         $test_mode = $this->getKey('veratad_settings/general/test_mode');
         $test_key = null;
-        if($test_mode){
+        if ($test_mode) {
             $test_key = $this->getKey('veratad_settings/general/test_key');
         }
         $addr_clean = str_replace("\n", ' ', $postParams['street']);
@@ -123,10 +135,9 @@ class Api extends \Magento\Framework\App\Helper\AbstractHelper
                 ]
             );
             $client->setRawData($data_string, 'application/json');
-            //$client->setParameterPost($data_string);
             $apiResponse = $client->request('POST');
             $rawResponse = $apiResponse->getRawBody();
-            $response = json_decode($rawResponse,true);
+            $response = json_decode($rawResponse, true);
         } catch (\Zend_Http_Client_Exception $e) {
             return false;
         }

@@ -43,7 +43,9 @@ class AgeVerification implements ResolverInterface
     }
 
     /**
-     * @param $post
+     * Calling the Age verification API
+     *
+     * @param array $post
      * @return array
      * @throws GraphQlInputException
      */
@@ -56,7 +58,9 @@ class AgeVerification implements ResolverInterface
     }
 
     /**
-     * @param $params
+     * Validate the input data
+     *
+     * @param array $params
      * @return array
      * @throws GraphQlInputException
      */
