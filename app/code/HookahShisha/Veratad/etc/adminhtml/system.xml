@@ -62,50 +62,6 @@
                     <comment>Set the AgeMatch endpoint.</comment>
                     <validate>required-entry</validate>
                 </field>
-                <field id="agematchattempts" type="text" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Total AgeMatch Attempts</label>
-                    <comment>Set the amount of AgeMatch attempts allowed per order.</comment>
-                    <validate>required-entry</validate>
-                </field>
-                <field id="dobvisible" type="select" translate="label,comment,tooltip" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Collect DOB at Checkout</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Should Date of Birth be added to the checkout form?</comment>
-                </field>
-                <field id="dobrequired" type="select" translate="label,comment,tooltip" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Require DOB at Checkout</label>
-                    <depends>
-                        <field id="dobvisible">1</field>
-                    </depends>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Should Date of Birth be required at checkout form?</comment>
-                </field>
-                <field id="dobvisible_additional" type="select" translate="label,comment,tooltip" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Collect DOB at Addtional Attempt</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Should Date of Birth be added to the additional attempt?</comment>
-                </field>
-                <field id="dobrequired_additional" type="select" translate="label,comment,tooltip" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Require DOB at Additional Attempt</label>
-                    <depends>
-                        <field id="dobvisible_additional">1</field>
-                    </depends>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Should Date of Birth be required at additional attempt?</comment>
-                </field>
-                <field id="ssnvisible_additional" type="select" translate="label,comment,tooltip" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Collect Last 4 SSN at Addtional Attempt</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Should Last 4 SSN be added to the additional attempt?</comment>
-                </field>
-                <field id="ssnrequired_additional" type="select" translate="label,comment,tooltip" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Require Last 4 SSN at Additional Attempt</label>
-                    <depends>
-                        <field id="ssnvisible_additional">1</field>
-                    </depends>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
-                    <comment>Should Last 4 SSN be required at additional attempt?</comment>
-                </field>
             </group>
             <group id="content" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Content Editor</label>
@@ -114,16 +70,8 @@
                     <comment>Introduction text to the user once they failed the first AgeMatch attempt and are about to try again.</comment>
                 </field>
                 <field id="agematch_success_subtitle" type="textarea" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>AgeMatch Second Attempt Success</label>
-                    <comment>Text a user will see when they PASS AgeMatch second attempt.</comment>
-                </field>
-                <field id="agematch_failure_subtitle" type="textarea" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>AgeMatch Second Attempt Failure</label>
-                    <comment>Text a user will see when they FAIL AgeMatch multiple attempts.</comment>
-                </field>
-                <field id="agematch_exceeded_subtitle" type="textarea" translate="label" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>AgeMatch Attempts Exceeded</label>
-                    <comment>Text a user will see when they have no more attempts.</comment>
+                    <label>AgeMatch Success</label>
+                    <comment>Text a user will see when they PASS AgeMatch</comment>
                 </field>
             </group>
             <group id="customer_groups_veratad" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">

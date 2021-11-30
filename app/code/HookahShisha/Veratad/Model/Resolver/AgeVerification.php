@@ -52,8 +52,9 @@ class AgeVerification implements ResolverInterface
     private function veratadPost($post)
     {
         $responseMsg = [];
-        $ageVerifyResponse =  $this->apiHelper->apiPost($post);
-        $responseMsg['response'] = $ageVerifyResponse;
+        $ageVerifyResponse =  $this->apiHelper->veratadPost($post);
+        $responseMsg['action'] = $ageVerifyResponse['action'];
+        $responseMsg['detail'] = $ageVerifyResponse['detail'];
         return $responseMsg;
     }
 
@@ -76,12 +77,26 @@ class AgeVerification implements ResolverInterface
                 __('Enter the Last Name and try again.')
             );
         }
+        if (trim($params['street']) === '') {
+            throw new GraphQlInputException(
+                __('Enter the Street and try again.')
+            );
+        }
+        if (trim($params['postcode']) === '') {
+            throw new GraphQlInputException(
+                __('Enter the Postcode/ Zip and try again.')
+            );
+        }
+        if (trim($params['dob']) === '') {
+            throw new GraphQlInputException(
+                __('Enter the DOB and try again.')
+            );
+        }
         if (false === \strpos($params['email'], '@')) {
             throw new GraphQlInputException(
                 __('The email address is invalid. Verify the email address and try again.')
             );
         }
-
         return $params;
     }
 }
