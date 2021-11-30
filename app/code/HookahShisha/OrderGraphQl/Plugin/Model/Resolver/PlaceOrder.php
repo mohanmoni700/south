@@ -10,7 +10,6 @@ use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\QuoteGraphQl\Model\Resolver\PlaceOrder as MagentoPlaceOrder;
 use Magento\Sales\Api\Data\OrderInterfaceFactory as OrderInterfaceFactory;
 use Magento\Sales\Api\OrderRepositoryInterfaceFactory as OrderRepositoryInterfaceFactory;
-use HookahShisha\Veratad\Model\Query\Api as VeratadApi;
 
 /**
  * This plugin validates and saves the order attribute
@@ -21,25 +20,17 @@ class PlaceOrder
     private OrderRepositoryInterfaceFactory $orderRepositoryInterfaceFactory;
 
     /**
-     * var VeratadApi
-     */
-     private $veratadApi;
-
-    /**
      * PlaceOrder constructor.
      *
      * @param OrderInterfaceFactory $orderFactory
      * @param OrderRepositoryInterfaceFactory $orderRepositoryInterfaceFactory
-     * @param VeratadApi $veratadApi
      */
     public function __construct(
         OrderInterfaceFactory $orderFactory,
-        OrderRepositoryInterfaceFactory $orderRepositoryInterfaceFactory,
-        VeratadApi $veratadApi
+        OrderRepositoryInterfaceFactory $orderRepositoryInterfaceFactory
     ) {
         $this->orderFactory = $orderFactory;
         $this->orderRepositoryInterfaceFactory = $orderRepositoryInterfaceFactory;
-        $this->veratadApi = $veratadApi;
     }
 
     /**
@@ -99,7 +90,6 @@ class PlaceOrder
         if ($order) {
             $order->setData('alfa_consent', true);
             $order->setData('veratad_dob', $args['input']['veratad_dob']);
-            $veratadAgeVerification = $this->veratadApi->apiPost($order,$args['input']['veratad_dob']);
             $this->orderRepositoryInterfaceFactory->create()->save($order);
         }
         return $return;
