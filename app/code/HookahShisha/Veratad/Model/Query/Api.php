@@ -37,13 +37,13 @@ class Api
      * Make POST requests
      *
      * @param OrderInterface $order
-     * @param string|mixed $dob
+     * @param string $dob
      * @return array
      */
     public function apiPost($order, $dob)
     {
         $response = [];
-        $enabled = $this->getKey('veratad_settings/general/enabled');
+        $enabled = $this->apiHelper->getKey('veratad_settings/general/enabled');
         if ($enabled && $order) {
             $billing = $order->getBillingAddress()->getData();
             $shipping = $order->getShippingAddress()->getData();
@@ -72,13 +72,41 @@ class Api
     }
 
     /**
-     * Check loggedin User or not
+     * Check LoggedIn User or not
      *
      * @return bool
      */
     protected function isLoggedIn(): bool
     {
         return (bool)$this->customerSession->isLoggedIn();
+    }
+
+    /**
+     * Auto Detect Address Verification
+     *
+     * @param array $billing
+     * @param array $shipping
+     * @param string $dob
+     * @return bool
+     */
+    protected function autoDetectAddressVerify($billing, $shipping, $dob)
+    {
+        $result = false;
+        //name check then decide what to post
+        $nameMatch = $this->apiHelper->nameDetection($billing, $shipping);
+        if ($nameMatch) {
+            $billing_verified = $this->apiHelper->veratadPost($billing, $dob);
+            if ($billing_verified) {
+                $result = true;
+            }
+        } else {
+            $billing_verified = $this->apiHelper->veratadPost($billing, $dob);
+            $shipping_verified = $this->apiHelper->veratadPost($shipping, $dob);
+            if ($billing_verified && $shipping_verified) {
+                $result = true;
+            }
+        }
+        return $result;
     }
 
     /**
@@ -113,22 +141,8 @@ class Api
             if ($billing_verified && $shipping_verified) {
                 $result = true;
             }
-
         } elseif ($verification_type === "auto_detect") {
-            //name check then decide what to post
-            $nameMatch = $this->apiHelper->nameDetection($billing, $shipping);
-            if ($nameMatch) {
-                $billing_verified = $this->apiHelper->veratadPost($billing, $dob);
-                if ($billing_verified) {
-                    $result = true;
-                }
-            } else {
-                $billing_verified = $this->apiHelper->veratadPost($billing, $dob);
-                $shipping_verified = $this->apiHelper->veratadPost($shipping, $dob);
-                if ($billing_verified && $shipping_verified) {
-                    $result = true;
-                }
-            }
+            $result = $this->autoDetectAddressVerify($billing, $shipping, $dob);
         }
         return $result;
     }

@@ -6,7 +6,9 @@ declare(strict_types=1);
 
 namespace HookahShisha\Veratad\Model\Config\Source;
 
-class VerificationType implements \Magento\Framework\Option\ArrayInterface
+use Magento\Framework\Option\ArrayInterface;
+
+class VerificationType implements ArrayInterface
 {
     /**
      * @inheritdoc

@@ -5,6 +5,7 @@
 
 namespace HookahShisha\Veratad\Helper;
 
+use Exception;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\HTTP\ZendClient;
@@ -12,7 +13,6 @@ use Magento\Framework\HTTP\ZendClientFactory;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
-use Magento\Framework\Exception\LocalizedException;
 
 /**
  * Handles Verification via Veratad API
@@ -213,7 +213,7 @@ class Api extends AbstractHelper
                 $rawResponse = $apiResponse->getRawBody();
                 $response = $this->json->unserialize($rawResponse);
                 $this->_logger->info('veratd response:' . $rawResponse);
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->_logger->critical($e->getMessage());
                 return false;
             }
