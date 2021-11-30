@@ -20,8 +20,6 @@ class PlaceOrder
     private OrderRepositoryInterfaceFactory $orderRepositoryInterfaceFactory;
 
     /**
-     * PlaceOrder constructor.
-     *
      * @param OrderInterfaceFactory $orderFactory
      * @param OrderRepositoryInterfaceFactory $orderRepositoryInterfaceFactory
      */
