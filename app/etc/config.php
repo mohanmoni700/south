@@ -455,6 +455,8 @@ return [
         'HookahShisha_Migration' => 1,
         'HookahShisha_Order' => 1,
         'Veratad_AgeVerification' => 0,
+        'HookahShisha_Quote' => 1,
+        'HookahShisha_QuoteGraphQl' => 1,
         'HookahShisha_RelatedProductGraphQl' => 1,
         'HookahShisha_SalesGraphQl' => 1,
         'Klarna_Core' => 1,
