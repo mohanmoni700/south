@@ -457,7 +457,6 @@ return [
         'Veratad_AgeVerification' => 0,
         'HookahShisha_RelatedProductGraphQl' => 1,
         'HookahShisha_SalesGraphQl' => 1,
-        'HookahShisha_Veratad' => 1,
         'Klarna_Core' => 1,
         'Klarna_Ordermanagement' => 1,
         'Klarna_Kp' => 1,
