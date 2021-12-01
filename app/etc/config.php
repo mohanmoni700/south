@@ -548,6 +548,7 @@ return [
         'Corra_PageBuilderCustomisation' => 1,
         'Signifyd_Connect' => 1,
         'Corra_Spreedly' => 1,
+        'Corra_Veratad' => 1,
         'Yotpo_Loyalty' => 1,
         'Dotdigitalgroup_Email' => 1,
         'Dotdigitalgroup_Chat' => 1,
