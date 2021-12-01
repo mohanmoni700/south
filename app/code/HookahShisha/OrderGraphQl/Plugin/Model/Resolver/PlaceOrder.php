@@ -24,7 +24,7 @@ class PlaceOrder
      * @param OrderRepositoryInterfaceFactory $orderRepositoryInterfaceFactory
      */
     public function __construct(
-        OrderInterfaceFactory           $orderFactory,
+        OrderInterfaceFactory $orderFactory,
         OrderRepositoryInterfaceFactory $orderRepositoryInterfaceFactory
     ) {
         $this->orderFactory = $orderFactory;
