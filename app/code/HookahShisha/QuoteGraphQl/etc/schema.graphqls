@@ -1,0 +1,14 @@
+##
+# @category    HookahShisha
+# @package     HookahShisha_QuotegGraphQl
+# @author      Janis Verins <info@corra.com>
+##
+
+input CartItemInput {
+    alfa_bundle: String @doc(description: "Stringified json object containing shisha and charcoal product sku's")
+}
+
+type ConfigurableCartItem {
+    alfa_bundle_flavour: String @doc(description: "Selected shisha product falvour")
+    alfa_bundle_charcoal: String @doc(description: "Selected chracoal product description")
+}
