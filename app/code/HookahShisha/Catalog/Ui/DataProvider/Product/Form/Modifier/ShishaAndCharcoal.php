@@ -15,9 +15,9 @@ use Magento\Ui\Component\Form\Fieldset;
  */
 class ShishaAndCharcoal extends Related
 {
-    const DATA_SCOPE_SHISHA = 'shisha';
+    public const DATA_SCOPE_SHISHA = 'shisha';
 
-    const DATA_SCOPE_CHARCOAL = 'charcoal';
+    public const DATA_SCOPE_CHARCOAL = 'charcoal';
 
     /**
      * @var string
