@@ -117,6 +117,7 @@ class Quote extends SourceQuote
                 $item->setQuote($this);
                 $item->setOptions($candidate->getCustomOptions());
                 $item->setProduct($candidate);
+                $item->setInAlfaBundle($request->getInAlfaBundle());
 
                 // Set alfa bundle only for configurable type items
                 if ($item->getProductType() == 'configurable' && $request->getAlfaBundle()) {
