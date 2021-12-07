@@ -6,6 +6,7 @@
 
 input CartItemInput {
     alfa_bundle: String @doc(description: "Stringified json object containing shisha and charcoal product sku's")
+    in_alfa_bundle: Boolean @doc(description: "To quickly determine if the product belongs to alfa bundle")
 }
 
 type ConfigurableCartItem {

@@ -37,7 +37,8 @@ class CartItemFactory extends SourceCartItemFactory
             $data['parent_sku'] ?? null,
             isset($data['selected_options']) ? $this->createSelectedOptions($data['selected_options']) : [],
             isset($data['entered_options']) ? $this->createEnteredOptions($data['entered_options']) : [],
-            $data['alfa_bundle'] ?? null
+            $data['alfa_bundle'] ?? null,
+            $data['in_alfa_bundle'] ?? null
         );
     }
 
