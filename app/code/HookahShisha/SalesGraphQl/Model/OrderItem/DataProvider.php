@@ -134,14 +134,16 @@ class DataProvider extends SourceDataProvider
         $orderList = $this->fetchOrders($orderItems);
 
         foreach ($orderItems as $orderItem) {
-            $product = $productList[$orderItem->getProductId()];
             /** @var ProductInterface $associatedProduct */
-            $associatedProduct = $product ?? null;
-            /** @var OrderInterface $associatedOrder */
+            $associatedProduct = $productList[$orderItem->getProductId()] ?? null;
+            $associatedProductType = $associatedProduct ? $associatedProduct->getTypeId() : '';
+                /** @var OrderInterface $associatedOrder */
             $associatedOrder = $orderList[$orderItem->getOrderId()];
             $itemOptions = $this->optionsProcessor->getItemOptions($orderItem);
-            $shishaTitle = $product->getTypeId() == 'configurable' ? $product->getShishaTitle() : '';
-            $charcoalTitle = $product->getTypeId() == 'configurable' ? $product->getCharcoalTitle() : '';
+            $shishaTitle = $associatedProduct && $associatedProductType == 'configurable'
+                ? $associatedProduct->getShishaTitle() : '';
+            $charcoalTitle = $associatedProduct && $associatedProductType == 'configurable'
+                ? $associatedProduct->getCharcoalTitle() : '';
             $alfaBundle = $orderItem->getAlfaBundle();
 
             $shishaSku = '';
