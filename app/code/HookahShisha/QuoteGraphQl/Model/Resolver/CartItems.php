@@ -121,24 +121,8 @@ class CartItems extends SourceCartItems
      */
     private function filterOutAlfaBundleProducts(array $cartItems): array
     {
-        $bundleItems = [];
-        foreach ($cartItems as $cartItem) {
-            $alfaBundle = $cartItem->getAlfaBundle();
-
-            if ($alfaBundle) {
-                $alfaBundle = json_decode($alfaBundle, true);
-
-                array_push($bundleItems, $alfaBundle['shisha_sku'], $alfaBundle['charcoal_sku']);
-            }
-        }
-
-        // Remove empty array elements
-        $bundleItems = array_filter($bundleItems);
-
-        return array_filter($cartItems, function ($item) use ($bundleItems) {
-            $itemSku = $item->getSku();
-
-            if (in_array($itemSku, $bundleItems)) {
+        return array_filter($cartItems, function ($item) {
+            if ($item->getInAlfaBundle() == '1') {
                 return false;
             }
 
