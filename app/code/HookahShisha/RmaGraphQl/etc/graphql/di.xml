@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  HookahShisha
+ * @package   HookahShisha_RmaGraphQl
+ * @author    Janis Verins <info@corra.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\RmaGraphQl\Model\Resolver\CustomerOrder\Item\IsEligible"
+                type="HookahShisha\RmaGraphQl\Model\Resolver\CustomerOrder\Item\IsEligible"/>
+</config>
