@@ -140,7 +140,11 @@ class CartItems extends SourceCartItems
      */
     private function getBundleProductAttribute(string $sku, bool $isCharcoal = false): string
     {
-        $product = $this->productRepository->get($sku);
+        try {
+            $product = $this->productRepository->get($sku);
+        } catch (NoSuchEntityException $e) {
+            $product = false;
+        }
 
         if (!$product) {
             return '';
