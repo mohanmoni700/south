@@ -142,7 +142,7 @@ class UpdateCartItems extends SourceUpdateCartItems
                         'cart_item_id' => $bundleItemToUpdate->getId()
                     ];
 
-                    array_push($cartItems, $itemToPush);
+                    $cartItems[] = $itemToPush;
                 }
             }
         }
