@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6c9b48b2cb426284bd51b8201aef6074",
+    "content-hash": "ad8229df915b89b777555b83a243684d",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -24673,6 +24673,55 @@
                 }
             ],
             "time": "2021-11-28T23:30:39+00:00"
+        },
+        {
+            "name": "plugincompany/cmsrevisions",
+            "version": "100.2.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/plugincompany/cmsrevisions/plugincompany-cmsrevisions-100.2.0.0.zip",
+                "shasum": "d56f6a86690cd82e3ff0abcf8493c58edf234c72"
+            },
+            "require": {
+                "php": "~5.5.0|~5.6.0|~7.0.2|~7.1|~7.2|~7.3",
+                "plugincompany/licensemanager": "^100.1.1"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "PluginCompany\\CmsRevisions\\": ""
+                }
+            },
+            "license": [
+                "custom"
+            ]
+        },
+        {
+            "name": "plugincompany/licensemanager",
+            "version": "100.1.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/plugincompany/licensemanager/plugincompany-licensemanager-100.1.1.0.zip",
+                "shasum": "e0502a6cb4e908be55dcece97d2a4ebc1524eef0"
+            },
+            "require": {
+                "php": "~5.5.22|~5.6|~7.0|~7.1|~7.2"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "PluginCompany\\LicenseManager\\": ""
+                }
+            },
+            "license": [
+                "custom"
+            ]
         },
         {
             "name": "psr/container",

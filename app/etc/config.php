@@ -592,6 +592,8 @@ return [
         'PCAPredict_Tag' => 1,
         'PayPal_Braintree' => 1,
         'PayPal_BraintreeGraphQl' => 1,
+        'PluginCompany_LicenseManager' => 1,
+        'PluginCompany_CmsRevisions' => 1,
         'Corra_SignifydGraphQl' => 1,
         'Temando_ShippingRemover' => 1,
         'HookahShisha_OrderGraphQl' => 1,
