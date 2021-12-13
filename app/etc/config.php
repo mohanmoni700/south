@@ -183,6 +183,34 @@ return [
                     ],
                 ],
             ],
+            'base' => [
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Corra/alfakher',
+                    ],
+                ],
+            ],
+            'hookah' => [
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Corra/alfakher',
+                    ],
+                ],
+            ],
+            'hookah_company' => [
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Corra/alfakher',
+                    ],
+                ],
+            ],
+            'hookah_wholesalers' => [
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Corra/alfakher',
+                    ],
+                ],
+            ],
         ],
     ],
     'modules' => [
