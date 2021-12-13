@@ -6,14 +6,11 @@
 
 /**
  * Enable, adjust and copy this code for each store you run
- *
  * Store #0, default one
- *
  * if (isHttpHost("example.com")) {
  *    $_SERVER["MAGE_RUN_CODE"] = "default";
  *    $_SERVER["MAGE_RUN_TYPE"] = "store";
  * }
- *
  * @param string $host
  * @return bool
  */
@@ -23,4 +20,24 @@ function isHttpHost(string $host)
         return false;
     }
     return $_SERVER['HTTP_HOST'] === $host;
+}
+
+$_ENV["ACTIVE_STORE"] = "default";
+
+if (isHttpHost("hookah.integration-5ojmyuq-hhdjar4f2w7cu.us-5.magentosite.cloud") || isHttpHost("mcstaging.hookah.com") || isHttpHost("mcprod.hookah.com") || isHttpHost("www.hookah.com") || isHttpHost("hookah.com")) {
+    $_SERVER["MAGE_RUN_CODE"] = "hookah";
+    $_SERVER["MAGE_RUN_TYPE"] = "website";
+    $_ENV["ACTIVE_STORE"] = "hookah_store";
+}
+
+if (isHttpHost("hookah-company.integration-5ojmyuq-hhdjar4f2w7cu.us-5.magentosite.cloud") || isHttpHost("mcstaging.hookah-company.com") || isHttpHost("mcprod.hookah-company.com") || isHttpHost("www.hookah-company.com") || isHttpHost("hookah-company.com")) {
+    $_SERVER["MAGE_RUN_CODE"] = "hookah_company";
+    $_SERVER["MAGE_RUN_TYPE"] = "website";
+    $_ENV["ACTIVE_STORE"] = "hookah_company_store";
+}
+
+if (isHttpHost("hookahwholesalers.integration-5ojmyuq-hhdjar4f2w7cu.us-5.magentosite.cloud") || isHttpHost("mcstaging.hookahwholesalers.com") || isHttpHost("mcprod.hookahwholesalers.com") || isHttpHost("www.hookahwholesalers.com") || isHttpHost("hookahwholesalers.com")) {
+    $_SERVER["MAGE_RUN_CODE"] = "hookah_wholesalers";
+    $_SERVER["MAGE_RUN_TYPE"] = "website";
+    $_ENV["ACTIVE_STORE"] = "hookah_wholesalers_store";
 }

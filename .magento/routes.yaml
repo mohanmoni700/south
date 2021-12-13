@@ -3,9 +3,21 @@
 # Each route describes how an incoming URL is going to be processed.
 
 "http://{default}/":
-    type: upstream
-    upstream: "mymagento:http"
+  type: upstream
+  upstream: "mymagento:http"
 
 "http://{all}/":
-    type: upstream
-    upstream: "mymagento:http"
+  type: upstream
+  upstream: "mymagento:http"
+
+"http://hookah.{default}/":
+  type: upstream
+  upstream: "mymagento:http"
+
+"http://hookah-company.{default}/":
+  type: upstream
+  upstream: "mymagento:http"
+
+"http://hookahwholesalers.{default}/":
+  type: upstream
+  upstream: "mymagento:http"
