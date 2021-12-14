@@ -20,14 +20,13 @@ use Magento\Quote\Model\Quote;
 
 class AddProductsToCart extends SourceAddProductsToCart
 {
-    /**#@+
+    /**
      * Error message codes
      */
     private const ERROR_PRODUCT_NOT_FOUND = 'PRODUCT_NOT_FOUND';
     private const ERROR_INSUFFICIENT_STOCK = 'INSUFFICIENT_STOCK';
     private const ERROR_NOT_SALABLE = 'NOT_SALABLE';
     private const ERROR_UNDEFINED = 'UNDEFINED';
-    /**#@-*/
 
     /**
      * List of error messages and codes.
