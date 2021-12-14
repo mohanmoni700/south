@@ -55,7 +55,7 @@ return [
             1 => [
                 'group_id' => '1',
                 'website_id' => '1',
-                'name' => 'Main Website Store',
+                'name' => 'Hookah-Shisha.com (B2C) Store',
                 'root_category_id' => '2',
                 'default_store_id' => '1',
                 'code' => 'main_website_store',
@@ -64,7 +64,7 @@ return [
                 'group_id' => '2',
                 'website_id' => '2',
                 'name' => 'Hookah.com (B2C) Store',
-                'root_category_id' => '2',
+                'root_category_id' => '635',
                 'default_store_id' => '2',
                 'code' => 'hookah_store',
             ],
@@ -80,7 +80,7 @@ return [
                 'group_id' => '4',
                 'website_id' => '4',
                 'name' => 'Hookah Wholesalers (B2B) Store',
-                'root_category_id' => '2',
+                'root_category_id' => '636',
                 'default_store_id' => '4',
                 'code' => 'hookah_wholesalers_store',
             ],
@@ -140,11 +140,44 @@ return [
      */
     'system' => [
         'default' => [
-            'fraud_protection' => [
-                'signifyd' => [
-                    'config' => [
-                        'active' => null,
+            'general' => [
+                'locale' => [
+                    'code' => 'en_US',
+                ],
+            ],
+            'dev' => [
+                'front_end_development_workflow' => [
+                    'type' => 'server_side_compilation',
+                ],
+                'template' => [
+                    'allow_symlink' => null,
+                    'minify_html' => '0',
+                ],
+                'js' => [
+                    'merge_files' => '0',
+                    'enable_js_bundling' => null,
+                    'minify_files' => '0',
+                    'move_script_to_bottom' => '0',
+                    'translate_strategy' => 'dictionary',
+                    'session_storage_logging' => '0',
+                    'minify_exclude' => [
+                        'tiny_mce' => '/tiny_mce/',
+                        'cardinal_commerce' => '/v1/songbird',
                     ],
+                ],
+                'css' => [
+                    'merge_css_files' => null,
+                    'minify_files' => '0',
+                    'use_css_critical_path' => '0',
+                    'minify_exclude' => [
+                        'tiny_mce' => '/tiny_mce/',
+                    ],
+                ],
+                'static' => [
+                    'sign' => '1',
+                ],
+                'grid' => [
+                    'async_indexing' => '0',
                 ],
             ],
         ],
