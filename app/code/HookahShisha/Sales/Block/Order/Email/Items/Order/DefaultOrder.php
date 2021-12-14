@@ -78,7 +78,9 @@ class DefaultOrder extends SourceDefaultOrder
 
         // Visually add shisha and charcoal product prices to base item totals
         if ($alfaBundle) {
-            foreach ($alfaBundle as $key => $sku) {
+            $skus = array_values($alfaBundle);
+
+            foreach ($skus as $sku) {
                 if ($sku) {
                     $bundleItem = $this->helper->getBundleItemBySku($items, $sku);
 
