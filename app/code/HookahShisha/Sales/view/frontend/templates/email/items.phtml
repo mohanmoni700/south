@@ -11,16 +11,16 @@
 <?php $_order = $block->getOrder() ?>
 <?php if ($_order) : ?>
     <?php $_items = $_order->getAllItems(); ?>
-    <table class="email-items">
+    <table class="email-items" aria-label="Shipment email template items">
         <thead>
         <tr>
-            <th class="item-info">
+            <th id="item-info" class="item-info">
                 <?= $block->escapeHtml(__('Items')) ?>
             </th>
-            <th class="item-qty">
+            <th id="item-qty" class="item-qty">
                 <?= $block->escapeHtml(__('Qty')) ?>
             </th>
-            <th class="item-price">
+            <th id="item-price" class="item-price">
                 <?= $block->escapeHtml(__('Price')) ?>
             </th>
         </tr>
@@ -44,7 +44,10 @@
             ->getGiftMessage($_order->getGiftMessageId()); ?>
         <?php if ($_giftMessage) : ?>
             <br />
-            <table class="message-gift">
+            <table class="message-gift" aria-label="Gift Message for this Order">
+                <tr>
+                    <th id="message-gift-header"></th>
+                </tr>
                 <tr>
                     <td>
                         <h3><?= $block->escapeHtml(__('Gift Message for this Order')) ?></h3>
