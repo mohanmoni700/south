@@ -11,4 +11,9 @@
     <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
         <plugin name="alfa_bundle_to_order_item" type="HookahShisha\Sales\Model\Plugin\Quote\AlfaBundleToOrderItem"/>
     </type>
+
+    <preference for="Magento\Sales\Block\Order\Email\Items\DefaultItems"
+                type="HookahShisha\Sales\Block\Order\Email\Items\DefaultItems"/>
+    <preference for="Magento\Sales\Block\Order\Email\Items\Order\DefaultOrder"
+                type="HookahShisha\Sales\Block\Order\Email\Items\Order\DefaultOrder"/>
 </config>
