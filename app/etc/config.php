@@ -700,6 +700,7 @@ return [
         'Eyemagine_HubSpot' => 1,
         'Fastly_Cdn' => 1,
         'HookahShisha_Catalog' => 1,
+        'HookahShisha_CatalogImportExport' => 1,
         'HookahShisha_Migration' => 1,
         'HookahShisha_Order' => 1,
         'Veratad_AgeVerification' => 0,
