@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+         <referenceBlock name="header.panel" remove="true"/>
+         <referenceContainer name="header.panel.wrapper">
+              <block class="Magento\Cms\Block\Block" name="header_links">
+                <arguments>
+                  <argument name="block_id" xsi:type="string">header_links</argument>
+                </arguments>
+              </block>
+        </referenceContainer>
+
+        <referenceContainer name="header-wrapper">
+              <block class='Magento\Framework\View\Element\Template' name="reorder_link"  after="top.search" template="Magento_Theme::reorder_link.phtml"/>
+        </referenceContainer>
+
+        <referenceContainer name="header-wrapper">
+              <block class='Magento\Framework\View\Element\Template' name="register_link"  after="minicart" template="Magento_Theme::register.phtml"/>
+        </referenceContainer>
+
+       <!--  <move element="register-link" destination="header-wrapper"  after="minicart"/> -->
+       <move element="top.search" destination="header-wrapper" before="minicart"/>
+       <move element="register_link" destination="header-wrapper" after="minicart"/>
+       <move element="reorder_link" destination="header-wrapper" after="top.search"/>
+
+      <!--  <referenceBlock name="footer_links" remove="true"/>
+       <referenceContainer name="footer">
+              <block class="Magento\Cms\Block\Block" name="footer_b2b_links" before="copyright">
+                <arguments>
+                  <argument name="block_id" xsi:type="string">header_links</argument>
+                </arguments>
+              </block>
+        </referenceContainer>
+
+         <referenceBlock name="copyright" remove="true"/>
+
+        <referenceContainer name="footer">
+              <block class="Magento\Cms\Block\Block" name="copyright_links" after="footer_b2b_links">
+                <arguments>
+                  <argument name="block_id" xsi:type="string">footer-copyright-block</argument>
+                </arguments>
+              </block>
+        </referenceContainer> -->
+
+     <!--  <referenceBlock name="form.subscribe" remove="true" />   -->
+
+    </body>
+</page>

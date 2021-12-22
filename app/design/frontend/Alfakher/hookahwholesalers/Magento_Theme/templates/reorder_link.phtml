@@ -1,0 +1,15 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+ <?php 
+   $helper = $this->helper('HookahShisha\CheckCustomerLogin\Helper\Data');
+   $values = $helper->CustomerLogin();
+   if($values == true){?>
+     <a class= "header_account_link" href="<?php echo $this->getUrl("sales/order/history");?>"><?php echo __('Reorder')?></a><?php
+   }else{?>
+     <a class= "header_account_link" href="<?php echo $this->getUrl("customer/account/login");?>"><?php echo __('Reorder')?></a><?php
+   }
+
