@@ -10,7 +10,6 @@ use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\QuoteGraphQl\Model\Resolver\PlaceOrder as MagentoPlaceOrder;
 use Magento\Sales\Api\Data\OrderInterfaceFactory as OrderInterfaceFactory;
 use Magento\Sales\Api\OrderRepositoryInterfaceFactory as OrderRepositoryInterfaceFactory;
-use Corra\Veratad\Model\VeratadProcessOrder;
 
 /**
  * This plugin validates and saves the order attribute
@@ -19,24 +18,17 @@ class PlaceOrder
 {
     private OrderInterfaceFactory $orderFactory;
     private OrderRepositoryInterfaceFactory $orderRepositoryInterfaceFactory;
-    /**
-     * @var VeratadProcessOrder
-     */
-    private $veratadProcessOrder;
 
     /**
      * @param OrderInterfaceFactory $orderFactory
      * @param OrderRepositoryInterfaceFactory $orderRepositoryInterfaceFactory
-     * @param VeratadProcessOrder $veratadProcessOrder
      */
     public function __construct(
         OrderInterfaceFactory $orderFactory,
-        OrderRepositoryInterfaceFactory $orderRepositoryInterfaceFactory,
-        VeratadProcessOrder $veratadProcessOrder
+        OrderRepositoryInterfaceFactory $orderRepositoryInterfaceFactory
     ) {
         $this->orderFactory = $orderFactory;
         $this->orderRepositoryInterfaceFactory = $orderRepositoryInterfaceFactory;
-        $this->veratadProcessOrder = $veratadProcessOrder;
     }
 
     /**
@@ -61,11 +53,6 @@ class PlaceOrder
         if (empty($args['input']['alfa_consent']) || !$args['input']['alfa_consent']) {
             throw new GraphQlInputException(
                 __('Required parameter "alfa_consent" is missing / "alfa_consent" should be true to place the order ')
-            );
-        }
-        if (empty($args['input']['veratad_dob']) || !$args['input']['veratad_dob']) {
-            throw new GraphQlInputException(
-                __('Required parameter "veratad_dob" is missing')
             );
         }
     }
@@ -95,8 +82,6 @@ class PlaceOrder
         $order = $orderFactory->loadByIncrementId($return['order']['order_number'] ?? '');
         if ($order) {
             $order->setData('alfa_consent', true);
-            $order->setData('veratad_dob', $args['input']['veratad_dob']);
-            $ageVerifyResponse = $this->veratadProcessOrder->handleVeratadPlaceOrder($order,$args['input']['veratad_dob'],$args['input']['ssn']);
             $this->orderRepositoryInterfaceFactory->create()->save($order);
         }
         return $return;
