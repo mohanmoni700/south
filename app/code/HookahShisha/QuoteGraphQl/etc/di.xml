@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  HookahShisha
+ * @package   HookahShisha_QuoteGraphQl
+ * @author    Janis Verins <info@corra.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\QuoteGraphQl\Model\Resolver\AddProductsToCart"
+                type="HookahShisha\QuoteGraphQl\Model\Resolver\AddProductsToCart"/>
+    <preference for="Magento\QuoteGraphQl\Model\Resolver\UpdateCartItems"
+                type="HookahShisha\QuoteGraphQl\Model\Resolver\UpdateCartItems"/>
+    <preference for="Magento\QuoteGraphQl\Model\Resolver\CartItems"
+                type="HookahShisha\QuoteGraphQl\Model\Resolver\CartItems"/>
+    <preference for="Magento\QuoteGraphQl\Model\Resolver\CartItemPrices"
+                type="HookahShisha\QuoteGraphQl\Model\Resolver\CartItemPrices"/>
+    <preference for="Magento\QuoteGraphQl\Model\Resolver\RemoveItemFromCart"
+                type="HookahShisha\QuoteGraphQl\Model\Resolver\RemoveItemFromCart"/>
+</config>

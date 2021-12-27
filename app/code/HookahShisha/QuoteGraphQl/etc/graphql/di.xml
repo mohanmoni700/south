@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  HookahShisha
+ * @package   HookahShisha_QuoteGraphQl
+ * @author    Janis Verins <info@corra.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Quote\Model\Cart\BuyRequest\BuyRequestBuilder">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="alfa_bundle" xsi:type="object">HookahShisha\QuoteGraphQl\Model\Cart\BuyRequest\AlfaBundleDataProvider</item>
+                <item name="in_alfa_bundle" xsi:type="object">HookahShisha\QuoteGraphQl\Model\Cart\BuyRequest\IsInAlfaBundleDataProvider</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

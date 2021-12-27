@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  HookahShisha
+ * @package   HookahShisha_Quote
+ * @author    Janis Verins <info@corra.com>
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="quote_item" resource="checkout" engine="innodb" comment="Sales Flat Quote Item">
+        <column xsi:type="text" name="alfa_bundle" nullable="true" comment="Alfa Bundle Product skus"/>
+        <column xsi:type="boolean" name="in_alfa_bundle" nullable="true" comment="Is part of Alfa Bundle?"/>
+    </table>
+</schema>
