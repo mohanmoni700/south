@@ -1,0 +1,16 @@
+diff --git a/vendor/auctane/api/Model/Carrier/Shipping.php    b/vendor/auctane/api/Model/Carrier/Shipping.php
+--- a/vendor/auctane/api/Model/Carrier/Shipping.php	2021-12-14 13:53:36.000000000 +0530
++++ b/vendor/auctane/api/Model/Carrier/Shipping.php	2021-12-14 13:57:24.000000000 +0530
+@@ -165,6 +165,12 @@
+             // Otherwise, it's a standard rates request, use the rate endpoint.
+             $currentMethod = $this->cart->getQuote()->getShippingAddress()->getShippingMethod();
+
++            if(empty($currentMethod)){
++                if(isset($request->getAllItems()[0])){
++                    $currentMethod = $request->getAllItems()[0]->getQuote()->getShippingAddress()->getShippingMethod();
++                }
++            }
++
+             if($currentMethod && $this->_startsWith($currentMethod, $this->_code)) $isValidation = true;
+             else $isValidation = false;
+
