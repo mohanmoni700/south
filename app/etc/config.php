@@ -710,6 +710,7 @@ return [
         'HookahShisha_RmaGraphQl' => 1,
         'HookahShisha_Sales' => 1,
         'HookahShisha_SalesGraphQl' => 1,
+        'HookahShisha_SuperPack' => 1,
         'Klarna_Core' => 1,
         'Klarna_Ordermanagement' => 1,
         'Klarna_Kp' => 1,
