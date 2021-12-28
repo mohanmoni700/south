@@ -32,7 +32,7 @@ class PlaceOrder
     }
 
     /**
-     *  Validate 'alfa_consent' & 'veratad_dob' before placing order.
+     *  Validate 'alfa_consent' before placing order.
      *
      * @param MagentoPlaceOrder $subject
      * @param Field $field
@@ -58,7 +58,7 @@ class PlaceOrder
     }
 
     /**
-     * Save 'alfa_consent' & 'veratad_dob' value when order is placed.
+     * Save 'alfa_consent' value when order is placed.
      *
      * @param MagentoPlaceOrder $subject
      * @param array $return
