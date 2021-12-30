@@ -14,9 +14,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function CustomerLogin()
     {
         if ($this->_customerSession->isLoggedIn()) {
-            $customer = $this->_customerSession;
-            return $customer;
-
+            return $this->_customerSession;
         }
     }
 }
