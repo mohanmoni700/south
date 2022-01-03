@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace HookahShisha\InvoiceCapture\Model;
 
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
+use Magento\Framework\Api\SortOrder;
+use Magento\Sales\Api\Data\OrderInterface;
 
 /**
  * Order Provider helper for Invoice Capture
  */
 class OrderProvider
 {
-    protected const SIGNIFYD_GUARANTEE = 'APPROVED';
+    protected const ORDER_STATUS_SHIPPED_CODE = 'shipped';
 
     /**
      * @var CollectionFactory
@@ -46,27 +48,14 @@ class OrderProvider
         //Take config values
         $pageSize = $this->config->getBatchSize();
         $collection = $this->collectionFactory->create()
-            ->addFieldToSelect(['entity_id', 'status']);
-        if ($pageSize) {
-            $collection->setPageSize($pageSize);
-        }
-        $collection
-            ->getSelect()
-            ->joinLeft(
-                ['scc'=>'signifyd_connect_case'],
-                'scc.order_increment=main_table.increment_id',
-                'order_increment'
+            ->addFieldToFilter(
+                ['status'],
+                [
+                    ['in' => [self::ORDER_STATUS_SHIPPED_CODE]]
+                ]
             )
-            ->join(
-                ['sop'=>'sales_order_payment'],
-                'sop.parent_id=main_table.entity_id',
-                'parent_id'
-            )
-            ->where('scc.guarantee=? OR scc.order_increment IS NULL', self::SIGNIFYD_GUARANTEE)
-            ->where(
-                '(sop.method=\'free\' AND main_table.status=\'pending\') OR' .
-                '(main_table.status IN (\'processing\'))'
-            );
+            ->addOrder(OrderInterface::CREATED_AT, SortOrder::SORT_DESC)
+            ->setPageSize($pageSize);
         return $collection;
     }
 }

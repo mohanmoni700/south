@@ -56,8 +56,8 @@ class InvoiceCaptureBulkCommand extends Command
      */
     protected function configure()
     {
-        $this->setName('hookahshisha:invoice-capture:automatic');
-        $this->setDescription('Create the Invoice and Capture the Payment Automatically after Shipped Status');
+        $this->setName('hookahshisha:invoice-capture:automatic')
+            ->setDescription('Create the Invoice and Capture the Payment Automatically after Shipped Status');
         parent::configure();
     }
 
