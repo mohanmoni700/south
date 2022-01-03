@@ -11,10 +11,10 @@ use \Magento\Store\Model\ScopeInterface;
  */
 class Config
 {
-    const ENABLE_INTEGRATION = 'invoice_capture/settings/enabled';
-    const CRON_ENABLED = 'invoice_capture/settings/cron_enabled';
-    const BATCH_SIZE = 'invoice_capture/settings/batch_size';
-    const ORDER_START_DATE = 'invoice_capture/settings/order_start';
+    protected const ENABLE_INTEGRATION = 'invoice_capture/settings/enabled';
+    protected const CRON_ENABLED = 'invoice_capture/settings/cron_enabled';
+    protected const BATCH_SIZE = 'invoice_capture/settings/batch_size';
+    protected const ORDER_START_DATE = 'invoice_capture/settings/order_start';
     /**
      * @var ScopeConfigInterface
      */

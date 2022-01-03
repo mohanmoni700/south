@@ -3,6 +3,8 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
     <module name="HookahShisha_InvoiceCapture">
         <sequence>
+            <module name="Magento_Backend"/>
+            <module name="Signifyd_Connect"/>
             <module name="Magento_Sales"/>
         </sequence>
     </module>
