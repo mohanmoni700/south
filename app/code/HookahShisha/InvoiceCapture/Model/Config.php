@@ -14,7 +14,7 @@ class Config
     protected const ENABLE_INTEGRATION = 'invoice_capture/settings/enabled';
     protected const CRON_ENABLED = 'invoice_capture/settings/cron_enabled';
     protected const BATCH_SIZE = 'invoice_capture/settings/batch_size';
-    protected const ORDER_START_DATE = 'invoice_capture/settings/order_start';
+
     /**
      * @var ScopeConfigInterface
      */
@@ -63,19 +63,6 @@ class Config
     {
         return $this->scopeConfig->getValue(
             self::BATCH_SIZE,
-            ScopeInterface::SCOPE_STORE
-        );
-    }
-
-    /**
-     * Return Order Start Date
-     *
-     * @return string
-     */
-    public function getOrderStartDate()
-    {
-        return $this->scopeConfig->getValue(
-            self::ORDER_START_DATE,
             ScopeInterface::SCOPE_STORE
         );
     }

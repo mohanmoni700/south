@@ -13,7 +13,7 @@ use Magento\Sales\Api\Data\OrderInterface;
  */
 class OrderProvider
 {
-    protected const ORDER_STATUS_SHIPPED_CODE = 'shipped';
+    public const ORDER_STATUS_SHIPPED_CODE = 'shipped';
 
     /**
      * @var CollectionFactory
