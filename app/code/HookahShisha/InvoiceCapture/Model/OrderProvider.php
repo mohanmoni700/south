@@ -47,7 +47,7 @@ class OrderProvider
     {
         //Take config values
         $pageSize = $this->config->getBatchSize();
-        $collection = $this->collectionFactory->create()
+        return $this->collectionFactory->create()
             ->addFieldToFilter(
                 ['status'],
                 [
@@ -56,6 +56,5 @@ class OrderProvider
             )
             ->addOrder(OrderInterface::CREATED_AT, SortOrder::SORT_DESC)
             ->setPageSize($pageSize);
-        return $collection;
     }
 }

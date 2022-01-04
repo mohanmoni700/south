@@ -9,7 +9,6 @@ use Magento\Framework\DB\TransactionFactory;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Sales\Model\Order\Invoice;
 use Magento\Sales\Model\Service\InvoiceService;
-use Psr\Log\LoggerInterface;
 use Magento\Sales\Model\Order;
 
 /**
@@ -17,16 +16,10 @@ use Magento\Sales\Model\Order;
  */
 class InvoiceCaptureProcessor
 {
-
     /**
      * @var Config
      */
     private $config;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
 
     /**
      * @var OrderProvider
@@ -43,32 +36,39 @@ class InvoiceCaptureProcessor
     private $invoiceService;
 
     /**
+     * @var InvoiceCaptureLogger
+     */
+    private $invoiceCaptureLogger;
+
+    /**
      * @var \Magento\Framework\DB\Transaction
      */
     private $transactionFactory;
 
     /**
+     *  InvoiceCaptureProcessor constructor.
+     *
      * @param Config $config
      * @param OrderProvider $orderProvider
-     * @param LoggerInterface $logger
      * @param OrderRepositoryInterface $orderRepository
      * @param InvoiceService $invoiceService
      * @param TransactionFactory $transactionFactory
+     * @param InvoiceCaptureLogger $invoiceCaptureLogger
      */
     public function __construct(
         Config $config,
         OrderProvider $orderProvider,
-        LoggerInterface $logger,
         OrderRepositoryInterface $orderRepository,
         InvoiceService $invoiceService,
-        TransactionFactory $transactionFactory
+        TransactionFactory $transactionFactory,
+        InvoiceCaptureLogger $invoiceCaptureLogger
     ) {
         $this->config = $config;
         $this->orderProvider = $orderProvider;
-        $this->logger = $logger;
         $this->orderRepository = $orderRepository;
         $this->invoiceService = $invoiceService;
         $this->transactionFactory = $transactionFactory;
+        $this->invoiceCaptureLogger = $invoiceCaptureLogger;
     }
 
     /**
@@ -84,7 +84,10 @@ class InvoiceCaptureProcessor
                 //Invoice the order logic
                 $this->processOrder($order);
             } catch (Exception $exception) {
-                $this->logger->error($exception->getMessage());
+                $message = "Error occured on Invoice Generate,  Please check log for more details";
+                $trace = $exception->getMessage();
+                $trace .= "\n". $exception->getTraceAsString();
+                $this->invoiceCaptureLogger->logExceptionMessage($message, $trace);
             }
         }
     }
@@ -133,7 +136,10 @@ class InvoiceCaptureProcessor
             $invoice->setRequestedCaptureCase(Invoice::CAPTURE_ONLINE);
             $invoice->register();
         } catch (\Exception $e) {
-            $this->logger->error($e->getMessage());
+            $message = "Error occured on PrepareInvoice,  Please check log for more details";
+            $trace = $e->getMessage();
+            $trace .= "\n". $e->getTraceAsString();
+            $this->invoiceCaptureLogger->logExceptionMessage($message, $trace);
         }
         return $invoice;
     }
@@ -156,7 +162,10 @@ class InvoiceCaptureProcessor
                 ->addObject($order);
             $transactionSave->save();
         } catch (\Exception $e) {
-            $this->logger->error($e->getMessage());
+            $message = "Error occured on Save Transaction,  Please check log for more details";
+            $trace = $e->getMessage();
+            $trace .= "\n". $e->getTraceAsString();
+            $this->invoiceCaptureLogger->logExceptionMessage($message, $trace);
         }
         return $invoice;
     }
