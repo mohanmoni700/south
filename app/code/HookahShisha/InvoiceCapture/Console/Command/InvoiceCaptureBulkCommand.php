@@ -72,9 +72,12 @@ class InvoiceCaptureBulkCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         try {
-            $this->state->getAreaCode();
+            $this->state->setAreaCode(\Magento\Framework\App\Area::AREA_CRONTAB);
         } catch (LocalizedException $e) {
-            $this->state->setAreaCode(Area::AREA_ADMINHTML);
+            $output->writeln(
+                'Could not Create the Invoice. <error>' . $e->getMessage() . '</error>',
+                OutputInterface::OUTPUT_NORMAL
+            );
         }
 
         if ($this->config->isEnabled() !== true) {

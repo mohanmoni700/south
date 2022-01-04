@@ -16,6 +16,10 @@ use Magento\Sales\Model\Order;
  */
 class InvoiceCaptureProcessor
 {
+    public const ONLINE_PAYMENT_METHOD = [
+        "spreedly"
+    ];
+
     /**
      * @var Config
      */
@@ -44,6 +48,10 @@ class InvoiceCaptureProcessor
      * @var \Magento\Framework\DB\Transaction
      */
     private $transactionFactory;
+    /**
+     * @var currentPaymentMethod
+     */
+    public $currentPaymentMethod;
 
     /**
      *  InvoiceCaptureProcessor constructor.
@@ -73,8 +81,6 @@ class InvoiceCaptureProcessor
 
     /**
      * Invoice Capture Processor
-     *
-     * @param array $orderIds
      */
     public function execute()
     {
@@ -96,8 +102,6 @@ class InvoiceCaptureProcessor
      * Change order status
      *
      * @param Order $order
-     * @return $this
-     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function processOrder(Order $order)
     {
@@ -105,11 +109,14 @@ class InvoiceCaptureProcessor
             if (!$order->getShipmentsCollection()->count()) {
                 return ;
             }
+            $payment = $order->getPayment();
+            if (is_object($payment) && $payment->getMethod()) {
+                $this->currentPaymentMethod = $payment->getMethod();
+            }
             if ($order->canInvoice()) {
                 $this->processInvoiceStep($order);
             }
         }
-        return $this;
     }
 
     /**
@@ -120,22 +127,25 @@ class InvoiceCaptureProcessor
     public function processInvoiceStep($order)
     {
         $invoice = $this->prepareInvoice($order);
-        $invoice = $this->saveTransaction($invoice);
+        $this->saveTransaction($invoice);
     }
 
     /**
      * Prepare Invoice
      *
      * @param Order $order
-     * @return Invoice
+     * @return bool|Order\Invoice
      */
     public function prepareInvoice($order)
     {
         try {
             $invoice = $this->invoiceService->prepareInvoice($order);
-            $invoice->setRequestedCaptureCase(Invoice::CAPTURE_ONLINE);
+            if (in_array($this->currentPaymentMethod, self::ONLINE_PAYMENT_METHOD)) {
+                $invoice->setRequestedCaptureCase(Invoice::CAPTURE_ONLINE);
+            }
             $invoice->register();
         } catch (\Exception $e) {
+            $invoice = false;
             $message = "Error occured on PrepareInvoice,  Please check log for more details";
             $trace = $e->getMessage();
             $trace .= "\n". $e->getTraceAsString();
@@ -162,6 +172,7 @@ class InvoiceCaptureProcessor
                 ->addObject($order);
             $transactionSave->save();
         } catch (\Exception $e) {
+            $invoice = false;
             $message = "Error occured on Save Transaction,  Please check log for more details";
             $trace = $e->getMessage();
             $trace .= "\n". $e->getTraceAsString();
