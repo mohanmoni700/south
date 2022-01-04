@@ -110,6 +110,8 @@ class InvoiceCaptureProcessor
     }
 
     /**
+     * Process InvoiceStep
+     *
      * @param Order $order
      */
     public function processInvoiceStep($order)
@@ -119,6 +121,8 @@ class InvoiceCaptureProcessor
     }
 
     /**
+     * Prepare Invoice
+     *
      * @param Order $order
      * @return Invoice
      */
@@ -135,6 +139,8 @@ class InvoiceCaptureProcessor
     }
 
     /**
+     * Save transaction
+     *
      * @param Invoice $invoice
      * @return Invoice
      */

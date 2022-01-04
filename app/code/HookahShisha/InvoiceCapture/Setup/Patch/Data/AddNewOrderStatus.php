@@ -23,12 +23,12 @@ class AddNewOrderStatus implements DataPatchInterface, PatchVersionInterface
     /**
      * Custom Processing Order-Status code
      */
-    const ORDER_STATUS_SHIPPED_CODE = 'shipped';
+    private const ORDER_STATUS_SHIPPED_CODE = 'shipped';
 
     /**
      * Custom Processing Order-Status label
      */
-    const ORDER_STATUS_SHIPPED_LABEL = 'Shipped';
+    private const ORDER_STATUS_SHIPPED_LABEL = 'Shipped';
 
     /**
      * Status Factory Object
