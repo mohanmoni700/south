@@ -17,6 +17,7 @@ use Magento\Quote\Model\Cart\BuyRequest\BuyRequestBuilder;
 use Magento\Quote\Model\Cart\Data\AddProductsToCartOutput;
 use Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface;
 use Magento\Quote\Model\Quote;
+use Magento\Quote\Model\Cart\Data\Error;
 
 class AddProductsToCart extends SourceAddProductsToCart
 {
@@ -101,11 +102,8 @@ class AddProductsToCart extends SourceAddProductsToCart
         $cart = $this->cartRepository->get($cartId);
 
         foreach ($cartItems as $cartItemPosition => $cartItem) {
-            $this->addItemToCart($cart, $cartItem, $cartItemPosition);
+            $this->addItemToCart($cart, $cartItem, $cartItemPosition, $cartItems);
         }
-
-        // Save cart only when all items are added to cart
-        $this->cartRepository->save($cart);
 
         if ($cart->getData('has_error')) {
             $cartErrors = $cart->getErrors();
@@ -119,6 +117,9 @@ class AddProductsToCart extends SourceAddProductsToCart
         if (count($this->errors) !== 0) {
             /* Revert changes introduced by add to cart processes in case of an error */
             $cart->getItemsCollection()->clear();
+        } else {
+            // Save cart only when all items are added to cart and no errors occurred
+            $this->cartRepository->save($cart);
         }
 
         return $this->prepareErrorOutput($cart);
@@ -130,9 +131,14 @@ class AddProductsToCart extends SourceAddProductsToCart
      * @param CartInterface|Quote $cart
      * @param Data\CartItem $cartItem
      * @param int $cartItemPosition
+     * @param array $cartItems
      */
-    private function addItemToCart(CartInterface $cart, Data\CartItem $cartItem, int $cartItemPosition): void
-    {
+    private function addItemToCart(
+        CartInterface $cart,
+        Data\CartItem $cartItem,
+        int $cartItemPosition,
+        array $cartItems
+    ): void {
         $sku = $cartItem->getSku();
 
         if ($cartItem->getQuantity() <= 0) {
@@ -155,8 +161,16 @@ class AddProductsToCart extends SourceAddProductsToCart
         try {
             $result = $cart->addProduct($product, $this->requestBuilder->build($cartItem));
         } catch (\Throwable $e) {
+            $isInAlfaBundle = $cartItem->getInAlfaBundle();
+            $alfaBundleProductType = $isInAlfaBundle
+                ? $this->getAlfaBundleProductType($cartItem->getSku(), $cartItems)
+                : '';
+            // We use custom message for products in alfa bundle if requested qty is not available
+            $useCustomMessage = $e->getMessage() == 'The requested qty is not available';
+            $customMessage = __('The requested %1 qty is not available', $alfaBundleProductType);
+
             $this->addError(
-                __($e->getMessage())->render(),
+                __($useCustomMessage ? $customMessage : $e->getMessage())->render(),
                 $cartItemPosition
             );
             $cart->setHasError(false);
@@ -181,7 +195,7 @@ class AddProductsToCart extends SourceAddProductsToCart
      */
     private function addError(string $message, int $cartItemPosition = 0): void
     {
-        $this->errors[] = new Data\Error(
+        $this->errors[] = new Error(
             $message,
             $this->getErrorCode($message),
             $cartItemPosition
@@ -219,5 +233,33 @@ class AddProductsToCart extends SourceAddProductsToCart
         $cart->setHasError(false);
 
         return $output;
+    }
+
+    /**
+     * Returns alfa bundle product type (shisha || charcoal)
+     *
+     * @param string $sku
+     * @param array $items
+     * @return string
+     */
+    private function getAlfaBundleProductType(string $sku, array $items): string
+    {
+        $type = [
+            'shisha_sku' => 'shisha',
+            'charcoal_sku' => 'charcoal'
+        ];
+        $alfaBundle = [];
+
+        foreach ($items as $item) {
+            $alfaBundle = $item->getAlfaBundle();
+
+            if ($alfaBundle) {
+                $alfaBundle = json_decode($alfaBundle, true);
+
+                break;
+            }
+        }
+
+        return $type[array_search($sku, $alfaBundle)];
     }
 }
