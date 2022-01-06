@@ -705,6 +705,7 @@ return [
         'HookahShisha_Migration' => 1,
         'HookahShisha_Order' => 1,
         'HookahShisha_OrderGraphQl' => 1,
+        'HookahShisha_PWAmaintanenceCheck' => 1,
         'HookahShisha_Quote' => 1,
         'HookahShisha_QuoteGraphQl' => 1,
         'HookahShisha_RelatedProductGraphQl' => 1,
