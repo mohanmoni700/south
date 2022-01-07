@@ -687,6 +687,7 @@ return [
         'Corra_LogCloudSupport' => 1,
         'Corra_NewRelicReportingGraphql' => 1,
         'Corra_PageBuilderCustomisation' => 1,
+        'Corra_PwaMaintenanceCheck' => 1,
         'Signifyd_Connect' => 1,
         'Corra_Spreedly' => 1,
         'Corra_Veratad' => 1,
