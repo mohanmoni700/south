@@ -46,7 +46,6 @@ class DefaultOrder extends SourceDefaultOrder
         $items = $this->getOrder()->getAllItems();
         $alfaBundleOptions = $this->helper->addAlfaBundleOptions($item, $items);
         $result = [];
-
         if ($options = $this->getItem()->getProductOptions()) {
             if (isset($options['options'])) {
                 $result[] = $options['options'];
@@ -81,7 +80,7 @@ class DefaultOrder extends SourceDefaultOrder
             $skus = array_values($alfaBundle);
 
             foreach ($skus as $sku) {
-                if ($sku) {
+                if ($sku && !is_array($sku)) {
                     $bundleItem = $this->helper->getBundleItemBySku($items, $sku);
 
                     $itemRowTotal += $bundleItem

@@ -126,10 +126,12 @@ class RemoveItemFromCart extends SourceRemoveItemFromCart
 
         $alfaBundle = json_decode($alfaBundle, true);
         foreach ($alfaBundle as $item => $sku) {
-            $id = $sku ? $this->getCartItemIdBySku($cartItems, $sku) : '';
+            if (!is_array($sku)) {
+                $id = $sku ? $this->getCartItemIdBySku($cartItems, $sku) : '';
 
-            if ($id) {
-                $this->cartItemRepository->deleteById($cartId, $id);
+                if ($id) {
+                    $this->cartItemRepository->deleteById($cartId, $id);
+                }
             }
         }
     }

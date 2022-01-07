@@ -15,8 +15,10 @@ use Magento\Quote\Api\Data\CartInterface;
 use Magento\Quote\Model\Cart\AddProductsToCart as SourceAddProductsToCart;
 use Magento\Quote\Model\Cart\BuyRequest\BuyRequestBuilder;
 use Magento\Quote\Model\Cart\Data\AddProductsToCartOutput;
+use Magento\Quote\Model\Cart\Data\CartItem;
 use Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface;
 use Magento\Quote\Model\Quote;
+use Magento\Quote\Model\Quote\Item;
 
 class AddProductsToCart extends SourceAddProductsToCart
 {
@@ -62,6 +64,8 @@ class AddProductsToCart extends SourceAddProductsToCart
      */
     private MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId;
 
+    private bool $superPackError = false;
+
     /**
      * @param ProductRepositoryInterface $productRepository
      * @param CartRepositoryInterface $cartRepository
@@ -99,13 +103,17 @@ class AddProductsToCart extends SourceAddProductsToCart
     {
         $cartId = $this->maskedQuoteIdToQuoteId->execute($maskedCartId);
         $cart = $this->cartRepository->get($cartId);
-
-        foreach ($cartItems as $cartItemPosition => $cartItem) {
-            $this->addItemToCart($cart, $cartItem, $cartItemPosition);
+        $count = 0;
+        foreach ($cartItems as $cartItem) {
+            $this->addItemToCart($cart, $cartItem, $count);
+            $count ++;
         }
 
         // Save cart only when all items are added to cart
-        $this->cartRepository->save($cart);
+        // Save if there are no super pack errors.
+        if (!$this->superPackError) {
+            $this->cartRepository->save($cart);
+        }
 
         if ($cart->getData('has_error')) {
             $cartErrors = $cart->getErrors();
@@ -125,14 +133,57 @@ class AddProductsToCart extends SourceAddProductsToCart
     }
 
     /**
+     * Get SuperPack array
+     *
+     * @param CartItem $cartItem
+     * @return bool | array
+     */
+    private function getSuperPackCartItem($cartItem)
+    {
+        $alfaBundle = $cartItem->getAlfaBundle();
+        if ($alfaBundle) {
+            $alfaBundle = json_decode($alfaBundle, true);
+            if (isset($alfaBundle['super_pack']) && $alfaBundle['super_pack'] && is_array($alfaBundle)) {
+                return $alfaBundle['super_pack'];
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Get SuperPack array
+     *
+     * @param CartInterface $cart
+     * @param array $item
+     * @return Item|string
+     */
+    private function addSuperPackProductToCart(
+        CartInterface $cart,
+        array $item
+    ) {
+        $cartItem = (new Data\CartItemFactory())->create($item);
+        try {
+            $product = $this->productRepository->get($cartItem->getSku(), false, null, true);
+        } catch (NoSuchEntityException $e) {
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __('Could not find a product with SKU "%sku"', ['sku' => $cartItem->getSku()])
+            );
+        }
+        return $cart->addProduct($product, $this->requestBuilder->build($cartItem));
+    }
+
+    /**
      * Adds a particular item to the shopping cart
      *
      * @param CartInterface|Quote $cart
-     * @param Data\CartItem $cartItem
+     * @param CartItem $cartItem
      * @param int $cartItemPosition
      */
-    private function addItemToCart(CartInterface $cart, Data\CartItem $cartItem, int $cartItemPosition): void
-    {
+    private function addItemToCart(
+        CartInterface $cart,
+        CartItem $cartItem,
+        int $cartItemPosition
+    ): void {
         $sku = $cartItem->getSku();
 
         if ($cartItem->getQuantity() <= 0) {
@@ -151,10 +202,26 @@ class AddProductsToCart extends SourceAddProductsToCart
 
             return;
         }
-
+        $this->addedSupePack = [];
+        $superPack = $this->getSuperPackCartItem($cartItem);
         try {
             $result = $cart->addProduct($product, $this->requestBuilder->build($cartItem));
+            $this->addedSupePack[] = [
+                'qty' => $cartItem->getQuantity(),
+                'src' => $result
+            ];
+
+            // Add all super pack items to cart
+            if ($superPack) {
+                foreach ($superPack as $item) {
+                    $res = $this->addSuperPackProductToCart($cart, $item);
+                    $this->addedSupePack[] = $res;
+                }
+            }
         } catch (\Throwable $e) {
+            if ($superPack) {
+                $this->superPackError = true;
+            }
             $this->addError(
                 __($e->getMessage())->render(),
                 $cartItemPosition
@@ -181,7 +248,7 @@ class AddProductsToCart extends SourceAddProductsToCart
      */
     private function addError(string $message, int $cartItemPosition = 0): void
     {
-        $this->errors[] = new Data\Error(
+        $this->errors[] = new \Magento\Quote\Model\Cart\Data\Error(
             $message,
             $this->getErrorCode($message),
             $cartItemPosition

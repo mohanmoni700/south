@@ -20,18 +20,18 @@ class Quote extends SourceQuote
      * Retrieve quote item by product id or by existing alfa bundle
      *
      * @param Product $product
-     * @param string|null $alfaBundle
+     * @param null|float|DataObject $request $request
      * @return false|mixed
      */
-    public function getItemByProductOrAlfaBundle(Product $product, ?string $alfaBundle)
+    public function getItemByProductOrAlfaBundle(Product $product, $request)
     {
+        $alfaBundle = $request->getAlfaBundle();
         if ($alfaBundle && $product->getTypeId() == 'configurable') {
             $existingAlfaBundle = false;
 
             foreach ($this->getAllItems() as $item) {
                 if ($item->getAlfaBundle() == $alfaBundle && $item->getSku() == $product->getSku()) {
                     $existingAlfaBundle = $item;
-
                     break;
                 }
             }
@@ -41,6 +41,16 @@ class Quote extends SourceQuote
             }
 
             return $existingAlfaBundle;
+        }
+
+        // separate superpack main product with child product
+        if ($product->getIsSuperpack() && $product->getTypeId() == 'configurable') {
+            foreach ($this->getAllItems() as $item) {
+                if ($item->representProduct($product) && ($item->getAlfaBundle() == $alfaBundle)) {
+                    return $item;
+                }
+            }
+            return false;
         }
 
         foreach ($this->getAllItems() as $item) {
@@ -111,14 +121,20 @@ class Quote extends SourceQuote
             $stickWithinParent = $candidate->getParentProductId() ? $parentItem : null;
             $candidate->setStickWithinParent($stickWithinParent);
 
-            $item = $this->getItemByProductOrAlfaBundle($candidate, $request->getAlfaBundle());
+            $item = $this->getItemByProductOrAlfaBundle($candidate, $request);
             if (!$item) {
                 $item = $this->itemProcessor->init($candidate, $request);
                 $item->setQuote($this);
                 $item->setOptions($candidate->getCustomOptions());
                 $item->setProduct($candidate);
                 $item->setInAlfaBundle($request->getInAlfaBundle());
-
+                if ($request->getInAlfaBundle() &&
+                    $product->getIsSuperpack()
+                ) {
+                    $item->setCustomPrice(0);
+                    $item->setOriginalCustomPrice(0);
+                    $item->getProduct()->setIsSuperMode(true);
+                }
                 // Set alfa bundle only for configurable type items
                 if ($item->getProductType() == 'configurable' && $request->getAlfaBundle()) {
                     $item->setAlfaBundle($request->getAlfaBundle());
@@ -127,6 +143,7 @@ class Quote extends SourceQuote
                 // Add only item that is not in quote already
                 $this->addItem($item);
             }
+
             $items[] = $item;
 
             /**
@@ -159,5 +176,64 @@ class Quote extends SourceQuote
 
         $this->_eventManager->dispatch('sales_quote_product_add_after', ['items' => $items]);
         return $parentItem;
+    }
+
+    /**
+     * Merge quotes
+     *
+     * @param SourceQuote $quote
+     * @return $this
+     */
+    public function merge(SourceQuote $quote)
+    {
+        $this->_eventManager->dispatch(
+            $this->_eventPrefix . '_merge_before',
+            [$this->_eventObject => $this, 'source' => $quote]
+        );
+
+        foreach ($quote->getAllVisibleItems() as $item) {
+            $found = false;
+            foreach ($this->getAllItems() as $quoteItem) {
+                // merge the product with same bundled superpack(only for main product)
+                // ex: superpack with red, green, blue should not be merged green, red
+                if ($quoteItem->compare($item) && ($item->getAlfaBundle() == $quoteItem->getAlfaBundle())) {
+                    $quoteItem->setQty($quoteItem->getQty() + $item->getQty());
+                    $this->itemProcessor->merge($item, $quoteItem);
+                    $found = true;
+                    break;
+                }
+            }
+
+            if (!$found) {
+                $newItem = clone $item;
+                $this->addItem($newItem);
+                if ($item->getHasChildren()) {
+                    foreach ($item->getChildren() as $child) {
+                        $newChild = clone $child;
+                        $newChild->setParentItem($newItem);
+                        $this->addItem($newChild);
+                    }
+                }
+            }
+        }
+
+        /**
+         * Init shipping and billing address if quote is new
+         */
+        if (!$this->getId()) {
+            $this->getShippingAddress();
+            $this->getBillingAddress();
+        }
+
+        if ($quote->getCouponCode()) {
+            $this->setCouponCode($quote->getCouponCode());
+        }
+
+        $this->_eventManager->dispatch(
+            $this->_eventPrefix . '_merge_after',
+            [$this->_eventObject => $this, 'source' => $quote]
+        );
+
+        return $this;
     }
 }

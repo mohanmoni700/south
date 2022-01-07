@@ -80,11 +80,12 @@ class CartItems extends SourceCartItems
             $alfaBundle = $cartItem->getAlfaBundle();
             $shishaSku = '';
             $charcoalSku = '';
-
+            $superPack = '';
             if ($alfaBundle) {
                 $alfaBundle = json_decode($alfaBundle, true);
                 $shishaSku = $alfaBundle['shisha_sku'];
                 $charcoalSku = $alfaBundle['charcoal_sku'];
+                $superPack = $alfaBundle['super_pack_flavours'];
             }
 
             if (!isset($cartProductsData[$productId])) {
@@ -98,6 +99,8 @@ class CartItems extends SourceCartItems
             $flavour = $shishaSku ? $this->getBundleProductAttribute($shishaSku): '';
             $charcoalDescription = $charcoalSku
                 ? $this->getBundleProductAttribute($charcoalSku, true): '';
+            $superPackFlavourList = is_array($superPack)
+                ? $superPack : [];
 
             $itemsData[] = [
                 'id' => $cartItem->getItemId(),
@@ -106,13 +109,14 @@ class CartItems extends SourceCartItems
                 'product' => $productData,
                 'model' => $cartItem,
                 'alfa_bundle_flavour' => $flavour,
-                'alfa_bundle_charcoal' => $charcoalDescription
+                'alfa_bundle_charcoal' => $charcoalDescription,
+                'super_pack_flavour' => $superPackFlavourList
             ];
         }
 
         return $itemsData;
     }
-
+    
     /**
      * Filters out bundle simple products from cartItems
      *

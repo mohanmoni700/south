@@ -82,9 +82,8 @@ class DefaultItems extends SourceDefaultItems
         // Visually add shisha and charcoal product prices to base item totals
         if ($alfaBundle) {
             $skus = array_values($alfaBundle);
-
             foreach ($skus as $sku) {
-                if ($sku) {
+                if ($sku && !is_array($sku)) {
                     $bundleItem = $this->helper->getBundleItemBySku($items, $sku);
 
                     $itemRowTotal += $bundleItem
