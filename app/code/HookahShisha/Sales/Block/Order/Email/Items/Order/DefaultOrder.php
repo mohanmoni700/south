@@ -7,10 +7,8 @@
 
 namespace HookahShisha\Sales\Block\Order\Email\Items\Order;
 
-use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\View\Element\Template;
 use Magento\Sales\Block\Order\Email\Items\Order\DefaultOrder as SourceDefaultOrder;
-use Magento\Sales\Model\Order\Item as OrderItem;
 use HookahShisha\Sales\Helper\Block\AlfaBundle;
 
 class DefaultOrder extends SourceDefaultOrder
@@ -60,39 +58,5 @@ class DefaultOrder extends SourceDefaultOrder
         }
 
         return array_merge(array_merge([], ...$result), $alfaBundleOptions);
-    }
-
-    /**
-     * Get the html for item price
-     *
-     * @param OrderItem $item
-     * @return string
-     * @throws LocalizedException
-     */
-    public function getItemPrice(OrderItem $item): string
-    {
-        $block = $this->getLayout()->getBlock('item_price');
-        $itemRowTotal = $this->getItem()->getRowTotal();
-        $alfaBundle = $this->helper->getAlfaBundle($item);
-        $items = $this->getOrder()->getAllItems();
-
-        // Visually add shisha and charcoal product prices to base item totals
-        if ($alfaBundle) {
-            $skus = array_values($alfaBundle);
-
-            foreach ($skus as $sku) {
-                if ($sku) {
-                    $bundleItem = $this->helper->getBundleItemBySku($items, $sku);
-
-                    $itemRowTotal += $bundleItem
-                        ? (float) $bundleItem->getPrice() * (float) $bundleItem->getQtyOrdered() : 0;
-                }
-            }
-        }
-
-        $item->setRowTotal($itemRowTotal);
-        $block->setItem($item);
-
-        return $block->toHtml();
     }
 }

@@ -20,10 +20,9 @@ class CartItem extends SourceCartItem
     private $alfaBundle;
 
     /**
-     * @var bool
+     * @var string
      */
-    private $inAlfaBundle;
-
+    private $parentAlfaBundle;
 
     /**
      * @param string $sku
@@ -32,7 +31,7 @@ class CartItem extends SourceCartItem
      * @param array|null $selectedOptions
      * @param array|null $enteredOptions
      * @param string|null $alfaBundle
-     * @param bool|null $inAlfaBundle
+     * @param string|null $parentAlfaBundle
      */
     public function __construct(
         string $sku,
@@ -41,12 +40,12 @@ class CartItem extends SourceCartItem
         array $selectedOptions = null,
         array $enteredOptions = null,
         string $alfaBundle = null,
-        bool $inAlfaBundle = null
+        string $parentAlfaBundle = null
     ) {
         parent::__construct($sku, $quantity, $parentSku, $selectedOptions, $enteredOptions);
 
         $this->alfaBundle = $alfaBundle;
-        $this->inAlfaBundle = $inAlfaBundle;
+        $this->parentAlfaBundle = $parentAlfaBundle;
     }
 
     /**
@@ -60,12 +59,12 @@ class CartItem extends SourceCartItem
     }
 
     /**
-     * Returns cart item alfaBundle
+     * Returns cart item parentAlfaBundle
      *
      * @return string
      */
-    public function getInAlfaBundle(): ?string
+    public function getParentAlfaBundle(): ?string
     {
-        return $this->inAlfaBundle;
+        return $this->parentAlfaBundle;
     }
 }

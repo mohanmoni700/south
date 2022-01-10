@@ -61,7 +61,7 @@ class OrderItems extends SourceOrderItems
         $orderItemIds = [];
         foreach ($parentOrder->getItems() as $item) {
             // Return only order items which are not part of Alfa Bundle
-            if (!$item->getParentItemId() && $item->getInAlfaBundle() != '1') {
+            if (!$item->getParentItemId() && !$item->getParentAlfaBundle()) {
                 $orderItemIds[] = (int)$item->getItemId();
             }
             $this->orderItemProvider->addOrderItemId((int)$item->getItemId());

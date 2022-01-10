@@ -124,12 +124,9 @@ class RemoveItemFromCart extends SourceRemoveItemFromCart
             return;
         }
 
-        $alfaBundle = json_decode($alfaBundle, true);
-        foreach ($alfaBundle as $item => $sku) {
-            $id = $sku ? $this->getCartItemIdBySku($cartItems, $sku) : '';
-
-            if ($id) {
-                $this->cartItemRepository->deleteById($cartId, $id);
+        foreach ($cartItems as $item) {
+            if ($item->getParentAlfaBundle() == $alfaBundle) {
+                $this->cartItemRepository->deleteById($cartId, $item->getItemId());
             }
         }
     }
@@ -151,24 +148,5 @@ class RemoveItemFromCart extends SourceRemoveItemFromCart
         }
 
         throw NoSuchEntityException::singleField('cartItemId', $cartItemId);
-    }
-
-    /**
-     * Returns cart item id by cart item sku
-     *
-     * @param array $cartItems
-     * @param string $cartItemSku
-     * @return string|null
-     * @throws NoSuchEntityException
-     */
-    private function getCartItemIdBySku(array $cartItems, string $cartItemSku): ?string
-    {
-        foreach ($cartItems as $cartItem) {
-            if ($cartItem->getSku() == $cartItemSku) {
-                return $cartItem->getItemId();
-            }
-        }
-
-        return null;
     }
 }

@@ -63,7 +63,7 @@ class CartItemPrices extends SourceCartitemPrices
             ],
             'row_total' => [
                 'currency' => $currencyCode,
-                'value' => $cartItem->getRowTotal() + $this->getBundleProductTotals($cartItem)
+                'value' => $cartItem->getRowTotal()
             ],
             'row_total_including_tax' => [
                 'currency' => $currencyCode,
@@ -75,38 +75,6 @@ class CartItemPrices extends SourceCartitemPrices
             ],
             'discounts' => $this->getDiscountValues($cartItem, $currencyCode)
         ];
-    }
-
-    /**
-     * Returns totals for bundle products
-     *
-     * @param Item $cartItem
-     * @return int
-     */
-    private function getBundleProductTotals(Item $cartItem): int
-    {
-        $alfaBundle = $cartItem->getAlfaBundle();
-        $shishaSku = '';
-        $charcoalSku = '';
-        $total = 0;
-
-        if ($alfaBundle) {
-            $alfaBundle = json_decode($alfaBundle, true);
-            $shishaSku = $alfaBundle['shisha_sku'];
-            $charcoalSku = $alfaBundle['charcoal_sku'];
-        }
-
-        if (!$shishaSku && !$charcoalSku) {
-            return $total;
-        }
-
-        foreach ($cartItem->getQuote()->getAllItems() as $item) {
-            if ($item->getSku() == $shishaSku || $item->getSku() == $charcoalSku) {
-                $total += $item->getCalculationPrice() * $cartItem->getQty();
-            }
-        }
-
-        return $total;
     }
 
     /**
