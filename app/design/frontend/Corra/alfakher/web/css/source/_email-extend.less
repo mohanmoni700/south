@@ -122,23 +122,36 @@ a {
 
 .footer {
     background-color: @email__background-color;
-    padding: @email-body__padding;
-
+    padding-top: 1rem;
+    padding-bottom:1rem;
+    padding-left: 10px;
+    padding-right: 10px;
     table {
         width: 100%;
 
         td {
             padding-bottom: @email-body__padding;
-            width: 33%;
-
             p {
                 margin-bottom: 0;
 
-                &.phone {
-                    font-size: @font-size__l;
+                &.phone,&.address {
+                    font-size:@button__font-size;
 
                     a {
                         color: inherit;
+                    }
+                }
+            }
+            &.w-25{
+                width:25%;
+            }
+            &.w-75{
+                width:75%;
+                text-align: right;
+                br{
+                    display: none;
+                    &:first-child{
+                        display: block;
                     }
                 }
             }

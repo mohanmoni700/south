@@ -15,10 +15,10 @@ use Magento\Quote\Api\Data\CartInterface;
 use Magento\Quote\Model\Cart\AddProductsToCart as SourceAddProductsToCart;
 use Magento\Quote\Model\Cart\BuyRequest\BuyRequestBuilder;
 use Magento\Quote\Model\Cart\Data\AddProductsToCartOutput;
-use Magento\Quote\Model\Cart\Data\CartItem;
 use Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface;
 use Magento\Quote\Model\Quote;
-use Magento\Quote\Model\Quote\Item;
+use Magento\Quote\Model\Cart\Data\Error;
+use Magento\Quote\Model\Cart\Data\CartItem;
 
 class AddProductsToCart extends SourceAddProductsToCart
 {
@@ -64,8 +64,6 @@ class AddProductsToCart extends SourceAddProductsToCart
      */
     private MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId;
 
-    private bool $superPackError = false;
-
     /**
      * @param ProductRepositoryInterface $productRepository
      * @param CartRepositoryInterface $cartRepository
@@ -95,7 +93,7 @@ class AddProductsToCart extends SourceAddProductsToCart
      * Add cart items to the cart
      *
      * @param string $maskedCartId
-     * @param Data\CartItem[] $cartItems
+     * @param CartItem[] $cartItems
      * @return AddProductsToCartOutput
      * @throws NoSuchEntityException Could not find a Cart with provided $maskedCartId
      */
@@ -103,16 +101,9 @@ class AddProductsToCart extends SourceAddProductsToCart
     {
         $cartId = $this->maskedQuoteIdToQuoteId->execute($maskedCartId);
         $cart = $this->cartRepository->get($cartId);
-        $count = 0;
-        foreach ($cartItems as $cartItem) {
-            $this->addItemToCart($cart, $cartItem, $count);
-            $count ++;
-        }
 
-        // Save cart only when all items are added to cart
-        // Save if there are no super pack errors.
-        if (!$this->superPackError) {
-            $this->cartRepository->save($cart);
+        foreach ($cartItems as $cartItemPosition => $cartItem) {
+            $this->addItemToCart($cart, $cartItem, $cartItemPosition, $cartItems);
         }
 
         if ($cart->getData('has_error')) {
@@ -127,6 +118,9 @@ class AddProductsToCart extends SourceAddProductsToCart
         if (count($this->errors) !== 0) {
             /* Revert changes introduced by add to cart processes in case of an error */
             $cart->getItemsCollection()->clear();
+        } else {
+            // Save cart only when all items are added to cart and no errors occurred
+            $this->cartRepository->save($cart);
         }
 
         return $this->prepareErrorOutput($cart);
@@ -176,13 +170,15 @@ class AddProductsToCart extends SourceAddProductsToCart
      * Adds a particular item to the shopping cart
      *
      * @param CartInterface|Quote $cart
-     * @param CartItem $cartItem
+     * @param Data\CartItem $cartItem
      * @param int $cartItemPosition
+     * @param array $cartItems
      */
     private function addItemToCart(
         CartInterface $cart,
         CartItem $cartItem,
-        int $cartItemPosition
+        int $cartItemPosition,
+        array $cartItems
     ): void {
         $sku = $cartItem->getSku();
 
@@ -192,8 +188,15 @@ class AddProductsToCart extends SourceAddProductsToCart
             return;
         }
 
+        $superPack = $this->getSuperPackCartItem($cartItem);
         try {
             $product = $this->productRepository->get($sku, false, null, true);
+            if ($superPack) {
+                foreach ($superPack as $item) {
+                    $res = $this->addSuperPackProductToCart($cart, $item);
+                    $this->addedSupePack[] = $res;
+                }
+            }
         } catch (NoSuchEntityException $e) {
             $this->addError(
                 __('Could not find a product with SKU "%sku"', ['sku' => $sku])->render(),
@@ -202,28 +205,20 @@ class AddProductsToCart extends SourceAddProductsToCart
 
             return;
         }
-        $this->addedSupePack = [];
-        $superPack = $this->getSuperPackCartItem($cartItem);
+
         try {
             $result = $cart->addProduct($product, $this->requestBuilder->build($cartItem));
-            $this->addedSupePack[] = [
-                'qty' => $cartItem->getQuantity(),
-                'src' => $result
-            ];
-
-            // Add all super pack items to cart
-            if ($superPack) {
-                foreach ($superPack as $item) {
-                    $res = $this->addSuperPackProductToCart($cart, $item);
-                    $this->addedSupePack[] = $res;
-                }
-            }
         } catch (\Throwable $e) {
-            if ($superPack) {
-                $this->superPackError = true;
-            }
+            $isInAlfaBundle = $cartItem->getInAlfaBundle();
+            $alfaBundleProductType = $isInAlfaBundle
+                ? $this->getAlfaBundleProductType($cartItem->getSku(), $cartItems)
+                : '';
+            // We use custom message for products in alfa bundle if requested qty is not available
+            $useCustomMessage = $e->getMessage() == 'The requested qty is not available';
+            $customMessage = __('The requested %1 qty is not available', $alfaBundleProductType);
+
             $this->addError(
-                __($e->getMessage())->render(),
+                __($useCustomMessage ? $customMessage : $e->getMessage())->render(),
                 $cartItemPosition
             );
             $cart->setHasError(false);
@@ -248,7 +243,7 @@ class AddProductsToCart extends SourceAddProductsToCart
      */
     private function addError(string $message, int $cartItemPosition = 0): void
     {
-        $this->errors[] = new \Magento\Quote\Model\Cart\Data\Error(
+        $this->errors[] = new Error(
             $message,
             $this->getErrorCode($message),
             $cartItemPosition
@@ -286,5 +281,33 @@ class AddProductsToCart extends SourceAddProductsToCart
         $cart->setHasError(false);
 
         return $output;
+    }
+
+    /**
+     * Returns alfa bundle product type (shisha || charcoal)
+     *
+     * @param string $sku
+     * @param array $items
+     * @return string
+     */
+    private function getAlfaBundleProductType(string $sku, array $items): string
+    {
+        $type = [
+            'shisha_sku' => 'shisha',
+            'charcoal_sku' => 'charcoal'
+        ];
+        $alfaBundle = [];
+
+        foreach ($items as $item) {
+            $alfaBundle = $item->getAlfaBundle();
+
+            if ($alfaBundle) {
+                $alfaBundle = json_decode($alfaBundle, true);
+
+                break;
+            }
+        }
+
+        return $type[array_search($sku, $alfaBundle)];
     }
 }
