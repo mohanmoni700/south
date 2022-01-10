@@ -7,12 +7,8 @@
 
 namespace HookahShisha\Sales\Block\Order\Email\Items;
 
-use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\View\Element\Template;
 use Magento\Sales\Block\Order\Email\Items\DefaultItems as SourceDefaultItems;
-use Magento\Sales\Model\Order\Creditmemo\Item as CreditmemoItem;
-use Magento\Sales\Model\Order\Invoice\Item as InvoiceItem;
-use Magento\Sales\Model\Order\Item as OrderItem;
 use HookahShisha\Sales\Helper\Block\AlfaBundle;
 
 class DefaultItems extends SourceDefaultItems
@@ -62,42 +58,5 @@ class DefaultItems extends SourceDefaultItems
         }
 
         return array_merge(array_merge([], ...$result), $alfaBundleOptions);
-    }
-
-    /**
-     * Get the html for item price
-     *
-     * @param OrderItem|InvoiceItem|CreditmemoItem $item
-     * @return string
-     * @throws LocalizedException
-     */
-    public function getItemPrice($item): string
-    {
-        $block = $this->getLayout()->getBlock('item_price');
-        $itemRowTotal = (float) $item->getPrice() * (float) $this->getItem()->getQty();
-        $itemBaseRowTotal = (float) $item->getBasePrice() * (float) $this->getItem()->getQty();
-        $alfaBundle = $this->helper->getAlfaBundle($item);
-        $items = $this->getOrder()->getAllItems();
-
-        // Visually add shisha and charcoal product prices to base item totals
-        if ($alfaBundle) {
-            $skus = array_values($alfaBundle);
-            foreach ($skus as $sku) {
-                if ($sku && !is_array($sku)) {
-                    $bundleItem = $this->helper->getBundleItemBySku($items, $sku);
-
-                    $itemRowTotal += $bundleItem
-                        ? (float) $bundleItem->getPrice() * (float) $bundleItem->getQtyOrdered() : 0;
-                    $itemBaseRowTotal += $bundleItem ?
-                        (float) $bundleItem->getBasePrice() * (float) $bundleItem->getQtyOrdered() : 0;
-                }
-            }
-        }
-
-        $item->setRowTotal($itemRowTotal);
-        $item->setBaseRowTotal($itemBaseRowTotal);
-        $block->setItem($item);
-
-        return $block->toHtml();
     }
 }

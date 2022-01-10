@@ -126,7 +126,7 @@ class CartItems extends SourceCartItems
     private function filterOutAlfaBundleProducts(array $cartItems): array
     {
         return array_filter($cartItems, function ($item) {
-            if ($item->getInAlfaBundle() == '1') {
+            if ($item->getParentAlfaBundle()) {
                 return false;
             }
 

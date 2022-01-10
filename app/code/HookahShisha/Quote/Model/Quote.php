@@ -20,38 +20,57 @@ class Quote extends SourceQuote
      * Retrieve quote item by product id or by existing alfa bundle
      *
      * @param Product $product
-     * @param null|float|DataObject $request $request
+     * @param null|float|DataObject $request
      * @return false|mixed
      */
-    public function getItemByProductOrAlfaBundle(Product $product, $request)
+    public function getItemByProductOrAlfaBundle(Product $product, $request) // NOSONAR
     {
         $alfaBundle = $request->getAlfaBundle();
-        if ($alfaBundle && $product->getTypeId() == 'configurable') {
-            $existingAlfaBundle = false;
+        $parentAlfaBundle = $request->getParentAlfaBundle();
+        $independentProduct = !$product->getParentProductId();
 
+        // Add alfa bundle base item or return existing one
+        if ($alfaBundle && $independentProduct) {
             foreach ($this->getAllItems() as $item) {
                 if ($item->getAlfaBundle() == $alfaBundle && $item->getSku() == $product->getSku()) {
-                    $existingAlfaBundle = $item;
-                    break;
-                }
-            }
-
-            if (!$existingAlfaBundle) {
-                return false;
-            }
-
-            return $existingAlfaBundle;
-        }
-
-        // separate superpack main product with child product
-        if ($product->getIsSuperpack() && $product->getTypeId() == 'configurable') {
-            foreach ($this->getAllItems() as $item) {
-                if ($item->representProduct($product) && ($item->getAlfaBundle() == $alfaBundle)) {
                     return $item;
                 }
             }
+
             return false;
         }
+
+        // Add alfa bundle child (simple) item or return existing one
+        if ($parentAlfaBundle) {
+            foreach ($this->getAllItems() as $item) {
+                if ($item->getSku() == $product->getSku() && $item->getParentAlfaBundle() == $parentAlfaBundle) {
+                    return $item;
+                }
+            }
+
+            return false;
+        }
+
+        // Add item not associated with alfa bundle or return existing one
+        if ($independentProduct) {
+            foreach ($this->getAllItems() as $item) {
+                if ($item->getSku() == $product->getSku() && !$item->getParentAlfaBundle()) {
+                    return $item;
+                }
+            }
+
+            return false;
+        }
+
+//        // separate superpack main product with child product
+//        if ($product->getIsSuperpack() && $product->getTypeId() == 'configurable') {
+//            foreach ($this->getAllItems() as $item) {
+//                if ($item->representProduct($product) && ($item->getAlfaBundle() == $alfaBundle)) {
+//                    return $item;
+//                }
+//            }
+//            return false;
+//        }
 
         foreach ($this->getAllItems() as $item) {
             if ($item->representProduct($product)) {
@@ -73,10 +92,10 @@ class Quote extends SourceQuote
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function addProduct(
+    public function addProduct( // NOSONAR
         Product $product,
-        $request = null,
-        $processMode = AbstractType::PROCESS_MODE_FULL
+                $request = null,
+                $processMode = AbstractType::PROCESS_MODE_FULL
     ) {
         if ($request === null) {
             $request = 1;
@@ -127,23 +146,28 @@ class Quote extends SourceQuote
                 $item->setQuote($this);
                 $item->setOptions($candidate->getCustomOptions());
                 $item->setProduct($candidate);
-                $item->setInAlfaBundle($request->getInAlfaBundle());
-                if ($request->getInAlfaBundle() &&
-                    $product->getIsSuperpack()
-                ) {
-                    $item->setCustomPrice(0);
-                    $item->setOriginalCustomPrice(0);
-                    $item->getProduct()->setIsSuperMode(true);
-                }
+
                 // Set alfa bundle only for configurable type items
                 if ($item->getProductType() == 'configurable' && $request->getAlfaBundle()) {
                     $item->setAlfaBundle($request->getAlfaBundle());
+                }
+                if ($request->getParentAlfaBundle()) {
+                    $item->setParentAlfaBundle($request->getParentAlfaBundle());
+                    // Included shisha and charcoal products should be charged zero
+                    $item->setCustomPrice(0);
+                    $item->setOriginalCustomPrice(0);
+                }
+
+                if ($request->getParentAlfaBundle()) {
+                    $item->setParentAlfaBundle($request->getParentAlfaBundle());
+                    // Included shisha and charcoal products should be charged zero
+                    $item->setCustomPrice(0);
+                    $item->setOriginalCustomPrice(0);
                 }
 
                 // Add only item that is not in quote already
                 $this->addItem($item);
             }
-
             $items[] = $item;
 
             /**
@@ -177,7 +201,6 @@ class Quote extends SourceQuote
         $this->_eventManager->dispatch('sales_quote_product_add_after', ['items' => $items]);
         return $parentItem;
     }
-
     /**
      * Merge quotes
      *

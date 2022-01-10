@@ -11,15 +11,15 @@ use Magento\Quote\Model\Cart\BuyRequest\BuyRequestDataProviderInterface;
 use Magento\Quote\Model\Cart\Data\CartItem;
 
 /**
- * Data provider for alfa bundle product buy requests
+ * Data provider for parent_alfa_bundle buy requests
  */
-class IsInAlfaBundleDataProvider implements BuyRequestDataProviderInterface
+class ParentAlfaBundleDataProvider implements BuyRequestDataProviderInterface
 {
     /**
      * @inheritdoc
      */
     public function execute(CartItem $cartItem): array
     {
-        return ['in_alfa_bundle' => $cartItem->getInAlfaBundle() ?? null];
+        return ['parent_alfa_bundle' => $cartItem->getParentAlfaBundle() ?? null];
     }
 }
