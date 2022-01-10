@@ -119,17 +119,11 @@ class UpdateCartItems extends SourceUpdateCartItems
         foreach ($cartItems as $cartItem) {
             $itemInCart = $cart->getItemById($cartItem['cart_item_id']);
             $qtyToAdd = $cartItem['quantity'] - $itemInCart->getQty();
-            $bundleProducts = $itemInCart->getAlfaBundle();
+            $alfaBundle = $itemInCart->getAlfaBundle();
 
-            if ($bundleProducts) {
-                $bundleProductsDecoded = json_decode($itemInCart->getAlfaBundle(), true);
-
-                $bundleItemsToUpdate = array_filter($cart->getItems(), function ($item) use ($bundleProductsDecoded) {
-                    $itemSku = $item->getSku();
-
-                    if ($itemSku == $bundleProductsDecoded['shisha_sku']
-                        || $itemSku == $bundleProductsDecoded['charcoal_sku']
-                    ) {
+            if ($alfaBundle) {
+                $bundleItemsToUpdate = array_filter($cart->getItems(), function ($item) use ($alfaBundle) {
+                    if ($item->getParentAlfaBundle() && $item->getParentAlfaBundle() == $alfaBundle) {
                         return $item;
                     }
 

@@ -20,27 +20,46 @@ class Quote extends SourceQuote
      * Retrieve quote item by product id or by existing alfa bundle
      *
      * @param Product $product
-     * @param string|null $alfaBundle
+     * @param null|float|DataObject $request
      * @return false|mixed
      */
-    public function getItemByProductOrAlfaBundle(Product $product, ?string $alfaBundle)
+    public function getItemByProductOrAlfaBundle(Product $product, $request) // NOSONAR
     {
-        if ($alfaBundle && $product->getTypeId() == 'configurable') {
-            $existingAlfaBundle = false;
+        $alfaBundle = $request->getAlfaBundle();
+        $parentAlfaBundle = $request->getParentAlfaBundle();
+        $independentProduct = !$product->getParentProductId();
 
+        // Add alfa bundle base item or return existing one
+        if ($alfaBundle && $independentProduct) {
             foreach ($this->getAllItems() as $item) {
                 if ($item->getAlfaBundle() == $alfaBundle && $item->getSku() == $product->getSku()) {
-                    $existingAlfaBundle = $item;
-
-                    break;
+                    return $item;
                 }
             }
 
-            if (!$existingAlfaBundle) {
-                return false;
+            return false;
+        }
+
+        // Add alfa bundle child (simple) item or return existing one
+        if ($parentAlfaBundle) {
+            foreach ($this->getAllItems() as $item) {
+                if ($item->getSku() == $product->getSku() && $item->getParentAlfaBundle() == $parentAlfaBundle) {
+                    return $item;
+                }
             }
 
-            return $existingAlfaBundle;
+            return false;
+        }
+
+        // Add item not associated with alfa bundle or return existing one
+        if ($independentProduct) {
+            foreach ($this->getAllItems() as $item) {
+                if ($item->getSku() == $product->getSku() && !$item->getParentAlfaBundle()) {
+                    return $item;
+                }
+            }
+
+            return false;
         }
 
         foreach ($this->getAllItems() as $item) {
@@ -63,7 +82,7 @@ class Quote extends SourceQuote
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function addProduct(
+    public function addProduct( // NOSONAR
         Product $product,
         $request = null,
         $processMode = AbstractType::PROCESS_MODE_FULL
@@ -111,17 +130,23 @@ class Quote extends SourceQuote
             $stickWithinParent = $candidate->getParentProductId() ? $parentItem : null;
             $candidate->setStickWithinParent($stickWithinParent);
 
-            $item = $this->getItemByProductOrAlfaBundle($candidate, $request->getAlfaBundle());
+            $item = $this->getItemByProductOrAlfaBundle($candidate, $request);
             if (!$item) {
                 $item = $this->itemProcessor->init($candidate, $request);
                 $item->setQuote($this);
                 $item->setOptions($candidate->getCustomOptions());
                 $item->setProduct($candidate);
-                $item->setInAlfaBundle($request->getInAlfaBundle());
 
                 // Set alfa bundle only for configurable type items
                 if ($item->getProductType() == 'configurable' && $request->getAlfaBundle()) {
                     $item->setAlfaBundle($request->getAlfaBundle());
+                }
+
+                if ($request->getParentAlfaBundle()) {
+                    $item->setParentAlfaBundle($request->getParentAlfaBundle());
+                    // Included shisha and charcoal products should be charged zero
+                    $item->setCustomPrice(0);
+                    $item->setOriginalCustomPrice(0);
                 }
 
                 // Add only item that is not in quote already

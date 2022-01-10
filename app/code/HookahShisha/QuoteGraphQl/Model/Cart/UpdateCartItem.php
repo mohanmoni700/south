@@ -118,7 +118,7 @@ class UpdateCartItem extends SourceUpdateCartItem
         if ($cartItem->getHasError()) {
             $errors = [];
             foreach ($cartItem->getMessage(false) as $message) {
-                $isInAlfaBundle = $cartItem->getInAlfaBundle() == 1;
+                $isInAlfaBundle = $cartItem->getParentAlfaBundle();
                 $useCustomMessage = $isInAlfaBundle && $message == 'The requested qty is not available';
                 // We use custom message for products in alfa bundle if requested qty is not available
                 // Also we use the same message for shisha and charcoal because first error is immediately thrown
