@@ -21,7 +21,7 @@
         </tr>
         </thead>
         <?php foreach ($_shipment->getAllItems() as $_item) : ?>
-            <?php if (!$_item->getOrderItem()->getParentItem() && $_item->getOrderItem()->getInAlfaBundle() != '1') : ?>
+            <?php if (!$_item->getOrderItem()->getParentItem() && !$_item->getOrderItem()->getParentAlfaBundle()) : ?>
                 <tbody>
                     <?= $block->getItemHtml($_item) ?>
                 </tbody>

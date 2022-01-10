@@ -161,7 +161,7 @@ class AddProductsToCart extends SourceAddProductsToCart
         try {
             $result = $cart->addProduct($product, $this->requestBuilder->build($cartItem));
         } catch (\Throwable $e) {
-            $isInAlfaBundle = $cartItem->getInAlfaBundle();
+            $isInAlfaBundle = $cartItem->getParentAlfaBundle();
             $alfaBundleProductType = $isInAlfaBundle
                 ? $this->getAlfaBundleProductType($cartItem->getSku(), $cartItems)
                 : '';
