@@ -116,7 +116,7 @@ class CartItems extends SourceCartItems
 
         return $itemsData;
     }
-    
+
     /**
      * Filters out bundle simple products from cartItems
      *

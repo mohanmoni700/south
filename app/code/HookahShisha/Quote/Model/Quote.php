@@ -148,16 +148,12 @@ class Quote extends SourceQuote
                 $item->setProduct($candidate);
 
                 // Set alfa bundle only for configurable type items
-                if ($item->getProductType() == 'configurable' && $request->getAlfaBundle()) {
+                if (
+//                    $item->getProductType() == 'configurable' &&
+                    $request->getAlfaBundle()
+                ) {
                     $item->setAlfaBundle($request->getAlfaBundle());
                 }
-                if ($request->getParentAlfaBundle()) {
-                    $item->setParentAlfaBundle($request->getParentAlfaBundle());
-                    // Included shisha and charcoal products should be charged zero
-                    $item->setCustomPrice(0);
-                    $item->setOriginalCustomPrice(0);
-                }
-
                 if ($request->getParentAlfaBundle()) {
                     $item->setParentAlfaBundle($request->getParentAlfaBundle());
                     // Included shisha and charcoal products should be charged zero

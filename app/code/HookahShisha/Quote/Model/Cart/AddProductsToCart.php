@@ -106,6 +106,7 @@ class AddProductsToCart extends SourceAddProductsToCart
             $this->addItemToCart($cart, $cartItem, $cartItemPosition, $cartItems);
         }
 
+
         if ($cart->getData('has_error')) {
             $cartErrors = $cart->getErrors();
 
@@ -191,12 +192,6 @@ class AddProductsToCart extends SourceAddProductsToCart
         $superPack = $this->getSuperPackCartItem($cartItem);
         try {
             $product = $this->productRepository->get($sku, false, null, true);
-            if ($superPack) {
-                foreach ($superPack as $item) {
-                    $res = $this->addSuperPackProductToCart($cart, $item);
-                    $this->addedSupePack[] = $res;
-                }
-            }
         } catch (NoSuchEntityException $e) {
             $this->addError(
                 __('Could not find a product with SKU "%sku"', ['sku' => $sku])->render(),
@@ -207,6 +202,20 @@ class AddProductsToCart extends SourceAddProductsToCart
         }
 
         try {
+            if ($superPack) {
+                $qty = $cartItem->getQuantity();
+                $parentAlfabundle = json_encode([
+                    "shisha_sku" =>  '',
+                    "charcoal_sku"=> '',
+                    "super_pack" => $cartItem->getSku()
+                ], true);
+
+                foreach ($superPack as $item) {
+                    $item['quantity'] = $qty;
+                    $item['parent_alfa_bundle'] =  $parentAlfabundle;
+                    $this->addSuperPackProductToCart($cart, $item);
+                }
+            }
             $result = $cart->addProduct($product, $this->requestBuilder->build($cartItem));
         } catch (\Throwable $e) {
             $isInAlfaBundle = $cartItem->getParentAlfaBundle();
