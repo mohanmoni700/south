@@ -52,7 +52,7 @@ class Quote extends SourceQuote
 
         // Add item not associated with alfa bundle or return existing one
         foreach ($this->getAllItems() as $item) {
-            if ($item->representProduct($product) && !$item->getParentAlfaBundle()) {
+            if ($item->representProduct($product) && !$item->getParentAlfaBundle() && !$item->getAlfaBundle()) {
                 return $item;
             }
         }
