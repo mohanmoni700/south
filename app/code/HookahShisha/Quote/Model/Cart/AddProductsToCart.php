@@ -207,7 +207,8 @@ class AddProductsToCart extends SourceAddProductsToCart
                 $parentAlfabundle = json_encode([
                     "shisha_sku" =>  '',
                     "charcoal_sku"=> '',
-                    "super_pack" => $cartItem->getSku()
+                    "super_pack_parent" => $cartItem->getSku(),
+                    "super_pack" => $superPack
                 ], true);
 
                 foreach ($superPack as $item) {
