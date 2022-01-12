@@ -148,10 +148,12 @@ class DataProvider extends SourceDataProvider
 
             $shishaSku = '';
             $charcoalSku = '';
+            $superPack = '';
             if ($alfaBundle) {
                 $alfaBundle = json_decode($alfaBundle, true);
                 $shishaSku = $alfaBundle['shisha_sku'];
                 $charcoalSku = $alfaBundle['charcoal_sku'];
+                $superPack = $alfaBundle['super_pack_flavours'] ?? null;
             }
 
             $shishaItem = $this->getBundleItem($orderItems, $shishaSku);
@@ -187,7 +189,8 @@ class DataProvider extends SourceDataProvider
                 'alfa_bundle_charcoal' => $charcoalItem
                     ? $charcoalItem->getProduct()->getName()
                     . ': '
-                    . $charcoalItem->getProduct()->getCharcoalShortDetail() : ''
+                    . $charcoalItem->getProduct()->getCharcoalShortDetail() : '',
+                'super_pack_flavour' => is_array($superPack) ? $superPack : []
             ];
         }
 
