@@ -22,6 +22,9 @@ class SuperPackProduct implements ResolverInterface
 {
     private ProductRepositoryInterface $productRepository;
 
+    /**
+     * @param ProductRepositoryInterface $productRepository
+     */
     public function __construct(
         ProductRepositoryInterface $productRepository
     ) {
@@ -38,21 +41,23 @@ class SuperPackProduct implements ResolverInterface
         $product = $this->productRepository->get($product->getSku());
         $flavourSku = $product->getCustomAttribute('flavour_sku');
         $isSuperPack = $product->getCustomAttribute('is_superpack');
-        if ($isSuperPack && $isSuperPack->getValue()) {
-            if ($flavourSku && $flavourSku->getValue()) {
-                $superPackSku = trim($flavourSku->getValue());
-                try {
-                    $superPackProduct =
-                        $this->productRepository->get($superPackSku);
-                } catch (\Exception $e) {
-                    return null;
-                }
+        if ($isSuperPack &&
+            $isSuperPack->getValue() &&
+            $flavourSku &&
+            $flavourSku->getValue()
+        ) {
+            $superPackSku = trim($flavourSku->getValue());
+            try {
+                $superPackProduct =
+                    $this->productRepository->get($superPackSku);
+            } catch (\Exception $e) {
+                return null;
+            }
 
-                if ($superPackProduct) {
-                    $data = $superPackProduct->getData();
-                    $data['model'] = $superPackProduct;
-                    return $data;
-                }
+            if ($superPackProduct) {
+                $data = $superPackProduct->getData();
+                $data['model'] = $superPackProduct;
+                return $data;
             }
         }
         return null;
