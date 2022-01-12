@@ -50,7 +50,6 @@ class Quote extends SourceQuote
             return false;
         }
 
-        // Add item not associated with alfa bundle or return existing one
         foreach ($this->getAllItems() as $item) {
             if ($item->representProduct($product) && !$item->getParentAlfaBundle() && !$item->getAlfaBundle()) {
                 return $item;
@@ -127,10 +126,9 @@ class Quote extends SourceQuote
                 $item->setProduct($candidate);
 
                 // Set alfa bundle only for configurable type items
-                if ($item->getProductType() == 'configurable' && $request->getAlfaBundle()) {
+                if ($request->getAlfaBundle()) {
                     $item->setAlfaBundle($request->getAlfaBundle());
                 }
-
                 if ($request->getParentAlfaBundle()) {
                     $item->setParentAlfaBundle($request->getParentAlfaBundle());
                     // Included shisha and charcoal products should be charged zero
@@ -173,5 +171,63 @@ class Quote extends SourceQuote
 
         $this->_eventManager->dispatch('sales_quote_product_add_after', ['items' => $items]);
         return $parentItem;
+    }
+    /**
+     * Merge quotes
+     *
+     * @param SourceQuote $quote
+     * @return $this
+     */
+    public function merge(SourceQuote $quote)
+    {
+        $this->_eventManager->dispatch(
+            $this->_eventPrefix . '_merge_before',
+            [$this->_eventObject => $this, 'source' => $quote]
+        );
+
+        foreach ($quote->getAllVisibleItems() as $item) {
+            $found = false;
+            foreach ($this->getAllItems() as $quoteItem) {
+                // merge the product with same bundled superpack(only for main product)
+                // ex: superpack with red, green, blue should not be merged green, red
+                if ($quoteItem->compare($item) && ($item->getAlfaBundle() == $quoteItem->getAlfaBundle())) {
+                    $quoteItem->setQty($quoteItem->getQty() + $item->getQty());
+                    $this->itemProcessor->merge($item, $quoteItem);
+                    $found = true;
+                    break;
+                }
+            }
+
+            if (!$found) {
+                $newItem = clone $item;
+                $this->addItem($newItem);
+                if ($item->getHasChildren()) {
+                    foreach ($item->getChildren() as $child) {
+                        $newChild = clone $child;
+                        $newChild->setParentItem($newItem);
+                        $this->addItem($newChild);
+                    }
+                }
+            }
+        }
+
+        /**
+         * Init shipping and billing address if quote is new
+         */
+        if (!$this->getId()) {
+            $this->getShippingAddress();
+            $this->getBillingAddress();
+        }
+
+        if ($quote->getCouponCode()) {
+            $this->setCouponCode($quote->getCouponCode());
+        }
+
+        $this->_eventManager->dispatch(
+            $this->_eventPrefix . '_merge_after',
+            [$this->_eventObject => $this, 'source' => $quote]
+        );
+
+        return $this;
     }
 }
