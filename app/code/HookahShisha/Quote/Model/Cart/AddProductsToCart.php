@@ -10,6 +10,7 @@ namespace HookahShisha\Quote\Model\Cart;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Message\MessageInterface;
+use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Api\Data\CartInterface;
 use Magento\Quote\Model\Cart\AddProductsToCart as SourceAddProductsToCart;
@@ -65,15 +66,22 @@ class AddProductsToCart extends SourceAddProductsToCart
     private MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId;
 
     /**
+     * @var Json
+     */
+    private Json $serializer;
+
+    /**
      * @param ProductRepositoryInterface $productRepository
      * @param CartRepositoryInterface $cartRepository
      * @param MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId
+     * @param Json $serializer
      * @param BuyRequestBuilder $requestBuilder
      */
     public function __construct(
         ProductRepositoryInterface $productRepository,
         CartRepositoryInterface $cartRepository,
         MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId,
+        Json $serializer,
         BuyRequestBuilder $requestBuilder
     ) {
         parent::__construct(
@@ -87,6 +95,7 @@ class AddProductsToCart extends SourceAddProductsToCart
         $this->cartRepository = $cartRepository;
         $this->maskedQuoteIdToQuoteId = $maskedQuoteIdToQuoteId;
         $this->requestBuilder = $requestBuilder;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -105,7 +114,7 @@ class AddProductsToCart extends SourceAddProductsToCart
         foreach ($cartItems as $cartItemPosition => $cartItem) {
             $this->addItemToCart($cart, $cartItem, $cartItemPosition, $cartItems);
         }
-        
+
         if ($cart->getData('has_error')) {
             $cartErrors = $cart->getErrors();
 
@@ -136,7 +145,7 @@ class AddProductsToCart extends SourceAddProductsToCart
     {
         $alfaBundle = $cartItem->getAlfaBundle();
         if ($alfaBundle) {
-            $alfaBundle = json_decode($alfaBundle, true);
+            $alfaBundle = $this->serializer->unserialize($alfaBundle);
             if (isset($alfaBundle['super_pack']) && $alfaBundle['super_pack'] && is_array($alfaBundle)) {
                 return $alfaBundle['super_pack'];
             }
@@ -306,7 +315,7 @@ class AddProductsToCart extends SourceAddProductsToCart
             $alfaBundle = $item->getAlfaBundle();
 
             if ($alfaBundle) {
-                $alfaBundle = json_decode($alfaBundle, true);
+                $alfaBundle = $this->serializer->unserialize($alfaBundle);
 
                 break;
             }
