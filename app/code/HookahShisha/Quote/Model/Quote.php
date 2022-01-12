@@ -27,12 +27,11 @@ class Quote extends SourceQuote
     {
         $alfaBundle = $request->getAlfaBundle();
         $parentAlfaBundle = $request->getParentAlfaBundle();
-        $independentProduct = !$product->getParentProductId();
 
         // Add alfa bundle base item or return existing one
-        if ($alfaBundle && $independentProduct) {
+        if ($alfaBundle) {
             foreach ($this->getAllItems() as $item) {
-                if ($item->getAlfaBundle() == $alfaBundle && $item->getSku() == $product->getSku()) {
+                if ($item->representProduct($product) && $item->getAlfaBundle() == $alfaBundle) {
                     return $item;
                 }
             }
@@ -43,37 +42,16 @@ class Quote extends SourceQuote
         // Add alfa bundle child (simple) item or return existing one
         if ($parentAlfaBundle) {
             foreach ($this->getAllItems() as $item) {
-                if ($item->getSku() == $product->getSku() && $item->getParentAlfaBundle() == $parentAlfaBundle) {
+                if ($item->representProduct($product) && $item->getParentAlfaBundle() == $parentAlfaBundle) {
                     return $item;
                 }
             }
 
             return false;
         }
-
-        // Add item not associated with alfa bundle or return existing one
-        if ($independentProduct) {
-            foreach ($this->getAllItems() as $item) {
-                if ($item->getSku() == $product->getSku() && !$item->getParentAlfaBundle()) {
-                    return $item;
-                }
-            }
-
-            return false;
-        }
-
-//        // separate superpack main product with child product
-//        if ($product->getIsSuperpack() && $product->getTypeId() == 'configurable') {
-//            foreach ($this->getAllItems() as $item) {
-//                if ($item->representProduct($product) && ($item->getAlfaBundle() == $alfaBundle)) {
-//                    return $item;
-//                }
-//            }
-//            return false;
-//        }
 
         foreach ($this->getAllItems() as $item) {
-            if ($item->representProduct($product)) {
+            if ($item->representProduct($product) && !$item->getParentAlfaBundle() && !$item->getAlfaBundle()) {
                 return $item;
             }
         }
@@ -94,8 +72,8 @@ class Quote extends SourceQuote
      */
     public function addProduct( // NOSONAR
         Product $product,
-                $request = null,
-                $processMode = AbstractType::PROCESS_MODE_FULL
+        $request = null,
+        $processMode = AbstractType::PROCESS_MODE_FULL
     ) {
         if ($request === null) {
             $request = 1;
@@ -148,10 +126,7 @@ class Quote extends SourceQuote
                 $item->setProduct($candidate);
 
                 // Set alfa bundle only for configurable type items
-                if (
-//                    $item->getProductType() == 'configurable' &&
-                    $request->getAlfaBundle()
-                ) {
+                if ($request->getAlfaBundle()) {
                     $item->setAlfaBundle($request->getAlfaBundle());
                 }
                 if ($request->getParentAlfaBundle()) {

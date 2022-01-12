@@ -105,8 +105,7 @@ class AddProductsToCart extends SourceAddProductsToCart
         foreach ($cartItems as $cartItemPosition => $cartItem) {
             $this->addItemToCart($cart, $cartItem, $cartItemPosition, $cartItems);
         }
-
-
+        
         if ($cart->getData('has_error')) {
             $cartErrors = $cart->getErrors();
 
@@ -204,12 +203,7 @@ class AddProductsToCart extends SourceAddProductsToCart
         try {
             if ($superPack) {
                 $qty = $cartItem->getQuantity();
-                $parentAlfabundle = json_encode([
-                    "shisha_sku" =>  '',
-                    "charcoal_sku"=> '',
-                    "super_pack_parent" => $cartItem->getSku(),
-                    "super_pack" => $superPack
-                ], true);
+                $parentAlfabundle = $cartItem->getAlfaBundle();
 
                 foreach ($superPack as $item) {
                     $item['quantity'] = $qty;
