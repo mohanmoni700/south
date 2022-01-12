@@ -145,7 +145,7 @@ class AddProductsToCart extends SourceAddProductsToCart
     {
         $alfaBundle = $cartItem->getAlfaBundle();
         if ($alfaBundle) {
-            $alfaBundle = json_decode($alfaBundle, true);
+            $alfaBundle = $this->serializer->unserialize($alfaBundle);
             if (isset($alfaBundle['super_pack']) && $alfaBundle['super_pack'] && is_array($alfaBundle)) {
                 return $alfaBundle['super_pack'];
             }
