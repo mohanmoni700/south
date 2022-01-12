@@ -13,3 +13,7 @@ type ConfigurableCartItem {
     alfa_bundle_flavour: String @doc(description: "Selected shisha product falvour")
     alfa_bundle_charcoal: String @doc(description: "Selected chracoal product description")
 }
+
+type SimpleCartItem {
+    super_pack_flavour: [String] @doc(description: "All the selected flavour")
+}
