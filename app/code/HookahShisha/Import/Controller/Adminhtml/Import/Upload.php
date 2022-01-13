@@ -94,7 +94,6 @@ class Upload extends \Magento\Framework\App\Action\Action
     {
         $post = $this->getRequest()->getPost();
         $resultRedirect = $this->resultRedirectFactory->create();
-        $connection = $this->_resource->getConnection();
         $files = $this->request->getFiles()->toArray(); // same as $_FIELS
         if ($post && isset($files) && $files["blogCsv"]["error"] == 0) {
             $mimes = ['application/vnd.ms-excel', 'text/plain', 'text/csv', 'text/tsv'];
@@ -111,87 +110,12 @@ class Upload extends \Magento\Framework\App\Action\Action
                 } catch (\Exception $e) {
                     $this->messageManager->addError($e->getMessage());
                 }
-
-                $tmpDir = $this->_directoryList->getPath('tmp');
-                $ext = 'csv';
-                /* Author */
-                if ($files["blogCsv"]["name"] == 'Author.csv') {
-                    $filePath = $tmpDir . "/Author." . $ext;
-                    $csv = $this->_csv;
-                    $csv->setDelimiter(',');
-                    $csvData = $csv->getData($filePath);
-                    $tableName = $connection->getTableName('magefan_blog_author');
-                    foreach ($csvData as $row => $data) {
-                        if ($row == 0) {
-                            continue;
-                        }
-                        $query = [
-                            'is_active' => $data[0],
-                            'firstname' => $data[1],
-                            'lastname' => $data[2],
-                            'email' => $data[3],
-                            'identifier' => strtolower($data[1]) . "-" . strtolower($data[2]),
-                        ];
-                        $connection->insert($tableName, $query);
-                    } /* foreach ends */
-                    $this->messageManager->addSuccess('Author Imported Successful!');
-                    return $resultRedirect->setPath('*/*/');
+                if ($files["blogCsv"]["name"] == 'Comment.csv' || $files["blogCsv"]["name"] == 'Author.csv') {
+                    $resultDirect = $this->importAuthorandComment($files, $resultRedirect);
+                    if ($resultDirect) {
+                        return $resultRedirect->setPath('*/*/');
+                    }
                 }
-
-                /* Comment */
-                if ($files["blogCsv"]["name"] == 'Comment.csv') {
-                    $filePath = $tmpDir . "/Comment." . $ext;
-                    $csv = $this->_csv;
-                    $csv->setDelimiter(',');
-                    $csvData = $csv->getData($filePath);
-                    $tableName = $connection->getTableName('magefan_blog_comment');
-                    foreach ($csvData as $row => $data) {
-                        if ($row == 0) {
-                            continue;
-                        }
-
-                        $email = $data[7];
-                        $customerId = $this->getCustomerByEmail($email);
-                        if ($customerId) {
-                            $data[2] = $customerId;
-                            $data[5] = '1';
-                            $query = [
-                                'parent_id' => $data[0],
-                                'post_id' => $data[1],
-                                'customer_id' => $data[2],
-                                'store_id' => $data[3],
-                                'status' => $data[4],
-                                'author_type' => $data[5],
-                                'author_nickname' => $data[6],
-                                'author_email' => $data[7],
-                                'text' => $data[8],
-                                'creation_time' => $data[9],
-                                'update_time' => $data[10],
-                            ];
-
-                        } else {
-
-                            $query = [
-                                'parent_id' => $data[0],
-                                'post_id' => $data[1],
-                                'customer_id' => $data[2],
-                                'store_id' => $data[3],
-                                'status' => $data[4],
-                                'author_type' => $data[5],
-                                'author_nickname' => $data[6],
-                                'author_email' => $data[7],
-                                'text' => $data[8],
-                                'creation_time' => $data[9],
-                                'update_time' => $data[10],
-                            ];
-
-                        }
-                        $connection->insert($tableName, $query);
-                    } /* foreach ends */
-                    $this->messageManager->addSuccess('Comment Imported Successful!');
-                    return $resultRedirect->setPath('*/*/');
-                }
-
             } else {
                 $this->messageManager->addNotice(__('Only CSV file is allowed!'));
                 return $resultRedirect->setPath('*/*/');
@@ -217,10 +141,100 @@ class Upload extends \Magento\Framework\App\Action\Action
     public function getCustomerByEmail($email)
     {
         $websiteID = $this->storemanager->getStore()->getWebsiteId();
-        $customer = $this->customer->create()->setWebsiteId($websiteID)->loadByEmail($email);
-        if ($customer->getId()) {
-            return $customer->getId();
+        $customerData = $this->customer->create()->setWebsiteId($websiteID)->loadByEmail($email);
+        if ($customerData->getId()) {
+            return $customerData->getId();
         }
         return false;
+    }
+
+    /**
+     * Import importAuthorandComment
+     *
+     * @param string $files
+     * @param string $resultRedirect
+     */
+    public function importAuthorandComment($files, $resultRedirect)
+    {
+        $connection = $this->_resource->getConnection();
+        $tmpDir = $this->_directoryList->getPath('tmp');
+        $ext = 'csv';
+        /* Author */
+        if ($files["blogCsv"]["name"] == 'Author.csv') {
+            $filePath = $tmpDir . "/Author." . $ext;
+            $csv = $this->_csv;
+            $csv->setDelimiter(',');
+            $csvData = $csv->getData($filePath);
+            $tableName = $connection->getTableName('magefan_blog_author');
+            foreach ($csvData as $row => $data) {
+                if ($row == 0) {
+                    continue;
+                }
+                $query = [
+                    'is_active' => $data[0],
+                    'firstname' => $data[1],
+                    'lastname' => $data[2],
+                    'email' => $data[3],
+                    'identifier' => strtolower($data[1]) . "-" . strtolower($data[2]),
+                ];
+                $connection->insert($tableName, $query);
+            } /* foreach ends */
+            $this->messageManager->addSuccess('Author Imported Successful!');
+            return true;
+        }
+
+        /* Comment */
+        if ($files["blogCsv"]["name"] == 'Comment.csv') {
+            $filePath = $tmpDir . "/Comment." . $ext;
+            $csv = $this->_csv;
+            $csv->setDelimiter(',');
+            $csvData = $csv->getData($filePath);
+            $tableName = $connection->getTableName('magefan_blog_comment');
+            foreach ($csvData as $row => $data) {
+                if ($row == 0) {
+                    continue;
+                }
+
+                $email = $data[7];
+                $customerId = $this->getCustomerByEmail($email);
+                if ($customerId) {
+                    $data[2] = $customerId;
+                    $data[5] = '1';
+                    $query = [
+                        'parent_id' => $data[0],
+                        'post_id' => $data[1],
+                        'customer_id' => $data[2],
+                        'store_id' => $data[3],
+                        'status' => $data[4],
+                        'author_type' => $data[5],
+                        'author_nickname' => $data[6],
+                        'author_email' => $data[7],
+                        'text' => $data[8],
+                        'creation_time' => $data[9],
+                        'update_time' => $data[10],
+                    ];
+
+                } else {
+
+                    $query = [
+                        'parent_id' => $data[0],
+                        'post_id' => $data[1],
+                        'customer_id' => $data[2],
+                        'store_id' => $data[3],
+                        'status' => $data[4],
+                        'author_type' => $data[5],
+                        'author_nickname' => $data[6],
+                        'author_email' => $data[7],
+                        'text' => $data[8],
+                        'creation_time' => $data[9],
+                        'update_time' => $data[10],
+                    ];
+
+                }
+                $connection->insert($tableName, $query);
+            } /* foreach ends */
+            $this->messageManager->addSuccess('Comment Imported Successful!');
+            return true;
+        }
     }
 }
