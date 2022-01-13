@@ -14,7 +14,9 @@ use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
 use Magento\Framework\GraphQl\Query\Resolver\ArgumentsProcessorInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Quote\Api\CartRepositoryInterface;
+use Magento\Quote\Model\Cart\Data\CartItem;
 use Magento\Quote\Model\Quote;
 use Magento\QuoteGraphQl\Model\Cart\GetCartForUser;
 use Magento\QuoteGraphQl\Model\CartItem\DataProvider\UpdateCartItems as UpdateCartItemsProvider;
@@ -46,15 +48,22 @@ class UpdateCartItems extends SourceUpdateCartItems
     private ArgumentsProcessorInterface $argsSelection;
 
     /**
+     * @var Json
+     */
+    private Json $serializer;
+
+    /**
      * @param GetCartForUser $getCartForUser
      * @param CartRepositoryInterface $cartRepository
      * @param UpdateCartItemsProvider $updateCartItems
+     * @param Json $serializer
      * @param ArgumentsProcessorInterface $argsSelection
      */
     public function __construct(
         GetCartForUser $getCartForUser,
         CartRepositoryInterface $cartRepository,
         UpdateCartItemsProvider $updateCartItems,
+        Json $serializer,
         ArgumentsProcessorInterface $argsSelection
     ) {
         parent::__construct($getCartForUser, $cartRepository, $updateCartItems, $argsSelection);
@@ -63,6 +72,7 @@ class UpdateCartItems extends SourceUpdateCartItems
         $this->cartRepository = $cartRepository;
         $this->updateCartItems = $updateCartItems;
         $this->argsSelection = $argsSelection;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -126,17 +136,41 @@ class UpdateCartItems extends SourceUpdateCartItems
                     if ($item->getParentAlfaBundle() && $item->getParentAlfaBundle() == $alfaBundle) {
                         return $item;
                     }
-
                     return false;
                 });
 
-                foreach ($bundleItemsToUpdate as $bundleItemToUpdate) {
-                    $itemToPush = [
-                        'quantity' => $bundleItemToUpdate->getQty() + $qtyToAdd,
-                        'cart_item_id' => $bundleItemToUpdate->getId()
-                    ];
+                $alfaBundleItem = $this->serializer->unserialize($alfaBundle);
 
-                    $cartItems[] = $itemToPush;
+                // Check in super_pack array to get the count of same item
+                // qty to increase * count of same item in array
+                if (isset($alfaBundleItem['super_pack']) && $alfaBundleItem['super_pack']) {
+                    // get all variant sku
+                    $allVariantSku = array_map(function ($item) {
+                        return $item['variant_sku'];
+                    }, $alfaBundleItem['super_pack']);
+
+                    // get count of same variant sku.
+                    $superPackVariantCount = array_count_values($allVariantSku);
+                    foreach ($bundleItemsToUpdate as $bundleItemToUpdate) {
+                        $itemToPush = [
+                            'quantity' =>
+                                $bundleItemToUpdate->getQty() +
+                                ($qtyToAdd * $superPackVariantCount[$bundleItemToUpdate->getSku()] ?? 1)
+                            ,
+                            'cart_item_id' => $bundleItemToUpdate->getId()
+                        ];
+
+                        $cartItems[] = $itemToPush;
+                    }
+                } else {
+                    foreach ($bundleItemsToUpdate as $bundleItemToUpdate) {
+                        $itemToPush = [
+                            'quantity' => $bundleItemToUpdate->getQty() + $qtyToAdd,
+                            'cart_item_id' => $bundleItemToUpdate->getId()
+                        ];
+
+                        $cartItems[] = $itemToPush;
+                    }
                 }
             }
         }
