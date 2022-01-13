@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="HookahShisha_Import::main_menu"
+             title="HookahShisha Import"
+             module="HookahShisha_Import"
+             sortOrder="10"
+             resource="Magento_Backend::content" />
+             
+             <add id="HookahShisha_Import::manage" 
+             title="Import blog" 
+             module="HookahShisha_Import" 
+             sortOrder="40" 
+             action="hookahshisha/Import/" 
+             resource="HookahShisha_Import::manage" 
+             parent="HookahShisha_Import::main_menu"/>
+    </menu>
+</config>
