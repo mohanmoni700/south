@@ -155,7 +155,7 @@ class UpdateCartItems extends SourceUpdateCartItems
                         $itemToPush = [
                             'quantity' =>
                                 $bundleItemToUpdate->getQty() +
-                                ($qtyToAdd * $superPackVariantCount[$bundleItemToUpdate->getSku()] ?? 1)
+                                ($qtyToAdd * ($superPackVariantCount[$bundleItemToUpdate->getSku()] ?? 1))
                             ,
                             'cart_item_id' => $bundleItemToUpdate->getId()
                         ];
