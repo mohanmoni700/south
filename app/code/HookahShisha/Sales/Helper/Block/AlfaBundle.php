@@ -33,6 +33,7 @@ class AlfaBundle
 
         $shishaSku = $alfaBundle['shisha_sku'] ?? '';
         $charcoalSku = $alfaBundle['charcoal_sku'] ?? '';
+        $superPackFlavours = $alfaBundle['super_pack_flavours'] ?? [];
         $shishaItem = $this->getBundleItemBySku($items, $shishaSku);
         $charcoalItem = $this->getBundleItemBySku($items, $charcoalSku);
         $shishaValue = $shishaItem ? $shishaItem->getProduct()->getAttributeText('flavour') : '';
@@ -51,6 +52,13 @@ class AlfaBundle
             $alfaBundleOptions[] = [
                 'label' => $item->getProduct()->getCharcoalTitle() ?? self::DEFAULT_CHARCOAL_TITLE,
                 'value' => $charcoalValue
+            ];
+        }
+
+        if ($superPackFlavours) {
+            $alfaBundleOptions[] = [
+                'label' => __('Flavours'),
+                'value' => implode(', ', $superPackFlavours)
             ];
         }
 
