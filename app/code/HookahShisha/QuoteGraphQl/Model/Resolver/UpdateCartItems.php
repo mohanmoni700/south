@@ -140,41 +140,59 @@ class UpdateCartItems extends SourceUpdateCartItems
                 });
 
                 $alfaBundleItem = $this->serializer->unserialize($alfaBundle);
-
-                // Check in super_pack array to get the count of same item
-                // qty to increase * count of same item in array
-                if (isset($alfaBundleItem['super_pack']) && $alfaBundleItem['super_pack']) {
-                    // get all variant sku
-                    $allVariantSku = array_map(function ($item) {
-                        return $item['variant_sku'];
-                    }, $alfaBundleItem['super_pack']);
-
-                    // get count of same variant sku.
-                    $superPackVariantCount = array_count_values($allVariantSku);
-                    foreach ($bundleItemsToUpdate as $bundleItemToUpdate) {
-                        $itemToPush = [
-                            'quantity' =>
-                                $bundleItemToUpdate->getQty() +
-                                ($qtyToAdd * ($superPackVariantCount[$bundleItemToUpdate->getSku()] ?? 1))
-                            ,
-                            'cart_item_id' => $bundleItemToUpdate->getId()
-                        ];
-
-                        $cartItems[] = $itemToPush;
-                    }
-                } else {
-                    foreach ($bundleItemsToUpdate as $bundleItemToUpdate) {
-                        $itemToPush = [
-                            'quantity' => $bundleItemToUpdate->getQty() + $qtyToAdd,
-                            'cart_item_id' => $bundleItemToUpdate->getId()
-                        ];
-
-                        $cartItems[] = $itemToPush;
-                    }
-                }
+                $cartItems = $this->getBundledCartItems($alfaBundleItem, $bundleItemsToUpdate, $qtyToAdd, $cartItems);
             }
         }
 
+        return $cartItems;
+    }
+
+    /**
+     * Get bundled or super pack product with updated qty
+     *
+     * @param array $alfaBundleItem
+     * @param array $bundleItemsToUpdate
+     * @param float $qtyToAdd
+     * @param array $cartItems
+     * @return array
+     */
+    private function getBundledCartItems(
+        $alfaBundleItem,
+        array $bundleItemsToUpdate,
+        float $qtyToAdd,
+        array $cartItems
+    ): array {
+        // Check in super_pack array to get the count of same item
+        // qty to increase * count of same item in array
+        if (isset($alfaBundleItem['super_pack']) && $alfaBundleItem['super_pack']) {
+            // get all variant sku
+            $allVariantSku = array_map(function ($item) {
+                return $item['variant_sku'];
+            }, $alfaBundleItem['super_pack']);
+
+            // get count of same variant sku.
+            $superPackVariantCount = array_count_values($allVariantSku);
+            foreach ($bundleItemsToUpdate as $bundleItemToUpdate) {
+                $itemToPush = [
+                    'quantity' =>
+                        $bundleItemToUpdate->getQty() +
+                        ($qtyToAdd * ($superPackVariantCount[$bundleItemToUpdate->getSku()] ?? 1))
+                    ,
+                    'cart_item_id' => $bundleItemToUpdate->getId()
+                ];
+
+                $cartItems[] = $itemToPush;
+            }
+        } else {
+            foreach ($bundleItemsToUpdate as $bundleItemToUpdate) {
+                $itemToPush = [
+                    'quantity' => $bundleItemToUpdate->getQty() + $qtyToAdd,
+                    'cart_item_id' => $bundleItemToUpdate->getId()
+                ];
+
+                $cartItems[] = $itemToPush;
+            }
+        }
         return $cartItems;
     }
 }
