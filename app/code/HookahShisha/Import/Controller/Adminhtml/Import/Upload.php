@@ -95,7 +95,6 @@ class Upload extends \Magento\Framework\App\Action\Action
         $post = $this->getRequest()->getPost();
         $resultRedirect = $this->resultRedirectFactory->create();
         $files = $this->request->getFiles()->toArray(); // same as $_FIELS
-        $mimes = ['application/vnd.ms-excel', 'text/plain', 'text/csv', 'text/tsv'];
         if ($post && isset($files) && $files["blogCsv"]["error"] == 0) {
             if ($files["blogCsv"]["name"] == 'Comment.csv' || $files["blogCsv"]["name"] == 'Author.csv') {
                 try {
