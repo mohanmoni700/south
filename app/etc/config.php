@@ -197,9 +197,6 @@ return [
                     'theme' => [
                         'theme_id' => 'frontend/Corra/alfakher',
                     ],
-                    'email' => [
-                        'logo' => 'stores/1/logo.png',
-                    ],
                 ],
             ],
         ],
