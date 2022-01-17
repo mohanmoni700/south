@@ -2,10 +2,15 @@
 namespace HookahShisha\Import\Controller\Adminhtml\Import;
 
 use Magento\Customer\Model\CustomerFactory;
+use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\App\ResourceConnection;
+use Magento\Framework\Filesystem;
 use Magento\Framework\File\Csv;
 use Magento\Framework\HTTP\PhpEnvironment\Request;
 use Magento\Framework\Json\Helper\Data as JsonHelper;
+use Magento\Framework\Message\ManagerInterface;
+use Magento\MediaStorage\Model\File\UploaderFactory;
 use Magento\Store\Model\StoreManagerInterface;
 
 /**
@@ -62,17 +67,17 @@ class Upload extends \Magento\Framework\App\Action\Action
      * @param UploaderFactory $_uploaderFactory
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
+        Context $context,
         Csv $csv,
         DirectoryList $directoryList,
-        \Magento\Framework\Message\ManagerInterface $messageManager,
+        ManagerInterface $messageManager,
         JsonHelper $jsonHelper,
-        \Magento\Framework\App\ResourceConnection $resource,
+        ResourceConnection $resource,
         CustomerFactory $customer,
         StoreManagerInterface $storemanager,
         Request $request,
-        \Magento\Framework\Filesystem $filesystem,
-        \Magento\MediaStorage\Model\File\UploaderFactory $_uploaderFactory
+        Filesystem $filesystem,
+        UploaderFactory $_uploaderFactory
     ) {
         $this->_csv = $csv;
         $this->_directoryList = $directoryList;
