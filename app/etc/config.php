@@ -699,6 +699,7 @@ return [
         'Fastly_Cdn' => 1,
         'HookahShisha_Catalog' => 1,
         'HookahShisha_CatalogImportExport' => 1,
+        'HookahShisha_Import' => 1,
         'HookahShisha_InvoiceCapture' => 1,
         'HookahShisha_Migration' => 1,
         'HookahShisha_Order' => 1,
