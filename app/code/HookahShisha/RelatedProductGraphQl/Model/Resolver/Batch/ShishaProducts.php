@@ -9,12 +9,12 @@ declare(strict_types=1);
 namespace HookahShisha\RelatedProductGraphQl\Model\Resolver\Batch;
 
 use HookahShisha\Catalog\Model\Product\Link;
-use Magento\RelatedProductGraphQl\Model\Resolver\Batch\AbstractLikedProducts;
+use HookahShisha\RelatedProductGraphQl\Model\Resolver\Batch\AbstractLikedShishaCharcoalProducts;
 
 /**
  * Shisha Products Resolver
  */
-class ShishaProducts extends AbstractLikedProducts
+class ShishaProducts extends AbstractLikedShishaCharcoalProducts
 {
     /**
      * @inheritDoc

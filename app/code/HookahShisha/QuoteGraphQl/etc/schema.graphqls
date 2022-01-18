@@ -6,10 +6,16 @@
 
 input CartItemInput {
     alfa_bundle: String @doc(description: "Stringified json object containing shisha and charcoal product sku's")
-    in_alfa_bundle: Boolean @doc(description: "To quickly determine if the product belongs to alfa bundle")
+    parent_alfa_bundle: String @doc(description: "Stringified json object containing shisha and charcoal product sku's")
 }
 
 type ConfigurableCartItem {
+    alfa_bundle_flavour: String @doc(description: "Selected shisha product falvour")
+    alfa_bundle_charcoal: String @doc(description: "Selected chracoal product description")
+}
+
+type SimpleCartItem {
+    super_pack_flavour: [String] @doc(description: "All the selected flavour")
     alfa_bundle_flavour: String @doc(description: "Selected shisha product falvour")
     alfa_bundle_charcoal: String @doc(description: "Selected chracoal product description")
 }

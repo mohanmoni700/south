@@ -27,7 +27,7 @@ class AlfaBundleToOrderItem
      * @return Item
      */
     public function aroundConvert(
-        ToOrderItem $subject,
+        ToOrderItem $subject, // NOSONAR
         Closure $proceed,
         AbstractItem $item,
         array $additional = []
@@ -35,7 +35,7 @@ class AlfaBundleToOrderItem
         /** @var $orderItem Item */
         $orderItem = $proceed($item, $additional);
         $orderItem->setAlfaBundle($item->getAlfaBundle());
-        $orderItem->setInAlfaBundle($item->getInAlfaBundle());
+        $orderItem->setParentAlfaBundle($item->getParentAlfaBundle());
 
         return $orderItem;
     }

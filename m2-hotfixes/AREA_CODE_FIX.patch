@@ -1,0 +1,33 @@
+diff --git a/vendor/magento/module-payment/Helper/Data.php    b/vendor/magento/module-payment/Helper/Data.php
+--- a/vendor/magento/module-payment/Helper/Data.php	2022-01-05 10:38:32.000000000 +0530
++++ b/vendor/magento/module-payment/Helper/Data.php	2022-01-05 10:38:23.000000000 +0530
+@@ -39,6 +39,11 @@
+     protected $_layout;
+
+     /**
++     * @var LayoutFactory
++     */
++    private $layoutFactory;
++
++    /**
+      * Factory for payment method models
+      *
+      * @var \Magento\Payment\Model\Method\Factory
+@@ -76,7 +81,7 @@
+         \Magento\Framework\App\Config\Initial $initialConfig
+     ) {
+         parent::__construct($context);
+-        $this->_layout = $layoutFactory->create();
++        $this->layoutFactory = $layoutFactory;
+         $this->_methodFactory = $paymentMethodFactory;
+         $this->_appEmulation = $appEmulation;
+         $this->_paymentConfig = $paymentConfig;
+@@ -183,7 +188,7 @@
+      */
+     public function getInfoBlock(InfoInterface $info, LayoutInterface $layout = null)
+     {
+-        $layout = $layout ?: $this->_layout;
++        $layout = $layout ?: $this->layoutFactory->create();
+         $blockType = $info->getMethodInstance()->getInfoBlockType();
+         $block = $layout->createBlock($blockType);
+         $block->setInfo($info);

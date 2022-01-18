@@ -14,6 +14,7 @@ use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
 use Magento\Framework\GraphQl\Query\Uid;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Quote\Model\Quote;
 use Magento\Quote\Model\Quote\Item as QuoteItem;
 use Magento\QuoteGraphQl\Model\Cart\GetCartProducts;
@@ -36,11 +37,18 @@ class CartItems extends SourceCartItems
     private ProductRepositoryInterface $productRepository;
 
     /**
+     * @var Json
+     */
+    private Json $serializer;
+
+    /**
+     * @param Json $serializer
      * @param GetCartProducts $getCartProducts
      * @param Uid $uidEncoder
      * @param ProductRepositoryInterface $productRepository
      */
     public function __construct(
+        Json $serializer,
         GetCartProducts $getCartProducts,
         Uid $uidEncoder,
         ProductRepositoryInterface $productRepository
@@ -50,6 +58,7 @@ class CartItems extends SourceCartItems
         $this->getCartProducts = $getCartProducts;
         $this->uidEncoder = $uidEncoder;
         $this->productRepository = $productRepository;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -80,13 +89,13 @@ class CartItems extends SourceCartItems
             $alfaBundle = $cartItem->getAlfaBundle();
             $shishaSku = '';
             $charcoalSku = '';
-
+            $superPack = '';
             if ($alfaBundle) {
-                $alfaBundle = json_decode($alfaBundle, true);
-                $shishaSku = $alfaBundle['shisha_sku'];
-                $charcoalSku = $alfaBundle['charcoal_sku'];
+                $alfaBundle = $this->serializer->unserialize($alfaBundle);
+                $shishaSku = $alfaBundle['shisha_sku'] ?? null;
+                $charcoalSku = $alfaBundle['charcoal_sku'] ?? null;
+                $superPack = $alfaBundle['super_pack_flavours'] ?? null;
             }
-
             if (!isset($cartProductsData[$productId])) {
                 $itemsData[] = new GraphQlNoSuchEntityException(
                     __("The product that was requested doesn't exist. Verify the product and try again.")
@@ -98,6 +107,8 @@ class CartItems extends SourceCartItems
             $flavour = $shishaSku ? $this->getBundleProductAttribute($shishaSku): '';
             $charcoalDescription = $charcoalSku
                 ? $this->getBundleProductAttribute($charcoalSku, true): '';
+            $superPackFlavourList = is_array($superPack)
+                ? $superPack : [];
 
             $itemsData[] = [
                 'id' => $cartItem->getItemId(),
@@ -106,7 +117,8 @@ class CartItems extends SourceCartItems
                 'product' => $productData,
                 'model' => $cartItem,
                 'alfa_bundle_flavour' => $flavour,
-                'alfa_bundle_charcoal' => $charcoalDescription
+                'alfa_bundle_charcoal' => $charcoalDescription,
+                'super_pack_flavour' => $superPackFlavourList
             ];
         }
 
@@ -122,7 +134,7 @@ class CartItems extends SourceCartItems
     private function filterOutAlfaBundleProducts(array $cartItems): array
     {
         return array_filter($cartItems, function ($item) {
-            if ($item->getInAlfaBundle() == '1') {
+            if ($item->getParentAlfaBundle()) {
                 return false;
             }
 

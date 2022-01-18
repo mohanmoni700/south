@@ -11,6 +11,10 @@
     <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
         <plugin name="alfa_bundle_to_order_item" type="HookahShisha\Sales\Model\Plugin\Quote\AlfaBundleToOrderItem"/>
     </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer">
+        <plugin name="avalara_order_view_information" disabled="true" />
+        <plugin name="avalara_order_view_information_fixed" type="HookahShisha\Sales\Model\Plugin\DefaultRendererPlugin" sortOrder="1" />
+    </type>
 
     <preference for="Magento\Sales\Block\Order\Email\Items\DefaultItems"
                 type="HookahShisha\Sales\Block\Order\Email\Items\DefaultItems"/>
