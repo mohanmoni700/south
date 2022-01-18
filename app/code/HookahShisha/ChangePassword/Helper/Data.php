@@ -16,10 +16,38 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
 
     public function CustomerLogin()
     {
-        $isLoggedIn = $this->httpContext->getValue(\Magento\Customer\Model\Context::CONTEXT_AUTH);
-
-        if ($isLoggedIn) {
+        if ($this->_customerSession->isLoggedIn()) {
             return $this->_customerSession;
         }
+    }
+
+    /**
+     * Checking customer login status
+     *
+     * @return bool
+     */
+    public function customerLoggedIn()
+    {
+        return (bool) $this->httpContext->getValue(\Magento\Customer\Model\Context::CONTEXT_AUTH);
+    }
+
+    /**
+     * Checking customer FirstName
+     *
+     * @return string
+     */
+    public function customerFirstName()
+    {
+        return $this->httpContext->getValue('firstname');
+    }
+
+    /**
+     * Checking customer LastName
+     *
+     * @return string
+     */
+    public function customerLastName()
+    {
+        return $this->httpContext->getValue('lastname');
     }
 }
