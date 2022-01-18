@@ -442,7 +442,7 @@ return [
         'Magento_InventoryInStorePickupAdminUi' => 0,
         'Magento_InventorySourceSelectionApi' => 0,
         'Magento_InventoryInStorePickup' => 0,
-        'Magento_InventoryInStorePickupGraphQl' => 1,
+        'Magento_InventoryInStorePickupGraphQl' => 0,
         'Magento_Shipping' => 1,
         'Magento_InventoryInStorePickupShippingApi' => 0,
         'Magento_InventoryInStorePickupQuoteGraphQl' => 0,
