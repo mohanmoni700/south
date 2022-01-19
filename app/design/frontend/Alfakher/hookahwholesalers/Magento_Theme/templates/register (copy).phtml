@@ -14,18 +14,14 @@
      <!--  <a class= "header_account_link" href="<?php //echo $this->getUrl("customer/account/login");?>"><?php //echo __('Sign in')?></a> -->
      <span class="sign-up"><?php echo __('Sign in/Sign Up')?></span>
         <ul class="sign-up-ul" style="display: none;">
-           <li class="guest-heading"><span class="guest-content-heading">Weclome Guest</span></li>
-           <li class="guest-content">
-              <span class="content-main">
-               <span class="content-item content-link"><a class= "sign_in_link" href="<?php echo $this->getUrl("customer/account/login");?>"><?php echo __('Sign in')?></a></span>
-               <span class="content-item content-text">or</span>
-               <span class="content-item content-link"><a class= "create_an_account_link" href="<?php echo $this->getUrl("customer/account/create");?>"><?php echo __('Sign Up')?></a></span>
-              </span>
-            </li>
+           <li>Weclome Guest</li>
+           <li><a class= "sign_in_link" href="<?php echo $this->getUrl("customer/account/login");?>"><?php echo __('Sign in')?></a></li>
+           <li><a class= "create_an_account_link" href="<?php echo $this->getUrl("customer/account/create");?>"><?php echo __('Sign Up')?></a></li>
         </ul>
      </div>
       <?php
    }
+
 ?>
 <script>
 require(['jquery'], function($){
