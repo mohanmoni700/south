@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block Magento\Sales\Block\Order\Email\Shipment\Items */
+?>
+<?php $_shipment = $block->getShipment() ?>
+<?php $_order    = $block->getOrder() ?>
+<?php if ($_shipment && $_order) : ?>
+    <table class="email-items" aria-label="Shipment email template items">
+        <thead>
+        <tr>
+            <th id="item-info" class="item-info">
+                <?= $block->escapeHtml(__('Items')) ?>
+            </th>
+            <th id="item-qty" class="item-qty">
+                <?= $block->escapeHtml(__('Qty')) ?>
+            </th>
+        </tr>
+        </thead>
+        <?php foreach ($_shipment->getAllItems() as $_item) : ?>
+            <?php if (!$_item->getOrderItem()->getParentItem() && !$_item->getOrderItem()->getParentAlfaBundle()) : ?>
+                <tbody>
+                    <?= $block->getItemHtml($_item) ?>
+                </tbody>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </table>
+<?php endif; ?>

@@ -60,14 +60,14 @@ $allowedAddressHtmlTags = ['b', 'br', 'em', 'i', 'li', 'ol', 'p', 'strong', 'sub
                 </span>
             </div>
             <div class="admin__page-section-item-content">
-                <table class="admin__table-secondary order-information-table">
+                <table class="admin__table-secondary order-information-table" role="none">
                     <tr>
-                        <th><?= $block->escapeHtml(__('Order Date')) ?></th>
+                        <th scope="row"><?= $block->escapeHtml(__('Order Date')) ?></th>
                         <td><?= $block->escapeHtml($orderAdminDate) ?></td>
                     </tr>
                     <?php if ($orderAdminDate != $orderStoreDate): ?>
                         <tr>
-                            <th>
+                            <th scope="row">
                                 <?= $block->escapeHtml(
                                     __(
                                         'Order Date (%1)',
@@ -79,19 +79,19 @@ $allowedAddressHtmlTags = ['b', 'br', 'em', 'i', 'li', 'ol', 'p', 'strong', 'sub
                         </tr>
                     <?php endif;?>
                     <tr>
-                        <th><?= $block->escapeHtml(__('Order Status')) ?></th>
+                        <th scope="row"><?= $block->escapeHtml(__('Order Status')) ?></th>
                         <td><span id="order_status"><?= $block->escapeHtml($order->getStatusLabel()) ?></span></td>
                     </tr>
                     <?= $block->getChildHtml() ?>
                     <?php if ($block->isSingleStoreMode() == false): ?>
                         <tr>
-                            <th><?= $block->escapeHtml(__('Purchased From')) ?></th>
+                            <th scope="row"><?= $block->escapeHtml(__('Purchased From')) ?></th>
                             <td><?= $block->escapeHtml($block->getOrderStoreName(), ['br']) ?></td>
                         </tr>
                     <?php endif; ?>
                     <?php if ($order->getRelationChildId()): ?>
                         <tr>
-                            <th><?= $block->escapeHtml(__('Link to the New Order')) ?></th>
+                            <th scope="row"><?= $block->escapeHtml(__('Link to the New Order')) ?></th>
                             <td>
                                 <a href="<?= $block->escapeUrl($block->getViewUrl($order->getRelationChildId())) ?>">
                                     <?= $block->escapeHtml($order->getRelationChildRealId()) ?>
@@ -101,7 +101,7 @@ $allowedAddressHtmlTags = ['b', 'br', 'em', 'i', 'li', 'ol', 'p', 'strong', 'sub
                     <?php endif; ?>
                     <?php if ($order->getRelationParentId()): ?>
                         <tr>
-                            <th><?= $block->escapeHtml(__('Link to the Previous Order')) ?></th>
+                            <th scope="row"><?= $block->escapeHtml(__('Link to the Previous Order')) ?></th>
                             <td>
                                 <a href="<?= $block->escapeUrl($block->getViewUrl($order->getRelationParentId())) ?>">
                                     <?= $block->escapeHtml($order->getRelationParentRealId()) ?>
@@ -111,7 +111,7 @@ $allowedAddressHtmlTags = ['b', 'br', 'em', 'i', 'li', 'ol', 'p', 'strong', 'sub
                     <?php endif; ?>
                     <?php if ($order->getRemoteIp() && $block->shouldDisplayCustomerIp()): ?>
                         <tr>
-                            <th><?= $block->escapeHtml(__('Placed from IP')) ?></th>
+                            <th scope="row"><?= $block->escapeHtml(__('Placed from IP')) ?></th>
                             <td>
                                 <?= $block->escapeHtml($order->getRemoteIp()); ?>
 
@@ -122,7 +122,7 @@ $allowedAddressHtmlTags = ['b', 'br', 'em', 'i', 'li', 'ol', 'p', 'strong', 'sub
                     <?php endif; ?>
                     <?php if ($globalCurrencyCode !== $baseCurrencyCode): ?>
                         <tr>
-                            <th>
+                            <th scope="row">
                                 <?= $block->escapeHtml(
                                     __(
                                         '%1 / %2 rate:',
@@ -139,7 +139,7 @@ $allowedAddressHtmlTags = ['b', 'br', 'em', 'i', 'li', 'ol', 'p', 'strong', 'sub
                         $globalCurrencyCode !==
                         $orderCurrencyCode): ?>
                         <tr>
-                            <th>
+                            <th scope="row">
                                 <?= $block->escapeHtml(
                                     __('%1 / %2 rate:', $orderCurrencyCode, $baseCurrencyCode)
                                 ) ?>
@@ -148,7 +148,7 @@ $allowedAddressHtmlTags = ['b', 'br', 'em', 'i', 'li', 'ol', 'p', 'strong', 'sub
                         </tr>
                     <?php endif; ?>
                     <tr>
-                        <th><?= $block->escapeHtml(__('Consent verified')) ?></th>
+                        <th scope="row"><?= $block->escapeHtml(__('Consent verified')) ?></th>
                         <td>
                             <?php if ($order->getData('alfa_consent')): ?>
                                 <?= $escaper->escapeHtml(__('Yes')) ?>
@@ -167,19 +167,19 @@ $allowedAddressHtmlTags = ['b', 'br', 'em', 'i', 'li', 'ol', 'p', 'strong', 'sub
                 <span class="title"><?= $block->escapeHtml(__('Account Information')) ?></span>
                 <div class="actions">
                     <?php if ($customerUrl): ?>
-                        <a href="<?= /* @noEscape */ $customerUrl ?>" target="_blank">
+                        <a href="<?= /* @noEscape */ $customerUrl ?>" target="_blank"  rel="noopener">
                             <?= $block->escapeHtml(__('Edit Customer')) ?>
                         </a>
                     <?php endif; ?>
                 </div>
             </div>
             <div class="admin__page-section-item-content">
-                <table class="admin__table-secondary order-account-information-table">
+                <table class="admin__table-secondary order-account-information-table" role="none">
                     <tr>
-                        <th><?= $block->escapeHtml(__('Customer Name')) ?></th>
+                        <th scope="row"><?= $block->escapeHtml(__('Customer Name')) ?></th>
                         <td>
                             <?php if ($customerUrl): ?>
-                                <a href="<?= $block->escapeUrl($customerUrl) ?>" target="_blank">
+                                <a href="<?= $block->escapeUrl($customerUrl) ?>" target="_blank" rel="noopener">
                                     <span><?= $block->escapeHtml($order->getCustomerName()) ?></span>
                                 </a>
                             <?php else: ?>
@@ -188,7 +188,7 @@ $allowedAddressHtmlTags = ['b', 'br', 'em', 'i', 'li', 'ol', 'p', 'strong', 'sub
                         </td>
                     </tr>
                     <tr>
-                        <th><?= $block->escapeHtml(__('Email')) ?></th>
+                        <th scope="row"><?= $block->escapeHtml(__('Email')) ?></th>
                         <td>
                             <a href="mailto:
                             <?= $block->escapeHtmlAttr($order->getCustomerEmail()) ?>">
@@ -198,13 +198,13 @@ $allowedAddressHtmlTags = ['b', 'br', 'em', 'i', 'li', 'ol', 'p', 'strong', 'sub
                     </tr>
                     <?php if ($groupName = $block->getCustomerGroupName()): ?>
                         <tr>
-                            <th><?= $block->escapeHtml(__('Customer Group')) ?></th>
+                            <th scope="row"><?= $block->escapeHtml(__('Customer Group')) ?></th>
                             <td><?= $block->escapeHtml($groupName) ?></td>
                         </tr>
                     <?php endif; ?>
                     <?php foreach ($block->getCustomerAccountData() as $data): ?>
                         <tr>
-                            <th><?= $block->escapeHtml($data['label']) ?></th>
+                            <th scope="row"><?= $block->escapeHtml($data['label']) ?></th>
                             <td><?= $block->escapeHtml($data['value'], ['br']) ?></td>
                         </tr>
                     <?php endforeach;?>

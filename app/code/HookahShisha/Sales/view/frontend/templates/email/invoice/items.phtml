@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Sales\Block\Order\Email\Invoice\Items */
+?>
+<?php $_invoice = $block->getInvoice() ?>
+<?php $_order   = $block->getOrder() ?>
+<?php if ($_invoice && $_order) : ?>
+    <table class="email-items" aria-label="Invoice email template items">
+        <thead>
+        <tr>
+            <th id="item-info" class="item-info">
+                <?= $block->escapeHtml(__('Items')) ?>
+            </th>
+            <th id="item-qty" class="item-qty">
+                <?= $block->escapeHtml(__('Qty')) ?>
+            </th>
+            <th id="item-subtotal" class="item-subtotal">
+                <?= $block->escapeHtml(__('Subtotal')) ?>
+            </th>
+        </tr>
+        </thead>
+        <?php foreach ($_invoice->getAllItems() as $_item) : ?>
+            <?php if (!$_item->getOrderItem()->getParentItem() && !$_item->getOrderItem()->getParentAlfaBundle()) : ?>
+                <tbody>
+                    <?= $block->getItemHtml($_item) ?>
+                </tbody>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        <tfoot class="order-totals">
+            <?= $block->getChildHtml('invoice_totals') ?>
+        </tfoot>
+    </table>
+<?php endif; ?>

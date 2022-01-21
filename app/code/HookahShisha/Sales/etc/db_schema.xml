@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  HookahShisha
+ * @package   HookahShisha_Sales
+ * @author    Janis Verins <info@corra.com>
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sales_order_item" resource="sales" engine="innodb" comment="Sales Flat Order Item">
+        <column xsi:type="text" name="alfa_bundle" nullable="true" comment="Alfa Bundle Product skus"/>
+        <column xsi:type="text" name="parent_alfa_bundle" nullable="true" comment="Parent Alfa Bundle Product skus"/>
+    </table>
+</schema>

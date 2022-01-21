@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="hookah_shisha" translate="label" sortOrder="920">
+            <label>HookahShisha</label>
+        </tab>
+        <section id="invoice_capture" translate="label" sortOrder="150" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <class>separator-top</class>
+            <label>Invoice Capture Settings</label>
+            <tab>hookah_shisha</tab>
+            <resource>HookahShisha_InvoiceCapture::config</resource>
+            <group id="settings" translate="label" type="text" sortOrder="10"
+                   showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>SETTINGS</label>
+                <field id="enabled" translate="label comment" type="select" sortOrder="10"
+                       showInDefault="1" showInWebsite="0" showInStore="1">
+                    <label>Enable Integration</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="cron_enabled" translate="label comment" type="select" sortOrder="20"
+                       showInDefault="1" showInWebsite="0" showInStore="1" canRestore="1">
+                    <label>Enable Cron</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="cron_expr" translate="label comment" type="text" sortOrder="25" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Cron Expression</label>
+                    <comment>
+                        <![CDATA[
+                            * * * * * command to be executed <br />
+                            | | | | | <br />
+                            | | | | +-----  Day of week (0 - 7) (Sunday=0 or 7) <br />
+                            | | | | <br />
+                            | | | +-------  Month (1 - 12) <br />
+                            | | | <br />
+                            | | +---------  Day of month (1 - 31) <br />
+                            | | <br />
+                            | +-----------  Hour (0 - 23) <br />
+                            | <br />
+                            +-------------  Minute (0 - 59) <br />
+                        ]]>
+                    </comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="cron_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="batch_size" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Batch Size</label>
+                    <comment>Specify the Batch size for the Invoice Capture (Default value is setting as 50)</comment>
+                    <validate>required-entry validate-digits</validate>
+                    <depends>
+                        <field id="cron_enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
