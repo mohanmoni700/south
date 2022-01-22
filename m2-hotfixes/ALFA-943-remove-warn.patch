@@ -1,0 +1,27 @@
+Index: vendor/magento/module-cms/Model/Wysiwyg/Validator.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vendor/magento/module-cms/Model/Wysiwyg/Validator.php b/vendor/magento/module-cms/Model/Wysiwyg/Validator.php
+--- a/vendor/magento/module-cms/Model/Wysiwyg/Validator.php	
++++ b/vendor/magento/module-cms/Model/Wysiwyg/Validator.php	(date 1642883082920)
+@@ -80,18 +80,6 @@
+         } catch (ValidationException $exception) {
+             if ($throwException) {
+                 throw $exception;
+-            } else {
+-                $this->messages->addUniqueMessages(
+-                    [
+-                        $this->messageFactory->create(
+-                            MessageInterface::TYPE_WARNING,
+-                            (string)__(
+-                                'Temporarily allowed to save HTML value that contains restricted elements. %1',
+-                                $exception->getMessage()
+-                            )
+-                        )
+-                    ]
+-                );
+             }
+         } catch (\Throwable $exception) {
+             if ($throwException) {
