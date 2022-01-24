@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5c64b22b1adac4497e1094b0fce7931e",
+    "content-hash": "be84d86c2edc7ed32d8b5452dcd5bfef",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -23426,6 +23426,109 @@
                 "source": "https://github.com/mageplaza/magento-2-product-labels-graphql/tree/master"
             },
             "time": "2020-03-09T10:04:22+00:00"
+        },
+        {
+            "name": "mageworx/module-info",
+            "version": "1.1.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/mageworx/module-info/mageworx-module-info-1.1.1.0.zip",
+                "shasum": "da24911b8d6a2b2f4b9d13acb6367ae70901806d"
+            },
+            "require": {
+                "magento/module-catalog": ">=100.0.0 <105",
+                "magento/module-cms": ">=100.0.0 <105"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "MageWorx\\Info\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "MageWorx Notifications & Extensions List"
+        },
+        {
+            "name": "mageworx/module-ordereditorbase",
+            "version": "2.11.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/mageworx/module-ordereditorbase/mageworx-module-ordereditorbase-2.11.3.0.zip",
+                "shasum": "7abc9500908bb4e03bc360ee9da01abd7adb25a8"
+            },
+            "require": {
+                "ext-intl": "*",
+                "ext-json": "*",
+                "magento/framework": ">=102.0.0",
+                "magento/module-checkout": ">=100.2.2 <101",
+                "magento/module-quote": ">=101.0.2 <102",
+                "magento/module-sales": ">=101.0.2 <104",
+                "mageworx/module-ordersbase": ">=1.1.1"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "MageWorx\\OrderEditor\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Order Editor module for Magento 2"
+        },
+        {
+            "name": "mageworx/module-ordereditormeta",
+            "version": "1.8.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/mageworx/module-ordereditormeta/mageworx-module-ordereditormeta-1.8.4.0.zip",
+                "shasum": "4846e21c38d9a13e8475339ec46262bc4c082ca8"
+            },
+            "require": {
+                "mageworx/module-info": ">=1.0.0",
+                "mageworx/module-ordereditorbase": "2.11.3",
+                "mageworx/module-ordersbase": "2.0.0"
+            },
+            "type": "metapackage"
+        },
+        {
+            "name": "mageworx/module-ordersbase",
+            "version": "2.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/mageworx/module-ordersbase/mageworx-module-ordersbase-2.0.0.0.zip",
+                "shasum": "179d8f9a0bb017cffee74d79cd4a03308b46edf9"
+            },
+            "require": {
+                "magento/framework": ">=102.0.0",
+                "magento/module-checkout": ">=100.2.2 <101",
+                "magento/module-quote": ">=101.0.2 <102",
+                "magento/module-sales": ">=101.0.2 <104"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "MageWorx\\OrdersBase\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Extended Orders module for the Magento 2"
         },
         {
             "name": "monolog/monolog",
