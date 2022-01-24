@@ -172,13 +172,15 @@ class Quote extends SourceQuote
         $this->_eventManager->dispatch('sales_quote_product_add_after', ['items' => $items]);
         return $parentItem;
     }
+
     /**
      * Merge quotes
      *
      * @param SourceQuote $quote
      * @return $this
+     * @throws LocalizedException
      */
-    public function merge(SourceQuote $quote)
+    public function merge(SourceQuote $quote): Quote //NOSONAR
     {
         $this->_eventManager->dispatch(
             $this->_eventPrefix . '_merge_before',
@@ -188,9 +190,13 @@ class Quote extends SourceQuote
         foreach ($quote->getAllVisibleItems() as $item) {
             $found = false;
             foreach ($this->getAllItems() as $quoteItem) {
-                // merge the product with same bundled superpack(only for main product)
+                // Merge the product with the same bundled superpack(only for main product) or
+                // merge the product with the same parent alfa bundle value.
                 // ex: superpack with red, green, blue should not be merged green, red
-                if ($quoteItem->compare($item) && ($item->getAlfaBundle() == $quoteItem->getAlfaBundle())) {
+                if ($quoteItem->compare($item)
+                    && $item->getAlfaBundle() == $quoteItem->getAlfaBundle()
+                    && $item->getParentAlfaBundle() == $quoteItem->getParentAlfaBundle()
+                ) {
                     $quoteItem->setQty($quoteItem->getQty() + $item->getQty());
                     $this->itemProcessor->merge($item, $quoteItem);
                     $found = true;
