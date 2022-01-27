@@ -1,0 +1,18 @@
+<!--@subject {{trans "This is the new Customer Registraction Detail."}} @-->
+{{template config_path="design/email/header_template"}}
+<h3>{{var desc}}</h3>
+<br><br>
+<table class="message-details" style="width:100%" border="8" cellspacing="5" cellpadding="5" align="center">
+    <tr>
+        <td><strong>Customer Id :- </strong></td>
+        <td>{{var id}}</td>
+    </tr>
+    <tr>
+        <td><strong>Customer Email :- </strong></td>
+        <td>{{var email}}</td>
+    </tr>
+</table>
+<br><br>
+<p>This is the System Generated email.</p>
+
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,13 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+
+
+        <container name="cart.discount" label="Cart Discount Container" htmlTag="div" htmlClass="cart-discount" after="-" />
+
+        <move element="checkout.cart.coupon" destination="cart.discount" />
+        <move element="cart.discount" destination="checkout.cart.container" />
+    	<referenceBlock name="checkout.cart.order.actions.gift_options" remove="true" />
+    	<referenceBlock name="checkout.cart.giftcardaccount" remove="true" />
+        <referenceBlock name="checkout.cart.item.renderers.default.actions" remove="true" />
+    </body>
+</page>

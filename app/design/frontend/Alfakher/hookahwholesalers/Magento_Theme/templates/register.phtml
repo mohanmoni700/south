@@ -4,34 +4,55 @@
  * See COPYING.txt for license details.
  */
 ?>
- <?php 
-   $helper = $this->helper('HookahShisha\CheckCustomerLogin\Helper\Data');
-   $values = $helper->CustomerLogin();
-   if($values == true){?>
-     <a class= "header_account_link" href="<?php echo $this->getUrl("customer/account/logout");?>"><?php echo __('My Account')?></a><?php
-   }else{?>
+<?php $helper = $this->helper('HookahShisha\ChangePassword\Helper\Data'); ?>
+<?php if($helper->customerLoggedIn()): ?>
+    <?php $values = $helper->CustomerLogin(); ?>
+    <?php $name = $helper->customerFirstName(); ?>
+    <div class="sign-in">
+        <span class="sign-up"><?php echo __('My Account')?></span>
+        <!-- <a class= "header_account_link" href="<?php //echo $this->getUrl("customer/account/logout");?>"><?php //echo __('My Account')?></a> -->
+        <ul class="sign-up-ul customer_logged_in" style="display: none;">
+            <li class="guest-heading"><span class="guest-content-heading">Welcome, <?php echo $name; ?>  </span></li>
+            <li class="guest-content">
+                <span class="content-main my_account">
+                    <span class="content-item content-link"><a class= "create_an_account_link" href="<?php echo $this->getUrl("customer/account/");?>"><?php echo __('My Account')?></a></span>
+                    <span class="content-item content-link">
+                        <a class= "sign_in_link" href="<?php echo $this->getUrl("customer/account/logout");?>"><?php echo __('Logout')?></a>
+                    </span>                  
+                </span>
+            </li>
+         </ul>
+         <div class="sign_in_overlay"></div>
+   </div>
+<?php else: ?>
      <div class="sign-in">
      <!--  <a class= "header_account_link" href="<?php //echo $this->getUrl("customer/account/login");?>"><?php //echo __('Sign in')?></a> -->
      <span class="sign-up"><?php echo __('Sign in/Sign Up')?></span>
         <ul class="sign-up-ul" style="display: none;">
-           <li class="guest-heading"><span class="guest-content-heading">Weclome Guest</span></li>
-           <li class="guest-content">
-              <span class="content-main">
-               <span class="content-item content-link"><a class= "sign_in_link" href="<?php echo $this->getUrl("customer/account/login");?>"><?php echo __('Sign in')?></a></span>
-               <span class="content-item content-text">or</span>
-               <span class="content-item content-link"><a class= "create_an_account_link" href="<?php echo $this->getUrl("customer/account/create");?>"><?php echo __('Sign Up')?></a></span>
-              </span>
+            <li class="guest-heading"><span class="guest-content-heading">Welcome Guest!</span></li>
+            <li class="guest-content">
+                <span class="content-main">
+                    <span class="content-item content-link">
+                        <a class= "sign_in_link" href="<?php echo $this->getUrl("customer/account/login");?>"><?php echo __('Sign in')?></a>
+                    </span>
+                    <span class="content-item content-text">or</span>
+                    <span class="content-item content-link"><a class= "create_an_account_link" href="<?php echo $this->getUrl("customer/account/create");?>"><?php echo __('Create an account')?></a></span>
+                </span>
             </li>
         </ul>
+        <div class="sign_in_overlay"></div>
      </div>
-      <?php
-   }
-?>
+<?php endif; ?>
 <script>
 require(['jquery'], function($){
     $(document).ready(function(){
-        $('.sign-up').click(function(){
+        $('.sign-in').click(function(e){
              $('.sign-up-ul').toggle();
+             $('.sign_in_overlay').toggle();
+        });
+        $(document).on('click','.sign_in_overlay',function(){
+         $('.sign-up-ul').hide();
+         $(this).hide();
         });
     });
 });

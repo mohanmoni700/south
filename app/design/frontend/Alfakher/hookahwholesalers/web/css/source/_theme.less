@@ -14,5 +14,151 @@
 //  Form field note icon
 @form-field-note-icon-font__content: false;
 
-@font-family-name__base: @montserrat_regular;
+@font-family-name__base: @montserrat;
 @font-family__base: @font-family-name__base, @font-family__sans-serif;
+
+
+
+
+// button style
+@button-primary__background:#000000;
+@button-primary__border:1px solid #000000;
+
+@button-primary__hover__background:#1f1e1e;
+@button-primary__hover__border:1px solid #1f1e1e;
+
+@button__padding: 7px 25px;
+
+
+@border-color__base: #CDCACA;
+
+
+//
+//  Layout variables
+//  _____________________________________________
+
+//  Widths
+@layout__width: ''; // for the fixed width layout
+@layout__max-width: 1280px;
+@layout-indent__width: 20px;
+@layout__width-xs-indent: 15px;
+@layout-column__sidebar-width: 3;
+@layout-column-main__width-2-left: 9;
+
+
+
+//
+//  Breadcrumbs variables
+//  _____________________________________________
+
+@breadcrumbs__font-size: 14px;
+@breadcrumbs-separator__symbol: '|';
+@breadcrumbs-separator__color: #000;
+@breadcrumbs-current__color: #838282;
+@breadcrumbs-current__font-weight: @font-weight__regular;
+
+
+
+//
+//  Form variables
+//  _____________________________________________
+
+//
+//  Form elements inputs default variables
+//  ---------------------------------------------
+
+@form-element-input__border-color: #000000;
+@form-element-input__border-radius: 10px;
+@form-element-input__height: 50px;
+@form-element-input__border: 2px solid @form-element-input__border-color;
+
+
+//  Form field label
+@form-field-label__color: #000;
+@form-field-label__font-size: 12px;
+@form-field-type-label-inline__margin: 0 0 10px 0;
+@form-field-type-label-inline__width: 100%;
+@form-field-type-label-inline__align: left;
+@form-field-type-label-inline__padding: @form-field-type-label-inline__padding-top 15px 0 6px;
+
+
+
+//
+//  Focus
+//  ---------------------------------------------
+
+@focus__color: transparent;
+@focus__box-shadow: 0 0 3px 1px @focus__color;
+
+
+
+//
+//  Messages variables
+//  _____________________________________________
+
+@message__border-width: 1px;
+@message__border-color: false;
+@message__border-style: false;
+@message__border-radius: 5px;
+@message__font-size: 12px;
+@message__font-weight: 700;
+@message__padding: 8px @indent__base;
+@message__line-height: 20px;
+@message__margin: @indent__s 0 @indent__s;
+
+
+//  Error message
+@message-error__color: #fff;
+@message-error__background: #FF0C27;
+@message-error__border-color: #FF0C27;
+@message-error-icon__color-inner: #fff;
+@message-error-link__color: @hookah_theme_color;
+
+
+//  Success message
+@message-success__color: #fff;
+@message-success__background: #961E70;
+@message-success__border-color: #961E70;
+@message-success-icon__color-inner: #fff;
+@message-success-link__color: #000;
+
+
+//  Warning message
+@message-warning__color: #000;
+@message-warning__background: #F2B807;
+@message-warning__border-color: #F2B807;
+@message-warning-icon__color-inner: #000;
+@message-warning-link__color: #000;
+
+
+
+// links
+@link__color : @hookah_theme_color;
+@link__visited__color : @hookah_theme_color;
+@link__active__color : @hookah_theme_color;
+@link__hover__color : @hookah_theme_color;
+@link__text-decoration: none;
+
+
+//
+//  Tabs
+//  ---------------------------------------------
+@tab-content__border-top-status: true;
+@tab-control__font-size: 18px;
+@tab-control__font-weight: 400;
+@tab-control__height: 28px;
+@tab-control__line-height: 28px;
+@tab-control__margin-right: 28px;
+@tab-control__color: #000;
+
+@tab-control__border-color: transparent;
+@tab-control__border-width: 5px;
+@tab-control__background-color: transparent;
+@tab-content__background-color: @color-white;	
+@tab-control__hover__background-color: transparent;
+@tab-control__hover__color: @hookah_theme_color;
+@tab-control__active__background-color: transparent;
+@tab-control__active__color: @hookah_theme_color;
+@tab-content__padding-top: 40px;
+@tab-content__padding-right: 40px;
+@tab-content__border: 1px solid #CDCACA;

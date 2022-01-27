@@ -1,0 +1,94 @@
+<?php
+/** @var \HookahShisha\Customerb2b\Block\Myaccount\Basicdetail $block */
+?>
+<?php $contact = $block->getContactDetail(); ?>
+<?php
+$actionURL = "#";
+$formDisable = 1;
+?>
+<?php $messageData = $block->getMessagedata(); ?>
+<?php if ($messageData['isContactChanged'] == 1): ?>
+    <?php $actionURL = $this->getUrl('customerb2b/account/contactPost'); ?>
+    <?php $formDisable = 0; ?>
+<?php endif; ?>
+<form class="form-address-edit"
+      action="<?= $block->escapeUrl($actionURL) ?>"
+      method="post"
+      id="other-contact-form-validate"
+      enctype="multipart/form-data"
+      data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>">
+    <fieldset class="fieldset">
+        <?= $block->getBlockHtml('formkey') ?>
+        <input type="hidden" name="id" value="<?= $block->getCustomer()->getId(); ?>">
+        <div class="field contact_name">
+            <label class="label" for="contact_name">
+                <span><?= /* @noEscape */ $escaper->escapeHtmlAttr(__('Contact Name')) ?></span>
+            </label>
+            <div class="control">
+                <input type="text"
+                       name="contact_name"
+                       value="<?php echo $block->escapeHtml($contact['contact_name']) ?>"
+                       placeholder="<?= $escaper->escapeHtmlAttr(__('Contact Name')) ?>"
+                       title="<?= $escaper->escapeHtmlAttr(__('Contact Name')) ?>"
+                       class="input-text"
+                       id="contact_name">
+            </div>
+        </div>
+        <div class="field contact_phone">
+            <label class="label" for="contact_phone">
+                <span><?= /* @noEscape */ $escaper->escapeHtmlAttr(__('Contact Phone')) ?></span>
+            </label>
+            <div class="control">
+                <input type="text"
+                       name="contact_phone"
+                       value="<?php echo $block->escapeHtml($contact['contact_phone']) ?>"
+                       placeholder="<?= $escaper->escapeHtmlAttr(__('Contact Phone')) ?>"
+                       title="<?= $escaper->escapeHtmlAttr(__('Contact Phone')) ?>"
+                       class="input-text"
+                       id="contact_phone">
+            </div>
+        </div>
+        <div class="field">
+            <label for="contact_email" class="label"><span><?= $block->escapeHtml(__('Contact Email')) ?></span></label>
+            <div class="control">
+                <input  type="email" 
+                        name="contact_email" 
+                        id="contact_email" 
+                        placeholder="<?php /* @escapeNotVerified */ echo __('Contact Email') ?>"
+                        autocomplete="off"  
+                        title="<?php /* @escapeNotVerified */ echo __('Contact Email') ?>" 
+                        class="input-text"
+                        data-validate="{'validate-email': true}"
+                        value="<?php echo $block->escapeHtml($contact['contact_email']) ?>"
+                        />
+
+            </div>
+        </div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit"
+                    class="action save primary"
+                    data-action="save-address"
+                    title="<?= $escaper->escapeHtmlAttr(__('Save other details')) ?>">
+                <span><?= $escaper->escapeHtml(__('Save other details')) ?></span>
+            </button>
+        </div>
+        <div class="secondary">
+            <a class="action back" href="<?= $escaper->escapeUrl($block->getBackUrl()) ?>">
+                <span><?= $escaper->escapeHtml(__('Go back')) ?></span>
+            </a>
+        </div>
+    </div>
+</form>
+<?php if($formDisable == 1): ?>
+<?php
+    $scriptString = <<<script
+        require(['jquery'], function($){
+            $(document).ready(function(){
+                $("#other-contact-form-validate :input").prop("disabled", true);
+            });
+        });
+    script; ?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+<?php endif; ?>
