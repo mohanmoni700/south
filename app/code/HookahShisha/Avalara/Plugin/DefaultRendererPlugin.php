@@ -35,7 +35,7 @@ class DefaultRendererPlugin
     /**
      * Retrieve rendered column html content
      *
-     * @param Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer $defaultRenderer
+     * @param DefaultRenderer $subject
      * @param \Closure $proceed
      * @param \Magento\Framework\DataObject|Item $item
      * @param string $column
@@ -44,8 +44,9 @@ class DefaultRendererPlugin
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @since 100.1.0
      */
+
     public function aroundGetColumnHtml(
-        DefaultRenderer $defaultRenderer,
+        DefaultRenderer $subject,
         \Closure $proceed,
         \Magento\Framework\DataObject $item,
         $column,
@@ -62,8 +63,8 @@ class DefaultRendererPlugin
             $result = $html;
         } elseif ($column == 'tax-percent') {
             $itemTotal = (($item->getPrice() * $item->getQtyOrdered()) - $item->getDiscountAmount());
-            $taxRate= ($itemTotal) ? number_format(($item->getTaxAmount() * 100) / $itemTotal, 2) : number_format(1, 2);
-            $html = $taxRate . "%";
+            $taxRate = ($itemTotal) ? ($item->getTaxAmount() * 100) / $itemTotal : 0;
+            $html = number_format($taxRate, 2) . "%";
 
             if (!empty($item->getExciseTax()) && !empty($item->getSalesTax())) {
                 $exciseTaxRate = number_format(($item->getExciseTax() * 100) / $itemTotal, 2);
