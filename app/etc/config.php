@@ -792,7 +792,6 @@ return [
         'Mageplaza_ProductLabels' => 1,
         'Mageplaza_ProductLabelsGraphQl' => 1,
         'Mageplaza_Seo' => 1,
-        'Mageplaza_Smtp' => 1,
         'PCAPredict_Tag' => 1,
         'PayPal_Braintree' => 1,
         'PayPal_BraintreeGraphQl' => 1,
