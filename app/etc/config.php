@@ -685,6 +685,7 @@ return [
         'Amazon_Payment' => 1,
         'Auctane_Api' => 1,
         'Avalara_Excise' => 1,
+        'Corra_AmastyPromoGraphQl' => 1,
         'Corra_AttributesGraphQl' => 1,
         'Corra_Log' => 1,
         'Corra_LogCloudSupport' => 1,
