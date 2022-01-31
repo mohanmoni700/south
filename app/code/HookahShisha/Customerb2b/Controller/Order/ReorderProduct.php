@@ -103,7 +103,7 @@ class ReorderProduct extends \Magento\Checkout\Controller\Cart implements HttpPo
             $orderCustomerId = $item->getOrder()->getCustomerId();
             $currentCustomerId = $this->httpContext->getValue('customer_id');
             if ($orderCustomerId == $currentCustomerId) {
-                $this->cart->addOrderItem($item, 1);
+                $this->cart->addOrderItem($item);
                 if (!$this->cart->getQuote()->getHasError()) {
                     $this->messageManager->addComplexSuccessMessage(
                         'addCartSuccessMessage',

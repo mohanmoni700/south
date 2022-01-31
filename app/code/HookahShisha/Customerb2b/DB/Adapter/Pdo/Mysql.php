@@ -86,10 +86,12 @@ class Mysql extends \Magento\Framework\DB\Adapter\Pdo\Mysql
                     $value = null;
                 }
 
-                /*$value = (string) $value;
-                if ($column['NULLABLE'] && $value == '') {
-                $value = null;
-                }*/
+                /**
+                 * $value = (string) $value;
+                 * if ($column['NULLABLE'] && $value == '') {
+                 * $value = null;
+                 * }
+                 */
                 break;
 
             case 'varbinary':
@@ -97,6 +99,8 @@ class Mysql extends \Magento\Framework\DB\Adapter\Pdo\Mysql
             case 'blob':
             case 'longblob':
                 // No special processing for MySQL is needed
+                break;
+            default:
                 break;
         }
 

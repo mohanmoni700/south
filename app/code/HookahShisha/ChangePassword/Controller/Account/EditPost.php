@@ -1,9 +1,5 @@
 <?php
-/**
- *
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 declare (strict_types = 1);
 
 namespace HookahShisha\ChangePassword\Controller\Account;
@@ -172,7 +168,6 @@ class EditPost extends \Magento\Customer\Controller\Account\EditPost
      */
     public function createCsrfValidationException(RequestInterface $request):  ? InvalidRequestException
     {
-        /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $resultRedirect->setPath('*/*/edit');
 
@@ -198,7 +193,6 @@ class EditPost extends \Magento\Customer\Controller\Account\EditPost
      */
     public function execute()
     {
-        /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();
         $validFormKey = $this->formKeyValidator->validate($this->getRequest());
 
@@ -273,7 +267,6 @@ class EditPost extends \Magento\Customer\Controller\Account\EditPost
             $this->session->setCustomerFormData($this->getRequest()->getPostValue());
         }
 
-        /** @var Redirect $resultRedirect */
         if ($this->getRequest()->getParam('custom_change_password')) {
             $resultRedirect = $this->resultRedirectFactory->create();
             $resultRedirect->setPath('changepassword/index/index');

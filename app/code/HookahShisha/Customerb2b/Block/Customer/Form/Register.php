@@ -1,8 +1,5 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 namespace HookahShisha\Customerb2b\Block\Customer\Form;
 
 use Magento\Customer\Helper\Address;
@@ -52,13 +49,13 @@ class Register extends \Magento\Directory\Block\Data
      * @param \Magento\Framework\Module\Manager $moduleManager
      * @param \Magento\Customer\Model\Session $customerSession
      * @param \Magento\Customer\Model\Url $customerUrl
-     * @param array $data
-     * @param Config $newsLetterConfig
-     * @param Address|null $addressHelper
      * @param \HookahShisha\Customerb2b\Model\Company\Source\Businesstype $businesstype
      * @param \HookahShisha\Customerb2b\Model\Company\Source\AnnualTurnOver $annualTurnOver
      * @param \HookahShisha\Customerb2b\Model\Company\Source\HearAboutUs $hearAboutUs
      * @param \HookahShisha\Customerb2b\Model\Company\Source\NumberOfEmp $numberOfEmp
+     * @param Config $newsLetterConfig
+     * @param Address|null $addressHelper
+     * @param array $data
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -71,13 +68,13 @@ class Register extends \Magento\Directory\Block\Data
         \Magento\Framework\Module\Manager $moduleManager,
         \Magento\Customer\Model\Session $customerSession,
         \Magento\Customer\Model\Url $customerUrl,
-        array $data = [],
-        Config $newsLetterConfig = null,
-        Address $addressHelper = null,
         \HookahShisha\Customerb2b\Model\Company\Source\Businesstype $businesstype,
         \HookahShisha\Customerb2b\Model\Company\Source\AnnualTurnOver $annualTurnOver,
         \HookahShisha\Customerb2b\Model\Company\Source\HearAboutUs $hearAboutUs,
-        \HookahShisha\Customerb2b\Model\Company\Source\NumberOfEmp $numberOfEmp
+        \HookahShisha\Customerb2b\Model\Company\Source\NumberOfEmp $numberOfEmp,
+        Config $newsLetterConfig = null,
+        Address $addressHelper = null,
+        array $data = []
     ) {
         $data['addressHelper'] = $addressHelper ?: ObjectManager::getInstance()->get(Address::class);
         $data['directoryHelper'] = $directoryHelper;

@@ -351,10 +351,10 @@ class Businessdetail extends Template
      */
     public function getCompanyAdminName(CompanyInterface $company)
     {
-        $companyAdmin = $this->getCompanyAdmin($company);
+        $companyAdminData = $this->getCompanyAdmin($company);
 
-        return ($companyAdmin && $companyAdmin->getId())
-        ? $this->customerViewHelper->getCustomerName($companyAdmin) : '';
+        return ($companyAdminData && $companyAdminData->getId())
+        ? $this->customerViewHelper->getCustomerName($companyAdminData) : '';
     }
 
     /**
@@ -366,10 +366,10 @@ class Businessdetail extends Template
     public function getCompanyAdminJobTitle(CompanyInterface $company)
     {
         $jobTitle = '';
-        $companyAdmin = $this->getCompanyAdmin($company);
+        $companyAdminData = $this->getCompanyAdmin($company);
 
-        if ($companyAdmin && $companyAdmin->getId()) {
-            $extensionAttributes = $companyAdmin->getExtensionAttributes()->getCompanyAttributes();
+        if ($companyAdminData && $companyAdminData->getId()) {
+            $extensionAttributes = $companyAdminData->getExtensionAttributes()->getCompanyAttributes();
 
             if ($extensionAttributes) {
                 $jobTitle = $extensionAttributes->getJobTitle();
@@ -387,9 +387,9 @@ class Businessdetail extends Template
      */
     public function getCompanyAdminEmail(CompanyInterface $company)
     {
-        $companyAdmin = $this->getCompanyAdmin($company);
+        $companyAdminData = $this->getCompanyAdmin($company);
 
-        return ($companyAdmin && $companyAdmin->getId()) ? $companyAdmin->getEmail() : '';
+        return ($companyAdminData && $companyAdminData->getId()) ? $companyAdminData->getEmail() : '';
     }
 
     /**
@@ -400,9 +400,9 @@ class Businessdetail extends Template
      */
     public function getSalesRepresentativeName(CompanyInterface $company)
     {
-        $salesRepresentative = $this->getSalesRepresentative($company);
+        $salesRepresentativeData = $this->getSalesRepresentative($company);
 
-        return ($salesRepresentative && $salesRepresentative->getId()) ? $salesRepresentative->getName() : '';
+        return ($salesRepresentativeData && $salesRepresentativeData->getId()) ? $salesRepresentativeData->getName() : '';
     }
 
     /**
@@ -413,9 +413,9 @@ class Businessdetail extends Template
      */
     public function getSalesRepresentativeEmail(CompanyInterface $company)
     {
-        $salesRepresentative = $this->getSalesRepresentative($company);
+        $salesRepresentativeData = $this->getSalesRepresentative($company);
 
-        return ($salesRepresentative && $salesRepresentative->getId()) ? $salesRepresentative->getEmail() : '';
+        return ($salesRepresentativeData && $salesRepresentativeData->getId()) ? $salesRepresentativeData->getEmail() : '';
     }
 
     /**

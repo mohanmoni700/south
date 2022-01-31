@@ -19,19 +19,7 @@ class HearAboutUs implements OptionSourceInterface
      */
     public function toOptionArray()
     {
-        // $options = [
-        //     ['label' => __('Returning Customer'), 'value' => 'returning_customer'],
-        //     ['label' => __('Headquest'), 'value' => 'headquest'],
-        //     ['label' => __('B.I.G.'), 'value' => 'big'],
-        //     ['label' => __('RTDA'), 'value' => 'rtda'],
-        //     ['label' => __('C.H.A.M.P.S. Show'), 'value' => 'champs_show'],
-        //     ['label' => __('Google'), 'value' => 'google'],
-        //     ['label' => __('Yahoo!'), 'value' => 'yahoo'],
-        //     ['label' => __('Other Search Engine'), 'value' => 'other_search_engine'],
-        //     ['label' => __('Flyer'), 'value' => 'flyer'],
-        //     ['label' => __('Friend/Family member'), 'value' => 'friend_family_member'],
-        // ];
-
+        $options = [];
         foreach ($this->getOptionArray() as $key => $value) {
             $options[] = ['label' => __($value), 'value' => $key];
         }
@@ -46,7 +34,7 @@ class HearAboutUs implements OptionSourceInterface
      */
     public function getOptionArray()
     {
-        $optionArray = [
+        return [
             'returning_customer' => 'Returning Customer',
             'headquest' => 'Headquest',
             'big' => 'B.I.G.',
@@ -58,6 +46,5 @@ class HearAboutUs implements OptionSourceInterface
             'flyer' => 'Flyer',
             'friend_family_member' => 'Friend/Family member',
         ];
-        return $optionArray;
     }
 }

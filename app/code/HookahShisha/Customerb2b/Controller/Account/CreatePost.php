@@ -200,9 +200,11 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
             /* end create customer accounts */
 
             $this->companyCreateSession->setCustomerId($customer->getId());
-            /*$this->messageManager->addSuccessMessage(
-            __('Thank you! We\'re reviewing your request and will contact you soon')
-            );*/
+            /**
+             * $this->messageManager->addSuccessMessage(
+             * __('Thank you! We\'re reviewing your request and will contact you soon')
+             * );
+             */
 
             $this->helperdata->sendEmail($data);
 

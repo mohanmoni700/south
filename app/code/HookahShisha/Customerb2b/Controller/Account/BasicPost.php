@@ -3,6 +3,7 @@
 namespace HookahShisha\Customerb2b\Controller\Account;
 
 use Magento\Customer\Api\AddressRepositoryInterface;
+use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Customer\Api\Data\AddressInterfaceFactory;
 use Magento\Customer\Api\Data\RegionInterface;
 use Magento\Customer\Api\Data\RegionInterfaceFactory;
@@ -64,8 +65,8 @@ class BasicPost extends \Magento\Customer\Controller\Address implements HttpPost
      * @param PageFactory $resultPageFactory
      * @param RegionFactory $regionFactory
      * @param HelperData $helperData
-     * @param Filesystem $filesystem
-     * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param Filesystem $filesystem = null
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -82,8 +83,8 @@ class BasicPost extends \Magento\Customer\Controller\Address implements HttpPost
         PageFactory $resultPageFactory,
         RegionFactory $regionFactory,
         HelperData $helperData,
-        Filesystem $filesystem = null,
-        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
+        CustomerRepositoryInterface $customerRepository,
+        Filesystem $filesystem = null
     ) {
         $this->regionFactory = $regionFactory;
         $this->helperData = $helperData;
@@ -130,19 +131,6 @@ class BasicPost extends \Magento\Customer\Controller\Address implements HttpPost
             array_merge($existingAddressData, $attributeValues),
             \Magento\Customer\Api\Data\AddressInterface::class
         );
-        /*$addressDataObject->setCustomerId($this->_getSession()->getCustomerId())
-        ->setIsDefaultBilling(
-        $this->getRequest()->getParam(
-        'default_billing',
-        isset($existingAddressData['default_billing']) ? $existingAddressData['default_billing'] : false
-        )
-        )
-        ->setIsDefaultShipping(
-        $this->getRequest()->getParam(
-        'default_shipping',
-        isset($existingAddressData['default_shipping']) ? $existingAddressData['default_shipping'] : false
-        )
-        );*/
 
         return $addressDataObject;
     }
@@ -205,14 +193,14 @@ class BasicPost extends \Magento\Customer\Controller\Address implements HttpPost
      */
     public function execute()
     {
-        $redirectUrl = null;
+        $redirectUrl = 'customer/account/index';
         if (!$this->_formKeyValidator->validate($this->getRequest())) {
-            return $this->resultRedirectFactory->create()->setPath('customer/account/index');
+            return $this->resultRedirectFactory->create()->setPath($redirectUrl);
         }
 
         if (!$this->getRequest()->isPost()) {
             $this->_getSession()->setAddressFormData($this->getRequest()->getPostValue());
-            return $this->resultRedirectFactory->create()->setPath('customer/account/index');
+            return $this->resultRedirectFactory->create()->setPath($redirectUrl);
         }
 
         try {
@@ -236,8 +224,8 @@ class BasicPost extends \Magento\Customer\Controller\Address implements HttpPost
             /* ENd Change the Customer objct Name */
 
             $this->messageManager->addSuccessMessage(__('You saved the basic details.'));
-            $url = $this->_buildUrl('customer/account/index', ['_secure' => true]);
-            return $this->resultRedirectFactory->create()->setPath('customer/account/index');
+            $url = $this->_buildUrl($redirectUrl, ['_secure' => true]);
+            return $this->resultRedirectFactory->create()->setPath($redirectUrl);
         } catch (InputException $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
             foreach ($e->getErrors() as $error) {
@@ -245,12 +233,12 @@ class BasicPost extends \Magento\Customer\Controller\Address implements HttpPost
             }
         } catch (\Exception $e) {
             $this->messageManager->addExceptionMessage($e, __('We can\'t save the basic details.'));
-            return $this->resultRedirectFactory->create()->setPath('customer/account/index');
+            return $this->resultRedirectFactory->create()->setPath($redirectUrl);
         }
 
         $this->_getSession()->setAddressFormData($this->getRequest()->getPostValue());
 
-        return $this->resultRedirectFactory->create()->setPath('customer/account/index');
+        return $this->resultRedirectFactory->create()->setPath($redirectUrl);
     }
 
     /**

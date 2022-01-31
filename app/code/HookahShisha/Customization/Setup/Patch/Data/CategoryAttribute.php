@@ -20,6 +20,7 @@ class CategoryAttribute implements DataPatchInterface
      * @var ModuleDataSetupInterface
      */
     private $moduleDataSetup;
+
     /**
      * EavSetupFactory
      *
@@ -38,7 +39,7 @@ class CategoryAttribute implements DataPatchInterface
         $this->eavSetupFactory = $eavSetupFactory;
     }
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function apply()
     {
@@ -56,14 +57,14 @@ class CategoryAttribute implements DataPatchInterface
         ]);
     }
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getDependencies()
     {
         return [];
     }
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAliases()
     {

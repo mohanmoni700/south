@@ -87,12 +87,12 @@ class Basicdetail extends \Magento\Directory\Block\Data
      * @param \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory
      * @param \Magento\Customer\Helper\Session\CurrentCustomer $currentCustomer
      * @param \Magento\Framework\Api\DataObjectHelper $dataObjectHelper
-     * @param array $data
-     * @param AddressMetadataInterface|null $addressMetadata
-     * @param Address|null $addressHelper
-     * @param Config $newsLetterConfig = null
-     * @param \Magento\Framework\Module\Manager $moduleManager
      * @param SubscriberFactory $subscriberFactory
+     * @param \Magento\Framework\Module\Manager $moduleManager
+     * @param AddressMetadataInterface $addressMetadata = null
+     * @param Address $addressHelper = null
+     * @param Config $newsLetterConfig = null
+     * @param array $data = []
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -108,12 +108,12 @@ class Basicdetail extends \Magento\Directory\Block\Data
         \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory,
         \Magento\Customer\Helper\Session\CurrentCustomer $currentCustomer,
         \Magento\Framework\Api\DataObjectHelper $dataObjectHelper,
-        array $data = [],
+        SubscriberFactory $subscriberFactory,
+        \Magento\Framework\Module\Manager $moduleManager,
         AddressMetadataInterface $addressMetadata = null,
         Address $addressHelper = null,
         Config $newsLetterConfig = null,
-        \Magento\Framework\Module\Manager $moduleManager,
-        SubscriberFactory $subscriberFactory
+        array $data = []
     ) {
         $this->_customerSession = $customerSession;
         $this->_addressRepository = $addressRepository;

@@ -16,11 +16,7 @@ class AnnualTurnOver implements \Magento\Framework\Data\OptionSourceInterface
      */
     public function toOptionArray()
     {
-        /*$options = [
-        ['label' => __('0-20000'), 'value' => '1'],
-        ['label' => __('20001-50000'), 'value' => '2'],
-        ['label' => __('>50001'), 'value' => '3'],
-        ];*/
+        $options = [];
         foreach ($this->getOptionArray() as $key => $value) {
             $options[] = ['label' => __($value), 'value' => $key];
         }
@@ -34,11 +30,10 @@ class AnnualTurnOver implements \Magento\Framework\Data\OptionSourceInterface
      */
     public function getOptionArray()
     {
-        $optionArray = [
+        return [
             1 => '0-20000',
             2 => '20001-50000',
             3 => '>50001',
         ];
-        return $optionArray;
     }
 }

@@ -13,7 +13,6 @@ $formDisable = 1;
 <?php $_country_id = $block->getAttributeData()->getFrontendLabel('country_id'); ?>
 <?php $_street = $block->getAttributeData()->getFrontendLabel('street'); ?>
 <?php $_city = $block->getAttributeData()->getFrontendLabel('city'); ?>
-<?php // $_region = $block->getAttributeData()->getFrontendLabel('region'); ?>
 <?php $_selectRegion = 'Please select a region, state or province.'; ?>
 <?php $_displayAll = $block->getConfig('general/region/display_all'); ?>
 
@@ -271,13 +270,13 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                 var countryval = $('#country option:selected').val();
                 if(countryval=='US'){
                     $('#region_id_label').children('span').html("$regionStateLabel");
-                    $('#region_id').attr('placeholder',"<?= $regionStateLabel ?>");
+                    $('#region_id').attr('placeholder',"$regionStateLabel");
                     $('.vat-tax-id').show();
                     $('.tin-number').show();
                     $('.tobacco-permit-number').show();
                 }else{
                     $('#region_id_label').children('span').html("$regionProvinceLabel");
-                    $('#region').attr('placeholder',"<?= $regionProvinceLabel ?>");
+                    $('#region').attr('placeholder',"$regionProvinceLabel");
                     $('.vat-tax-id').hide();
                     $('#vat_tax_id').val('');
                     $('.tin-number').hide();

@@ -1,14 +1,31 @@
 <?php
+
 namespace HookahShisha\Customization\Block;
 
+/**
+ * Topmenu changes block
+ *
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class Topmenu extends \Smartwave\Megamenu\Block\Topmenu
 {
 
-    public function getSubmenuItemsHtml($children, $level = 1, $max_level = 0, $column_width = 12, $menu_type = 'fullwidth', $columns = null)
-    {
+    /**
+     * @inheritDoc
+     */
+    public function getSubmenuItemsHtml(
+        $children,
+        $level = 1,
+        $max_level = 0,
+        $column_width = 12,
+        $menu_type = 'fullwidth',
+        $columns = null
+    ) {
         $html = '';
 
-        if (!$max_level || ($max_level && $max_level == 0) || ($max_level && $max_level > 0 && $max_level - 1 >= $level)) {
+        if (!$max_level || ($max_level && $max_level == 0) ||
+            ($max_level && $max_level > 0 && $max_level - 1 >= $level)
+        ) {
             $column_class = "";
             if ($level == 1 && $columns && ($menu_type == 'fullwidth' || $menu_type == 'staticwidth')) {
                 $column_class = "col-md-" . $column_width . " ";
@@ -56,12 +73,19 @@ class Topmenu extends \Smartwave\Megamenu\Block\Topmenu
 
                     $html .= '<span>' . $child->getName();
                     if ($sw_menu_cat_label) {
-                        $html .= '<span class="cat-label cat-label-' . $sw_menu_cat_label . '">' . $this->_megamenuConfig['cat_labels'][$sw_menu_cat_label] . '</span>';
+                        $html .= '<span class="cat-label cat-label-' . $sw_menu_cat_label . '">';
+                        $html .= $this->_megamenuConfig['cat_labels'][$sw_menu_cat_label] . '</span>';
                     }
 
                     $html .= '</span></a>';
                     if (count($sub_children) > 0) {
-                        $html .= $this->getSubmenuItemsHtml($sub_children, $level + 1, $max_level, $column_width, $menu_type);
+                        $html .= $this->getSubmenuItemsHtml(
+                            $sub_children,
+                            $level + 1,
+                            $max_level,
+                            $column_width,
+                            $menu_type
+                        );
                     }
                     $html .= '</li>';
 

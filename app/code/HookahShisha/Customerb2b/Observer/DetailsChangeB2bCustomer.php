@@ -66,7 +66,6 @@ class DetailsChangeB2bCustomer implements ObserverInterface
             if ($companyId) {
                 if ($data['cst_account_verified'] == 1) {
                     $customer->setCustomAttribute('cst_details_changed', 0);
-                    // $customer->setCustomAttribute('cst_verification_message', "");
                 } elseif (!empty($data['cst_verification_message'])) {
                     $customer->setCustomAttribute('cst_details_changed', 0);
                 }

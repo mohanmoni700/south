@@ -74,7 +74,7 @@ class Validate extends Action implements HttpPostActionInterface, HttpGetActionI
      * @return bool
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    private function isCompanyEmailValid($email)
+    public function isCompanyEmailValid($email)
     {
         $searchCriteria = $this->searchCriteriaBuilder
             ->addFilter(CompanyInterface::COMPANY_EMAIL, $email)
