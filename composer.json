@@ -16,6 +16,10 @@
         }
     },
     "repositories": {
+        "amasty": {
+            "type": "composer",
+            "url": "https://composer.amasty.com/enterprise/"
+        },
         "magefan-blog-plus-extra-m2": {
             "type": "composer",
             "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/"
@@ -38,11 +42,13 @@
         }
     },
     "require": {
+        "amasty/promo": "^2.11",
         "auctane/api": "^2.2",
         "avalara/excise": "^1.0",
         "corra/custom-attributes-graph-ql": "^1.0",
         "corra/log": "^1.3",
         "corra/log-cloud-support": "^2.0",
+        "corra/module-amasty-promo-graph-ql": "^1.1",
         "corra/module-page-builder-customisation": "^1.0",
         "corra/module-pwa-maintenance-check": "^1.0",
         "corra/module-signifyd-graph-ql": "^1.0",
