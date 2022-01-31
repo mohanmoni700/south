@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "be84d86c2edc7ed32d8b5452dcd5bfef",
+    "content-hash": "a761e3d6a75f6f6009d0fadaf0ac12ca",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -25073,6 +25073,52 @@
             "time": "2020-03-09T10:04:22+00:00"
         },
         {
+            "name": "mageplaza/module-sitemap",
+            "version": "4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mageplaza/magento-2-google-xml-sitemap.git",
+                "reference": "40dd206e2d7e7efaf689741933eb8a799621e9cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-google-xml-sitemap/zipball/40dd206e2d7e7efaf689741933eb8a799621e9cb",
+                "reference": "40dd206e2d7e7efaf689741933eb8a799621e9cb",
+                "shasum": ""
+            },
+            "require": {
+                "mageplaza/magento-2-seo-extension": "^4.0.0",
+                "mageplaza/module-core": "^1.4.5"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Mageplaza\\Sitemap\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Mageplaza",
+                    "email": "support@mageplaza.com",
+                    "homepage": "https://www.mageplaza.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "Magento 2 Google XML Sitemap extension",
+            "support": {
+                "issues": "https://github.com/mageplaza/magento-2-google-xml-sitemap/issues",
+                "source": "https://github.com/mageplaza/magento-2-google-xml-sitemap/tree/v4.0.1"
+            },
+            "time": "2021-09-14T01:21:16+00:00"
+        },
+        {
             "name": "mageworx/module-info",
             "version": "1.1.1",
             "dist": {
@@ -31729,5 +31775,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.2.0"
 }

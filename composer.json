@@ -6,7 +6,14 @@
     "license": "OSL-3.0",
     "config": {
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "laminas/laminas-dependency-plugin": false,
+            "composer/package-versions-deprecated": false,
+            "magento/magento-composer-installer": false,
+            "magento/inventory-composer-installer": false,
+            "magento/composer-root-update-plugin": false
+        }
     },
     "repositories": {
         "magefan-blog-plus-extra-m2": {
@@ -54,6 +61,7 @@
         "mageplaza/magento-2-seo-extension": "^4.1",
         "mageplaza/module-product-labels": "^4.0",
         "mageplaza/module-product-labels-graphql": "^1.0",
+        "mageplaza/module-sitemap": "^4.0",
         "mageworx/module-ordereditormeta": "^1.8",
         "msp/cmsimportexport": "^1.1",
         "pcapredict/tag": "^2.1",
