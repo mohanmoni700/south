@@ -18,6 +18,7 @@ $formDisable = 1;
       enctype="multipart/form-data"
       data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>">
     <fieldset class="fieldset">
+        <legend></legend>
         <?= $block->getBlockHtml('formkey') ?>
         <input type="hidden" name="id" value="<?= $block->getCustomer()->getId(); ?>">
         <div class="field contact_name">

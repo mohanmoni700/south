@@ -117,7 +117,6 @@ class MyProducts extends \Magento\Catalog\Block\Product\AbstractProduct
     {
         $collection = [];
         if ($customer = $this->getCurrentCustomer()) {
-            // $customer = $this->getCurrentCustomer();
             $page = ($this->getRequest()->getParam('p')) ? $this->getRequest()->getParam('p') : 1;
             $pageSize = ($this->getRequest()->getParam('limit')) ? $this->getRequest()->getParam('limit') : 5;
             $collection = $this->productFactory->create()->getCollection();

@@ -89,6 +89,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
 
         <?php if ($block->getShowAddressFields()): ?>
             <fieldset class="fieldset address">
+                <legend></legend>
                 <input type="hidden" name="create_address" value="1"/>
                 <?php $_company = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Company::class) ?>
                 <?php if ($_company->isEnabled()): ?>
@@ -273,6 +274,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
         <?php endif; ?>
 
         <fieldset class="fieldset additional_info">
+            <legend></legend>
             <?= $block->getChildHtml('form_additional_info') ?>
         </fieldset>
 
@@ -299,6 +301,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
     <div id="business_details" style="display: none;" class="business_details_tab">
         <fieldset class="fieldset" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
             <fieldset class="fieldset create account" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+                <legend></legend>
                 <!-- start Adding the Company field refrence from vendor/magento/module-company/view/frontend/templates/company/account/create.phtml-->
                 <input type="hidden" name="company[status]" value="1"/>
                 <input type="hidden" name="company[company_email]" id="company_email"/>
