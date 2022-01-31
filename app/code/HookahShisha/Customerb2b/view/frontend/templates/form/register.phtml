@@ -49,6 +49,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
     </ul>
     <div id="basic_details" class="show">
         <fieldset class="fieldset create info">
+            <legend></legend>
             <input type="hidden" name="success_url" value="<?= $block->escapeUrl($block->getSuccessUrl()) ?>"/>
             <input type="hidden" name="error_url" value="<?= $block->escapeUrl($block->getErrorUrl()) ?>"/>
             <input type="hidden" name="cst_account_verified" value="0"/>
@@ -97,15 +98,16 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 
                 <?php /* data-validate="{required:true, 'validate-email':true, 'remote':'<?php echo $this->getUrl('customerb2b/customer/emailcheck', ['_secure' => true]); ?>'}" */ ?>
                 <div class="field required">
-                    <label for="email_address" class="label"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
+                    <?php $emailLabel = __('Email'); ?>
+                    <label for="email_address" class="label"><span><?= $block->escapeHtml($emailLabel) ?></span></label>
                     <div class="control">
                         <input  type="email" 
                                 name="email" 
                                 id="email_address" 
-                                placeholder="<?php /* @escapeNotVerified */ echo __('Email') ?>"
+                                placeholder="<?= $block->escapeHtml($emailLabel) ?>"
                                 autocomplete="off" 
                                 value="<?php echo $block->escapeHtml($formData->getEmail()) ?>" 
-                                title="<?php /* @escapeNotVerified */ echo __('Email') ?>" 
+                                title="<?= $block->escapeHtml($emailLabel) ?>"
                                 class="input-text"
                                 data-role="email"
                                 data-async-is-valid="true"
@@ -304,14 +306,15 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 <input type="hidden" name="company[com_details_changed]" value="1"/>
 
                 <div class="field company-name _required">
+                    <?php $businessNameLabel = __('Business Name'); ?>
                     <label class="label" for="company_name">
-                        <span><?= $block->escapeHtml(__('Business Name')) ?></span>
+                        <span><?= $block->escapeHtml($businessNameLabel) ?></span>
                     </label>
                     <div class="control">
                         <input type="text" name="company[company_name]" id="company_name"
                                value=""
-                               placeholder="<?= $block->escapeHtmlAttr(__('Business Name')) ?>"
-                               title="<?= $block->escapeHtmlAttr(__('Business Name')) ?>"
+                               placeholder="<?= $block->escapeHtmlAttr($businessNameLabel) ?>"
+                               title="<?= $block->escapeHtmlAttr($businessNameLabel) ?>"
                                class="input-text" data-validate="{required:true}">
                     </div>
                 </div>
@@ -370,9 +373,10 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     </div>
                 </div>
                 <div class="field vat-tax-id">
+                    <?php $salesTaxID = __('Sales Tax ID'); ?>
                     <label class="label" for="vat_tax_id">
                         <span class="tax_tooltip">
-                        <span><?= $block->escapeHtml(__('Sales Tax ID')) ?></span>
+                        <span><?= /* @noEscape */ $block->escapeHtml($salesTaxID) ?></span>
                         <?php $tooltipSalesTaxEnable = $block->getConfig('hookahshisha/business_details/enable_business'); ?>
                         <?php if($tooltipSalesTaxEnable): ?>
                             <?php $tooltipSalesTaxId = $block->getConfig('hookahshisha/business_details/tooltip_sales_tax_id'); ?>
@@ -386,32 +390,34 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     <div class="control">
                         <input type="text" name="company[vat_tax_id]" id="vat_tax_id"
                                value=""
-                               placeholder="<?= $block->escapeHtmlAttr(__('Sales Tax ID')) ?>"
-                               title="<?= $block->escapeHtmlAttr(__('Sales Tax ID')) ?>"
+                               placeholder="<?= /* @noEscape */ $block->escapeHtmlAttr($salesTaxID) ?>"
+                               title="<?= /* @noEscape */ $block->escapeHtmlAttr($salesTaxID) ?>"
                                class="input-text">
                     </div>
                 </div>
                 <div class="field tin-number">
+                    <?php $tinNumberLabel = __('TIN Number'); ?>
                     <label class="label" for="tin_number">
-                        <span><?= $block->escapeHtml(__('TIN Number')) ?></span>
+                        <span><?= $block->escapeHtml($tinNumberLabel) ?></span>
                     </label>
                     <div class="control">
                         <input type="text" name="company[tin_number]" id="tin_number"
                                value=""
-                               placeholder="<?= $block->escapeHtmlAttr(__('TIN Number')) ?>"
-                               title="<?= $block->escapeHtmlAttr(__('TIN Number')) ?>"
+                               placeholder="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
+                               title="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
                                class="input-text">
                     </div>
                 </div>
                 <div class="field tobacco-permit-number">
+                    <?php $tobaccoPermitNumber = __('Tobacco Permit Number'); ?>
                     <label class="label" for="tobacco_permit_number">
-                        <span><?= $block->escapeHtml(__('Tobacco Permit Number')) ?></span>
+                        <span><?= /* @noEscape */ $block->escapeHtml($tobaccoPermitNumber) ?></span>
                     </label>
                     <div class="control">
                         <input type="text" name="company[tobacco_permit_number]" id="tobacco_permit_number"
                                value=""
-                               placeholder="<?= $block->escapeHtmlAttr(__('Tobacco Permit Number')) ?>"
-                               title="<?= $block->escapeHtmlAttr(__('Tobacco Permit Number')) ?>"
+                               placeholder="<?= /* @noEscape */ $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
+                               title="<?= /* @noEscape */ $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
                                class="input-text">
                     </div>
                 </div>
@@ -450,15 +456,16 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
 
 
                 <div class="field password required">
-                    <label for="password" class="label"><span><?= $block->escapeHtml(__('Password')) ?></span></label>
+                    <?php $passwordLabel = __('Password'); ?>
+                    <label for="password" class="label"><span><?= $block->escapeHtml($passwordLabel) ?></span></label>
                     <div class="control">
                         <?php $requiredCharacterClassesNumber = $block->escapeHtmlAttr(
                             $block->getRequiredCharacterClassesNumber()
                         ); ?>
                         <input type="password" name="password" id="password"
-                               title="<?= $block->escapeHtmlAttr(__('Password')) ?>"
+                               title="<?= $block->escapeHtmlAttr($passwordLabel) ?>"
                                class="input-text"
-                               placeholder="<?= $block->escapeHtmlAttr(__('Password')) ?>"
+                               placeholder="<?= $block->escapeHtmlAttr($passwordLabel) ?>"
                                data-password-min-length="<?= $block->escapeHtmlAttr($block->getMinimumPasswordLength()) ?>"
                                data-password-min-character-sets="<?= /* @noEscape */ $requiredCharacterClassesNumber ?>"
                                data-validate="{required:true, 'validate-customer-password':true}"
@@ -467,15 +474,16 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     </div>
                 </div>
                 <div class="field confirmation password required">
+                    <?php $confirmPasswordLabel = __('Confirm Password'); ?>
                     <label for="password-confirmation" class="label">
-                        <span><?= $block->escapeHtml(__('Confirm Password')) ?></span>
+                        <span><?= /* @noEscape */ $block->escapeHtml($confirmPasswordLabel) ?></span>
                     </label>
                     <div class="control">
                         <input type="password"
                                name="password_confirmation"
-                               title="<?= $block->escapeHtmlAttr(__('Confirm Password')) ?>"
+                               title="<?= /* @noEscape */ $block->escapeHtmlAttr($confirmPasswordLabel) ?>"
                                id="password-confirmation"
-                               placeholder="<?= $block->escapeHtmlAttr(__('Confirm Password')) ?>"
+                               placeholder="<?= /* @noEscape */ $block->escapeHtmlAttr($confirmPasswordLabel) ?>"
                                class="input-text"
                                data-validate="{required:true, equalTo:'#password'}"/>
                         <a class="fa fa-eye-slash" id="showlgpass" data-vis="0" title=""></a>

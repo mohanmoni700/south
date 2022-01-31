@@ -43,6 +43,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
       enctype="multipart/form-data"
       data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>">
     <fieldset class="fieldset">
+        <legend></legend>
         <?= $block->getBlockHtml('formkey') ?>
         <input type="hidden" name="success_url" value="<?= $escaper->escapeUrl($block->getSuccessUrl()) ?>">
         <input type="hidden" name="error_url" value="<?= $escaper->escapeUrl($block->getErrorUrl()) ?>">
@@ -79,6 +80,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
 
     </fieldset>
     <fieldset class="fieldset">
+        <legend></legend>
         <div class="field street required">
             <label for="street_1" class="label"><span><?= $block->escapeHtml(__($_street . ' 1')) ?></span></label>
             <div class="control">

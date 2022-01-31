@@ -36,25 +36,27 @@ $formDisable = 1;
         <input type="hidden" name="com_account_verified" value="0"/>
         <input type="hidden" name="com_details_changed" value="1"/>
         <div class="field company-name _required">
+            <?php $businessNameLabel = __('Business Name'); ?>
             <label class="label" for="company_name">
-                <span><?= $block->escapeHtml(__('Business Name')) ?></span>
+                <span><?= $block->escapeHtml($businessNameLabel) ?></span>
             </label>
             <div class="control">
                 <input type="text" name="company_name" id="company_name"
                        value="<?= $block->escapeHtmlAttr($company->getCompanyName()) ?>"
-                       placeholder="<?= $block->escapeHtmlAttr(__('Business Name')) ?>"
-                       title="<?= $block->escapeHtmlAttr(__('Business Name')) ?>"
+                       placeholder="<?= $block->escapeHtmlAttr($businessNameLabel) ?>"
+                       title="<?= $block->escapeHtmlAttr($businessNameLabel) ?>"
                        class="input-text" data-validate="{required:true}">
             </div>
         </div>
         <div class="field business-type required">
+            <?php $businessTypeLabel = __('Business Type'); ?>
             <label class="label" for="business_type">
-                <span><?= $block->escapeHtml(__('Business Type')) ?></span>
+                <span><?= $block->escapeHtml($businessTypeLabel) ?></span>
             </label>
             <div class="control">
                 <select id="business_type"
                         name="business_type"
-                        title="<?= /* @noEscape */ $block->escapeHtmlAttr(__('Business Type')) ?>"
+                        title="<?= /* @noEscape */ $block->escapeHtmlAttr($businessTypeLabel) ?>"
                         class="validate-select business_type">
                     <option value="">
                         <?= $block->escapeHtml(__('Please select business type.')) ?>
@@ -130,26 +132,28 @@ $formDisable = 1;
             </div>
         </div>
         <div class="field tin-number">
+            <?php $tinNumberLabel = __('TIN Number'); ?>
             <label class="label" for="tin_number">
-                <span><?= $block->escapeHtml(__('TIN Number')) ?></span>
+                <span><?= $block->escapeHtml($tinNumberLabel) ?></span>
             </label>
             <div class="control">
                 <input type="text" name="tin_number" id="tin_number"
                        value="<?= $block->escapeHtmlAttr($company->getTinNumber()) ?>"
-                       placeholder="<?= $block->escapeHtmlAttr(__('TIN Number')) ?>"
-                       title="<?= $block->escapeHtmlAttr(__('TIN Number')) ?>"
+                       placeholder="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
+                       title="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
                        class="input-text">
             </div>
         </div>
         <div class="field tobacco-permit-number">
+            <?php $tobaccoPermitNumber = __('Tobacco Permit Number'); ?>
             <label class="label" for="tobacco_permit_number">
-                <span><?= $block->escapeHtml(__('Tobacco Permit Number')) ?></span>
+                <span><?= $block->escapeHtml($tobaccoPermitNumber) ?></span>
             </label>
             <div class="control">
                 <input type="text" name="tobacco_permit_number" id="tobacco_permit_number"
                        value="<?= $block->escapeHtmlAttr($company->getTobaccoPermitNumber()) ?>"
-                       placeholder="<?= $block->escapeHtmlAttr(__('Tobacco Permit Number')) ?>"
-                       title="<?= $block->escapeHtmlAttr(__('Tobacco Permit Number')) ?>"
+                       placeholder="<?= $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
+                       title="<?= $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
                        class="input-text">
             </div>
         </div>
@@ -174,13 +178,14 @@ $formDisable = 1;
             </div>
         </div>
         <div class="field hear-about-us message">
+            <?php $questionsLabel = __('Questions?'); ?>
             <label class="label" for="questions">
-                <span><?= $block->escapeHtml(__('Questions?')) ?></span>
+                <span><?= $block->escapeHtml($questionsLabel) ?></span>
             </label>
             <div class="control">
                 <textarea name="questions" id="questions"
-                       placeholder="<?= $block->escapeHtmlAttr(__('Questions?')) ?>"
-                       title="<?= $block->escapeHtmlAttr(__('Questions?')) ?>"
+                       placeholder="<?= $block->escapeHtmlAttr($questionsLabel) ?>"
+                       title="<?= $block->escapeHtmlAttr($questionsLabel) ?>"
                        class="input-text"><?= $block->escapeHtmlAttr($company->getQuestions()) ?></textarea>
             </div>
         </div>

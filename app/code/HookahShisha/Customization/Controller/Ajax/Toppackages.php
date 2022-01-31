@@ -3,6 +3,7 @@
 namespace Brainvire\Customization\Controller\Ajax;
 
 /**
+ * Create Toppackages action
  *
  */
 class Toppackages extends \Magento\Framework\App\Action\Action
@@ -10,6 +11,15 @@ class Toppackages extends \Magento\Framework\App\Action\Action
 
     const TOP_SPORTS_PACKAGES = 'home_setting/home/top_sports_packages';
 
+    /**
+     * @param \Magento\Framework\App\Action\Context $context
+     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollection
+     * @param \Magento\Catalog\Helper\Image $productImageHelper
+     * @param \Magento\Wishlist\Helper\Data $wishlistHelper
+     * @param \Magento\Catalog\Helper\Product\Compare $compareHelper
+     */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
@@ -29,6 +39,9 @@ class Toppackages extends \Magento\Framework\App\Action\Action
         parent::__construct($context);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function execute()
     {
 
@@ -44,7 +57,6 @@ class Toppackages extends \Magento\Framework\App\Action\Action
 
         if (count($proSkus)) {
             $bvArray = array_chunk($proSkus, 4);
-            // $result['page_count'] = count($bvArray);
 
             $collection = $this->_productCollection->create();
             $collection->addattributetoselect(['name', 'small_image', 'thumbnail', 'image']);

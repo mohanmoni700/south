@@ -80,7 +80,6 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
      * @param \Magento\Customer\Api\AccountManagementInterface $customerAccountManagement
      * @param \Magento\Customer\Api\Data\CustomerInterfaceFactory $customerDataFactory
      * @param \Magento\Company\Model\Create\Session $companyCreateSession
-     * @param \Magento\Company\Model\CompanyUser|null $companyUser
      * @param \Magento\Customer\Model\CustomerExtractor $customerExtractor
      * @param \Magento\Framework\Api\DataObjectHelper $dataObjectHelper
      * @param \Magento\Customer\Model\Session $customerSession
@@ -88,6 +87,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
      * @param \Magento\Customer\Api\Data\RegionInterfaceFactory $regionDataFactory
      * @param \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory
      * @param \HookahShisha\Customerb2b\Helper\Data $helperdata
+     * @param \Magento\Company\Model\CompanyUser|null $companyUser
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -99,14 +99,14 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
         \Magento\Customer\Api\AccountManagementInterface $customerAccountManagement,
         \Magento\Customer\Api\Data\CustomerInterfaceFactory $customerDataFactory,
         \Magento\Company\Model\Create\Session $companyCreateSession,
-        \Magento\Company\Model\CompanyUser $companyUser = null,
         \Magento\Customer\Model\CustomerExtractor $customerExtractor,
         \Magento\Framework\Api\DataObjectHelper $dataObjectHelper,
         \Magento\Customer\Model\Session $customerSession,
         \Magento\Customer\Model\Metadata\FormFactory $formFactory,
         \Magento\Customer\Api\Data\RegionInterfaceFactory $regionDataFactory,
         \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory,
-        \HookahShisha\Customerb2b\Helper\Data $helperdata
+        \HookahShisha\Customerb2b\Helper\Data $helperdata,
+        \Magento\Company\Model\CompanyUser $companyUser = null
     ) {
         parent::__construct($context);
         $this->userContext = $userContext;
@@ -164,15 +164,14 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
             }
 
             $customer = $this->customerDataFactory->create();
-            /*
-            $customerData = $request->getPost('customer', []);
-
-            $this->objectHelper->populateWithArray(
-            $customer,
-            $customerData,
-            \Magento\Customer\Api\Data\CustomerInterface::class
-            );
-            $customer = $this->customerAccountManagement->createAccount($customer);
+            /**
+             * $customerData = $request->getPost('customer', []);
+             * $this->objectHelper->populateWithArray(
+             * $customer,
+             * $customerData,
+             * \Magento\Customer\Api\Data\CustomerInterface::class
+             * );
+             * $customer = $this->customerAccountManagement->createAccount($customer);
              */
 
             /* start create customer accounts */

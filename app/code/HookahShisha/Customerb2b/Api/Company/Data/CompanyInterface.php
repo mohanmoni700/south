@@ -1,8 +1,5 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 namespace HookahShisha\Customerb2b\Api\Company\Data;
 
 /**
@@ -13,39 +10,6 @@ namespace HookahShisha\Customerb2b\Api\Company\Data;
  */
 interface CompanyInterface extends \Magento\Company\Api\Data\CompanyInterface
 {
-    /*const COMPANY_ID = 'entity_id';
-    const STATUS = 'status';
-    const NAME = 'company_name';
-    const LEGAL_NAME = 'legal_name';
-    const COMPANY_EMAIL = 'company_email';
-    const EMAIL = 'email';
-    const VAT_TAX_ID = 'vat_tax_id';
-    const RESELLER_ID = 'reseller_id';
-    const COMMENT = 'comment';
-    const STREET = 'street';
-    const CITY = 'city';
-    const COUNTRY_ID = 'country_id';
-    const REGION = 'region';
-    const REGION_ID = 'region_id';
-    const POSTCODE = 'postcode';
-    const TELEPHONE = 'telephone';
-    const JOB_TITLE = 'job_title';
-    const PREFIX = 'prefix';
-    const FIRSTNAME = 'firstname';
-    const MIDDLENAME = 'middlename';
-    const LASTNAME = 'lastname';
-    const SUFFIX = 'suffix';
-    const GENDER = 'gender';
-    const CUSTOMER_GROUP_ID = 'customer_group_id';
-    const SALES_REPRESENTATIVE_ID = 'sales_representative_id';
-    const REJECT_REASON = 'reject_reason';
-    const REJECTED_AT = 'rejected_at';
-    const SUPER_USER_ID = 'super_user_id';
-
-    const STATUS_PENDING = 0;
-    const STATUS_APPROVED = 1;
-    const STATUS_REJECTED = 2;
-    const STATUS_BLOCKED = 3;*/
 
     const BUSINESS_TYPE = 'business_type';
     const ANNUAL_TURN_OVER = 'annual_turn_over';

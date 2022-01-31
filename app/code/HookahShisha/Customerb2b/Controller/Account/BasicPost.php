@@ -224,7 +224,6 @@ class BasicPost extends \Magento\Customer\Controller\Address implements HttpPost
             /* ENd Change the Customer objct Name */
 
             $this->messageManager->addSuccessMessage(__('You saved the basic details.'));
-            $url = $this->_buildUrl($redirectUrl, ['_secure' => true]);
             return $this->resultRedirectFactory->create()->setPath($redirectUrl);
         } catch (InputException $e) {
             $this->messageManager->addErrorMessage($e->getMessage());

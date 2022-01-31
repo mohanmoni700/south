@@ -131,8 +131,6 @@ class MyProducts extends \Magento\Catalog\Block\Product\AbstractProduct
                 $joinConditions,
                 []
             );
-            // $collection = $this->sharedCatalogCollection->create()
-            // $collection->addFieldToFilter("customer_group_id", $customer->getGroupId());
             $collection->addAttributeToSelect(['price', 'regular_price', 'final_price', 'name', 'small_image']);
             $collection->addAttributeToFilter('status', Status::STATUS_ENABLED);
             $collection->setPageSize($pageSize);
