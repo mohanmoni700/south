@@ -1,0 +1,15 @@
+<?php
+    $controllerUrl = 'hookahshisha/import/upload';
+?>
+
+<form action="<?= $block->escapeUrl($block->getUrl($controllerUrl)) ?>" method="post" enctype="multipart/form-data">
+<?= $block->getBlockHtml('formkey') ?>
+    <div class="import">
+        <label for="myfile">Upload CSV:</label>
+        <input type="file" id="blogCsv" accept=".csv" name="blogCsv" required>
+    </div>
+    <div class="import">
+        <button id="submit_button" type="submit" class="action-default scalable save primary">Submit</button>
+    </div>
+</form>
+

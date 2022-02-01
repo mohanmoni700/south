@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "453d193f0a7b1cdda44629c2b92d9738",
+    "content-hash": "bc5c2a0e0f70d5bb20f4472c69b9667f",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -50,6 +50,164 @@
                 "source": "https://github.com/2tvenom/CBOREncode/tree/1.0.2"
             },
             "time": "2020-10-27T07:22:41+00:00"
+        },
+        {
+            "name": "amasty/base",
+            "version": "1.12.19",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/base-1.12.19-ee.zip"
+            },
+            "require": {
+                "php": "^7.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\Base\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Amasty Base"
+        },
+        {
+            "name": "amasty/module-advanced-conditions",
+            "version": "1.5.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/module-advanced-conditions-1.5.4-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.12.19",
+                "php": "^7.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\Conditions\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Advanced Conditions by Amasty"
+        },
+        {
+            "name": "amasty/module-banners-lite",
+            "version": "1.0.19",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/module-banners-lite-1.0.19-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.12.19",
+                "php": "^7.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\BannersLite\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Promo Banners Lite by Amasty"
+        },
+        {
+            "name": "amasty/module-salesrulewizard",
+            "version": "1.0.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/module-salesrulewizard-1.0.3-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.12.19",
+                "amasty/promo": ">=2.11.0",
+                "php": "^7.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\SalesRuleWizard\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Sales Rule Wizard by Amasty"
+        },
+        {
+            "name": "amasty/promo",
+            "version": "2.11.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/promo-2.11.0-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.12.19",
+                "amasty/module-advanced-conditions": ">=1.5.4",
+                "amasty/module-banners-lite": ">=1.0.19",
+                "amasty/module-salesrulewizard": ">=1.0.3",
+                "amasty/rgrid": ">=1.0.7",
+                "php": "^7.3.0"
+            },
+            "suggest": {
+                "amasty/module-promo-mftf-2": "Install module-promo-mftf-2 module to be able to run Free Gift MFTF tests for Magento 2.3.5+ version.",
+                "amasty/module-promo-mftf-3": "Install module-promo-mftf-3 module to be able to run Free Gift MFTF tests for Magento 2.4.0+ version."
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\Promo\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Free Gift by Amasty"
+        },
+        {
+            "name": "amasty/rgrid",
+            "version": "1.0.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/rgrid-1.0.7-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.12.19",
+                "php": "~5.6.5|7.0.2|7.0.4|~7.0.6|^7.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\Rgrid\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Extended Rules Grid by Amasty"
         },
         {
             "name": "amzn/amazon-pay-and-login-magento-2-module",
@@ -1621,6 +1779,51 @@
             "time": "2019-10-25T10:52:19+00:00"
         },
         {
+            "name": "corra/module-amasty-promo-graph-ql",
+            "version": "1.1.7",
+            "dist": {
+                "type": "zip",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-amasty-promo-graph-ql/1.1.7.0/93b7fb147491063ce094baaef39b6fc891e1c2f2.zip",
+                "reference": "93b7fb147491063ce094baaef39b6fc891e1c2f2",
+                "mirrors": [
+                    {
+                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "amasty/promo": "*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Corra\\AmastyPromoGraphQl\\": ""
+                }
+            },
+            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "CORRA"
+                }
+            ],
+            "description": "GraphQl support for Amasty Promo Module",
+            "homepage": "https://bitbucket.org/corratech/amastypromographql",
+            "support": {
+                "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/2064515388/Amasty+Promo+GraphQl",
+                "source": "https://bitbucket.org/corratech/amastypromographql/src/93b7fb147491063ce094baaef39b6fc891e1c2f2/?at=1.1.7",
+                "issues": "https://bitbucket.org/corratech/amastypromographql/issues"
+            },
+            "time": "2021-06-23T12:03:16+00:00"
+        },
+        {
             "name": "corra/module-page-builder-customisation",
             "version": "1.0.7",
             "dist": {
@@ -1794,11 +1997,11 @@
         },
         {
             "name": "corra/module-veratad",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "dist": {
                 "type": "zip",
-                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-veratad/1.0.3.0/f84d7829b2310c5eb64df9b3b830cca3fc1c4f3e.zip",
-                "reference": "f84d7829b2310c5eb64df9b3b830cca3fc1c4f3e",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-veratad/1.0.4.0/c70092da9b7cf25f91535a0d48bc6d77ad7c1de7.zip",
+                "reference": "c70092da9b7cf25f91535a0d48bc6d77ad7c1de7",
                 "mirrors": [
                     {
                         "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
@@ -1829,10 +2032,10 @@
             "homepage": "https://bitbucket.org/corratech/veratad",
             "support": {
                 "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/3622797537/AgeMatch+-+Veratad",
-                "source": "https://bitbucket.org/corratech/veratad/src/f84d7829b2310c5eb64df9b3b830cca3fc1c4f3e/?at=1.0.3",
+                "source": "https://bitbucket.org/corratech/veratad/src/c70092da9b7cf25f91535a0d48bc6d77ad7c1de7/?at=1.0.4",
                 "issues": "https://bitbucket.org/corratech/veratad/issues"
             },
-            "time": "2021-12-29T09:56:42+00:00"
+            "time": "2022-01-27T01:52:54+00:00"
         },
         {
             "name": "corra/module-yotpo-loyalty-extended",
@@ -23381,6 +23584,51 @@
             "time": "2021-07-21T06:58:49+00:00"
         },
         {
+            "name": "mageplaza/module-delete-orders",
+            "version": "4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mageplaza/magento-2-delete-orders.git",
+                "reference": "44bc6c2d219a24b66dd4c01d20f32b1f61733360"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-delete-orders/zipball/44bc6c2d219a24b66dd4c01d20f32b1f61733360",
+                "reference": "44bc6c2d219a24b66dd4c01d20f32b1f61733360",
+                "shasum": ""
+            },
+            "require": {
+                "mageplaza/module-core": "^1.4.5"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Mageplaza\\DeleteOrders\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Mageplaza",
+                    "email": "support@mageplaza.com",
+                    "homepage": "https://www.mageplaza.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "Magento 2 Delete Orders extension",
+            "support": {
+                "issues": "https://github.com/mageplaza/magento-2-delete-orders/issues",
+                "source": "https://github.com/mageplaza/magento-2-delete-orders/tree/v4.0.1"
+            },
+            "time": "2021-08-16T10:06:54+00:00"
+        },
+        {
             "name": "mageplaza/module-product-labels",
             "version": "4.1.0",
             "source": {
@@ -23461,6 +23709,109 @@
                 "source": "https://github.com/mageplaza/magento-2-product-labels-graphql/tree/master"
             },
             "time": "2020-03-09T10:04:22+00:00"
+        },
+        {
+            "name": "mageworx/module-info",
+            "version": "1.1.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/mageworx/module-info/mageworx-module-info-1.1.1.0.zip",
+                "shasum": "da24911b8d6a2b2f4b9d13acb6367ae70901806d"
+            },
+            "require": {
+                "magento/module-catalog": ">=100.0.0 <105",
+                "magento/module-cms": ">=100.0.0 <105"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "MageWorx\\Info\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "MageWorx Notifications & Extensions List"
+        },
+        {
+            "name": "mageworx/module-ordereditorbase",
+            "version": "2.11.3",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/mageworx/module-ordereditorbase/mageworx-module-ordereditorbase-2.11.3.0.zip",
+                "shasum": "7abc9500908bb4e03bc360ee9da01abd7adb25a8"
+            },
+            "require": {
+                "ext-intl": "*",
+                "ext-json": "*",
+                "magento/framework": ">=102.0.0",
+                "magento/module-checkout": ">=100.2.2 <101",
+                "magento/module-quote": ">=101.0.2 <102",
+                "magento/module-sales": ">=101.0.2 <104",
+                "mageworx/module-ordersbase": ">=1.1.1"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "MageWorx\\OrderEditor\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Order Editor module for Magento 2"
+        },
+        {
+            "name": "mageworx/module-ordereditormeta",
+            "version": "1.8.4",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/mageworx/module-ordereditormeta/mageworx-module-ordereditormeta-1.8.4.0.zip",
+                "shasum": "4846e21c38d9a13e8475339ec46262bc4c082ca8"
+            },
+            "require": {
+                "mageworx/module-info": ">=1.0.0",
+                "mageworx/module-ordereditorbase": "2.11.3",
+                "mageworx/module-ordersbase": "2.0.0"
+            },
+            "type": "metapackage"
+        },
+        {
+            "name": "mageworx/module-ordersbase",
+            "version": "2.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/mageworx/module-ordersbase/mageworx-module-ordersbase-2.0.0.0.zip",
+                "shasum": "179d8f9a0bb017cffee74d79cd4a03308b46edf9"
+            },
+            "require": {
+                "magento/framework": ">=102.0.0",
+                "magento/module-checkout": ">=100.2.2 <101",
+                "magento/module-quote": ">=101.0.2 <102",
+                "magento/module-sales": ">=101.0.2 <104"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "MageWorx\\OrdersBase\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Extended Orders module for the Magento 2"
         },
         {
             "name": "monolog/monolog",
@@ -29804,22 +30155,22 @@
                 }
             },
             "license": [
-                "Commercial License - Copyright 2021  - WYOMIND  - Purchasing any product (Software) from the  wyomind.com web-site means buyer agree to the following statements (see LICENSE.TXT)"
+                "Commercial License - Copyright 2022  - WYOMIND  - Purchasing any product (Software) from the  wyomind.com web-site means buyer agree to the following statements (see LICENSE.TXT)"
             ]
         },
         {
             "name": "wyomind/massproductimport",
-            "version": "8.4.7",
+            "version": "8.6.2",
             "dist": {
                 "type": "zip",
-                "url": "https://repo.wyomind.com/wyomind-massproductimport-8.4.7.zip",
+                "url": "https://repo.wyomind.com/wyomind-massproductimport-8.6.2.zip",
                 "reference": ""
             },
             "require": {
                 "magento/framework": ">=100.0.0",
                 "php": "~5.5.0|~5.6.0|>=7.0.0",
                 "wyomind/framework": ">=5.0.0",
-                "wyomind/massstockupdate": ">=9.2.0.0,<=11.2.4"
+                "wyomind/massstockupdate": ">=9.2.0.0,<=11.4.4"
             },
             "type": "magento2-module",
             "autoload": {
@@ -29831,15 +30182,15 @@
                 }
             },
             "license": [
-                "Commercial License - Copyright 2021  - WYOMIND  - Purchasing any product (Software) from the  wyomind.com web-site means buyer agree to the following statements (see LICENSE.TXT)"
+                "Commercial License - Copyright 2022  - WYOMIND  - Purchasing any product (Software) from the  wyomind.com web-site means buyer agree to the following statements (see LICENSE.TXT)"
             ]
         },
         {
             "name": "wyomind/massstockupdate",
-            "version": "11.2.4",
+            "version": "11.4.4",
             "dist": {
                 "type": "zip",
-                "url": "https://repo.wyomind.com/wyomind-massstockupdate-11.2.4.zip",
+                "url": "https://repo.wyomind.com/wyomind-massstockupdate-11.4.4.zip",
                 "reference": ""
             },
             "require": {
@@ -29857,7 +30208,7 @@
                 }
             },
             "license": [
-                "Commercial License - Copyright 2021  - WYOMIND  - Purchasing any product (Software) from the  wyomind.com web-site means buyer agree to the following statements (see LICENSE.TXT)"
+                "Commercial License - Copyright 2022  - WYOMIND  - Purchasing any product (Software) from the  wyomind.com web-site means buyer agree to the following statements (see LICENSE.TXT)"
             ]
         },
         {
@@ -30012,5 +30363,6 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.2.0"
 }
+
