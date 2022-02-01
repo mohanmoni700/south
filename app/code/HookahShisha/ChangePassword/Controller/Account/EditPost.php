@@ -232,15 +232,15 @@ class EditPost extends \Magento\Customer\Controller\Account\EditPost
                 // logout from current session if password or email changed.
 
                 if (($this->getRequest()->getParam('custom_change_password')) && ($isPasswordChanged)) {
-                    return $resultRedirect->setPath('changepassword/index/index');
+                    $resultRedirect->setPath('changepassword/index/index');
                 }
 
                 if ($isPasswordChanged || $isEmailChanged) {
                     $this->session->logout();
                     $this->session->start();
-                    return $resultRedirect->setPath('customer/account/login');
+                    $resultRedirect->setPath('customer/account/login');
                 }
-                return $resultRedirect->setPath('customer/account');
+                $resultRedirect->setPath('customer/account');
             } catch (InvalidEmailOrPasswordException $e) {
                 $this->messageManager->addErrorMessage($this->escaper->escapeHtml($e->getMessage()));
             } catch (UserLockedException $e) {
@@ -252,7 +252,7 @@ class EditPost extends \Magento\Customer\Controller\Account\EditPost
                 $this->session->start();
                 $this->messageManager->addErrorMessage($message);
 
-                return $resultRedirect->setPath('customer/account/login');
+                $resultRedirect->setPath('customer/account/login');
             } catch (InputException $e) {
                 $this->messageManager->addErrorMessage($this->escaper->escapeHtml($e->getMessage()));
                 foreach ($e->getErrors() as $error) {

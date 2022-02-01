@@ -23,14 +23,12 @@ class ContactPost extends \Magento\Framework\App\Action\Action implements HttpPo
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
-     * @param \Psr\Log\LoggerInterface $logger
      * @param \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
      * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface
 
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
-        \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
         \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface
     ) {

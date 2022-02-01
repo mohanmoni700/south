@@ -217,9 +217,10 @@ class Register extends \Magento\Directory\Block\Data
      */
     public function getRegion()
     {
-        if (null !== ($region = $this->getFormData()->getRegion())) {
+        $formData = $this->getFormData();
+        if (null !== ($region = $formData->getRegion())) {
             return $region;
-        } elseif (null !== ($region = $this->getFormData()->getRegionId())) {
+        } elseif (null !== ($region = $formData->getRegionId())) {
             return $region;
         }
         return null;

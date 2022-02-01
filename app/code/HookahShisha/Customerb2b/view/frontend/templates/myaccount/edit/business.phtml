@@ -9,6 +9,7 @@ $countries = $block->getCountriesList();
 $company = $block->getCustomerCompany();
 $actionURL = "#";
 $formDisable = 1;
+$selectedElement = "selected='selected'";
 ?>
 <?php $messageData = $block->getMessagedata(); ?>
 <?php if ($messageData['comAccountVerified'] == 0 && $messageData['comDetailsChanged'] == 0): ?>
@@ -31,7 +32,8 @@ $formDisable = 1;
       data-mage-init='{"validation":{}}'>
     <?= $block->getBlockHtml('formkey') ?>
     <?php if ($block->isEditAccountAllowed()): ?>
-    <fieldset class="fieldset info">        
+    <fieldset class="fieldset info">
+        <legend></legend>
         <input type="hidden" name="company_email" id="company_email" value="<?= $block->escapeHtmlAttr($company->getCompanyEmail()) ?>"/>
         <input type="hidden" name="com_account_verified" value="0"/>
         <input type="hidden" name="com_details_changed" value="1"/>
@@ -63,7 +65,7 @@ $formDisable = 1;
                     </option>
                     <?php foreach ($block->getBusinessType() as $key => $value): ?>
                         <option value="<?= $value['value']?>"
-                            <?php if($value['value'] == $company->getBusinessType()){ echo "selected='selected'"; } ?>
+                            <?php if($value['value'] == $company->getBusinessType()){ echo $selectedElement; } ?>
                             ><?= $value['label']?></option>
                     <?php endforeach; ?>
                 </select>
@@ -83,7 +85,7 @@ $formDisable = 1;
                     </option>
                     <?php foreach ($block->getAnnualTurnOver() as $kAto => $valAto): ?>
                         <option value="<?= $valAto['value']?>"
-                            <?php if($valAto['value'] == $company->getAnnualTurnOver()){ echo "selected='selected'"; } ?>
+                            <?php if($valAto['value'] == $company->getAnnualTurnOver()){ echo $selectedElement; } ?>
                             ><?= $valAto['label']?></option>
                     <?php endforeach; ?>
                 </select>
@@ -103,16 +105,17 @@ $formDisable = 1;
                     </option>
                     <?php foreach ($block->getNumberOfEmp() as $knoe => $valnoe): ?>
                         <option value="<?= $valnoe['value']?>"
-                            <?php if($valnoe['value'] == $company->getNumberOfEmp()){ echo "selected='selected'"; } ?>
+                            <?php if($valnoe['value'] == $company->getNumberOfEmp()){ echo $selectedElement; } ?>
                             ><?= $valnoe['label']?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
         </div>
         <div class="field vat-tax-id">
+            <?php $salesTaxID = __('Sales Tax ID'); ?>
             <label class="label" for="vat_tax_id">
                 <span class="tax_tooltip">
-                <span><?= $block->escapeHtml(__('Sales Tax ID')) ?></span>
+                <span><?= $block->escapeHtml($salesTaxID) ?></span>
                 <?php $tooltipSalesTaxEnable = $block->getConfig('hookahshisha/business_details/enable_business'); ?>
                 <?php if($tooltipSalesTaxEnable): ?>
                     <?php $tooltipSalesTaxId = $block->getConfig('hookahshisha/business_details/tooltip_sales_tax_id'); ?>
@@ -126,8 +129,8 @@ $formDisable = 1;
             <div class="control">
                 <input type="text" name="vat_tax_id" id="vat_tax_id"
                        value="<?= $block->escapeHtmlAttr($company->getVatTaxId()) ?>"
-                       placeholder="<?= $block->escapeHtmlAttr(__('Sales Tax ID')) ?>"
-                       title="<?= $block->escapeHtmlAttr(__('Sales Tax ID')) ?>"
+                       placeholder="<?= $block->escapeHtmlAttr($salesTaxID) ?>"
+                       title="<?= $block->escapeHtmlAttr($salesTaxID) ?>"
                        class="input-text">
             </div>
         </div>
@@ -171,7 +174,7 @@ $formDisable = 1;
                     </option>
                     <?php foreach ($block->getHearAboutUs() as $khau => $valhau): ?>
                         <option value="<?= $valhau['value']?>"
-                            <?php if($valhau['value'] == $company->getHearAboutUs()){ echo "selected='selected'"; } ?>
+                            <?php if($valhau['value'] == $company->getHearAboutUs()){ echo $selectedElement; } ?>
                             ><?= $valhau['label']?></option>
                     <?php endforeach; ?>
                 </select>

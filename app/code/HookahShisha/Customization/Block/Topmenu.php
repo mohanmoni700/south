@@ -33,7 +33,6 @@ class Topmenu extends \Smartwave\Megamenu\Block\Topmenu
             }
             $html = '<ul class="subchildmenu ' . $column_class . '">';
             $i = 0;
-            $totalCount = 0;
             foreach ($children as $child) {
                 if ($level == 2) {
                     $i++;
