@@ -47,7 +47,7 @@ class InitGraphQlTranslations
     /**
      * Initialize translation area part
      * Similarly to how SOAP and REST controllers initialize translation area part
-     * Or how frontend abstract action plugin loads design that initializes the same part
+     * or how frontend abstract action plugin loads design that initializes the same part
      * For frontend-specific areas, are emulation methods later would switch translation data as necessary
      * However, emulation does not initialize translation area part,
      * and as it is never called for graphQl, it is never loaded without such a plugin
