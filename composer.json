@@ -6,7 +6,14 @@
     "license": "OSL-3.0",
     "config": {
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "laminas/laminas-dependency-plugin": false,
+            "composer/package-versions-deprecated": false,
+            "magento/magento-composer-installer": false,
+            "magento/inventory-composer-installer": false,
+            "magento/composer-root-update-plugin": false
+        }
     },
     "repositories": {
         "amasty": {
@@ -56,6 +63,7 @@
         "magenest/module-quickbooksonline": "^2.5",
         "magento/composer-root-update-plugin": "~1.1",
         "magento/magento-cloud-metapackage": ">=2.4.3 <2.4.4",
+        "mageplaza/module-delete-orders": "^4.0",
         "mageplaza/module-product-labels": "^4.0",
         "mageplaza/module-product-labels-graphql": "^1.0",
         "mageworx/module-ordereditormeta": "^1.8",
