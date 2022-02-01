@@ -735,6 +735,7 @@ return [
         'Magefan_BlogImport' => 1,
         'Magefan_BlogAuthor' => 1,
         'Magefan_BlogExtra' => 1,
+        'HookahShisha_Magefan' => 1,
         'Magefan_ProductWidget' => 1,
         'Magefan_WysiwygAdvanced' => 1,
         'Magefan_YouTubeWidget' => 1,
