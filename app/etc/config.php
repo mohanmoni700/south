@@ -747,6 +747,7 @@ return [
         'Magenest_Core' => 1,
         'Magenest_QuickBooksOnline' => 1,
         'Mageplaza_Core' => 1,
+        'Mageplaza_DeleteOrders' => 1,
         'Mageplaza_ProductLabels' => 1,
         'Mageplaza_ProductLabelsGraphQl' => 1,
         'PCAPredict_Tag' => 1,
