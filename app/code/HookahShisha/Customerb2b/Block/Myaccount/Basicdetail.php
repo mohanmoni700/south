@@ -242,24 +242,6 @@ class Basicdetail extends \Magento\Directory\Block\Data
     }
 
     /**
-     * Return the Url to go back.
-     *
-     * @return string
-     */
-    public function getBackUrl()
-    {
-        if ($this->getData('back_url')) {
-            return $this->getData('back_url');
-        }
-
-        if ($this->getCustomerAddressCount()) {
-            return $this->getUrl('customer/address');
-        } else {
-            return $this->getUrl('customer/account/');
-        }
-    }
-
-    /**
      * Return the Url for saving.
      *
      * @return string
@@ -330,62 +312,6 @@ class Basicdetail extends \Magento\Directory\Block\Data
     }
 
     /**
-     * Retrieve the number of addresses associated with the customer given a customer Id.
-     *
-     * @return int
-     */
-    public function getCustomerAddressCount()
-    {
-        return count($this->getCustomer()->getAddresses());
-    }
-
-    /**
-     * Determine if the address can be set as the default billing address.
-     *
-     * @return bool|int
-     */
-    public function canSetAsDefaultBilling()
-    {
-        if (!$this->getAddress()->getId()) {
-            return $this->getCustomerAddressCount();
-        }
-        return !$this->isDefaultBilling();
-    }
-
-    /**
-     * Determine if the address can be set as the default shipping address.
-     *
-     * @return bool|int
-     */
-    public function canSetAsDefaultShipping()
-    {
-        if (!$this->getAddress()->getId()) {
-            return $this->getCustomerAddressCount();
-        }
-        return !$this->isDefaultShipping();
-    }
-
-    /**
-     * Is the address the default billing address?
-     *
-     * @return bool
-     */
-    public function isDefaultBilling()
-    {
-        return (bool) $this->getAddress()->isDefaultBilling();
-    }
-
-    /**
-     * Is the address the default shipping address?
-     *
-     * @return bool
-     */
-    public function isDefaultShipping()
-    {
-        return (bool) $this->getAddress()->isDefaultShipping();
-    }
-
-    /**
      * Retrieve the Customer Data using the customer Id from the customer session.
      *
      * @return \Magento\Customer\Api\Data\CustomerInterface
@@ -393,20 +319,6 @@ class Basicdetail extends \Magento\Directory\Block\Data
     public function getCustomer()
     {
         return $this->currentCustomer->getCustomer();
-    }
-
-    /**
-     * Return back button Url, either to customer address or account.
-     *
-     * @return string
-     */
-    public function getBackButtonUrl()
-    {
-        if ($this->getCustomerAddressCount()) {
-            return $this->getUrl('customer/address');
-        } else {
-            return $this->getUrl('customer/account/');
-        }
     }
 
     /**

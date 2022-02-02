@@ -285,22 +285,6 @@ class Businessdetail extends Template
     }
 
     /**
-     * Gets company street label
-     *
-     * @param CompanyInterface $company
-     * @return string
-     */
-    public function getCompanyStreetLabel(CompanyInterface $company)
-    {
-        $streetLabel = '';
-        $streetData = $company->getStreet();
-        $streetLabel .= (!empty($streetData[0])) ? $streetData[0] : '';
-        $streetLabel .= (!empty($streetData[1])) ? ' ' . $streetData[1] : '';
-
-        return $streetLabel;
-    }
-
-    /**
      * Is company address displayed
      *
      * @param CompanyInterface $company
@@ -309,27 +293,6 @@ class Businessdetail extends Template
     public function isCompanyAddressDisplayed(CompanyInterface $company)
     {
         return $company->getCountryId() ? true : false;
-    }
-
-    /**
-     * Get company address string
-     *
-     * @param CompanyInterface $company
-     * @return string
-     */
-    public function getCompanyAddressString(CompanyInterface $company)
-    {
-        $addressParts = [];
-
-        $addressParts[] = $company->getCity();
-        $addressParts[] = $this->countryInformationProvider->getActualRegionName(
-            $company->getCountryId(),
-            $company->getRegionId(),
-            $company->getRegion()
-        );
-        $addressParts[] = $company->getPostcode();
-
-        return implode(', ', array_filter($addressParts));
     }
 
     /**
@@ -377,79 +340,5 @@ class Businessdetail extends Template
         }
 
         return $jobTitle;
-    }
-
-    /**
-     * Get company admin email
-     *
-     * @param CompanyInterface $company
-     * @return string
-     */
-    public function getCompanyAdminEmail(CompanyInterface $company)
-    {
-        $companyAdminData = $this->getCompanyAdmin($company);
-
-        return ($companyAdminData && $companyAdminData->getId()) ? $companyAdminData->getEmail() : '';
-    }
-
-    /**
-     * Get sales representative name
-     *
-     * @param CompanyInterface $company
-     * @return string
-     */
-    public function getSalesRepresentativeName(CompanyInterface $company)
-    {
-        $salesRepresentativeData = $this->getSalesRepresentative($company);
-
-        return ($salesRepresentativeData && $salesRepresentativeData->getId()) ? $salesRepresentativeData->getName() : '';
-    }
-
-    /**
-     * Get sales representative email
-     *
-     * @param CompanyInterface $company
-     * @return string
-     */
-    public function getSalesRepresentativeEmail(CompanyInterface $company)
-    {
-        $salesRepresentativeData = $this->getSalesRepresentative($company);
-
-        return ($salesRepresentativeData && $salesRepresentativeData->getId()) ? $salesRepresentativeData->getEmail() : '';
-    }
-
-    /**
-     * Get company admin
-     *
-     * @param CompanyInterface $company
-     * @return CustomerInterface
-     */
-    protected function getCompanyAdmin(CompanyInterface $company)
-    {
-        if ($this->companyAdmin === null) {
-            $this->companyAdmin = $this->companyManagement->getAdminByCompanyId($company->getId());
-        }
-
-        return $this->companyAdmin;
-    }
-
-    /**
-     * Get company sales representative
-     *
-     * @param CompanyInterface $company
-     * @return User
-     */
-    private function getSalesRepresentative(CompanyInterface $company)
-    {
-        if ($this->salesRepresentative !== null) {
-            return $this->salesRepresentative;
-        }
-
-        $salesRepresentativeId = $company->getSalesRepresentativeId();
-        if ($salesRepresentativeId) {
-            $this->salesRepresentative = $this->userFactory->create()->load($salesRepresentativeId);
-        }
-
-        return $this->salesRepresentative;
     }
 }

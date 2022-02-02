@@ -76,7 +76,7 @@ class Tabs extends Generic implements TabInterface
      */
     public function getTabLabel()
     {
-        return __('Other Contact detail ');
+        return __('Other Contact detail');
     }
 
     /**
@@ -86,7 +86,7 @@ class Tabs extends Generic implements TabInterface
      */
     public function getTabTitle()
     {
-        return __('Other Contact detail ');
+        return __('Other Contact detail');
     }
 
     /**
