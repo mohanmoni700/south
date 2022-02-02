@@ -71,35 +71,5 @@ class VerifyRejectB2bCompany implements ObserverInterface
             $companyData->setComDetailsChanged(0);
         }
         $company = $this->companyRepository->save($companyData);
-
-        if ($params['general']['is_sentmail'] == 1) {
-            $comAccountVerified = $company->getComAccountVerified();
-            $comDetailsChanged = $company->getComDetailsChanged();
-            $comVerificationMessage = $company->getComVerificationMessage();
-            if (empty($comVerificationMessage)) {
-                $comVerificationMessage = "Some Of your details has been rejected. please update the same";
-            }
-
-            $customerId = $company->getSuperUserId();
-            $customerData = $this->customerRepository->getById($customerId);
-
-            $data['email'] = $customerData->getEmail();
-            $data['name'] = $customerData->getFirstname() . ' ' . $customerData->getLastname();
-            $data['rejectReason'] = $comVerificationMessage;
-            $data['store_id'] = $customerData->getStoreId();
-            $data['b2bformtype'] = "Business Details";
-
-            $isCstCom = "";
-            $status = 0;
-
-            if ($comAccountVerified == 0 && $comDetailsChanged == 0) {
-                $isCstCom = "reject";
-                $this->helperb2b->sendRejectEmail($isCstCom, $data, $status);
-            }
-            if ($comAccountVerified == 1 && $comDetailsChanged == 0) {
-                $isCstCom = "approve";
-                $this->helperb2b->sendRejectEmail($isCstCom, $data, $status);
-            }
-        }
     }
 }
