@@ -4093,6 +4093,41 @@
             "description": "Klarna Order Management Magento 2 Extension"
         },
         {
+            "name": "klaviyo/magento2-extension",
+            "version": "3.0.11",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klaviyo/magento2-klaviyo.git",
+                "reference": "342aabf2a57ef82b70761502dadcf2d6893e18f6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klaviyo/magento2-klaviyo/zipball/342aabf2a57ef82b70761502dadcf2d6893e18f6",
+                "reference": "342aabf2a57ef82b70761502dadcf2d6893e18f6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "magento/module-quote": ">=101.1.3"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Klaviyo\\Reclaim\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Klaviyo extension for Magento 2. Allows pushing newsletters to Klaviyo's platform and more.",
+            "support": {
+                "issues": "https://github.com/klaviyo/magento2-klaviyo/issues",
+                "source": "https://github.com/klaviyo/magento2-klaviyo/tree/3.0.11"
+            },
+            "time": "2021-12-21T15:48:26+00:00"
+        },
+        {
             "name": "laminas/laminas-captcha",
             "version": "2.11.0",
             "source": {
