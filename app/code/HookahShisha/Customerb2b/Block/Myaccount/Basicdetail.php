@@ -238,12 +238,7 @@ class Basicdetail extends \Magento\Directory\Block\Data
      */
     public function getTitle()
     {
-        if ($title = $this->getData('title')) {
-            return $title;
-        }
-
-        $title = __('My Account');
-        return $title;
+        return __('My Account');
     }
 
     /**

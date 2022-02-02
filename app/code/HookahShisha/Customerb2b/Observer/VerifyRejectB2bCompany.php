@@ -62,7 +62,6 @@ class VerifyRejectB2bCompany implements ObserverInterface
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        $params = $observer->getRequest()->getParams();
         $companyData = $observer->getCompany();
 
         if ($companyData->getComAccountVerified() == 1) {
@@ -70,6 +69,6 @@ class VerifyRejectB2bCompany implements ObserverInterface
         } elseif (!empty($companyData->getComVerificationMessage())) {
             $companyData->setComDetailsChanged(0);
         }
-        $company = $this->companyRepository->save($companyData);
+        $this->companyRepository->save($companyData);
     }
 }

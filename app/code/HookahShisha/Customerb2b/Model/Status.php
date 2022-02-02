@@ -18,11 +18,10 @@ class Status implements OptionSourceInterface
      */
     public function getOptionArray()
     {
-        $options = [
+        return [
             '1' => __('Yes'),
             '0' => __('No'),
         ];
-        return $options;
     }
 
     /**

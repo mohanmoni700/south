@@ -10,7 +10,7 @@ use Magento\Framework\Exception\InputException;
 use \Magento\Customer\Api\AccountManagementInterface;
 
 /**
- * Create company account action.
+ * Change password account action.
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -43,7 +43,6 @@ class Changepwd extends \Magento\Framework\App\Action\Action implements HttpPost
      */
     public function execute()
     {
-        $request = $this->getRequest();
         $resultRedirect = $this->resultRedirectFactory->create()->setPath('changepassword/index/index');
 
         try {
