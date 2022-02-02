@@ -60,39 +60,37 @@ class VerifyRejectB2bCustomer implements ObserverInterface
         $request = $observer->getEvent()->getRequest();
         $data = $request->getPost('customer');
 
-        if ($data && $data['is_sentmail'] == 1) {
-            $customer = $observer->getEvent()->getCustomer();
-            $companyId = $customer->getExtensionAttributes()->getCompanyAttributes()->getCompanyId();
-            if ($companyId) {
+        $customer = $observer->getEvent()->getCustomer();
+        $companyId = $customer->getExtensionAttributes()->getCompanyAttributes()->getCompanyId();
+        if ($data && $companyId && $data['is_sentmail'] == 1) {
 
-                $cst_account_verified = $customer->getCustomAttribute('cst_account_verified');
-                $cstAccountVerified = $cst_account_verified ? $cst_account_verified->getValue() : 0;
-                $cst_details_changed = $customer->getCustomAttribute('cst_details_changed');
-                $cstDetailsChanged = $cst_details_changed ? $cst_details_changed->getValue() : 0;
+            $cst_account_verified = $customer->getCustomAttribute('cst_account_verified');
+            $cstAccountVerified = $cst_account_verified ? $cst_account_verified->getValue() : 0;
+            $cst_details_changed = $customer->getCustomAttribute('cst_details_changed');
+            $cstDetailsChanged = $cst_details_changed ? $cst_details_changed->getValue() : 0;
 
-                $cst_verification_message = $customer->getCustomAttribute('cst_verification_message');
-                $cstVerificationMessage = $cst_verification_message ? $cst_verification_message->getValue() : "";
-                if (empty($cstVerificationMessage)) {
-                    $cstVerificationMessage = "Some Of your details has been rejected. please update the same";
+            $cst_verification_message = $customer->getCustomAttribute('cst_verification_message');
+            $cstVerificationMessage = $cst_verification_message ? $cst_verification_message->getValue() : "";
+            if (empty($cstVerificationMessage)) {
+                $cstVerificationMessage = "Some Of your details has been rejected. please update the same";
+            }
+
+            $data['email'] = $customer->getEmail();
+            $data['name'] = $customer->getFirstname() . ' ' . $customer->getLastname();
+            $data['rejectReason'] = $cstVerificationMessage;
+            $data['store_id'] = $customer->getStoreId();
+            $data['b2bformtype'] = "Basic Details";
+
+            $isCstCom = "";
+            $status = 0;
+            if ($customer->getStoreId() == 8) {
+                if ($cstAccountVerified == 0 && $cstDetailsChanged == 0) {
+                    $isCstCom = "reject";
+                    $this->helperb2b->sendRejectEmail($isCstCom, $data, $status);
                 }
-
-                $data['email'] = $customer->getEmail();
-                $data['name'] = $customer->getFirstname() . ' ' . $customer->getLastname();
-                $data['rejectReason'] = $cstVerificationMessage;
-                $data['store_id'] = $customer->getStoreId();
-                $data['b2bformtype'] = "Basic Details";
-
-                $isCstCom = "";
-                $status = 0;
-                if ($customer->getStoreId() == 8) {
-                    if ($cstAccountVerified == 0 && $cstDetailsChanged == 0) {
-                        $isCstCom = "reject";
-                        $this->helperb2b->sendRejectEmail($isCstCom, $data, $status);
-                    }
-                    if ($cstAccountVerified == 1 && $cstDetailsChanged == 0) {
-                        $isCstCom = "approve";
-                        $this->helperb2b->sendRejectEmail($isCstCom, $data, $status);
-                    }
+                if ($cstAccountVerified == 1 && $cstDetailsChanged == 0) {
+                    $isCstCom = "approve";
+                    $this->helperb2b->sendRejectEmail($isCstCom, $data, $status);
                 }
             }
         }

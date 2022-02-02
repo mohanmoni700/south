@@ -107,57 +107,14 @@ class Myaccount extends \Magento\Directory\Block\Data
      */
     public function getMessageData()
     {
-        $companyData = $this->getCustomerCompany();
-        $customerData = $this->getCustomer();
-        $comAccountVerified = 1;
-        $comDetailsChanged = 0;
-        $comVerificationMessage = "";
-        if ($companyData) {
-            $comAccountVerified = $companyData->getComAccountVerified();
-            $comDetailsChanged = $companyData->getComDetailsChanged();
-            $comVerificationMessage = $companyData->getComVerificationMessage();
-        }
-        $cst_account_verified = $customerData->getCustomAttribute('cst_account_verified');
-        $cstAccountVerified = $cst_account_verified ? $cst_account_verified->getValue() : 0;
-        $cst_details_changed = $customerData->getCustomAttribute('cst_details_changed');
-        $cstDetailsChanged = $cst_details_changed ? $cst_details_changed->getValue() : 1;
-
-        $cst_verification_message = $customerData->getCustomAttribute('cst_verification_message');
-        $cstVerificationMessage = $cst_verification_message ? $cst_verification_message->getValue() : "";
-
         $message = [];
-        $isContactChanged = 1;
-        if ($comAccountVerified == 0 && $cstAccountVerified == 0
-            && ($cstDetailsChanged == 1 || $comDetailsChanged == 1)
-        ) {
-            $messageString = "Your details are under verification. you would receive an email once there is an update.";
-            $message[] = ["pending", $messageString];
-        }
-
-        if ($comAccountVerified == 0 && $comDetailsChanged == 0) {
-            if (empty($comVerificationMessage)) {
-                $comVerificationMessage = "Some Of your details has been rejected. please update the same";
-            }
-            $message[] = ["reject", $comVerificationMessage];
-        }
-        if ($cstAccountVerified == 0 && $cstDetailsChanged == 0) {
-            if (empty($cstVerificationMessage)) {
-                $cstVerificationMessage = "Some Of your details has been rejected. please update the same";
-            }
-            $message[] = ["reject", $cstVerificationMessage];
-        }
-
-        if ($cstAccountVerified == 0 && $comAccountVerified == 0) {
-            $isContactChanged = 0;
-        }
-
         return [
             'message' => $message,
-            'comAccountVerified' => $comAccountVerified,
-            'comDetailsChanged' => $comDetailsChanged,
-            'cstAccountVerified' => $cstAccountVerified,
-            'cstDetailsChanged' => $cstDetailsChanged,
-            'isContactChanged' => $isContactChanged,
+            'comAccountVerified' => 0,
+            'comDetailsChanged' => 0,
+            'cstAccountVerified' => 0,
+            'cstDetailsChanged' => 0,
+            'isContactChanged' => 1,
         ];
     }
 }
