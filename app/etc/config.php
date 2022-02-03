@@ -727,6 +727,7 @@ return [
         'Klarna_Kp' => 1,
         'Klarna_Onsitemessaging' => 1,
         'Klarna_KpGraphQl' => 1,
+        'Klaviyo_Reclaim' => 1,
         'MSP_Common' => 1,
         'MSP_CmsImportExport' => 1,
         'MageModule_Core' => 1,
