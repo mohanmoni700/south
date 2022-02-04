@@ -31,17 +31,16 @@ class CartPrices
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function afterResolve(
-        MagentoCartPrices $subject,
+        MagentoCartPrices $subject,// NOSONAR
         $result,
-        Field $field,
-        $context,
-        ResolveInfo $info,
-        array $value = null,
-        array $args = null
+        Field $field, // NOSONAR
+        $context, // NOSONAR
+        ResolveInfo $info, // NOSONAR
+        array $value = null, // NOSONAR
+        array $args = null // NOSONAR
     ) {
         if (empty($result['applied_taxes'])) {
             $quote = $result['model'];
-            // ToDo Check this method with all the scenario working or not. If not working we need use totalsCollector
             if (!empty($quote && ($quote->getShippingAddress()) && ($quote->getShippingAddress()->getTaxAmount()))) {
                 $result['applied_taxes'][] = [
                     'label' => "Avalara_Excise_Tax",
