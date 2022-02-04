@@ -40,11 +40,17 @@ class CartPrices
         array $args = null
     ) {
         if (empty($result['applied_taxes'])) {
-            //ToDO change harcoded value: presently checking how we can take the tax amount same as luma
-            $result['applied_taxes'][] = [
-                'label' => 1,
-                'amount' => ['value' => 2.79, 'currency' => 'USD']
-            ];
+            $quote = $result['model'];
+            // ToDo Check this method with all the scenario working or not. If not working we need use totalsCollector
+            if (!empty($quote && ($quote->getShippingAddress()) && ($quote->getShippingAddress()->getTaxAmount()))) {
+                $result['applied_taxes'][] = [
+                    'label' => "Avalara_Excise_Tax",
+                    'amount' => [
+                        'value' => $quote->getShippingAddress()->getTaxAmount(),
+                        'currency' => $result['grand_total']['currency']
+                    ]
+                ];
+            }
         }
         return $result;
     }
