@@ -750,6 +750,7 @@ return [
         'Mageplaza_Core' => 1,
         'Mageplaza_ProductLabels' => 1,
         'Mageplaza_ProductLabelsGraphQl' => 1,
+        'Mageplaza_Webhook' => 1,
         'PCAPredict_Tag' => 1,
         'PayPal_Braintree' => 1,
         'PayPal_BraintreeGraphQl' => 1,
