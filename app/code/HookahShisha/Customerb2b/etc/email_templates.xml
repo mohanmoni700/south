@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+ 
+    <template id="b2b_customer_admin_email_template" 
+                label="B2B Customer Admin Email" 
+                file="b2bcustomeradminemailtemplate.html" 
+                type="html" 
+                module="HookahShisha_Customerb2b" 
+                area="frontend"/>
+
+    <template id="b2b_company_customer_account_verfiy_email"
+                label="B2B Customer Company Account Verify Email"
+                file="b2bcompanycustomeraccountverfiyemail.html"
+                type="html"
+                module="HookahShisha_Customerb2b"
+                area="frontend"
+    />
+
+    <template id="b2b_company_customer_account_reject_email"
+                label="B2B Customer Company Account Reject Email"
+                file="b2bcompanycustomeraccountrejectemail.html"
+                type="html"
+                module="HookahShisha_Customerb2b"
+                area="frontend"
+    />
+     
+</config>

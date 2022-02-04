@@ -1,0 +1,22 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+        <title>REGISTER</title>
+    </head>
+	<body>
+        <referenceContainer name="content">
+            <container name="customer.register.container" htmlTag="div" htmlClass="login-container" />
+        	<referenceBlock name="customer_form_register">
+            	<arguments>
+                	<argument name="show_address_fields" xsi:type="boolean">true</argument>
+            	</arguments>
+            	<action method="setTemplate">
+                    <argument name="template" xsi:type="string">HookahShisha_Customerb2b::form/register.phtml</argument>
+                </action>
+        	</referenceBlock>
+        </referenceContainer>
+    	<referenceBlock name="login_as_customer_opt_in_create" remove="true"/>
+
+        <move element="page.main.title" destination="customer.register.container" before="-"/>
+        <move element="customer_form_register" destination="customer.register.container" />
+	</body>
+</page>

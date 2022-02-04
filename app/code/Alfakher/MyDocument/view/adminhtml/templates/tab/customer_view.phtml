@@ -1,0 +1,121 @@
+<?php 
+   $customerid=$block->getCustomer();
+   $customerData= $block->getCustomercollection($customerid);
+   $data= $customerData->getData();
+   $documentData= $block->getDocumentCollection();
+   $docdata = $documentData->getData();
+   if(!empty($docdata)){
+?>
+
+<div class="fieldset-wrapper customer-information">
+   
+   <div class="fieldset-wrapper-title">
+      <span class="title"><?php /* @escapeNotVerified */ echo __('Documents') ?></span>
+   </div>
+   
+   <div class="fieldset-wrapper-title">
+      <span class="title"><?php /* @escapeNotVerified */ echo __('Customer Information') ?></span>
+   </div>
+
+   <b>Name: </b><?php echo $customerData->getFirstname();?>
+      <span style="padding-left: 34em;">
+         <b>Email: </b><?php echo $customerData->getEmail(); ?>
+      </span>
+   
+   <div class="fieldset-wrapper-title">
+      <span class="title"><?php /* @escapeNotVerified */ echo __('') ?></span>
+   </div>
+   
+<!-- Document Information. -->
+   <?php
+      $items= $block->getDocumentCollection();
+      $i=0; 
+      $customer_id = ['customer_id' => $customerid,];
+   ?>
+
+<!-- Form start BS 24-1-22 -->
+   <form action="<?php echo $block->getUrl('mydoc/document/saveform',['_query' => $customer_id])?>" method="post" class="form doc-form">
+
+      <input name="form_key" type="hidden" value="<?php echo $block->getFormKey() ?>" />
+      <?php foreach ($items as $document) {?>
+      
+         <div class="doc-box">
+               <input type="hidden" class="doc_id" name="mydocument_id[]" value="<?php echo $document->getMydocumentId()?>">
+               <div class="admin__form_field">
+                  <span class="admin__form_label">Document name:</span>
+                  <span class="admin__form_value"><?= $document->getDocumentName() ?></span>
+               </div>
+               
+                <?php        
+                  $filename=$document->getFilename();
+                  $queryParams = ['filename' => $filename,];
+               ?>
+               
+               <div class="admin__form_field">
+                  <span class="admin__form_label">File:</span>
+                  <span class="admin__form_value"><a href="<?php echo $block->getUrl('mydoc/document/download',['_query' => $queryParams])?>"><?php echo $document->getFilename();?></a></span>
+               </div>
+
+               <?php if(!empty($document->getExpiryDate())){  ?>
+               
+               <div class="admin__form_field">
+                  <span class="admin__form_label">Expiry Date:</span>
+                  <span class="admin__form_value"><?= $document->getExpiryDate() ?></span>
+               </div> 
+
+               <?php } 
+                  $val=$document->getMydocumentId(); 
+               ?>
+
+               <div class="admin__form_field">
+                 <span class="admin__form_label">Document Verified:</span>
+                   <label class="switch admin__form_value"> 
+                      <input type="checkbox" id='toggle_<?php echo $document->getMydocumentId()?>' class='cmn-toggle cmn-toggle-round' value="0" name='status[]' <?php echo $document->getStatus()== '1' ? 'checked' : ''; ?> >
+                      <span class="slider round"></span>
+                  </label>
+                </div>
+
+               <div class="admin__form_field" id="message_<?php echo $document->getMydocumentId()?>">
+                  <span class="admin__form_label">Rejected Reason:</span>
+                  <input type="text" name="message[]" class="admin__form_value">
+               </div>
+
+               <?php $i++; ?>
+         </div>
+      <?php } ?>
+               <button type="submit" value="submit" id="custom_btn">save</button>
+   </form>
+   <!-- Form End BS 24-1-22 -->
+</div>
+
+
+<?php }
+   else{
+       echo "No Documents are uploaded!";
+   }  
+?>
+
+
+<script type="text/javascript">
+       require(['jquery', 'jquery/ui'], function($){
+           jQuery(document).ready( function() {         
+               jQuery("[id^='toggle_']").on('change', function(){
+                  
+                  var toggle_id = $(this).attr('id');
+                  var check = this.checked ? 1 : 0;
+                  var splitid = toggle_id.split("_");
+                   
+                   if(check == 1) {
+                       jQuery("#message_"+splitid[1]).hide();
+                        $("#"+toggle_id).val('1');
+                   }
+                   else{
+                       jQuery("#message_"+splitid[1]).show();
+                        $("#"+toggle_id).val('0');
+                   }
+               }).change();
+           });
+       });
+</script>
+
+
