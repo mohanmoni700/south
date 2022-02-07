@@ -49,7 +49,7 @@ class SwatchDataProvider extends SourceSwatchDataProvider
         if ((isset($swatches[$optionId]['type']) && $swatches[$optionId]['type'] == Swatch::SWATCH_TYPE_EMPTY)
             || !isset($swatches[$optionId]['type'], $swatches[$optionId]['value'])
         ) {
-            // If swatch is empty, return no data to type resolver to not get an error.
+            // If swatch is empty, return no data to type resolver to not get an error
             return null;
         }
 
