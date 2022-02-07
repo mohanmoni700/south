@@ -745,6 +745,7 @@ return [
         'Eyemagine_HubSpot' => 1,
         'Fastly_Cdn' => 1,
         'HookahShisha_Avalara' => 1,
+        'HookahShisha_AvalaraExciseGraphQl' => 1,
         'HookahShisha_Catalog' => 1,
         'HookahShisha_CatalogImportExport' => 1,
         'HookahShisha_GraphQl' => 1,
