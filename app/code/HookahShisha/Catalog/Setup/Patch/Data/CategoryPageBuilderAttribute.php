@@ -2,7 +2,7 @@
 /**
  * @category  HookahShisha
  * @package   HookahShisha_Catalog
- * @author    Bashid CB <bashidcb@corra.com>
+ * @author    Corra
  */
 declare(strict_types=1);
 
