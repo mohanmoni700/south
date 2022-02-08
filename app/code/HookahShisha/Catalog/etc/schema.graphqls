@@ -1,0 +1,9 @@
+##
+# @category    HookahShisha
+# @package     HookahShisha_Catalog
+# @author      Corra
+##
+
+interface CategoryInterface {
+    alfa_description: String @doc(description: "An optional description of the category.") @resolver(class: "\\Magento\\CatalogGraphQl\\Model\\Resolver\\Category\\CategoryHtmlAttribute")
+}
