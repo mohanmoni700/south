@@ -721,6 +721,7 @@ return [
         'HookahShisha_Sales' => 1,
         'HookahShisha_SalesGraphQl' => 1,
         'HookahShisha_SuperPack' => 1,
+        'HookahShisha_SwatchData' => 1,
         'HookahShisha_SwatchesGraphQl' => 1,
         'HookahShisha_YotpoLoyalty' => 1,
         'Klarna_Core' => 1,
