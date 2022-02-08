@@ -102,6 +102,9 @@ class SwatchFileType extends \Magento\Config\Model\Config\Backend\File
         return parent::afterSave();
     }
 
+    /**
+     * @return $this
+     */
     public function readOptions($fileValue)
     {
         $optionsData = $swatchOptions = [];
@@ -112,11 +115,10 @@ class SwatchFileType extends \Magento\Config\Model\Config\Backend\File
         $value = '';
         $key = '';
         foreach ($csvData as $row => $data) {
-            //$key = 'option_' . $row;
+            $key = 'option_' . $row;
             if ($row > 0) {
                 $attribute = $this->eavConfig->getAttribute('catalog_product', 'color');
                 $options = $attribute->getSource()->getAllOptions(false);
-                $optionsExists = [];
 
                 foreach ($options as $option) {
                     if ($data[0] == $option['label']) {
@@ -147,52 +149,51 @@ class SwatchFileType extends \Magento\Config\Model\Config\Backend\File
         return $optionValues;
     }
 
+    /**
+     * @return $this
+     */
     public function addProductAttributes($attributesOptionsData)
     {
-        try {
-            // Add order if it doesn't exist. This is an important step to make sure everything will be created correctly.
-            foreach ($attributesOptionsData as &$attributeOptionsData) {
-                $order = 0;
-                $swatchVisualFiles = isset($attributeOptionsData['optionvisual']['value'])
-                ? $attributeOptionsData['optionvisual']['value']
-                : [];
-                foreach ($swatchVisualFiles as $index => $swatchVisualFile) {
-                    if (!isset($attributeOptionsData['optionvisual']['order'][$index])) {
-                        $attributeOptionsData['optionvisual']['order'][$index] = ++$order;
-                    }
+        // Add order if it doesn't exist. This is an important step to make sure everything will be created correctly.
+        foreach ($attributesOptionsData as &$attributeOptionsData) {
+            $order = 0;
+            $swatchVisualFiles = isset($attributeOptionsData['optionvisual']['value'])
+            ? $attributeOptionsData['optionvisual']['value']
+            : [];
+            foreach ($swatchVisualFiles as $index => $swatchVisualFile) {
+                if (!isset($attributeOptionsData['optionvisual']['order'][$index])) {
+                    $attributeOptionsData['optionvisual']['order'][$index] = ++$order;
                 }
             }
+        }
 
-            // Prepare visual swatches files.
-            $mediaDirectory = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
-            $tmpMediaPath = $this->productMediaConfig->getBaseTmpMediaPath();
-            $fullTmpMediaPath = $mediaDirectory->getAbsolutePath($tmpMediaPath);
-            $this->driverFile->createDirectory($fullTmpMediaPath);
-            foreach ($attributesOptionsData as &$attributeOptionsData) {
-                $swatchVisualFiles = $attributeOptionsData['swatchvisual']['value'] ?? [];
-                foreach ($swatchVisualFiles as $index => $swatchVisualFile) {
-                    $this->driverFile->copy(
-                        $mediaDirectory->getAbsolutePath() . 'Swatch' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $swatchVisualFile,
-                        $fullTmpMediaPath . DIRECTORY_SEPARATOR . $swatchVisualFile
-                    );
-                    $newFile = $this->swatchHelper->moveImageFromTmp($swatchVisualFile);
-                    if (substr($newFile, 0, 1) == '.') {
-                        $newFile = substr($newFile, 1); // Fix generating swatch variations for files beginning with ".".
-                    }
-                    $this->swatchHelper->generateSwatchVariations($newFile);
-                    $attributeOptionsData['swatchvisual']['value'][$index] = $newFile;
+        // Prepare visual swatches files.
+        $mediaDirectory = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
+        $tmpMediaPath = $this->productMediaConfig->getBaseTmpMediaPath();
+        $fullTmpMediaPath = $mediaDirectory->getAbsolutePath($tmpMediaPath);
+        $this->driverFile->createDirectory($fullTmpMediaPath);
+        foreach ($attributesOptionsData as &$attributeOptionsData) {
+            $swatchVisualFiles = $attributeOptionsData['swatchvisual']['value'] ?? [];
+            foreach ($swatchVisualFiles as $index => $swatchVisualFile) {
+                $this->driverFile->copy(
+                    $mediaDirectory->getAbsolutePath() . 'Swatch' . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR . $swatchVisualFile,
+                    $fullTmpMediaPath . DIRECTORY_SEPARATOR . $swatchVisualFile
+                );
+                $newFile = $this->swatchHelper->moveImageFromTmp($swatchVisualFile);
+                if (substr($newFile, 0, 1) == '.') {
+                    $newFile = substr($newFile, 1); // Fix generating swatch variations for files beginning with ".".
                 }
+                $this->swatchHelper->generateSwatchVariations($newFile);
+                $attributeOptionsData['swatchvisual']['value'][$index] = $newFile;
             }
+        }
 
-            // Add attribute options.
-            foreach ($attributesOptionsData as $code => $attributeOptionsData) {
-                /* @var \Magento\Catalog\Model\ResourceModel\Eav\Attribute $attribute */
-                $attribute = $this->attributeRepository->get($code);
-                $attribute->addData($attributeOptionsData);
-                $attribute->save();
-            }
-        } catch (\Exception $ex) {
-            throw new \Exception(__('There was an error adding product attributes.'), 0, $ex);
+        // Add attribute options.
+        foreach ($attributesOptionsData as $code => $attributeOptionsData) {
+            /* @var \Magento\Catalog\Model\ResourceModel\Eav\Attribute $attribute */
+            $attribute = $this->attributeRepository->get($code);
+            $attribute->addData($attributeOptionsData);
+            $attribute->save();
         }
     }
 }
