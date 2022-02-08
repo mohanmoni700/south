@@ -115,7 +115,6 @@ class SwatchFileType extends \Magento\Config\Model\Config\Backend\File
         $value = '';
         $key = '';
         foreach ($csvData as $row => $data) {
-            $key = 'option_' . $row;
             if ($row > 0) {
                 $attribute = $this->eavConfig->getAttribute('catalog_product', 'color');
                 $options = $attribute->getSource()->getAllOptions(false);
@@ -166,6 +165,7 @@ class SwatchFileType extends \Magento\Config\Model\Config\Backend\File
                 }
             }
         }
+        unset($attributeOptionsData);
 
         // Prepare visual swatches files.
         $mediaDirectory = $this->filesystem->getDirectoryRead(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA);
@@ -187,6 +187,7 @@ class SwatchFileType extends \Magento\Config\Model\Config\Backend\File
                 $attributeOptionsData['swatchvisual']['value'][$index] = $newFile;
             }
         }
+        unset($attributeOptionsData);
 
         // Add attribute options.
         foreach ($attributesOptionsData as $code => $attributeOptionsData) {
