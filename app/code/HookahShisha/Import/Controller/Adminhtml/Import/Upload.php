@@ -2,15 +2,10 @@
 namespace HookahShisha\Import\Controller\Adminhtml\Import;
 
 use Magento\Customer\Model\CustomerFactory;
-use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Filesystem\DirectoryList;
-use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\Filesystem;
 use Magento\Framework\File\Csv;
 use Magento\Framework\HTTP\PhpEnvironment\Request;
 use Magento\Framework\Json\Helper\Data as JsonHelper;
-use Magento\Framework\Message\ManagerInterface;
-use Magento\MediaStorage\Model\File\UploaderFactory;
 use Magento\Store\Model\StoreManagerInterface;
 
 /**
@@ -67,17 +62,17 @@ class Upload extends \Magento\Framework\App\Action\Action
      * @param UploaderFactory $_uploaderFactory
      */
     public function __construct(
-        Context $context,
+        \Magento\Framework\App\Action\Context $context,
         Csv $csv,
         DirectoryList $directoryList,
-        ManagerInterface $messageManager,
+        \Magento\Framework\Message\ManagerInterface $messageManager,
         JsonHelper $jsonHelper,
-        ResourceConnection $resource,
+        \Magento\Framework\App\ResourceConnection $resource,
         CustomerFactory $customer,
         StoreManagerInterface $storemanager,
         Request $request,
-        Filesystem $filesystem,
-        UploaderFactory $_uploaderFactory
+        \Magento\Framework\Filesystem $filesystem,
+        \Magento\MediaStorage\Model\File\UploaderFactory $_uploaderFactory
     ) {
         $this->_csv = $csv;
         $this->_directoryList = $directoryList;
@@ -100,6 +95,7 @@ class Upload extends \Magento\Framework\App\Action\Action
         $post = $this->getRequest()->getPost();
         $resultRedirect = $this->resultRedirectFactory->create();
         $files = $this->request->getFiles()->toArray(); // same as $_FIELS
+        $mimes = ['application/vnd.ms-excel', 'text/plain', 'text/csv', 'text/tsv'];
         if ($post && isset($files) && $files["blogCsv"]["error"] == 0) {
             if ($files["blogCsv"]["name"] == 'Comment.csv' || $files["blogCsv"]["name"] == 'Author.csv') {
                 try {
@@ -173,6 +169,7 @@ class Upload extends \Magento\Framework\App\Action\Action
                     continue;
                 }
                 $query = [
+                    'author_id' => $data[4],
                     'is_active' => $data[0],
                     'firstname' => $data[1],
                     'lastname' => $data[2],
@@ -222,6 +219,7 @@ class Upload extends \Magento\Framework\App\Action\Action
                 $data[2] = $customerId;
                 $data[5] = '1';
                 $query = [
+                    'comment_id' => $data[11],
                     'parent_id' => $data[0],
                     'post_id' => $data[1],
                     'customer_id' => $data[2],
@@ -238,6 +236,7 @@ class Upload extends \Magento\Framework\App\Action\Action
             } else {
 
                 $query = [
+                    'comment_id' => $data[11],
                     'parent_id' => $data[0],
                     'post_id' => $data[1],
                     'customer_id' => $data[2],
@@ -250,7 +249,6 @@ class Upload extends \Magento\Framework\App\Action\Action
                     'creation_time' => $data[9],
                     'update_time' => $data[10],
                 ];
-
             }
             $connection->insert($tableName, $query);
         } /* foreach ends */
