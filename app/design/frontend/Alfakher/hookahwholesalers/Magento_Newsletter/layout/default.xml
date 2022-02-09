@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="head.components">
+            <block class="Magento\Framework\View\Element\Js\Components" name="newsletter_head_components" template="Magento_Newsletter::js/components.phtml" ifconfig="newsletter/general/active"/>
+        </referenceBlock>
+        <referenceContainer name="footer">
+            <block class="Magento\Newsletter\Block\Subscribe" name="form.subscribe" as="subscribe" before="-" template="Magento_Newsletter::subscribe.phtml" ifconfig="newsletter/general/active"/>
+
+            <block class="Magento\Cms\Block\Block" name="footer.content">
+			    <arguments>
+			        <argument name="block_id" xsi:type="string">hookah_footer_link</argument>
+			    </arguments>
+			</block>
+        </referenceContainer>
+
+        <referenceContainer name="footer-container">
+            <container name="copyright.merge" htmlTag="div" htmlClass="copyright_merge">
+            <block class="Magento\Cms\Block\Block" name="hookah.footer.social">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">hookah_footer_social</argument>
+                </arguments>
+            </block>
+            <block class="Magento\Cms\Block\Block" name="footer.payments">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">footer_payments</argument>
+                </arguments>
+            </block>
+            </container>
+        </referenceContainer>
+
+        <referenceBlock name="footer_links" remove="true" />
+        <referenceBlock name="form.subscribe" remove="true" />
+
+        <move element="copyright" destination="copyright.merge" before="-"/>
+
+
+    </body>
+</page>

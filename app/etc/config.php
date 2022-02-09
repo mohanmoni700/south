@@ -237,7 +237,7 @@ return [
             'hookah_wholesalers' => [
                 'design' => [
                     'theme' => [
-                        'theme_id' => 'frontend/Corra/alfakher',
+                        'theme_id' => 'frontend/Alfakher/hookahwholesalers',
                     ],
                 ],
             ],
@@ -714,6 +714,7 @@ return [
         'Magento_WishlistGiftCard' => 1,
         'Magento_WishlistGiftCardGraphQl' => 1,
         'Magento_GiftCardRequisitionListGraphQl' => 0,
+        'Alfakher_MyDocument' => 1,
         'Amasty_BannersLite' => 1,
         'Amasty_Base' => 1,
         'Amasty_Conditions' => 1,
@@ -748,6 +749,9 @@ return [
         'HookahShisha_AvalaraExciseGraphQl' => 1,
         'HookahShisha_Catalog' => 1,
         'HookahShisha_CatalogImportExport' => 1,
+        'HookahShisha_ChangePassword' => 1,
+        'HookahShisha_Customerb2b' => 1,
+        'HookahShisha_Customization' => 1,
         'HookahShisha_GraphQl' => 1,
         'HookahShisha_Import' => 1,
         'HookahShisha_InvoiceCapture' => 1,
@@ -800,6 +804,7 @@ return [
         'PluginCompany_LicenseManager' => 1,
         'PluginCompany_CmsRevisions' => 1,
         'Corra_SignifydGraphQl' => 1,
+        'Smartwave_Megamenu' => 1,
         'Temando_ShippingRemover' => 1,
         'Veratad_AgeVerification' => 0,
         'Vertex_Tax' => 1,

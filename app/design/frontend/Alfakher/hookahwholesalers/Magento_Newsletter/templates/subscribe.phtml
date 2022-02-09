@@ -1,0 +1,120 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Newsletter\Block\Subscribe $block */
+?>
+<div class="block newsletter">
+    <div class="title"><strong><?= $block->escapeHtml(__('Newsletter')) ?></strong></div>
+    <div class="content">
+        <form class="form subscribe"
+            novalidate
+            action="<?= $block->escapeUrl($block->getFormActionUrl()) ?>"
+            method="post"
+            data-mage-init='{"validation": {"errorClass": "mage-error"}}'
+            id="newsletter-validate-detail">
+            <div class="field newsletter">
+                <div class="control">
+                    <h3><?= $block->escapeHtml(__('Join Our Newsletter')) ?></h3>
+                    <p><?= $block->escapeHtml(__('Be the first to know about new arrivals, sales & promos!')) ?></p>
+                    <label for="newsletter">
+                        <input name="email" type="email" id="newsletter"
+                               placeholder="<?= $block->escapeHtml(__('Email address')) ?>"
+                               data-mage-init='{"mage/trim-input":{}}'
+                               data-validate="{required:true, 'validate-email':true}"
+                        />
+                    </label>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="action subscribe primary"
+                        title="<?= $block->escapeHtmlAttr(__('Subscribe')) ?>"
+                        type="submit"
+                        aria-label="Subscribe">
+                    <span><?= $block->escapeHtml(__('Subscribe')) ?></span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<a href="javascript:" class="top_scroll" id="top-return"><i class="icon-chevron-up"></i></a>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Customer/js/block-submit-on-send": {
+                "formId": "newsletter-validate-detail"
+            }
+        }
+    }
+</script>
+
+<script type="text/javascript">
+    require(['jquery'], function($){
+
+        $(document).ready(function(){
+
+            $(".open-children-toggle").click(function() {
+               $(this).parent().find('.level0').toggleClass('opened');
+            });
+
+            $(window).scroll(function() {
+                if ($(this).scrollTop() >= 50) {        
+                    $('#top-return').fadeIn(200);    
+                } else {
+                    $('#top-return').fadeOut(200);   
+                }
+            });
+            $('#top-return').click(function() {      
+                $('body,html').animate({
+                    scrollTop : 0                       
+                }, 500);
+            });
+
+            $('.ui-menu-item.parent.level1 > a').click(function() {
+                $(this).parent().siblings().removeClass('current');
+                $(this).parent('li').addClass('current');
+                return false;
+            });
+            $(".ui-menu-item.parent.level1:first-child").addClass('current');
+            if ($(window).width() < 1025) {
+                $(".ui-menu-item.parent.level1:first-child").removeClass('current');
+                jQuery('.ui-menu-item.parent.level1 > a span').click(function() {
+                    jQuery(this).closest('li').toggleClass('current');
+                    return false;
+                });
+
+                // mobile menu custom toggle
+                jQuery('.sw-megamenu').hide();
+                jQuery('.hamburger_icon').on('click', function () {
+                    jQuery('.sw-megamenu').toggleClass('active');
+                }); 
+              
+            }
+
+            //passvisible 
+            jQuery(document).on('click','#showlgpass',function(){
+                var vis = jQuery(this).data('vis');
+                if(vis == 0){
+                    jQuery(this).closest('.control').find('input').attr('type','text');
+                    jQuery(this).removeClass('fa-eye-slash').addClass('fa-eye');
+                    jQuery(this).data('vis',1);
+                }else{
+                    jQuery(this).closest('.control').find('input').attr('type','password');
+                    jQuery(this).removeClass('fa-eye').addClass('fa-eye-slash');
+                    jQuery(this).data('vis',0);
+                }
+            });
+
+        });
+
+
+        $(".login.primary").click(function() {
+            $('html,body').animate({
+                scrollTop: $(".login-container").offset().top},
+                'slow');
+        });
+
+    });
+</script>

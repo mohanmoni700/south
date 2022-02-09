@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	
+	<preference for="Alfakher\MyDocument\Api\MyDocumentRepositoryInterface" type="Alfakher\MyDocument\Model\MyDocumentRepository"/>
+	
+	<preference for="Alfakher\MyDocument\Api\Data\MyDocumentInterface" type="Alfakher\MyDocument\Model\MyDocument"/>
+
+	<preference for="Alfakher\MyDocument\Api\Data\MyDocumentSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+</config>

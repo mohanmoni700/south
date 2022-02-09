@@ -1,0 +1,19 @@
+<!--@subject {{trans "Your account registration request rejected"}}  @-->
+<!--@vars {
+"var name":"Customer Name",
+"var companyName": "Company Name",
+"var b2bformtype": "b2b form type (Basic or Business)",
+"var rejectReason|escape|nl2br":"Company Reject Reason"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<p class="greeting company-greeting"><strong>{{trans "Dear %name," name=$name}}</strong></p>
+<p>{{trans
+    "Your %b2bformtype registration request has been rejected
+    for the following reason:"
+    b2bformtype=$b2bformtype|raw}}</p>
+<p><strong>{{var rejectReason|escape|nl2br}}</strong></p>
+<p>{{trans "If you have any questions, please contact the seller."}}</p>
+
+{{template config_path="design/email/footer_template"}}
