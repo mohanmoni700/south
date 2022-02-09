@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+        <section id="swatch" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="0" showInStore="0">
+            <class>separator-top</class>
+            <label>Swatch Data</label>
+            <tab>general</tab>
+            <resource>HookahShisha_SwatchData::config_megamenu</resource>
+            <group id="general" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Swatch Data Settings</label>
+                <field id="custom_file_upload" translate="label" type="Magento\Config\Block\System\Config\Form\Field\File" sortOrder="6" showInDefault="1" showInWebsite="1" >
+                    <label>Option file</label>
+                    <backend_model>HookahShisha\SwatchData\Model\Config\Backend\SwatchFileType</backend_model>
+                    <upload_dir config="system" scope_info="1">Swatch</upload_dir>
+                </field>
+            </group>
+        </section>
+	</system>
+</config>
