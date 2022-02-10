@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @var \Magento\Company\Block\Company\Register\Profile $block
+ */
+?>
+<div class="login-container">
+    <div class="block-customerb2b-company-profile-account successful_box">
+        <div class="block-title">
+            <strong><?= $block->escapeHtml(__('Registration Successful')) ?></strong>
+        </div>
+        <div class="block-content-customerb2b">
+            <div class="box box-account-information">
+                <span><?= $block->escapeHtml(__('Your details are under verification, you would receive Email for the update regarding same')) ?></span>
+            </div>
+            <div class="create_account_link">
+                <a class="action signin primary" href="<?= $block->escapeUrl($this->getUrl('customer/account/login')) ?>"><?= $block->escapeHtml(__('Sign In')) ?></a>
+            </div>
+        </div>
+    </div>
+</div>
