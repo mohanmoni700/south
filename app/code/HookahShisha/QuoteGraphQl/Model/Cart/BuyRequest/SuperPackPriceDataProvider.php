@@ -2,7 +2,7 @@
 /**
  * @category  HookahShisha
  * @package   HookahShisha_QuoteGraphQl
- * @author    Janis Verins <info@corra.com>
+ * @author    Corra
  */
 
 namespace HookahShisha\QuoteGraphQl\Model\Cart\BuyRequest;
