@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="general" sortOrder="10">
+        <field name="com_account_verified" sortOrder="10" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">category</item>
+                    <item name="default" xsi:type="number">0</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>boolean</dataType>
+                <label translate="true">Account Verified?</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">0</map>
+                            <map name="true" xsi:type="string">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="com_details_changed" sortOrder="20" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">category</item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>boolean</dataType>
+                <label translate="true">Details Changed?</label>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">0</map>
+                            <map name="true" xsi:type="string">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="com_verification_message" sortOrder="30" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">com_verification_message</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Verification Message</label>
+                <notice translate="true">If you reject then please add message here Example : Some Of your details has been rejected. please update the same.</notice>
+            </settings>
+        </field>
+        <field name="is_sentmail" sortOrder="40" formElement="checkbox">
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>boolean</dataType>
+                <label translate="true">Do you want to sent emails?</label>
+                <notice translate="true">Only email Sent to customer on verified and reject account</notice>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">0</map>
+                            <map name="true" xsi:type="string">1</map>
+                        </valueMap>
+                        <prefer>checkbox</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+    </fieldset>    
+    <fieldset name="information" sortOrder="20">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Account Information</label>
+            <dataScope>information</dataScope>
+        </settings>
+        <field name="legal_name" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">legal_name</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Company Legal Name</label>
+            </settings>
+        </field>
+        <field name="vat_tax_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">vat_tax_id</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Sales Tax ID</label>
+            </settings>
+        </field>
+        <field name="reseller_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">reseller_id</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Reseller ID</label>
+            </settings>
+        </field>
+        <field name="comment" formElement="textarea">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">comment</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Comment</label>
+            </settings>
+        </field>
+    </fieldset>
+    <fieldset name="businessdetails" sortOrder="25">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Business Detail</label>
+            <dataScope>businessdetails</dataScope>
+        </settings>
+        <field name="business_type" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">business_type</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Business Type</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="HookahShisha\Customerb2b\Model\Company\Source\Businesstype"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="annual_turn_over" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">annual_turn_over</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Annual Turn Over</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="HookahShisha\Customerb2b\Model\Company\Source\AnnualTurnOver"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="number_of_emp" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">number_of_emp</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Number Of Emp</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="HookahShisha\Customerb2b\Model\Company\Source\NumberOfEmp"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="tin_number" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">tin_number</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Tin Number</label>
+            </settings>
+        </field>
+        <field name="tobacco_permit_number" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">tobacco_permit_number</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Tobacco Permit Number</label>
+            </settings>
+        </field>
+        <field name="hear_about_us" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">hear_about_us</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Hear About US</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="HookahShisha\Customerb2b\Model\Company\Source\HearAboutUs"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="questions" formElement="textarea">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">questions</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Questions</label>
+            </settings>
+        </field>
+    </fieldset>
+    <fieldset name="address" sortOrder="30">
+        <settings>
+            <collapsible>true</collapsible>
+            <label translate="true">Legal Address</label>
+            <dataScope>address</dataScope>
+        </settings>
+        <container name="street_container" component="Magento_Ui/js/form/components/group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Street Address</item>
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="dataScope" xsi:type="string">street</item>
+                </item>
+            </argument>
+            <field name="street" formElement="input">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="source" xsi:type="string">street</item>
+                    </item>
+                </argument>
+                <settings>
+                    <validation>
+                        <rule name="required-entry" xsi:type="boolean">false</rule>
+                    </validation>
+                    <dataType>text</dataType>
+                    <dataScope>0</dataScope>
+                </settings>
+            </field>
+            <field name="street_second" formElement="input">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="source" xsi:type="string">street</item>
+                    </item>
+                </argument>
+                <settings>
+                    <dataType>text</dataType>
+                    <dataScope>1</dataScope>
+                </settings>
+            </field>
+        </container>
+        <field name="city" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">city</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">City</label>
+            </settings>
+        </field>
+        <field name="country_id" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">country_id</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Country</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Magento\Directory\Model\ResourceModel\Country\Collection"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="region_id" component="Magento_Ui/js/form/element/region" formElement="select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">address</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">State/Province</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <filterBy>
+                            <field>country_id</field>
+                            <target>${ $.provider }:${ $.parentScope }.country_id</target>
+                        </filterBy>
+                        <customEntry>region</customEntry>
+                        <options class="Magento\Directory\Model\ResourceModel\Region\Collection"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+        <field name="region" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">address</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <visible>false</visible>
+            </settings>
+        </field>
+        <field name="postcode" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">postcode</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">ZIP/Postal Code</label>
+            </settings>
+        </field>
+        <field name="telephone" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">telephone</item>
+                </item>
+            </argument>
+            <settings>
+                <validation>
+                    <rule name="required-entry" xsi:type="boolean">false</rule>
+                </validation>
+                <dataType>text</dataType>
+                <label translate="true">Phone Number</label>
+            </settings>
+        </field>
+    </fieldset>
+</form>
