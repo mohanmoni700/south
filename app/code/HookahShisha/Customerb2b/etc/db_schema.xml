@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="company" resource="default" engine="innodb" comment="Company Table">
+        <column xsi:type="varchar" name="business_type" nullable="true" length="80" comment="Business Type"/>
+        <column xsi:type="varchar" name="annual_turn_over" nullable="true" length="80" comment="What is your Annual Turn Over"/>
+        <column xsi:type="varchar" name="number_of_emp" nullable="true" length="80" comment="What is your Annual Turn Over"/>
+        <column xsi:type="varchar" name="tin_number" nullable="true" length="80" comment="TIN Number"/>
+        <column xsi:type="varchar" name="tobacco_permit_number" nullable="true" length="255" comment="Tobacco Permit Number"/>
+        <column xsi:type="varchar" name="hear_about_us" nullable="true" length="80" comment="How did you hear about us ?"/>
+        <column xsi:type="text" name="questions" nullable="true" comment="Questions?"/>
+        <column xsi:type="smallint" name="com_account_verified" nullable="true" comment="Account verified?" default="0"/>
+        <column xsi:type="smallint" name="com_details_changed" nullable="true" comment="Details Changed?" default="1"/>
+        <column xsi:type="text" name="com_verification_message" nullable="true" comment="Verification Message"/>
+    </table>
+</schema>

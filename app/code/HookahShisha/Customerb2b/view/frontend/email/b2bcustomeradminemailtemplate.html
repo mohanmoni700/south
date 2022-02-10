@@ -1,0 +1,110 @@
+<!--@subject Hookah wholesaler account information@-->
+{{template config_path="design/email/header_template"}}
+    <table border="0" style="width: 100%;">
+        <caption style="display: none;">{{trans "Hookah wholesaler account information"}}</caption>
+        <tr class="email-info">
+            <th style="align-content: center; padding: 5px 10px;width: 100%;" colspan="2">
+                 <strong style="background: #961E70;color: #fff;padding: 10px;display: block;text-align: center;font-size: 16px;margin:0px 0 10px 0;">{{trans "Basic Details"}}</strong>
+            </th>
+        </tr>
+        <tr>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "First Name"}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var firstname}}</p>
+            </td>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "Last Name"}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var lastname}}</p>
+            </td>
+        </tr>
+         <tr>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "Phone Number  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var telephone}}</p>
+            </td>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "Email  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var email}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"  style="padding:5px 10px;width:100%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "Street Address  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var street}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "Country  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var country_id}}</p>
+            </td>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "Region  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var region}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "City  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var city}}</p>
+            </td>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;margin-bottom: 6px;">{{trans "Postcode  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var postcode}}</p>
+            </td>
+        </tr>
+        <tr class="email-info">
+            <td style="align-content: center; padding: 5px 10px;width: 100%;"  colspan="2">
+                <strong style="background: #961E70;color: #fff;padding: 10px;display: block;text-align: center;font-size: 16px;margin:15px 0 0px 0;">{{trans "Business Details"}}</strong>
+            </td>
+        </tr>
+        <tr>
+        <tr>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "Business name  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var company_name}}</p>
+            </td>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "Business type  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var business_type}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "Annual Turn over  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var annual_turn_over}}</p>
+            </td>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "Number Of Emp  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var number_of_emp}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "Vat Tax Id  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var vat_tax_id}}</p>
+            </td>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "Tin Number  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var tin_number}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "Tobacco Permit Number  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var tobacco_permit_number}}</p>
+            </td>
+            <td style="padding:5px 10px;width:50%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "Hear About Us  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var hear_about_us}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding:5px 10px;width:100%">
+                <strong style="color: #000000;font-size: 12px;display: block;width: 100%;margin-bottom: 6px;">{{trans "Question  "}}</strong>
+                <p style="border: 2px solid #000000;border-radius: 8px;min-height: 20px;color: #000000;padding:8px 5px;margin-bottom: 0;">{{var questions}}</p>
+            </td>
+        </tr>
+    </table> 
+
+{{template config_path="design/email/footer_template"}}
