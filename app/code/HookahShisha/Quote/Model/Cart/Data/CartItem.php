@@ -25,6 +25,11 @@ class CartItem extends SourceCartItem
     private $parentAlfaBundle;
 
     /**
+     * @var string
+     */
+    private $superPackPrice;
+
+    /**
      * @param string $sku
      * @param float $quantity
      * @param string|null $parentSku
@@ -32,6 +37,7 @@ class CartItem extends SourceCartItem
      * @param array|null $enteredOptions
      * @param string|null $alfaBundle
      * @param string|null $parentAlfaBundle
+     * @param string|null $superPackPrice
      */
     public function __construct(
         string $sku,
@@ -40,12 +46,14 @@ class CartItem extends SourceCartItem
         array $selectedOptions = null,
         array $enteredOptions = null,
         string $alfaBundle = null,
-        string $parentAlfaBundle = null
+        string $parentAlfaBundle = null,
+        string $superPackPrice = null
     ) {
         parent::__construct($sku, $quantity, $parentSku, $selectedOptions, $enteredOptions);
 
         $this->alfaBundle = $alfaBundle;
         $this->parentAlfaBundle = $parentAlfaBundle;
+        $this->superPackPrice = $superPackPrice;
     }
 
     /**
@@ -66,5 +74,25 @@ class CartItem extends SourceCartItem
     public function getParentAlfaBundle(): ?string
     {
         return $this->parentAlfaBundle;
+    }
+
+    /**
+     * Returns cart item superPackPrice
+     *
+     * @return float
+     */
+    public function getSuperPackPrice(): ?float
+    {
+        return $this->superPackPrice;
+    }
+
+    /**
+     * Set superpack custom price for product
+     *
+     * @param float $price
+     */
+    public function setSuperPackPrice(float $price = 0)
+    {
+        $this->superPackPrice = $price;
     }
 }
