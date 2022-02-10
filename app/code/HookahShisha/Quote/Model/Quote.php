@@ -128,12 +128,21 @@ class Quote extends SourceQuote
                 // Set alfa bundle only for configurable type items
                 if ($request->getAlfaBundle()) {
                     $item->setAlfaBundle($request->getAlfaBundle());
+                    $superPackSimplePrice = $request->getSuperPackPrice();
+                    if ($superPackSimplePrice !== null) {
+                        $item->setCustomPrice($superPackSimplePrice);
+                        $item->setOriginalCustomPrice($superPackSimplePrice);
+                    }
                 }
                 if ($request->getParentAlfaBundle()) {
                     $item->setParentAlfaBundle($request->getParentAlfaBundle());
                     // Included shisha and charcoal products should be charged zero
-                    $item->setCustomPrice(0);
-                    $item->setOriginalCustomPrice(0);
+                    $finalPrice = $request->getSuperPackPrice();
+                    if (!$finalPrice) {
+                        $finalPrice = 0;
+                    }
+                    $item->setCustomPrice($finalPrice);
+                    $item->setOriginalCustomPrice($finalPrice);
                 }
 
                 // Add only item that is not in quote already
