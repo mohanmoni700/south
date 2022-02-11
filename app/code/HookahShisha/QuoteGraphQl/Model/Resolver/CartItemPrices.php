@@ -53,7 +53,16 @@ class CartItemPrices extends SourceCartitemPrices
             // But the totals should be calculated even if no address is set
             $this->totals = $this->totalsCollector->collectQuoteTotals($cartItem->getQuote());
         }
+
         $currencyCode = $cartItem->getQuote()->getQuoteCurrencyCode();
+
+        if (isset($value['super_pack_models']) && $value['super_pack_models']) {
+            return $this->getCartItemPricesForSuperpack(
+                $cartItem,
+                $value['super_pack_models'],
+                $currencyCode
+            );
+        }
 
         return [
             'model' => $cartItem,
@@ -74,6 +83,53 @@ class CartItemPrices extends SourceCartitemPrices
                 'value' => $cartItem->getDiscountAmount(),
             ],
             'discounts' => $this->getDiscountValues($cartItem, $currencyCode)
+        ];
+    }
+
+    /**
+     * Get item prices for superpack
+     *
+     * @param Item $simpleProductCartItem
+     * @param Item[] $superPackModels
+     * @param string $currencyCode
+     * @return array
+     */
+    private function getCartItemPricesForSuperpack(
+        Item $simpleProductCartItem,
+        array $superPackModels,
+        string $currencyCode
+    ) {
+        $price = 0;
+        $rowTotal = 0;
+        $rowTotalIncludingTax = 0;
+        $discountAmount = 0;
+        $superPackModels[] = $simpleProductCartItem;
+        foreach ($superPackModels as $cartItem) {
+            $price += $cartItem->getCalculationPrice() ?? 0;
+            $rowTotal += $cartItem->getRowTotal() ?? 0;
+            $rowTotalIncludingTax += $cartItem->getRowTotal() ?? 0;
+            $discountAmount += $cartItem->getDiscountAmount() ?? 0;
+        }
+
+        return [
+            'model' => $simpleProductCartItem,
+            'price' => [
+                'currency' => $currencyCode,
+                'value' => $price,
+            ],
+            'row_total' => [
+                'currency' => $currencyCode,
+                'value' => $rowTotal
+            ],
+            'row_total_including_tax' => [
+                'currency' => $currencyCode,
+                'value' => $rowTotalIncludingTax,
+            ],
+            'total_item_discount' => [
+                'currency' => $currencyCode,
+                'value' => $discountAmount,
+            ],
+            'discounts' => $this->getDiscountValues($simpleProductCartItem, $currencyCode)
         ];
     }
 
