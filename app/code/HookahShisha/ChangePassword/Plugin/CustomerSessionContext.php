@@ -89,22 +89,18 @@ class CustomerSessionContext
     public function getMydocuments()
     {
         $customer_id = $this->customerSession->getCustomerId();
-        $doc_collection = $this->collection->create()
+        return $this->collection->create()
             ->addFieldToFilter('customer_id', ['eq' => $customer_id])
             ->addFieldToFilter('status', ['eq' => 0]);
-        return $doc_collection;
     }
     public function getStatus()
     {
         $msg = 2;
         $doc_collection = $this->getMydocuments();
         foreach ($doc_collection as $value) {
-            // echo $value->getMessage();
             if (empty($value->getMessage())) {
-                //$msg = "Your document(s) are under verification. You would receive an email once there is an update.";
                 $msg = 0;
             } else {
-                //$msg = "Some of your document(s) has been rejected. Please update the same";
                 $msg = 1;
             }
         }
@@ -118,7 +114,6 @@ class CustomerSessionContext
         foreach ($doc_collection as $value) {
             $expiry_date = $value->getExpiryDate();
             if ($expiry_date < $todate) {
-                //$msg = "Some of the document(s) has been expired";
                 $msg = 0;
             }
         }
