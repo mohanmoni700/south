@@ -80,8 +80,8 @@ class CartItems extends SourceCartItems
         }
 
         $cartProductsData = $this->getCartProductsData($cart);
-        $cartItems = $cart->getAllVisibleItems();
-        $cartItems = $this->filterOutAlfaBundleProducts($cartItems);
+        $allCartItems = $cart->getAllVisibleItems();
+        $cartItems = $this->filterOutAlfaBundleProducts($allCartItems);
 
         /** @var QuoteItem $cartItem */
         foreach ($cartItems as $cartItem) {
@@ -109,7 +109,6 @@ class CartItems extends SourceCartItems
                 ? $this->getBundleProductAttribute($charcoalSku, true): '';
             $superPackFlavourList = is_array($superPack)
                 ? $superPack : [];
-
             $itemsData[] = [
                 'id' => $cartItem->getItemId(),
                 'uid' => $this->uidEncoder->encode((string) $cartItem->getItemId()),
@@ -118,11 +117,30 @@ class CartItems extends SourceCartItems
                 'model' => $cartItem,
                 'alfa_bundle_flavour' => $flavour,
                 'alfa_bundle_charcoal' => $charcoalDescription,
-                'super_pack_flavour' => $superPackFlavourList
+                'super_pack_flavour' => $superPackFlavourList,
+                'super_pack_models' => $superPack ? $this->getSuperPackModels($allCartItems, $cartItem) : ''
             ];
         }
 
         return $itemsData;
+    }
+
+    /**
+     * Get Superpack cart items
+     *
+     * @param array $allCartItems
+     * @param QuoteItem $cartItem
+     * @return array $cartItem
+     */
+    private function getSuperPackModels(array $allCartItems, QuoteItem $cartItem)
+    {
+        return array_filter($allCartItems, function ($item) use ($cartItem) {
+            if ($item->getParentAlfaBundle() &&
+                $item->getParentAlfaBundle() === $cartItem->getAlfaBundle()) {
+                return true;
+            }
+            return false;
+        });
     }
 
     /**
