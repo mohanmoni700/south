@@ -1,0 +1,15 @@
+<?php
+    $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
+    $docdata = $_helperB2b->getDocMessageData();
+    $exp_msg = $_helperB2b->getExpiryMsg();
+?>
+    <?php if ($docdata == 0): ?>
+        <div class="pending-tooltip"><div class="tooltip-inner"><?= $block->escapeHtml(__("Your document(s) are under verification. You would receive an email once there is an update.")) ?></div></div>
+     
+    <?php elseif ($docdata == 1): ?>
+        <div class="pending-tooltip"><div class="tooltip-inner"><?= $block->escapeHtml(__("Some of your document(s) has been rejected. Please update the same")) ?></div></div>
+    <?php endif; ?>
+
+    <?php if ($exp_msg == 0): ?>
+        <div class="pending-tooltip exp"><div class="tooltip-inner"><?= $block->escapeHtml(__("Some of the document(s) has been expired")) ?></div></div>
+    <?php endif; ?>

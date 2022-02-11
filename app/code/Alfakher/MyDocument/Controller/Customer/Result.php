@@ -11,153 +11,187 @@ use Magento\Framework\Filesystem;
 use Magento\Framework\Image\AdapterFactory;
 use Magento\MediaStorage\Model\File\UploaderFactory;
 
-class Result extends Action {
-	protected $_myDocument;
-	protected $resultRedirect;
+class Result extends Action
+{
+    /**
+     * @var \Alfakher\MyDocument\Model\MyDocumentFactory
+     */
+    protected $_myDocument;
 
-	/**
-	 * @var UploaderFactory
-	 */
-	protected $uploaderFactory;
+    /**
+     * @var \Magento\Framework\Controller\ResultFactory
+     */
+    protected $resultRedirect;
 
-	/**
-	 * @var AdapterFactory
-	 */
-	protected $adapterFactory;
+    /**
+     * @var UploaderFactory
+     */
+    protected $uploaderFactory;
 
-	protected $customerSession;
-	/**
-	 * @var Filesystem
-	 */
-	protected $filesystem;
+    /**
+     * @var AdapterFactory
+     */
+    protected $adapterFactory;
 
-	public function __construct(
-		\Magento\Framework\App\Action\Context $context,
-		\Alfakher\MyDocument\Model\MyDocumentFactory $myDocument,
-		\Magento\Framework\Controller\ResultFactory $result,
-		\Magento\Customer\Model\Session $customerSession,
-		UploaderFactory $uploaderFactory,
-		AdapterFactory $adapterFactory,
-		Filesystem $filesystem,
-		\Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-	) {
-		parent::__construct($context);
-		$this->_myDocument = $myDocument;
-		$this->resultRedirect = $result;
-		$this->uploaderFactory = $uploaderFactory;
-		$this->adapterFactory = $adapterFactory;
-		$this->filesystem = $filesystem;
-		$this->customerSession = $customerSession;
-		$this->resultJsonFactory = $resultJsonFactory;
-	}
-	public function execute() {
-		$post = $this->getRequest()->getPostValue();
-		/*echo "<pre>";
-		print_r($post);*/
-		$name = $post['name'];
-		$newArray = array();
+    /**
+     * @var \Magento\Customer\Model\Session
+     */
+    protected $customerSession;
 
-		foreach ($post['name'] as $key => $value) {
-			$newArray[$key]['name'] = $value;
+    /**
+     * @var Filesystem
+     */
+    protected $filesystem;
 
-		}
-		foreach ($post['expiry_date'] as $key => $value) {
+    /**
+     *
+     * @param \Magento\Framework\App\Action\Context $context
+     * @param \Alfakher\MyDocument\Model\MyDocumentFactory $myDocument
+     * @param \Magento\Framework\Controller\ResultFactory $result
+     * @param \Magento\Customer\Model\Session $customerSession
+     * @param UploaderFactory $uploaderFactory
+     * @param AdapterFactory $adapterFactory
+     * @param Filesystem $filesystem
+     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     */
+    public function __construct(
+        \Magento\Framework\App\Action\Context $context,
+        \Alfakher\MyDocument\Model\MyDocumentFactory $myDocument,
+        \Magento\Framework\Controller\ResultFactory $result,
+        \Magento\Customer\Model\Session $customerSession,
+        UploaderFactory $uploaderFactory,
+        AdapterFactory $adapterFactory,
+        Filesystem $filesystem,
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+    ) {
+        parent::__construct($context);
+        $this->_myDocument = $myDocument;
+        $this->resultRedirect = $result;
+        $this->uploaderFactory = $uploaderFactory;
+        $this->adapterFactory = $adapterFactory;
+        $this->filesystem = $filesystem;
+        $this->customerSession = $customerSession;
+        $this->resultJsonFactory = $resultJsonFactory;
+    }
 
-			$expiryDate = date('Y-m-d', strtotime($value));
-			$newArray[$key]['expiry_date'] = $expiryDate;
+    /**
+     * Execute MyDocument
 
-		}
+     * @return \Magento\Framework\View\Result\Page
+     */
+    public function execute()
+    {
+        $post = $this->getRequest()->getPostValue();
+        $newArray = [];
 
-		$filesData = $this->getRequest()->getFiles('filename');
-		/*print_r($filesData);*/
+        if (isset($post['is_customerfrom_usa'])) {
+            $is_usa = 1;
+        } else {
+            $is_usa = 0;
+        }
 
-		if (count($filesData)) {
-			$i = 0;
-			foreach ($filesData as $files) {
+        if (isset($post['is_add_more_form'])) {
+            foreach ($post['is_add_more_form'] as $key => $value) {
+                if ($value != '') {
+                    $newArray[$key]['is_add_more_form'] = $value;
+                } else {
+                    $newArray[$key]['is_add_more_form'] = '';
+                }
+            }
+        }
 
-				if (isset($files['tmp_name']) && strlen($files['tmp_name']) > 0) {
+        $filesData = $this->getRequest()->getFiles()->toArray();
+        if (count($filesData)) {
+            $i = 0;
+            foreach ($filesData as $key => $files) {
 
-					try {
+                if (isset($files['tmp_name']) && strlen($files['tmp_name']) > 0) {
 
-						$uploaderFactories = $this->uploaderFactory->create(['fileId' => $filesData[$i]]);
+                    try {
+                        $uploaderFactories = $this->uploaderFactory->create(['fileId' => $filesData[$key]]);
+                        $uploaderFactories->setAllowedExtensions(['jpg', 'jpeg', 'gif', 'png', 'pdf']);
+                        $imageAdapter = $this->adapterFactory->create();
+                        $uploaderFactories->addValidateCallback(
+                            'custom_image_upload',
+                            $uploaderFactories,
+                            'validateUploadFile'
+                        );
 
-						$uploaderFactories->setAllowedExtensions(['jpg', 'jpeg', 'gif', 'png', 'pdf']);
+                        /*Allow folder creation*/
+                        $uploaderFactories->setAllowCreateFolders(true);
+                        $maxsize = 20;
 
-						$imageAdapter = $this->adapterFactory->create();
+                        /*number_format($_FILES['filename']['size'] / 1048576, 2) . ' MB';*/
+                        if ((number_format($files['size'] / 1048576, 2) >= $maxsize)) {
+                            throw new LocalizedException(
+                                __('File too large. File must be less than 20 megabytes.')
+                            );
+                        }
 
-						$uploaderFactories->addValidateCallback('custom_image_upload', $uploaderFactories, 'validateUploadFile');
+                        /*Rename file name if already exists*/
+                        $uploaderFactories->setAllowRenameFiles(true);
+                        $uploaderFactories->setFilesDispersion(false);
+                        $mediaDirectory = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA);
+                        $destinationPath = $mediaDirectory->getAbsolutePath('myDocument');
+                        $result = $uploaderFactories->save($destinationPath);
+                        if (!$result) {
+                            throw new LocalizedException(
+                                __('File cannot be saved to path: $1', $destinationPath)
+                            );
+                        }
 
-						// allow folder creation
-						$uploaderFactories->setAllowCreateFolders(true);
-						$maxsize = 20;
-						/*number_format($_FILES['filename']['size'] / 1048576, 2) . ' MB';*/
-						if ((number_format($files['size'] / 1048576, 2) >= $maxsize)) {
-							exit('File too large. File must be less than 20 megabytes.');
-						}
+                        $imagePath = $result['file'];
+                        $data['filename'] = $imagePath;
+                    } catch (\Exception $e) {
+                        $this->messageManager->addError(__($e->getMessage()));
+                    }
+                }
 
-						// rename file name if already exists
-						$uploaderFactories->setAllowRenameFiles(true);
-						$uploaderFactories->setFilesDispersion(false);
+                if (isset($newArray[$i]['expiry_date'])) {
+                    $date = ltrim($newArray[$i]['expiry_date'], 'Expiry Date:');
+                    $expiryDate = date("Y-m-d", strtotime($date));
+                } else {
+                    $expiryDate = '';
+                }
 
-						$mediaDirectory = $this->filesystem->getDirectoryRead(DirectoryList::MEDIA);
-						$destinationPath = $mediaDirectory->getAbsolutePath('myDocument');
+                $resultRedirect = $this->resultRedirect->create(ResultFactory::TYPE_REDIRECT);
+                $resultRedirect->setUrl('mydocument/customer/index');
+                $model = $this->_myDocument->create();
+                $model->setData($data);
 
-						$result = $uploaderFactories->save($destinationPath);
-						if (!$result) {
-							throw new LocalizedException(
-								__('File cannot be saved to path: $1', $destinationPath)
-							);
-						}
+                $model->addData([
+                    "document_name" => $post['name'.($i + 1)],
+                    "customer_id" => $this->customerSession->getCustomer()->getId(),
+                    "expiry_date" => $this->convertDate($post['expiry_date'.($i + 1)]),
+                    "is_customerfrom_usa" => $is_usa,
+                    "status" => 0,
+                    "is_add_more_form" => $newArray[$i]['is_add_more_form']
+                ]);
+                $model->setIsDelete(false);
+                $model->setStatus(0);
+                $saveData = $model->save();
+                $i++;
+            }
+        }
 
-						$imagePath = $result['file'];
-						$data['filename'] = $imagePath;
-					} catch (\Exception $e) {
-						$this->messageManager->addError(__($e->getMessage()));
-					}
+        $resultJson = $this->resultJsonFactory->create();
+        if ($saveData) {
+            $htmlContent = "Record Saved Successfully.";
+            $success = true;
+        } else {
+            $htmlContent = '';
+            $success = false;
+        }
+        return $resultJson->setData([
+            'html' => $htmlContent,
+            'success' => $success]);
+    }
 
-				}
-
-				/*echo $newArray[$i]['name'];*/
-				if (isset($newArray[$i]['expiry_date'])) {
-					$expirydate = $newArray[$i]['expiry_date'];
-				} else {
-					$expirydate = '';
-				}
-
-				$resultRedirect = $this->resultRedirect->create(ResultFactory::TYPE_REDIRECT);
-				$resultRedirect->setUrl($this->_redirect->getRefererUrl());
-				$model = $this->_myDocument->create();
-				$model->setData($data);
-
-				$model->addData([
-					"document_name" => $newArray[$i]['name'],
-					"customer_id" => $this->customerSession->getCustomer()->getId(),
-					"expiry_date" => $expirydate,
-				]);
-
-				$saveData = $model->save();
-				$i++;
-			}
-
-		}
-
-		/*if ($saveData) {
-				$this->messageManager->addSuccess(__('Insert Record Successfully !'));
-				$res = "1";
-			} else {
-				$res = false;
-			}
-			echo json_encode($res);
-		*/
-		$resultJson = $this->resultJsonFactory->create();
-		if ($saveData) {
-			$htmlContent = "Insert Record Successfully !";
-			$success = true;
-		} else {
-			$success = false;
-		}
-		return $resultJson->setData([
-			'html' => $htmlContent,
-			'success' => $success]);
-	}
+    private function convertDate($value) {
+        if($value != '') {
+            $date = ltrim($value, 'Expiry Date:');
+            return date("Y-m-d", strtotime($date));
+        }
+        return '';
+    }
 }

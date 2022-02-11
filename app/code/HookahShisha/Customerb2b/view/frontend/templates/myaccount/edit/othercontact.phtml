@@ -1,5 +1,6 @@
 <?php
 /** @var \HookahShisha\Customerb2b\Block\Myaccount\Basicdetail $block */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
 ?>
 <?php $contact = $block->getContactDetail(); ?>
 <?php
@@ -16,7 +17,8 @@ $formDisable = 1;
       method="post"
       id="other-contact-form-validate"
       enctype="multipart/form-data"
-      data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>">
+      data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>"
+      data-mage-init='{"validation":{}}'>
     <fieldset class="fieldset">
         <legend></legend>
         <?= $block->getBlockHtml('formkey') ?>
@@ -32,7 +34,7 @@ $formDisable = 1;
                        value="<?= /* @noEscape */ $block->escapeHtml($contact['contact_name']) ?>"
                        placeholder="<?= $escaper->escapeHtmlAttr($contactNameLabel) ?>"
                        title="<?= /* @noEscape */ $escaper->escapeHtmlAttr($contactNameLabel) ?>"
-                       class="input-text"
+                       class="input-text validate-alphanum-with-spaces minimum-length-1 maximum-length-255 validate-length"
                        id="contact_name">
             </div>
         </div>
@@ -47,7 +49,7 @@ $formDisable = 1;
                        value="<?= /* @noEscape */ $block->escapeHtml($contact['contact_phone']) ?>"
                        placeholder="<?= $escaper->escapeHtmlAttr($contactPhoneLabel) ?>"
                        title="<?= /* @noEscape */ $escaper->escapeHtmlAttr($contactPhoneLabel) ?>"
-                       class="input-text"
+                       class="input-text validate-digits minimum-length-10 maximum-length-10 validate-length"
                        id="contact_phone">
             </div>
         </div>
@@ -96,3 +98,19 @@ $formDisable = 1;
     script; ?>
 <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
 <?php endif; ?>
+
+<?php
+    $scriptStrings = <<<script
+    require(['jquery'], function($){
+        jQuery("#other-contact-form-validate .action.save.primary").click(function(e) {
+            if(jQuery('#contact_name').val().length == 0 
+                && jQuery('#contact_phone').val().length == 0 
+                && jQuery('#contact_email').val().length == 0
+            ) {
+                e.preventDefault();
+            }
+        });
+    });
+    script;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptStrings, false) ?>

@@ -1,0 +1,17 @@
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <referenceContainer name="content">
+        <block class="Alfakher\Productpageb2b\Block\Product\ViewDetailRenderer" name="view.details.link" template="Alfakher_Productpageb2b::product/viewdetails.phtml" />
+        <block class="Magento\Catalog\Block\Product\View\Description" name="product.info.tier.price.text.attribute" template="Magento_Catalog::product/view/attribute.phtml" before="product.info.sku">
+            <arguments>
+                <argument name="at_call" xsi:type="string">getTierPricesText</argument>
+                <argument name="at_code" xsi:type="string">tier_prices_text</argument>
+                <argument name="css_class" xsi:type="string">tier_prices_text</argument>
+                <argument name="add_attribute" xsi:type="string">itemprop="tier_prices_text"</argument>
+            </arguments>
+        </block>
+        <referenceBlock name="product.attributes.exclude.pagebuilder" remove="true" /> 
+    </referenceContainer>
+    <move element="view.details.link" destination="product.info.price" after="product.info.review"/>
+    <move element="product.info.tier.price.text.attribute" destination="product.info.main" before="product.info.stock.sku"/>
+    
+</page>

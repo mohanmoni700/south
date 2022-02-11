@@ -1,1 +1,367 @@
-<h1>usa customer</h1>
+<?php
+$customerid = $block->getCustomerId();
+$docdata = $block->getDocumentCollection($customerid);
+$data = $docdata->getData();
+$dataSize = count($data);
+$mediaUrl = $block->getMediaUrl();
+$mediaUrl = $mediaUrl."myDocument/";
+$is_delete = [];
+$pdfImg = $block->getViewFileUrl('images/pdf.svg');
+foreach ($data as $val) {
+    $is_delete[] = $val['is_delete'];
+}
+$uploaderType = [
+    'FEIN',
+    'Sales Tax/Resale License',
+    'State Tobacco License',
+    'Unified Resale Certificate'
+];
+$customResultUrl = $block->getUrl('mydocument/customer/result');
+$deleteDocumentUrl = $block->getUrl('mydocument/customer/deletedocument');
+$updateDocumentUrl = $block->getUrl('mydocument/customer/updatedocument');
+?>
+<div class="document-title">
+    <span class="title">
+        <?= $block->escapeHtml(__('My Documents')); ?>
+    </span>
+    <span class="note">
+        <?= $block->escapeHtml(__('(File type supported are JPG,PNG and PDF)')); ?>
+    </span>
+</div>
+<?php if (!empty($data)): ?>
+<div class="my_document">
+    <form id="updatedocument"
+        class="updatedocument"
+        accept-charset="utf-8"
+        enctype="multipart/form-data"
+        data-mage-init='{"validation":{}}'
+        method="post">
+        <div class="updated-container">
+        <?php foreach ($data as $val): ?>
+            <?php if ($val['is_add_more_form'] == 0): ?>
+                <?php if ($val['is_delete'] == 0): ?>
+                    <?php if ($val['status'] == 0 && $val['message'] != null): ?>
+                        <?php $rejectedClass = "rejected"; ?>
+                    <?php else: ?>
+                        <?php $rejectedClass = ""; ?>
+                    <?php endif;?>
+                    <div class="document <?= $block->escapeHtml($rejectedClass); ?>" for="document uploader">
+                        <?php
+                            $checkext = $block->checkExtension($mediaUrl.$val['filename']);
+                            $extension = $checkext['extension'];
+                        ?>
+                        <div class="input-file">
+                            <?php if ($extension == "pdf"): ?>
+                                <img src="<?= $block->escapeUrl($pdfImg); ?>" height="34" width="43"
+                                class="pdf-image" alt="pdf documents" />
+                            <?php else: ?>
+                                <img src="<?= $block->escapeUrl($mediaUrl.$val['filename']); ?>" height="170" width="170" />
+                            <?php endif; ?>
+                            <div class="doc-actions">
+                                <?php if ($val['status'] == 0 && $val['message'] != null): ?>
+                                    <a  class="view-doc-link" href="<?= $block->escapeUrl($mediaUrl.$val['filename']); ?>"
+                                        target="_blank"></a>
+                                    <a  class="deletedocument" name="deletedocument" href="#"
+                                        id="<?= $block->escapeHtml($val['mydocument_id']); ?>"></a>
+                                <?php else: ?>
+                                    <a  class="view-doc-link" href="<?= $block->escapeUrl($mediaUrl.$val['filename']); ?>"
+                                        target="_blank"></a>
+                                <?php endif; ?>
+                            </div>
+                            <?php if ($val['status'] != 0 && $val['message'] == null): ?>
+                            <span class="approved">
+                                <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/doc_approved.png')); ?>"
+                                    alt="approved_union"
+                                    width="60"
+                                    height="60"
+                                    loading="lazy" />
+                            </span>
+                            <?php endif; ?>
+                        </div>
+                        <div class="doc-name">
+                            <span><?= $block->escapeHtml($val['filename']); ?></span>
+                            <a  href="<?= $block->escapeUrl($mediaUrl.$val['filename']); ?>"
+                                target="_blank" download class="download-doc"></a>
+                        </div>
+                        <div class="field">
+                            <label><?= $block->escapeHtml(__("Document Name"));  ?></label>
+                            <div class="value">
+                                <?= $block->escapeHtml($val['document_name']); ?>
+                            </div>
+                        </div>
+                        <?php if (isset($val['expiry_date'])): ?>
+                            <div class="field">
+                                <label><?= $block->escapeHtml(__("Expiry Date"));  ?></label>
+                                <div class="value date">
+                                    <?= $block->escapeHtml(__('Expiry Date: ') . $val['expiry_date']); ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($val['status'] == 0 && $val['message'] != null): ?>
+                            <div class="doc-tooltip">
+                                <span class="tooltip-toggle">
+                                    <?= $block->escapeHtml(__('PLEASE CHECK THE DETAILS')); ?>
+                                </span>
+                                <span class="tooltip-content">
+                                    <?= $block->escapeHtml($val['message']); ?>
+                                </span>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                <?php else: ?>
+                    <div class="upload" for="document uploader">
+                        <div class="input-file">
+                            <input type="file" id="updatefile_<?= $block->escapeHtml($val['mydocument_id']);?>"
+                            class="upload-filename" name="updatefile<?= $block->escapeHtml($val['mydocument_id']);?>" data-validate="{required:true}"/>
+                            <span class="input-note">
+                                <?= $block->escapeHtml(__('(Only one document can be uploaded 1)')); ?>
+                            </span>
+                            <span id="image-error-message<?= $block->escapeHtml($val['mydocument_id']);?>" style="color:red;"></span>
+                            <!-- bv_vv; date:04-02-2022; File Preview Start; -->
+                            <img class="previewimage-filename<?= $block->escapeHtml($val['mydocument_id']);?>"
+                            height="170" width="170" src="" title="" style="display:none;"/>
+                            <div class="doc-actions" id="doc-actions-filename<?= $block->escapeHtml($val['mydocument_id']);?>"
+                                style="display:none;">
+                                <a class="view-doc-link" id="view-doc-link-filename<?= $block->escapeHtml($val['mydocument_id']);?>"
+                                    href="" target="_blank"></a>
+                                <a class="deletedocument-preview deletedocument"
+                                id="deletedocument-filename<?= $block->escapeHtml($val['mydocument_id']);?>"></a>
+                            </div>
+                            <!-- bv_vv; date:04-02-2022; File Preview End; -->
+                        </div>
+                        <div class="doc_name" for="document name" style="display:none;">
+                            <label><?= $block->escapeHtml(__('Document Name')); ?></label>
+                            <input type="text" id="name-<?= $block->escapeHtml($val['mydocument_id']);?>" name="name<?= $block->escapeHtml($val['mydocument_id']);?>"
+                                data-validate="{required:true}" value="<?= $block->escapeHtml($val['document_name']); ?>" />
+                        </div>
+                        <div class="set_expiry" for="document expiry data" style="display:none" >
+                            <label><?= $block->escapeHtml(__('Set a Specific Expiry date')); ?></label>
+                            <input type="checkbox" id="toggle<?= $block->escapeHtml($val['mydocument_id']);?>"
+                            name="set_expiry[]" class="cmn-toggle cmn-toggle-round" />
+                            <span class="slider round"></span>
+                            <div class="expiry_dates expiry_dates<?= $block->escapeHtml($val['mydocument_id']);?>"
+                                for="document expiry data" style="display:none">
+                                <label><?= $block->escapeHtml(__('Set Expiry Date')); ?></label>
+                                <input type="text" placeholder="Expiry Date" name="expiry_date<?= $block->escapeHtml($val['mydocument_id']);?>"
+                                id="expiry_date<?= $block->escapeHtml($val['mydocument_id']);?>" data-validate="{required:true}" />
+                            </div>
+                        </div>
+                        <input type="hidden" id="is_add_more_form<?= $block->escapeHtml($val['mydocument_id']);?>" name="is_add_more_form[]" value="0"/>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        <?php if (in_array(1, $is_delete)): ?>
+            <button type="submit" id="btnsave" class="action submit primary" style="display: none;">
+                <span><?= $block->escapeHtml(__('Submit')); ?></span>
+            </button>
+        <?php endif; ?>
+       </div>
+    </form>
+</div>
+<?php endif; ?>
+<?php
+$doc_name = [];
+foreach ($data as $val) {
+    $doc_name[] = $val['document_name'];
+}
+?>
+<div class="my_document">
+    <form name="usaform" id="usaform"
+        class="updatedocument" 
+        accept-charset="utf-8"
+        enctype="multipart/form-data"
+        autocomplete="off" data-mage-init='{"validation":{}}'>
+        <input type="hidden" id="is_customerfrom_usa" name="is_customerfrom_usa[]" value="1"/>
+        <!-- FILE UPLOADER START FOR FEIN-->
+        <div class="upload-container">
+            <?php foreach ($uploaderType as $key => $value): ?>
+            <?php if(!in_array($value,$doc_name)): ?>
+            <?php $counter = $key + 1;?>
+            <div class="upload" for="document uploader">
+                <label><?= $block->escapeHtml(__($value)); ?></label>
+                <div class="input-file">
+                    <input type="file" id="filename<?= $block->escapeHtml($counter); ?>"
+                    class="upload-filename" name="filename<?= $block->escapeHtml($counter); ?>" data-validate="{required:true}"/>
+                    <span class="input-note">
+                        <?= $block->escapeHtml(__('(Only one document can be uploaded 1)')); ?>
+                    </span>
+                    <span id="image-error-message<?= $block->escapeHtml($counter); ?>" style="color:red;"></span>
+                    <!-- bv_vv; date:04-02-2022; File Preview Start; -->
+                    <img class="previewimage-filename<?= $block->escapeHtml($counter); ?>"
+                    height="170" width="170" src="" title="" style="display:none;"/>
+                    <div class="doc-actions" id="doc-actions-filename<?= $block->escapeHtml($counter); ?>"
+                        style="display:none;">
+                        <a class="view-doc-link" id="view-doc-link-filename<?= $block->escapeHtml($counter); ?>"
+                            href="" target="_blank"></a>
+                        <a class="deletedocument-preview deletedocument"
+                        id="deletedocument-filename<?= $block->escapeHtml($counter); ?>"></a>
+                    </div>
+                    <!-- bv_vv; date:04-02-2022; File Preview End; -->
+                </div>
+                <div class="doc_name" for="document name" style="display:none;">
+                    <label><?= $block->escapeHtml(__('Document Name')); ?></label>
+                    <input type="text" id="name-<?= $block->escapeHtml($counter); ?>" name="name<?= $block->escapeHtml($counter); ?>"
+                        data-validate="{required:true}" value="<?= $block->escapeHtml($value); ?>" readonly/>
+                </div>
+                <div class="set_expiry" for="document expiry data" style="display:none" >
+                    <label><?= $block->escapeHtml(__('Set a Specific Expiry date')); ?></label>
+                    <input type="checkbox" id="toggle<?= $block->escapeHtml($counter); ?>"
+                    name="set_expiry[]" class="cmn-toggle cmn-toggle-round" />
+                    <span class="slider round"></span>
+                    <div class="expiry_dates expiry_dates<?= $block->escapeHtml($counter); ?>"
+                        for="document expiry data" style="display:none">
+                        <label><?= $block->escapeHtml(__('Set Expiry Date')); ?></label>
+                        <input type="text" placeholder="Expiry Date" name="expiry_date<?= $block->escapeHtml($counter); ?>"
+                        id="expiry_date<?= $block->escapeHtml($counter); ?>" data-validate="{required:true}" />
+                    </div>
+                </div>
+                <input type="hidden" id="is_add_more_form<?= $block->escapeHtml($counter); ?>" name="is_add_more_form[]" value="0"/>
+            </div>
+            <?php endif; ?>
+            <?php endforeach; ?>
+            <!-- FOR ADD MORE START -->
+            <div class="upload" for="document uploader">
+                <span class="image-error-message" style="color:red;"></span>
+                <div class="doc_name" for="document name"></div>
+                <div class="set_expiry" for="document expiry data"></div>
+                <div class="expiry_dates" for="document expiry data"></div>
+            </div>
+            <!-- FOR ADD MORE END -->
+        </div>
+        <?php if (empty($data)): ?>
+            <div class="document-title add-more-field">
+                <div class="field ">
+                    <input type="checkbox" class="checkbox">
+                    <label class="label">
+                        <span>
+                            <?= $block->escapeHtml(__('Do you want to add more document?')); ?>
+                        </span>
+                    </label>
+                </div>
+                <span class="note" style="display: none;">
+                    <?= $block->escapeHtml(__('(File type supported are JPG,PNG and PDF)')); ?>
+                </span>
+            </div>
+            <div class="upload-container add-more-container" style="display:none;">
+                <div class="add-more-cont">
+                    <a id="add_more"><?= $block->escapeHtml(__('Add More Document')); ?></a>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="document-title add-more-field">
+                <div class="field ">
+                    <input type="checkbox" class="checkbox" checked>
+                    <label class="label">
+                        <span>
+                            <?= $block->escapeHtml(__('Do you want to add more document?')); ?>
+                        </span>
+                    </label>
+                </div>
+                <span class="note">
+                    <?= $block->escapeHtml(__('(File type supported are JPG,PNG and PDF)')); ?>
+                </span>
+            </div>
+            <div class="upload-container add-more-container">
+                <?php foreach($data as $key => $val): ?>
+                    <?php if($val['is_add_more_form'] == 1): ?>
+                    <div class="document" for="document uploader">
+                        <?php
+                            $checkext = $block->checkExtension($mediaUrl.$val['filename']);
+                            $extension = $checkext['extension'];
+                        ?>
+                        <div class="input-file">
+                            <?php if ($extension == "pdf"): ?>
+                                <img src="<?= $block->escapeUrl($pdfImg); ?>" height="34" width="43"
+                                class="pdf-image" alt="pdf documents" />
+                            <?php else: ?>
+                                <img src="<?= $block->escapeUrl($mediaUrl.$val['filename']); ?>" height="170" width="170" />
+                            <?php endif; ?>
+                            <div class="doc-actions">
+                                <?php if ($val['status'] == 0 && $val['message'] != null): ?>
+                                    <a  class="view-doc-link" href="<?= $block->escapeUrl($mediaUrl.$val['filename']); ?>"
+                                        target="_blank"></a>
+                                    <a  class="deletedocument" name="deletedocument" href="#"
+                                        id="<?= $block->escapeHtml($val['mydocument_id']); ?>"></a>
+                                <?php else: ?>
+                                    <a  class="view-doc-link" href="<?= $block->escapeUrl($mediaUrl.$val['filename']); ?>"
+                                        target="_blank"></a>
+                                <?php endif; ?>
+                            </div>
+                            <?php if ($val['status'] != 0 && $val['message'] == null): ?>
+                            <span class="approved">
+                                <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/doc_approved.png')); ?>"
+                                    alt="approved_union"
+                                    width="60"
+                                    height="60"
+                                    loading="lazy" />
+                            </span>
+                            <?php endif; ?>
+                        </div>
+                        <div class="doc-name">
+                            <span><?= $block->escapeHtml($val['filename']); ?></span>
+                            <a  href="<?= $block->escapeUrl($mediaUrl.$val['filename']); ?>"
+                                target="_blank" download class="download-doc"></a>
+                        </div>
+                        <div class="field">
+                            <label><?= $block->escapeHtml(__("Document Name"));  ?></label>
+                            <div class="value">
+                                <?= $block->escapeHtml($val['document_name']); ?>
+                            </div>
+                        </div>
+                        <?php if (isset($val['expiry_date'])): ?>
+                            <div class="field">
+                                <label><?= $block->escapeHtml(__("Expiry Date"));  ?></label>
+                                <div class="value date">
+                                    <?= $block->escapeHtml(__('Expiry Date: ') . $val['expiry_date']); ?>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <?php if ($val['status'] == 0 && $val['message'] != null): ?>
+                            <div class="doc-tooltip">
+                                <span class="tooltip-toggle">
+                                    <?= $block->escapeHtml(__('PLEASE CHECK THE DETAILS')); ?>
+                                </span>
+                                <span class="tooltip-content">
+                                    <?= $block->escapeHtml($val['message']); ?>
+                                </span>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
+        <button type="submit" id="btnsave" class="action submit primary">
+            <span><?= $block->escapeHtml(__('Submit')); ?></span>
+        </button>
+    </form>
+</div>
+<div id="popup-modal"  style="display:none">
+    <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/success_union.svg')); ?>"
+    alt="success_union" width="60" height="60" loading="lazy" />
+    <h1 class="success_msg"><?= $block->escapeHtml(__('DOCUMENTS ARE UPLOADED SUCCESSFULLY')); ?></h1>
+    <h5><?= $block->escapeHtml(__('Once it is approved by Admin, Product price would be visible to you')); ?></h5>
+</div>
+<script type="text/x-magento-init">
+{
+    "*": {
+        "Alfakher_MyDocument/js/documentforusa": {
+            "pdfImg": "<?= $block->escapeUrl($pdfImg); ?>",
+            "inputNote": "<?= $block->escapeHtml(__('(Only one document can be uploaded)')); ?>",
+            "customResultUrl": "<?= $block->escapeUrl($customResultUrl); ?>",
+            "deleteDocumentUrl": "<?= $block->escapeUrl($deleteDocumentUrl); ?>",
+            "updateDocumentUrl": "<?= $block->escapeUrl($updateDocumentUrl); ?>"   
+        }
+    }
+}
+</script>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Customer/js/block-submit-on-send": {
+                "formId": "usaform"
+            }
+        }
+    }
+</script>

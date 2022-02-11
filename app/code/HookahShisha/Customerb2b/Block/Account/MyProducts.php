@@ -2,8 +2,6 @@
 
 namespace HookahShisha\Customerb2b\Block\Account;
 
-use Magento\Catalog\Model\Product\Attribute\Source\Status;
-
 class MyProducts extends \Magento\Catalog\Block\Product\AbstractProduct
 {
 
@@ -120,20 +118,23 @@ class MyProducts extends \Magento\Catalog\Block\Product\AbstractProduct
             $page = ($this->getRequest()->getParam('p')) ? $this->getRequest()->getParam('p') : 1;
             $pageSize = ($this->getRequest()->getParam('limit')) ? $this->getRequest()->getParam('limit') : 5;
             $collection = $this->productFactory->create()->getCollection();
-            $joinConditions[] = "u.sku = e.sku";
-            $joinConditions[] = "u.customer_group_id= " . $customer->getGroupId();
 
-            $joinConditions = implode(' AND ', $joinConditions);
+            $joinAndConditions[] = "u.row_id = e.row_id";
+            $joinAndConditions[] = "u.customer_group_id= " . $customer->getGroupId();
 
+            $joinConditions = implode(' AND ', $joinAndConditions);
             $collection->getSelect()->join(
-                ['u' => $collection->getTable('shared_catalog_product_item')],
+                ['u' => $collection->getTable('catalog_product_entity_tier_price')],
                 $joinConditions,
                 []
             );
+
             $collection->addAttributeToSelect(['price', 'regular_price', 'final_price', 'name', 'small_image']);
-            $collection->addAttributeToFilter('status', Status::STATUS_ENABLED);
+            $collection->addAttributeToFilter('status', \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
+            $collection->addAttributeToFilter('type_id', 'simple');
             $collection->setPageSize($pageSize);
             $collection->setCurPage($page);
+            $collection->getSelect()->group('entity_id');
         }
         return $collection;
     }

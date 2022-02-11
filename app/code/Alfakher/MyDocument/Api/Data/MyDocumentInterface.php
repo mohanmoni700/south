@@ -3,7 +3,7 @@
  * Copyright ©  All rights reserved.
  * See COPYING.txt for license details.
  */
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Alfakher\MyDocument\Api\Data;
 
@@ -22,12 +22,14 @@ interface MyDocumentInterface
 
     /**
      * Get mydocument_id
+
      * @return string|null
      */
     public function getMydocumentId();
 
     /**
      * Set mydocument_id
+
      * @param string $mydocumentId
      * @return \Alfakher\MyDocument\MyDocument\Api\Data\MyDocumentInterface
      */
@@ -35,12 +37,14 @@ interface MyDocumentInterface
 
     /**
      * Get customer_id
+
      * @return string|null
      */
     public function getCustomerId();
 
     /**
      * Set customer_id
+
      * @param string $customerId
      * @return \Alfakher\MyDocument\MyDocument\Api\Data\MyDocumentInterface
      */
@@ -48,12 +52,14 @@ interface MyDocumentInterface
 
     /**
      * Get is_customerfrom_usa
+
      * @return string|null
      */
     public function getIsCustomerfromUsa();
 
     /**
      * Set is_customerfrom_usa
+
      * @param string $isCustomerfromUsa
      * @return \Alfakher\MyDocument\MyDocument\Api\Data\MyDocumentInterface
      */
@@ -61,12 +67,14 @@ interface MyDocumentInterface
 
     /**
      * Get filename
+
      * @return string|null
      */
     public function getFilename();
 
     /**
      * Set filename
+
      * @param string $filename
      * @return \Alfakher\MyDocument\MyDocument\Api\Data\MyDocumentInterface
      */
@@ -74,12 +82,14 @@ interface MyDocumentInterface
 
     /**
      * Get status
+
      * @return string|null
      */
     public function getStatus();
 
     /**
      * Set status
+
      * @param string $status
      * @return \Alfakher\MyDocument\MyDocument\Api\Data\MyDocumentInterface
      */
@@ -87,12 +97,14 @@ interface MyDocumentInterface
 
     /**
      * Get message
+
      * @return string|null
      */
     public function getMessage();
 
     /**
      * Set message
+
      * @param string $message
      * @return \Alfakher\MyDocument\MyDocument\Api\Data\MyDocumentInterface
      */
@@ -100,12 +112,14 @@ interface MyDocumentInterface
 
     /**
      * Get document_name
+
      * @return string|null
      */
     public function getDocumentName();
 
     /**
      * Set document_name
+
      * @param string $documentName
      * @return \Alfakher\MyDocument\MyDocument\Api\Data\MyDocumentInterface
      */
@@ -113,12 +127,14 @@ interface MyDocumentInterface
 
     /**
      * Get created_at
+
      * @return string|null
      */
     public function getCreatedAt();
 
     /**
      * Set created_at
+
      * @param string $createdAt
      * @return \Alfakher\MyDocument\MyDocument\Api\Data\MyDocumentInterface
      */
@@ -126,15 +142,16 @@ interface MyDocumentInterface
 
     /**
      * Get expiry_date
+
      * @return string|null
      */
     public function getExpiryDate();
 
     /**
      * Set expiry_date
+
      * @param string $expiryDate
      * @return \Alfakher\MyDocument\MyDocument\Api\Data\MyDocumentInterface
      */
     public function setExpiryDate($expiryDate);
 }
-
