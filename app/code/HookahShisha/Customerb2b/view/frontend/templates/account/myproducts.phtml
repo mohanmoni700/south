@@ -10,6 +10,10 @@ use Magento\Framework\App\Action\Action;
 $_helper = $this->helper(\Magento\Catalog\Helper\Output::class);
 $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
 ?>
+<div class="block-title page-title">
+    <h1>My Product Pricing</h1>
+</div>
+
 <div class="table-wrapper myproduct-pricing">
     <table class="data table table-myproduct-pricing" id="myproduct-pricing-table">
         <caption class="table-caption"><?= $block->escapeHtml(__('Product Pricing')) ?></caption>
@@ -39,11 +43,13 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                             }
                             ?>
                             <?php // Product Image ?>
+                            <div class="product_box_info">
                             <a href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>"
                                class="product photo product-item-photo"
                                tabindex="-1">
                                 <?= $productImage->toHtml() ?>
                             </a>
+                            <div class="merge_box">
                             <strong class="product name product-item-name">
                                 <a class="product-item-link"
                                    href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>">
@@ -52,6 +58,8 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                             </strong>
 
                             <strong class="product sku product-item-sku"><?= $block->escapeHtml(__('SKU:')) ?> <?= /* @noEscape */ $_product->getSku() ?></strong>
+                            </div>
+                            </div>
                         </td>
 
                         <?php 
@@ -100,7 +108,7 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                                                 ?>">
                                         <input type="hidden" name="qty" id="qty" min="0" value="1" title="Qty" class="input-text qty qty-<?= $escaper->escapeHtml($_product->getId()) ?>" >
                                         <?= $block->getBlockHtml('formkey') ?>
-                                        <button type="submit"
+                                        <button style="background: transparent;margin-top: 0;letter-spacing: 0;text-transform: none;" type="submit"
                                                 title="<?= $escaper->escapeHtmlAttr(__('Add to Cart')) ?>"
                                                 class="action tocart primary"
                                                 disabled>

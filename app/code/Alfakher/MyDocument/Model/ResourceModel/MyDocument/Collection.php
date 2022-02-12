@@ -1,9 +1,5 @@
 <?php
-/**
- * Copyright ©  All rights reserved.
- * See COPYING.txt for license details.
- */
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Alfakher\MyDocument\Model\ResourceModel\MyDocument;
 
@@ -13,7 +9,7 @@ class Collection extends AbstractCollection
 {
 
     /**
-     * @inheritDoc
+     * @var _idFieldName
      */
     protected $_idFieldName = 'mydocument_id';
 
@@ -28,4 +24,3 @@ class Collection extends AbstractCollection
         );
     }
 }
-

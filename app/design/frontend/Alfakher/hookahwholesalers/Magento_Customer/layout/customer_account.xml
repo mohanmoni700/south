@@ -90,5 +90,18 @@
                 </arguments>
             </block>
         </referenceBlock>
+        <referenceBlock name="customer_account_navigation">
+            <block class="Magento\Framework\View\Element\Html\Link\Current" name="customer.account.logout" after='-'>
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">Logout</argument>
+                    <argument name="path" xsi:type="string">customer/account/logout</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+
+        <referenceBlock name="customer-account-navigation-company-link" remove="true"/>
+        <referenceBlock name="customer-account-navigation-company-users-link" remove="true" />
+        <referenceBlock name="customer-account-navigation-company-profile-link" remove="true" />
+        <referenceBlock name="customer-account-navigation-company-roles-link" remove="true" />
     </body>
 </page>
