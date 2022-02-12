@@ -161,12 +161,12 @@ class Result extends Action
                 $model->setData($data);
 
                 $model->addData([
-                    "document_name" => $post['name'.($i + 1)],
+                    "document_name" => $post['name' . ($i + 1)],
                     "customer_id" => $this->customerSession->getCustomer()->getId(),
-                    "expiry_date" => $this->convertDate($post['expiry_date'.($i + 1)]),
+                    "expiry_date" => $this->convertDate($post['expiry_date' . ($i + 1)]),
                     "is_customerfrom_usa" => $is_usa,
                     "status" => 0,
-                    "is_add_more_form" => $newArray[$i]['is_add_more_form']
+                    "is_add_more_form" => $newArray[$i]['is_add_more_form'],
                 ]);
                 $model->setIsDelete(false);
                 $model->setStatus(0);
@@ -188,8 +188,12 @@ class Result extends Action
             'success' => $success]);
     }
 
-    private function convertDate($value) {
-        if($value != '') {
+    /**
+     * @inheritDoc
+     */
+    private function convertDate($value)
+    {
+        if ($value != '') {
             $date = ltrim($value, 'Expiry Date:');
             return date("Y-m-d", strtotime($date));
         }

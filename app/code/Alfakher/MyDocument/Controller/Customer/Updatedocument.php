@@ -93,9 +93,10 @@ class Updatedocument extends Action
             $i = 0;
             foreach ($filesData as $files) {
                 if (isset($files['tmp_name']) && strlen($files['tmp_name']) > 0) {
-                    
+
                     try {
-                        $uploaderFactories = $this->uploaderFactory->create(['fileId' => $filesData['updatefile'.$newArray[$i]['documentid']]]);
+                        $uploaderFactories = $this->uploaderFactory
+                            ->create(['fileId' => $filesData['updatefile' . $newArray[$i]['documentid']]]);
                         $uploaderFactories->setAllowedExtensions(['jpg', 'jpeg', 'gif', 'png', 'pdf']);
                         $imageAdapter = $this->adapterFactory->create();
                         $uploaderFactories->addValidateCallback(
@@ -138,9 +139,9 @@ class Updatedocument extends Action
                     $data['updatefile'] = null;
                 }
 
-                if(isset($post['expiry_date'.($post['documentid'][$i])]) &&
-                $post['expiry_date'.($post['documentid'][$i])] != "") {
-                    $date = ltrim($post['expiry_date'.($post['documentid'][$i])], 'Expiry Date:');
+                if (isset($post['expiry_date' . ($post['documentid'][$i])]) &&
+                    $post['expiry_date' . ($post['documentid'][$i])] != "") {
+                    $date = ltrim($post['expiry_date' . ($post['documentid'][$i])], 'Expiry Date:');
                     $expiryDate = date("Y-m-d", strtotime($date));
                 } else {
                     $expiryDate = "";
@@ -152,7 +153,7 @@ class Updatedocument extends Action
                 if ($data['updatefile'] != null) {
 
                     $model->setFileName($data['updatefile']);
-                    $model->setDocumentName($post['name'.($post['documentid'][$i])]);
+                    $model->setDocumentName($post['name' . ($post['documentid'][$i])]);
                     $model->setExpiryDate($expiryDate);
                     $model->setIsDelete(false);
                     $model->setStatus(0);
