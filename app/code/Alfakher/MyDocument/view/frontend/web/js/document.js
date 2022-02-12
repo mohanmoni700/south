@@ -67,8 +67,10 @@ define([
                         }
                     }
                     reader.readAsDataURL(e.target.files[0]);
+                    currentElem.closest('.upload').addClass('active');
                 } else {
                     currentElem.val('');
+                    currentElem.closest('.upload').removeClass('active');
                     $("#image-error-message-" + showId).html("File type supported are JPG,PNG and PDF Only");
                 }
 
@@ -82,7 +84,6 @@ define([
                     }
                 });
                 expireOnChange(showId);
-                currentElem.closest('.upload').addClass('active');
                 $("#btnsave, #updatebtnsave").show();
             } else {
                 currentElem.closest('.upload').removeClass('active');
@@ -300,6 +301,7 @@ define([
     	                $("#btnsave, #updatebtnsave").show();
                     } else {
                         $(this).val('');
+                        $(this).closest('.upload').removeClass('active');
                         $("#image-error-message-" + fileId).html("File type supported are JPG,PNG and PDF Only");
                     }
 	            } else {
