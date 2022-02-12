@@ -76,8 +76,8 @@ class Document extends \Magento\Framework\View\Element\Template
             $str_status = implode(" ", $status);
 
             $message = [];
-
-            if ($str_status == 0 && empty($str_msg)) {
+            
+            if (in_array(0, $status) && empty($str_msg)) {
                 $verification = "Your details are under verification. You would receive an email once there is an update.";
                 $message[] = ["pending", $verification];
             } else {
@@ -118,6 +118,16 @@ class Document extends \Magento\Framework\View\Element\Template
                 'pending' => $verification,
                 'reject' => $rejected,
                 'reject' => $docexpired,
+            ];
+        } else {
+            $message = "Document(s) verification would be required to view pricing of the product";
+            return [
+                'message' => [
+                    [
+                        "pending",
+                        $message
+                    ],
+                ]
             ];
         }
     }

@@ -43,20 +43,23 @@ define([
                             var extension = filename.replace(/^.*\./, '');
                             var nameArr = filename.split('\\');
                             if (extension == 'pdf') {
-                                var filesrc = config.pdfImg;
+                                var filePreview = config.pdfImg;
+                                var filesrc = URL.createObjectURL(e.target.files[0])
                                 var imgClass = "pdf-image";
                             } else {
-                                var filesrc = event.target.result;
+                                var filePreview = URL.createObjectURL(e.target.files[0]);
+                                var filesrc = URL.createObjectURL(e.target.files[0]);
                                 var imgClass = "";
                             }
 
-                            $('<img class="previewimage-filename-' + showId + '" height="170" width="170" src="' + filesrc + '" title="' + filename + '"/>' +
+                            $('<img class="previewimage-filename-' + showId + '" height="170" width="170" src="' + filePreview + '" title="' + filename + '"/>' +
                                 '<div class="doc-actions" id="doc-actions-filename-' + showId + '">' +
-                                '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + event.target.result + '" target="_blank"></a>' +
+                                '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + filesrc + '" target="_blank"></a>' +
                                 '<a class="deletedocument-preview deletedocument" id="deletedocument-filename-' + showId + '"></a>' +
                                 '</div>').insertAfter($('#' + docActionInsertAfter + showId));
 
                             $("#deletedocument-filename-" + showId).click(function() {
+                                $('.previewimage-filename-' + showId).remove();
                                 $("#doc-actions-filename-" + showId).remove();
                                 $('#' + docActionInsertAfter + showId).val('');
                                 currentElem.closest('.upload').removeClass('active');
@@ -256,21 +259,22 @@ define([
     			        var reader = new FileReader();
     			        reader.onload = function(event) {
     			            if (event.target.result) {
-
     			                var filename = jQuery('#updatefile_' + fileId).val();
     			                var extension = filename.replace(/^.*\./, '');
     			                var nameArr = filename.split('\\');
     			                if (extension == 'pdf') {
-    			                    var filesrc = config.pdfImg;
-    			                    var imgClass = "pdf-image";
-    			                } else {
-    			                    var filesrc = event.target.result;
-    			                    var imgClass = "";
-    			                }
+                                    var filePreview = config.pdfImg;
+                                    var filesrc = URL.createObjectURL(e.target.files[0])
+                                    var imgClass = "pdf-image";
+                                } else {
+                                    var filePreview = URL.createObjectURL(e.target.files[0]);
+                                    var filesrc = URL.createObjectURL(e.target.files[0]);
+                                    var imgClass = "";
+                                }
     			              
-    			                $('<img class="previewimage-filename_' + fileId + ' ' + imgClass + '" height="170" width="170" src="' + filesrc + '" title="' + filename + '"/>' +
+    			                $('<img class="previewimage-filename_' + fileId + ' ' + imgClass + '" height="170" width="170" src="' + filePreview + '" title="' + filename + '"/>' +
                                     '<div class="doc-actions" id="doc-actions-filename_' + fileId + '">' +
-                                    '<a class="view-doc-link" id="view-doc-link-filename_' + fileId + '" href="' + event.target.result + '" target="_blank"></a>' +
+                                    '<a class="view-doc-link" id="view-doc-link-filename_' + fileId + '" href="' + filesrc + '" target="_blank"></a>' +
                                     '<a class="deletedocument-preview deletedocument" id="deletedocument-filename_' + fileId + '"></a>' +
                                     '</div>').insertAfter("#updatefile_" + fileId);
 
