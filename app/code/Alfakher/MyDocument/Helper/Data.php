@@ -92,20 +92,15 @@ class Data extends AbstractHelper
             ->addFieldToFilter('customer_id', ['eq' => $customerid]);
         $docdata = $collection->getData();
 
-        $rejected = [];
-        $message = [];
+        $rejected_doc = [];
 
         foreach ($docdata as $val) {
             if (isset($val['document_name']) && isset($val['message'])) {
-                $docmsg = 'Document Name: ' . $val['document_name'] . ' Rejected Reason: ' . $val['message'];
-                $rejected[] = $docmsg;
-            }
-        }
+                $docname = $val['document_name'];
+                $docmsg = $val['message'];
+                $rejected_doc[] = ['docmsg' => $docmsg, 'docname' => $docname];
 
-        if (!empty($rejected)) {
-            $reason = implode(",", $rejected);
-        } else {
-            $reason = "None!";
+            }
         }
 
         $this->_inlineTranslation->suspend();
@@ -142,7 +137,7 @@ class Data extends AbstractHelper
             ->setTemplateVars([
                 'msg' => $msg,
                 'name' => $customerName,
-                'rejected' => $reason,
+                'rejected_doc' => $rejected_doc,
 
             ])
             ->setFromByScope($sender)
