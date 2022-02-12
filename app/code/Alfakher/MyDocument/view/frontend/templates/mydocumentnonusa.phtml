@@ -103,7 +103,8 @@
                 <div class="upload" for="document uploader">
                     <div class="update-doc-<?=$val['mydocument_id'];?> input-file">
                         <input type="hidden" name="documentid[]" value="<?= $block->escapeHtml($val['mydocument_id']); ?>" />
-                        <input type="file" name="updatefile[]" id="updatefile_<?= $block->escapeHtml($val['mydocument_id']); ?>" data-validate="{required:true}" />
+                        <input type="file" name="updatefile_<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                        id="updatefile_<?= $block->escapeHtml($val['mydocument_id']); ?>" data-validate="{required:true}" />
                         <span id="image-error-message-<?= $val['mydocument_id']; ?>" style="color:red;"></span>
                         <img class="previewimage-filename_" height="170" width="170" src="" title="" style="display:none;"></img>
                         <div class="doc-actions" id="doc-actions-filename_<?= $block->escapeHtml($val['mydocument_id']); ?>" style="display:none;">

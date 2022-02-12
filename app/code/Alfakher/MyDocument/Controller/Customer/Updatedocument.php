@@ -83,30 +83,19 @@ class Updatedocument extends Action
     {
         $resultJson = $this->resultJsonFactory->create();
         $post = $this->getRequest()->getPostValue();
-        $filesData = $this->getRequest()->getFiles('updatefile');
+        $filesData = $this->getRequest()->getFiles()->toArray();
         $newArray = [];
+        $data = [];
         foreach ($post['documentid'] as $key => $value) {
             $newArray[$key]['documentid'] = $value;
         }
-        // foreach ($post['expiry_date'] as $key => $value) {
-        //     if ($value == '') {
-        //         $expiryDate = '';
-        //     } else {
-        //         $date = ltrim($value, 'Expiry Date:');
-        //         $expiryDate = date("Y-m-d", strtotime($date));
-        //     }
-        //     $newArray[$key]['expiry_date'] = $expiryDate;
-        // }
-
         if (count($filesData)) {
             $i = 0;
             foreach ($filesData as $files) {
-
                 if (isset($files['tmp_name']) && strlen($files['tmp_name']) > 0) {
-
+                    
                     try {
-
-                        $uploaderFactories = $this->uploaderFactory->create(['fileId' => $filesData[$i]]);
+                        $uploaderFactories = $this->uploaderFactory->create(['fileId' => $filesData['updatefile'.$newArray[$i]['documentid']]]);
                         $uploaderFactories->setAllowedExtensions(['jpg', 'jpeg', 'gif', 'png', 'pdf']);
                         $imageAdapter = $this->adapterFactory->create();
                         $uploaderFactories->addValidateCallback(
@@ -139,41 +128,39 @@ class Updatedocument extends Action
                                 __('File cannot be saved to path: $1', $destinationPath)
                             );
                         }
-
                         $imagePath = $result['file'];
-                        $data['filename'] = $imagePath;
+                        $data['updatefile'] = $imagePath;
                     } catch (\Exception $e) {
                         $this->messageManager->addError(__($e->getMessage()));
                     }
 
                 } else {
-                    $data['filename'] = null;
+                    $data['updatefile'] = null;
                 }
 
-                if (isset($newArray[$i]['expiry_date'])) {
-                    $date = ltrim($newArray[$i]['expiry_date'], 'Expiry Date:');
+                if(isset($post['expiry_date'.($post['documentid'][$i])]) &&
+                $post['expiry_date'.($post['documentid'][$i])] != "") {
+                    $date = ltrim($post['expiry_date'.($post['documentid'][$i])], 'Expiry Date:');
                     $expiryDate = date("Y-m-d", strtotime($date));
                 } else {
-                    $expiryDate = '';
+                    $expiryDate = "";
                 }
 
                 $resultRedirect = $this->resultRedirect->create(ResultFactory::TYPE_REDIRECT);
                 $resultRedirect->setUrl('mydocument/customer/index');
                 $model = $this->_myDocument->create()->load($newArray[$i]['documentid']);
-                if ($data['filename'] != null) {
+                if ($data['updatefile'] != null) {
 
-                    $model->setFileName($data['filename']);
+                    $model->setFileName($data['updatefile']);
                     $model->setDocumentName($post['name'.($post['documentid'][$i])]);
                     $model->setExpiryDate($expiryDate);
                     $model->setIsDelete(false);
                     $model->setStatus(0);
                     $model->setMessage('');
-
                     $saveData = $model->save();
                 }
                 $i++;
             }
-
         }
         if ($saveData) {
             $success = true;

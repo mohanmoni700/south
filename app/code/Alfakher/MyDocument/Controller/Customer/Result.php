@@ -83,6 +83,7 @@ class Result extends Action
     {
         $post = $this->getRequest()->getPostValue();
         $newArray = [];
+        $data = [];
 
         if (isset($post['is_customerfrom_usa'])) {
             $is_usa = 1;

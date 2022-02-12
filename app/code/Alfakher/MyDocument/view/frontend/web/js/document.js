@@ -277,6 +277,7 @@ define([
     			                 $("#deletedocument-filename_" + fileId).click(function() {
     	                                $("#doc-actions-filename_" + fileId).remove();
     	                                $('.previewimage-filename_' + fileId).remove();
+                                        $(".update-doc-" + fileId).closest('.upload').removeClass('active');
     	                            });
     			            }
     			        }

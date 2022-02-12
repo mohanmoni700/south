@@ -113,7 +113,7 @@ define([
                         '<div class="expiry_dates expiry_dates' + showId + '" for="document expiry data" style="display:none">' +
                         '<label>Set Expiry Date</label>' +
                         '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date' + showId + '" data-validate="{required:true}" />' +
-                        '<input type="hidden" id="is_add_more_form"'+ showId +' name="is_add_more_form[]" value="1"/>'+
+                        '<input type="hidden" id="is_add_more_form'+ showId +'" name="is_add_more_form[]" value="1"/>'+
                         '</div></div>').insertAfter("#input-file-" + showId);
 
                     $("#image-error-message" + showId).html("");
@@ -130,6 +130,8 @@ define([
                 var reader = new FileReader();
                 reader.onload = function(event) {
                     if (event.target.result) {
+                    	console.log(fileid);
+                    	console.log(showId);
                         var filename = jQuery('#'+ fileid + showId).val();
                         var extension = filename.replace(/^.*\./, '');
                         var nameArr = filename.split('\\');
@@ -145,7 +147,6 @@ define([
                             '<div class="doc-actions" id="doc-actions-filename-' + showId + '">' +
                             '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + event.target.result + '" target="_blank"></a>' +
                             '<a class="deletedocument-preview deletedocument" id="deletedocument-filename-' + showId + '"></a>' +
-                            '<a href="' + event.target.result + '" download="' + nameArr[2] + '" id="download-doc-preview-filename-' + showId + '" class="download-doc-preview"></a>' +
                             '</div>').insertAfter("#" + fileid + showId);
 
                         $("#deletedocument-filename-" + showId).click(function() {
@@ -210,7 +211,7 @@ define([
 	     * @param {String} postUrl
 	     */
 	    function formSubmitById(id, resetId, postUrl) {
-	        $("form#" + id).submit(function(e) {
+	        $("form#"+id).submit(function(e) {
 	            e.preventDefault();
 	            var formData = new FormData(this);
 	            $.ajax({
@@ -260,11 +261,11 @@ define([
 	        fileChangeById(3);
 	        fileChangeById(4);
 
-	        var id = jQuery('#usaform').find('input[type="file"]').length;
 	        $("#add_more").click(function() {
-	            var showId = ++id;
+	        	var id = jQuery('#usaform').find('input[type="file"]').length;
+	        	var showId = ++id;
 	            if (showId <= 10) {
-	                $('<div class="upload" for="document uploader"><div class="input-file" id="input-file-' + showId + '">' +
+	                $('<div class="upload" for="document uploader"><div class="input-file test" id="input-file-' + showId + '">' +
 	                    '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" />' +
 	                    '<span class="input-note">' + config.inputNote + '</span>'+
 	                    '</div></div>').insertBefore('.upload-container .add-more-cont');
@@ -326,12 +327,14 @@ define([
 	        var popup = modal(options, $('#popup-modal'));
 
 	        $('button#btnsave').click( function(e) {
+	        	alert('calll');
 		        if($('#usaform').valid()) {
+	        		alert('calll1');
 		        	formSubmitById('usaform', 'usaform', config.customResultUrl);
 		        }
 		    });
 		    
-	        $(".updated-container .document .deletedocument").click(function() {
+	        $(".document .deletedocument").click(function() {
 	            var documentId = $(this).attr('id');
 	            $.ajax({
 	                url: config.deleteDocumentUrl,
@@ -357,7 +360,11 @@ define([
 	            }
 	        });
 
-	        formSubmitById('updatedocument', 'updatedocument', config.updateDocumentUrl);
+	        $('button#updatebtnsave').click( function(e) {
+            	if($('#updatedocument').valid()) {
+            		formSubmitById('updatedocument', 'updatedocument', config.updateDocumentUrl);
+            	}
+            });
 
 	        $('.update-toggle').change(function() {
 	            var toggleId = $(this).attr('id');
@@ -374,49 +381,7 @@ define([
 
 	        $("[id^='updatefile_']").on('change', function(e) {
 	            var showId = $(this).prev().val();
-	            // fileUploading(showId, 'updatefile_', $(this));
-	            var val = $(this).val();
-				var fileId = $(this).attr('id');
-				if (val) {
-			        var extension = val.substring(val.lastIndexOf('.') + 1).toLowerCase();
-			        var extensionArr = ['pdf', 'jpg', 'png'];
-			        $("#doc-actions-filename_" + fileId).remove();
-			        var reader = new FileReader();
-			        reader.onload = function(event) {
-			            if (event.target.result) {
-			                var filename = $('#'+fileId).val();
-			                var extension = filename.replace(/^.*\./, '');
-			                var nameArr = filename.split('\\');
-
-			                if (extension == 'pdf') {
-			                    var filesrc = config.pdfImg;
-			                    var imgClass = "pdf-image";
-			                } else {
-			                    var filesrc = event.target.result;
-			                    var imgClass = "";
-			                }
-			              
-			                $('<img class="previewimage-filename_' + fileId + ' ' + imgClass + '" height="170" width="170" src="' + filesrc + '" title="' + filename + '"/>' +
-								'<div class="doc-actions" id="doc-actions-filename_' + fileId + '">' +
-								'<a class="view-doc-link" id="view-doc-link-filename_' + fileId + '" href="' + event.target.result + '" target="_blank"></a>' +
-								'<a class="deletedocument-preview deletedocument" id="deletedocument-filename_' + fileId + '"></a>' +
-								'</div>').insertAfter("#" + fileId);
-
-			                $('#expiry_date'+showId).change(function() {
-					            if ($(this).val()) {
-					                var date_val = $(this).val();
-					                $(this).val('Expiry Date: ' + date_val);
-					                $(this).addClass('active-date');
-					            }
-					        });
-			                $("#deletedocument-filename_" + fileId).click(function() {
-                                $("#doc-actions-filename_" + fileId).remove();
-                                $('.previewimage-filename_' + fileId).remove();
-                            });
-			            }
-			        }
-			        reader.readAsDataURL(e.target.files[0]);
-			    }
+	            fileUploading(showId, 'updatefile_', $(this), e);
 	        });
 	    });
 	};
