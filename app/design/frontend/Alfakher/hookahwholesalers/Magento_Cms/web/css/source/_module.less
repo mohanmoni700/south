@@ -126,7 +126,7 @@
       >div {
         width: 100%;
         text-align: center;
-        margin-top: 16px;
+        margin-top: 20px;
       }
       img {
         border-right: 1px solid #D9D9D9;
@@ -134,12 +134,17 @@
       .pagebuilder-button-link {
         .lib-css(padding, 0);
         .lib-css(margin, 0);
-        width: 128px;
+        width: 138px;
         .lib-css(color, @color-black);
         .lib-css(font-weight, @font-weight__regular);
         .lib-font-size(22);
         .lib-css(line-height, (@indent__l - 3));
         cursor: pointer;
+        text-decoration: none !important;
+        &:hover {
+          .lib-css(color, @hookah_theme_color);
+          .lib-css(font-weight, @font-weight__bold);
+        }
       }
     }
     .pagebuilder-column-group:not(.slick-slider) {

@@ -27,6 +27,7 @@
                 $_postName = $block->escapeHtml($_post->getTitle());
             ?>
             <li class="post-holder post-holder-<?= (int)$_post->getId() ?>">
+            <div class="post-holder-hover">
                 <?php $featuredImage = $_post->getFeaturedListImage() ?: $_post->getFeaturedImage(); ?>
                     <?php if ($featuredImage) { ?>
                         <?php
@@ -103,6 +104,7 @@
                         </a>
                     </div>
                 </div>
+            </div>
             </li>
 
         <?php } ?>
