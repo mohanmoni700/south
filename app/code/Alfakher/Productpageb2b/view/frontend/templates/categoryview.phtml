@@ -3,10 +3,16 @@ $category = $block->getCurrentCategory();
 $subcats = $category->getChildrenCategories();
 $_helper = $this->helper('Magento\Catalog\Helper\Output');
 ?>
+
 <!-- Show child category image and name start[BS] -->
+<div class="block-content content">
+<div class="products wrapper grid products-grid products">
+<div class="column main">
+
+<div class="products list items product-items">
 <?php
-foreach ($subcats as $subcat) {
-    if ($subcat->getIsActive()) {
+foreach ($subcats as $subcat):
+    if ($subcat->getIsActive()):
             $_category = $block->getChildCategory($subcat->getId());
             $_outputhelper = $this->helper('Magento\Catalog\Helper\Output');
             $subcaturl = $subcat->getUrl();
@@ -14,13 +20,29 @@ foreach ($subcats as $subcat) {
             $_imgUrl = $_category->getImageUrl();
             $_imgHtml = '<img src="' . $_imgUrl . '" height="200" width="200"/>';
             $_imgHtml = $_outputhelper->categoryAttribute($_category, $_imgHtml, 'image');
+            ?>
 
-            echo '<a href="' . $subcaturl . '" class="block-promo" title="' . $subcat->getName() . '">' . $_imgHtml . '<span style="background-color: rgba(255,255,255,0.9)" class="content bg-white">';
-            echo $subcat->getName();
-    }
-}
+            <div class="item product product-item">
+            <div class="product-item-info">
+                    <a href="<?= $subcaturl ?>" class="product photo product-item-photo"><?= $_imgHtml ?>
+                    </a>
+                <div class="product details product-item-details">
+                    <strong class="product name product-item-name"><a
+                            class="product-item-link"
+                            title="<?= $subcat->getName() ?>"
+                            href="<?= $subcaturl ?>">
+                        <?= $subcat->getName() ?></a>
+                    </strong>
+                </div>
+            </div>
+            </div>
+
+   <?php  endif;
+endforeach;
 ?>
+</div>
+</div>
+</div>
+</div>
+
 <!-- Show child category image and name start[BS] -->
-
-
-
