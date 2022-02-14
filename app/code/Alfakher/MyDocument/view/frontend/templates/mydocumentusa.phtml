@@ -184,7 +184,12 @@ $updateDocumentUrl = $block->getUrl('mydocument/customer/updatedocument');
                 <?php endif;?>
                 <?php if ($val['is_add_more_form'] == 1): ?>
                     <?php if ($val['is_delete'] == 0): ?>
-                        <div class="document" for="document uploader">
+                        <?php if ($val['status'] == 0 && $val['message'] != null): ?>
+                            <?php $rejectedClass = "rejected"; ?>
+                        <?php else: ?>
+                            <?php $rejectedClass = ""; ?>
+                        <?php endif;?>
+                        <div class="document <?= $rejectedClass; ?>" for="document uploader">
                             <?php
                             $fileName = $mediaUrl.$val['filename'];
                             $checkext = $block->checkExtension($fileName);

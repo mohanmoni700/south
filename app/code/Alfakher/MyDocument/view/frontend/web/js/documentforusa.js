@@ -270,9 +270,10 @@ define([
 	        	var id = jQuery('#usaform').find('input[type="file"]').length;
 	        	var showId = ++id;
 	            if (showId <= 10) {
-	                $('<div class="upload" for="document uploader"><div class="input-file test" id="input-file-' + showId + '">' +
+	                $('<div class="upload" for="document uploader"><div class="input-file" id="input-file-' + showId + '">' +
 	                    '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" />' +
 	                    '<span class="input-note">' + config.inputNote + '</span>'+
+	                    '<span id="image-error-message'+showId+'" style="color:red;"></span>'+
 	                    '</div></div>').insertBefore('.upload-container .add-more-cont');
 	            }
 	            $('#filename-' + showId).change(function(e) {
