@@ -5,13 +5,11 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
 ?>
 <!-- Show child category image and name start[BS] -->
 <?php
-    foreach ($subcats as $subcat) {
-        if ($subcat->getIsActive()) {
-
+foreach ($subcats as $subcat) {
+    if ($subcat->getIsActive()) {
             $_category = $block->getChildCategory($subcat->getId());
             $_outputhelper = $this->helper('Magento\Catalog\Helper\Output');
             $subcaturl = $subcat->getUrl();
-
             $_imgHtml = '';
             $_imgUrl = $_category->getImageUrl();
             $_imgHtml = '<img src="' . $_imgUrl . '" height="200" width="200"/>';
@@ -19,10 +17,8 @@ $_helper = $this->helper('Magento\Catalog\Helper\Output');
 
             echo '<a href="' . $subcaturl . '" class="block-promo" title="' . $subcat->getName() . '">' . $_imgHtml . '<span style="background-color: rgba(255,255,255,0.9)" class="content bg-white">';
             echo $subcat->getName();
-
-
-        }
-    } 
+    }
+}
 ?>
 <!-- Show child category image and name start[BS] -->
 

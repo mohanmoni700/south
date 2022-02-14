@@ -128,13 +128,10 @@ class Document extends \Magento\Framework\View\Element\Template
             ];
         } else {
             $verification = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_documents_verification_required', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+            $message[] = ["pending", $verification];
             return [
-                'message' => [
-                    [
-                        "pending",
-                        $message,
-                    ],
-                ],
+                'message' => $message,
+                'pending' => $verification,
             ];
         }
     }
