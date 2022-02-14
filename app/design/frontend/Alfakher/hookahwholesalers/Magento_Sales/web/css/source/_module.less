@@ -43,6 +43,56 @@
             margin-bottom: 30px;
         }   
     }
+    .sales-order-view{
+        &.account{
+            .page-title-wrapper{
+                .page-title{
+                    .lib-font-size(18);
+                    line-height: 28px;
+                    color: #333333;
+                    font-weight: @font-weight__bold;
+                    float: left;
+                    margin-bottom: 0;
+                    margin-right: 20px;
+                }
+            }
+            span.order-status{
+                .lib-font-size(11);
+                padding: 6px 10px;
+                float: left;
+                border: 1px solid #F2B807;
+                text-transform: uppercase;
+                font-weight: @font-weight__bold;
+                margin-bottom: 0;
+            } 
+            .negotiable-quote-order-information{
+                float:left;
+                width: 100%;
+                margin-top: 17px;
+            }
+            .order-actions-toolbar{
+                float:left;
+                width: 100%;   
+                a.action.order{
+                    color: #404040;
+                    text-decoration: underline;
+                }
+                a.action.print{
+                    position: relative;
+                    &:before{
+                        content:'';
+                        background-image: url('@{baseDir}images/print_icon.svg');
+                        background-repeat: no-repeat;
+                        display: inline-block;
+                        position: relative;
+                        width: 13px;
+                        height: 12px;
+                        margin-right: 12px;
+                    }
+                }
+            }
+        } 
+    }
     .table-wrapper.myproduct-pricing{
         .alert{
             margin-top: 25px;
