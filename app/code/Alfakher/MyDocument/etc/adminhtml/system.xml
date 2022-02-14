@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="hookahshisha">
+            <resource>HookahShisha_Productpageb2b::productpageb2b_config</resource>
+            <group id="productpageb2b" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Customer B2B Product Detail</label>
+                <field id="productpageb2b_price_section_for_guest" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Disable Price section for Guests</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="productpage" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Documentation Massages</label>
+                <field id="productpageb2b_document_Verification_section" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Verification massage</label>
+                </field>
+                <field id="productpageb2b_document_rejection_sections" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Rejection massage</label>
+                </field>
+                 <field id="productpageb2b_documents_expired_sections" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Expired document massage</label>
+                </field>
+                <field id="productpageb2b_documents_verification_required" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Document Require Massage</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
