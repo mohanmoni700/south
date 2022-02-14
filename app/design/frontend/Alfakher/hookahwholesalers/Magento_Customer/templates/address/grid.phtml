@@ -65,7 +65,7 @@ $customerAddressView = $block->getData('customer_address');
     {
         ".page-main": {
             "address": {
-                "deleteAddress": "td a[role='delete-address']",
+                "deleteAddress": "div a[role='delete-address']",
                 "deleteUrlPrefix": "<?= $block->escapeJs($block->escapeUrl($block->getDeleteUrl())) ?>id/",
                 "addAddress": "button[role='add-address']",
                 "addAddressLocation": "<?= $block->escapeJs($block->escapeUrl($block->getAddAddressUrl())) ?>"
