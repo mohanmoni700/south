@@ -1,19 +1,20 @@
-<!-- Yasin Document verification msg Start -->
+<!-- Document verification msg Start -->
 
 <?php
-    //system config value 
-    $config = $block->getLayout()->createBlock(\Magento\Config\Block\System\Config\Form::class);
-    $documents_required_msg = $config->getConfigValue('hookahshisha/productpage/productpageb2b_documents_verification_required');
-    $document_Verification_msg = $config->getConfigValue('hookahshisha/productpage/productpageb2b_document_Verification_section');
-    $document_Reject_msg = $config->getConfigValue('hookahshisha/productpage/productpageb2b_document_rejection_sections');
-    $document_expir_msg = $config->getConfigValue('hookahshisha/productpage/productpageb2b_documents_expired_sections');
 
+   //helper boolean
     $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
     $docdata = $_helperB2b->getDocMessageData();
     $exp_msg = $_helperB2b->getExpiryMsg();
     $is_document_upload = $_helperB2b->getDocuments();
+    
+    //get System config values 
+    $documents_required_msg = $_helperB2b->getConfigValue('hookahshisha/productpage/productpageb2b_documents_verification_required');
+    $document_Verification_msg = $_helperB2b->getConfigValue('hookahshisha/productpage/productpageb2b_document_Verification_section');
+    $document_Reject_msg = $_helperB2b->getConfigValue('hookahshisha/productpage/productpageb2b_document_rejection_sections');
+    $document_expir_msg = $_helperB2b->getConfigValue('hookahshisha/productpage/productpageb2b_documents_expired_sections');
 ?>
-<?php if($_helperB2b->isCustomerLoggedIn()): ?>
+<?php if($_helperB2b->isCustomerLoggedIn()) : ?>
     <?php if ($docdata == 0): ?>
         <div class="pending-tooltip"><div class="tooltip-inner"><?= $block->escapeHtml(__($document_Verification_msg)) ?></div>
         </div>
@@ -30,5 +31,7 @@
         <div class="pending-tooltip"><div class="tooltip-inner"><?= $block->escapeHtml(__($documents_required_msg)) ?></div></div>
     <?php endif; ?>
 <?php endif; ?>    
+<!-- End Msg -->
 
-<!--Yasin Document verification msg End -->
+
+
