@@ -5,6 +5,10 @@ use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory;
 
 class Document extends \Magento\Framework\View\Element\Template
 {
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    protected $scopeConfig;
 
     /**
      * @var CollectionFactory
@@ -19,6 +23,7 @@ class Document extends \Magento\Framework\View\Element\Template
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Magento\Customer\Model\Session $customerSession
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param CollectionFactory $collection
      * @param array $data = []
      */
@@ -26,11 +31,13 @@ class Document extends \Magento\Framework\View\Element\Template
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Customer\Model\Session $customerSession,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         CollectionFactory $collection,
         array $data = []
     ) {
         $this->collection = $collection;
         $this->customerSession = $customerSession;
+        $this->scopeConfig = $scopeConfig;
         parent::__construct($context, $data);
     }
 
@@ -77,37 +84,34 @@ class Document extends \Magento\Framework\View\Element\Template
 
             $message = [];
 
-            if ($str_status == 0 && empty($str_msg)) {
-                $verification = "Your details are under verification. You would receive an email once there is an update.";
+            if (in_array(0, $status) && empty($str_msg)) {
+                $verification = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_document_Verification_section', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
                 $message[] = ["pending", $verification];
             } else {
                 $verification = "";
             }
 
             if (in_array(0, $status) && !empty($str_msg)) {
-                $rejected = "Some of your document(s) has been rejected. Please update the same";
+                $rejected = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_document_rejection_sections', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
                 $message[] = ["reject", $rejected];
             } else {
                 $rejected = "";
             }
 
             $todate = date("Y-m-d");
-            
+
             foreach ($document as $value) {
                 $expiry_date = $value['expiry_date'];
-                if ($expiry_date <= $todate && $value['status'] == 0) {
+                if (($expiry_date <= $todate && $expiry_date != "")
+                    && $value['status'] == 0) {
                     $msg[] = "expired";
                 } else {
                     $msg[] = "not expired";
                 }
             }
 
-            if (!empty($expiry_date)) {
-                if (in_array('expired', $msg)) {
-                    $docexpired = "Some of the document(s) has been expired";
-                } else {
-                    $docexpired = "";
-                }
+            if (in_array('expired', $msg)) {
+                $docexpired = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_documents_expired_sections', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
             } else {
                 $docexpired = "";
             }
@@ -121,6 +125,16 @@ class Document extends \Magento\Framework\View\Element\Template
                 'pending' => $verification,
                 'reject' => $rejected,
                 'reject' => $docexpired,
+            ];
+        } else {
+            $verification = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_documents_verification_required', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+            return [
+                'message' => [
+                    [
+                        "pending",
+                        $message,
+                    ],
+                ],
             ];
         }
     }

@@ -20,8 +20,6 @@ class ViewDetailRenderer extends Template
     protected $productRepository;
 
     /**
-     * Core registry
-     *
      * @var \Magento\Framework\Registry
      */
     protected $_coreRegistry;

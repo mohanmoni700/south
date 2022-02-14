@@ -74,6 +74,11 @@ class CustomerSessionContext
             false
         );
         $this->httpContext->setValue(
+            'is_document_upload',
+            $this->getDocuments(),
+            false
+        );
+        $this->httpContext->setValue(
             'document_status',
             $this->getStatus(),
             false
@@ -86,26 +91,44 @@ class CustomerSessionContext
 
         return $proceed($request);
     }
+
+    /**
+     * @inheritDoc
+     */
     public function getMydocuments()
     {
         $customer_id = $this->customerSession->getCustomerId();
-        return $this->collection->create()
+        $doc_collection = $this->collection->create()
             ->addFieldToFilter('customer_id', ['eq' => $customer_id])
             ->addFieldToFilter('status', ['eq' => 0]);
+        return $doc_collection;
     }
+
+    /**
+     * start check document is verified or not
+     * @inheritDoc
+     */
     public function getStatus()
     {
         $msg = 2;
+        $rejectmsg = [];
         $doc_collection = $this->getMydocuments();
         foreach ($doc_collection as $value) {
-            if (empty($value->getMessage())) {
-                $msg = 0;
-            } else {
-                $msg = 1;
-            }
+            $rejectmsg[] = $value->getMessage();
+        }
+        $str_msg = implode("", $rejectmsg);
+        if (empty($str_msg)) {
+            $msg = 0;
+        } else {
+            $msg = 1;
         }
         return $msg;
     }
+
+    /**
+     * start check document is expired or not
+     * @inheritDoc
+     */
     public function getExpiryDate()
     {
         $msg = 1;
@@ -116,6 +139,22 @@ class CustomerSessionContext
             if ($expiry_date < $todate) {
                 $msg = 0;
             }
+        }
+        return $msg;
+    }
+
+    /**
+     * start check customer document is uploaded or not.
+     * @inheritDoc
+     */
+    public function getDocuments()
+    {
+        $msg = 1;
+        $customer_id = $this->customerSession->getCustomerId();
+        $doc_collection = $this->collection->create()
+            ->addFieldToFilter('customer_id', ['eq' => $customer_id]);
+        if (empty($doc_collection->getdata())) {
+            $msg = 0;
         }
         return $msg;
     }

@@ -40,7 +40,17 @@
   .cms-home {
     .page-footer {
       margin-top: 0;
-    } 
+    }
+    .blog-widget-recent {
+      .post-list {
+        .post-description {
+          overflow: unset;
+          display: block;
+          -webkit-box-orient: unset;
+          -webkit-line-clamp: unset;
+        }
+      }
+    }
   }
   .homepage_slider_content {
     .lib-css(margin-bottom, (@indent__l * 2));
@@ -123,10 +133,21 @@
       }  
     }
     .pagebuilder-column {
+      cursor: pointer;
+      &:hover {
+        >div {
+          top: -20px;
+        }
+        .pagebuilder-button-link {
+          .lib-css(color, @hookah_theme_color);
+          .lib-css(font-weight, @font-weight__bold);
+        }
+      }
       >div {
         width: 100%;
         text-align: center;
-        margin-top: 16px;
+        margin-top: 24px;
+        position: relative;
       }
       img {
         border-right: 1px solid #D9D9D9;
@@ -134,12 +155,17 @@
       .pagebuilder-button-link {
         .lib-css(padding, 0);
         .lib-css(margin, 0);
-        width: 128px;
+        width: 138px;
         .lib-css(color, @color-black);
         .lib-css(font-weight, @font-weight__regular);
         .lib-font-size(22);
         .lib-css(line-height, (@indent__l - 3));
         cursor: pointer;
+        text-decoration: none !important;
+        &:hover {
+          .lib-css(color, @hookah_theme_color);
+          .lib-css(font-weight, @font-weight__bold);
+        }
       }
     }
     .pagebuilder-column-group:not(.slick-slider) {

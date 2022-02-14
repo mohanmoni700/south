@@ -49,13 +49,18 @@
             &:not(.blog-widget-recent-masonry) {
                 li.post-holder {
                     width: 33.33%;
-                    margin: 0 0 10px 0;
+                    margin: 0 0 20px 0;
                     padding: 0 15px;
                     &:nth-child(2n+1) {
                         clear: none;
                     }
                     &:nth-child(3n+1) {
                         clear: left;
+                    }
+                    .post-holder-hover {
+                        &:hover {
+                            box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.15);
+                        }
                     }
                 }
             }
@@ -123,7 +128,7 @@
     }
     .view-more {
         text-align: center;
-        margin-top: 30px;
+        margin-top: 10px;
         a.action.primary {
             text-transform: uppercase;
             border-radius: 30px;
@@ -530,6 +535,7 @@
                 padding: 0;
                 .posted-icon {
                     max-width: 12px;
+                    top: 0px;
                 }
                 .value {
                     font-size: 10px;
