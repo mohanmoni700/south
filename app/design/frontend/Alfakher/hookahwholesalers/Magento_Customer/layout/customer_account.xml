@@ -18,7 +18,9 @@
         <referenceBlock name="sidebar.additional" remove="true"/>
         <referenceBlock name="category.product.addto.compare" remove="true"/>
 
-        <referenceBlock name="page.main.title" remove="true"/>
+        <!-- bv_op; commenting the below line; date : 11-2-22; Start -->
+        <!-- <referenceBlock name="page.main.title" remove="true"/> -->
+        <!-- bv_op; commenting the below line; date : 11-2-22; End -->
  
  	   <!-- Store credit -->
  
@@ -83,7 +85,7 @@
         <referenceBlock name="customer-account-navigation-delimiter-2" remove="true"/>
 
         <referenceBlock name="customer_account_navigation">
-            <block class="Magento\Framework\View\Element\Html\Link\Current" name="customer-account-navigation-custom">
+            <block class="Magento\Framework\View\Element\Html\Link\Current" name="customer-account-navigation-custom" after="my_document">
                 <arguments>
                     <argument name="path" xsi:type="string">customerb2b/account/myproductpricing</argument>
                     <argument name="label" xsi:type="string">My Product Pricing</argument>

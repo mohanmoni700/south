@@ -9,12 +9,14 @@ class Breadcrumbs extends \Magento\Theme\Block\Html\Breadcrumbs
 {
 
     /**
-     * Catalog data
-     *
      * @var Data
      */
     protected $_catalogData = null;
-    protected $path = array();
+
+    /**
+     * @var Path
+     */
+    protected $path = [];
 
     /**
      * @param Context $context
@@ -27,20 +29,26 @@ class Breadcrumbs extends \Magento\Theme\Block\Html\Breadcrumbs
         parent::__construct($context, $data);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getTitleSeparator($store = null)
     {
         $separator = (string) $this->_scopeConfig->getValue('catalog/seo/title_separator', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $store);
         return ' ' . $separator . ' ';
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getBreadcrumb()
     {
         $this->addCrumb(
-                'home', [
-            'label' => __('Home'),
-            'title' => __('Go to Home Page'),
-            'link' => $this->getBaseUrl()
-                ]
+            'home', [
+                'label' => __('Home'),
+                'title' => __('Go to Home Page'),
+                'link' => $this->getBaseUrl(),
+            ]
         );
         foreach ((array) $this->path as $name => $breadcrumb) {
             $this->addCrumb($name, $breadcrumb);
@@ -48,6 +56,9 @@ class Breadcrumbs extends \Magento\Theme\Block\Html\Breadcrumbs
         return $this->getCrumbs();
     }
 
+    /**
+     * @inheritDoc
+     */
     protected function _prepareLayout()
     {
         $this->path = $this->_catalogData->getBreadcrumbPath();
@@ -59,14 +70,19 @@ class Breadcrumbs extends \Magento\Theme\Block\Html\Breadcrumbs
         //return parent::_prepareLayout();
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getCrumbs()
     {
         return $this->_crumbs;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getBaseUrl()
     {
         return $this->_storeManager->getStore()->getBaseUrl();
     }
-
 }

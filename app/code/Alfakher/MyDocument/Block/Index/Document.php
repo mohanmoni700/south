@@ -5,6 +5,10 @@ use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory;
 
 class Document extends \Magento\Framework\View\Element\Template
 {
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    protected $scopeConfig;
 
     /**
      * @var CollectionFactory
@@ -19,6 +23,7 @@ class Document extends \Magento\Framework\View\Element\Template
     /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Magento\Customer\Model\Session $customerSession
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param CollectionFactory $collection
      * @param array $data = []
      */
@@ -26,11 +31,13 @@ class Document extends \Magento\Framework\View\Element\Template
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Customer\Model\Session $customerSession,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         CollectionFactory $collection,
         array $data = []
     ) {
         $this->collection = $collection;
         $this->customerSession = $customerSession;
+        $this->scopeConfig = $scopeConfig;
         parent::__construct($context, $data);
     }
 
@@ -76,23 +83,23 @@ class Document extends \Magento\Framework\View\Element\Template
             $str_status = implode(" ", $status);
 
             $message = [];
-            
+
             if (in_array(0, $status) && empty($str_msg)) {
-                $verification = "Your details are under verification. You would receive an email once there is an update.";
+                $verification = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_document_Verification_section', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
                 $message[] = ["pending", $verification];
             } else {
                 $verification = "";
             }
 
             if (in_array(0, $status) && !empty($str_msg)) {
-                $rejected = "Some of your document(s) has been rejected. Please update the same";
+                $rejected = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_document_rejection_sections', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
                 $message[] = ["reject", $rejected];
             } else {
                 $rejected = "";
             }
 
             $todate = date("Y-m-d");
-            
+
             foreach ($document as $value) {
                 $expiry_date = $value['expiry_date'];
                 if (($expiry_date <= $todate && $expiry_date != "")
@@ -102,9 +109,9 @@ class Document extends \Magento\Framework\View\Element\Template
                     $msg[] = "not expired";
                 }
             }
-            
+
             if (in_array('expired', $msg)) {
-                $docexpired = "Some of the document(s) has been expired";
+                $docexpired = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_documents_expired_sections', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
             } else {
                 $docexpired = "";
             }
@@ -120,14 +127,11 @@ class Document extends \Magento\Framework\View\Element\Template
                 'reject' => $docexpired,
             ];
         } else {
-            $message = "Document(s) verification would be required to view pricing of the product";
+            $verification = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_documents_verification_required', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+            $message[] = ["pending", $verification];
             return [
-                'message' => [
-                    [
-                        "pending",
-                        $message
-                    ],
-                ]
+                'message' => $message,
+                'pending' => $verification,
             ];
         }
     }
