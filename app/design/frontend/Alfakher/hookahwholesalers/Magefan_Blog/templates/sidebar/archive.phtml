@@ -1,13 +1,5 @@
 <?php
 /**
- * Copyright © Magefan (support@magefan.com). All rights reserved.
- * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
- *
- * Glory to Ukraine! Glory to the heroes!
- */
-?>
-<?php
-/**
  * Blog sidebar archive template
  *
  * @var $block \Magefan\Blog\Block\Sidebar\Archive
@@ -15,27 +7,33 @@
 ?>
 
 <?php
-    $_months = $block->getMonths();
+    $_years = $block->getMonths();
 ?>
-<?php if (count($_months)) { ?>
+<?php if (count($_years)) { ?>
 <div class="widget block block-archive" data-bind="scope: 'blog-archive'">
     <div class="block-title">
         <?= $block->escapeHtml(__('Month List')) ?>
     </div>
     <div class="block-content">
-        <?php foreach ($_months as $time) { ?>
-            <?php
-                $title = $block->getTranslatedDate($time);
-            ?>
-            <div class="item">
-                <a title="<?= $block->escapeHtml(__('Archive %1', $title)) ?>"
-                   class="archive-item-link"
-                   href="<?= $block->escapeUrl($block->getTimeUrl($time)) ?>">
-                    <?= $block->escapeHtml($title); ?>
-                </a>
-            </div>
-
-        <?php } ?>
+        <?php foreach ($_years as $_year =>  $_months): ?>
+            <?php if (count($_months)): ?>
+                <div>
+                    <span><?php echo $_year; ?></span>
+                    <?php foreach ($_months as $time): ?>
+                        <?php
+                            $title = $block->getTranslatedDate($time);
+                        ?>
+                        <div class="item">
+                            <a title="<?= $block->escapeHtml(__('Archive %1', $title)) ?>"
+                               class="archive-item-link"
+                               href="<?= $block->escapeUrl($block->getTimeUrl($time)) ?>">
+                                <?= $block->escapeHtml($title); ?>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+            <?php endif; ?>
+                </div>
+        <?php endforeach; ?>
     </div>
 </div>
 <?php } ?>
