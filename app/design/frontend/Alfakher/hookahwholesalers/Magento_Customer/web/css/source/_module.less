@@ -353,6 +353,32 @@ ul.nav.items{
                     color: @disable_font_clr;
                 }
             }
+            .add-more-field {
+                .checkbox{
+                    &:checked {
+                        + label{
+                            &:before {
+                                background: @color_black;
+                                border-color: @color_black;
+                            }
+                            &::after {
+                                background-color: @color_black;
+                            }
+                        }                       
+                    }
+                    &:disabled {
+                        + label{
+                            &:before {
+                                background: @disable_checkbox_clr;
+                                border-color: @disable_checkbox_clr;
+                            }
+                            &::after {
+                                background-color: @disable_checkbox_clr;
+                            }
+                        }    
+                    }
+                }
+            }
          .action.save.primary{
              background: @disable_tabbg;
              border-color: @disable_border;
@@ -1909,6 +1935,9 @@ ul.nav.items{
             text-transform: uppercase;
             letter-spacing: 2px;
             line-height: 38px;
+            &:hover {
+                background: @hookah_theme_gradient;
+            }
         }
     }
     button.action.primary, 
