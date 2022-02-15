@@ -119,13 +119,23 @@ class MyProducts extends \Magento\Catalog\Block\Product\AbstractProduct
             $pageSize = ($this->getRequest()->getParam('limit')) ? $this->getRequest()->getParam('limit') : 5;
             $collection = $this->productFactory->create()->getCollection();
 
-            $joinAndConditions[] = "u.row_id = e.row_id";
+            $joinAndConditions[] = "u.sku = e.sku";
             $joinAndConditions[] = "u.customer_group_id= " . $customer->getGroupId();
 
             $joinConditions = implode(' AND ', $joinAndConditions);
             $collection->getSelect()->join(
-                ['u' => $collection->getTable('catalog_product_entity_tier_price')],
+                ['u' => $collection->getTable('shared_catalog_product_item')],
                 $joinConditions,
+                []
+            );
+
+            $joinAndConditionsTier[] = "t.row_id = e.row_id";
+            $joinAndConditionsTier[] = "t.customer_group_id= " . $customer->getGroupId();
+
+            $joinConditionsTier = implode(' AND ', $joinAndConditionsTier);
+            $collection->getSelect()->join(
+                ['t' => $collection->getTable('catalog_product_entity_tier_price')],
+                $joinConditionsTier,
                 []
             );
 

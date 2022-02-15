@@ -1647,7 +1647,7 @@
             }            
             .pending-tooltip {
                 order: 1;
-                margin-bottom: 1px;
+                margin-bottom: 0;
             }            
             .category_view {
                 position: relative;
@@ -1666,6 +1666,9 @@
             .category-image {
                 height: 250px;
                 margin: 0;
+                ~ .category_description_container {
+                    display: block;
+                }
                 &::before {
                     content: '';
                     background: @color-black;
@@ -1688,7 +1691,9 @@
                 top: 50%;
                 transform: translate(-50%, -50%);
                 .lib-css(color, @color-white);
-                
+                width: 100%;
+                max-width: 960px;
+                display: none;
                 #page-title-heading {
                     .lib-css(text-align, center);
                     .lib-css(margin, 0 0 @indent__base 0);
@@ -1903,6 +1908,7 @@
             color: @color-white !important;
         }
         &:hover {
+            background: @hookah_theme_gradient !important;
             > .amscroll-text {
                 filter: brightness(1);
             }
@@ -1918,6 +1924,42 @@
         display: none;
     }
 
+    //
+    //  Category CMS View
+    //  ---------------------------------------------
+    .catalog-category-view {
+        .category-view  {
+            .page-main {
+                max-width: @list_page_container;
+                padding: 0 (@indent__s + @indent__xs);
+            }
+            .column.main {
+                width: 100%;
+                padding-left: 0;
+            }
+            .product-item-name {
+                margin: 0;
+            }
+            ~ #maincontent {
+                .columns {
+                    .column.main {
+                        min-height: 0;
+                        padding-bottom: 0;
+                    }
+                }
+            }
+        }
+        &.page-products {
+            .category-view  {
+                .product-item-info {
+                    width: 100%;
+                    img {
+                        max-width: 100%;
+                    }
+                }
+            }
+        }
+    }
 }
 & when (@media-target = 'desktop'), (@media-target = 'all') {
     @media only screen and (max-width: 1024px) {
