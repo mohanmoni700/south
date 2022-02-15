@@ -1,0 +1,15 @@
+<?php
+$sampleItemBlock = $block->getLayout()->createBlock(\Alfakher\MyDocument\Block\Index\Document::class);?>
+<?php $isLoggedin = $sampleItemBlock->isCustomerLoggedIn(); ?>
+<?php $isDocumentApproved = $sampleItemBlock->isDocumentApproved(); ?>
+<script type="text/javascript">
+    require(['jquery', 'mage/mage'], function($) {
+            $(document).ready(function() {
+                var login = '<?= $isLoggedin; ?>';
+                var approved = '<?= $isDocumentApproved; ?>';
+                localStorage.setItem("is_login", login);
+                localStorage.setItem("is_approved", approved);
+                return false;
+        });
+    });
+</script>

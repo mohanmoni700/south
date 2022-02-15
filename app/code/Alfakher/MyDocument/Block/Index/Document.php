@@ -21,10 +21,16 @@ class Document extends \Magento\Framework\View\Element\Template
     protected $customerSession;
 
     /**
+     * @var \HookahShisha\ChangePassword\Plugin\CustomerSessionContext
+     */
+    protected $CustomerSessionContext;
+
+    /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Magento\Customer\Model\Session $customerSession
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param CollectionFactory $collection
+     * @param \HookahShisha\ChangePassword\Plugin\CustomerSessionContext $CustomerSessionContext
      * @param array $data = []
      */
 
@@ -33,11 +39,13 @@ class Document extends \Magento\Framework\View\Element\Template
         \Magento\Customer\Model\Session $customerSession,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         CollectionFactory $collection,
+        \HookahShisha\ChangePassword\Plugin\CustomerSessionContext $CustomerSessionContext,
         array $data = []
     ) {
-        $this->collection = $collection;
-        $this->customerSession = $customerSession;
         $this->scopeConfig = $scopeConfig;
+        $this->customerSession = $customerSession;
+        $this->collection = $collection;
+        $this->CustomerSessionContext = $CustomerSessionContext;
         parent::__construct($context, $data);
     }
 
@@ -133,6 +141,30 @@ class Document extends \Magento\Framework\View\Element\Template
                 'message' => $message,
                 'pending' => $verification,
             ];
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isCustomerLoggedIn()
+    {
+        if ($this->customerSession->isLoggedIn()) {
+            return 'Yes';
+        } else {
+            return 'No';
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isDocumentApproved()
+    {
+        if (!$this->CustomerSessionContext->getStatus()) {
+            return 'Yes';
+        } else {
+            return 'No';
         }
     }
 }
