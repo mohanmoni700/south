@@ -94,8 +94,13 @@
                 -webkit-line-clamp: 2;
                 -webkit-box-orient: vertical;
                 min-height: 58px;
+                text-decoration: none;
                 .product-item-link {
                     width: 100%;
+                    &:hover {
+                        color: @hookah_theme_color;
+                        text-decoration: none;
+                    }
                 }
             }            
 
@@ -295,9 +300,9 @@
             text-transform: uppercase;
             text-decoration: none;
             font-weight: @font-weight__bold;
-            // &:hover {
-            //     background: @hookah_theme_gradient;
-            // }
+            &:hover {
+                background: @hookah_theme_gradient;
+            }
         }
     }
 
@@ -309,6 +314,10 @@
                     background-color: transparent;
                     border: solid 1px @color_black;                    
                     padding: 11px 20px;
+                    &:hover {
+                        color: @color-white;
+                        border-color: transparent;
+                    }
                 }
             }
         }
