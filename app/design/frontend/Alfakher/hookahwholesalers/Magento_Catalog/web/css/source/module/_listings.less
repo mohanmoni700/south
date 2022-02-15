@@ -427,15 +427,7 @@
                 width: 30%;
             }
         }
-    }
-    .product {
-        &-item {
-            &-name {
-                .lib-font-size(16);
-                min-height: 46px;
-            }
-        }
-    }
+    }    
     .products-grid {
         .product-item {
             margin-bottom: @indent__l;
@@ -448,6 +440,17 @@
                     padding: 9px 16px 8px 16px;
                     font-size: 10px;
                 }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .product {
+        &-item {
+            &-name {
+                .lib-font-size(16);
+                min-height: 46px;
             }
         }
     }

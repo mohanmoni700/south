@@ -2,6 +2,9 @@
 $category = $block->getCurrentCategory();
 $subcats = $category->getChildrenCategories();
 $_helper = $this->helper('Magento\Catalog\Helper\Output');
+$imageHelper = $this->helper(\Magento\Catalog\Helper\Image::class);
+$placeholderImageUrl = $imageHelper->getDefaultPlaceholderUrl('image');
+
 ?>
 
 <!-- Show child category image and name start[BS] -->
@@ -18,8 +21,13 @@ foreach ($subcats as $subcat):
             $subcaturl = $subcat->getUrl();
             $_imgHtml = '';
             $_imgUrl = $_category->getImageUrl();
-            $_imgHtml = '<img src="' . $_imgUrl . '" height="200" width="200"/>';
+            if($_imgUrl){
+            $_imgHtml = '<img src="' . $_imgUrl . '" height="300" width="300" alt="Product" />';
+            }else{
+            $_imgHtml = '<img src="' . $placeholderImageUrl . '" height="300" width="300" alt="Product" />';  
+            }
             $_imgHtml = $_outputhelper->categoryAttribute($_category, $_imgHtml, 'image');
+
             ?>
 
             <div class="item product product-item">

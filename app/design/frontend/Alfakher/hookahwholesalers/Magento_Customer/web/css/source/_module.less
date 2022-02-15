@@ -1616,8 +1616,8 @@ ul.nav.items{
             box-shadow: none;
             height: 40px;
             &:hover{
-                background: @button-primary__hover__background;
-                border: @button-primary__hover__border;
+                border-color: transparent;
+                background: @hookah_theme_gradient;
             }
         }
     }
@@ -1821,6 +1821,10 @@ ul.nav.items{
                     font-size: 16px;
                     text-transform: uppercase;
                     letter-spacing: 2px;
+                    &:hover {
+                        border-color: transparent;
+                        background: @hookah_theme_gradient;
+                    }
                 }
             }
             &:after {

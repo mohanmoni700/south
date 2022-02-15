@@ -9,6 +9,8 @@ $subcats = $category->getChildrenCategories();
         <h2 class="cat_tite"><?php echo $category->getName(); ?></h2>
     <!-- </div> -->
 </div>
+<!-- this condition to check wether sub category exists[BS]start -->
+<?php if(!empty($subcats->getData())){ ?>
 <div class="shorting_main">
     <div class="shorting_slider">
         <?php
@@ -19,6 +21,9 @@ $subcats = $category->getChildrenCategories();
         <?php endforeach; ?>
     </div>
 </div>
+<?php } ?>
+<!-- condition to check wether sub category exists[BS]end -->
+
 
 <script type="text/javascript">
     require([
@@ -35,7 +40,7 @@ $subcats = $category->getChildrenCategories();
                     slidesToScroll: 1,
                     autoplay: false,
                     infinite: false,
-                    variableWidth: true,
+                    variableWidth: true
                 });
             }, 0);
         });
