@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "27813decbfc46f88f952855cd320aa1b",
+    "content-hash": "ef5b801ca4c2152be6f80e2fc4ca545c",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -1802,6 +1802,51 @@
                 "source": "https://bitbucket.org/corratech/logcloudsupport/src/d6beadf67f6298540af11e083ebc42158316fa21/?at=master"
             },
             "time": "2019-10-25T10:52:19+00:00"
+        },
+        {
+            "name": "corra/module-amasty-promo-graph-ql",
+            "version": "1.1.8",
+            "dist": {
+                "type": "zip",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-amasty-promo-graph-ql/1.1.8.0/d5195fc70943d370d281d988a95d93079a4e8016.zip",
+                "reference": "d5195fc70943d370d281d988a95d93079a4e8016",
+                "mirrors": [
+                    {
+                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "amasty/promo": "*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Corra\\AmastyPromoGraphQl\\": ""
+                }
+            },
+            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "CORRA"
+                }
+            ],
+            "description": "GraphQl support for Amasty Promo Module",
+            "homepage": "https://bitbucket.org/corratech/amastypromographql",
+            "support": {
+                "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/2064515388/Amasty+Promo+GraphQl",
+                "source": "https://bitbucket.org/corratech/amastypromographql/src/d5195fc70943d370d281d988a95d93079a4e8016/?at=1.1.8",
+                "issues": "https://bitbucket.org/corratech/amastypromographql/issues"
+            },
+            "time": "2022-02-15T09:04:40+00:00"
         },
         {
             "name": "corra/module-page-builder-customisation",
@@ -32657,5 +32702,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.2.0"
 }
