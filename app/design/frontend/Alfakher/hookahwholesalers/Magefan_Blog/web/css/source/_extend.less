@@ -638,6 +638,12 @@
             transform: unset;
             padding: 30px;
             display: inline-block;
+            .post-item-link{
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
         }
         button.slick-prev,
         button.slick-next{
@@ -648,12 +654,6 @@
         }
         button.slick-next{
             left: ~"calc(50% + 10px)";
-        }
-        .post-item-link{
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
         }
     }
     .widget.block-list-posts{

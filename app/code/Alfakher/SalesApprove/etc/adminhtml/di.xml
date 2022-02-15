@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author af_bv_op
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+	<!--Adding sales approve button-->
+	<type name="Magento\Sales\Block\Adminhtml\Order\View">
+		<plugin name="sales_order_adminhtml_view_sales_approve_button_plugin" type="Alfakher\SalesApprove\Plugin\Sales\Block\Adminhtml\Order\View"/>
+	</type>
+
+</config>
