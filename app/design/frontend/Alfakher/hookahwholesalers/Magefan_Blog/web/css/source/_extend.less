@@ -106,6 +106,7 @@
             align-items: center;
             .value {
                 color: @gray2_color;
+                margin-right: 5px;
             }
         }
         .post-author {
@@ -231,13 +232,14 @@
                 margin: 0 0 5px;
             }
             .accordion {
-                padding-left: 20px;
+                padding-left: 0;
                 margin: 0;
                 list-style: disc;
                 li {
                     padding: 5px 0 15px 0;
                     margin-bottom: 15px;
                     border-bottom: @hookah_theme_border;
+                    list-style-position: inside;
                     a {
                         color: #000;
                         font-weight: 400;
@@ -297,7 +299,6 @@
             }
             .post-ftimg-hld img {
                 width: 100%;
-                height: 375px;
             }
             .post-content {
                 padding: 10px 0;
@@ -487,7 +488,7 @@
             height: 40px;
             border-radius: 100%;
             background-color: transparent;
-            border: solid 1px #961e70;
+            border: solid 2px #961e70;
             top: auto;
             bottom: 2rem;
             &:before {
@@ -498,7 +499,7 @@
         }
         button.slick-prev {
             left: auto;
-            right: 100px;
+            right: 80px;
         }
     }
 
@@ -577,7 +578,7 @@
     }  
 }
 
-@media screen and (max-width: @screen__m){
+@media screen and (max-width: (@screen__m - 1)){
     //
     // Blog page common design 
     // _________________________________
@@ -586,12 +587,15 @@
         .column.main{
             padding: 0;
         }
+        .page-main{
+            padding-left: 30px;
+            padding-right: 30px;
+        }
     }
     .blog-page{
         .sidebar-additional{
-            padding-left: 30px;
-            padding-right: 30px;
             width: 100%;
+            margin-top: 80px;
         }
     }
 
@@ -629,8 +633,8 @@
 
     .block-featured-posts{
         margin-bottom: 120px;
-        width: ~"calc(100% + 30px)";
-        margin-left: -15px;
+        width: ~"calc(100% + 60px)";
+        margin-left: -30px;
         .post-content{
             position: unset;
             width: 100%;
@@ -685,19 +689,32 @@
 }
 
 @media screen and (min-width: @screen__m) and (max-width: (@screen__l - 1)){
-   .block-featured-posts{
-    margin-bottom: 120px;
+    .block-featured-posts{
+        margin-bottom: 120px;
 
         button.slick-prev,
         button.slick-next{
             bottom: -80px;
         }
-   }
-   .widget.block-list-posts{
-    .block-content{
-        .item{
-            padding: 0;
+        .post-content{
+            width: 100%;
+            max-width: 550px;
         }
     }
+    .widget.block-list-posts{
+        .block-content{
+            .item{
+                padding: 0;
+            }
+        }
    } 
+
+   .blog-page-list{
+        .post-list{
+            .post-holder{
+                width: ~"calc(100% - 2%) / 2";
+                margin-right: 4%;
+            }
+        }
+   }
 }

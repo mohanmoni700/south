@@ -14,16 +14,18 @@
     <div class="block-title">
         <?= $block->escapeHtml(__('Month List')) ?>
     </div>
-    <div class="block-content">
+    <div id="month_list_collapse" class="block-content">
         <?php foreach ($_years as $_year =>  $_months): ?>
             <?php if (count($_months)): ?>
-                <div>
-                    <span><?php echo $_year; ?></span>
+                <div data-role="collapsible">
+                    <div data-role="trigger">
+                        <span><?php echo $_year; ?></span>
+                    </div>
                     <?php foreach ($_months as $time): ?>
                         <?php
                             $title = $block->getTranslatedDate($time);
                         ?>
-                        <div class="item">
+                        <div class="item" data-role="content">
                             <a title="<?= $block->escapeHtml(__('Archive %1', $title)) ?>"
                                class="archive-item-link"
                                href="<?= $block->escapeUrl($block->getTimeUrl($time)) ?>">
@@ -37,3 +39,12 @@
     </div>
 </div>
 <?php } ?>
+
+
+<script>
+    require([
+        'jquery',
+        'accordion'], function ($) {
+        $("#month_list_collapse").accordion();
+    });
+</script>

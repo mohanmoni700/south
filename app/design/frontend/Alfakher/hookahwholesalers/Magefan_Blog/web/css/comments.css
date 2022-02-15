@@ -20,11 +20,11 @@
 /* Reply Form */
 .c-replyform textarea,
 .c-replyform input {color: #222;background: #fff !important;display: block; border: 1px solid #000; padding: 0 23px; height: 35px; font-size: 13px;}
-.c-replyform textarea,
+.c-replyform textarea::placeholder{color: #000;}
 .c-replyform input::placeholder{color: #000;}
-.c-replyform textarea,
+.c-replyform textarea::placeholder{color: #000;}
 .c-replyform input:-ms-input-placeholder{color: #000;}
-.c-replyform textarea,
+.c-replyform textarea::placeholder{color: #000;}
 .c-replyform input::-ms-input-placeholder{color: #000;}
 .c-replyform textarea {padding: 8px 23px;height: 88px;border: 1px solid #000;}
 /* .c-replyform.no-active textarea {border-bottom: 1px solid #bbbbbb;height: 60px;} */
@@ -131,5 +131,11 @@
 @media screen and (max-width: 767px){
     .c-comments{
         margin-top: 80px;
+    }
+    .c-post .p-actions{
+        flex-direction: column;
+    }
+    .c-post .p-actions a{
+        margin-top: 20px;
     }
 }
