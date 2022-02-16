@@ -69,6 +69,10 @@ define([
                 prevPage();
             });
 
+            $("#signinredirect").click(function(){
+                window.location.href = config.signInUrl;
+            });
+
             $("#usadocprevious, #nonusadocprevious").click(function() {
                 if ($("#document_upload").hasClass("show")) {
                     $("#document_upload").hide();

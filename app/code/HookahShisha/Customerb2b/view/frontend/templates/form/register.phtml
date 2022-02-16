@@ -605,7 +605,8 @@ $displayAllRegions = $block->getConfig("general/region/display_all") ? "true" : 
             "HookahShisha_Customerb2b/js/register": {
                 "regionStateLabel": "<?= $block->escapeHtml($regionStateLabel); ?>",
                 "regionProvinceLabel": "<?= $block->escapeHtml($regionProvinceLabel); ?>",
-                "createPostUrl": "<?= $block->escapeUrl($this->getUrl('customerb2b/account/createPost')); ?>"
+                "createPostUrl": "<?= $block->escapeUrl($this->getUrl('customerb2b/account/createPost')); ?>",
+                "signInUrl": "<?= $block->escapeUrl($this->getUrl('customer/account/login')); ?>"
             }
         },
         ".field.password": {
