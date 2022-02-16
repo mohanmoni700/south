@@ -1122,6 +1122,9 @@ ul.nav.items{
                         }
                     }
                 }
+                .step_list {
+                    .lib-font-size(12);
+                }
 
                 .basic{
                     &:after{
@@ -1211,6 +1214,7 @@ ul.nav.items{
                             background-image: url('@{baseDir}images/documents.svg');
                             width: 18px;
                             height: 22px;
+                            top: 18px;
                         }
                     }
                 }
@@ -1762,6 +1766,20 @@ ul.nav.items{
                 right: -8px;
                 top: 2px;
             }
+            max-width: 1200px;
+            > * {
+                max-width: 940px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .form.create.account {
+                min-width: unset;
+                #basic_details, #business_details {
+                    max-width: 720px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+            }
         }
     }
     .login-container{
@@ -2242,6 +2260,11 @@ ul.nav.items{
             .login-container{
                 margin-top: 30px;
                 margin-bottom: 0;
+            }
+        }
+        .register_nav {
+            li legend.legend {
+                .lib-font-size(16);
             }
         }
     }
