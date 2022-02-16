@@ -205,7 +205,13 @@ define([
             };
 
             var popup = modal(options, $('#popup-modal'));
-
+            $('#popup-modal').modal({
+                closed: function (){
+                    this.closeModal();
+                    location.reload();
+                    $('#myformdynamic').trigger("reset");
+                }
+            });
             $('button#btnsave').click( function(e) {
             	if($('#myformdynamic').valid()) {
             		formSubmitById('myformdynamic', 'myformdynamic', config.customResultUrl);
