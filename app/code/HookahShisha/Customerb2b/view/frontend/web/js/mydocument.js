@@ -182,7 +182,7 @@ define([
                 if (showId <= 10) {
                     $('<div class="upload" for="document uploader">' +
                         '<div class="input-file">' +
-                        '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" />' +
+                        '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" data-validate="{required:true}" />' +
                         '<span id="image-error-message-'+ showId + '" style="color:red;"></span>'+
                         '<span class="input-note">' + config.inputNote + '</span>' +
                         '<input type="hidden" id="is_add_more_form' + showId + '" name="is_add_more_form[]" value="0"/>' +

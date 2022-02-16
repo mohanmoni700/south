@@ -269,7 +269,7 @@ define([
 	            if (showId <= 10) {
 	                $('<input type="hidden" name="is_customerfrom_usa' + showId + '" value="1"/>'+
                 	'<div class="upload" for="document uploader"><div class="input-file" id="input-file-' + showId + '">' +
-                    '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" />' +
+                    '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" data-validate="{required:true}" />' +
                     '<span class="input-note">' + config.inputNote + '</span>'+
                     '<span id="image-error-message'+showId+'" style="color:red;"></span>'+
                     '</div></div>').insertBefore('.upload-container .add-more-cont');
