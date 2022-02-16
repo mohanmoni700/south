@@ -28,7 +28,7 @@ if(!empty($size)){
         
         <?php if ($block->isExpanded()):?>
             <?php include ($block->getTemplateFile('Magento_Catalog::product/list/toolbar/sorter.phtml')) ?>
-            <div class="cate-filter"><a href="javascript:void(0)" class="filter_button" id="is_filter">Filter</a></div>
+            <div class="cate-filter"><a href="javascript:void(0)" class="filter_button" id="is_filter">Hide Filter</a></div>
         <?php endif; ?>
     </div>
 <?php endif;
@@ -38,10 +38,13 @@ if(!empty($size)){
 <script>
     require(['jquery'], function($) {
         $("#is_filter").click(function(){
+
               if ($(".sidebar.sidebar-main").css("display") == 'block') {
+                    $("#is_filter").text('Show Filter');
                     $(".sidebar.sidebar-main").css("display", "none");
-                    $(".column.main").addClass("filter-collapse");                    
+                    $(".column.main").addClass("filter-collapse");
               } else {
+                    $("#is_filter").text('Hide Filter');
                     $(".sidebar.sidebar-main").css("display", "block");
                     $(".column.main").removeClass("filter-collapse");
               }
