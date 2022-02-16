@@ -192,6 +192,107 @@
     .search.summary {
         margin-bottom: @indent__s;
     }
+
+
+    //
+    //  Klevu Search Result page
+    //  _____________________________________________
+    .search-index-index {
+        .page-title {
+            .lib-font-size(28);
+            width: 100%;
+            text-align: center;
+            font-weight: @font-weight__semibold;
+            color: @color-black;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+        [ku-container] {
+            &[data-container-role="main"] {
+                width: 100%;
+            }
+        }
+        .kuContainer {
+            padding: 0;
+        }
+    }
+    .kuSearchResultsPageContainer {
+        .kuContainer {
+            .kuTabs {
+                border-color: @input-border_color;
+                margin-bottom: 20px;
+                a {
+                    color: @color_black;
+                    .lib-font-size(14);
+                    padding: 14px 0;
+                    margin-right: 20px;                    
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                    &.kuTabSelected {
+                        border-color: @hookah_theme_color;
+                        border-bottom-width: 5px;
+                    }
+                    &:hover {
+                        border-color: @hookah_theme_color;
+                        border-bottom-width: 5px;
+                    }
+                }
+            }
+        }
+        [ku-container][data-container-role="left"] {
+            width: 320px;
+            max-width: 320px;
+            padding-right: 20px;
+        }
+        div.kuFilters {
+            padding: 0;
+        }
+        .kuFiltersTitleHeading {
+            .lib-font-size(20);
+            font-weight: @font-weight__semibold;
+            color: @color_black;
+            margin-bottom: 20px;
+        }
+        .kuFilterBox {
+            padding-bottom: 0;
+            .kuFilterHead {
+                padding: 12px 0;
+                color: @color_black;
+                .lib-font-size(16);
+                text-transform: capitalize;
+                font-weight: @font-weight__bold;
+                border-color: @input-border_color;
+                &.kuCollapse {
+                    &::after {
+                        top: 20px;
+                        border-color: @color_black;
+                        opacity: 1;
+                    }
+                }
+                &.kuExpand {
+                    &::after {
+                        top: 16px;
+                        border-color: @color_black;
+                        opacity: 1;
+                    }
+                }
+            }     
+            .kuFilterNames {
+                ul {
+                    li {
+                        margin-bottom: 14px;
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                        a {
+                            margin: 0;
+                        }
+                    }
+                }
+            }       
+        }
+    }
 }
 
 //
