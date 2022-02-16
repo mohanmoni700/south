@@ -10,12 +10,21 @@ $customResultUrl = $block->getUrl('mydocument/customer/hookahresult');
 $deleteDocumentUrl = $block->getUrl('mydocument/customer/deletedocument');
 $updateDocumentUrl = $block->getUrl('mydocument/customer/updatedocument');
 ?>
+<div class="document-title">
+    <span class="title">
+        <?= $block->escapeHtml(__('Document Upload')); ?>
+    </span>
+    <span class="note">
+        <?= $block->escapeHtml(__('(File type supported are JPG,PNG and PDF)')); ?>
+    </span>
+</div>
 <div class="my_document">
     <form name="usaform" id="usaform"
         class="usaform" 
         accept-charset="utf-8"
         enctype="multipart/form-data"
         autocomplete="off" data-mage-init='{"validation":{}}'>
+        <input type="hidden" name="cust_id_usa" id="cust_id_usa" />
         <div class="upload-container">
             <?php foreach ($uploaderType as $key => $value): ?>
                 <?php $counter = $key + 1;?>
@@ -102,9 +111,18 @@ $updateDocumentUrl = $block->getUrl('mydocument/customer/updatedocument');
                 <a id="add_more"><?= $block->escapeHtml(__('Add More Document')); ?></a>
             </div>
         </div>
-        <button type="submit" id="btnsave" class="action submit primary" style="display:none;">
-            <span><?= $block->escapeHtml(__('Submit')); ?></span>
-        </button>
+        <div class="actions-toolbar justify_btn">
+            <div class="primary prev">
+                <button type="button" class="action previou primary" id="usadocprevious" title="PREVIOUS">
+                    <span><?= $block->escapeHtml(__('PREVIOUS')); ?></span>
+                </button>
+            </div>
+            <div class="primary regis">
+                <button type="submit" id="usabtnsave" class="action submit primary">
+                    <span><?= $block->escapeHtml(__('Submit')); ?></span>
+                </button>
+            </div>
+        </div>
     </form>
 </div>
 <div id="popup-modal-usa" style="display:none">

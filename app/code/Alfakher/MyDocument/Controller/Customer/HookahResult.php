@@ -107,7 +107,12 @@ class HookahResult extends \Magento\Framework\App\Action\Action
                         $imagePath = $result['file'];
                         $model = $this->myDocument->create();
                         $model->setDocumentName($this->getArrayVal($post, 'name', $counter));
-                        $model->setCustomerId(2518);
+                        if($this->getArrayVal($post, 'is_customerfrom_usa', $counter) == 0)
+                        {
+                            $model->setCustomerId($post['cust_id_non_usa']);
+                        } else {
+                            $model->setCustomerId($post['cust_id_usa']);
+                        }
                         $model->setExpiryDate($this->convertDate($this->getArrayVal($post, 'expiry_date', $counter)));
                         $model->setIsCustomerfromUsa($this->getArrayVal($post, 'is_customerfrom_usa', $counter));
                         $model->setIsDelete(false);

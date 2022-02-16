@@ -84,10 +84,10 @@ define([
                     }
                 });
                 expireOnChange(showId);
-                $("#btnsave, #updatebtnsave").show();
+                $("#nonusabtnsave").show();
             } else {
                 currentElem.closest('.upload').removeClass('active');
-                $("#btnsave, #updatebtnsave").hide();
+                $("#nonusabtnsave").hide();
             }
         }
 
@@ -193,28 +193,11 @@ define([
                 });
             });
 
-            $('button#btnsave').click( function(e) {
+            $('button#nonusabtnsave').click( function(e) {
             	if($('#myformdynamic').valid()) {
             		formSubmitById('myformdynamic', 'myformdynamic', config.customResultUrl);
             	}
 		    });
-
-            $(".deletedocument").click(function() {
-                var documentId = $(this).attr('id');
-                $.ajax({
-                    url: config.deleteDocumentUrl,
-                    type: 'post',
-                    dataType: 'json',
-                    data: {
-                        id: documentId
-                    },
-                    showLoader: true,
-                    complete: function(result) {
-                        location.reload(true);
-                    },
-                    error: function(xhr, status, errorThrown) {}
-                });
-            });
         });
     };
 });

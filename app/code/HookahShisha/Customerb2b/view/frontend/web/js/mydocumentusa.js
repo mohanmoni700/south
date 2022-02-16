@@ -46,10 +46,10 @@ define([
 	     * @param {Object} e
 	     * @param {String} fileId
 	     * @param {String} expiry_date
-	     * @param {String} btnsave
+	     * @param {String} usabtnsave
 	     * @param {String} currentElem
 	     */
-	    function handleFile(e, fileId, expiry_date, btnsave, currentElem) {
+	    function handleFile(e, fileId, expiry_date, usabtnsave, currentElem) {
 
 	        var reader = new FileReader();
 	        reader.onload = function(event) {
@@ -80,7 +80,7 @@ define([
 	                $("#download-doc-preview-" + fileId).attr("href", event.target.result);
 	                $("#download-doc-preview-" + fileId).attr("download", nameArr[2]);
 	                $(expiry_date).show();
-	                $(btnsave).show();
+	                $(usabtnsave).show();
 
 	                $("#deletedocument-" + fileId).click(function() {
 	                    $("#doc-actions-" + fileId).hide();
@@ -197,10 +197,10 @@ define([
 	                var extensionArr = ['pdf', 'jpg', 'png'];
 	                if (extensionArr.indexOf(extension) >= 0) {
 	                    $("#image-error-message" + id).html("");
-		                handleFile(e, "filename" + id, ".set_expiry" + id, "#btnsave", $(this));
+		                handleFile(e, "filename" + id, ".set_expiry" + id, "#usabtnsave", $(this));
 	        			$(".doc_name" + id).show();
 		                $(".set_expiry" + id).show();
-		                $("#btnsave").show();
+		                $("#usabtnsave").show();
 	                } else {
 	                    $(this).val('');
 	                    $("#image-error-message" + id).html("File type supported are JPG,PNG and PDF Only");
@@ -208,7 +208,7 @@ define([
 	            } else {
 	        		$(".doc_name" + id).hide();
 	                $(".set_expiry" + id).hide();
-	                $("#btnsave").hide();
+	                $("#usabtnsave").hide();
 	            }
 	        });
 	    }
@@ -264,16 +264,15 @@ define([
 	        fileChangeById(4);
 
 	        $("#add_more").click(function() {
-	        	alert('callll2');
 	        	var id = jQuery('#usaform').find('input[type="file"]').length;
 	        	var showId = ++id;
 	            if (showId <= 10) {
 	                $('<input type="hidden" name="is_customerfrom_usa' + showId + '" value="1"/>'+
-	                	'<div class="upload" for="document uploader"><div class="input-file" id="input-file-' + showId + '">' +
-	                    '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" />' +
-	                    '<span class="input-note">' + config.inputNote + '</span>'+
-	                    '<span id="image-error-message'+showId+'" style="color:red;"></span>'+
-	                    '</div></div>').insertBefore('.upload-container .add-more-cont');
+                	'<div class="upload" for="document uploader"><div class="input-file" id="input-file-' + showId + '">' +
+                    '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" />' +
+                    '<span class="input-note">' + config.inputNote + '</span>'+
+                    '<span id="image-error-message'+showId+'" style="color:red;"></span>'+
+                    '</div></div>').insertBefore('.upload-container .add-more-cont');
 	            }
 	            $('#filename-' + showId).change(function(e) {
 	                var val = $(this).val();
@@ -298,11 +297,11 @@ define([
 	        $('#filename1,#filename2,#filename3,#filename4').change(function() {
 	            if ($(this).val()) {
 	                $(this).closest('.upload').addClass('active');
-	                $("#btnsave").show();
+	                $("#usabtnsave").show();
 	                $(this).parent().find('img').show();
 	            } else {
 	                $(this).closest('.upload').removeClass('active');
-	                $("#btnsave").hide();
+	                $("#usabtnsave").hide();
 	                $(this).parent().find('img').hide();
 	            }
 	        });
@@ -315,7 +314,7 @@ define([
 	            }
 	        });
 
-	        $('button#btnsave').click( function(e) {
+	        $('button#usabtnsave').click( function(e) {
 		        if($('#usaform').valid()) {
 		        	formSubmitById('usaform', 'usaform', config.customResultUrl);
 		        }
