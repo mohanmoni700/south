@@ -2,7 +2,7 @@
 /**
  * @category  HookahShisha
  * @package   HookahShisha_Migration
- * @author    Janis Verins <info@corra.com>
+ * @author    CORRA
  */
 declare(strict_types=1);
 
@@ -72,7 +72,8 @@ class AddMigrateCustomerAttribute implements DataPatchInterface
                 'backend' => '',
                 'is_used_in_grid' => true,
                 'is_visible_in_grid' => true,
-                'is_filterable_in_grid' => true
+                'is_filterable_in_grid' => true,
+                'default' => 0
             ]
         );
 
