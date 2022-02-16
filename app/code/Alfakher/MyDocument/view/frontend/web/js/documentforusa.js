@@ -331,7 +331,13 @@ define([
 	            }]
 	        };
 	        var popup = modal(options, $('#popup-modal'));
-
+	        $('#popup-modal').modal({
+                closed: function (){
+                    this.closeModal();
+                    location.reload();
+                    $('#usaform').trigger("reset");
+                }
+            });
 	        $('button#btnsave').click( function(e) {
 		        if($('#usaform').valid()) {
 		        	formSubmitById('usaform', 'usaform', config.customResultUrl);

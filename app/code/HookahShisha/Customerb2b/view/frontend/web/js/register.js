@@ -59,6 +59,19 @@ define([
             }
         }
         $(document).ready(function() {
+            $("#basic_details").hide();
+            $("#basic_details").removeClass("show");
+            $(".basic_details").removeClass("active");
+
+            $("#business_details").hide();
+            $("#business_details").removeClass("show");
+            $(".business_details").removeClass("active");
+
+            $("#document_upload").show();
+            $("#document_upload").addClass("show");
+            $(".document_upload").addClass("active");
+            $("#usa_customer_tab").show();
+
             $("#country").change(function() {
                 onCountryChange();
             });
@@ -69,21 +82,8 @@ define([
                 prevPage();
             });
 
-            $("#signinredirect").click(function(){
+            $("#signinredirect, #nonusadocskip, #usadocskip").click(function(){
                 window.location.href = config.signInUrl;
-            });
-
-            $("#usadocprevious, #nonusadocprevious").click(function() {
-                if ($("#document_upload").hasClass("show")) {
-                    $("#document_upload").hide();
-                    $("#document_upload").removeClass("show");
-                    $(".document_upload").removeClass("active");
-
-                    $("#business_details").show();
-                    $("#business_details").addClass("show");
-                    $(".business_details").addClass("active");
-                    window.scrollTo(0, 200);
-                }
             });
 
             $("#form-validate").submit(function(event) {
