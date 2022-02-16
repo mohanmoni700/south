@@ -119,7 +119,7 @@ class DataProvider extends SourceDataProvider
      *
      * @return array
      */
-    private function fetch(): array
+    private function fetch(): array // NOSONAR
     {
         if (empty($this->orderItemIds) || !empty($this->orderItemList)) {
             return $this->orderItemList;
@@ -149,10 +149,10 @@ class DataProvider extends SourceDataProvider
             $shishaSku = '';
             $charcoalSku = '';
             $superPack = '';
-            if ($alfaBundle) {
+            if ($alfaBundle && $alfaBundle !== '""') {
                 $alfaBundle = json_decode($alfaBundle, true);
-                $shishaSku = $alfaBundle['shisha_sku'];
-                $charcoalSku = $alfaBundle['charcoal_sku'];
+                $shishaSku = $alfaBundle['shisha_sku'] ?? null;
+                $charcoalSku = $alfaBundle['charcoal_sku'] ?? null;
                 $superPack = $alfaBundle['super_pack_flavours'] ?? null;
             }
 
@@ -279,10 +279,10 @@ class DataProvider extends SourceDataProvider
      * Returns product if its part of alfa bundle
      *
      * @param array $orderItems
-     * @param string $sku
+     * @param string|null $sku
      * @return false|mixed
      */
-    private function getBundleItem(array $orderItems, string $sku)
+    private function getBundleItem(array $orderItems, string $sku = null)
     {
         if (!$sku) {
             return false;
