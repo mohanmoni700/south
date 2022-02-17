@@ -71,6 +71,7 @@ class HookahResult extends \Magento\Framework\App\Action\Action
         
         $post = $this->getRequest()->getPostValue();
         $filesData = $this->getRequest()->getFiles()->toArray();
+
         $response = [];
 
         if (count($filesData)) {
@@ -106,6 +107,7 @@ class HookahResult extends \Magento\Framework\App\Action\Action
 
                         $imagePath = $result['file'];
                         $model = $this->myDocument->create();
+                        $model->setFilename($imagePath);
                         $model->setDocumentName($this->getArrayVal($post, 'name', $counter));
                         if($this->getArrayVal($post, 'is_customerfrom_usa', $counter) == 0)
                         {
