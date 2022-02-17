@@ -287,7 +287,10 @@ define([
 	            if ($(this).val() == "1") {
 	                $(".add-more-container").show();
 	                $(".add-more-field .note").show();
-	                $('#add_more').click();
+	                if($('.upload-container.add-more-container .upload').length == 0)
+	                {
+	                	$('#add_more').click();
+	                }
 	            } else {
 	                $(".add-more-container").hide();
 	                $(".add-more-field .note").hide();

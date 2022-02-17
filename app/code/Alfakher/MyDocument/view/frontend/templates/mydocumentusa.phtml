@@ -21,6 +21,7 @@ $uploaderType = [
 $customResultUrl = $block->getUrl('mydocument/customer/result');
 $deleteDocumentUrl = $block->getUrl('mydocument/customer/deletedocument');
 $updateDocumentUrl = $block->getUrl('mydocument/customer/updatedocument');
+$today = date("Y-m-d");
 ?>
 <div class="document-title">
     <span class="title">
@@ -42,11 +43,13 @@ $updateDocumentUrl = $block->getUrl('mydocument/customer/updatedocument');
         <?php foreach ($data as $val): ?>
             <?php if ($val['is_add_more_form'] == 0): ?>
                 <?php if ($val['is_delete'] == 0): ?>
-                    <?php if ($val['status'] == 0 && $val['message'] != null): ?>
+                    <?php $expiry_date = $val['expiry_date']; ?>
+                    <?php if (($val['status'] == 0 && $val['message'] != null) ||
+                    (($expiry_date <= $today && $expiry_date != "") && $val['status'] == 0)): ?>
                         <?php $rejectedClass = "rejected"; ?>
                     <?php else: ?>
                         <?php $rejectedClass = ""; ?>
-                    <?php endif;?>
+                    <?php endif; ?>
                     <?php $fileName = $mediaUrl.$val['filename']; ?>
                     <div class="document <?= $block->escapeHtml($rejectedClass); ?>" for="document uploader">
                         <?php

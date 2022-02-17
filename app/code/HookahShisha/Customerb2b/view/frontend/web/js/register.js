@@ -59,18 +59,6 @@ define([
             }
         }
         $(document).ready(function() {
-            $("#basic_details").hide();
-            $("#basic_details").removeClass("show");
-            $(".basic_details").removeClass("active");
-
-            $("#business_details").hide();
-            $("#business_details").removeClass("show");
-            $(".business_details").removeClass("active");
-
-            $("#document_upload").show();
-            $("#document_upload").addClass("show");
-            $(".document_upload").addClass("active");
-            $("#usa_customer_tab").show();
 
             $("#country").change(function() {
                 onCountryChange();

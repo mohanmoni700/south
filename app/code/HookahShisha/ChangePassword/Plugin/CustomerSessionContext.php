@@ -134,7 +134,7 @@ class CustomerSessionContext
         $todate = date("Y-m-d");
         foreach ($doc_collection as $value) {
             $expiry_date = $value->getExpiryDate();
-            if ($expiry_date < $todate) {
+            if ($expiry_date <= $todate && $expiry_date != "") {
                 /*0 for "Some of the document(s) has been expired";*/
                 $msg = 0;
             }
