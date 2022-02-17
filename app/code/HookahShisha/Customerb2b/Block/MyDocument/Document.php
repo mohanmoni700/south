@@ -5,7 +5,7 @@ namespace HookahShisha\Customerb2b\Block\MyDocument;
 class Document extends \Magento\Framework\View\Element\Template
 {
     protected $customerSession;
-    
+
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Customer\Model\Session $customerSession,
@@ -20,7 +20,6 @@ class Document extends \Magento\Framework\View\Element\Template
      */
     public function getCustomerId()
     {
-        $customerid = $this->customerSession->getCustomer()->getId();
-        return $customerid;
+        return $this->customerSession->getCustomer()->getId();
     }
 }

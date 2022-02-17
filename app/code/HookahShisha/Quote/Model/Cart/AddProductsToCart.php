@@ -212,9 +212,7 @@ class AddProductsToCart extends SourceAddProductsToCart
         float $totalPrice,
         float $simpleProductPrice
     ):float {
-        $finalPrice = ($finalPrice/$totalPrice) * $simpleProductPrice;
-        // return by flooring up to 2 decimal point.
-        return floor($finalPrice * 100) / 100;
+        return ($finalPrice/$totalPrice) * $simpleProductPrice;
     }
 
     /**
@@ -257,7 +255,6 @@ class AddProductsToCart extends SourceAddProductsToCart
                 $qty = $cartItem->getQuantity();
                 $parentAlfabundle = $cartItem->getAlfaBundle();
                 $simpleProductPrice = $product->getFinalPrice();
-                $totalFinalPrice = 0;
                 foreach ($superPackArray as $item) {
                     $item['quantity'] = $qty;
                     $item['parent_alfa_bundle'] =  $parentAlfabundle;
@@ -267,9 +264,8 @@ class AddProductsToCart extends SourceAddProductsToCart
                         $simpleProductPrice
                     );
                     $this->addSuperPackProductToCart($cart, $item, $finalPrice);
-                    $totalFinalPrice += $finalPrice;
                 }
-                $cartItem->setSuperPackPrice($simpleProductPrice - $totalFinalPrice);
+                $cartItem->setSuperPackPrice(0);
             }
             $result = $cart->addProduct($product, $this->requestBuilder->build($cartItem));
         } catch (\Throwable $e) {

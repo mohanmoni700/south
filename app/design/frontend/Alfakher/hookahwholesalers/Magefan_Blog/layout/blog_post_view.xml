@@ -11,5 +11,8 @@
     <body>
         <referenceBlock name="page.main.title" remove="true" />
         <referenceBlock name="blog.sidebar.featured" remove="true" />
+
+        <move element="blog.post.relatedposts" destination="blog.post.comments" after="blog.post.comments.magefan"/>
+        <move element="blog.post.relatedproducts" destination="main.content" after="-"/>
     </body>
 </page>

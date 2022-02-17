@@ -24,16 +24,38 @@
                 <?= $block->escapeHtml(__('Related Posts')) ?>
         </div>
         <?php } ?>
-        <ol class="block-content">
-            <?php foreach ($postCollection as $post) { ?>
-                <li class="item">
-                    <a class="post-item-link" title="<?= $block->escapeHtml($post->getTitle()) ?>"
-                       href="<?= $block->escapeUrl($post->getPostUrl()) ?>">
-                        <?= $block->escapeHtml($post->getTitle()) ?>
-                    </a>
-                </li>
+        <div class="block-content">
+            <?php foreach ($postCollection as $post) { 
+                $featuredImage = $post->getFeaturedListImage() ?: $post->getFeaturedImage();
+                    if($featuredImage){
+                        $featuredImageHtml = '<img src="' . $featuredImage . '" height="100" width="100" alt="img" />';
+                    }else{
+                        $featuredImageHtml = '';  
+                    }
+                ?>
+                <div class="item">
+                    <!-- for featured image show start[BS] -->
+                    <div class="image-container">
+                        <a href="<?= $featuredImage ?>"><?= $featuredImageHtml ?></a>
+                    </div>
+                    <!-- for featured image show start[BS] -->
+
+                    <div class="block-info">
+                        <h3>
+                            <a class="post-item-link" title="<?= $block->escapeHtml($post->getTitle()) ?>" href="<?= $block->escapeUrl($post->getPostUrl()) ?>"><?= $block->escapeHtml($post->getTitle())?>
+                            </a>
+                        </h3>
+                        <!-- for published date start[BS] -->
+                        <?php if ($post->isPublishDateEnabled()) { ?>
+                            <div class="item post-posed-date">
+                                <span class="value"><?= $block->escapeHtml($post->getPublishDate()) ?></span>
+                            </div>
+                        <?php } ?>
+                        <!-- for published date end[BS] -->
+                    </div>
+                </div>
             <?php } ?>
-        </ol>
+        </div>
     </div>
     <?php } ?>
 <?php } ?>

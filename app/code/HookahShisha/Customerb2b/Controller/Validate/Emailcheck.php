@@ -1,5 +1,5 @@
 <?php
-namespace HookahShisha\Customerb2b\Controller\Customer;
+namespace HookahShisha\Customerb2b\Controller\Validate;
 
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Store\Model\StoreManagerInterface;

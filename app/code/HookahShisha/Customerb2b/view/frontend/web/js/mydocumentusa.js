@@ -239,6 +239,7 @@ define([
                             $("#usaform").hide();
                             $('.page-title-wrapper').hide();
                             $('.form-create-account').hide();
+                            $("#usa_customer_tab .document-title").hide();
 	                    } else {
 	                        $(".page.messages").html('<div role="alert" class="messages">' +
 	                            '<div class="alert danger alert-danger" data-ui-id="message-danger">' +

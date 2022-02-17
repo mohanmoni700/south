@@ -90,10 +90,9 @@ class CustomerSessionContext
     public function getMydocuments()
     {
         $customer_id = $this->customerSession->getCustomerId();
-        $doc_collection = $this->collection->create()
+        return $this->collection->create()
             ->addFieldToFilter('customer_id', ['eq' => $customer_id])
             ->addFieldToFilter('status', ['eq' => 0]);
-        return $doc_collection;
     }
 
     /**
