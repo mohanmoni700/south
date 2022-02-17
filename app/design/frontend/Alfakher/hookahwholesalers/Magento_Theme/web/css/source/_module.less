@@ -295,14 +295,52 @@
         .klevuQuickSearchingArea{
             box-shadow: 0 10px 15px -3px rgba(0,0,0,.1), 0 4px 6px -2px rgba(0,0,0,.05);
             border-radius: .5rem;
+            padding-bottom: 25px;
+            padding-top: 30px;
         }
-    } 
+        .klevuSuggestionsBlock {
+            display: none;
+        }
+        .klevuResultsBlock {
+            .klevuQuickSearchResults {
+                .klevuProductItemTop {
+                    display: none;
+                }
+                .klevuProductItemBottom {
+                    width: 100%;
+                    min-height: 0;
+                    padding: 0;
+                }
+                ul {
+                    li {
+                        .klevuQuickProductDescBlock {
+                            margin: 0;
+                        }
+                        a.klevuQuickProductInnerBlock {
+                            padding: 8px 20px;
+                        }
+                    }
+                }
+            }            
+            .klevuProductsViewAll {
+                top: -16px;
+                right: 20px;
+            }
+            .klevuSuggestionHeading {
+                padding: 20px 0 16px 0;
+                display: none;
+            }
+        }
+    }    
     .klevuTarget.klevu-fluid.kuEmptySearchBox>div.klevuWrap{
         min-width: 600px !important;
     }
+    div.kuEmptySearchBox.klevuTarget.kuQuickSearchResultsContainer .kuPopularSearchesBlock {
+        margin-bottom: 0;
+    }
     .klevuSuggestionHeading.kuPopularSearchHeading{
-        padding: 15px;
-        padding-bottom: 10px;
+        padding: 0 20px 20px 20px;
+        padding-bottom: 16px;
     }
     li.kuPopularSearchTerm a {
         padding: 5px 15px 10px 15px;
@@ -335,6 +373,8 @@
                     margin-bottom: 14px;
                     transition: all .5s;
                     font-weight: 400;
+                    margin-bottom: 0;
+                    color: @color_black;
                     &:hover{
                         color:#9B2269;
                     }
@@ -396,9 +436,17 @@
         .klevuSuggestionHeading{
             padding-left: 0;
         }
+        .kuPopularSearchTerms {
+            li {
+                a {
+                    text-decoration: underline;
+                    font-size: 14px;
+                }
+            }
+        }
         &.kuEmptySearchBox{
             span.klevuHeadingText{
-                padding-left: 15px
+                padding-left: 20px
             }
             .kuPopularSearchTerms{
                 ul{
@@ -407,8 +455,9 @@
                             background:transparent;
                         }
                         a{
-                            padding-left: 15px;
                             transition: all .5s;
+                            padding: 10px 20px;
+                            color: @color_black;
                             &:hover{
                                 color:#9B2269;
                             }
@@ -419,6 +468,9 @@
         }
         .klevuResultsBlock .klevuQuickSearchResults ul li:hover{
             background: transparent;
+        }
+        .klevuResultsBlock span.klevuHeadingText {
+            padding-left: 20px;
         }
     }
     .klevuAutoSuggestionsWrap.klevuCategorySuggestions {
@@ -1252,6 +1304,19 @@
         margin-right: -15px;
         .slick-list {
             padding-right: 140px !important;
+        }
+    }
+
+    .klevuTarget.klevu-fluid > div.klevuWrap{
+        width: ~"calc(100% - 30px)";
+        max-width: 100%;
+        left: 15px !important;
+    }
+    body {
+        .kuEmptySearchBox {
+            .klevuQuickSearchingArea {
+                width: ~"calc(100% - 10px)";
+            }
         }
     }
 
@@ -2145,6 +2210,7 @@
             
         .klevuTarget.klevu-fluid > div.klevuWrap{
             width: ~"calc(100% - 40px)";
+            max-width: 100%;
         }
         .klevuTarget.klevu-fluid.kuEmptySearchBox > div.klevuWrap{
             min-width:  ~"calc(100% - 20px)" !important;
