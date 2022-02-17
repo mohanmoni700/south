@@ -268,16 +268,44 @@
                 &.kuCollapse {
                     margin-bottom: 20px;
                     &::after {
-                        top: 20px;
-                        border-color: @color_black;
+                        top: 15px;
+                        border-color: transparent;
                         opacity: 1;
+                        content: '';
+                        background: url('@{baseDir}images/select_arrow.svg') center no-repeat;
+                        background-size: contain;
+                        width: 13px;
+                        height: 12px;
+                        position: absolute;
+                        right: 0;
+                        transition: all 0.5s ease-out;
+                        padding: 0;
+                        -webkit-transform: rotate(-180deg);
+                        -moz-transform: rotate(-180deg);
+                        -o-transform: rotate(-180deg);
+                        -ms-transform: rotate(-180deg);
+                        transform: rotate(-180deg);
                     }
                 }
                 &.kuExpand {
                     &::after {
                         top: 16px;
-                        border-color: @color_black;
+                        border-color: transparent;
                         opacity: 1;
+                        content: '';
+                        background: url('@{baseDir}images/select_arrow.svg') center no-repeat;
+                        background-size: contain;
+                        width: 13px;
+                        height: 12px;
+                        position: absolute;
+                        right: 0;
+                        transition: all 0.5s ease-out;
+                        padding: 0;
+                        -webkit-transform: rotate(0deg);
+                        -moz-transform: rotate(0deg);
+                        -o-transform: rotate(0deg);
+                        -ms-transform: rotate(0deg);
+                        transform: rotate(0deg);
                     }
                 }
             }     
@@ -288,7 +316,7 @@
                         &:last-child {
                             margin-bottom: 0;
                         }
-                        a {
+                        a.klevuFilterOption {
                             margin: 0;
                             &:hover {
                                 span.kuFilterIcon:after {
@@ -327,7 +355,7 @@
         .noUi-connect {
             background-color: @hookah_theme_color;
         }
-        .noUi-connect, .noUi-horizontal {            
+        .noUi-connect, .noUi-horizontal {
             .noUi-handle {
                 width: 32px;
                 height: 32px;
@@ -366,9 +394,17 @@
             }
         }
         div.kuDropdown {
-            z-index: 1;
+            z-index: 2;
             .kuDropdownLabel {
                 padding: 10px 30px 10px 10px;
+            }
+            .kuDropdownOptions {
+                background-color: @color-white;
+                .kuDropOption {
+                    &:hover {
+                        background-color: @account_bgclr;
+                    }
+                }
             }
         }
         .kuLandingResultsViewSwitchContainer {
@@ -379,7 +415,7 @@
             ul {
                 li.klevuProduct {
                     .kuProdWrap {
-                        border: none;
+                        border: none;                        
                         .kuProdAdditional {
                             position: relative;
                             background-color: transparent;
@@ -396,6 +432,9 @@
                             .kuAddtocart {
                                 margin: 0;
                             }
+                        }
+                        .kuProdBottom {
+                            height: auto;
                         }
                     }
                     .kuName {
@@ -427,6 +466,10 @@
                     margin: 0 auto;
                 }
             }
+            .kuBtn {              
+                display: table !important;
+                margin: 0 auto;
+            }
         }
         .klevuNoResultsRecs-itemPrice, .productQuick-Price, .kuPrice {
             div.kuSalePrice, span.kuSalePrice {                
@@ -453,12 +496,12 @@
             }
         }
         .kuBtn {
-            background-color: @color_black;
-            border-color: @color_black;
+            background-color: transparent;
+            border: solid 1px @color_black;
+            color: @color-black;
             border-radius: 20px;
             font-weight: @font-weight__bold;
-            padding: 6px 12px;
-            display: inline-block !important;
+            padding: 6px 16px;
             &:hover {
                 background: @hookah_theme_gradient;
                 border-color: transparent;
@@ -554,6 +597,49 @@
                 }
             }
         }
+        [data-result-view="list"] {
+            .kuResults {
+                ul {
+                    li.klevuProduct {
+                        text-align: center;
+                    }
+                }
+            }
+            .klevuNoResultsRecs-itemPrice, .productQuick-Price, .kuPrice {
+                div.kuSalePrice, span.kuSalePrice {
+                    text-align: center;
+                    float: none;
+                    display: table;
+                    margin: 0 auto;
+                }
+            }
+            .kuBtn {              
+                display: table !important;
+                margin: 0 auto;
+            }
+            .klevuProduct {
+                width: 50% !important;
+                main {
+                    width: 100%;
+                }
+            }    
+        }
+        .kuFilterBox {
+            .kuFilterHead {
+                &.kuCollapse {
+                    &::after  {
+                        width: 11px;
+                        height: 10px;
+                    }
+                }
+                &.kuExpand {
+                    &::after {
+                        width: 11px;
+                        height: 10px;
+                    }
+                }
+            }            
+        }         
     }
 }
 
