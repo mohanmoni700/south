@@ -1057,7 +1057,8 @@
     //  ---------------------------------------------
     .cms-no-route{
         .column.main{
-            margin-top: 3%;
+            margin-top: 70px;
+            margin-bottom: 30px;
         }
         .page-title-wrapper{
             .page-title{
@@ -1065,19 +1066,25 @@
             }
         }
         .main-heading{
-            font-weight: 600;
-            font-size: 200px;
+            font-weight: 700;
+            font-size: 170px;
             padding-bottom: 0;
-            margin-bottom: 0;
+            margin-bottom: 20px;
             color: #961e70;
             line-height: 1;
         }
         .sub-heading{
-            font-weight: 600;
+            font-family: 'DMSerifDisplay-Regular';
+            font-size: 40px;
             margin: 5px 0 15px;
+        }
+        .contact-links{
+            color: #000;
+            text-decoration: underline;
         }
         .back-btn{
             a{
+                width: 300px;  
                 background: #000000;
                 border: 1px solid #000000;
                 color: #ffffff;
@@ -1085,12 +1092,16 @@
                 display: inline-block;
                 font-family: montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif;
                 font-weight: 700;
-                padding: 14px 55px;
+                padding-top: 12px !important;
                 font-size: 1.5rem;
                 box-sizing: border-box;
                 vertical-align: middle;
                 text-transform: uppercase;
                 border-radius: 26px;
+                &:hover{
+                    background: @hookah_theme_gradient;
+                    border: transparent;
+                }
             }
         }
     }
