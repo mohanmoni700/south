@@ -289,8 +289,7 @@
 
     .klevuTarget.klevu-fluid{
         > div.klevuWrap{
-            max-width: 600px;
-            margin-left: 15px;
+            max-width: 630px;
             border-radius: 10px;
         }
         .klevuQuickSearchingArea{
@@ -379,7 +378,7 @@
                     a{
                         color: @color-black;
                         text-decoration: underline;
-                        padding: 3px;
+                        padding: 8px 0;
                         .lib-font-size(14);
                         transition: all .5s;
                         &:hover{
@@ -794,10 +793,10 @@
     //  ---------------------------------------------
     .comman_arrow {
         .slick-prev {
-            left: -46px;
+            left: -36px;
         }
         .slick-next {
-            right: -46px;
+            right: -36px;
             &:before {
                 padding-left: 2px;
             }
@@ -813,6 +812,19 @@
                 font-size: 16px;
                 padding-right: 0;
             }
+            &:hover {
+                background-color: @hookah_theme_color;
+                &:before {
+                    color: @color_white;
+                }
+            }
+        }
+        .slick-slider {
+            margin: 0 -10px;
+        }
+        .slick-slide {
+            margin-right:10px;
+            margin-left:10px;
         }
     }
 
@@ -823,6 +835,9 @@
         .columns {
             .column.main {
                 padding-bottom: 0;
+                > .pending-tooltip {
+                    margin-bottom: 0;
+                }
             }
         }
         .blog-widget-recent {
@@ -832,14 +847,30 @@
         }
     }
     .homepage_category_slider {
+        .slick-slider {
+            margin: 0;
+        }
+        .slick-slide {
+            margin-right: 0;
+            margin-left: 0;
+        }
         .slick-list {
             width: 100%;
         }
+        &.comman_arrow {
+            .slick-prev {
+                left: -46px;
+            }
+            .slick-next {
+                right: -46px;
+            }
+        }
+
     }
     .top_products {
         background-color: @hookah_primary_light;
-        padding: 40px 0 20px 0;
-        margin-top: 50px;
+        padding: 40px 0 70px 0;
+        margin-top: 60px;
     }
     .welcomesale_block {
         background-color: @hookah_yellow_light;
@@ -1020,6 +1051,60 @@
             z-index: 1;
         }
     }
+
+    //
+    //  404 page
+    //  ---------------------------------------------
+    .cms-no-route{
+        .column.main{
+            margin-top: 70px;
+            margin-bottom: 30px;
+        }
+        .page-title-wrapper{
+            .page-title{
+                display: none !important;
+            }
+        }
+        .main-heading{
+            font-weight: 700;
+            font-size: 170px;
+            padding-bottom: 0;
+            margin-bottom: 20px;
+            color: #961e70;
+            line-height: 1;
+        }
+        .sub-heading{
+            font-family: 'DMSerifDisplay-Regular';
+            font-size: 40px;
+            margin: 5px 0 15px;
+        }
+        .contact-links{
+            color: #000;
+            text-decoration: underline;
+        }
+        .back-btn{
+            a{
+                width: 300px;  
+                background: #000000;
+                border: 1px solid #000000;
+                color: #ffffff;
+                cursor: pointer;
+                display: inline-block;
+                font-family: montserrat, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+                font-weight: 700;
+                padding-top: 12px !important;
+                font-size: 1.5rem;
+                box-sizing: border-box;
+                vertical-align: middle;
+                text-transform: uppercase;
+                border-radius: 26px;
+                &:hover{
+                    background: @hookah_theme_gradient;
+                    border: transparent;
+                }
+            }
+        }
+    }
 }
 
 
@@ -1119,6 +1204,8 @@
         }
     }
     .top_products {
+        margin-top: 40px;
+        padding-bottom: 50px;
         .h2_heading_builder {
             .lib-font-size(26);
             border-bottom: solid 2px @color_ccc;
@@ -1163,7 +1250,14 @@
         margin-right: -15px;
         .slick-list {
             padding-right: 100px !important;
-        }
+        }        
+    }
+    .top_sellling {
+        .widget-product-carousel.product-items {
+            .slick-list {
+                padding-right: 0 !important;
+            }        
+        }   
     }
     .homepage_category_slider {
         margin-right: -15px;
@@ -1171,6 +1265,15 @@
             padding-right: 140px !important;
         }
     }
+
+    //
+    //  404 page
+    //  ---------------------------------------------
+    .cms-no-route{
+        .main-heading{
+            font-size: 130px;
+        }
+    } 
 }
 
 
@@ -1942,29 +2045,44 @@
     }
 
     @media only screen and (max-width: 1399px) {
+        .homepage_category_slider {        
+            &.comman_arrow {
+                .slick-prev {
+                    left: -34px;
+                }
+                .slick-next {
+                    right: -34px;
+                }
+            }
+    
+        }
         .comman_arrow {
             .slick-prev {
-                left: -34px;
+                left: -24px;
             }
             .slick-next {
-                right: -34px;
+                right: -24px;
             }
+        }
+    }
+    @media only screen and (max-width: 1399px) and (min-width: 1360px) {
+        .comman_arrow {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+        .homepage_category_slider {
+            padding-left: 15px;
+            padding-right: 15px;
         }
     }
     @media only screen and (max-width: 1359px) and (min-width: 1280px) {
         .comman_arrow {
-            padding-left: 24px;
-            padding-right: 24px;
-            .slick-prev {
-                left: -32px;
-            }
-            .slick-next {
-                right: -32px;
-            }
+            padding-left: 35px;
+            padding-right: 35px;
         }
         .homepage_category_slider {
-            padding-left: 40px;
-            padding-right: 40px;
+            padding-left: 45px;
+            padding-right: 45px;
         }
     }
     @media only screen and (max-width: 1279px) {

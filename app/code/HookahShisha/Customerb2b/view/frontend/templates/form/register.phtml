@@ -26,7 +26,6 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
 ?>
 
 <form class="form create account form-create-account"
-      action="<?= $block->escapeUrl($this->getUrl('customerb2b/account/createPost')) ?>"
       method="post"
       id="form-validate"
       enctype="multipart/form-data"
@@ -45,6 +44,11 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
             <p><label class="step_list"><?= $block->escapeHtml(__('Step 2')) ?></label></p>
             <legend class="legend"><span><?= $block->escapeHtml(__('Business Details')) ?></span></legend>
             <span class="user_icon business"></span>
+        </li>
+        <li class="document_upload">
+            <p><label class="step_list"><?= $block->escapeHtml(__('Step 3')) ?></label></p>
+            <legend class="legend"><span><?= $block->escapeHtml(__('Document Upload')) ?></span></legend>
+            <span class="user_icon docs"></span>
         </li>
     </ul>
     <div id="basic_details" class="show">
@@ -283,8 +287,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 <button type="button"
                         class="action next primary"
                         id="next"
-                        title="<?= $block->escapeHtmlAttr(__('Next')) ?>"
-                        onclick="nextPage()">
+                        title="<?= $block->escapeHtmlAttr(__('Next')) ?>">
                     <span><?= $block->escapeHtml(__('Next')) ?></span>
                 </button>
             </div>
@@ -508,27 +511,13 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     <?php /* Extensions placeholder */ ?>
                     <?= $block->getChildHtml('customer.form.register.newsletter') ?>
                 <?php endif ?>
-                <?php /*
-                <div class="field choice email-cst-info">
-                    <input type="checkbox"
-                           name="email_cst_info"
-                           title="<?= $block->escapeHtmlAttr(__('Email Customer Information')) ?>"
-                           value="1"
-                           id="email_cst_info"
-                           class="checkbox"/>
-                    <label for="email_cst_info" class="label">
-                        <span><?= $block->escapeHtml(__('Email Customer Information')) ?></span>
-                    </label>
-                </div>
-                */ ?>
             </fieldset>
             <div class="actions-toolbar justify_btn">
                 <div class="primary prev">
                     <button type="button"
                             class="action previou primary"
                             id="previous"
-                            title="<?= $block->escapeHtmlAttr(__('PREVIOUS')) ?>"
-                            onclick="prevPage()">
+                            title="<?= $block->escapeHtmlAttr(__('PREVIOUS')) ?>">
                         <span><?= $block->escapeHtml(__('PREVIOUS')) ?></span>
                     </button>
                 </div>
@@ -536,8 +525,8 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 <div class="primary regis">
                     <button type="submit"
                             class="action register submit primary"
-                            title="<?= $block->escapeHtmlAttr(__('REGISTER')) ?>">
-                        <span><?= $block->escapeHtml(__('REGISTER')) ?></span>
+                            title="<?= $block->escapeHtmlAttr(__('NEXT')) ?>">
+                        <span><?= $block->escapeHtml(__('NEXT')) ?></span>
                     </button>
                 </div>
             </div>
@@ -547,10 +536,31 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
         </fieldset>
     </div>
 </form>
+<div id="document_upload" style="display: none;" class="document_upload_tab">
+    <?= $block->getChildHtml('register_doc'); ?>
+</div>
+<div id="register-success-popup" style="display:none">
+    <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/success_union.svg')); ?>"
+        alt="success_union"
+        width="60"
+        height="60"
+        loading="lazy" />
+    <h1 class="success_msg"><?= $block->escapeHtml(__('Registration Successful')); ?></h1>
+    <h5><?= $block->escapeHtml(__('In Next Step you would be redirected to Document upload screen.')); ?></h5>
+</div>
+<div id="popup-modal-non-usa" style="display:none">
+    <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/success_union.svg')); ?>"
+    alt="success_union" width="60" height="60" loading="lazy" />
+    <h1 class="success_msg"><?= $block->escapeHtml(__('Documents are uploaded successfully')); ?></h1>
+    <h5><?= $block->escapeHtml(__('Once it is approved by Admin, Product price would be visible to you')); ?></h5>
+    <button type="button" id="signinredirect" class="action submit primary">
+        <span><?= $block->escapeHtml(__('Sign In')); ?></span>
+    </button>
+</div>
 <?php if ($block->getShowAddressFields()): ?>
-    <?php
-    $displayAllRegions = $block->getConfig("general/region/display_all") ? "true" : "false";
-    ?>
+<?php
+$displayAllRegions = $block->getConfig("general/region/display_all") ? "true" : "false";
+?>
 <script type="text/x-magento-init">
     {
         "#country": {
@@ -591,6 +601,12 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                         "passwordSelector": "#password,#password-confirmation"
                     }
                 }
+            },
+            "HookahShisha_Customerb2b/js/register": {
+                "regionStateLabel": "<?= $block->escapeHtml($regionStateLabel); ?>",
+                "regionProvinceLabel": "<?= $block->escapeHtml($regionProvinceLabel); ?>",
+                "createPostUrl": "<?= $block->escapeUrl($this->getUrl('customerb2b/account/createPost')); ?>",
+                "signInUrl": "<?= $block->escapeUrl($this->getUrl('customer/account/login')); ?>"
             }
         },
         ".field.password": {
@@ -599,80 +615,4 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
             }
         }
     }
-</script>
-<script type="text/javascript">
-function onCountryChange() {
-    require(['jquery'], function($){
-        var countryval = $('#country option:selected').val();
-        if(countryval=='US'){
-            $('#region_id_label').children('span').html("<?= $regionStateLabel ?>");
-            $('#region_id').attr('placeholder',"<?= $regionStateLabel ?>");
-            $('.vat-tax-id').show();
-            $('.tin-number').show();
-            $('.tobacco-permit-number').show();
-        }else{
-            $('#region_id_label').children('span').html("<?= $regionProvinceLabel ?>");
-            $('#region').attr('placeholder',"<?= $regionProvinceLabel ?>");
-            $('.vat-tax-id').hide();
-            $('#vat_tax_id').val('');
-            $('.tin-number').hide();
-            $('#tin_number').val('');
-            $('.tobacco-permit-number').hide();
-            $('#tobacco_permit_number').val('');
-        }
-    });
-}
-require(['jquery', 'jquery/ui','mage/mage'], function($){
-    $("#country").change(function () {
-        onCountryChange();
-    });
-    $( "#form-validate" ).submit(function( event ) {
-        var dataForm = $('#form-validate');
-        dataForm.mage('validation', {});
-        var status = dataForm.validation('isValid');
-        
-        if(status){
-            $("body").trigger('processStart');
-        }else{
-            $("body").trigger('processStop');
-            event.preventDefault();
-        }
-    });
-});
-function nextPage() {
-    require(['jquery', 'jquery/ui','mage/mage'], function($){
-        var dataForm = $('#form-validate');
-        dataForm.mage('validation', {});
-        var status = dataForm.validation('isValid');
-        
-        if(status){
-            $('input[name="company[company_email]"]').val($('input[name="email"]').val());
-            if($("#basic_details").hasClass("show")){
-                $("#basic_details").hide();
-                $("#basic_details").removeClass("show");
-                $(".basic_details").removeClass("active");
-
-                $("#business_details").show();
-                $("#business_details").addClass("show");
-                $(".business_details").addClass("active");
-            }
-            onCountryChange();
-            window.scrollTo(0,200);
-        }
-    });
-}
-function prevPage() {
-    require(['jquery', 'jquery/ui'], function($){
-        if($("#business_details").hasClass("show")){
-            $("#business_details").hide();
-            $("#business_details").removeClass("show");
-            $(".business_details").removeClass("active");
-
-            $("#basic_details").show();
-            $("#basic_details").addClass("show");
-            $(".basic_details").addClass("active");
-             window.scrollTo(0,200);
-        }
-    });
-}
 </script>

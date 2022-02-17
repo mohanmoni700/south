@@ -1,20 +1,17 @@
 <?php
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-?>
-<?php
-/**
  * Product list toolbar
  *
  * @var $block \Magento\Catalog\Block\Product\ProductList\Toolbar
  */
 
-// phpcs:disable Magento2.Security.IncludeFile.FoundIncludeFile
-// phpcs:disable PSR2.Methods.FunctionCallSignature.SpaceBeforeOpenBracket
 ?>
-<?php if ($block->getCollection()->getSize()):?>
+<?php
+// check size of category start[BS]14/02/2022
+$size=[];
+$size=$block->getCollection();
+if(!empty($size)){
+ if ($block->getCollection()->getSize()):?>
     <?php $widget = $this->helper(\Magento\Framework\Json\Helper\Data::class)->jsonDecode($block->getWidgetOptionsJson());
         $widgetOptions = $this->helper(\Magento\Framework\Json\Helper\Data::class)->jsonEncode($widget['productListToolbarForm']);
     ?>
@@ -31,17 +28,23 @@
         
         <?php if ($block->isExpanded()):?>
             <?php include ($block->getTemplateFile('Magento_Catalog::product/list/toolbar/sorter.phtml')) ?>
-            <div class="cate-filter"><a href="javascript:void(0)" class="filter_button" id="is_filter">Filter</a></div>
+            <div class="cate-filter"><a href="javascript:void(0)" class="filter_button" id="is_filter">Hide Filter</a></div>
         <?php endif; ?>
     </div>
-<?php endif ?>
+<?php endif;
+ }
+// check size of category end[BS]14/02/2022
+?>
 <script>
     require(['jquery'], function($) {
         $("#is_filter").click(function(){
+
               if ($(".sidebar.sidebar-main").css("display") == 'block') {
+                    $("#is_filter").text('Show Filter');
                     $(".sidebar.sidebar-main").css("display", "none");
-                    $(".column.main").addClass("filter-collapse");                    
+                    $(".column.main").addClass("filter-collapse");
               } else {
+                    $("#is_filter").text('Hide Filter');
                     $(".sidebar.sidebar-main").css("display", "block");
                     $(".column.main").removeClass("filter-collapse");
               }

@@ -42,15 +42,18 @@ use Magento\Framework\App\Action\Action;
                     <?php if ($templateType) : ?>
                         <?= $block->getReviewsSummaryHtml($_item, $templateType) ?>
                     <?php endif; ?>
-
-                    <?= $block->getProductPriceHtml($_item, $type) ?>
-
-                    <?= $block->getProductDetailsHtml($_item) ?>
-
+                     <!-- check the documnet is uploaded or verified  -->
+                    <?php if($showCart && $_helperB2b->getDocuments() == 1 && $_helperB2b->getDocMessageData() == 2) : ?>
+                      
+                      <?= $block->getProductPriceHtml($_item, $type) ?>
+                      <?= $block->getProductDetailsHtml($_item) ?>
+                    
+                    <?php endif; ?>
                     
                         <div class="product-item-inner">
                             <div class="product-item-actions">
-                                <?php if ($showCart) : ?>
+                                <!-- check the documnet is uploaded or verified  -->
+                                <?php if ($showCart && $_helperB2b->getDocuments() != 1 || $_helperB2b->getDocMessageData() != 2) : ?>
                                     <div class="actions-primary">
                                         <?php if ($_item->isSaleable()) : ?>
                                             <?php $postParams = $block->getAddToCartPostParams($_item); ?>
@@ -72,7 +75,7 @@ use Magento\Framework\App\Action\Action;
                                             <?php endif; ?>
                                         <?php endif; ?>
                                     </div>
-                                <?php else : ?>
+                                <?php elseif(!$showCart) : ?>
                                     <div class="actions-primary">
                                         <div class="logged-in-action">
                                             <a href="<?= $block->getUrl('customer/account/login') ?>"><?= $block->escapeHtml(__('Sign in / Register')) ?></a>

@@ -1,15 +1,37 @@
+<!-- Document verification msg Start -->
+
 <?php
+
+   //helper boolean
     $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
     $docdata = $_helperB2b->getDocMessageData();
     $exp_msg = $_helperB2b->getExpiryMsg();
+    $is_document_upload = $_helperB2b->getDocuments();
+    
+    //get System config values 
+    $documents_required_msg = $_helperB2b->getConfigValue('hookahshisha/productpage/productpageb2b_documents_verification_required');
+    $document_Verification_msg = $_helperB2b->getConfigValue('hookahshisha/productpage/productpageb2b_document_Verification_section');
+    $document_Reject_msg = $_helperB2b->getConfigValue('hookahshisha/productpage/productpageb2b_document_rejection_sections');
+    $document_expir_msg = $_helperB2b->getConfigValue('hookahshisha/productpage/productpageb2b_documents_expired_sections');
 ?>
+<?php if($_helperB2b->isCustomerLoggedIn()) : ?>
     <?php if ($docdata == 0): ?>
-        <div class="pending-tooltip"><div class="tooltip-inner"><?= $block->escapeHtml(__("Your document(s) are under verification. You would receive an email once there is an update.")) ?></div></div>
+        <div class="pending-tooltip"><div class="tooltip-inner"><?= $block->escapeHtml(__($document_Verification_msg)) ?></div>
+        </div>
      
     <?php elseif ($docdata == 1): ?>
-        <div class="pending-tooltip"><div class="tooltip-inner"><?= $block->escapeHtml(__("Some of your document(s) has been rejected. Please update the same")) ?></div></div>
+        <div class="pending-tooltip"><div class="tooltip-inner"><?= $block->escapeHtml(__($document_Reject_msg)) ?></div></div>
     <?php endif; ?>
 
     <?php if ($exp_msg == 0): ?>
-        <div class="pending-tooltip exp"><div class="tooltip-inner"><?= $block->escapeHtml(__("Some of the document(s) has been expired")) ?></div></div>
+        <div class="pending-tooltip exp"><div class="tooltip-inner"><?= $block->escapeHtml(__($document_expir_msg)) ?></div></div>
     <?php endif; ?>
+    
+    <?php if ($is_document_upload == 0): ?>
+        <div class="pending-tooltip"><div class="tooltip-inner"><?= $block->escapeHtml(__($documents_required_msg)) ?></div></div>
+    <?php endif; ?>
+<?php endif; ?>    
+<!-- End Msg -->
+
+
+

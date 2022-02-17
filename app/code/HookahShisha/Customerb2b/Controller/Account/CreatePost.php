@@ -71,6 +71,11 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
     private $helperdata;
 
     /**
+     * @var \Magento\Framework\Controller\Result\JsonFactory
+     */
+    private $resultJsonFactory;
+
+    /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Authorization\Model\UserContextInterface $userContext
      * @param \Psr\Log\LoggerInterface $logger
@@ -87,6 +92,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
      * @param \Magento\Customer\Api\Data\RegionInterfaceFactory $regionDataFactory
      * @param \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory
      * @param \HookahShisha\Customerb2b\Helper\Data $helperdata
+     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param \Magento\Company\Model\CompanyUser|null $companyUser
      */
     public function __construct(
@@ -106,6 +112,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
         \Magento\Customer\Api\Data\RegionInterfaceFactory $regionDataFactory,
         \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory,
         \HookahShisha\Customerb2b\Helper\Data $helperdata,
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Magento\Company\Model\CompanyUser $companyUser = null
     ) {
         parent::__construct($context);
@@ -126,6 +133,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
         $this->regionDataFactory = $regionDataFactory;
         $this->addressDataFactory = $addressDataFactory;
         $this->helperdata = $helperdata;
+        $this->resultJsonFactory = $resultJsonFactory;
     }
 
     /**
@@ -136,6 +144,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
         $request = $this->getRequest();
         $resultRedirect = $this->resultRedirectFactory->create()->setPath('customer/account/create');
         $data = $this->getRequest()->getParams();
+        $resultJson = $this->resultJsonFactory->create();
 
         if (!$this->validateRequest()) {
             return $resultRedirect;
@@ -190,20 +199,32 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
             /* end create customer accounts */
 
             $this->companyCreateSession->setCustomerId($customer->getId());
-
             $this->helperdata->sendEmail($data);
-
-            $resultRedirect->setPath('customerb2b/account/index');
+            
+            $resultJson->setData([
+                'status' => 'success',
+                'message' => 'Your accout has been created successfully.',
+                'country' => $data['country_id'],
+                'id' => $customer->getId()
+            ]);
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
-            $this->messageManager->addErrorMessage($e->getMessage());
+            $resultJson->setData([
+                'status' => 'error',
+                'message' => $e->getMessage(),
+                'country' => null,
+                'id' => null
+            ]);
         } catch (\Exception $e) {
-            $this->messageManager->addErrorMessage(
-                __('An error occurred on the server. Your changes have not been saved.')
-            );
+            $resultJson->setData([
+                'status' => 'error',
+                'message' => 'An error occurred on the server. Your changes have not been saved.',
+                'country' => null,
+                'id' => null
+            ]);
             $this->logger->critical($e);
         }
 
-        return $resultRedirect;
+        return $resultJson;
     }
 
     /**

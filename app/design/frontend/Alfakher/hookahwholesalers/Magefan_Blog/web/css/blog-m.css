@@ -56,7 +56,7 @@
 .post-list .hidden {display:none;}
 .post-view .post-bottom {margin-top:30px;}
 
-.post-view .post-nextprev-hld  {margin-bottom: 30px;}
+.post-view .post-nextprev-hld  {margin-bottom: 30px; display: none;}
 .post-view .post-nextprev-hld .nextprev-link {font-weight: 700;}
 .post-view .post-nextprev-hld .prev-link {float:left}
 .post-view .post-nextprev-hld .next-link {float:right}
@@ -96,8 +96,16 @@
 .widget.block-tagclaud .largest{font-size:2em}
 
 /* Widget Archive */
-.widget.block-archive .item {margin: 5px 0 10px; border-bottom: 1px solid #cdcaca; padding-bottom: 10px;}
-.widget.block-archive .item.archive-item-link{color: #000;}
+.widget.block-archive div[data-role="collapsible"]{margin: 5px 0 10px; border-bottom: 1px solid #cdcaca; padding-bottom: 10px;}
+.widget.block-archive div[data-role="trigger"]{cursor: pointer;}
+.widget.block-archive div[data-role="trigger"] span{color: #000; position: relative;}
+.widget.block-archive div[data-role="trigger"] span:before{content: ""; display: inline-block; width: 12px; height: 0.5px; background: #000; position: absolute; right: -24px; top: 50%; transform: translateY(-50%) rotate(90deg);} 
+.widget.block-archive div[data-role="trigger"] span:after{content: ""; display: inline-block; width: 12px; height: 0.5px; background: #000; position: absolute; top: 50%; right: -24px; transform: translateY(-50%);} 
+.widget.block-archive div[aria-selected="true"] span{font-weight: 600;}
+.widget.block-archive div[aria-selected="true"] div[data-role="trigger"] span:before{transform: translateY(-50%) rotate(180deg);}
+.widget.block-archive .collapse-content{margin-top: 8px;}
+.widget.block-archive .item {margin: 0 0 5px 20px;}
+
 
 /* Widget Recent */
 .blog-widget-recent .post-list {padding: 0;margin: 0;}
@@ -213,8 +221,3 @@
 .mf-blog-icon.mfbi-user {background-image: url('../images/user-icon.svg')}
 .mf-blog-icon.mfbi-views {background-image: url('../images/views-icon.svg')}
 /* END Fix Related Products */
-
-
-@media screen and (min-width: 768px) and (max-width: 1023px){
-    .widget.blog-search .action.search{position: unset; width: 100%; margin-top: 5px;}
-}

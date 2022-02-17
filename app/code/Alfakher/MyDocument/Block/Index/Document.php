@@ -5,6 +5,10 @@ use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory;
 
 class Document extends \Magento\Framework\View\Element\Template
 {
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    protected $scopeConfig;
 
     /**
      * @var CollectionFactory
@@ -17,20 +21,31 @@ class Document extends \Magento\Framework\View\Element\Template
     protected $customerSession;
 
     /**
+     * @var \HookahShisha\ChangePassword\Plugin\CustomerSessionContext
+     */
+    protected $CustomerSessionContext;
+
+    /**
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Magento\Customer\Model\Session $customerSession
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param CollectionFactory $collection
+     * @param \HookahShisha\ChangePassword\Plugin\CustomerSessionContext $CustomerSessionContext
      * @param array $data = []
      */
 
     public function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Customer\Model\Session $customerSession,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         CollectionFactory $collection,
+        \HookahShisha\ChangePassword\Plugin\CustomerSessionContext $CustomerSessionContext,
         array $data = []
     ) {
-        $this->collection = $collection;
+        $this->scopeConfig = $scopeConfig;
         $this->customerSession = $customerSession;
+        $this->collection = $collection;
+        $this->CustomerSessionContext = $CustomerSessionContext;
         parent::__construct($context, $data);
     }
 
@@ -77,22 +92,22 @@ class Document extends \Magento\Framework\View\Element\Template
 
             $message = [];
 
-            if ($str_status == 0 && empty($str_msg)) {
-                $verification = "Your details are under verification. You would receive an email once there is an update.";
+            if (in_array(0, $status) && empty($str_msg)) {
+                $verification = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_document_Verification_section', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
                 $message[] = ["pending", $verification];
             } else {
                 $verification = "";
             }
 
             if (in_array(0, $status) && !empty($str_msg)) {
-                $rejected = "Some of your document(s) has been rejected. Please update the same";
+                $rejected = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_document_rejection_sections', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
                 $message[] = ["reject", $rejected];
             } else {
                 $rejected = "";
             }
 
             $todate = date("Y-m-d");
-            
+
             foreach ($document as $value) {
                 $expiry_date = $value['expiry_date'];
                 if (($expiry_date <= $todate && $expiry_date != "")
@@ -102,9 +117,9 @@ class Document extends \Magento\Framework\View\Element\Template
                     $msg[] = "not expired";
                 }
             }
-            
+
             if (in_array('expired', $msg)) {
-                $docexpired = "Some of the document(s) has been expired";
+                $docexpired = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_documents_expired_sections', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
             } else {
                 $docexpired = "";
             }
@@ -119,6 +134,37 @@ class Document extends \Magento\Framework\View\Element\Template
                 'reject' => $rejected,
                 'reject' => $docexpired,
             ];
+        } else {
+            $verification = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_documents_verification_required', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+            $message[] = ["pending", $verification];
+            return [
+                'message' => $message,
+                'pending' => $verification,
+            ];
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isCustomerLoggedIn()
+    {
+        if ($this->customerSession->isLoggedIn()) {
+            return 'Yes';
+        } else {
+            return 'No';
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isDocumentApproved()
+    {
+        if (!$this->CustomerSessionContext->getStatus()) {
+            return 'Yes';
+        } else {
+            return 'No';
         }
     }
 }

@@ -353,6 +353,32 @@ ul.nav.items{
                     color: @disable_font_clr;
                 }
             }
+            .add-more-field {
+                .checkbox{
+                    &:checked {
+                        + label{
+                            &:before {
+                                background: @color_black;
+                                border-color: @color_black;
+                            }
+                            &::after {
+                                background-color: @color_black;
+                            }
+                        }                       
+                    }
+                    &:disabled {
+                        + label{
+                            &:before {
+                                background: @disable_checkbox_clr;
+                                border-color: @disable_checkbox_clr;
+                            }
+                            &::after {
+                                background-color: @disable_checkbox_clr;
+                            }
+                        }    
+                    }
+                }
+            }
          .action.save.primary{
              background: @disable_tabbg;
              border-color: @disable_border;
@@ -1041,9 +1067,13 @@ ul.nav.items{
             .regis{
                 float: right;
                 width: 50%;
-                .register{
+                .register, .action.submit {
                     float: right;
+                    
                 }
+            }
+            button.submit {
+                transform: translateX(0);
             }
         }
         .action.next.primary{
@@ -1087,6 +1117,17 @@ ul.nav.items{
                             background: #961E70;
                         }
                     }
+                    .user_icon.docs{
+                        &:before{
+                             background-image: url('@{baseDir}images/documents-active.svg');
+                        }
+                        &:after{
+                            background: #961E70;
+                        }
+                    }
+                }
+                .step_list {
+                    .lib-font-size(12);
                 }
 
                 .basic{
@@ -1170,6 +1211,14 @@ ul.nav.items{
                             width: 21px;
                             height: 20px;
                             margin-left: -1px;
+                        }
+                    }
+                    &.docs{
+                        &:before{
+                            background-image: url('@{baseDir}images/documents.svg');
+                            width: 18px;
+                            height: 22px;
+                            top: 18px;
                         }
                     }
                 }
@@ -1616,8 +1665,8 @@ ul.nav.items{
             box-shadow: none;
             height: 40px;
             &:hover{
-                background: @button-primary__hover__background;
-                border: @button-primary__hover__border;
+                border-color: transparent;
+                background: @hookah_theme_gradient;
             }
         }
     }
@@ -1721,6 +1770,20 @@ ul.nav.items{
                 right: -8px;
                 top: 2px;
             }
+            max-width: 1200px;
+            > * {
+                max-width: 940px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .form.create.account {
+                min-width: unset;
+                #basic_details, #business_details {
+                    max-width: 720px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+            }
         }
     }
     .login-container{
@@ -1821,6 +1884,10 @@ ul.nav.items{
                     font-size: 16px;
                     text-transform: uppercase;
                     letter-spacing: 2px;
+                    &:hover {
+                        border-color: transparent;
+                        background: @hookah_theme_gradient;
+                    }
                 }
             }
             &:after {
@@ -1905,6 +1972,9 @@ ul.nav.items{
             text-transform: uppercase;
             letter-spacing: 2px;
             line-height: 38px;
+            &:hover {
+                background: @hookah_theme_gradient;
+            }
         }
     }
     button.action.primary, 
@@ -1960,6 +2030,24 @@ ul.nav.items{
         }
     }
 
+    //
+    //  Logout Page
+    //  _________________________________
+    .customer-account-logoutsuccess{
+        .page-main{
+            margin-top: 8%;
+            text-align: center;
+            .page-title{
+                font-weight: 600;
+                margin-bottom: 20px;
+            }
+        }
+        .column.main{
+            p{
+                font-size: 16px;
+            }
+        }
+    }
 
 }
 
@@ -2176,6 +2264,11 @@ ul.nav.items{
             .login-container{
                 margin-top: 30px;
                 margin-bottom: 0;
+            }
+        }
+        .register_nav {
+            li legend.legend {
+                .lib-font-size(16);
             }
         }
     }

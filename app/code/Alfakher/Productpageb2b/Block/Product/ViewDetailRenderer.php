@@ -20,17 +20,15 @@ class ViewDetailRenderer extends Template
     protected $productRepository;
 
     /**
-     * Core registry
-     *
      * @var \Magento\Framework\Registry
      */
     protected $_coreRegistry;
 
     /**
      * @param Context $context
-     * @param array $data
      * @param \Magento\Framework\Registry $coreRegistry
      * @param ProductRepositoryInterface|\Magento\Framework\Pricing\PriceCurrencyInterface $productRepository
+     * @param array $data = []
      */
     public function __construct(
         Context $context,

@@ -30,14 +30,17 @@
         <div class="updated-container">
             <?php foreach ($data as $key => $val): ?>
                 <?php if ($val['is_delete'] == 0): ?>
-                    <?php if ($val['status'] == 0 && $val['message'] != null): ?>
+                    <?php $expiry_date = $val['expiry_date']; ?>
+                    <?php if (($val['status'] == 0 && $val['message'] != null) ||
+                    (($expiry_date <= $today && $expiry_date != "") && $val['status'] == 0)): ?>
                         <?php $rejectedClass = "rejected"; ?>
                     <?php else: ?>
                         <?php $rejectedClass = ""; ?>
-                    <?php endif;?>
+                    <?php endif; ?>
                     <div class="document <?= $block->escapeHtml($rejectedClass); ?>" for="document uploader">
                         <?php
-                            $checkext = $block->checkExtension($mediaUrl.$val['filename']);
+                            $fileName = $mediaUrl.$val['filename'];
+                            $checkext = $block->checkExtension($fileName);
                             $extension = $checkext['extension'];
                         ?>
                         <div class="input-file">
@@ -45,17 +48,17 @@
                                 <img src="<?= $block->escapeUrl($pdfImg); ?>" height="34" width="43"
                                 class="pdf-image" alt="pdf documents" />
                             <?php else: ?>
-                                <img src="<?= $block->escapeUrl($mediaUrl.$val['filename']) ; ?>"
+                                <img src="<?= $block->escapeUrl($fileName) ; ?>"
                                 height="100px" width="100px" />
                             <?php endif; ?>
                             <div class="doc-actions">
                                 <?php if ($val['status'] == 0 && $val['message'] != null): ?>
-                                    <a  class="view-doc-link" href="<?= $block->escapeUrl($mediaUrl.$val['filename']); ?>"
+                                    <a  class="view-doc-link" href="<?= $block->escapeUrl($fileName); ?>"
                                         target="_blank"></a>
                                     <a class="deletedocument" name="deletedocument" href="#"
                                     id="<?= $block->escapeHtml($val['mydocument_id']); ?>"></a>
                                 <?php else: ?>
-                                    <a  class="view-doc-link" href="<?= $block->escapeUrl($mediaUrl.$val['filename']);?>"
+                                    <a  class="view-doc-link" href="<?= $block->escapeUrl($fileName);?>"
                                         target="_blank"></a>
 
                                 <?php endif; ?>
@@ -72,7 +75,7 @@
                         </div>
                         <div class="doc-name">
                             <span><?= $block->escapeHtml($val['filename']); ?></span>
-                            <a  href="<?= $block->escapeUrl($mediaUrl.$val['filename']); ?>" target="_blank"
+                            <a  href="<?= $block->escapeUrl($fileName); ?>" target="_blank"
                                 download class="download-doc"></a>
                         </div>
                         <div class="field">
@@ -101,15 +104,28 @@
                 <?php endif; ?>
                 <?php if ($val['is_delete'] != 0): ?>
                 <div class="upload" for="document uploader">
-                    <div class="update-doc-<?=$val['mydocument_id'];?> input-file">
-                        <input type="hidden" name="documentid[]" value="<?= $block->escapeHtml($val['mydocument_id']); ?>" />
-                        <input type="file" name="updatefile_<?= $block->escapeHtml($val['mydocument_id']); ?>"
-                        id="updatefile_<?= $block->escapeHtml($val['mydocument_id']); ?>" data-validate="{required:true}" />
-                        <span id="image-error-message-<?= $val['mydocument_id']; ?>" style="color:red;"></span>
-                        <img class="previewimage-filename_" height="170" width="170" src="" title="" style="display:none;"></img>
-                        <div class="doc-actions" id="doc-actions-filename_<?= $block->escapeHtml($val['mydocument_id']); ?>" style="display:none;">
-                            <a class="view-doc-link" id="view-doc-link-filename_<?= $block->escapeHtml($val['mydocument_id']); ?>" href="" target="_blank"></a>
-                            <a class="deletedocument-preview deletedocument" id="deletedocument-filename_<?= $block->escapeHtml($val['mydocument_id']); ?>"></a>
+                    <div class="update-doc-<?= $block->escapeHtml($val['mydocument_id']);?> input-file">
+                        <input type="hidden" name="documentid[]"
+                        value="<?= $block->escapeHtml($val['mydocument_id']); ?>" />
+                        <input type="file"
+                        name="updatefile<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                        id="updatefile_<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                        data-validate="{required:true}" />
+                        <span id="image-error-message-<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                            style="color:red;"></span>
+                        <img class="previewimage-filename_"
+                        height="170"
+                        width="170"
+                        src="" title=""
+                        style="display:none;"></img>
+                        <div class="doc-actions"
+                        id="doc-actions-filename_<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                        style="display:none;">
+                            <a class="view-doc-link"
+                            id="view-doc-link-filename_<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                            href="" target="_blank"></a>
+                            <a class="deletedocument-preview deletedocument"
+                            id="deletedocument-filename_<?= $block->escapeHtml($val['mydocument_id']); ?>"></a>
                         </div>
                     </div>
                     <div class="doc_name" for="document name">
@@ -120,16 +136,20 @@
                     </div>
                     <div class="set_expiry" for="document expiry data" style="position:relative;">
                         <label><?= $block->escapeHtml(__('Set a Specific Expiry date')); ?></label>
-                        <input type="checkbox" id="toggle-<?= $block->escapeHtml($val['mydocument_id']); ; ?>"
+                        <input type="checkbox" id="toggle-<?= $block->escapeHtml($val['mydocument_id']);
+                        ; ?>"
                         name="set_expiry[]"
                         class="update-toggle cmn-toggle cmn-toggle-round"/>
                         <span class="slider round"></span>
-                        <div class="expiry_dates expiry_dates-toggle-<?= $val['mydocument_id']; ?>" for="document expiry data" style="display:none">
+                        <div class="expiry_dates expiry_dates-toggle-<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                            for="document expiry data"
+                            style="display:none">
                             <label><?= $block->escapeHtml(__('Set Expiry Date')); ?></label>
                             <input type="text"
                                 placeholder="Expiry Date"
                                 name="expiry_date<?= $block->escapeHtml($val['mydocument_id']); ?>"
-                                id="expiry_date-<?= $block->escapeHtml($val['mydocument_id']); ?>" data-validate="{required:true}"
+                                id="expiry_date-<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                                data-validate="{required:true}"
                                 class="update-date" value="<?= $block->escapeHtml($val['expiry_date']); ?>"/>
                         </div>
                     </div>

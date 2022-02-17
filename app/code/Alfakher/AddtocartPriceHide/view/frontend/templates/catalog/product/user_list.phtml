@@ -24,6 +24,7 @@ $_helper = $block->getData('outputHelper');
 <!-- Check the Document is verified or not vy -->
 <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
        $docdata = $_helperB2b->getDocMessageData();
+       $is_document_upload = $_helperB2b->getDocuments();
 ?>
 <?php if (!$_productCollection->count()): ?>
     <div class="message info empty">
@@ -78,7 +79,7 @@ $_helper = $block->getData('outputHelper');
                                 <?=/* @noEscape */ $_helper->productAttribute($_product, $_product->getName(), 'name')?>
                             </a>
                         </strong>
-                        <?php if ($docdata == 2): ?>
+                        <?php if ($docdata == 2 && $is_document_upload == 1): ?>
                             <?= $block->getReviewsSummaryHtml($_product, $templateType) ?>
                             <?= /* @noEscape */ $block->getProductPrice($_product) ?>
                             <?= $block->getProductDetailsHtml($_product) ?>
@@ -107,15 +108,17 @@ $_helper = $block->getData('outputHelper');
                                                    /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED]
                                                     ?>">
                                             <?= $block->getBlockHtml('formkey') ?>
-                                        <?php if ($docdata != 2): ?>
-                                            <!-- start view details btn -->
+                                        <?php if ($docdata == 2 && $is_document_upload == 1): ?>
+                                        <?php else: ?>
+                                             <!-- start view details btn -->
                                                 <div class="actions-primary">
                                                         <div class="logged-in-action">
-                                                            <a href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>"><?= $block->escapeHtml(__('View More')) ?></a>
+                                                            <a href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>"><?= $block->escapeHtml(__('View Details')) ?></a>
                                                         </div>
                                                 </div>
                                             <!-- end -->
                                         <?php endif; ?>    
+
                                         </form>
                                     <?php else:?>
                                         <?php if ($_product->isAvailable()):?>

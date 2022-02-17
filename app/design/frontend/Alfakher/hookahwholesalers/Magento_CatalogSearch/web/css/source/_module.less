@@ -192,6 +192,344 @@
     .search.summary {
         margin-bottom: @indent__s;
     }
+
+
+    //
+    //  Klevu Search Result page
+    //  _____________________________________________
+    .search-index-index {
+        .page-title {
+            .lib-font-size(28);
+            width: 100%;
+            text-align: center;
+            font-weight: @font-weight__semibold;
+            color: @color-black;
+            margin-top: 30px;
+            margin-bottom: 10px;
+        }
+        [ku-container] {
+            &[data-container-role="main"] {
+                width: 100%;
+            }
+        }
+        .kuContainer {
+            padding: 0;
+        }
+    }
+    .kuSearchResultsPageContainer {
+        .kuContainer {
+            .kuTabs {
+                border-color: @input-border_color;
+                margin-bottom: 20px;
+                a {
+                    color: @color_black;
+                    .lib-font-size(14);
+                    padding: 14px 0;
+                    margin-right: 20px;                    
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                    &.kuTabSelected {
+                        border-color: @hookah_theme_color;
+                        border-bottom-width: 5px;
+                        background-color: transparent;
+                    }
+                    &:hover {
+                        border-color: @hookah_theme_color;
+                        border-bottom-width: 5px;
+                    }
+                }
+            }
+        }
+        [ku-container][data-container-role="left"] {
+            width: 320px;
+            max-width: 320px;
+            padding-right: 20px;
+        }
+        div.kuFilters {
+            padding: 0;
+        }
+        .kuFiltersTitleHeading {
+            .lib-font-size(20);
+            font-weight: @font-weight__semibold;
+            color: @color_black;
+            margin-bottom: 20px;
+        }
+        .kuFilterBox {
+            padding-bottom: 10px;
+            margin-bottom: 6px;
+            .kuFilterHead {
+                padding: 12px 0;
+                color: @color_black;
+                .lib-font-size(16);
+                text-transform: capitalize;
+                font-weight: @font-weight__bold;
+                border-color: @input-border_color;
+                &.kuCollapse {
+                    margin-bottom: 20px;
+                    &::after {
+                        top: 15px;
+                        border-color: transparent;
+                        opacity: 1;
+                        content: '';
+                        background: url('@{baseDir}images/select_arrow.svg') center no-repeat;
+                        background-size: contain;
+                        width: 13px;
+                        height: 12px;
+                        position: absolute;
+                        right: 0;
+                        transition: all 0.5s ease-out;
+                        padding: 0;
+                        -webkit-transform: rotate(-180deg);
+                        -moz-transform: rotate(-180deg);
+                        -o-transform: rotate(-180deg);
+                        -ms-transform: rotate(-180deg);
+                        transform: rotate(-180deg);
+                    }
+                }
+                &.kuExpand {
+                    &::after {
+                        top: 16px;
+                        border-color: transparent;
+                        opacity: 1;
+                        content: '';
+                        background: url('@{baseDir}images/select_arrow.svg') center no-repeat;
+                        background-size: contain;
+                        width: 13px;
+                        height: 12px;
+                        position: absolute;
+                        right: 0;
+                        transition: all 0.5s ease-out;
+                        padding: 0;
+                        -webkit-transform: rotate(0deg);
+                        -moz-transform: rotate(0deg);
+                        -o-transform: rotate(0deg);
+                        -ms-transform: rotate(0deg);
+                        transform: rotate(0deg);
+                    }
+                }
+            }     
+            .kuFilterNames {
+                ul {
+                    li {
+                        margin-bottom: 14px;
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                        a.klevuFilterOption {
+                            margin: 0;
+                            &:hover {
+                                span.kuFilterIcon:after {
+                                    top: 4px;
+                                    left: 3px;
+                                }
+                            }
+                        }
+                        &.kuSelected {
+                            a {
+                                span.kuFilterIcon:after {
+                                    top: 4px;
+                                    left: 3px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }     
+            &.kuMulticheck {
+                .kuFilterIcon {
+                    &:before {
+                        height: 16px;
+                        width: 16px;
+                        border-color: @color_black;
+                        margin-right: 12px;
+                    }
+                }
+            }
+        }
+        .noUi-tooltip {
+            min-width: 50px;
+            border-radius: 0;
+            border-color: @input-border_color;
+        }
+        .noUi-connect {
+            background-color: @hookah_theme_color;
+        }
+        .noUi-connect, .noUi-horizontal {
+            .noUi-handle {
+                width: 32px;
+                height: 32px;
+                left: -19px;
+                top: -12px;
+                box-shadow: none;
+                &:before {
+                    height: 16px;
+                    left: 11px;
+                    top: 6px;
+                }
+                &:after {
+                    height: 16px;
+                    top: 6px;
+                    left: 19px;
+                }
+            }
+        }
+        .noUi-horizontal {
+            .noUi-handle-lower, .noUi-handle-upper {
+                .noUi-tooltip {
+                    bottom: -40px;
+                }
+            }
+        }
+        .kuFilterTagsContainer {
+            .kuFilterTagKey {
+                color: @color_black;
+                padding: 6px 2px;
+            }
+            .kuFilterTagValue {
+                padding: 6px 7px;
+            }
+            .kuFilterTagClearAll {
+                padding: 5px 7px;
+            }
+        }
+        div.kuDropdown {
+            z-index: 2;
+            .kuDropdownLabel {
+                padding: 10px 30px 10px 10px;
+            }
+            .kuDropdownOptions {
+                background-color: @color-white;
+                .kuDropOption {
+                    &:hover {
+                        background-color: @account_bgclr;
+                    }
+                }
+            }
+        }
+        .kuLandingResultsViewSwitchContainer {
+            padding: 13px 5px;
+            z-index: 1;
+        }
+        .kuResults {
+            ul {
+                li.klevuProduct {
+                    .kuProdWrap {
+                        border: none;                        
+                        .kuProdAdditional {
+                            position: relative;
+                            background-color: transparent;
+                            box-shadow: none;
+                            visibility: visible;
+                            opacity: 1;
+                            width: 100%;
+                            border: none;
+                            top: 0;
+                            left: 0;
+                            .kuProdAdditionalData {
+                                padding-top: 0;
+                            }
+                            .kuAddtocart {
+                                margin: 0;
+                            }
+                        }
+                        .kuProdBottom {
+                            height: auto;
+                        }
+                    }
+                    .kuName {
+                        margin-bottom: 16px;
+                        a {
+                            font-size: 20px;
+                            &:hover {
+                                text-decoration: none;
+                                color: @hookah_theme_color;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        [data-result-view="grid"] {
+            .kuResults {
+                ul {
+                    li.klevuProduct {
+                        text-align: center;
+                    }
+                }
+            }
+            .klevuNoResultsRecs-itemPrice, .productQuick-Price, .kuPrice {
+                div.kuSalePrice, span.kuSalePrice {
+                    text-align: center;
+                    float: none;
+                    display: table;
+                    margin: 0 auto;
+                }
+            }
+            .kuBtn {              
+                display: table !important;
+                margin: 0 auto;
+            }
+        }
+        .klevuNoResultsRecs-itemPrice, .productQuick-Price, .kuPrice {
+            div.kuSalePrice, span.kuSalePrice {                
+                font-size: 15px;                
+                color: @color_black;
+                .klevuQuickPriceGreyText {
+                    font-size: 15px !important;
+                    color: @color_black !important;
+                }
+            }
+        }
+        .kuPagination {
+            a.klevuPaginate, a.kuCurrent {
+                border: solid 1px @input-border_color;
+                width: 24px;
+                height: 24px;
+                font-size: 12px;
+                text-align: center;
+                padding: 0;
+                line-height: 22px;
+                &:last-child {
+                    border-right: solid 1px @input-border_color;
+                }
+            }
+        }
+        .kuBtn {
+            background-color: transparent;
+            border: solid 1px @color_black;
+            color: @color-black;
+            border-radius: 20px;
+            font-weight: @font-weight__bold;
+            padding: 6px 16px;
+            &:hover {
+                background: @hookah_theme_gradient;
+                border-color: transparent;
+            }
+        }
+    }
+    //
+    //  Responsive Tablet
+    //  ---------------------------------------------
+    @media only screen and (max-width: 1199px) and (min-width: 768px) {
+        .kuSearchResultsPageContainer {
+            [ku-container][data-container-role="left"] {
+                width: 250px;
+                max-width: 250px;
+            }
+            .kuResults {
+                ul {
+                    li.klevuProduct {
+                        .kuName {
+                            a {
+                                font-size: 18px;
+                            }
+                        }
+                    }
+                }
+            }            
+        }
+    }
 }
 
 //
@@ -203,6 +541,105 @@
         .block-content {
             margin-bottom: 0;
         }
+    }
+    .search-index-index {
+        .page-title {
+            .lib-font-size(22);
+            margin-top: 16px;
+        }
+    }
+    .kuSearchResultsPageContainer {
+        .kuContainer {
+            .kuTabs {
+                margin: 0 -15px 10px -15px;
+                a.kuTab {
+                    &:hover {
+                        background-color: transparent;
+                        border-bottom: solid 5px @hookah_theme_color;
+                    }
+                }
+            }
+        }
+        [ku-container][data-container-role="left"] {
+            max-width: 100%;
+            width: 100%;
+            padding-right: 0;
+        }
+        div.kuFilters {
+            padding: 0 10px;
+        }
+        .kuDropdown {
+            div.kuDropdownLabel {
+                &:after {
+                    right: 12px;
+                    top: 11px;
+                }
+            }
+        }
+        .kuResults {
+            ul {
+                li.klevuProduct {
+                    width: 50%;
+                    .kuName {
+                        margin-bottom: 10px;
+                        a {
+                            font-size: 16px;
+                        }
+                    }
+                }
+            }            
+        }
+        .klevuNoResultsRecs-itemPrice, .productQuick-Price, .kuPrice {
+            div.kuSalePrice, span.kuSalePrice {                   
+                font-size: 13px;
+                .klevuQuickPriceGreyText {
+                    font-size: 13px !important;
+                }
+            }
+        }
+        [data-result-view="list"] {
+            .kuResults {
+                ul {
+                    li.klevuProduct {
+                        text-align: center;
+                    }
+                }
+            }
+            .klevuNoResultsRecs-itemPrice, .productQuick-Price, .kuPrice {
+                div.kuSalePrice, span.kuSalePrice {
+                    text-align: center;
+                    float: none;
+                    display: table;
+                    margin: 0 auto;
+                }
+            }
+            .kuBtn {              
+                display: table !important;
+                margin: 0 auto;
+            }
+            .klevuProduct {
+                width: 50% !important;
+                main {
+                    width: 100%;
+                }
+            }    
+        }
+        .kuFilterBox {
+            .kuFilterHead {
+                &.kuCollapse {
+                    &::after  {
+                        width: 11px;
+                        height: 10px;
+                    }
+                }
+                &.kuExpand {
+                    &::after {
+                        width: 11px;
+                        height: 10px;
+                    }
+                }
+            }            
+        }         
     }
 }
 

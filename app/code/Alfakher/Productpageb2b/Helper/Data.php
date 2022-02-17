@@ -8,6 +8,10 @@ use \Magento\Customer\Model\Context as CustomerContext;
 class Data extends \Magento\Framework\App\Helper\AbstractHelper
 {
     /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    protected $scopeConfig;
+    /**
      * @var \Magento\Customer\Model\Session
      */
     protected $_customerSession;
@@ -26,13 +30,15 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         CollectionFactory $collection,
         \Magento\Framework\App\Http\Context $httpContext,
         CompanyManagementInterface $companyRepository,
-        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     ) {
         $this->collection = $collection;
         $this->_customerSession = $session;
         $this->httpContext = $httpContext;
         $this->companyRepository = $companyRepository;
         $this->customerRepository = $customerRepository;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -56,5 +62,14 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     {
         return $this->httpContext->getValue('document_expiry_date');
         //return $document_expiry_date;
+    }
+    public function getDocuments()
+    {
+        return $this->httpContext->getValue('is_document_upload');
+        //return $document_expiry_date;
+    }
+    public function getConfigValue($section)
+    {
+        return $this->scopeConfig->getValue($section, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 }

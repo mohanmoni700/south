@@ -44,43 +44,45 @@ define([
 	    /** bv_vv; date:04-02-2022; File Preview Start;
 	     *
 	     * @param {Object} e
-	     * @param {String} fileid
+	     * @param {String} fileId
 	     * @param {String} expiry_date
 	     * @param {String} btnsave
 	     */
-	    function handleFile(e, fileid, expiry_date, btnsave) {
+	    function handleFile(e, fileId, expiry_date, btnsave) {
 
 	        var reader = new FileReader();
 	        reader.onload = function(event) {
 	            if (event.target.result) {
-	                var filename = jQuery("#" + fileid).val();
+	                var filename = jQuery("#" + fileId).val();
 	                var extension = filename.replace(/^.*\./, '');
 	                var nameArr = filename.split('\\');
 	                if (extension == 'pdf') {
-	                    var filesrc = config.pdfImg;
-	                    var imgClass = "pdf-image";
-	                } else {
-	                    var filesrc = event.target.result;
-	                    var imgClass = "";
-	                }
+                        var filePreview = config.pdfImg;
+                        var filesrc = URL.createObjectURL(e.target.files[0])
+                        var imgClass = "pdf-image";
+                    } else {
+                        var filePreview = URL.createObjectURL(e.target.files[0]);
+                        var filesrc = URL.createObjectURL(e.target.files[0]);
+                        var imgClass = "";
+                    }
 
-	                $(".previewimage-" + fileid).attr("src", filesrc);
-	                $(".previewimage-" + fileid).attr("title", filename);
-	                $(".previewimage-" + fileid).addClass(imgClass);
+	                $(".previewimage-" + fileId).attr("src", filePreview);
+	                $(".previewimage-" + fileId).attr("title", filename);
+	                $(".previewimage-" + fileId).addClass(imgClass);
 
-	                $("#view-doc-link-" + fileid).show();
-	                $("#doc-actions-" + fileid).show();
-	                $("#view-doc-link-" + fileid).attr("href", filesrc);
-	                $("#download-doc-preview-" + fileid).attr("href", event.target.result);
-	                $("#download-doc-preview-" + fileid).attr("download", nameArr[2]);
+	                $("#view-doc-link-" + fileId).show();
+	                $("#doc-actions-" + fileId).show();
+	                $("#view-doc-link-" + fileId).attr("href", filesrc);
+	                $("#download-doc-preview-" + fileId).attr("href", event.target.result);
+	                $("#download-doc-preview-" + fileId).attr("download", nameArr[2]);
 	                $(expiry_date).show();
 	                $(btnsave).show();
 
-	                $("#deletedocument-" + fileid).click(function() {
-	                    $("#doc-actions-" + fileid).hide();
-	                    $(".previewimage-" + fileid).hide();
-	                    $("#view-doc-link-" + fileid).hide();
-	                    $("#" + fileid).val('');
+	                $("#deletedocument-" + fileId).click(function() {
+	                    $("#doc-actions-" + fileId).hide();
+	                    $(".previewimage-" + fileId).hide();
+	                    $("#view-doc-link-" + fileId).hide();
+	                    $("#" + fileId).val('');
 	                    $(this).closest('.upload').removeClass('active');
 	                });
 	            }
@@ -91,9 +93,9 @@ define([
 	    /** File uploading by ID
 	     *
 	     * @param {Number} showId
-	     * @param {String} fileid
+	     * @param {String} fileId
 	     */
-	    function fileUploading(showId, fileid, currentElem, e) {
+	    function fileUploading(showId, fileId, currentElem, e) {
 	    	var val = currentElem.val();
 	    	if (val) {
                 /*bv-hd Dynaminc Image and PDF validation*/
@@ -105,7 +107,7 @@ define([
 
                     $('<div class="doc_name" for="document name">' +
                         '<label>Document Name</label>' +
-                        '<input type="text" id="name-' + showId + '" name="name' + showId + '" /></div>' +
+                        '<input type="text" id="name-' + showId + '" name="name' + showId + '" data-validate="{required:true}"/></div>' +
                         '<div class="set_expiry" for="document expiry data" style="display:none">' +
                         '<label>Set a Specific Expiry date</label>' +
                         '<input type="checkbox" name="set_expiry-' + showId + '" id="toggle' + showId + '" value="0" class="cmn-toggle cmn-toggle-round" />' +
@@ -130,29 +132,32 @@ define([
                 var reader = new FileReader();
                 reader.onload = function(event) {
                     if (event.target.result) {
-                    	console.log(fileid);
-                    	console.log(showId);
-                        var filename = jQuery('#'+ fileid + showId).val();
+                        var filename = jQuery('#'+ fileId + showId).val();
                         var extension = filename.replace(/^.*\./, '');
                         var nameArr = filename.split('\\');
                         if (extension == 'pdf') {
-                            var filesrc = config.pdfImg;
-                            var imgClass = "pdf-image";
-                        } else {
-                            var filesrc = event.target.result;
-                            var imgClass = "";
-                        }
+	                        var filePreview = config.pdfImg;
+	                        var filesrc = URL.createObjectURL(e.target.files[0])
+	                        var imgClass = "pdf-image";
+	                    } else {
+	                        var filePreview = URL.createObjectURL(e.target.files[0]);
+	                        var filesrc = URL.createObjectURL(e.target.files[0]);
+	                        var imgClass = "";
+	                    }
 
-                        $('<img class="previewimage-filename-' + showId + ' ' + imgClass + '" height="170" width="170" src="' + filesrc + '" title="' + filename + '"/>' +
+                        $('<img class="previewimage-filename-' + showId + ' ' + imgClass + '" height="170" width="170" src="' + filePreview + '" title="' + filename + '"/>' +
                             '<div class="doc-actions" id="doc-actions-filename-' + showId + '">' +
-                            '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + event.target.result + '" target="_blank"></a>' +
-                            '<a class="deletedocument-preview deletedocument" id="deletedocument-filename-' + showId + '"></a>' +
-                            '</div>').insertAfter("#" + fileid + showId);
+                            '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + filesrc + '" target="_blank"></a>' +
+                            '<a class="deletedocument-preview deletedocument" id="deletedocument-filename' + showId + '"></a>' +
+                            '</div>').insertAfter("#" + fileId + showId);
 
-                        $("#deletedocument-filename-" + showId).click(function() {
+                        $("#deletedocument-filename" + showId).click(function() {
                             $("#doc-actions-filename-" + showId).remove();
-                            $('#'+ fileid + showId).val('');
-                            $(this).closest('.upload').removeClass('active');
+                            $('#'+ fileId + showId).val('');
+                            $(".previewimage-filename-" + showId).hide();
+		                    $("#view-doc-link-" + showId).hide();
+		                    $("#updatefile_" + showId + ", #filename-"+showId).closest('.upload').find('.input-note').show();
+                            $("#updatefile_" + showId + ", #filename-"+showId).closest('.upload').removeClass('active');
                         });
                     }
                 }
@@ -265,9 +270,10 @@ define([
 	        	var id = jQuery('#usaform').find('input[type="file"]').length;
 	        	var showId = ++id;
 	            if (showId <= 10) {
-	                $('<div class="upload" for="document uploader"><div class="input-file test" id="input-file-' + showId + '">' +
+	                $('<div class="upload" for="document uploader"><div class="input-file" id="input-file-' + showId + '">' +
 	                    '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" />' +
 	                    '<span class="input-note">' + config.inputNote + '</span>'+
+	                    '<span id="image-error-message'+showId+'" style="color:red;"></span>'+
 	                    '</div></div>').insertBefore('.upload-container .add-more-cont');
 	            }
 	            $('#filename-' + showId).change(function(e) {
@@ -283,7 +289,10 @@ define([
 	            if ($(this).val() == "1") {
 	                $(".add-more-container").show();
 	                $(".add-more-field .note").show();
-	                $('#add_more').click();
+	                if($('.upload-container.add-more-container .upload').length == 0)
+	                {
+	                	$('#add_more').click();
+	                }
 	            } else {
 	                $(".add-more-container").hide();
 	                $(".add-more-field .note").hide();
@@ -325,11 +334,15 @@ define([
 	            }]
 	        };
 	        var popup = modal(options, $('#popup-modal'));
-
+	        $('#popup-modal').modal({
+                closed: function (){
+                    this.closeModal();
+                    location.reload();
+                    $('#usaform').trigger("reset");
+                }
+            });
 	        $('button#btnsave').click( function(e) {
-	        	alert('calll');
 		        if($('#usaform').valid()) {
-	        		alert('calll1');
 		        	formSubmitById('usaform', 'usaform', config.customResultUrl);
 		        }
 		    });
