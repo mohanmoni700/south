@@ -30,11 +30,13 @@
         <div class="updated-container">
             <?php foreach ($data as $key => $val): ?>
                 <?php if ($val['is_delete'] == 0): ?>
-                    <?php if ($val['status'] == 0 && $val['message'] != null): ?>
+                    <?php $expiry_date = $val['expiry_date']; ?>
+                    <?php if (($val['status'] == 0 && $val['message'] != null) ||
+                    (($expiry_date <= $today && $expiry_date != "") && $val['status'] == 0)): ?>
                         <?php $rejectedClass = "rejected"; ?>
                     <?php else: ?>
                         <?php $rejectedClass = ""; ?>
-                    <?php endif;?>
+                    <?php endif; ?>
                     <div class="document <?= $block->escapeHtml($rejectedClass); ?>" for="document uploader">
                         <?php
                             $fileName = $mediaUrl.$val['filename'];
