@@ -675,6 +675,20 @@ ul.nav.items{
                     }
                 }
             }
+            &.mypaymentoptions{
+                a,strong{
+                    &:before{
+                      width: 17px;
+                      height: 17px;
+                      background: url('@{baseDir}images/payment_option.svg') no-repeat;  
+                    }   
+                }
+                strong{
+                    &:before{
+                        filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+                    }
+                }
+            }
             
             &.manageaddresses{
                 a,strong{
@@ -1068,8 +1082,10 @@ ul.nav.items{
                 float: right;
                 width: 50%;
                 .register, .action.submit {
-                    float: right;
-                    
+                    float: right;                    
+                }
+                .width-auto {
+                    width: auto;
                 }
             }
             button.submit {
