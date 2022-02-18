@@ -16,11 +16,14 @@ $placeholderImageUrl = $imageHelper->getDefaultPlaceholderUrl('image');
 <?php
 foreach ($subcats as $subcat):
     if ($subcat->getIsActive()):
+        // echo "<pre>";
             $_category = $block->getChildCategory($subcat->getId());
+            // print_r($_category->getData());die;
             $_outputhelper = $this->helper('Magento\Catalog\Helper\Output');
             $subcaturl = $subcat->getUrl();
             $_imgHtml = '';
             $_imgUrl = $_category->getImageUrl();
+            $_disc = $_category->getDescription();
             if($_imgUrl){
             $_imgHtml = '<img src="' . $_imgUrl . '" height="300" width="300" alt="Product" />';
             }else{
@@ -31,18 +34,22 @@ foreach ($subcats as $subcat):
             ?>
 
             <div class="item product product-item">
-            <div class="product-item-info">
-                    <a href="<?= $subcaturl ?>" class="product photo product-item-photo"><?= $_imgHtml ?>
-                    </a>
-                <div class="product details product-item-details">
-                    <strong class="product name product-item-name"><a
-                            class="product-item-link"
-                            title="<?= $subcat->getName() ?>"
-                            href="<?= $subcaturl ?>">
-                        <?= $subcat->getName() ?></a>
-                    </strong>
+                <div class="product-item-info">
+                        <a href="<?= $subcaturl ?>" class="product photo product-item-photo"><?= $_imgHtml ?>
+                        </a>
+                    <div class="product details product-item-details">
+                            <span class="catalog description-item">
+                                <?= $_disc; ?>
+                            </span>
+                        
+                        <strong class="product name product-item-name"><a
+                                class="product-item-link"
+                                title="<?= $subcat->getName() ?>"
+                                href="<?= $subcaturl ?>">
+                            <?= $subcat->getName() ?></a>
+                        </strong>
+                    </div>
                 </div>
-            </div>
             </div>
 
    <?php  endif;
@@ -54,3 +61,10 @@ endforeach;
 </div>
 
 <!-- Show child category image and name start[BS] -->
+
+
+<script>
+    require(['jquery'], function ($) {
+        $(".toolbar-products").hide();
+    });
+</script>
