@@ -23,13 +23,16 @@
     }
 
     .checkout-cart-index {
-        .page-title-wrapper{
-            margin-top: @indent__m + 15px;
-            margin-bottom: @indent__m;
+        div.page-title-wrapper{
+            padding-right: 0;
+            align-items: center;
+            justify-content: center;
+            margin: 60px 0 30px 0;
+            width: 100%;
             .page-title{
                 .lib-font-size(32);
-                line-height: 38px;
-                font-weight: 400;
+                line-height: 1.2;
+                font-weight: @font-weight__bold;
                 margin-bottom: 0;
             }
         }
@@ -124,6 +127,10 @@
         }
         .cart-empty{
             text-align: center;
+            background: url('@{baseDir}images/shopping-bag.svg') no-repeat center 0;
+            background-size: 140px auto;
+            padding-top: 150px;
+            color: @color_black;
         }
     }
     .item-actions {
@@ -740,14 +747,15 @@
     } 
     .checkout-cart-index{
         .page-title-wrapper{
-            .page-title{
-                .lib-font-size(30);
-                font-weight: 700;
-                color: #333333;
+            h1.page-title{
+                .lib-font-size(26);
                 display: block;
                 text-align: center;
-                margin-bottom: 40px;
             }
+        }
+        .cart-empty {
+            background-size: 100px auto;
+            padding-top: 120px;
         }
         thead + tbody.cart.item {
             border-top: 0 !important;
