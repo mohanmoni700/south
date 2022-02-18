@@ -188,6 +188,7 @@ define([
                 	fileRender(showId, 'filename-',$(this),e);
                 });
             });
+            
             var options = {
                 type: 'popup',
                 responsive: true,
@@ -199,10 +200,24 @@ define([
                     click: function() {
                         this.closeModal();
                         location.reload();
-                        $('#myformdynamic').trigger("reset");
+                        $('#myformdynamic').trigger("reset");  
+                    }
+                },{
+                    class: 'action-close',
+                    click: function() {
+                        this.closeModal();
+                        location.reload();
+                        $('#myformdynamic').trigger("reset");  
                     }
                 }]
             };
+            
+            // Reload the page on Esc key
+            $(document).keydown(function(event) {
+                if (event.keyCode == 27) { 
+                    location.reload();
+                }
+            });    
 
             var popup = modal(options, $('#popup-modal'));
             $('#popup-modal').modal({

@@ -126,8 +126,22 @@ define([
                                                 $("#non_usa_customer_tab").show();
                                             }
                                         }
-                                    }]
+                                    },{
+                                    class: 'action-close',
+                                    click: function() {
+                                        this.closeModal();
+                                        location.reload();
+                                        $('#form-validate').trigger("reset");  
+                                    }
+                                }]
                                 };
+
+                                // Reload the page on Esc key
+                                $(document).keydown(function(event) {
+                                    if (event.keyCode == 27) { 
+                                        location.reload();
+                                    }
+                                });
                                 var popup = modal(options, $('#register-success-popup'));
 
                                 $('#form-validate').trigger("reset");
