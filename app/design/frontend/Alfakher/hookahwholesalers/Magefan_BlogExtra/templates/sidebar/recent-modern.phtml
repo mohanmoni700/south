@@ -68,12 +68,12 @@ $imageHelper = $this->helper(\Magefan\Blog\Helper\Image::class);
                             <?php if ($block->getDisplayImage() && $_post->isPublishDateEnabled()) { ?>
                                 <div class="block-date">
                                     <span class="post-date"><?= $block->escapeHtml($_post->getPublishDate()) ?></span>
+                                    <div class="comment-counter"><strong> - </strong><span class="cmt-count"><?= $block->escapeHtml($comment_count) ?> </span></div>
                                 </div>
                             <?php } ?>
                             <div class="post-description d-none"></div>
                             <div class="read-more d-none"></div>
                         </div>
-                        <?= $comment_count ?>
                     </div>
                     <!-- END post item -->
                 <?php } ?>
