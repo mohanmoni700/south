@@ -130,8 +130,28 @@ define([
                                     class: 'action-close',
                                     click: function() {
                                         this.closeModal();
-                                        location.reload();
-                                        $('#form-validate').trigger("reset");  
+                                        $("#basic_details").hide();
+                                        $("#basic_details").removeClass("show");
+                                        $(".basic_details").removeClass("active");
+
+                                        $("#business_details").hide();
+                                        $("#business_details").removeClass("show");
+                                        $(".business_details").removeClass("active");
+
+                                        $("#document_upload").show();
+                                        $("#document_upload").addClass("show");
+                                        $(".document_upload").addClass("active");
+                                        $('#form-validate').trigger("reset");
+                                        if(data.country == "US")
+                                        {
+                                            $('#cust_id_usa').val(data.id);
+                                            $("#usa_customer_tab").show();
+                                        }
+                                        if (data.country != "US")
+                                        {
+                                            $('#cust_id_non_usa').val(data.id);
+                                            $("#non_usa_customer_tab").show();
+                                        }  
                                     }
                                 }]
                                 };
@@ -139,7 +159,28 @@ define([
                                 // Reload the page on Esc key
                                 $(document).keydown(function(event) {
                                     if (event.keyCode == 27) { 
-                                        location.reload();
+                                        $("#basic_details").hide();
+                                        $("#basic_details").removeClass("show");
+                                        $(".basic_details").removeClass("active");
+
+                                        $("#business_details").hide();
+                                        $("#business_details").removeClass("show");
+                                        $(".business_details").removeClass("active");
+
+                                        $("#document_upload").show();
+                                        $("#document_upload").addClass("show");
+                                        $(".document_upload").addClass("active");
+                                        $('#form-validate').trigger("reset");
+                                        if(data.country == "US")
+                                        {
+                                            $('#cust_id_usa').val(data.id);
+                                            $("#usa_customer_tab").show();
+                                        }
+                                        if (data.country != "US")
+                                        {
+                                            $('#cust_id_non_usa').val(data.id);
+                                            $("#non_usa_customer_tab").show();
+                                        }
                                     }
                                 });
                                 var popup = modal(options, $('#register-success-popup'));
