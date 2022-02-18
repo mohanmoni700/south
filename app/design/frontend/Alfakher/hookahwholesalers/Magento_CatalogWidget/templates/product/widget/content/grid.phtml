@@ -11,7 +11,11 @@ use Magento\Framework\App\Action\Action;
 // phpcs:disable Generic.Files.LineLength.TooLong
 // phpcs:disable Magento2.Templates.ThisInTemplate.FoundHelper
 ?>
-<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
+<?php 
+    $showCart = true;
+    $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
+    $showCart = $_helperB2b->isCustomerLoggedIn();
+    //$_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
     $docdata = $_helperB2b->getDocMessageData();
     $is_document_upload = $_helperB2b->getDocuments();
 ?>
@@ -27,7 +31,6 @@ use Magento\Framework\App\Action\Action;
 
     $showWishlist = true;
     $showCompare = true;
-    $showCart = true;
     $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
     $description = false;
     ?>
@@ -61,8 +64,9 @@ use Magento\Framework\App\Action\Action;
                                 <?php endif; ?>
                                 
                                 <?php if ($docdata == 2 && $is_document_upload == 1): ?>
-                                    <?= /* @noEscape */ $block->getProductPrice($_product) ?>
-                                    <?= $block->getProductDetailsHtml($_product) ?>
+                                    <?= $block->getProductPriceHtml($_item, $type) ?>
+
+                                    <?= $block->getProductDetailsHtml($_item) ?>
                                 <?php endif; ?>
 
                                 <?php if ($showWishlist || $showCompare || $showCart): ?>
@@ -95,6 +99,12 @@ use Magento\Framework\App\Action\Action;
                                                             <div class="stock unavailable"><span><?= $block->escapeHtml(__('Out of stock')) ?></span></div>
                                                         <?php endif; ?>
                                                     <?php endif; ?>
+                                                </div>
+                                                ?php elseif(!$showCart) : ?>
+                                                <div class="actions-primary">
+                                                    <div class="logged-in-action">
+                                                        <a href="<?= $block->getUrl('customer/account/login') ?>"><?= $block->escapeHtml(__('Sign in / Register')) ?></a>
+                                                    </div>
                                                 </div>
                                             <?php endif; ?>
                                         </div>
