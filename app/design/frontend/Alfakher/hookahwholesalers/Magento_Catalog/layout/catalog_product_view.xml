@@ -12,7 +12,7 @@
     <body>
         <referenceBlock name="breadcrumbs" remove="true" />
             <referenceContainer name="page.top">
-                <block class="Alfakher\Productpageb2b\Block\Product\Breadcrumbs" name="product.view.breadcrumbs" template="Magento_Theme::html/breadcrumbs.phtml" />       
+                <block class="Alfakher\Productpageb2b\Block\Product\Breadcrumbs" name="product.view.breadcrumbs" template="Magento_Theme::html/product_breadcrumbs.phtml" />       
             </referenceContainer>
         <move element="page.main.title" destination="product.info.main" before="-" />
         <move element="breadcrumbs" destination="page.wrapper" before="main.content"/>
