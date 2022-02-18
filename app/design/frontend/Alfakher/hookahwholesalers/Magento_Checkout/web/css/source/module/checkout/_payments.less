@@ -72,7 +72,7 @@
 
         .payment-method-content {
             display: none;
-            .lib-css(padding, 0 0 @indent__base @checkout-payment-method-content__padding__xl);
+            .lib-css(padding, 0 0 @indent__base 0);
             .fieldset {
                 &:not(:last-child) {
                     margin: 0 0 @indent__base;
@@ -211,7 +211,12 @@
                 margin: @indent__s 0 0 ;
             }
         }
-    }
+        .actions-toolbar {
+            .primary.checkout {
+                width: 260px;
+            }
+        }
+    }    
 }
 
 //
@@ -249,14 +254,18 @@
                     }
 
                     &.type {
-                        .control {
-                            margin-left: 25.8%;
-                        }
-
+                        width: 100%;
                         &.no-detection {
                             .control {
                                 margin-left: 0;
                             }
+                        }
+                    }
+                    &.cvv {
+                        width: 100%;
+                        ~ .field {
+                            width: 100%;
+                            padding-left: 20px;
                         }
                     }
                 }

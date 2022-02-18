@@ -37,17 +37,16 @@ foreach ($subcats as $subcat):
                 <div class="product-item-info">
                         <a href="<?= $subcaturl ?>" class="product photo product-item-photo"><?= $_imgHtml ?>
                         </a>
-                    <div class="product details product-item-details">
-                            <span class="catalog description-item">
-                                <?= $_disc; ?>
-                            </span>
-                        
+                    <div class="product details product-item-details">                        
                         <strong class="product name product-item-name"><a
                                 class="product-item-link"
                                 title="<?= $subcat->getName() ?>"
                                 href="<?= $subcaturl ?>">
                             <?= $subcat->getName() ?></a>
                         </strong>
+                        <div class="catalog description-item">
+                            <?= $_disc; ?>
+                        </div>
                     </div>
                 </div>
             </div>
