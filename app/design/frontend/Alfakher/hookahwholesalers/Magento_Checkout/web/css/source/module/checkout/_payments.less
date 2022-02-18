@@ -175,6 +175,73 @@
             }
         }
     }
+
+    //
+    //  Order Success
+    //  _____________________________________________
+    .checkout-onepage-success {
+        .page-main {
+            text-align: center;
+            padding: 160px 20px 60px 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.10);
+            border-radius: 10px;
+            margin: 40px auto 80px;
+            background: @color_white url('@{baseDir}images/order-success.svg') no-repeat center 60px;
+        }
+        .actions-toolbar {
+            .primary {
+                float: none;
+            }
+        }
+        .column.main {
+            min-height: 0;
+            padding: 0;
+        }
+        .action.print {
+            display: none;
+        }
+        .page-title {
+            .lib-font-size(32);
+            font-weight: @font-weight__bold;
+            margin-bottom: 30px;
+        }
+        .actions-toolbar {
+            margin-top: 30px;
+        }
+        .action.primary.continue {
+            margin: 0;
+            min-width: 375px;
+            padding: 12px 17px;
+            font-size: 16px;
+            background: @hookah_theme_color;
+            border-color: @hookah_theme_color;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            &:hover {
+                background: @hookah_theme_gradient;
+                border-color: transparent;
+            }
+        }
+    }
+
+    //
+    //  Responsive
+    //  _____________________________________________
+    @media only screen and (max-width: 1399px) {
+        .checkout-onepage-success {
+            .page-main {
+                width: 96%;
+            }
+        }
+    }
+    @media only screen and (max-width: 1199px) {
+        .checkout-onepage-success {
+            .page-main {
+                margin: 30px auto 60px;
+            }
+        }
+    }
 }
 
 //
@@ -216,7 +283,29 @@
                 width: 260px;
             }
         }
-    }    
+    } 
+    
+    //
+    //  Order Success
+    //  _____________________________________________
+    .checkout-onepage-success {
+        .action.primary.continue {
+            min-width: 100%;
+        }
+        .page-main {
+            width: 90%;
+            margin: 20px auto;
+            padding: 140px 16px 40px 16px;
+            background-position: center 30px;
+        }
+        .page-title {
+            .lib-font-size(26);
+            margin-bottom: 24px;
+        }
+        .actions-toolbar {
+            margin-top: 25px;
+        }
+    }
 }
 
 //
