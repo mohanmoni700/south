@@ -180,32 +180,20 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
             $websiteID = $this->_storemanager->getStore()->getWebsiteId();
             $email = (string) $login['username'];
             $resultRedirect->setPath('customer/account/login/');
-            if ($email) {
-                $customerData = $this->customer->setWebsiteId($websiteID)->loadByEmail($email);
-                $migrate_customer_value = "";
-                if ($customerData->getId()) {
-                    $customerData = $this->customerRepository->getById($customerData->getId());
-                    $migrate_customer = $customerData->getCustomAttribute('migrate_customer');
+            $migrate_customer_value = "";
+            $customerData = $this->customer->setWebsiteId($websiteID)->loadByEmail($email);
+            if ($customerData->getId()) {
+                $customerData = $this->customerRepository->getById($customerData->getId());
+                $migrate_customer = $customerData->getCustomAttribute('migrate_customer');
 
-                    if (!empty($migrate_customer)) {
-                        $migrate_customer_value = $migrate_customer->getValue();
-                    }
+                if (!empty($migrate_customer)) {
+                    $migrate_customer_value = $migrate_customer->getValue();
                 }
-            } else {
-                $this->messageManager->addErrorMessage(__('Please enter your email.'));
-                return $resultRedirect;
             }
+
             /* Here we are checking the Reset password */
             if (!empty($login['username']) && !empty($migrate_customer_value) && $migrate_customer_value == 1) {
                 /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
-
-                if (!\Zend_Validate::is($email, \Magento\Framework\Validator\EmailAddress::class)) {
-                    $this->session->setForgottenEmail($email);
-                    $this->messageManager->addErrorMessage(
-                        __('The email address is incorrect. Verify the email address and try again.')
-                    );
-                    return $resultRedirect;
-                }
 
                 try {
                     $this->customerAccountManagement->initiatePasswordReset(

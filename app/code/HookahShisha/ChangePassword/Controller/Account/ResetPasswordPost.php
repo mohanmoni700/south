@@ -110,7 +110,6 @@ class ResetPasswordPost extends \Magento\Customer\Controller\Account\ResetPasswo
             $this->messageManager->addSuccessMessage(__('You updated your password.'));
             $resultRedirect->setPath('*/*/login');
 
-            return $resultRedirect;
         } catch (InputException $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
             foreach ($e->getErrors() as $error) {
