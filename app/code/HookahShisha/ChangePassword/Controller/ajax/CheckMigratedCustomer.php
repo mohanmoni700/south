@@ -82,7 +82,7 @@ class CheckMigratedCustomer extends \Magento\Framework\App\Action\Action
         } else {
             $response = [
                 'errors' => true,
-                'message' => __('Invalid Customer'),
+                'message' => __('Please enter a valid email address.'),
             ];
         }
         return $resultJson->setData($response);
