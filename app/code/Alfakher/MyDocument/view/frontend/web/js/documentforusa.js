@@ -81,6 +81,8 @@ define([
 	                $("#deletedocument-" + fileId).click(function() {
 	                    $("#doc-actions-" + fileId).hide();
 	                    $(".previewimage-" + fileId).hide();
+	                    // remove pdf class[BS]
+	                    $(".previewimage-" + fileId).removeClass(imgClass);
 	                    $("#view-doc-link-" + fileId).hide();
 	                    $("#" + fileId).val('');
 	                    $(this).closest('.upload').removeClass('active');
@@ -155,6 +157,8 @@ define([
                             $("#doc-actions-filename-" + showId).remove();
                             $('#'+ fileId + showId).val('');
                             $(".previewimage-filename-" + showId).hide();
+                            //remove pdf class[BS]
+	                    	$(".previewimage-filename-" + showId).removeClass(imgClass);
 		                    $("#view-doc-link-" + showId).hide();
 		                    $("#updatefile_" + showId + ", #filename-"+showId).closest('.upload').find('.input-note').show();
                             $("#updatefile_" + showId + ", #filename-"+showId).closest('.upload').removeClass('active');
