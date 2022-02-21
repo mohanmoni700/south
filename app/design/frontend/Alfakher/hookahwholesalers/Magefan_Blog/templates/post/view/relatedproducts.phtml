@@ -178,7 +178,31 @@ if ($exist = $block->getItems()->getSize()) {
                 slidesToShow: 4,
                 slidesToScroll: 1,
                 autoplay: false,
-                infinite: false
+                infinite: false,
+
+                responsive: [
+                    {
+                        breakpoint: 1023,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 1,
+                        }
+                    },
+                    {
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 1
+                        }
+                    },
+                    {
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1
+                        }
+                    }
+               ]
             });
         });
     });

@@ -331,8 +331,23 @@ define([
 	                    location.reload();
 	                    $('#usaform').trigger("reset");
 	                }
-	            }]
+	            },{
+                    class: 'action-close',
+                    click: function() {
+                        this.closeModal();
+                        location.reload();
+                        $('#usaform').trigger("reset");  
+                    }
+                }]
 	        };
+
+	        // Reload the page on Esc key
+            $(document).keydown(function(event) {
+                if (event.keyCode == 27) { 
+                    location.reload();
+                }
+            });    
+
 	        var popup = modal(options, $('#popup-modal'));
 	        $('#popup-modal').modal({
                 closed: function (){

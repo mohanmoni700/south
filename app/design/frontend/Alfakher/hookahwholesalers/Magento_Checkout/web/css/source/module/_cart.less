@@ -23,16 +23,16 @@
     }
 
     .checkout-cart-index {
-        .page-title-wrapper{
-            margin-top: @indent__m + 15px;
-            margin-bottom: @indent__m;
-            .page-title{
+        div.page-title-wrapper{
+            padding-right: 0;            
+            margin: 40px 0 25px 0;
+            width: 100%;
+            .page-title {
                 .lib-font-size(32);
-                line-height: 38px;
-                font-weight: 400;
                 margin-bottom: 0;
+                font-weight: @font-weight__regular;
             }
-        }
+        }        
         .cart.main.actions{
             .action.update{
                 .cart_btn();
@@ -122,8 +122,26 @@
                 margin-top: -7px;
              }
         }
+        .empty-cart-class{
+            .page-title-wrapper{
+                width: 100%;
+                padding-right: 0;
+                .page-title{
+                    width: 100%;
+                    .lib-font-size(32);
+                    line-height: 1.2;
+                    font-weight: @font-weight__bold;
+                    margin-bottom: 0;
+                    text-align: center;
+                }
+            }
+        }
         .cart-empty{
             text-align: center;
+            background: url('@{baseDir}images/shopping-bag.svg') no-repeat center 0;
+            background-size: 140px auto;
+            padding-top: 150px;
+            color: @color_black;
         }
     }
     .item-actions {
@@ -475,6 +493,8 @@
 
             &-item-details {
                 white-space: normal;
+                text-align: left;
+                margin-top: 0;
             }
 
             &-item-name {
@@ -486,6 +506,10 @@
                 color: @color-black;
                 text-decoration: none;
                 margin-bottom: 10px;
+                min-height: 0;
+                text-overflow: unset;
+                -webkit-line-clamp: unset;
+                overflow: unset;
                 a{
                     color: @color-black;
                 }
@@ -740,14 +764,25 @@
     } 
     .checkout-cart-index{
         .page-title-wrapper{
-            .page-title{
+            h1.page-title{
                 .lib-font-size(30);
-                font-weight: 700;
-                color: #333333;
                 display: block;
                 text-align: center;
-                margin-bottom: 40px;
+                font-weight: @font-weight__bold;
             }
+        }
+        .empty-cart-class {
+            .page-title-wrapper{
+                h1.page-title{
+                    .lib-font-size(30);
+                    display: block;
+                    text-align: center;
+                }
+            }
+        }
+        .cart-empty {
+            background-size: 100px auto;
+            padding-top: 120px;
         }
         thead + tbody.cart.item {
             border-top: 0 !important;
@@ -870,6 +905,15 @@
             &:extend(.abs-shopping-cart-items-mobile all);
         }
     }
+
+    .empty-cart-class{
+        .page-title-wrapper{
+            margin-top: 80px;
+            .page-title{
+                margin-bottom: 0;
+            }
+        }
+    }
 }
 
 //
@@ -954,6 +998,8 @@
                     vertical-align: top;
                     white-space: normal;
                     width: 99%;
+                    text-align: left;
+                    margin-top: 0;
                 }
             }
         }

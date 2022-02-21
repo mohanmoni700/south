@@ -12,5 +12,11 @@
         <referenceContainer name="sidebar.additional">
             <referenceBlock name="multiple-wishlist_sidebar" remove="true" />
         </referenceContainer>
+    
+        <referenceContainer name="page.top">
+           <container name="blogpost.div" htmlTag="div" htmlClass="blogpost-div" />
+        </referenceContainer>
+       	
+       	<move element="breadcrumbs" destination="blogpost.div" before="main.content"/>
     </body>
 </page>
