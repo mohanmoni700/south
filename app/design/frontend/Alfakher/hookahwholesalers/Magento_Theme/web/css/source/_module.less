@@ -1152,7 +1152,7 @@
                 border-radius: 26px;
                 &:hover{
                     background: @hookah_theme_gradient;
-                    border: transparent;
+                    border-color: transparent;
                 }
             }
         }
@@ -2307,6 +2307,9 @@
                         right: -@indent__xs;
                         &::before{
                             right: 3px;
+                        }
+                        &::after{
+                            right: 3px !important;
                         }
                     }
                 }

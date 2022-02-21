@@ -34,7 +34,7 @@ $imageHelper = $this->helper(\Magefan\Blog\Helper\Image::class);
                     <?php
                     $_postUrl = $block->escapeUrl($_post->getPostUrl());
                     $_postName = $block->escapeHtml($_post->getTitle());
-                    $comment_count = $_post->getCommentsCount();
+                    $comment_count = $_post->getCommentsCount() ? $_post->getCommentsCount() : 0;  
                     ?>
                     <!-- post item -->
                     <div class="post-item d-flex mb-4">

@@ -40,12 +40,14 @@ $today = date("Y-m-d");
         data-mage-init='{"validation":{}}'
         method="post">
         <div class="updated-container">
-        <?php foreach ($data as $val): ?>
+        <?php foreach ($data as $val): 
+                        // echo $val['expiry_date'];
+            ?>
             <?php if ($val['is_add_more_form'] == 0): ?>
                 <?php if ($val['is_delete'] == 0): ?>
                     <?php $expiry_date = $val['expiry_date']; ?>
                     <?php if (($val['status'] == 0 && $val['message'] != null) ||
-                    (($expiry_date <= $today && $expiry_date != "") && $val['status'] == 0)): ?>
+                    (($expiry_date <= $today && $expiry_date != ""))): ?>
                         <?php $rejectedClass = "rejected"; ?>
                     <?php else: ?>
                         <?php $rejectedClass = ""; ?>
@@ -64,7 +66,7 @@ $today = date("Y-m-d");
                                 <img src="<?= $block->escapeUrl($fileName); ?>" height="170" width="170" />
                             <?php endif; ?>
                             <div class="doc-actions">
-                                <?php if ($val['status'] == 0 && $val['message'] != null): ?>
+                                <?php if ($val['status'] == 0 && $val['message'] != null || (($expiry_date <= $today && $expiry_date != "") && $val['status'] == 0)): ?>
                                     <a  class="view-doc-link" href="<?= $block->escapeUrl($fileName); ?>"
                                         target="_blank"></a>
                                     <a  class="deletedocument" name="deletedocument" href="#"
@@ -185,10 +187,12 @@ $today = date("Y-m-d");
                     </span>
                 </div>
                 <?php endif;?>
-                <?php if ($val['is_add_more_form'] == 1): ?>
+                <?php if ($val['is_add_more_form'] == 1):?>
                     <?php if ($val['is_delete'] == 0): ?>
-                        <?php if ($val['status'] == 0 && $val['message'] != null): ?>
-                            <?php $rejectedClass = "rejected"; ?>
+                        <?php 
+                        if (($val['status'] == 0 && $val['message'] != null) ||
+                        (($val['expiry_date'] <= $today && $val['expiry_date'] != ""))):?>
+                        <?php $rejectedClass = "rejected"; ?>
                         <?php else: ?>
                             <?php $rejectedClass = ""; ?>
                         <?php endif;?>
@@ -206,7 +210,7 @@ $today = date("Y-m-d");
                                     <img src="<?= $block->escapeUrl($fileName); ?>" height="170" width="170" />
                                 <?php endif; ?>
                                 <div class="doc-actions">
-                                    <?php if ($val['status'] == 0 && $val['message'] != null): ?>
+                                    <?php if ($val['status'] == 0 && $val['message'] != null || (($val['expiry_date'] <= $today && $val['expiry_date'] != "") && $val['status'] == 0)): ?>
                                         <a  class="view-doc-link" href="<?= $block->escapeUrl($fileName); ?>"
                                             target="_blank"></a>
                                         <a  class="deletedocument" name="deletedocument" href="#"
