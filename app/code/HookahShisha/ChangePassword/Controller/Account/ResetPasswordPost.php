@@ -1,13 +1,8 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace HookahShisha\ChangePassword\Controller\Account;
 
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
-use Magento\Customer\Model\Customer\CredentialsValidator;
 use Magento\Customer\Model\ForgotPasswordToken\GetCustomerByToken;
 use Magento\Customer\Model\Session;
 use Magento\Framework\App\Action\Context;
@@ -44,7 +39,6 @@ class ResetPasswordPost extends \Magento\Customer\Controller\Account\ResetPasswo
      * @param Session $customerSession
      * @param AccountManagementInterface $accountManagement
      * @param CustomerRepositoryInterface $customerRepository
-     * @param CredentialsValidator|null $credentialsValidator
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
@@ -53,7 +47,6 @@ class ResetPasswordPost extends \Magento\Customer\Controller\Account\ResetPasswo
         Session $customerSession,
         AccountManagementInterface $accountManagement,
         CustomerRepositoryInterface $customerRepository,
-        CredentialsValidator $credentialsValidator = null,
         GetCustomerByToken $getByToken = null
     ) {
         $objectManager = ObjectManager::getInstance();
