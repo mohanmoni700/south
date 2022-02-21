@@ -41,7 +41,7 @@ define([
                                 $('.response-msg').html("<div class='error'>"+msg.message+"</div>");
                                 setTimeout(function(){ $('.response-msg').html(null); }, 5000);
                             } else {
-                                if (msg.migrated_customer == 1){
+                                if (msg.migrate_customer == 1){
                                     $(config.passwordSelector).hide();
                                     $(config.submitButton).text("Reset Password");
                                 }else{

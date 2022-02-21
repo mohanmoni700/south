@@ -67,22 +67,22 @@ class CheckMigratedCustomer extends \Magento\Framework\App\Action\Action
         $customer->loadByEmail($email);
         if ($customer->getId()) {
             $customer = $this->customerRepository->getById($customer->getId());
-            $migrated_customer = $customer->getCustomAttribute('migrated_customer');
-            if (!empty($migrated_customer)) {
-                $migrated_customer_value = $migrated_customer->getValue();
+            $migrate_customer = $customer->getCustomAttribute('migrate_customer');
+            if (!empty($migrate_customer)) {
+                $migrate_customer_value = $migrate_customer->getValue();
                 $response = [
-                    'migrated_customer' => $migrated_customer_value,
+                    'migrate_customer' => $migrate_customer_value,
                 ];
             } else {
                 $response = [
-                    'migrated_customer' => null,
+                    'migrate_customer' => null,
                 ];
 
             }
         } else {
             $response = [
                 'errors' => true,
-                'message' => __('Invalid Customer'),
+                'message' => __('Please enter a valid email address.'),
             ];
         }
         return $resultJson->setData($response);

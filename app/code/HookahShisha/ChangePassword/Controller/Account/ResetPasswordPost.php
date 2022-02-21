@@ -100,8 +100,8 @@ class ResetPasswordPost extends \Magento\Customer\Controller\Account\ResetPasswo
                 $password
             );
 
-            if ($customer->getCustomAttribute("migrated_customer")) {
-                $customer->setCustomAttribute("migrated_customer", 0);
+            if ($customer->getCustomAttribute("migrate_customer")) {
+                $customer->setCustomAttribute("migrate_customer", 0);
                 $this->customerRepository->save($customer);
             }
             // logout from current session if password changed.

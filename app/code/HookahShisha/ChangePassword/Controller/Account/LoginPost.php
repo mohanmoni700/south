@@ -183,13 +183,13 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                     $customer->setWebsiteId($websiteID);
                 }
                 $customer->loadByEmail($email);
-                $migrated_customer_value = "";
+                $migrate_customer_value = "";
                 if ($customer->getId()) {
                     $customer = $this->customerRepository->getById($customer->getId());
-                    $migrated_customer = $customer->getCustomAttribute('migrated_customer');
+                    $migrate_customer = $customer->getCustomAttribute('migrate_customer');
 
-                    if (!empty($migrated_customer)) {
-                        $migrated_customer_value = $migrated_customer->getValue();
+                    if (!empty($migrate_customer)) {
+                        $migrate_customer_value = $migrate_customer->getValue();
                     }
                 }
             } else {
@@ -197,7 +197,7 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                 return $resultRedirect->setPath('customer/account/login/');
             }
             /* Here we are checking the Reset password */
-            if (!empty($login['username']) && !empty($migrated_customer_value) && $migrated_customer_value == 1) {
+            if (!empty($login['username']) && !empty($migrate_customer_value) && $migrate_customer_value == 1) {
                 /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
                 $resultRedirect = $this->resultRedirectFactory->create();
 
