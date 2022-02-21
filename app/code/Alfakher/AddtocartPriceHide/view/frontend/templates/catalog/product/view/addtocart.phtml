@@ -1,0 +1,65 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php   $_product = $block->getProduct(); ?>
+<?php   $buttonTitle = __('Add to Cart'); ?>
+<?php   $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
+        $showCart = $_helperB2b->isCustomerLoggedIn();
+        $docdata = $_helperB2b->getDocMessageData();
+        $is_document_upload = $_helperB2b->getDocuments();
+
+?>
+<?php if ($_product->isSaleable()):?>
+<div class="box-tocart">
+    <?php if ($showCart): ?>
+        <?php if ($docdata == 2 && $is_document_upload == 1 ): ?>
+            <div class="fieldset">
+                <?php if ($block->shouldRenderQuantity()):?>
+                <div class="field qty">
+                    <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
+                    <div class="control">
+                        <input type="number"
+                               name="qty"
+                               id="qty"
+                               min="0"
+                               value="<?= $block->getProductDefaultQty() * 1 ?>"
+                               title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                               class="input-text qty"
+                               data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                               />
+                    </div>
+                </div>
+                <?php endif; ?>
+                <div class="actions">
+                    <button type="submit"
+                            title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                            class="action primary tocart"
+                            id="product-addtocart-button" disabled>
+                        <span><?= $block->escapeHtml($buttonTitle) ?></span>
+                    </button>
+                    <?= $block->getChildHtml('', true) ?>
+                </div>
+            </div>
+        <?php endif; ?>
+    
+    <?php else: ?>
+    <div class="actions-primary">
+        <div class="logged-in-action">
+                <a href="<?= $block->getUrl('customer/account/login') ?>"><?= $block->escapeHtml(__('Sign in / Register')) ?></a>
+        </div>
+    </div> 
+    <?php endif; ?> 
+</div>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        }
+    }
+</script>

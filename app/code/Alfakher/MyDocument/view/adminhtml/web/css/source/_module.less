@@ -7,6 +7,9 @@
 //  --------------------------------------------
 
 & when (@media-common = true) {
+	.form.doc-form {
+	    margin-top: 3rem;
+	}
 	.doc-box {
       	border: 1px solid #CDCACA;
       	width: ~'calc(50% - 76px)';
@@ -18,6 +21,7 @@
 
        	.admin__form_field {
 	       margin-bottom: 10px;
+	       word-break: break-word;
 	   	}
 	   	.switch {
 		   position: relative;
@@ -53,7 +57,7 @@
    			}
    		}
    		.cmn-toggle:checked + .slider {
-   			background-color: #588242;
+   			background-color: #79a22e;
    		}
    		.cmn-toggle:focus + .slider {
    			box-shadow: 0 0 1px #2196F3;
@@ -75,5 +79,17 @@
 	   	button {
 	   		display: block;
 	   	}
+	}
+	#custom_btn{
+	    background-color: #eb5202;
+	    border-color: #eb5202;
+	    color: #ffffff;
+	    &:hover{
+	    	background-color: #ba4000;
+		    border-color: #b84002;
+		    box-shadow: 0 0 0 1px #007bdb;
+		    color: #ffffff;
+		    text-decoration: none;
+	    }
 	} 
 }

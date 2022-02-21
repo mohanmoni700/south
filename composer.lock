@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ef5b801ca4c2152be6f80e2fc4ca545c",
+    "content-hash": "7c955e6b5a5c6fc8533b89afc960141d",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -52,14 +52,39 @@
             "time": "2020-10-27T07:22:41+00:00"
         },
         {
-            "name": "amasty/base",
-            "version": "1.12.19",
+            "name": "amasty/ajax-scroll",
+            "version": "1.4.5",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/base-1.12.19-ee.zip"
+                "url": "https://composer.amasty.com/enterprise/packages/ajax-scroll-1.4.5-ee.zip"
             },
             "require": {
+                "amasty/base": ">=1.13.1",
                 "php": "^7.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\Scroll\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "AJAX Scroll by Amasty"
+        },
+        {
+            "name": "amasty/base",
+            "version": "1.13.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/base-1.13.1-ee.zip"
+            },
+            "require": {
+                "php": ">=7.3.0"
             },
             "type": "magento2-module",
             "autoload": {
@@ -83,7 +108,7 @@
                 "url": "https://composer.amasty.com/enterprise/packages/module-advanced-conditions-1.5.4-ee.zip"
             },
             "require": {
-                "amasty/base": ">=1.12.19",
+                "amasty/base": ">=1.4.7",
                 "php": "^7.3.0"
             },
             "type": "magento2-module",
@@ -108,7 +133,7 @@
                 "url": "https://composer.amasty.com/enterprise/packages/module-banners-lite-1.0.19-ee.zip"
             },
             "require": {
-                "amasty/base": ">=1.12.19",
+                "amasty/base": ">=1.13.1",
                 "php": "^7.1.0"
             },
             "type": "magento2-module",
@@ -126,6 +151,57 @@
             "description": "Promo Banners Lite by Amasty"
         },
         {
+            "name": "amasty/module-improved-layered-navigation-page",
+            "version": "2.7.13",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/module-improved-layered-navigation-page-2.7.13-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.13.1",
+                "amasty/module-shop-by-base": ">=2.15.1",
+                "php": ">=7.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\ShopbyPage\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Improved Layered Navigation by Amasty - Page sub-module"
+        },
+        {
+            "name": "amasty/module-mage24fix",
+            "version": "1.0.6",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/module-mage24fix-1.0.6-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.13.1",
+                "php": "^7.1.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\Mage24Fix\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Fix for Magento 2.4.0 by Amasty"
+        },
+        {
             "name": "amasty/module-salesrulewizard",
             "version": "1.0.3",
             "dist": {
@@ -133,7 +209,7 @@
                 "url": "https://composer.amasty.com/enterprise/packages/module-salesrulewizard-1.0.3-ee.zip"
             },
             "require": {
-                "amasty/base": ">=1.12.19",
+                "amasty/base": ">=1.13.1",
                 "amasty/promo": ">=2.11.0",
                 "php": "^7.1.0"
             },
@@ -152,6 +228,64 @@
             "description": "Sales Rule Wizard by Amasty"
         },
         {
+            "name": "amasty/module-shop-by-base",
+            "version": "2.15.2",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/module-shop-by-base-2.15.2-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.13.1",
+                "amasty/module-mage24fix": ">=1.0.6",
+                "php": ">=7.3.0"
+            },
+            "suggest": {
+                "mobiledetect/mobiledetectlib": "We recommend using the 3rd-party library to improve the mobile detection algorithm."
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\ShopbyBase\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Base Improved Layered Navigation by Amasty"
+        },
+        {
+            "name": "amasty/module-shop-by-brand",
+            "version": "2.12.5",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/module-shop-by-brand-2.12.5-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.13.1",
+                "amasty/module-shop-by-base": ">=2.15.2",
+                "php": ">=7.3.0"
+            },
+            "suggest": {
+                "amasty/module-shop-by-brand-graphql": "Install module-shop-by-brand-graphql module to activate GraphQl and Shop By Brand integration."
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\ShopbyBrand\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Shop by Brand by Amasty"
+        },
+        {
             "name": "amasty/promo",
             "version": "2.11.0",
             "dist": {
@@ -159,7 +293,7 @@
                 "url": "https://composer.amasty.com/enterprise/packages/promo-2.11.0-ee.zip"
             },
             "require": {
-                "amasty/base": ">=1.12.19",
+                "amasty/base": ">=1.13.1",
                 "amasty/module-advanced-conditions": ">=1.5.4",
                 "amasty/module-banners-lite": ">=1.0.19",
                 "amasty/module-salesrulewizard": ">=1.0.3",
@@ -192,7 +326,7 @@
                 "url": "https://composer.amasty.com/enterprise/packages/rgrid-1.0.7-ee.zip"
             },
             "require": {
-                "amasty/base": ">=1.12.19",
+                "amasty/base": ">=1.13.1",
                 "php": "~5.6.5|7.0.2|7.0.4|~7.0.6|^7.1.0"
             },
             "type": "magento2-module",
@@ -208,6 +342,70 @@
                 "Commercial"
             ],
             "description": "Extended Rules Grid by Amasty"
+        },
+        {
+            "name": "amasty/shopby",
+            "version": "2.18.1",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/shopby-2.18.1-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.13.1",
+                "amasty/module-improved-layered-navigation-page": ">=2.7.13",
+                "amasty/module-shop-by-base": ">=2.15.2",
+                "amasty/module-shop-by-brand": ">=2.12.4",
+                "amasty/shopby-seo": ">=2.13.0",
+                "magento/module-catalog-search": ">=101.0.2",
+                "magento/module-layered-navigation": ">=100.2.0",
+                "magento/module-swatches": ">=100.2.0",
+                "php": ">=7.3.0"
+            },
+            "suggest": {
+                "amasty/module-grouped-options": "Install module-grouped-options module to activate Grouped Options integration.",
+                "amasty/module-shopby-mftf-2": "Install module-shopby-mftf-2 module to implement mftf-tests for Magento 2.3.6+ versions.",
+                "amasty/module-shopby-mftf-3": "Install module-shopby-mftf-3 module to implement mftf-tests for Magento 2.4.1+ versions.",
+                "amasty/shopby-graphql": "Install shopby-graph-ql module to activate GraphQl and Shopby integration."
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\Shopby\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Improved Layered Navigation by Amasty"
+        },
+        {
+            "name": "amasty/shopby-seo",
+            "version": "2.13.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://composer.amasty.com/enterprise/packages/shopby-seo-2.13.0-ee.zip"
+            },
+            "require": {
+                "amasty/base": ">=1.13.1",
+                "amasty/module-shop-by-base": ">=2.15.1",
+                "php": ">=7.3.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Amasty\\ShopbySeo\\": ""
+                }
+            },
+            "license": [
+                "Commercial"
+            ],
+            "description": "Improved Layered Navigation by Amasty - SEO sub-module"
         },
         {
             "name": "amzn/amazon-pay-and-login-magento-2-module",
@@ -4185,6 +4383,438 @@
                 "source": "https://github.com/klaviyo/magento2-klaviyo/tree/3.0.11"
             },
             "time": "2021-12-21T15:48:26+00:00"
+        },
+        {
+            "name": "klevu/module-addtocart",
+            "version": "2.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klevu/addtocart.git",
+                "reference": "66543ac4b6607623877a148930f0ea66e8639a74"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klevu/addtocart/zipball/66543ac4b6607623877a148930f0ea66e8639a74",
+                "reference": "66543ac4b6607623877a148930f0ea66e8639a74",
+                "shasum": ""
+            },
+            "require": {
+                "magento/framework": "@stable",
+                "magento/module-backend": "@stable",
+                "magento/module-catalog": "@stable",
+                "magento/module-eav": "@stable",
+                "magento/module-store": "@stable",
+                "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0|~7.3.0|~7.4.0"
+            },
+            "type": "magento-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Klevu\\Addtocart\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Klevu Oy",
+                    "email": "niraj.aswani@klevu.com",
+                    "homepage": "https://www.klevu.com/"
+                }
+            ],
+            "description": "Search that learns, generates sales. Fastest, most advanced cloud-based search, autocomplete, instant search",
+            "support": {
+                "issues": "https://github.com/klevu/addtocart/issues",
+                "source": "https://github.com/klevu/addtocart/tree/2.5.0"
+            },
+            "time": "2021-12-06T15:42:53+00:00"
+        },
+        {
+            "name": "klevu/module-content",
+            "version": "2.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klevu/content.git",
+                "reference": "96fdc8c452f35843826cf3e1d2a276b31b1ba61a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klevu/content/zipball/96fdc8c452f35843826cf3e1d2a276b31b1ba61a",
+                "reference": "96fdc8c452f35843826cf3e1d2a276b31b1ba61a",
+                "shasum": ""
+            },
+            "require": {
+                "klevu/module-logger": "^1.0.0",
+                "magento/framework": "@stable",
+                "magento/module-backend": "@stable",
+                "magento/module-catalog": "@stable",
+                "magento/module-eav": "@stable",
+                "magento/module-store": "@stable",
+                "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0|~7.3.0|~7.4.0"
+            },
+            "type": "magento-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Klevu\\Content\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Klevu Oy",
+                    "email": "niraj.aswani@klevu.com",
+                    "homepage": "https://www.klevu.com/"
+                }
+            ],
+            "description": "Search that learns, generates sales. Fastest, most advanced cloud-based search, autocomplete, instant search",
+            "support": {
+                "issues": "https://github.com/klevu/content/issues",
+                "source": "https://github.com/klevu/content/tree/2.5.0"
+            },
+            "time": "2021-12-06T15:44:46+00:00"
+        },
+        {
+            "name": "klevu/module-frontend-js",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klevu/frontend-js.git",
+                "reference": "bc9264eb9d1cf247c9c605e41c9d2c7fdbf0d4d7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klevu/frontend-js/zipball/bc9264eb9d1cf247c9c605e41c9d2c7fdbf0d4d7",
+                "reference": "bc9264eb9d1cf247c9c605e41c9d2c7fdbf0d4d7",
+                "shasum": ""
+            },
+            "require": {
+                "klevu/module-productsearch": "^2.0.0",
+                "magento/module-backend": "@stable",
+                "magento/module-config": "@stable",
+                "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0|~7.3.0|~7.4.0"
+            },
+            "type": "magento-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Klevu\\FrontendJs\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Klevu Oy",
+                    "email": "niraj.aswani@klevu.com",
+                    "homepage": "https://www.klevu.com/"
+                }
+            ],
+            "description": "Klevu Frontend JavaScript",
+            "support": {
+                "issues": "https://github.com/klevu/frontend-js/issues",
+                "source": "https://github.com/klevu/frontend-js/tree/1.1.0"
+            },
+            "time": "2021-12-06T16:10:12+00:00"
+        },
+        {
+            "name": "klevu/module-logger",
+            "version": "1.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klevu/logger.git",
+                "reference": "6e9327f4955811218d44c9898b374ee8796a3eaa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klevu/logger/zipball/6e9327f4955811218d44c9898b374ee8796a3eaa",
+                "reference": "6e9327f4955811218d44c9898b374ee8796a3eaa",
+                "shasum": ""
+            },
+            "require": {
+                "magento/framework": "*",
+                "magento/module-store": "*",
+                "monolog/monolog": "*",
+                "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0|~7.3.0|~7.4.0",
+                "psr/log": "*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Klevu\\Logger\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Klevu Oy",
+                    "email": "niraj.aswani@klevu.com",
+                    "homepage": "https://www.klevu.com/"
+                }
+            ],
+            "description": "Provides logger functionality to modules within Klevu Magento 2 suite",
+            "support": {
+                "issues": "https://github.com/klevu/logger/issues",
+                "source": "https://github.com/klevu/logger/tree/1.0.4"
+            },
+            "time": "2022-01-20T09:17:32+00:00"
+        },
+        {
+            "name": "klevu/module-metadata",
+            "version": "1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klevu/metadata.git",
+                "reference": "2aa4c88de879292be4c61443727a101b743ed3e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klevu/metadata/zipball/2aa4c88de879292be4c61443727a101b743ed3e9",
+                "reference": "2aa4c88de879292be4c61443727a101b743ed3e9",
+                "shasum": ""
+            },
+            "require": {
+                "klevu/module-registry": "^1.0.0",
+                "magento/framework": "@stable",
+                "magento/module-catalog": "@stable",
+                "magento/module-checkout": "@stable",
+                "magento/module-config": "@stable",
+                "magento/module-store": "@stable",
+                "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0|~7.3.0|~7.4.0",
+                "psr/log": "@stable"
+            },
+            "type": "magento-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Klevu\\Metadata\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Klevu Oy",
+                    "email": "niraj.aswani@klevu.com",
+                    "homepage": "https://www.klevu.com/"
+                }
+            ],
+            "description": "Klevu Metadata",
+            "support": {
+                "issues": "https://github.com/klevu/metadata/issues",
+                "source": "https://github.com/klevu/metadata/tree/1.1.0"
+            },
+            "time": "2021-12-06T16:08:17+00:00"
+        },
+        {
+            "name": "klevu/module-productsearch",
+            "version": "2.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klevu/productsearch.git",
+                "reference": "05923a2905f628cde3fcfcd1535f06621c7f66bb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klevu/productsearch/zipball/05923a2905f628cde3fcfcd1535f06621c7f66bb",
+                "reference": "05923a2905f628cde3fcfcd1535f06621c7f66bb",
+                "shasum": ""
+            },
+            "require": {
+                "klevu/module-frontend-js": "^1.1.0",
+                "klevu/module-logger": "^1.0.0",
+                "klevu/module-metadata": "^1.1.0",
+                "magento/framework": "@stable",
+                "magento/module-backend": "@stable",
+                "magento/module-catalog": "@stable",
+                "magento/module-eav": "@stable",
+                "magento/module-store": "@stable",
+                "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0|~7.3.0|~7.4.0"
+            },
+            "type": "magento-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Klevu\\Search\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Klevu Oy",
+                    "email": "niraj.aswani@klevu.com",
+                    "homepage": "https://www.klevu.com/"
+                }
+            ],
+            "description": "Search that learns, generates sales. Fastest, most advanced cloud-based search, autocomplete, instant search",
+            "support": {
+                "issues": "https://github.com/klevu/productsearch/issues",
+                "source": "https://github.com/klevu/productsearch/tree/2.5.3"
+            },
+            "time": "2022-02-03T12:44:55+00:00"
+        },
+        {
+            "name": "klevu/module-registry",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klevu/registry.git",
+                "reference": "fb43abaff8d02d4c2305546115df7aa11982aace"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klevu/registry/zipball/fb43abaff8d02d4c2305546115df7aa11982aace",
+                "reference": "fb43abaff8d02d4c2305546115df7aa11982aace",
+                "shasum": ""
+            },
+            "require": {
+                "magento/framework": "@stable",
+                "magento/module-catalog": "@stable",
+                "magento/module-store": "@stable"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Klevu\\Registry\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "description": "Replacement for deprecated core registry class",
+            "support": {
+                "issues": "https://github.com/klevu/registry/issues",
+                "source": "https://github.com/klevu/registry/tree/1.0.1"
+            },
+            "time": "2021-09-23T10:01:47+00:00"
+        },
+        {
+            "name": "klevu/module-search",
+            "version": "2.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klevu/klevu-smart-search-M2.git",
+                "reference": "6d4f95b2e37637794730b2f394a1fb06459641aa"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klevu/klevu-smart-search-M2/zipball/6d4f95b2e37637794730b2f394a1fb06459641aa",
+                "reference": "6d4f95b2e37637794730b2f394a1fb06459641aa",
+                "shasum": ""
+            },
+            "require": {
+                "klevu/module-addtocart": "2.5.0",
+                "klevu/module-content": "2.5.0",
+                "klevu/module-mysqlcompat": "1.0.1",
+                "klevu/module-productsearch": "2.5.3",
+                "klevu/module-troubleshoot": "1.0.2"
+            },
+            "type": "metapackage",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Klevu Oy",
+                    "email": "niraj.aswani@klevu.com",
+                    "homepage": "https://www.klevu.com/"
+                }
+            ],
+            "description": "Search that learns, generates sales. Fastest, most advanced cloud-based search, autocomplete, instant search",
+            "support": {
+                "source": "https://github.com/klevu/klevu-smart-search-M2/tree/2.5.3"
+            },
+            "time": "2022-02-03T13:01:31+00:00"
+        },
+        {
+            "name": "klevu/module-troubleshoot",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/klevu/magento-troubleshoot.git",
+                "reference": "563418ca039b4a3b9a7293c412bc774417b46a20"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/klevu/magento-troubleshoot/zipball/563418ca039b4a3b9a7293c412bc774417b46a20",
+                "reference": "563418ca039b4a3b9a7293c412bc774417b46a20",
+                "shasum": ""
+            },
+            "require": {
+                "magento/framework": "@stable",
+                "magento/module-backend": "@stable",
+                "magento/module-catalog": "@stable",
+                "magento/module-eav": "@stable",
+                "magento/module-store": "@stable",
+                "php": "~5.5.0|~5.6.0|~7.0.0|~7.1.0|~7.2.0|~7.3.0|~7.4.0"
+            },
+            "type": "magento-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Klevu\\Troubleshoot\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Klevu Oy",
+                    "email": "niraj.aswani@klevu.com",
+                    "homepage": "https://www.klevu.com/"
+                }
+            ],
+            "description": "Klevu Troubleshoot module for trouble shooting data synchronisation issues",
+            "support": {
+                "issues": "https://github.com/klevu/magento-troubleshoot/issues",
+                "source": "https://github.com/klevu/magento-troubleshoot/tree/1.0.2"
+            },
+            "time": "2021-11-04T09:09:44+00:00"
         },
         {
             "name": "laminas/laminas-captcha",
@@ -25208,6 +25838,57 @@
             "time": "2020-12-02T21:12:59+00:00"
         },
         {
+            "name": "mageplaza/magento-2-seo-extension",
+            "version": "4.1.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mageplaza/magento-2-seo.git",
+                "reference": "df78f8053dc61b407f14809d0400848d595db058"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-seo/zipball/df78f8053dc61b407f14809d0400848d595db058",
+                "reference": "df78f8053dc61b407f14809d0400848d595db058",
+                "shasum": ""
+            },
+            "require": {
+                "mageplaza/module-core": "^1.4.5"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Mageplaza\\Seo\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Mageplaza",
+                    "email": "support@mageplaza.com",
+                    "homepage": "https://www.mageplaza.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "Magento 2 SEO extension",
+            "keywords": [
+                "magento 2",
+                "magento 2 seo",
+                "mageplaza",
+                "seo"
+            ],
+            "support": {
+                "issues": "https://github.com/mageplaza/magento-2-seo/issues",
+                "source": "https://github.com/mageplaza/magento-2-seo/tree/v4.1.4"
+            },
+            "time": "2021-12-28T07:28:09+00:00"
+        },
+        {
             "name": "mageplaza/module-core",
             "version": "1.4.11",
             "source": {
@@ -25375,6 +26056,52 @@
                 "source": "https://github.com/mageplaza/magento-2-product-labels-graphql/tree/master"
             },
             "time": "2020-03-09T10:04:22+00:00"
+        },
+        {
+            "name": "mageplaza/module-sitemap",
+            "version": "4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mageplaza/magento-2-google-xml-sitemap.git",
+                "reference": "40dd206e2d7e7efaf689741933eb8a799621e9cb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mageplaza/magento-2-google-xml-sitemap/zipball/40dd206e2d7e7efaf689741933eb8a799621e9cb",
+                "reference": "40dd206e2d7e7efaf689741933eb8a799621e9cb",
+                "shasum": ""
+            },
+            "require": {
+                "mageplaza/magento-2-seo-extension": "^4.0.0",
+                "mageplaza/module-core": "^1.4.5"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Mageplaza\\Sitemap\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "Mageplaza",
+                    "email": "support@mageplaza.com",
+                    "homepage": "https://www.mageplaza.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "Magento 2 Google XML Sitemap extension",
+            "support": {
+                "issues": "https://github.com/mageplaza/magento-2-google-xml-sitemap/issues",
+                "source": "https://github.com/mageplaza/magento-2-google-xml-sitemap/tree/v4.0.1"
+            },
+            "time": "2021-09-14T01:21:16+00:00"
         },
         {
             "name": "mageplaza/module-webhook",
@@ -26046,6 +26773,79 @@
                 }
             ],
             "time": "2020-12-30T14:27:27+00:00"
+        },
+        {
+            "name": "paradoxlabs/firstdata",
+            "version": "2.3.9",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/paradoxlabs/firstdata/paradoxlabs-firstdata-2.3.9.0.zip",
+                "shasum": "b094225c7ad25f4a02168888b24a03e6ff543aaa"
+            },
+            "require": {
+                "ext-openssl": "*",
+                "paradoxlabs/tokenbase": "~4.3.8"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "ParadoxLabs\\FirstData\\": ""
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "description": "First Data payment method for Magento 2.x by Paradox Labs",
+            "keywords": [
+                "data",
+                "first",
+                "firstdata",
+                "payeezy",
+                "payment",
+                "tokenization"
+            ],
+            "time": "2021-08-23T00:00:00-05:00"
+        },
+        {
+            "name": "paradoxlabs/tokenbase",
+            "version": "4.3.8",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/paradoxlabs/tokenbase/paradoxlabs-tokenbase-4.3.8.0.zip",
+                "shasum": "dd74b457ed1743a191600415ae223b66db0f5809"
+            },
+            "require": {
+                "ext-json": "*",
+                "magento/framework": "^100.0||^101.0||^102.0||^103.0",
+                "magento/module-admin-notification": "^100.0",
+                "magento/module-backend": "^100.0||^101.0||^102.0",
+                "magento/module-checkout": "^100.0",
+                "magento/module-config": "^100.0||^101.0",
+                "magento/module-customer": "^100.0||^101.0||^102.0||^103.0",
+                "magento/module-directory": "^100.0",
+                "magento/module-payment": "^100.0",
+                "magento/module-quote": "^100.0||^101.0",
+                "magento/module-sales": "^100.0||^101.0||^102.0||^103.0",
+                "magento/module-store": "^100.0||^101.0",
+                "monolog/monolog": "^1.11"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "ParadoxLabs\\TokenBase\\": ""
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "description": "Base module for ParadoxLabs tokenization payment methods.",
+            "time": "2021-08-23T00:00:00-05:00"
         },
         {
             "name": "paragonie/constant_time_encoding",

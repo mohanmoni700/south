@@ -23,6 +23,17 @@
         {{var template_styles|raw}}
 
         {{css file="css/email.css"}}
+        @media only screen and (max-width: 767px) {
+            .customeradmin tr{
+                display: block;
+                width: 100%;
+            }
+            .customeradmin tr td,
+            .customeradmin tr th{
+                width: 100% !important;
+                display: block;
+            }
+        }
     </style>
 </head>
 <body>

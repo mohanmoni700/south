@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <body>
+        <referenceContainer name="main.content">
+            <block class="HookahShisha\Customerb2b\Block\Myaccount" name="cutomer.b2b.messaages" template="HookahShisha_Customerb2b::myaccount/b2bcustomerMessage.phtml" before="-" />
+        </referenceContainer>
+        <referenceContainer name="content">
+            <referenceBlock name="customer_account_dashboard_top" remove="true" />
+            <referenceBlock name="customer_account_dashboard_info" remove="true" />
+            <referenceBlock name="customer_account_dashboard_info1" remove="true" />
+            <referenceBlock name="customer_account_dashboard_address" remove="true" />
+            <block class="HookahShisha\Customerb2b\Block\Myaccount" name="cutomer.b2b.details" template="HookahShisha_Customerb2b::myaccount.phtml" > 
+                <block class="HookahShisha\Customerb2b\Block\Myaccount\Basicdetail" name="customer_address_edit" template="HookahShisha_Customerb2b::myaccount/edit/basic.phtml" cacheable="false">
+                    <arguments>
+                        <argument name="attribute_data" xsi:type="object">Magento\Customer\Block\DataProviders\AddressAttributeData</argument>
+                        <argument name="post_code_config" xsi:type="object">Magento\Customer\Block\DataProviders\PostCodesPatternsAttributeData</argument>
+                        <argument name="view_model" xsi:type="object">Magento\Customer\ViewModel\Address</argument>
+                    </arguments>
+                </block>
+                <block class="HookahShisha\Customerb2b\Block\Myaccount\Businessdetail" name="company_profile"
+                   cacheable="false"
+                   ifconfig="btob/website_configuration/company_active"
+                   template="HookahShisha_Customerb2b::myaccount/edit/business.phtml"/>
+                <block class="HookahShisha\Customerb2b\Block\Myaccount\Basicdetail" name="other_contact_detail" 
+                    template="HookahShisha_Customerb2b::myaccount/edit/othercontact.phtml" 
+                    cacheable="false" />
+            </block>
+        </referenceContainer>
+
+        <!-- bv_op; date : 10-2-22; adding below line; Start -->
+        <referenceBlock name="page.main.title" remove="true"/>
+        <!-- bv_op; date : 10-2-22; adding below line; End -->
+    </body>
+</page>

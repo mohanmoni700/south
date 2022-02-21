@@ -1,0 +1,95 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ *
+ * Glory to Ukraine! Glory to the heroes!
+ */
+?>
+<?php
+/**
+ * Blog sidebar posts list template
+ *
+ * @var $block \Magefan\Blog\Block\Post\PostList\AbstractList
+ */
+?>
+
+<?php
+    $_postCollection = $block->getPostCollection();
+?>
+<?php
+    $width = (int)$block->getBlockImageWidth() ?: 920;
+    $height = (int)$block->getBlockImageheight() ?: 625;
+    $imageHelper = $this->helper(\Magefan\Blog\Helper\Image::class);
+?>
+<?php if ($_postCollection->count()) { ?>
+<div class="widget block block-<?= $block->escapeHtml(str_replace('_', '-', $block->getWidgetKey())) ?> block-list-posts" >
+    <div class="block-content">
+        <?php foreach ($_postCollection as $_post) { ?>
+            <?php
+                $_postUrl = $block->escapeUrl($_post->getPostUrl());
+                $_postName = $block->escapeHtml($_post->getTitle());
+            ?>
+            <div class="item clearfix">
+                <?php if ($block->getDisplayImage()) { ?>
+                    <?php $featuredImage = $_post->getFeaturedImage(); ?>
+                    <div class="post-image">
+                        <?php
+                        $featuredImgAlt = $_post->getData('featured_list_img_alt') ?: $_post->getData('featured_img_alt');
+                        if (!$featuredImgAlt) {
+                            $featuredImgAlt =  $_postName;
+                        }
+                        ?>
+                        <a class="post-item-link" title="<?= $_postName ?>" href="<?= $_postUrl ?>">
+                            <?php
+                                if ($featuredImage) {
+                                    $featuredImageUrl = $imageHelper->init($_post->getFeaturedImg())->resize($width, $height);
+                                } else {
+                                    $featuredImageUrl = $this->getViewFileUrl('Magefan_Blog::images/featured_blog.png');
+                                }
+                            ?>
+                            <img data-width-amp="<?= $width ?>" data-height-amp="<?= $height ?>" layout="responsive" src="<?= $block->escapeUrl($featuredImageUrl) ?>"
+                                 alt="<?= $block->escapeHtml($featuredImgAlt) ?>" />
+                        </a>
+                    </div>
+                <?php } ?>
+                <div class="post-content">
+                    <a class="post-item-link" title="<?= $_postName ?>" href="<?= $_postUrl ?>">
+                        <?= $_postName ?>
+                    </a>
+                    <p class="post-shortdata">
+                        <span class="post-author"><?= __('By Admin') ?></span>
+                        <?php if ($block->getDisplayImage() && $_post->isPublishDateEnabled()) { ?>
+                            <span class="post-item-date">/<?= $block->escapeHtml($_post->getPublishDate()) ?>/</span>
+                        <?php } ?>
+                    </p>
+                    <p class="post-shortdata">
+                        <span class="post-category"><?= __('General, How to Hookah Education') ?></span>
+                    </p>
+                    <div class="post-desc">
+                        <?= __('Body Text Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean massa. ') ?>
+                    </div>
+                    <a class="action primary read-more"><span><?= __('Read more') ?></span></a>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+</div>
+<?php } ?>
+<script type="text/javascript">
+    require([
+        "jquery",
+        "Magento_PageBuilder/js/resource/slick/slick"
+    ], function ($) {
+        $(window).load(function() {
+            $('.block-list-posts .block-content').slick({
+                dots: false,
+                arrows: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: false,
+                infinite: false
+            });
+        });
+    });
+</script>

@@ -1,102 +1,110 @@
-<?php 
-   $customerid=$block->getCustomer();
-   $customerData= $block->getCustomercollection($customerid);
-   $data= $customerData->getData();
-   $documentData= $block->getDocumentCollection();
-   $docdata = $documentData->getData();
-   if(!empty($docdata)){
+<?php
+$customerid=$block->getCustomer();
+$customerData= $block->getCustomercollection($customerid);
+$data= $customerData->getData();
+$documentData= $block->getDocumentCollection();
+$docdata = $documentData->getData();
 ?>
+<?php if (!empty($docdata)) { ?>
 
 <div class="fieldset-wrapper customer-information">
    
    <div class="fieldset-wrapper-title">
-      <span class="title"><?php /* @escapeNotVerified */ echo __('Documents') ?></span>
+      <span class="title"><?=  __('Documents') ?></span>
    </div>
    
    <div class="fieldset-wrapper-title">
-      <span class="title"><?php /* @escapeNotVerified */ echo __('Customer Information') ?></span>
+      <span class="title"><?=  __('Customer Information') ?></span>
    </div>
-
-   <b>Name: </b><?php echo $customerData->getFirstname();?>
-      <span style="padding-left: 34em;">
-         <b>Email: </b><?php echo $customerData->getEmail(); ?>
-      </span>
-   
    <div class="fieldset-wrapper-title">
-      <span class="title"><?php /* @escapeNotVerified */ echo __('') ?></span>
+        <b>Name: </b><?= $customerData->getFirstname();?>
+        <span style="padding-left: 34em;">
+         <b>Email: </b><?= $customerData->getEmail(); ?>
+        </span>
+    </div>
+   <div class="fieldset-wrapper-title">
+      <span class="title"><?=  __('') ?></span>
    </div>
    
 <!-- Document Information. -->
-   <?php
-      $items= $block->getDocumentCollection();
-      $i=0; 
-      $customer_id = ['customer_id' => $customerid,];
-   ?>
+    <?php
+        $items= $block->getDocumentCollection();
+        $i=0;
+        $customer_id = ['customer_id' => $customerid,];
+    ?>
 
 <!-- Form start BS 24-1-22 -->
-   <form action="<?php echo $block->getUrl('mydoc/document/saveform',['_query' => $customer_id])?>" method="post" class="form doc-form">
+    <form action="<?= $block->getUrl('mydoc/document/saveform', ['_query' => $customer_id]) ?>" method="post" class="form doc-form">
 
-      <input name="form_key" type="hidden" value="<?php echo $block->getFormKey() ?>" />
-      <?php foreach ($items as $document) {?>
+        <input name="form_key" type="hidden" value="<?= $block->getFormKey() ?>" />
+        <?php foreach ($items as $document) { ?>
       
-         <div class="doc-box">
-               <input type="hidden" class="doc_id" name="mydocument_id[]" value="<?php echo $document->getMydocumentId()?>">
-               <div class="admin__form_field">
+            <div class="doc-box">
+                <input type="hidden" class="doc_id" name="mydocument_id[]" value="<?= $document->getMydocumentId()?>">
+                <div class="admin__form_field">
                   <span class="admin__form_label">Document name:</span>
                   <span class="admin__form_value"><?= $document->getDocumentName() ?></span>
-               </div>
+                </div>
+                
+                <?php
+                    $filename=$document->getFilename();
+                    $queryParams = ['filename' => $filename,];
+                ?>
                
-                <?php        
-                  $filename=$document->getFilename();
-                  $queryParams = ['filename' => $filename,];
-               ?>
-               
-               <div class="admin__form_field">
-                  <span class="admin__form_label">File:</span>
-                  <span class="admin__form_value"><a href="<?php echo $block->getUrl('mydoc/document/download',['_query' => $queryParams])?>"><?php echo $document->getFilename();?></a></span>
-               </div>
-
-               <?php if(!empty($document->getExpiryDate())){  ?>
-               
-               <div class="admin__form_field">
-                  <span class="admin__form_label">Expiry Date:</span>
-                  <span class="admin__form_value"><?= $document->getExpiryDate() ?></span>
-               </div> 
-
-               <?php } 
-                  $val=$document->getMydocumentId(); 
-               ?>
-
-               <div class="admin__form_field">
-                 <span class="admin__form_label">Document Verified:</span>
-                   <label class="switch admin__form_value"> 
-                      <input type="checkbox" id='toggle_<?php echo $document->getMydocumentId()?>' class='cmn-toggle cmn-toggle-round' value="0" name='status[]' <?php echo $document->getStatus()== '1' ? 'checked' : ''; ?> >
-                      <span class="slider round"></span>
-                  </label>
+                <div class="admin__form_field">
+                    <span class="admin__form_label">File:</span>
+                    <span class="admin__form_value"><a href="<?= $block->getUrl('mydoc/document/download', ['_query' => $queryParams])?>"><?= $document->getFilename();?></a></span>
                 </div>
 
-               <div class="admin__form_field" id="message_<?php echo $document->getMydocumentId()?>">
-                  <span class="admin__form_label">Rejected Reason:</span>
-                  <input type="text" name="message[]" class="admin__form_value">
-               </div>
+                <?php if (!empty($document->getExpiryDate())) {  ?>
+               
+                 <div class="admin__form_field">
+                    <span class="admin__form_label">Expiry Date:</span>
+                     <span class="admin__form_value"><?= $document->getExpiryDate() ?></span>
+                </div> 
+                <?php } ?>
+                <?php $val=$document->getMydocumentId(); ?>
+
+                 <div class="admin__form_field">
+                    <span class="admin__form_label">Document Verified:</span>
+                    <label class="switch admin__form_value">
+                     <!-- bv-hd toggle disable after admin action -->
+                    <?php if ($document->getStatus() == 1) { ?>
+                    
+                    <input type="checkbox" id='toggle_<?= $document->getMydocumentId()?>' class='cmn-toggle cmn-toggle-round' value="0" name='status[]' <?= $document->getStatus()== '1' ? 'checked' : ''; ?> disabled>
+                    <?php } elseif ($document->getStatus() == 0 && $document->getMessage() !=null) { ?>
+                        <input type="checkbox" id='toggle_<?= $document->getMydocumentId()?>' class='cmn-toggle cmn-toggle-round' value="0" name='status[]' <?= $document->getStatus()== '1' ? 'checked' : ''; ?> disabled>
+                    <?php } else { ?>
+                        <input type="checkbox" id='toggle_<?= $document->getMydocumentId()?>' class='cmn-toggle cmn-toggle-round' value="0" name='status[]' <?= $document->getStatus()== '1' ? 'checked' : ''; ?> >
+                    <?php } ?>
+                    <!-- bv-hd toggle disable after admin action -->
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+
+
+
+                <div class="admin__form_field" id="message_<?= $document->getMydocumentId()?>">
+                    <span class="admin__form_label">Rejected Reason:</span>
+                  
+                    <input type="text" name="message[]" class="admin__form_value" value="<?= $document->getMessage() ?>" >
+                </div>
 
                <?php $i++; ?>
-         </div>
+        </div>
       <?php } ?>
-               <button type="submit" value="submit" id="custom_btn">save</button>
-   </form>
+                <button type="submit" value="submit" id="custom_btn">Save</button>
+    </form>
    <!-- Form End BS 24-1-22 -->
 </div>
 
 
-<?php }
-   else{
-       echo "No Documents are uploaded!";
-   }  
-?>
+<?php } else {
+        echo "No Documents are uploaded!";
+} ?>
 
+<script>
 
-<script type="text/javascript">
        require(['jquery', 'jquery/ui'], function($){
            jQuery(document).ready( function() {         
                jQuery("[id^='toggle_']").on('change', function(){
@@ -107,15 +115,24 @@
                    
                    if(check == 1) {
                        jQuery("#message_"+splitid[1]).hide();
+                       jQuery("#message_"+splitid[1]).find('input').prop('required',false);
                         $("#"+toggle_id).val('1');
                    }
                    else{
                        jQuery("#message_"+splitid[1]).show();
                         $("#"+toggle_id).val('0');
+                        jQuery("#message_"+splitid[1]).find('input').prop('required',true);
+                   }
+
+                   if(jQuery("#message_"+splitid[1]).find('input').val()){
+                     jQuery("#message_"+splitid[1]).find('input').prop('readonly',true);
+
+                   }else{
+                     jQuery("#message_"+splitid[1]).find('input').prop('readonly',false);
                    }
                }).change();
+
+
            });
        });
 </script>
-
-

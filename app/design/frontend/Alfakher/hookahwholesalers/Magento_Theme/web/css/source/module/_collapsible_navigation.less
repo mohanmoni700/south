@@ -47,10 +47,6 @@
 
             a {
                 text-decoration: none;
-
-                &:hover {
-                    .lib-css(background, @collapsible-nav-item-hover);
-                }
             }
 
             &.current {
@@ -95,17 +91,25 @@
     .block-collapsible-nav {
         left: 0;
         top: -21px;
-        width: 100%;
+        width: calc(~'100% - 30px');
         z-index: 5;
+        right: 0;
+        margin: 0 auto;
 
         .title {
             &:extend(.abs-toggling-title-mobile all);
+            padding: @indent__s + 5px  40px  @indent__s + 5px  @indent__s + 5px;
+            border-radius: 10px;
+            strong{
+                font-weight: 400;
+            }
         }
 
         .content {
-            border-bottom: @border-width__base solid @border-color__base;
+            border: 2px solid @navborder_clr;
             display: none;
-
+            border-radius: 10px;
+            overflow: hidden;
             &.active {
                 display: block;
             }

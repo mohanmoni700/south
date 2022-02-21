@@ -3,7 +3,7 @@
  * Copyright ©  All rights reserved.
  * See COPYING.txt for license details.
  */
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Alfakher\MyDocument\Model;
 
@@ -45,7 +45,6 @@ class MyDocumentRepository implements MyDocumentRepositoryInterface
      * @var MyDocument
      */
     protected $searchResultsFactory;
-
 
     /**
      * @param ResourceMyDocument $resource
@@ -104,17 +103,17 @@ class MyDocumentRepository implements MyDocumentRepositoryInterface
         \Magento\Framework\Api\SearchCriteriaInterface $criteria
     ) {
         $collection = $this->myDocumentCollectionFactory->create();
-        
+
         $this->collectionProcessor->process($criteria, $collection);
-        
+
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);
-        
+
         $items = [];
         foreach ($collection as $model) {
             $items[] = $model;
         }
-        
+
         $searchResults->setItems($items);
         $searchResults->setTotalCount($collection->getSize());
         return $searchResults;
@@ -146,4 +145,3 @@ class MyDocumentRepository implements MyDocumentRepositoryInterface
         return $this->delete($this->get($myDocumentId));
     }
 }
-

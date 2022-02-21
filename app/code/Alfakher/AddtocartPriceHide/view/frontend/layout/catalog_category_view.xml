@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1columns" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <script src="Alfakher_AddtocartPriceHide::js/common.js" async="async" />
+    </head>
+    <body>
+        <referenceContainer name="columns.top">
+            <block class="Alfakher\MyDocument\Block\Index\Document" name="document.messages" template="Alfakher_AddtocartPriceHide::documentMessage.phtml" before="-"/>
+            
+            <block class="Alfakher\AddtocartPriceHide\Block\Index\CategoryBrand" name="childcategory" template="Alfakher_AddtocartPriceHide::categories.phtml" />
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="Alfakher_AddtocartPriceHide::catalog/product/list/toolbar.phtml">
+            </block>
+        </referenceContainer>
+    </body>
+</page>

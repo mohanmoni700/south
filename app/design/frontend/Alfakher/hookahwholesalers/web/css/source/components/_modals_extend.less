@@ -55,7 +55,7 @@
             }
         }
         input:hover {
-            border-color: #000;
+            border-color: #000 !important;
         }
     }
 
@@ -130,6 +130,7 @@
             -webkit-overflow-scrolling: touch;
             overflow-x: hidden;
             overflow-y: auto;
+            z-index: 1111 !important;
         }
 
         .modal-inner-wrap {
@@ -148,10 +149,10 @@
 
             .modal-custom-overlay {
                 .lib-css(background-color, @modal-overlay__background-color);
+                z-index: 1110 !important;
             }
         }
     }
-
     .modal-popup {
         pointer-events: auto;
         &.modal-slide {
