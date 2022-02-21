@@ -1012,6 +1012,27 @@
     //
     //  Responsive Tablet
     //  ---------------------------------------------
+    @media only screen and (max-width: 1349px) and (min-width: 1280px) {
+        .block.upsell {
+            .slick-prev {
+              left: -6px;
+            }
+            .slick-next {
+              right: -6px;              
+            }
+            .products.list.items .slick-list {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+    }
+    @media only screen and (max-width: 1279px) {
+        .block.upsell {
+            .slick-prev, .slick-next {
+              display: none !important;
+            }
+        }
+    }
     @media only screen and (max-width: 1199px) and (min-width: 992px) {
         .catalog-category-view, .catalogsearch-result-index {
             main#maincontent {
@@ -1128,6 +1149,11 @@
     }
     .block.upsell{
         margin-top: 20px;
+        .products-upsell {
+            .product-item-info {
+                padding: 0 5px;
+            }
+        }
     }  
     .product-info-main{
         .stock.available,
