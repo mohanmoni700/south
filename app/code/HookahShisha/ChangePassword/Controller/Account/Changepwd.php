@@ -25,7 +25,7 @@ class Changepwd extends \Magento\Framework\App\Action\Action implements HttpPost
 
     /**
      * @param \Magento\Framework\App\Action\Context $context
-     * @param AccountManagementInterface
+     * @param AccountManagementInterface $customerAccountManagement
      * @param Session $customerSession
      */
     public function __construct(
