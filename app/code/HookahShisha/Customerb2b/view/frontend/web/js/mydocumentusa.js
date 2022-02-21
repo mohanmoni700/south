@@ -1,4 +1,4 @@
-define([
+-define([
 	'jquery',
 	'Magento_Ui/js/modal/modal',
 	'mage/calendar',
@@ -106,6 +106,7 @@ define([
                 var extension = val.substring(val.lastIndexOf('.') + 1).toLowerCase();
                 var extensionArr = ['pdf', 'jpg', 'png'];
                 if (extensionArr.indexOf(extension) >= 0) {
+                	// alert("allowed");
                     $(this).closest('.upload').find('.doc_name').remove();
                     $(this).closest('.upload').find('.set_expiry').remove();
 
@@ -270,12 +271,14 @@ define([
 	            if (showId <= 10) {
 	                $('<input type="hidden" name="is_customerfrom_usa' + showId + '" value="1"/>'+
                 	'<div class="upload" for="document uploader"><div class="input-file" id="input-file-' + showId + '">' +
-                    '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" data-validate="{required:true}" />' +
+                    '<input type="file" id="filename-' + showId + '" class="upload-filename-' + showId +'" name="filename' + showId + '" data-validate="{required:true}" />' +
                     '<span class="input-note">' + config.inputNote + '</span>'+
                     '<span id="image-error-message'+showId+'" style="color:red;"></span>'+
-                    '</div></div>').insertBefore('.upload-container .add-more-cont');
+                    '</div></div>').insertBefore('.upload-container .usa-add-more');
 	            }
 	            $('#filename-' + showId).change(function(e) {
+	            	// alert("change");
+	            	// alert($(this).val());
 	                var val = $(this).val();
 	                fileUploading(showId, 'filename-', $(this), e);
 	            });
