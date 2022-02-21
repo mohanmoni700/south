@@ -82,6 +82,9 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
      */
     private $customer;
 
+    /**
+     * @var CustomerRepositoryInterface
+     */
     protected $customerRepository;
 
     /**
@@ -165,9 +168,9 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
      */
     public function execute()
     {
+        $resultRedirect = $this->resultRedirectFactory->create();
         if ($this->session->isLoggedIn() || !$this->formKeyValidator->validate($this->getRequest())) {
             /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
-            $resultRedirect = $this->resultRedirectFactory->create();
             $resultRedirect->setPath('*/*/');
             return $resultRedirect;
         }
@@ -176,17 +179,13 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
             $login = $this->getRequest()->getPost('login');
             $websiteID = $this->_storemanager->getStore()->getWebsiteId();
             $email = (string) $login['username'];
-
+            $resultRedirect->setPath('customer/account/login/');
             if ($email) {
-                $customer = $this->customer;
-                if ($websiteID) {
-                    $customer->setWebsiteId($websiteID);
-                }
-                $customer->loadByEmail($email);
+                $customerData = $this->customer->setWebsiteId($websiteID)->loadByEmail($email);
                 $migrate_customer_value = "";
-                if ($customer->getId()) {
-                    $customer = $this->customerRepository->getById($customer->getId());
-                    $migrate_customer = $customer->getCustomAttribute('migrate_customer');
+                if ($customerData->getId()) {
+                    $customerData = $this->customerRepository->getById($customerData->getId());
+                    $migrate_customer = $customerData->getCustomAttribute('migrate_customer');
 
                     if (!empty($migrate_customer)) {
                         $migrate_customer_value = $migrate_customer->getValue();
@@ -194,19 +193,18 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                 }
             } else {
                 $this->messageManager->addErrorMessage(__('Please enter your email.'));
-                return $resultRedirect->setPath('customer/account/login/');
+                return $resultRedirect;
             }
             /* Here we are checking the Reset password */
             if (!empty($login['username']) && !empty($migrate_customer_value) && $migrate_customer_value == 1) {
                 /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
-                $resultRedirect = $this->resultRedirectFactory->create();
 
                 if (!\Zend_Validate::is($email, \Magento\Framework\Validator\EmailAddress::class)) {
                     $this->session->setForgottenEmail($email);
                     $this->messageManager->addErrorMessage(
                         __('The email address is incorrect. Verify the email address and try again.')
                     );
-                    return $resultRedirect->setPath('customer/account/login/');
+                    return $resultRedirect;
                 }
 
                 try {
@@ -218,20 +216,18 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                     // Do nothing, we don't want anyone to use this action to determine which email accounts are registered.
                 } catch (SecurityViolationException $exception) {
                     $this->messageManager->addErrorMessage($exception->getMessage());
-                    return $resultRedirect->setPath('customer/account/login/');
                 } catch (\Exception $exception) {
                     $this->messageManager->addExceptionMessage(
                         $exception,
                         __('We\'re unable to send the password reset email.')
                     );
-                    return $resultRedirect->setPath('customer/account/login/');
                 }
                 $this->messageManager->addSuccessMessage($this->getSuccessMessage($email));
-                return $resultRedirect->setPath('customer/account/login/');
+                return $resultRedirect;
             } elseif (!empty($login['username']) && !empty($login['password'])) {
                 try {
-                    $customer = $this->customerAccountManagement->authenticate($login['username'], $login['password']);
-                    $this->session->setCustomerDataAsLoggedIn($customer);
+                    $customerData = $this->customerAccountManagement->authenticate($login['username'], $login['password']);
+                    $this->session->setCustomerDataAsLoggedIn($customerData);
                     if ($this->getCookieManager()->getCookie('mage-cache-sessid')) {
                         $metadata = $this->getCookieMetadataFactory()->createCookieMetadata();
                         $metadata->setPath('/');
