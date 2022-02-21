@@ -98,6 +98,10 @@
                         border-radius: 0px 30px 30px 0px;
                         color: #fff;
                         min-width: 160px;
+                        &:hover{
+                            background: @hookah_theme_gradient;
+                            border-color: transparent;
+                        }
                     }
                 }
                 .actions-toolbar .secondary {
@@ -160,7 +164,7 @@
 
             .fields {
                 > .year {
-                    padding-left: @indent__xs;
+                    padding-left: 20px;
                 }
 
                 .select {
@@ -171,20 +175,24 @@
 
             .month {
                 .select {
-                    width: 140px;
+                    width: 150px;
+                    background-position: calc(~'100% - 10px');
+                    padding-right: 32px;
                 }
             }
 
             .year {
                 .select {
-                    width: 80px;
+                    width: 150px;
+                    background-position: calc(~'100% - 10px');
+                    padding-right: 32px;
                 }
             }
 
             .captcha,
             .number {
                 .input-text {
-                    width: 225px;
+                    width: 100%;
                 }
             }
 
@@ -197,7 +205,7 @@
 
             .cvv {
                 .input-text {
-                    width: 55px;
+                    width: 120px;
                 }
             }
 
@@ -207,6 +215,61 @@
                         .field {
                             width: auto !important;
                         }
+                    }
+                }
+            }
+        }
+        .payment-method-billing-address {
+            margin-bottom: 30px;
+        }
+    }
+    #co-payment-form {
+        .fieldset {
+            > br, > hr {
+                display: none;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 1199px) and (min-width: 992px) {
+        .checkout-payment-method {
+            .ccard {
+                .month, .year {
+                    .select {
+                        width: 120px;
+                        padding-right: 32px;
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 992px) and (min-width: 768px) {
+        .checkout-payment-method {
+            .payment-method-content {
+                .fieldset {
+                    > .field {
+                        &.number, &.date {
+                            width: 100%;
+                        }
+                        &.cvv {
+                            ~ .field {
+                                padding-left: 0 !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .opc-block-summary, .opc-block-shipping-information {
+            padding: 14px;
+        }    
+    }
+    @media only screen and (max-width: 370px) {
+        .checkout-payment-method {
+            .ccard {
+                .month, .year {
+                    select.select {
+                        width: 120px;
                     }
                 }
             }
@@ -236,6 +299,39 @@
                 }
                 &.discount-code {
                     margin-top: 3rem;
+                }
+            }
+        }
+        .payment-method-content {
+            .fieldset {
+                > .field {
+                    &.cvv {
+                        width: auto;
+                    }
+                    &.date {
+                        width: auto;
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+        .ccard {
+            .fields {
+                > .year {
+                    padding-left: 5px;
+                }
+            }
+            .month, .year {
+                .select {
+                    width: 80px;
+                    padding-right: 18px;
+                    background-size: 10px;
+                    background-position: calc(~'100% - 6px');
+                }
+            }
+            .cvv {
+                .input-text {
+                    width: 110px;
                 }
             }
         }

@@ -19,23 +19,26 @@
                 <div class="control">
                     <h3><?= $block->escapeHtml(__('Join Our Newsletter')) ?></h3>
                     <p><?= $block->escapeHtml(__('Be the first to know about new arrivals, sales & promos!')) ?></p>
-                    <label for="newsletter">
-                        <input name="email" type="email" id="newsletter"
-                               placeholder="<?= $block->escapeHtml(__('Email address')) ?>"
-                               data-mage-init='{"mage/trim-input":{}}'
-                               data-validate="{required:true, 'validate-email':true}"
-                        />
-                    </label>
+                    <div class="action_filde">
+                        <label for="newsletter">
+                            <input name="email" type="email" id="newsletter"
+                                   placeholder="<?= $block->escapeHtml(__('Email address')) ?>"
+                                   data-mage-init='{"mage/trim-input":{}}'
+                                   data-validate="{required:true, 'validate-email':true}"
+                            />
+                        </label>
+                        <div class="actions">
+                            <button class="action subscribe primary"
+                                    title="<?= $block->escapeHtmlAttr(__('Subscribe')) ?>"
+                                    type="submit"
+                                    aria-label="Subscribe">
+                                <span><?= $block->escapeHtml(__('Subscribe')) ?></span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="actions">
-                <button class="action subscribe primary"
-                        title="<?= $block->escapeHtmlAttr(__('Subscribe')) ?>"
-                        type="submit"
-                        aria-label="Subscribe">
-                    <span><?= $block->escapeHtml(__('Subscribe')) ?></span>
-                </button>
-            </div>
+            
         </form>
     </div>
 </div>
@@ -72,9 +75,7 @@
                 }, 500);
             });
 
-            $('.ui-menu-item.parent.level1 > a').click(function() {
-                $(this).parent().siblings().removeClass('current');
-                $(this).parent('li').addClass('current');
+            $('.level0 > .level-top').click(function() {
                 return false;
             });
             $(".ui-menu-item.parent.level1:first-child").addClass('current');
@@ -92,6 +93,13 @@
                 }); 
               
             }
+        	$(".ui-menu-item.parent.level1").hover(function(){
+			    $(this).closest('ul').find('li').not($(this)).removeClass('current');
+			   	$(this).addClass('current');
+			   	 
+			    }, function(){
+			     $(this).closest('ul').find('li').not($(this)).removeClass('current');
+			});
 
             //passvisible 
             jQuery(document).on('click','#showlgpass',function(){
@@ -115,6 +123,7 @@
                 scrollTop: $(".login-container").offset().top},
                 'slow');
         });
+        $('.block-collapsible-nav .block-collapsible-nav-title strong').html($('.block-collapsible-nav .block-collapsible-nav-content strong').html());
 
     });
 </script>

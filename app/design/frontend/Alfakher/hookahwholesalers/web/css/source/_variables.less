@@ -56,7 +56,16 @@
 @color_E0E0E0: #E0E0E0;
 @account_bgclr:#EAEAEA;
 @hookah_theme_color: #961E70;
+@hookah_theme_color_light: rgba(150,30,112,0.10);
 @hookah_theme_boxshadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
+@hookah_theme_border: 1px solid #CDCACA;
+@hookah_primary_light: #f9f7fe;
+@hookah_primary_light2: rgba(227, 216, 250, 0.3);
+@hookah_yellow: #F2B807;
+@hookah_yellow_light: rgba(242, 184, 7, 0.05);
+@hookah_yellow_light2: rgba(253, 218, 112, 0.4);
+@hookah_collection_bg: #E3D8FA;
+@hookah_theme_gradient: linear-gradient(274.47deg, #9B2269 4.86%, #D378FF 92.75%);
 
 //Width
 @layout_container:1280px;
@@ -81,10 +90,24 @@
 @montserrat_semibold:@montserrat;
 @montserrat_light:@montserrat;
 
+@font-weight__bold: 700;
+@font-weight__semibold: 600;
+@font-weight__light: 300;
+@font-weight__regular: 400;
 
+@font-weight__light: 300;
+@DMSerifDisplay:'DMSerifDisplay-Regular';
 
 @montserrat:montserrat;
 
+
+// Text Color 
+@font-gray: #333333;
+
+@account-wrapperbg: #F2F2F2;
+@input_field_bg:#EAEAEA;
+@navborder_clr:#000000;
+@color_primary:#961E70;
 
 .cart_btn{
 	padding: 8px 20px;
@@ -97,7 +120,33 @@
     background: @color-white;
     border: 1px solid @color-black;
     border-radius: 30px;
+    &:hover {
+        color: @color-white;
+        background: @hookah_theme_gradient;
+        border-color: transparent;
+    }
 }
 
 @account-wrapperbg: #F2F2F2;
 @input_field_bg:#EAEAEA;
+
+@navborder_clr:#000000;
+@color_primary:#961E70;
+@color_primary_hover: #961E70;
+
+.title1{
+    font-family: @DMSerifDisplay;
+    .lib-font-size(28);
+    line-height: 38px;
+    color: @color_primary;
+    margin-bottom: 0;
+    position: relative;
+}
+
+.title-primary{
+    font-weight: @font-weight__bold;
+    .lib-font-size(18);
+    line-height: 28px;
+    color: @font-gray;
+    margin-bottom: 0;
+}

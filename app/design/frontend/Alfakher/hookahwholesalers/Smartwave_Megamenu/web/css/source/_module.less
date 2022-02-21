@@ -34,9 +34,10 @@
 //m - L
 & when (@media-target = 'desktop'), (@media-target = 'all') {
     @media only screen and (min-width: 1025px) {
-        .page-wrapper .navigation {
+        .page-wrapper nav.navigation.sw-megamenu {
             max-width: 100%;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, .1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, .1);
+            width: 100%;
             ul {
                 max-width: 1280px;
                 margin: 0 auto;
@@ -734,6 +735,7 @@
         .lib-css(background, @color-white);
         padding: 0 @indent__l;
         width: 100%;
+        display: none;
         &.active {
             display: block !important;
             position: absolute;
@@ -745,7 +747,8 @@
                
                 li.ui-menu-item.parent{
                     .open-children-toggle{
-                        display: none;
+                        display: block;
+                        margin-right: 15px;
                     }
                 } 
             } 

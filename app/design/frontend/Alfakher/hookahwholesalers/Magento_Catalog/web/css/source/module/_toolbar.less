@@ -9,6 +9,7 @@
 
 @toolbar-mode-icon-font-size: 24px;
 @toolbar-element-background: @panel__background-color;
+@toolbar-element-background-active: #DEDEDE;
 
 //
 //  Common
@@ -25,23 +26,19 @@
     .toolbar {
         &:extend(.abs-add-clearfix all);
     }
-
+    .amasty-catalog-topnav {
+        margin-top: 0 !important;
+    }
     .toolbar-amount {
         display: block;
-        line-height: @toolbar-mode-icon-font-size + 2;
+        line-height: @toolbar-mode-icon-font-size + 6;
         margin: 0;
-        padding: 8px 0 0;
         vertical-align: middle;
-
-        .products.wrapper ~ .toolbar & {
-            display: none;
-        }
     }
 
     .toolbar-products {
         margin-bottom: @indent__xl;
         padding: 0 @indent__s;
-        text-align: center;
         &:extend(.abs-add-clearfix all);
 
         .pages {
@@ -60,8 +57,6 @@
     }
 
     .sorter {
-        padding: 4px 0 0;
-
         .products.wrapper ~ .toolbar & {
             display: none;
         }
@@ -71,14 +66,29 @@
             top: -2px;
             display: none;
         }
+        .sorter-label {
+            font-weight: @font-weight__bold;
+            &::after {
+                content: ":";
+                display: inline-block;
+                margin-left: 2px;
+            }
+        }
     }
 
     .sorter-options {
         margin: 0 0 0 7px;
-        width: auto;
+        width: 180px;
+        height: 32px;
         border-top: 0;
         border-left: 0;
         border-right: 0;
+        border-radius: 0;
+        border-width: 1px;
+        border-color: @input-border_color;
+        background-size: 12px;
+        background-position: ~"calc(100% - 14px)";
+        padding-right: 36px;
     }
 
     .sorter-action {
@@ -116,7 +126,32 @@
 
     .limiter {
         .page-products .toolbar & {
-            display: none;
+            float: left;
+            margin-right: 10px;
+            .limiter-text {
+                display: none;
+            }
+            .label {
+                font-weight: @font-weight__bold;
+                &::after {
+                    content: ":";
+                    display: inline-block;
+                }
+            }
+            .limiter-options {
+                margin: 0 0 0 2px;
+                width: 80px;
+                height: 32px;
+                border-top: 0;
+                border-left: 0;
+                border-right: 0;
+                border-radius: 0;
+                border-width: 1px;
+                border-color: @input-border_color;
+                background-size: 12px;
+                background-position: ~"calc(100% - 14px)";
+                padding-right: 36px;
+            }
         }
     }
 }
@@ -142,6 +177,8 @@
 
     .toolbar-amount {
         float: left;
+        margin-right: 10px;
+        display: inline-block !important;
     }
 
     .sorter {
@@ -150,9 +187,7 @@
 
     .modes {
         display: inline-block;
-        float: left;
         margin-right: @indent__base;
-
         .products.wrapper ~ .toolbar & {
             display: none;
         }
@@ -169,22 +204,30 @@
         float: left;
         font-weight: @font-weight__regular;
         line-height: 1;
-        padding: 7px 10px;
+        padding: 1px 3px;
         text-align: center;
-
+        background-color: @panel__background-color;
+        &:before {
+            font-size: @toolbar-mode-icon-font-size - 4;
+        }
         &:not(.active) {
             &:hover {
                 .lib-css(color, @text__color__muted);
                 background: darken(@toolbar-element-background, 7%);
             }
         }
-
+        &:nth-child(2) {
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
         &:last-child {
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
             border-right: 1px solid @border-color__base;
         }
 
         &.active {
-            .lib-css(color, @primary__color__light);
+            background: darken(@toolbar-element-background, 7%);
         }
 
         .lib-icon-font(
@@ -204,6 +247,91 @@
         .products.wrapper ~ & .limiter {
             display: block;
             float: right;
+        }
+    }
+    .cate-filter {
+        float: right;
+        margin: 0 16px 0 0;
+    }
+    .filter_button {
+        background: transparent url('@{baseDir}images/filter.svg') no-repeat center right;
+        padding: 0 26px 0 0;
+        line-height: 32px;
+        border: none;
+        font-weight: @font-weight__regular;
+        color: @color-black;
+        text-decoration: none !important;
+        display: inline-block;
+        &:hover {
+            color: @color-black;
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .page-products {
+        .toolbar {
+            .limiter {
+                display: none;
+            }
+        }
+    }
+    .toolbar-sorter {
+        &.sorter {
+            width: 50%;
+            float: right;
+            text-align: center;
+            min-height: 60px;
+            padding: 2px 0;
+            border-left: 1px solid @input-border_color;
+        }
+    }
+    .cate-filter {
+        float: left;
+        width: 50%;
+        text-align: center;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        border-right: solid 1px @input-border_color;
+        min-height: 60px;
+        display: none;
+        .filter_button {
+            .lib-font-size(16);
+            color: @color-black;
+            font-weight: @font-weight__bold;
+            line-height: 1.4;
+            text-decoration: none;
+        }
+    }
+    .sorter {
+        .sorter-label {
+            .lib-font-size(16);            
+            &:after {
+                display: none;
+            }
+        }
+    }
+    .sorter-options {
+        margin: 0;
+        width: 90%;
+        border: none;
+    }
+    .catalog-category-view, .catalogsearch-result-index {
+        .toolbar {
+            padding-bottom: 0;
+            border-top: 1px solid @input-border_color;
+            margin-top: -61px;
+        }
+    }
+    .toolbar-products {
+        .toolbar-amount {
+            display: none;
         }
     }
 }

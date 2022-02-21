@@ -1,270 +1,240 @@
 <?php
     $customerid = $block->getCustomerId();
     $docdata = $block->getDocumentCollection($customerid);
-    $data = $docdata->getData(); ?>
-
-    <div class="document-title"><span class="title">My Documents</span><span class="note">(File type supported are JPG,PNG and PDF,Max file size 20 MB)</span></div>
-
-    <?php if($data!==''){?>
-    <?php foreach($data as $val){ ?>
-        <div class="uploaded-doc-box">
-            <div><a href="<?php echo "/media/".$val['filename'];?>"><?php echo $val['filename'];?></a></div>
-            <div><label><?= __('Document Name') ?></label>
-                <div class="doc-name"><?= $val['document_name'] ?></div>
-            </div>
-             <div><label><?= __('Set a Specific Expiry date') ?></label>
-                <span>toggle</span>
-            </div>
-            <div><label><?= __('Set Expiry Date*') ?></label>
-                <div class="doc-ex-date"><?= __('Expiry Date:') .$val['expiry_date'] ?></div>
-            </div>
-        </div>
-    <?php } ?>
-<?php }
+    $data = $docdata->getData();
+    $dataSize = count($data);
+    $mediaUrl = $block->getMediaUrl();
+    $mediaUrl = $mediaUrl."myDocument/";
+    $pdfImg = $block->getViewFileUrl('images/pdf.svg');
+    $customResultUrl = $block->getUrl('mydocument/customer/result');
+    $deleteDocumentUrl = $block->getUrl('mydocument/customer/deletedocument');
+    $updateDocumentUrl = $block->getUrl('mydocument/customer/updatedocument');
+    $today = date("Y-m-d");
 ?>
-<!-- </div> -->
-
-<!-- <div class="note">
-    <span>(File type supported are JPG,PNG and PDF,Max file size 20 MB)</span>
-</div> -->
+<div class="document-title">
+    <span class="title">
+        <?= $block->escapeHtml(__('My Documents')); ?>
+    </span>
+    <span class="note">
+        <?= $block->escapeHtml(__('(File type supported are JPG,PNG and PDF)')); ?>
+    </span>
+</div>
+<?php if (!empty($data)): ?>
 <div class="my_document">
-    <form name="myformdynamic" id="myformdynamic" accept-charset="utf-8" enctype="multipart/form-data" autocomplete="off" data-mage-init='{"validation":{}}' method="post">
-            <div class="add-more-cont"><a id="add_more"><img src="<?php echo $this->getUrl('static/version1642502197/frontend/Corra/alfakher/en_US/images/'); ?>logo.svg">Add More Document</a></div>
-            <div class="upload" for="document uploader">
-                <input type="file" id="filename" class="upload-filename" name="filename[]" data-validate="{required:true}"/>
-            </div>
-            <div class="doc_name" for="document name">
-                <div class="label">
-                    <label>Document Name</label>
-                </div>
-                <input type="text" id="name" name="name[]" data-validate="{required:true}" />
-            </div>
-            <div class="set_expiry" for="document expiry data" >
-                <div class="label">
-                    <input type="checkbox" id="toggle" name="set_expiry[]" class="cmn-toggle cmn-toggle-round checkbox" >
-                    <label>Set a Specific Expiry date
-                    </label>
-                    </input>
-                </div>
-                <input type="checkbox" id="toggle" name="set_expiry[]" class="cmn-toggle cmn-toggle-round" >
-                <span class="slider round"></span>
-                
-                <div class="expiry_dates" for="document expiry data" >
-                    <input type="text" placeholder="Expiry Date" name="expiry_date[]" id="expiry_date" data-validate="{required:true}" />
-                </div>    
-            </div>
-            <br>
+    <form id="updatedocument"
+        class="updatedocument"
+        accept-charset="utf-8"
+        enctype="multipart/form-data"
+        data-mage-init='{"validation":{}}'
+        method="post">
+        <div class="updated-container">
+            <?php foreach ($data as $key => $val): ?>
+                <?php if ($val['is_delete'] == 0): ?>
+                    <?php $expiry_date = $val['expiry_date']; ?>
+                    <?php if (($val['status'] == 0 && $val['message'] != null) ||
+                    (($expiry_date <= $today && $expiry_date != "") && $val['status'] == 0)): ?>
+                        <?php $rejectedClass = "rejected"; ?>
+                    <?php else: ?>
+                        <?php $rejectedClass = ""; ?>
+                    <?php endif; ?>
+                    <div class="document <?= $block->escapeHtml($rejectedClass); ?>" for="document uploader">
+                        <?php
+                            $fileName = $mediaUrl.$val['filename'];
+                            $checkext = $block->checkExtension($fileName);
+                            $extension = $checkext['extension'];
+                        ?>
+                        <div class="input-file">
+                            <?php if ($extension == "pdf"): ?>
+                                <img src="<?= $block->escapeUrl($pdfImg); ?>" height="34" width="43"
+                                class="pdf-image" alt="pdf documents" />
+                            <?php else: ?>
+                                <img src="<?= $block->escapeUrl($fileName) ; ?>"
+                                height="100px" width="100px" />
+                            <?php endif; ?>
+                            <div class="doc-actions">
+                                <?php if ($val['status'] == 0 && $val['message'] != null): ?>
+                                    <a  class="view-doc-link" href="<?= $block->escapeUrl($fileName); ?>"
+                                        target="_blank"></a>
+                                    <a class="deletedocument" name="deletedocument" href="#"
+                                    id="<?= $block->escapeHtml($val['mydocument_id']); ?>"></a>
+                                <?php else: ?>
+                                    <a  class="view-doc-link" href="<?= $block->escapeUrl($fileName);?>"
+                                        target="_blank"></a>
 
-
-        <button type="submit" id="btnsave" class="action submit primary">
-            <span>Submit</span>
+                                <?php endif; ?>
+                            </div>
+                            <?php if ($val['status'] != 0 && $val['message'] == null): ?>
+                            <span class="approved">
+                                <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/doc_approved.png')); ?>"
+                                    alt="approved_union"
+                                    width="60"
+                                    height="60"
+                                    loading="lazy" />
+                            </span>
+                            <?php endif; ?>
+                        </div>
+                        <div class="doc-name">
+                            <span><?= $block->escapeHtml($val['filename']); ?></span>
+                            <a  href="<?= $block->escapeUrl($fileName); ?>" target="_blank"
+                                download class="download-doc"></a>
+                        </div>
+                        <div class="field">
+                            <label><?= $block->escapeHtml(__("Document Name"));  ?></label>
+                            <div class="value"><?= $block->escapeHtml($val['document_name']); ?></div>
+                        </div>
+                        <?php if (isset($val['expiry_date'])): ?>
+                        <div class="field">
+                            <label><?= $block->escapeHtml(__("Expiry Date"));  ?></label>
+                            <div class="value date">
+                                <?= $block->escapeHtml(__('Expiry Date: ') . $val['expiry_date']); ?>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                        <?php if ($val['status'] == 0 && $val['message'] != null): ?>
+                            <div class="doc-tooltip">
+                                <span class="tooltip-toggle">
+                                    <?= $block->escapeHtml(__('PLEASE CHECK THE DETAILS')); ?>
+                                </span>
+                                <span class="tooltip-content">
+                                    <?= $block->escapeHtml($val['message']); ?>
+                                </span>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                <?php endif; ?>
+                <?php if ($val['is_delete'] != 0): ?>
+                <div class="upload" for="document uploader">
+                    <div class="update-doc-<?= $block->escapeHtml($val['mydocument_id']);?> input-file">
+                        <input type="hidden" name="documentid[]"
+                        value="<?= $block->escapeHtml($val['mydocument_id']); ?>" />
+                        <input type="file"
+                        name="updatefile<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                        id="updatefile_<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                        data-validate="{required:true}" />
+                        <span id="image-error-message-<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                            style="color:red;"></span>
+                        <img class="previewimage-filename_"
+                        height="170"
+                        width="170"
+                        src="" title=""
+                        style="display:none;"></img>
+                        <div class="doc-actions"
+                        id="doc-actions-filename_<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                        style="display:none;">
+                            <a class="view-doc-link"
+                            id="view-doc-link-filename_<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                            href="" target="_blank"></a>
+                            <a class="deletedocument-preview deletedocument"
+                            id="deletedocument-filename_<?= $block->escapeHtml($val['mydocument_id']); ?>"></a>
+                        </div>
+                    </div>
+                    <div class="doc_name" for="document name">
+                        <label><?= $block->escapeHtml(__('Document Name')); ?></label>
+                        <input type="text" id="name" name="name<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                        data-validate="{required:true}"
+                        value="<?= $block->escapeHtml($val['document_name']); ?>"/>
+                    </div>
+                    <div class="set_expiry" for="document expiry data" style="position:relative;">
+                        <label><?= $block->escapeHtml(__('Set a Specific Expiry date')); ?></label>
+                        <input type="checkbox" id="toggle-<?= $block->escapeHtml($val['mydocument_id']);
+                        ; ?>"
+                        name="set_expiry[]"
+                        class="update-toggle cmn-toggle cmn-toggle-round"/>
+                        <span class="slider round"></span>
+                        <div class="expiry_dates expiry_dates-toggle-<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                            for="document expiry data"
+                            style="display:none">
+                            <label><?= $block->escapeHtml(__('Set Expiry Date')); ?></label>
+                            <input type="text"
+                                placeholder="Expiry Date"
+                                name="expiry_date<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                                id="expiry_date-<?= $block->escapeHtml($val['mydocument_id']); ?>"
+                                data-validate="{required:true}"
+                                class="update-date" value="<?= $block->escapeHtml($val['expiry_date']); ?>"/>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+        <button type="submit" id="updatebtnsave" class="action submit primary" style="display:none">
+            <span><?= $block->escapeHtml(__('Submit')); ?></span>
         </button>
     </form>
 </div>
-<div id="popup-modal" >
-    <h1>DOCUMENTS ARE UPLOADED SUCCESSFULLY</h1>
-    <h5>Once it is approved by Admin, Product price would be visible to you</h5>
+<?php endif; ?>
+<?php if ($dataSize == 0): ?>
+<div class="my_document">
+    <form name="myformdynamic"
+    id="myformdynamic"
+    accept-charset="utf-8"
+    enctype="multipart/form-data"
+    autocomplete="off"
+    data-mage-init='{"validation":{}}'
+    method="post">
+        <div class="upload-container">
+            <div class="upload" for="document uploader">
+                <div class="input-file">
+                    <input type="file" id="filename-1" class="upload-filename" name="filename1"
+                    data-validate="{required:true}"/>
+                    <span id="image-error-message-1" style="color:red;"></span>
+                    <span class="input-note"><?= $block->escapeHtml(__('(Only one document can be uploaded)')) ?></span>
+                    <!-- bv_vv; date:04-02-2022; File Preview Start; -->
+                    <img class="previewimage-filename-1" height="170" width="170"
+                    src="" title="" style="display:none;"></img>
+                    <div class="doc-actions" id="doc-actions-filename-1" style="display:none;">
+                        <a class="view-doc-link" id="view-doc-link-filename-1" href="" target="_blank"></a>
+                        <a class="deletedocument-preview deletedocument" id="deletedocument-filename-1"></a>
+                    </div>
+                </div>
+                <!-- bv_vv; date:04-02-2022; File Preview End; -->
+                <div class="doc_name" for="document name">
+                    <label><?= $block->escapeHtml(__('Document Name')); ?></label>
+                    <input type="text" id="name" name="name1" data-validate="{required:true}" />
+                </div>
+                <div class="set_expiry" for="document expiry data" style="display:none" >
+                    <label><?= $block->escapeHtml(__('Set a Specific Expiry date')); ?></label>
+                    <input type="checkbox" id="toggle" name="set_expiry[]" class="cmn-toggle cmn-toggle-round" />
+                    <span class="slider round" />
+                    <div class="expiry_dates" for="document expiry data" style="display:none">
+                        <label><?= $block->escapeHtml(__('Set Expiry Date')); ?></label>
+                        <input type="text"
+                            placeholder="Expiry Date"
+                            name="expiry_date1"
+                            id="expiry_date-1" data-validate="{required:true}" />
+                    </div>    
+                </div>
+            </div>
+            <input type="hidden" id="is_add_more_form1" name="is_add_more_form[]" value="0"/>
+            <div class="add-more-cont">
+                <a id="add_more"><?= $block->escapeHtml(__('Add More Document')); ?></a>
+            </div>
+        </div>
+        <button type="submit" id="btnsave" class="action submit primary" style="display:none">
+            <span><?= $block->escapeHtml(__('Submit')); ?></span>
+        </button>
+    </form>
 </div>
-
-
-<script>
-require(["jquery", "mage/calendar"], function($){
-    $(document).ready(function() {
-            $("#btnsave").hide();
-            $(".set_expiry").hide();
-            $(".expiry_dates").hide();
-            $('#toggle').on('change', function(){
-                   this.value = this.checked ? 1 : 0;
-                   if($(this).val() == "1") {
-                        /*alert("dfdfds");*/
-                        $(".expiry_dates").show();
-                        $("#expiry_date").attr("data-validate", "{required:true}");
-                        /*$(".expiry_dates").append('<input type="text" id="expiry_date-'+showId+'" name="expiry_date[]">');*/
-                   }else{
-                        $(".expiry_dates").hide();
-                   }
-
-
-                   $("#expiry_date").datepicker({
-                      minDate: 0,
-                        // startDate: '-0m',
-                      showMonthAfterYear: false,
-                      dateFormat:'mm/dd/yy',
-                      changeMonth: true,
-                      changeYear: true,
-                      yearRange: '2020:2030',
-                    });
-
-               }).change();;
-
-          $(".doc_name").hide();
-          /*$(".expiry").hide();*/
-          $('#filename').change( function()
-            {
-                if ($(this).val()){
-                     $(".set_expiry").show();
-                    $(".doc_name").show();
-                    $("#btnsave").show();
-                 } else{
-                    $(".set_expiry").hide();
-                     $(".doc_name").hide();
-                     $("#btnsave").hide();
-                 }
-            });
-
-          var id = 1;
-            $("#add_more").click(function(){
-                var showId = ++id;
-                if(showId <=10)
-                {
-                    $(".upload").append('<input type="file" id="filename-'+showId+'" class="upload-filename" name="filename[]">');
-                }
-
-            $('#filename-'+showId).change( function()
-            {
-                if ($(this).val()){
-                     $(".doc_name").append('<div class="label"><label>Document Name</label></div><input type="text" id="name-'+showId+'" name="name[]">');
-                     $(".set_expiry").append('<div class="label"><label>Set a Specific Expiry date</label></div><input type="checkbox" id="toggle-'+showId+'" name="set_expiry[]" /><span class="slider round"></span>');
-
-                $(document).on('change',"#toggle-"+showId, function() {
-                  this.value = this.checked ? 1 : 0;
-                   if($(this).val() == "1") {
-                        if($("#expiry_date-"+showId).css('display')){ 
-                            if($("#expiry_date-"+showId).css('display') == 'none'){
-                                $("#expiry_date-"+showId).show();
-                            }
-                        }else{
-                            $(".set_expiry").append('<input type="text" placeholder="Expiry Date" id="expiry_date-'+showId+'" name="expiry_date[]">');    
-                        }
-
-                        $("#expiry_date-"+showId).datepicker({
-                          showMonthAfterYear: false,
-                          dateFormat:'mm/dd/yy',
-                          changeMonth: true,
-                          changeYear: true,
-                          yearRange: '2020:2030',
-                        });
-
-                        
-                   }else{
-                        $("#expiry_date-"+showId).hide();
-                   }
-                });
-                }/*else{
-                    $(".expiry").hide();
-                     $(".doc_name").hide();
-                 }*/
-            });
-
-            
-            });
-
-            $('#toggle-'+showId).change( function(){
-                   this.value = this.checked ? 1 : 0;
-                   if($(this).val() == "1") {
-                        /*alert("dfdfds");*/
-                        /*$(".expiry_dates").show();*/
-                        $(".expiry_dates").append('<input type="text" placeholder="Expiry Date" id="expiry_date-'+showId+'" name="expiry_date[]">');
-                   }/*else{
-                        $(".expiry_dates").hide();
-                   }*/
-
-               }).change();;
-            
-        
-        /*$("#myformdynamic").submit(function(){
-            
-            if ($('#myformdynamic').valid()) {
-                $('.page.messages').html('');
-                var document_name = $("input[name='name']").val();
-                var document_expirydate = $("input[name='expiry_date']").val();
-                var formData = new FormData(this);
-                var file_obj = document.getElementById("filename");
-                formData.append('filename', file_obj.files[0]);
-
-                var url = "<?php echo $block->getBaseUrl().'mydocument/customer/result/' ?>";
-                $.ajax({
-                    url: url,
-                    type: "POST",
-                    dataType: "JSON",
-                    contentType: false,
-                    enctype: 'multipart/form-data',
-                    processData: false,
-                    //data: {fname:event_fname,lname:event_lname,address:event_address,city:event_city,mobilenumber:event_mobilenumber,filename:event_filename},
-                    data: formData,
-                    showLoader: true,
-                    cache: false,
-                    success: function(response){
-                        //console.log(response.output);
-                        //jQuery('.page.messages').html(response);
-                        if(response == "1"){
-                            $(".page.messages").html('<div role="alert" class="messages"><div class="message-success success message" data-ui-id="message-success"><div >Insert Record Successfully !</div></div></div>');
-                            $('#name').val('');
-                            $('#expiry_date').val('');
-                            $('#filename').val('');
-                        }else{
-                            //alert("Not Saved!");
-                            $(".page.messages").html('<div role="alert" class="messages"><div class="alert danger alert-danger" data-ui-id="message-danger"><div >Data could not saved ! .</div></div></div>');
-                        }
-                        $(".page.messages").delay(200).fadeIn().delay(4000).fadeOut();
-                    }
-                });
-                return false;
-            }
-        });*/
-    });    
-});
+<?php endif; ?>
+<div id="popup-modal" style="display:none">
+    <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/success_union.svg')); ?>"
+        alt="success_union"
+        width="60"
+        height="60"
+        loading="lazy" />
+    <h1 class="success_msg"><?= $block->escapeHtml(__('DOCUMENTS ARE UPLOADED SUCCESSFULLY')); ?></h1>
+    <h5><?= $block->escapeHtml(__('Once it is approved by Admin, Product price would be visible to you')); ?></h5>
+</div>
+<script type="text/x-magento-init">
+{
+    "*": {
+        "Alfakher_MyDocument/js/document": {
+            "pdfImg": "<?= $block->escapeUrl($pdfImg); ?>",
+            "inputNote": "<?= $block->escapeHtml(__('(Only one document can be uploaded)')); ?>",
+            "customResultUrl": "<?= $block->escapeUrl($customResultUrl); ?>",
+            "deleteDocumentUrl": "<?= $block->escapeUrl($deleteDocumentUrl); ?>",
+            "updateDocumentUrl": "<?= $block->escapeUrl($updateDocumentUrl); ?>"
+        }
+    }
+}
 </script>
-<script>
-    require(["jquery",'Magento_Ui/js/modal/modal'], function($,modal) {
-        var options = {
-                type: 'popup',
-                responsive: true,
-                innerScroll: true,
-                buttons: [{
-                    text: $.mage.__('Continue'),
-                    class: 'mymodal1',
-                    click: function () {
-                        this.closeModal();
-                        // $("#myformdynamic").reset();
-                        $('#myformdynamic').trigger("reset");
-                        /*$('#myformdynamic').hide();*/
-
-                    }
-                }]
-            };
-        var popup = modal(options, $('#popup-modal'));
-
-         $("form#myformdynamic").submit(function(e) {
-            e.preventDefault();
-            var formData = new FormData(this);
-            var url = "<?php echo $block->getBaseUrl().'mydocument/customer/result/' ?>";
-            $.ajax({
-                url: url,
-                type: 'POST',
-                data: formData,
-                /*showLoader: true,*/
-                dataType: 'json',
-                success: function(data) {
-                    console.log(data.html);
-                    console.log(data.success);
-                    if(data.success==1){
-                        console.log("success if conditon");
-                        $('#myformdynamic').trigger("reset");
-                        $("#popup-modal").modal("openModal");
-                    }else{
-                        $(".page.messages").html('<div role="alert" class="messages"><div class="alert danger alert-danger" data-ui-id="message-danger"><div >Data could not saved ! .</div></div></div>');
-                        $(".page.messages").delay(200).fadeIn().delay(4000).fadeOut();
-                    }
-                },
-                cache: false,
-                contentType: false,
-                processData: false,
-            });
-         });
-    });
-
-</script>
-
-
-

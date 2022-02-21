@@ -258,6 +258,14 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
 <?php endif; ?>
 <?php
     $scriptString .= <<<script
+            $(document).ready(function(){
+                jQuery("#form-validate #country").attr("disabled","disabled");
+                jQuery("#form-validate #zip").attr("disabled","disabled");
+                jQuery("#form-validate #city").attr("disabled","disabled");
+                setTimeout(function(){
+                    jQuery("#form-validate #region_id").attr("disabled","disabled");
+                }, 3000);
+            });
             $("#country").change(function () {
                 onCountryChange();
             });

@@ -1,0 +1,19 @@
+<?php 
+$rejection=$this->getRejectedDoc();
+if (!empty($rejection)){ ?>
+<h3>Rejected Documents</h3>
+<table border="1">
+	<tr>
+    	<th>Document Name</th>
+    	<th>Rejected Reason</th>
+	</tr>
+<?php foreach ($rejection as $item): ?>
+	<tr>
+   		<td><?= $item['docname'] ?></td>
+    	<td><?= $item['docmsg'] ?></td>
+	</tr>
+<?php endforeach; ?>
+</table>
+<?php } ?>
+
+

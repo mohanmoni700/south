@@ -1,9 +1,5 @@
 <?php
-/**
- * Copyright ©  All rights reserved.
- * See COPYING.txt for license details.
- */
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Alfakher\MyDocument\Model;
 
@@ -165,4 +161,3 @@ class MyDocument extends AbstractModel implements MyDocumentInterface
         return $this->setData(self::EXPIRY_DATE, $expiryDate);
     }
 }
-

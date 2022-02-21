@@ -1,0 +1,7 @@
+<?php $message = $block->getMessageData(); ?>
+
+<?php if (!empty($message)): ?>
+    <?php foreach ($message['message'] as $key => $value):?>
+      <div class="<?= $block->escapeHtml(__($value[0])) ?>"><?= $block->escapeHtml(__($value[1])) ?></div>
+    <?php endforeach; ?>
+<?php endif; ?>

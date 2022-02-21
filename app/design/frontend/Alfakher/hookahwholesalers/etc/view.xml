@@ -9,11 +9,11 @@
     <media>
         <images module="Magento_Catalog">
             <image id="bundled_product_customization_page" type="thumbnail">
-                <width>140</width>
-                <height>140</height>
+                <width>300</width>
+                <height>300</height>
             </image>
             <image id="cart_cross_sell_products" type="small_image">
-                <width>240</width>
+                <width>300</width>
                 <height>300</height>
             </image>
             <image id="cart_page_product_thumbnail" type="small_image">
@@ -21,11 +21,11 @@
                 <height>170</height>
             </image>
             <image id="category_page_grid" type="small_image">
-                <width>240</width>
+                <width>300</width>
                 <height>300</height>
             </image>
             <image id="category_page_list" type="small_image">
-                <width>240</width>
+                <width>300</width>
                 <height>300</height>
             </image>
             <image id="customer_account_my_tags_tag_view" type="small_image">
@@ -53,7 +53,7 @@
                 <height>75</height>
             </image>
             <image id="new_products_content_widget_grid" type="small_image">
-                <width>240</width>
+                <width>300</width>
                 <height>300</height>
             </image>
             <image id="new_products_content_widget_list" type="small_image">
@@ -69,8 +69,8 @@
                 <height>265</height>
             </image>
             <image id="product_comparison_list" type="small_image">
-                <width>140</width>
-                <height>140</height>
+                <width>300</width>
+                <height>300</height>
             </image>
             <image id="product_page_image_large" type="image"/>
             <image id="product_page_image_medium" type="image">
@@ -78,12 +78,12 @@
                 <height>700</height>
             </image>
             <image id="product_page_image_small" type="thumbnail">
-                <width>90</width>
-                <height>90</height>
+                <width>115</width>
+                <height>115</height>
             </image>
             <image id="product_swatch_image_large" type="image"/>
             <image id="product_swatch_image_medium" type="image">
-                <width>240</width>
+                <width>300</width>
                 <height>300</height>
             </image>
             <image id="product_swatch_image_small" type="thumbnail">
@@ -115,7 +115,7 @@
                 <height>75</height>
             </image>
             <image id="recently_compared_products_grid_content_widget" type="small_image">
-                <width>240</width>
+                <width>300</width>
                 <height>300</height>
             </image>
             <image id="recently_compared_products_images_names_widget" type="thumbnail">
@@ -131,7 +131,7 @@
                 <height>207</height>
             </image>
             <image id="recently_viewed_products_grid_content_widget" type="small_image">
-                <width>240</width>
+                <width>300</width>
                 <height>300</height>
             </image>
             <image id="recently_viewed_products_images_names_widget" type="small_image">
@@ -147,8 +147,8 @@
                 <height>270</height>
             </image>
             <image id="related_products_list" type="small_image">
-                <width>140</width>
-                <height>140</height>
+                <width>300</width>
+                <height>300</height>
             </image>
             <image id="review_page_product_image" type="small_image">
                 <width>285</width>
@@ -171,8 +171,8 @@
                 <height>90</height>
             </image>
             <image id="upsell_products_list" type="small_image">
-                <width>140</width>
-                <height>140</height>
+                <width>300</width>
+                <height>300</height>
             </image>
             <image id="wishlist_sidebar_block" type="thumbnail">
                 <width>75</width>
@@ -183,7 +183,7 @@
                 <height>113</height>
             </image>
             <image id="wishlist_thumbnail" type="small_image">
-                <width>240</width>
+                <width>300</width>
                 <height>300</height>
             </image>
         </images>
@@ -306,4 +306,90 @@
         <item type="directory">Lib::mage/adminhtml</item>
         <item type="directory">Lib::mage/backend</item>
     </exclude>
+    <vars module="Magento_PageBuilder">
+        <var name="breakpoints">
+            <var name="desktop">
+                <var name="label">Desktop</var>
+                <var name="stage">true</var>
+                <var name="default">true</var>
+                <var name="class">desktop-switcher</var>
+                <var name="icon">Magento_PageBuilder::css/images/switcher/switcher-desktop.svg</var>
+                <var name="conditions">
+                    <var name="min-width">1024px</var>
+                </var>
+                <var name="options">
+                    <var name="products">
+                        <var name="default">
+                            <var name="slidesToShow">5</var>
+                        </var>
+                    </var>
+                </var>
+            </var>
+            <var name="tablet">
+                <var name="conditions">
+                    <var name="max-width">1024px</var>
+                    <var name="min-width">768px</var>
+                </var>
+                <var name="options">
+                    <var name="products">
+                        <var name="default">
+                            <var name="slidesToShow">4</var>
+                        </var>
+                        <var name="continuous">
+                            <var name="slidesToShow">3</var>
+                        </var>
+                    </var>
+                </var>
+            </var>
+            <var name="smalltablet">
+                <var name="conditions">
+                    <var name="max-width">992px</var>
+                    <var name="min-width">768px</var>
+                </var>
+                <var name="options">
+                    <var name="products">
+                        <var name="default">
+                            <var name="slidesToShow">3</var>
+                        </var>
+                        <var name="continuous">
+                            <var name="slidesToShow">3</var>
+                        </var>
+                    </var>
+                </var>
+            </var>
+            <var name="mobile">
+                <var name="label">Mobile</var>
+                <var name="stage">true</var>
+                <var name="class">mobile-switcher</var>
+                <var name="icon">Magento_PageBuilder::css/images/switcher/switcher-mobile.svg</var>
+                <var name="media">only screen and (max-width: 768px)</var>
+                <var name="conditions">
+                    <var name="max-width">767px</var>
+                    <var name="min-width">640px</var>
+                </var>
+                <var name="options">
+                    <var name="products">
+                        <var name="default">
+                            <var name="slidesToShow">2</var>
+                        </var>
+                    </var>
+                </var>
+            </var>
+            <var name="mobile-small">
+                <var name="conditions">
+                    <var name="max-width">640px</var>
+                </var>
+                <var name="options">
+                    <var name="products">
+                        <var name="default">
+                            <var name="slidesToShow">1</var>
+                        </var>
+                        <var name="continuous">
+                            <var name="slidesToShow">1</var>
+                        </var>
+                    </var>
+                </var>
+            </var>
+        </var>
+    </vars>
 </view>
