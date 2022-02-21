@@ -60,14 +60,10 @@ class CheckMigratedCustomer extends \Magento\Framework\App\Action\Action
         $websiteID = $this->_storemanager->getStore()->getWebsiteId();
         $email = $this->getRequest()->getParam('email');
 
-        $customer = $this->customer;
-        if ($websiteID) {
-            $customer->setWebsiteId($websiteID);
-        }
-        $customer->loadByEmail($email);
-        if ($customer->getId()) {
-            $customer = $this->customerRepository->getById($customer->getId());
-            $migrate_customer = $customer->getCustomAttribute('migrate_customer');
+        $customerData = $this->customer->setWebsiteId($websiteID)->loadByEmail($email);
+        if ($customerData->getId()) {
+            $customerData = $this->customerRepository->getById($customerData->getId());
+            $migrate_customer = $customerData->getCustomAttribute('migrate_customer');
             if (!empty($migrate_customer)) {
                 $migrate_customer_value = $migrate_customer->getValue();
                 $response = [
