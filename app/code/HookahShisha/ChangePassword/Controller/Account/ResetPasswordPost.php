@@ -39,7 +39,7 @@ class ResetPasswordPost extends \Magento\Customer\Controller\Account\ResetPasswo
      * @param Session $customerSession
      * @param AccountManagementInterface $accountManagement
      * @param CustomerRepositoryInterface $customerRepository
-     *
+     * @param GetCustomerByToken $getByToken = null
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function __construct(
