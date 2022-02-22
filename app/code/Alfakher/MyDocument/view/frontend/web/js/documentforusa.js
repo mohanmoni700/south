@@ -106,11 +106,11 @@ define([
                 if (extensionArr.indexOf(extension) >= 0) {
                     $(this).closest('.upload').find('.doc_name').remove();
                     $(this).closest('.upload').find('.set_expiry').remove();
-
-                    $('<div class="doc_name" for="document name">' +
+                    // added new class add-new_[BS]
+                    $('<div class="doc_name add-new_'+showId+'" for="document name">' +
                         '<label>Document Name</label>' +
                         '<input type="text" id="name-' + showId + '" name="name' + showId + '" data-validate="{required:true}"/></div>' +
-                        '<div class="set_expiry" for="document expiry data" style="display:none">' +
+                        '<div class="set_expiry add-new_'+showId+'" for="document expiry data" style="display:none">' +
                         '<label>Set a Specific Expiry date</label>' +
                         '<input type="checkbox" name="set_expiry-' + showId + '" id="toggle' + showId + '" value="0" class="cmn-toggle cmn-toggle-round" />' +
                         '<span class="slider round"></span>' +
@@ -155,8 +155,11 @@ define([
 
                         $("#deletedocument-filename" + showId).click(function() {
                             $("#doc-actions-filename-" + showId).remove();
+                            //remove multi div append[BS]
+                            $(".add-new_"+showId).remove();
                             $('#'+ fileId + showId).val('');
                             $(".previewimage-filename-" + showId).hide();
+                            
                             //remove pdf class[BS]
 	                    	$(".previewimage-filename-" + showId).removeClass(imgClass);
 		                    $("#view-doc-link-" + showId).hide();
