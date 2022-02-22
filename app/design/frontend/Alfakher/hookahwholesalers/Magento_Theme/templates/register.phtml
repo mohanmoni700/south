@@ -56,15 +56,37 @@
 <script>
 require(['jquery'], function($){
     $(document).ready(function(){
-        $('.sign-in').click(function(e){
-             $('.sign-up-ul').toggle();
-             $('.sign_in_overlay').toggle();
+        // $('.sign-in').click(function(e){
+        //      $('.sign-up-ul').toggle();
+        //      $('.sign_in_overlay').toggle();
+        // });
+        // $(document).on('click','.sign_in_overlay',function(){
+        //  $('.sign-up-ul').hide();
+        //  $(this).hide();
+        // });
+
+        $('.sign-in').click(function(event){
+            $('.sign-up-ul').toggle();
+            $('.sign_in_overlay').toggle();
+            
+            $('.page-header .header.content .minicart-wrapper').removeClass("active");
+            $('.minicart-wrapper .action.showcart').removeClass("active");
+            $('.page-header .header.content .minicart-wrapper .ui-dialog.ui-widget.mage-dropdown-dialog').hide();
+        });
+        $(".sign-in").on("click", function (event) {
+            event.stopPropagation();
         });
         $(document).on('click','.sign_in_overlay',function(){
-         $('.sign-up-ul').hide();
-         $(this).hide();
+            $('.sign-up-ul').hide();
+            $(this).hide();
+        });
+        $('.minicart-wrapper .action.showcart').click(function(event){
+            $(".sign-up-ul").hide();
         });
     });
+    $(document).on("click", function () {
+        $(".sign-up-ul").hide();
+    });    
 });
 </script>
 
