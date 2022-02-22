@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  HookahShisha
+ * @package   HookahShisha_CustomerGraphQl
+ * @author    CORRA
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\CustomerGraphQl\Model\Resolver\GenerateCustomerToken"
+                type="HookahShisha\CustomerGraphQl\Model\Resolver\GenerateCustomerToken"/>
+
+    <type name="Magento\CustomerGraphQl\Model\Resolver\ResetPassword">
+        <plugin name="disable_migrate_customer_attribute"
+                type="HookahShisha\CustomerGraphQl\Plugin\Model\Resolver\ResetPassword"/>
+    </type>
+</config>
