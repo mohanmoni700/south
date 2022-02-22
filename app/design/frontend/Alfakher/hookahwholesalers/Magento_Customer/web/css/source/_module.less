@@ -262,6 +262,7 @@ ul.nav.items{
             address{
                 line-height: 20px;
                 color: @account_color-font;
+                line-break: anywhere;
                 a{
                     color: @account_color-font;
                 }
@@ -1732,6 +1733,13 @@ ul.nav.items{
     //  _________________________________
 
 
+    .response-msg {
+        text-align: center;
+        .error {
+            color: @color-red9;
+            margin-bottom: 10px;
+        }
+    }
     .separator {
         position: relative;
         text-align: center;
@@ -1891,7 +1899,7 @@ ul.nav.items{
                     margin: 8px auto 0;
                 }
                 .primary.login {
-                    width: 180px;
+                    min-width: 180px;
                     height: 50px;
                     .lib-css(background, @color-black);
                     margin-bottom: @indent__m;

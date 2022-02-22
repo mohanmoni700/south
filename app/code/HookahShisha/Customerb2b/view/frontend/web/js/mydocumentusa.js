@@ -106,7 +106,7 @@ define([
                 var extension = val.substring(val.lastIndexOf('.') + 1).toLowerCase();
                 var extensionArr = ['pdf', 'jpg', 'png'];
                 if (extensionArr.indexOf(extension) >= 0) {
-                	// alert("allowed");
+
                     $(this).closest('.upload').find('.doc_name').remove();
                     $(this).closest('.upload').find('.set_expiry').remove();
 
@@ -280,8 +280,6 @@ define([
                     '</div></div>').insertBefore('.upload-container .usa-add-more');
 	            }
 	            $('#filename-' + showId).change(function(e) {
-	            	// alert("change");
-	            	// alert($(this).val());
 	                var val = $(this).val();
 	                fileUploading(showId, 'filename-', $(this), e);
 	            });

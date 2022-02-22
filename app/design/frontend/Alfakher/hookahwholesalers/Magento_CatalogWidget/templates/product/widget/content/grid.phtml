@@ -100,7 +100,7 @@ use Magento\Framework\App\Action\Action;
                                                         <?php endif; ?>
                                                     <?php endif; ?>
                                                 </div>
-                                                ?php elseif(!$showCart) : ?>
+                                                <?php elseif(!$showCart) : ?>
                                                 <div class="actions-primary">
                                                     <div class="logged-in-action">
                                                         <a href="<?= $block->getUrl('customer/account/login') ?>"><?= $block->escapeHtml(__('Sign in / Register')) ?></a>
