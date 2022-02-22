@@ -237,6 +237,7 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                         $metadata->setPath('/');
                         $this->getCookieManager()->deleteCookie('mage-cache-sessid', $metadata);
                     }
+
                     $customer_id = $customerData->getId();
 
                     $doc_collection = $this->collection->create()->addFieldToFilter('customer_id', ['eq' => $customer_id]);
