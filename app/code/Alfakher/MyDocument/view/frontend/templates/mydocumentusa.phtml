@@ -160,10 +160,12 @@ $today = date("Y-m-d");
                             <div class="expiry_dates expiry_dates<?= $block->escapeHtml($val['mydocument_id']);?>"
                                 for="document expiry data" style="display:none">
                                 <label><?= $block->escapeHtml(__('Set Expiry Date')); ?></label>
+                                <!-- old date[BS] -->
                                 <input type="text" placeholder="Expiry Date"
                                 name="expiry_date<?= $block->escapeHtml($val['mydocument_id']);?>"
                                 id="expiry_date<?= $block->escapeHtml($val['mydocument_id']);?>"
-                                data-validate="{required:true}" />
+                                data-validate="{required:true}"
+                                value="<?= $block->escapeHtml($val['expiry_date']); ?>" />
                             </div>
                         </div>
                         <input type="hidden"
@@ -302,11 +304,13 @@ $today = date("Y-m-d");
                             <div class="expiry_dates expiry_dates<?= $block->escapeHtml($val['mydocument_id']);?>"
                                 for="document expiry data" style="display:none">
                                 <label><?= $block->escapeHtml(__('Set Expiry Date')); ?></label>
+                                <!-- old date[BS] -->
                                 <input type="text"
                                 placeholder="Expiry Date"
                                 name="expiry_date<?= $block->escapeHtml($val['mydocument_id']);?>"
                                 id="expiry_date<?= $block->escapeHtml($val['mydocument_id']);?>"
-                                data-validate="{required:true}" />
+                                data-validate="{required:true}" 
+                                value="<?= $block->escapeHtml($val['expiry_date']); ?>"/>
                             </div>
                         </div>
                     </div>
