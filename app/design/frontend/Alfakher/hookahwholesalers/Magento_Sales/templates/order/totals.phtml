@@ -18,7 +18,11 @@
             <?php if ($_total->getStrong()) : ?>
                 <strong><?= $block->escapeHtml($_total->getLabel()) ?></strong>
             <?php else : ?>
+                <?php if ($_code == 'shipping'): ?>
+                <?= __("Shipping") ?>
+                <?php else: ?>
                 <?= $block->escapeHtml($_total->getLabel()) ?>
+                <?php endif; ?>
             <?php endif ?>
         </th>
         <td <?= /* @noEscape */ $block->getValueProperties() ?> data-th="<?= $block->escapeHtmlAttr($_total->getLabel()) ?>">
