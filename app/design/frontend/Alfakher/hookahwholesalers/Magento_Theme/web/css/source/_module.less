@@ -1152,7 +1152,7 @@
                 border-radius: 26px;
                 &:hover{
                     background: @hookah_theme_gradient;
-                    border: transparent;
+                    border-color: transparent;
                 }
             }
         }
@@ -1184,6 +1184,20 @@
     .customer-account-forgotpassword{
         .page-main{
             padding: 30px 0;
+        }
+    }
+    .customer-account-login, .customer-account-forgotpassword {
+        .page-header {
+            margin-bottom: 0;
+        }
+        .page-footer {
+            margin-top: 0;
+        }
+    }
+    .login-container {
+        .field.note {
+            .lib-font-size(18);
+            padding: 0 20px;
         }
     }
     #html-body{
@@ -2307,6 +2321,9 @@
                         right: -@indent__xs;
                         &::before{
                             right: 3px;
+                        }
+                        &::after{
+                            right: 3px !important;
                         }
                     }
                 }

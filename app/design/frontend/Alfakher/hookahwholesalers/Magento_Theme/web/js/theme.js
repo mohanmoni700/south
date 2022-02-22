@@ -26,4 +26,6 @@ define([
     });
 
     keyboardHandler.apply();
+
+    $('.blog-page-list .block.block-products-list.grid').insertAfter('.blog-page-list .page-main > .columns');
 });

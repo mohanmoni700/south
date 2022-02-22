@@ -8,13 +8,15 @@
 
 /** @var \Magento\Customer\Block\Form\Login $block */
 ?>
+<?php $checkmigratedcustomerurl = $block->getUrl('changepassword/ajax/checkmigratedcustomer'); ?>
 <div class="block block-customer-login">
 
     <div class="block-title">
         <div class="separator"><span class="user_icon"></span> </div>
         <strong id="block-customer-login-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Registered Customers')) ?></strong>
     </div>
-    <div class="block-content" aria-labelledby="block-customer-login-heading">
+    <div class="block-content" aria-labelledby="block-customer-login-heading" id="customer-login">
+    <div class="response-msg"></div>
         <form class="form form-login"
               action="<?= $block->escapeUrl($block->getPostActionUrl()) ?>"
               method="post"
@@ -80,4 +82,19 @@
             }
         }
     </script>
+    <!-- bv_vv; 18-02-2022; check for migrated customer; start-->
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "HookahShisha_ChangePassword/js/checkmigratedcustomer": {
+                "email": "#email",
+                "passwordSelector": "#customer-login .password",
+                "checkmigratedcustomerurl": "<?= $block->escapeUrl($checkmigratedcustomerurl); ?>",
+                "submitButton": "#send2",
+                "migratedcustomer": "#migrate_customer"
+            }
+        }
+    }
+    </script>
+    <!-- bv_vv; 18-02-2022; check for migrated customer; end-->
 </div>
