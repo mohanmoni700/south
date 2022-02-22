@@ -31,6 +31,7 @@ class ViewDetailRenderer extends Template
      * @param Context $context
      * @param \Magento\Framework\Registry $coreRegistry
      * @param ProductRepositoryInterface|\Magento\Framework\Pricing\PriceCurrencyInterface $productRepository
+     * @param \Magento\Store\Model\StoreManagerInterface $storemanager
      * @param array $data = []
      */
     public function __construct(
@@ -82,8 +83,6 @@ class ViewDetailRenderer extends Template
 
         $product = $this->getProduct();
 
-        $productImageUrl = $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $product->getImage();
-        //$productUrl = $product->getProductUrl();
-        return $productImageUrl;
+        return $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $product->getImage();
     }
 }

@@ -11,17 +11,23 @@ use Magento\Store\Model\StoreManagerInterface;
 class CheckMigratedCustomer extends \Magento\Framework\App\Action\Action
 {
     /**
-     * @var \Magento\Customer\Model\Customer
+     * @var Customer
      */
     private $customer;
 
     /**
-     * @var Magento\Framework\View\Result\PageFactory
+     * @var PageFactory
      */
     protected $resultPageFactory;
 
+    /**
+     * @var JsonFactory
+     */
     protected $resultJsonFactory;
 
+    /**
+     * @var CustomerRepositoryInterface
+     */
     protected $customerRepository;
 
     /**
@@ -63,11 +69,11 @@ class CheckMigratedCustomer extends \Magento\Framework\App\Action\Action
         $customerData = $this->customer->setWebsiteId($websiteID)->loadByEmail($email);
         if ($customerData->getId()) {
             $customerData = $this->customerRepository->getById($customerData->getId());
-            $migrate_customer = $customerData->getCustomAttribute('migrate_customer');
-            if (!empty($migrate_customer)) {
-                $migrate_customer_value = $migrate_customer->getValue();
+            $migrateCustomer = $customerData->getCustomAttribute('migrate_customer');
+            if (!empty($migrateCustomer)) {
+                $migrateCustomerValue = $migrateCustomer->getValue();
                 $response = [
-                    'migrate_customer' => $migrate_customer_value,
+                    'migrate_customer' => $migrateCustomerValue,
                 ];
             } else {
                 $response = [

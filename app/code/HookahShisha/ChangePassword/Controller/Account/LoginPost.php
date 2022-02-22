@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 
 namespace HookahShisha\ChangePassword\Controller\Account;
 
@@ -92,6 +88,20 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
      */
     private $_storemanager;
 
+    /**
+     * @param Context $context
+     * @param Session $customerSession
+     * @param AccountManagementInterface $customerAccountManagement
+     * @param CustomerUrl $customerHelperData
+     * @param Validator $formKeyValidator
+     * @param AccountRedirect $accountRedirect
+     * @param Escaper $escaper
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param Customer $customer
+     * @param StoreManagerInterface $storemanager
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function __construct(
         Context $context,
         Session $customerSession,
