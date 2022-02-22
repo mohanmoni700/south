@@ -36,6 +36,7 @@ class CheckMigratedCustomer extends \Magento\Framework\App\Action\Action
     private $_storemanager;
 
     /**
+     *
      * @param Context $context
      * @param PageFactory $resultPageFactory
      * @param JsonFactory $resultJsonFactory
@@ -59,6 +60,9 @@ class CheckMigratedCustomer extends \Magento\Framework\App\Action\Action
         return parent::__construct($context);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function execute()
     {
         /** @var \Magento\Framework\Controller\Result\Json $resultJson */
