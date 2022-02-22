@@ -1,4 +1,8 @@
 <?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 
 namespace HookahShisha\ChangePassword\Controller\Account;
 
@@ -88,20 +92,6 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
      */
     private $_storemanager;
 
-    /**
-     * @param Context $context
-     * @param Session $customerSession
-     * @param AccountManagementInterface $customerAccountManagement
-     * @param CustomerUrl $customerHelperData
-     * @param Validator $formKeyValidator
-     * @param AccountRedirect $accountRedirect
-     * @param Escaper $escaper
-     * @param CustomerRepositoryInterface $customerRepository
-     * @param Customer $customer
-     * @param StoreManagerInterface $storemanager
-     *
-     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-     */
     public function __construct(
         Context $context,
         Session $customerSession,
@@ -112,12 +102,14 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
         Escaper $escaper,
         CustomerRepositoryInterface $customerRepository,
         Customer $customer,
-        StoreManagerInterface $storemanager
+        StoreManagerInterface $storemanager,
+        \Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory $collection
     ) {
         $this->escaper = $escaper;
         $this->customerRepository = $customerRepository;
         $this->customer = $customer;
         $this->_storemanager = $storemanager;
+        $this->collection = $collection;
         parent::__construct($context, $customerSession, $customerAccountManagement, $customerHelperData, $formKeyValidator, $accountRedirect);
     }
 
@@ -190,20 +182,34 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
             $websiteID = $this->_storemanager->getStore()->getWebsiteId();
             $email = (string) $login['username'];
             $resultRedirect->setPath('customer/account/login/');
-            $migrate_customer_value = "";
-            $customerData = $this->customer->setWebsiteId($websiteID)->loadByEmail($email);
-            if ($customerData->getId()) {
-                $customerData = $this->customerRepository->getById($customerData->getId());
-                $migrate_customer = $customerData->getCustomAttribute('migrate_customer');
+            if ($email) {
+                $customerData = $this->customer->setWebsiteId($websiteID)->loadByEmail($email);
+                $migrate_customer_value = "";
+                if ($customerData->getId()) {
+                    $customerData = $this->customerRepository->getById($customerData->getId());
+                    $redirectUrl = $this->accountRedirect->getRedirectCookie();
 
-                if (!empty($migrate_customer)) {
-                    $migrate_customer_value = $migrate_customer->getValue();
+                    $migrate_customer = $customerData->getCustomAttribute('migrate_customer');
+
+                    if (!empty($migrate_customer)) {
+                        $migrate_customer_value = $migrate_customer->getValue();
+                    }
                 }
+            } else {
+                $this->messageManager->addErrorMessage(__('Please enter your email.'));
+                return $resultRedirect;
             }
-
             /* Here we are checking the Reset password */
             if (!empty($login['username']) && !empty($migrate_customer_value) && $migrate_customer_value == 1) {
                 /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
+
+                if (!\Zend_Validate::is($email, \Magento\Framework\Validator\EmailAddress::class)) {
+                    $this->session->setForgottenEmail($email);
+                    $this->messageManager->addErrorMessage(
+                        __('The email address is incorrect. Verify the email address and try again.')
+                    );
+                    return $resultRedirect;
+                }
 
                 try {
                     $this->customerAccountManagement->initiatePasswordReset(
@@ -231,13 +237,28 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                         $metadata->setPath('/');
                         $this->getCookieManager()->deleteCookie('mage-cache-sessid', $metadata);
                     }
-                    $redirectUrl = $this->accountRedirect->getRedirectCookie();
-                    if (!$this->getScopeConfig()->getValue('customer/startup/redirect_dashboard') && $redirectUrl) {
-                        $this->accountRedirect->clearRedirectCookie();
+                    $customer_id = $customerData->getId();
+
+                    $doc_collection = $this->collection->create()->addFieldToFilter('customer_id', ['eq' => $customer_id]);
+                    $document = $doc_collection->getData();
+                    $dataSize = count($document);
+                    $status = [];
+                    foreach ($document as $value) {
+                        $status[] = $value['status'];
+                    }
+
+                    if (in_array(0, $status) || empty($dataSize)) {
                         $resultRedirect = $this->resultRedirectFactory->create();
-                        // URL is checked to be internal in $this->_redirect->success()
-                        $resultRedirect->setUrl($this->_redirect->success($redirectUrl));
+                        $resultRedirect->setPath('mydocument/customer/index');
                         return $resultRedirect;
+
+                    } else {
+                        if (!$this->getScopeConfig()->getValue('customer/startup/redirect_dashboard') && $redirectUrl) {
+                            $this->accountRedirect->clearRedirectCookie();
+                            $resultRedirect = $this->resultRedirectFactory->create();
+                            $resultRedirect->setUrl($this->_redirect->success($redirectUrl));
+                            return $resultRedirect;
+                        }
                     }
                 } catch (EmailNotConfirmedException $e) {
                     $this->messageManager->addComplexErrorMessage(
