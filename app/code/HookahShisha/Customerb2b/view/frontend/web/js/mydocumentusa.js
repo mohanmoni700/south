@@ -66,17 +66,17 @@ define([
                         var filesrc = URL.createObjectURL(e.target.files[0]);
                         var imgClass = "";
                     }
-
 	                $(".previewimage-" + fileId).show();
 	                $(".previewimage-" + fileId).attr("src", filePreview);
 	                $(".previewimage-" + fileId).attr("title", filename);
 	                $(".previewimage-" + fileId).addClass(imgClass);
 
 	                currentElem.closest('.upload').addClass('active');
-
 	                $("#view-doc-link-" + fileId).show();
 	                $("#doc-actions-" + fileId).show();
 	                $("#view-doc-link-" + fileId).attr("href", filesrc);
+	                $("#downloaddocument-" + fileId).show();
+	                $("#downloaddocument-" + fileId).attr("href", event.target.result);
 	                $("#download-doc-preview-" + fileId).attr("href", event.target.result);
 	                $("#download-doc-preview-" + fileId).attr("download", nameArr[2]);
 	                $(expiry_date).show();
@@ -155,6 +155,7 @@ define([
                             '<div class="doc-actions" id="doc-actions-filename-' + showId + '">' +
                             '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + filesrc + '" target="_blank"></a>' +
                             '<a class="deletedocument-preview deletedocument" id="deletedocument-filename' + showId + '"></a>' +
+                            '<a class="download-doc-preview" id="downloaddocument-filename' + showId + '" href="' + filesrc + '" target="_blank" download></a>' +
                             '</div>').insertAfter("#" + fileId + showId);
 
                         $("#deletedocument-filename" + showId).click(function() {

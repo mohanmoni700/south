@@ -56,6 +56,7 @@ define([
                                 '<div class="doc-actions" id="doc-actions-filename-' + showId + '">' +
                                 '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + filesrc + '" target="_blank"></a>' +
                                 '<a class="deletedocument-preview deletedocument" id="deletedocument-filename-' + showId + '"></a>' +
+                                '<a class="download-doc-preview" id="downloaddocument-filename-' + showId + '" href="' + filesrc + '" target="_blank" download></a>' +
                                 '</div>').insertAfter($('#' + docActionInsertAfter + showId));
 
                             $("#deletedocument-filename-" + showId).click(function() {
