@@ -129,7 +129,14 @@
                 .lib-css(line-height, @checkout-billing-address-details__line-height);
                 .lib-css(padding, @checkout-billing-address-details__padding);
             }
-
+            .action-edit-address {
+                margin-top: 10px;
+                .lib-button-primary();
+                &:hover {
+                    border-color: transparent;
+                    background: @hookah_theme_gradient;
+                }
+            }
         }
 
         .payment-method-note {
