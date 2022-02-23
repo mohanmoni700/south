@@ -310,7 +310,7 @@
                     width: 100%;
                     min-height: 0;
                     padding: 0;
-                }
+                }                
                 ul {
                     li {
                         .klevuQuickProductDescBlock {
@@ -318,6 +318,10 @@
                         }
                         a.klevuQuickProductInnerBlock {
                             padding: 8px 20px;
+                            color: @color_black;
+                            &:hover {
+                                color: @hookah_theme_color;
+                            }
                         }
                     }
                 }
@@ -368,15 +372,23 @@
     .kuQuickSearchAutoCompleteLayout{
         .klevuResultsBlock{
             .klevuQuickSearchResults{
-                ul li .klevuQuickProductName{
-                    text-decoration: underline;
-                    margin-bottom: 14px;
-                    transition: all .5s;
-                    font-weight: 400;
-                    margin-bottom: 0;
-                    color: @color_black;
-                    &:hover{
-                        color:#9B2269;
+                ul li {
+                    .klevuQuickProductName{
+                        text-decoration: underline;
+                        margin-bottom: 14px;
+                        transition: all .5s;
+                        font-weight: 400;
+                        margin-bottom: 0;
+                        color: @color_black;
+                        &:hover{
+                            color:#9B2269;
+                        }
+                    }
+                    .klevuQuickProductPrice {
+                        display: none;
+                    }
+                    .kuQuickCaptionStockOut {
+                        min-height: 0;
                     }
                 }
                 ul li{
@@ -1157,6 +1169,59 @@
             }
         }
     }
+
+    //
+    //  Contact page
+    //  ---------------------------------------------
+    #contactBox {
+        text-align: left;
+        margin: 5px !important;
+        min-height: 512px !important;
+        width: 230px !important;
+        float: left;
+        border: 2px solid @color_black;
+        position: relative;
+        -webkit-border-radius: 4px;
+        -moz-border-radius: 4px;
+        -o-border-radius: 4px;
+        border-radius: 4px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.20);
+        zoom: 1;
+    }
+    #contactBoxHead {
+        height: 20px;
+        width: 100%;
+        color: #ffffff;
+        text-align: center;
+        font-weight: bold;
+        display: block;
+        background-color: @color_black;
+    }
+    #contactBoxpad {
+        padding: 10px;
+        font-size: 11px;
+    }
+    .strongcontact {
+        font-weight: @font-weight__bold;
+        font-size: 18px;
+        color: @color_black;
+    }
+    .tollfree {
+        color: @color_black;
+        font-size: 16px;
+        font-weight: normal;
+    }
+    a.emaillink {
+        font-size: 12px;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+    .last-link {
+        margin: 13px 0px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 
@@ -1935,10 +2000,10 @@
                             padding: 7px 35px 9px @indent__base;
                             border-radius: 50px;
                             border-color: @color_E0E0E0;
-                            min-height: 35px;
+                            min-height: 42px;
                             border-width: 1.5px;
                             line-height: normal;
-                            height: 35px;
+                            height: 42px;
                             font-size: 12px;
                             &::placeholder{
                                 font-size: 12px;
@@ -2378,7 +2443,8 @@
                             position: unset;
                             margin: 12px 0 0;
                             font-size: 12px;
-                            line-height: 35px;
+                            height: 36px;
+                            min-height: 36px;
                             &:focus {
                                 box-shadow: none;
                             }
