@@ -106,13 +106,15 @@ define([
                 var extension = val.substring(val.lastIndexOf('.') + 1).toLowerCase();
                 var extensionArr = ['pdf', 'jpg', 'png'];
                 if (extensionArr.indexOf(extension) >= 0) {
+
                     $(this).closest('.upload').find('.doc_name').remove();
                     $(this).closest('.upload').find('.set_expiry').remove();
 
-                    $('<div class="doc_name" for="document name">' +
+                    // added new class add-new_[BS]
+                    $('<div class="doc_name add-new_'+showId+'" for="document name">' +
                         '<label>Document Name</label>' +
                         '<input type="text" id="name-' + showId + '" name="name' + showId + '" data-validate="{required:true}"/></div>' +
-                        '<div class="set_expiry" for="document expiry data" style="display:none">' +
+                        '<div class="set_expiry add-new_'+showId+'" for="document expiry data" style="display:none">' +
                         '<label>Set a Specific Expiry date</label>' +
                         '<input type="checkbox" name="set_expiry-' + showId + '" id="toggle' + showId + '" value="0" class="cmn-toggle cmn-toggle-round" />' +
                         '<span class="slider round"></span>' +
@@ -157,6 +159,8 @@ define([
 
                         $("#deletedocument-filename" + showId).click(function() {
                             $("#doc-actions-filename-" + showId).remove();
+                            //remove multi div append[BS]
+                            $(".add-new_"+showId).remove();
                             $('#'+ fileId + showId).val('');
                             $(".previewimage-filename-" + showId).hide();
 		                    $("#view-doc-link-" + showId).hide();
@@ -270,10 +274,10 @@ define([
 	            if (showId <= 10) {
 	                $('<input type="hidden" name="is_customerfrom_usa' + showId + '" value="1"/>'+
                 	'<div class="upload" for="document uploader"><div class="input-file" id="input-file-' + showId + '">' +
-                    '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" data-validate="{required:true}" />' +
+                    '<input type="file" id="filename-' + showId + '" class="upload-filename-' + showId +'" name="filename' + showId + '" data-validate="{required:true}" />' +
                     '<span class="input-note">' + config.inputNote + '</span>'+
                     '<span id="image-error-message'+showId+'" style="color:red;"></span>'+
-                    '</div></div>').insertBefore('.upload-container .add-more-cont');
+                    '</div></div>').insertBefore('.upload-container .usa-add-more');
 	            }
 	            $('#filename-' + showId).change(function(e) {
 	                var val = $(this).val();

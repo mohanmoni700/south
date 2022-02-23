@@ -762,6 +762,7 @@ return [
         'HookahShisha_Catalog' => 1,
         'HookahShisha_CatalogImportExport' => 1,
         'HookahShisha_ChangePassword' => 1,
+        'HookahShisha_CustomerGraphQl' => 1,
         'HookahShisha_Customerb2b' => 1,
         'HookahShisha_Customization' => 1,
         'HookahShisha_GraphQl' => 1,

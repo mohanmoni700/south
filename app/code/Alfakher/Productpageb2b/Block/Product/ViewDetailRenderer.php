@@ -13,7 +13,10 @@ use Magento\Review\Model\Review;
  */
 class ViewDetailRenderer extends Template
 {
-
+    /**
+     * @var StoreManagerInterface
+     */
+    protected $_storeManager;
     /**
      * @var ProductRepositoryInterface
      */
@@ -28,16 +31,19 @@ class ViewDetailRenderer extends Template
      * @param Context $context
      * @param \Magento\Framework\Registry $coreRegistry
      * @param ProductRepositoryInterface|\Magento\Framework\Pricing\PriceCurrencyInterface $productRepository
+     * @param \Magento\Store\Model\StoreManagerInterface $storemanager
      * @param array $data = []
      */
     public function __construct(
         Context $context,
         \Magento\Framework\Registry $coreRegistry,
         ProductRepositoryInterface $productRepository,
+        \Magento\Store\Model\StoreManagerInterface $storemanager,
         array $data = []
     ) {
         $this->_coreRegistry = $coreRegistry;
         $this->productRepository = $productRepository;
+        $this->_storeManager = $storemanager;
         parent::__construct($context, $data);
     }
 
@@ -65,5 +71,18 @@ class ViewDetailRenderer extends Template
     {
         $product = $this->getProduct();
         return $product->getUrlModel()->getUrl($product, ['_ignore_category' => true]);
+    }
+    /**
+     * Get product image url
+     *
+     * @return string
+     */
+    public function getProductImageUrl()
+    {
+        $store = $this->_storeManager->getStore();
+
+        $product = $this->getProduct();
+
+        return $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $product->getImage();
     }
 }

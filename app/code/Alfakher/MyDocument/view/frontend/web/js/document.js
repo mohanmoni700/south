@@ -51,8 +51,8 @@ define([
                                 var filesrc = URL.createObjectURL(e.target.files[0]);
                                 var imgClass = "";
                             }
-
-                            $('<img class="previewimage-filename-' + showId + '" height="170" width="170" src="' + filePreview + '" title="' + filename + '"/>' +
+                            //added pdf class[BS]
+                            $('<img class="previewimage-filename-' + showId + ' ' + imgClass + '" height="170" width="170" src="' + filePreview + '" title="' + filename + '"/>' +
                                 '<div class="doc-actions" id="doc-actions-filename-' + showId + '">' +
                                 '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + filesrc + '" target="_blank"></a>' +
                                 '<a class="deletedocument-preview deletedocument" id="deletedocument-filename-' + showId + '"></a>' +

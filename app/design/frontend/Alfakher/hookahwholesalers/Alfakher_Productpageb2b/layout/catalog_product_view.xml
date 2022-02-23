@@ -10,6 +10,9 @@
             </arguments>
         </block>
         <referenceBlock name="product.attributes.exclude.pagebuilder" remove="true" /> 
+        <!-- SEO Schema Start -->
+        <block class="Alfakher\Productpageb2b\Block\Product\ViewDetailRenderer" name="product.info.seo" template="Alfakher_Productpageb2b::product/view/seoschema.phtml"  />
+        <!-- SEO Schema End -->
     </referenceContainer>
     <move element="view.details.link" destination="product.info.price" after="product.info.review"/>
     <move element="product.info.tier.price.text.attribute" destination="product.info.main" before="product.info.stock.sku"/>
