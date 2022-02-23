@@ -15,15 +15,11 @@
         <move element="category.image" destination="category.banner.container" before="-" />
         <move element="category.description" destination="category.banner.description" after="page.main.title" />
         <move element="page.main.title" destination="category.banner.description" after="category.description" />
-        <move element="product.view.breadcrumbs" destination="columns.top.wrapper" before="-"/>
+        
+        <move element="breadcrumbs" destination="columns.top.wrapper" before="-"/>
 
         <referenceBlock name="sidebar.additional" remove="true"/>
         <referenceBlock name="category.product.addto.compare" remove="true"/>
 
-        <move element="product.view.breadcrumbs" destination="columns.top.wrapper" before="-"/>
-        <referenceBlock name="breadcrumbs" remove="true" />
-        <referenceContainer name="page.top">
-            <block class="Alfakher\Productpageb2b\Block\Product\Breadcrumbs" name="product.view.breadcrumbs" template="Magento_Theme::html/product_breadcrumbs.phtml" />
-        </referenceContainer>
     </body>
 </page>
