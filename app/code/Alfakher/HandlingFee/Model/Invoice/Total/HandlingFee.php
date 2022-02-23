@@ -3,11 +3,16 @@
 namespace Alfakher\HandlingFee\Model\Invoice\Total;
 
 /**
- *
+ * Appending handling fee to invoice
  */
 class HandlingFee extends \Magento\Sales\Model\Order\Invoice\Total\AbstractTotal
 {
-
+    /**
+     * Collect totals
+     *
+     * @param \Magento\Sales\Model\Order\Invoice $invoice
+     * @return $this
+     */
     public function collect(\Magento\Sales\Model\Order\Invoice $invoice)
     {
         $orderHandlingFee = $invoice->getOrder()->getHandlingFee();

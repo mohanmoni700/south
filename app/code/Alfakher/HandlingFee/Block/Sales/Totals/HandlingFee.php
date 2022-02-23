@@ -2,6 +2,11 @@
 
 namespace Alfakher\HandlingFee\Block\Sales\Totals;
 
+/**
+ * Display handling fee in customer account
+ *
+ * @author af_bv_op
+ */
 class HandlingFee extends \Magento\Framework\View\Element\Template
 {
 
@@ -14,17 +19,6 @@ class HandlingFee extends \Magento\Framework\View\Element\Template
      * @var \Magento\Framework\DataObject
      */
     protected $_source;
-
-    /**
-     * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param array $data
-     */
-    public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        array $data = []
-    ) {
-        parent::__construct($context, $data);
-    }
 
     /**
      * Check if we nedd display full tax total info
@@ -46,12 +40,17 @@ class HandlingFee extends \Magento\Framework\View\Element\Template
         return $this->_source;
     }
 
+    /**
+     * Get order's store id
+     */
     public function getStore()
     {
         return $this->_order->getStore();
     }
 
     /**
+     * Return order
+     *
      * @return Order
      */
     public function getOrder()
@@ -60,6 +59,8 @@ class HandlingFee extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Lable property
+     *
      * @return array
      */
     public function getLabelProperties()
@@ -68,6 +69,8 @@ class HandlingFee extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Value property
+     *
      * @return array
      */
     public function getValueProperties()
@@ -76,6 +79,8 @@ class HandlingFee extends \Magento\Framework\View\Element\Template
     }
 
     /**
+     * Calculate totals
+     *
      * @return $this
      */
     public function initTotals()
@@ -98,5 +103,4 @@ class HandlingFee extends \Magento\Framework\View\Element\Template
 
         return $this;
     }
-
 }

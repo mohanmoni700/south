@@ -12,6 +12,7 @@ class Updatefee extends \Magento\Backend\App\Action
     /**
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
+     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,

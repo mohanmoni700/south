@@ -3,17 +3,24 @@
 namespace Alfakher\HandlingFee\Model\Quote\Total;
 
 /**
+ * Display handling fee on cart and checkout page
+ *
  * @author af_bv_op
  */
 class HandlingFee extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal
 {
     /**
+     *
      * @var \Magento\Quote\Model\QuoteValidator
      */
     protected $quoteValidator;
 
     /**
+     * Constructor
+     *
      * @param \Magento\Quote\Model\QuoteValidator $quoteValidator
+     * @param \Magento\Framework\App\ProductMetadataInterface $productMetadata
+     * @param \Alfakher\HandlingFee\Helper\Data $helperData
      */
     public function __construct(
         \Magento\Quote\Model\QuoteValidator $quoteValidator,
@@ -26,6 +33,8 @@ class HandlingFee extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal
     }
 
     /**
+     * Collect totals
+     *
      * @param \Magento\Quote\Model\Quote $quote
      * @param \Magento\Quote\Api\Data\ShippingAssignmentInterface $shippingAssignment
      * @param \Magento\Quote\Model\Quote\Address\Total $total
@@ -60,6 +69,8 @@ class HandlingFee extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal
     }
 
     /**
+     * Clear values
+     *
      * @param \Magento\Quote\Model\Quote\Address\Total $total
      */
     protected function clearValues(
@@ -78,6 +89,8 @@ class HandlingFee extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal
     }
 
     /**
+     * Fetch handling fee
+     *
      * @param \Magento\Quote\Model\Quote $quote
      * @param \Magento\Quote\Model\Quote\Address\Total $total
      * @return array
