@@ -3,7 +3,9 @@
 namespace Alfakher\HandlingFee\Block\Adminhtml\Sales\Order\Creditmemo\View;
 
 /**
+ * Displaying handling fee in credit memi
  *
+ * @author af_bv_op
  */
 class HandlingFee extends \Magento\Framework\View\Element\Template
 {
@@ -21,15 +23,18 @@ class HandlingFee extends \Magento\Framework\View\Element\Template
 
     /**
      * OrderFee constructor.
+     *
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param array $data
      */
+    /*
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        array $data = []
+    \Magento\Framework\View\Element\Template\Context $context,
+    array $data = []
     ) {
-        parent::__construct($context, $data);
+    parent::__construct($context, $data);
     }
+     */
 
     /**
      * Get data (totals) source model
@@ -41,6 +46,9 @@ class HandlingFee extends \Magento\Framework\View\Element\Template
         return $this->getParentBlock()->getSource();
     }
 
+    /**
+     * Fetch credit memo
+     */
     public function getCreditmemo()
     {
         return $this->getParentBlock()->getCreditmemo();

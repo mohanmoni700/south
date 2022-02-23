@@ -3,13 +3,19 @@
 namespace Alfakher\HandlingFee\Model\Creditmemo\Total;
 
 /**
- *
+ * Appending handling fee to the credit memo
  */
 use Magento\Sales\Model\Order\Creditmemo\Total\AbstractTotal;
 
 class HandlingFee extends AbstractTotal
 {
-
+    /**
+     * Constructor
+     *
+     * @param \Magento\Framework\App\RequestInterface $request
+     * @param \Magento\Sales\Api\InvoiceRepositoryInterface $invoiceRepository
+     * @param array $data
+     */
     public function __construct(
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Sales\Api\InvoiceRepositoryInterface $invoiceRepository,
@@ -21,6 +27,12 @@ class HandlingFee extends AbstractTotal
         parent::__construct($data);
     }
 
+    /**
+     * Collect totals
+     *
+     * @param \Magento\Sales\Model\Order\Creditmemo $creditmemo
+     * @return $this
+     */
     public function collect(\Magento\Sales\Model\Order\Creditmemo $creditmemo)
     {
         $requestParams = $this->request->getParams();

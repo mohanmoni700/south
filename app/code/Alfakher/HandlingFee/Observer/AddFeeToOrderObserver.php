@@ -3,13 +3,20 @@
 namespace Alfakher\HandlingFee\Observer;
 
 /**
+ * Add handling fee to order
  *
+ * @author af_bv_op
  */
 use Magento\Framework\Event\ObserverInterface;
 
 class AddFeeToOrderObserver implements ObserverInterface
 {
 
+    /**
+     * Execute
+     *
+     * @param \Magento\Framework\Event\Observer $observer
+     */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $quote = $observer->getQuote();
