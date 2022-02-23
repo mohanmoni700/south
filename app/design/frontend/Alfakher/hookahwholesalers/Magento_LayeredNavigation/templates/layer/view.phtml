@@ -14,7 +14,9 @@
 */
 $stateBlock = $block->getLayout()->createBlock('\Magento\LayeredNavigation\Block\Navigation\State');
 ?>
+<?php /* get document boolean value using helper [vy]*/?>
 
+<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php if ($block->canShowBlock()) : ?>
     <div class="block filter" id="layered-filter-block" data-mage-init='
     {
@@ -100,13 +102,23 @@ $stateBlock = $block->getLayout()->createBlock('\Magento\LayeredNavigation\Block
                     <?php $wrapOptions = true;
                 endif; ?>
                     <?php if ($filter->getItemsCount()) : ?>
-                        <div role="heading" aria-level="3" class="filter-options-title"><?= $block->escapeHtml(__($filter->getName())) ?></div>
-                        <div class="filter-options-content"><?= /* @noEscape */ $block->getChildBlock('renderer')->render($filter) ?></div>
+                    <?php /* start Check the document is verified or not [vy]*/?>
+                    <?php if($filter->getName() != "Price" ): ?>
+                                <div role="heading" aria-level="3" class="filter-options-title"><?= $block->escapeHtml(__($filter->getName())) ?></div>
+                                <div class="filter-options-content"><?= /* @noEscape */ $block->getChildBlock('renderer')->render($filter) ?></div>
+                    <?php else: ?>
+                       <?php if($_helperB2b->getDocMessageData() == 2 && $_helperB2b->getDocuments() == 1 ): ?>
+                                 <div role="heading" aria-level="3" class="filter-options-title"><?= $block->escapeHtml(__($filter->getName())) ?></div>
+                                <div class="filter-options-content"><?= /* @noEscape */ $block->getChildBlock('renderer')->render($filter) ?></div>
+                        <?php endif; ?>   
+                    <?php /* end [vy]*/?>
+
                     <?php endif; ?>
+                <?php endif; ?>
             <?php endforeach; ?>
             <?php if ($wrapOptions) : ?>
                 </div>
             <?php endif; ?>
         </div>
     </div>
-<?php endif; ?>
+<?php endif; ?>    
