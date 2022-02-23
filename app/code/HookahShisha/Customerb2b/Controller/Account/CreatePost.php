@@ -4,6 +4,7 @@ declare (strict_types = 1);
 
 namespace HookahShisha\Customerb2b\Controller\Account;
 
+use Laminas\Validator\EmailAddress;
 use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
 use Magento\Framework\Exception\InputException;
 
@@ -76,6 +77,11 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
     private $resultJsonFactory;
 
     /**
+     * @var EmailAddress
+     */
+    private $emailValidator;
+
+    /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Authorization\Model\UserContextInterface $userContext
      * @param \Psr\Log\LoggerInterface $logger
@@ -94,6 +100,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
      * @param \HookahShisha\Customerb2b\Helper\Data $helperdata
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param \Magento\Company\Model\CompanyUser|null $companyUser
+     * @param EmailAddress $emailValidator
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -113,7 +120,8 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
         \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory,
         \HookahShisha\Customerb2b\Helper\Data $helperdata,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Magento\Company\Model\CompanyUser $companyUser = null
+        \Magento\Company\Model\CompanyUser $companyUser = null,
+        EmailAddress $emailValidator
     ) {
         parent::__construct($context);
         $this->userContext = $userContext;
@@ -134,6 +142,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
         $this->addressDataFactory = $addressDataFactory;
         $this->helperdata = $helperdata;
         $this->resultJsonFactory = $resultJsonFactory;
+        $this->emailValidator = $emailValidator;
     }
 
     /**
@@ -159,6 +168,16 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
             if (!\Zend_Validate::is($data['email'], 'NotEmpty')) {
                 throw new InputException(
                     __("Please define all the required Basic Details.")
+                );
+            }
+            $isEmailAddress = $this->emailValidator->isValid($data['email']);
+
+            if (!$isEmailAddress) {
+                throw new InputException(
+                    __(
+                        'Please enter valid email id : "%value"',
+                        ['fieldName' => 'Email', 'value' => $data['email']]
+                    )
                 );
             }
 
@@ -200,26 +219,26 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
 
             $this->companyCreateSession->setCustomerId($customer->getId());
             $this->helperdata->sendEmail($data);
-            
+
             $resultJson->setData([
                 'status' => 'success',
                 'message' => 'Your accout has been created successfully.',
                 'country' => $data['country_id'],
-                'id' => $customer->getId()
+                'id' => $customer->getId(),
             ]);
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
             $resultJson->setData([
                 'status' => 'error',
                 'message' => $e->getMessage(),
                 'country' => null,
-                'id' => null
+                'id' => null,
             ]);
         } catch (\Exception $e) {
             $resultJson->setData([
                 'status' => 'error',
                 'message' => 'An error occurred on the server. Your changes have not been saved.',
                 'country' => null,
-                'id' => null
+                'id' => null,
             ]);
             $this->logger->critical($e);
         }
