@@ -51,11 +51,13 @@ define([
                                 var filesrc = URL.createObjectURL(e.target.files[0]);
                                 var imgClass = "";
                             }
+                            
                             //added pdf class[BS]
                             $('<img class="previewimage-filename-' + showId + ' ' + imgClass + '" height="170" width="170" src="' + filePreview + '" title="' + filename + '"/>' +
                                 '<div class="doc-actions" id="doc-actions-filename-' + showId + '">' +
                                 '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + filesrc + '" target="_blank"></a>' +
                                 '<a class="deletedocument-preview deletedocument" id="deletedocument-filename-' + showId + '"></a>' +
+                                '<a class="download-doc-preview" id="downloaddocument-filename-' + showId + '" href="' + filesrc + '" target="_blank" download></a>' +
                                 '</div>').insertAfter($('#' + docActionInsertAfter + showId));
 
                             $("#deletedocument-filename-" + showId).click(function() {
@@ -277,6 +279,7 @@ define([
 			        var extension = val.substring(val.lastIndexOf('.') + 1).toLowerCase();
 			        var extensionArr = ['pdf', 'jpg', 'png'];
                     if (extensionArr.indexOf(extension) >= 0) {
+                        
     			        $("#doc-actions-filename_" + fileId).remove();
     			        var reader = new FileReader();
     			        reader.onload = function(event) {
@@ -298,6 +301,7 @@ define([
                                     '<div class="doc-actions" id="doc-actions-filename_' + fileId + '">' +
                                     '<a class="view-doc-link" id="view-doc-link-filename_' + fileId + '" href="' + filesrc + '" target="_blank"></a>' +
                                     '<a class="deletedocument-preview deletedocument" id="deletedocument-filename_' + fileId + '"></a>' +
+                                    '<a class="download-doc-preview" id="downloaddocument-filename_' + fileId + '" href="' + filesrc + '" target="_blank" download></a>' +
                                     '</div>').insertAfter("#updatefile_" + fileId);
 
     			                 $("#deletedocument-filename_" + fileId).click(function() {
@@ -320,6 +324,7 @@ define([
     	                expireOnChange(fileId);
     	                $(this).closest('.upload').addClass('active');
     	                $("#btnsave, #updatebtnsave").show();
+                        
                     } else {
                         $(this).val('');
                         $(this).closest('.upload').removeClass('active');

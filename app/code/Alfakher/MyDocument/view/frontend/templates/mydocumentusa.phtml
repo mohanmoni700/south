@@ -64,7 +64,7 @@ $today = date("Y-m-d");
                                 <img src="<?= $block->escapeUrl($fileName); ?>" height="170" width="170" />
                             <?php endif; ?>
                             <div class="doc-actions">
-                                <?php if ($val['status'] == 0 && $val['message'] != null || (($expiry_date <= $today && $expiry_date != "") && $val['status'] == 0)): ?>
+                                <?php if ($val['status'] == 0 && $val['message'] != null || (($expiry_date <= $today && $expiry_date != ""))): ?>
                                     <a  class="view-doc-link" href="<?= $block->escapeUrl($fileName); ?>"
                                         target="_blank"></a>
                                     <a  class="deletedocument" name="deletedocument" href="#"
@@ -210,7 +210,7 @@ $today = date("Y-m-d");
                                     <img src="<?= $block->escapeUrl($fileName); ?>" height="170" width="170" />
                                 <?php endif; ?>
                                 <div class="doc-actions">
-                                    <?php if ($val['status'] == 0 && $val['message'] != null || (($val['expiry_date'] <= $today && $val['expiry_date'] != "") && $val['status'] == 0)): ?>
+                                    <?php if ($val['status'] == 0 && $val['message'] != null || (($val['expiry_date'] <= $today && $val['expiry_date'] != ""))): ?>
                                         <a  class="view-doc-link" href="<?= $block->escapeUrl($fileName); ?>"
                                             target="_blank"></a>
                                         <a  class="deletedocument" name="deletedocument" href="#"
@@ -366,6 +366,7 @@ foreach ($data as $val) {
                             href="" target="_blank"></a>
                         <a class="deletedocument-preview deletedocument"
                         id="deletedocument-filename<?= $block->escapeHtml($counter); ?>"></a>
+                        <a class="download-doc-preview" id="downloaddocument-filename<?= $block->escapeHtml($counter); ?>" href="" target="_blank" download></a>
                     </div>
                     <!-- bv_vv; date:04-02-2022; File Preview End; -->
                 </div>

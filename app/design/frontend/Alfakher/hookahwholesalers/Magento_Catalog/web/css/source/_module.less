@@ -328,6 +328,8 @@
             }
             .product-item-name{
                 margin-bottom: 6px;
+                .lib-font-size(14);
+                min-height: 0;
             }
             .product-item-sku{
                 .lib-font-size(12);
@@ -1405,7 +1407,7 @@
         &:extend(.abs-revert-field-type-desktop all);
     }
     #amasty-shopby-product-list {
-        margin-bottom: 80px;
+        margin-bottom: 40px;
     }
 }
 
@@ -1915,6 +1917,9 @@
         letter-spacing: 1px;
         font-weight: @font-weight__bold;
         margin-bottom: 20px;
+        &.with-radious {
+            border-radius: 12px;
+        }
         .tooltip-inner {
             position: relative;
             max-width: @layout_container;

@@ -10,6 +10,9 @@
 }(function ($) {
     'use strict';
     $.fn.swMegamenu = function() {
+        $(".mobile_menu_icon").click(function(){  
+            $(".mobile_menu_icon").toggleClass("change");
+        });
         $(".navigation.sw-megamenu li.classic .submenu, .navigation.sw-megamenu li.staticwidth .submenu, .navigation.sw-megamenu li.classic .subchildmenu .subchildmenu").each(function(){
             $(this).css("left","-9999px");
             $(this).css("right","auto");

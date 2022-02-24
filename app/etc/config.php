@@ -716,6 +716,7 @@ return [
         'Magento_GiftCardRequisitionListGraphQl' => 0,
         'Alfakher_AddtocartPriceHide' => 1,
         'Alfakher_Blog' => 1,
+        'Alfakher_HandlingFee' => 1,
         'Alfakher_MyDocument' => 1,
         'Alfakher_Productpageb2b' => 1,
         'Alfakher_SalesApprove' => 1,

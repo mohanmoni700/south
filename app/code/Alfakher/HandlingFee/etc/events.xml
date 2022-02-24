@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_model_service_quote_submit_before">
+        <observer name="add_handling_fee_to_order" instance="Alfakher\HandlingFee\Observer\AddFeeToOrderObserver" />
+    </event>
+    <event name="payment_cart_collect_items_and_amounts">
+        <observer name="handling_fee_payment_collect_total" instance="Alfakher\HandlingFee\Observer\Addfeetopaypal" />
+    </event>
+
+    <event name="sales_order_invoice_pay">
+        <observer name="handling_fee_invoice_collect" instance="Alfakher\HandlingFee\Observer\CaptureHandlingFee" />
+    </event>
+
+    <!-- sales_order_creditmemo_refund -->
+    <!-- sales_order_creditmemo_save_after -->
+    <!-- adminhtml_sales_order_creditmemo_register_before -->
+    <!-- sales_order_creditmemo_process_relation -->
+    <!-- sales_order_creditmemo_load_after -->
+    <!-- sales_order_creditmemo_view -->
+    <!-- sales_order_creditmemo_save -->
+    <!-- sales_order_creditmemo_addComment -->
+    <!-- sales_order_creditmemo_print -->
+    <!-- sales_order_creditmemo_email -->
+    <event name="sales_order_creditmemo_refund">
+        <observer name="handling_fee_creditmemo_refund" instance="Alfakher\HandlingFee\Observer\RefundHandlingFee" />
+    </event>
+</config>
