@@ -37,24 +37,19 @@ if(!empty($size)){
 // check size of category end[BS]14/02/2022
 ?>
 <?php /* show/hide filter start vy */ ?>
-<?php
-    $scriptString = <<<script
-        <script type="text/javascript">
-        require(['jquery'], function($) {
-            $(document).on("click", '.cate-filter', function(event) { 
-                if ($(".sidebar.sidebar-main").css("display") == 'block') {       
-                    $("#is_filter").text('Show Filter');
-                    $(".sidebar.sidebar-main").css("display", "none");
-                    $(".column.main").addClass("filter-collapse");
-                } else {
-                    $("#is_filter").text('Hide Filter');
-                    $(".sidebar.sidebar-main").css("display", "block");
-                    $(".column.main").removeClass("filter-collapse");
-                }
-            });
+<script type="text/javascript">
+    require(['jquery'], function($) {
+        $(document).on("click", '.cate-filter', function(event) { 
+            if ($(".sidebar.sidebar-main").css("display") == 'block') {       
+                $("#is_filter").text('Show Filter');
+                $(".sidebar.sidebar-main").css("display", "none");
+                $(".column.main").addClass("filter-collapse");
+            } else {
+                $("#is_filter").text('Hide Filter');
+                $(".sidebar.sidebar-main").css("display", "block");
+                $(".column.main").removeClass("filter-collapse");
+            }
         });
-        </script>
-    script;
-?>
-<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+    });
+</script>
 <?php /* End */ ?>
