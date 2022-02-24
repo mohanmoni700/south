@@ -7,7 +7,7 @@ namespace Alfakher\HandlingFee\Model\Creditmemo\Total;
  */
 use Magento\Sales\Model\Order\Creditmemo\Total\AbstractTotal;
 
-class HandlingFee extends AbstractTotal
+class Fee extends AbstractTotal
 {
     /**
      * Constructor
