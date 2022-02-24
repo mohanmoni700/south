@@ -3,6 +3,7 @@
  * Product list toolbar
  *
  * @var $block \Magento\Catalog\Block\Product\ProductList\Toolbar
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
  */
 
 ?>
@@ -35,19 +36,20 @@ if(!empty($size)){
  }
 // check size of category end[BS]14/02/2022
 ?>
-<script>
+<?php /* show/hide filter start vy */ ?>
+<script type="text/javascript">
     require(['jquery'], function($) {
-        $("#is_filter").click(function(){
-
-              if ($(".sidebar.sidebar-main").css("display") == 'block') {
-                    $("#is_filter").text('Show Filter');
-                    $(".sidebar.sidebar-main").css("display", "none");
-                    $(".column.main").addClass("filter-collapse");
-              } else {
-                    $("#is_filter").text('Hide Filter');
-                    $(".sidebar.sidebar-main").css("display", "block");
-                    $(".column.main").removeClass("filter-collapse");
-              }
+        $(document).on("click", '.cate-filter', function(event) { 
+            if ($(".sidebar.sidebar-main").css("display") == 'block') {       
+                $("#is_filter").text('Show Filter');
+                $(".sidebar.sidebar-main").css("display", "none");
+                $(".column.main").addClass("filter-collapse");
+            } else {
+                $("#is_filter").text('Hide Filter');
+                $(".sidebar.sidebar-main").css("display", "block");
+                $(".column.main").removeClass("filter-collapse");
+            }
         });
     });
 </script>
+<?php /* End */ ?>
