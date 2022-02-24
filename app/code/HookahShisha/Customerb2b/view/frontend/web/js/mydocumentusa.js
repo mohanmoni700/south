@@ -66,6 +66,12 @@ define([
                         var filesrc = URL.createObjectURL(e.target.files[0]);
                         var imgClass = "";
                     }
+                    
+                    $('<div class="comman-doc-name document'+fileId+'">' +
+                      '<span>'+nameArr[2]+'</span>'+
+                      '<a class="comman-download-doc" id="downloaddocument-filename'+fileId+'" href="' + filesrc + '" target="_blank" download></a>' +
+                      '</div>').insertAfter('#input-'+fileId);
+
 	                $(".previewimage-" + fileId).show();
 	                $(".previewimage-" + fileId).attr("src", filePreview);
 	                $(".previewimage-" + fileId).attr("title", filename);
@@ -85,6 +91,7 @@ define([
 	                $("#deletedocument-" + fileId).click(function() {
 	                    $("#doc-actions-" + fileId).hide();
 	                    $(".previewimage-" + fileId).hide();
+	                    $(".document" + fileId).hide();
 	                    $("#view-doc-link-" + fileId).hide();
 	                    $("#" + fileId).val('');
 	                    $(this).closest('.upload').removeClass('active');
@@ -101,6 +108,7 @@ define([
 	     */
 	    function fileUploading(showId, fileId, currentElem, e) {
 	    	var val = currentElem.val();
+	    
 	    	if (val) {
                 /*bv-hd Dynaminc Image and PDF validation*/
                 var extension = val.substring(val.lastIndexOf('.') + 1).toLowerCase();
@@ -109,9 +117,16 @@ define([
 
                     $(this).closest('.upload').find('.doc_name').remove();
                     $(this).closest('.upload').find('.set_expiry').remove();
-
+                    var filesrc = URL.createObjectURL(e.target.files[0]);
+                    var filename = jQuery('#'+ fileId + showId).val();
+                    var nameArr = filename.split('\\');
+                    var name = nameArr[2];
                     // added new class add-new_[BS]
-                    $('<div class="doc_name add-new_'+showId+'" for="document name">' +
+                    $('<div class="comman-doc-name document'+showId+'">' +
+                        '<span>'+name+'</span>'+
+                        '<a class="comman-download-doc" id="downloaddocument-filename'+showId+'" href="' + filesrc + '" target="_blank" download></a>' +
+                        '</div>'+
+                        '<div class="doc_name add-new_'+showId+'" for="document name">' +
                         '<label>Document Name</label>' +
                         '<input type="text" id="name-' + showId + '" name="name' + showId + '" data-validate="{required:true}"/></div>' +
                         '<div class="set_expiry add-new_'+showId+'" for="document expiry data" style="display:none">' +
@@ -155,7 +170,6 @@ define([
                             '<div class="doc-actions" id="doc-actions-filename-' + showId + '">' +
                             '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + filesrc + '" target="_blank"></a>' +
                             '<a class="deletedocument-preview deletedocument" id="deletedocument-filename' + showId + '"></a>' +
-                            '<a class="download-doc-preview" id="downloaddocument-filename' + showId + '" href="' + filesrc + '" target="_blank" download></a>' +
                             '</div>').insertAfter("#" + fileId + showId);
 
                         $("#deletedocument-filename" + showId).click(function() {
@@ -164,6 +178,7 @@ define([
                             $(".add-new_"+showId).remove();
                             $('#'+ fileId + showId).val('');
                             $(".previewimage-filename-" + showId).hide();
+		                    $(".document" + showId).hide();
 		                    $("#view-doc-link-" + showId).hide();
 		                    $("#updatefile_" + showId + ", #filename-"+showId).closest('.upload').find('.input-note').show();
                             $("#updatefile_" + showId + ", #filename-"+showId).closest('.upload').removeClass('active');
@@ -324,6 +339,7 @@ define([
 	        });
 
 	        $('button#usabtnsave').click( function(e) {
+                $(".pending-tooltip").hide();  
 		        if($('#usaform').valid()) {
 		        	formSubmitById('usaform', 'usaform', config.customResultUrl);
 		        }
