@@ -1,14 +1,20 @@
 <?php
 
-namespace Alfakher\HandlingFee\Block\Adminhtml\Sales\Order\Invoice\View;
+namespace Alfakher\HandlingFee\Block\Adminhtml\Sales\Order\Invoice;
 
 /**
- * Display handling fee in invoice
+ * Appending Handling fee in invoice
  *
  * @author af_bv_op
  */
-class HandlingFee extends \Magento\Framework\View\Element\Template
+class Fee extends \Magento\Framework\View\Element\Template
 {
+
+    /**
+     * @var $_dataHelper
+     */
+    protected $_dataHelper;
+
     /**
      * @var $_invoice
      */
@@ -51,7 +57,7 @@ class HandlingFee extends \Magento\Framework\View\Element\Template
     }
 
     /**
-     * Calculate totals
+     * Calaculate totals
      */
     public function initTotals()
     {
@@ -59,13 +65,21 @@ class HandlingFee extends \Magento\Framework\View\Element\Template
         $this->getInvoice();
         $this->getSource();
 
-        if ($this->getSource()->getHandlingFee() <= 0) {
+        if (!$this->getSource()->getOrder()->getHandlingFee()) {
             return $this;
         }
+
+        $orderHandlingFee = $this->getSource()->getOrder()->getHandlingFee();
+        $orderHandlingFeeInvoiced = $this->getSource()->getOrder()->getHandlingFeeInvoiced();
+        $amount = $orderHandlingFee - $orderHandlingFeeInvoiced;
+        if ($amount <= 0) {
+            return $this;
+        }
+
         $total = new \Magento\Framework\DataObject(
             [
                 'code' => 'handling_fee',
-                'value' => $this->getSource()->getHandlingFee(),
+                'value' => $amount,
                 'label' => "Handling Fee",
             ]
         );

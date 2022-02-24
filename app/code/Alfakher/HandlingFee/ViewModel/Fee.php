@@ -7,7 +7,7 @@ namespace Alfakher\HandlingFee\ViewModel;
  *
  * @author af_bv_op
  */
-class HandlingFee implements \Magento\Framework\View\Element\Block\ArgumentInterface
+class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
 
     const MODULE_ENABLE = "hookahshisha/handling_fee_group/handling_fee_enable";
