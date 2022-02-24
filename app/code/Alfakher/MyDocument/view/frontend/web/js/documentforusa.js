@@ -66,6 +66,11 @@ define([
                         var imgClass = "";
                     }
 
+                    $('<div class="comman-doc-name document'+fileId+'">' +
+                        '<span>'+nameArr[2]+'</span>'+
+                        '<a class="comman-download-doc" id="downloaddocument-filename'+fileId+'" href="' + filesrc + '" target="_blank" download></a>' +
+                        '</div>').insertAfter('#input-'+fileId);
+
 	                $(".previewimage-" + fileId).attr("src", filePreview);
 	                $(".previewimage-" + fileId).attr("title", filename);
 	                $(".previewimage-" + fileId).addClass(imgClass);
@@ -82,6 +87,7 @@ define([
 	                $("#deletedocument-" + fileId).click(function() {
 	                    $("#doc-actions-" + fileId).hide();
 	                    $(".previewimage-" + fileId).hide();
+	                    $(".document" + fileId).hide();
 	                    // remove pdf class[BS]
 	                    $(".previewimage-" + fileId).removeClass(imgClass);
 	                    $("#view-doc-link-" + fileId).hide();
@@ -108,7 +114,20 @@ define([
                     $(this).closest('.upload').find('.doc_name').remove();
                     $(this).closest('.upload').find('.set_expiry').remove();
                     // added new class add-new_[BS]
-                    $('<div class="doc_name add-new_'+showId+'" for="document name">' +
+                    var filesrc = URL.createObjectURL(e.target.files[0]);
+                    var filename = jQuery('#'+ fileId + showId).val();
+                    var nameArr = filename.split('\\');
+                    var name = nameArr[2];
+
+                    $('<div class="comman-doc-name document'+showId+'">' +
+                        '<span>'+name+'</span>'+
+                        '<a class="comman-download-doc" id="downloaddocument-filename'+showId+'" href="' + filesrc + '" target="_blank" download></a>' +
+                        '</div>').insertAfter("#input-updatefile-" + showId);
+
+                    $('<div class="comman-doc-name document'+showId+'">' +
+                        '<span>'+name+'</span>'+
+                        '<a class="comman-download-doc" id="downloaddocument-filename'+showId+'" href="' + filesrc + '" target="_blank" download></a>' +
+                        '</div>'+'<div class="doc_name add-new_'+showId+'" for="document name">' +
                         '<label>Document Name</label>' +
                         '<input type="text" id="name-' + showId + '" name="name' + showId + '" data-validate="{required:true}"/></div>' +
                         '<div class="set_expiry add-new_'+showId+'" for="document expiry data" style="display:none">' +
@@ -152,7 +171,6 @@ define([
                             '<div class="doc-actions" id="doc-actions-filename-' + showId + '">' +
                             '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + filesrc + '" target="_blank"></a>' +
                             '<a class="deletedocument-preview deletedocument" id="deletedocument-filename' + showId + '"></a>' +
-                            '<a class="download-doc-preview" id="downloaddocument-filename' + showId + '" href="' + filesrc + '" target="_blank" download></a>' +
                             '</div>').insertAfter("#" + fileId + showId);
 
                         $("#deletedocument-filename" + showId).click(function() {
@@ -165,6 +183,7 @@ define([
                             //remove pdf class[BS]
 	                    	$(".previewimage-filename-" + showId).removeClass(imgClass);
 		                    $("#view-doc-link-" + showId).hide();
+		                    $(".document" + showId).hide();
 		                    $("#updatefile_" + showId + ", #filename-"+showId).closest('.upload').find('.input-note').show();
                             $("#updatefile_" + showId + ", #filename-"+showId).closest('.upload').removeClass('active');
                         });
