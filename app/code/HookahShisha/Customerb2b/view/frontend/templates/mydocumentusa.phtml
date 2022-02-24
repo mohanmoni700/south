@@ -33,7 +33,7 @@ $updateDocumentUrl = $block->getUrl('mydocument/customer/updatedocument');
                 value="1"/>
                 <div class="upload" for="document uploader">
                     <label><?= $block->escapeHtml(__($value)); ?></label>
-                    <div class="input-file">
+                    <div class="input-file" id="input-filename<?= $block->escapeHtml($counter); ?>">
                         <input type="file"
                         data-id="<?= $block->escapeHtml($counter); ?>"
                         id="filename<?= $block->escapeHtml($counter); ?>"
@@ -53,10 +53,10 @@ $updateDocumentUrl = $block->getUrl('mydocument/customer/updatedocument');
                                 href="" target="_blank"></a>
                             <a class="deletedocument-preview deletedocument"
                             id="deletedocument-filename<?= $block->escapeHtml($counter); ?>"></a>
-                            <a class="download-doc-preview" id="downloaddocument-filename<?= $block->escapeHtml($counter); ?>" href="" target="_blank" download></a>
                         </div>
                         <!-- bv_vv; date:04-02-2022; File Preview End; -->
                     </div>
+                    
                     <div class="doc_name" for="document name" style="display:none;">
                         <label><?= $block->escapeHtml(__('Document Name')); ?></label>
                         <input type="text"

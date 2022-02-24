@@ -110,8 +110,7 @@ class Document extends \Magento\Framework\View\Element\Template
 
             foreach ($document as $value) {
                 $expiry_date = $value['expiry_date'];
-                if (($expiry_date <= $todate && $expiry_date != "")
-                    && $value['status'] == 0) {
+                if (($expiry_date <= $todate && $expiry_date != "")) {
                     $msg[] = "expired";
                 } else {
                     $msg[] = "not expired";
