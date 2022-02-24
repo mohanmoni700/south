@@ -410,7 +410,13 @@
     //
     // Document Modal Popup design [AR]
     // __________________________________________________________
-
+    .mydocument-customer-index, .customer-account-create {
+        .document-modal, #popup-modal-non-usa {
+            ~ .modals-overlay {
+                pointer-events: none;
+            }
+        }
+    }
     .document-modal, #popup-modal-non-usa {
         text-align: center;
     
@@ -418,13 +424,15 @@
             max-width: 700px;
             border-radius: 10px;
             width: 100%;
+            min-height: 0;
         }
         .success_msg {
-            font-size: 25px;
+            font-size: 32px;
             width: 100%;
             margin: 30px auto;
             font-weight: 700;
-            max-width: 360px;
+            text-transform: uppercase;
+            max-width: 480px;
         }
         h5 {
             font-weight: normal;
@@ -452,18 +460,17 @@
                     }
                 }
             }
-        }        
-    }
-    #popup-modal-non-usa {
-        .success_msg {
-            font-size: 32px;
-            text-transform: uppercase;
-            max-width: 480px;
+        }
+        .modal-footer {
+            .action.primary {
+                margin-bottom: 16px;
+                min-width: 180px;
+            }
         }
         #signinredirect {
-            margin-bottom: 10px;
-            margin-top: 20px;
             min-width: 180px;
+            margin-top: 16px;
+            margin-bottom: 10px;
         }
     }
 
@@ -551,26 +558,29 @@
 //  _____________________________________________
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .document-modal.modal-popup.modal-slide {
-        left: 0;
+        left: 15px;
+        right: 15px;
+        top: 30px;
+        bottom: auto;
     }
     .modals-wrapper {
         .document-modal.modal-popup {
             &._show {
                 .modal-inner-wrap {
-                    border-radius: 0;
+                    box-shadow: none;
                 }
             }
             .modal-header, .modal-footer {
                 border-radius: 0;
             }
+            .success_msg {
+                font-size: 26px;
+            }
         }
     }
     #popup-modal-non-usa {
         .success_msg {
-            font-size: 24px;
-        }
-        #signinredirect {
-            min-width: 160px;
+            font-size: 26px;
         }
     }
 }

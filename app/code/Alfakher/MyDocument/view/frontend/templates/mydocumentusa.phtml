@@ -116,7 +116,7 @@ $today = date("Y-m-d");
                     </div>
                 <?php else: ?>
                     <div class="upload" for="document uploader">
-                        <div class="input-file">
+                        <div class="input-file" id="input-updatefile-<?= $block->escapeHtml($val['mydocument_id']);?>">
                             <input type="hidden" name="documentid[]"
                             value="<?= $block->escapeHtml($val['mydocument_id']); ?>" />
                             <input type="file" id="updatefile_<?= $block->escapeHtml($val['mydocument_id']);?>"
@@ -262,7 +262,7 @@ $today = date("Y-m-d");
                         </div>
                     <?php else: ?>
                     <div class="upload" for="document uploader">
-                        <div class="input-file">
+                        <div class="input-file" id="input-updatefile-<?= $block->escapeHtml($val['mydocument_id']);?>">
                             <input type="hidden" name="documentid[]"
                             value="<?= $block->escapeHtml($val['mydocument_id']); ?>" />
                             <input type="file" id="updatefile_<?= $block->escapeHtml($val['mydocument_id']);?>"
@@ -347,7 +347,7 @@ foreach ($data as $val) {
                     <?php $counter = $key + 1;?>
             <div class="upload" for="document uploader">
                 <label><?= $block->escapeHtml(__($value)); ?></label>
-                <div class="input-file">
+                <div class="input-file" id="input-filename<?= $block->escapeHtml($counter);?>">
                     <input type="file"
                     id="filename<?= $block->escapeHtml($counter); ?>"
                     class="upload-filename"
@@ -366,7 +366,6 @@ foreach ($data as $val) {
                             href="" target="_blank"></a>
                         <a class="deletedocument-preview deletedocument"
                         id="deletedocument-filename<?= $block->escapeHtml($counter); ?>"></a>
-                        <a class="download-doc-preview" id="downloaddocument-filename<?= $block->escapeHtml($counter); ?>" href="" target="_blank" download></a>
                     </div>
                     <!-- bv_vv; date:04-02-2022; File Preview End; -->
                 </div>
