@@ -1,0 +1,150 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/* @var \Magento\Sales\Block\Adminhtml\Order\Totals $block */
+?>
+
+
+<?php /* bv_op; date : 18-2-22; edit handling fee; Start */ ?>
+<?php
+$viewModel = $block->getData('view_model');
+$order = $block->getOrder();
+$websiteId = $order->getStore()->getWebsiteId();
+$canShowFeeEdit = $viewModel->isModuleEnabled($websiteId);
+?>
+<?php /* bv_op; date : 18-2-22; edit handling fee; End */ ?>
+
+
+<table class="data-table admin__table-secondary order-subtotal-table">
+    <?php $_totals = $block->getTotals('footer') ?>
+
+    <?php if ($_totals): ?>
+        <tfoot>
+            <?php foreach ($block->getTotals('footer') as $_code => $_total): ?>
+                <?php if ($_total->getBlockName()): ?>
+                    <?= $block->getChildHtml($_total->getBlockName(), false) ?>
+                <?php else: ?>
+                <tr class="col-<?= $block->escapeHtmlAttr($_code) ?>">
+                    <td <?= /* @noEscape */ $block->getLabelProperties() ?> class="label">
+                        <strong><?= $block->escapeHtml($_total->getLabel()) ?></strong>
+                    </td>
+                    <td <?= /* @noEscape */ $block->getValueProperties() ?>>
+                        <strong><?= /* @noEscape */ $block->formatValue($_total) ?></strong>
+                    </td>
+                </tr>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </tfoot>
+    <?php endif; ?>
+
+    <?php $_totals = $block->getTotals('')?>
+    <?php if ($_totals): ?>
+        <tbody>
+            <?php foreach ($_totals as $_code => $_total): ?>
+                <?php if ($_total->getBlockName()): ?>
+                    <?= $block->getChildHtml($_total->getBlockName(), false) ?>
+                <?php else: ?>
+                    <tr class="col-<?= $block->escapeHtmlAttr($_code) ?>">
+                        <td <?= /* @noEscape */ $block->getLabelProperties() ?> class="label">
+                            <?php if ($_total->getCode() == "shipping" && $canShowFeeEdit): ?>
+                                <?php if ($_total->getStrong()): ?>
+                                <strong><?= __("Shipping") ?></strong>
+                                <?php else: ?>
+                                    <?= __("Shipping") ?>
+                                <?php endif?>
+                            <?php else: ?>
+                                <?php if ($_total->getStrong()): ?>
+                                <strong><?= $block->escapeHtml($_total->getLabel()) ?></strong>
+                                <?php else: ?>
+                                    <?= $block->escapeHtml($_total->getLabel()) ?>
+                                <?php endif?>
+                            <?php endif; ?>
+                        </td>
+
+                        <?php if ($_total->getStrong()): ?>
+                            <td <?= /* @noEscape */ $block->getValueProperties() ?>>
+                                <strong><?= /* @noEscape */ $block->formatValue($_total) ?></strong>
+                            </td>
+                        <?php else: ?>
+                            <td <?= /* @noEscape */ $block->getValueProperties() ?>>
+                                <span><?= /* @noEscape */ $block->formatValue($_total) ?></span>
+                            </td>
+                        <?php endif; ?>
+                    </tr>
+                <?php endif; ?>
+
+
+                <?php /* bv_op; date : 18-2-22; edit handling fee; Start */ ?>
+                <?php if ($_total->getCode() == 'handling_fee' && $canShowFeeEdit && !$order->getInvoiceCollection()->count()): ?>
+                    <tr id="edit_handling_fee_btn_tr">
+                        <td></td>
+                        <td id="edit_handling_fee">
+                            <button class="primary" type="button" id="edit_handling_fee_btn">Edit Handling Fee</button>
+                        </td>
+                    </tr>
+                    <tr id="submit_handling_fee_btn_tr" style="display: none;">
+                        <td id="submit_handling_fee">
+                            <button type="button" id="cancle_handling_fee_btn">Cancle</button>
+                            <button class="primary" type="button" id="submit_handling_fee_btn">Submit</button>
+                        </td>
+                        <td>
+                            <input type="hidden" name="updated_handling_fee_for_order" id="updated_handling_fee_for_order" value="<?= $order->getId() ?>">
+                            <input type="text" name="updated_handling_fee" id="updated_handling_fee" placeholder="Amount to update" class="admin__control-textarea" value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                <?php /* bv_op; date : 18-2-22; edit handling fee; End */ ?>
+
+
+            <?php endforeach; ?>
+        </tbody>
+    <?php endif; ?>
+</table>
+
+
+
+
+
+<?php /* bv_op; date : 18-2-22; edit handling fee; Start */ ?>
+<?php if ($canShowFeeEdit && !$order->getInvoiceCollection()->count()): ?>
+
+<script type="text/javascript">
+    require(['jquery'], function ($) {
+        $(document).on('click', "#edit_handling_fee_btn", function () {
+            $("#edit_handling_fee_btn_tr").hide();
+            $("#submit_handling_fee_btn_tr").show();
+        });
+
+        $(document).on('click', "#cancle_handling_fee_btn", function () {
+            $("#edit_handling_fee_btn_tr").show();
+            $("#submit_handling_fee_btn_tr").hide();
+            $("#updated_handling_fee").val(0);
+        });
+
+        $(document).on('click', "#submit_handling_fee_btn", function () {
+            var updatedHandlingFee = $("#updated_handling_fee").val();
+            var orderId = $("#updated_handling_fee_for_order").val();
+            if (typeof updatedHandlingFee === 'undefined' || updatedHandlingFee == '') {
+                alert("please enter some value");
+                return;
+            }
+
+            $.ajax({
+                url: "<?= $block->getUrl('handlingfee/Order/updatefee/') ?>",
+                showLoader: true,
+                type: 'POST',
+                data: {order_id:orderId, amount : updatedHandlingFee},
+                success: function(response) {
+                    location.reload(true);
+                }
+            });
+
+        });
+    });
+</script>
+
+<?php endif; ?>
+<?php /* bv_op; date : 18-2-22; edit handling fee; End */ ?>

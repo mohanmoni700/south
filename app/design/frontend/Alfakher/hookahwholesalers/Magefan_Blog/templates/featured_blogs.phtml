@@ -58,18 +58,38 @@
                         <?= $_postName ?>
                     </a>
                     <p class="post-shortdata">
-                        <span class="post-author"><?= __('By Admin') ?></span>
+                        
+                        <?php if ($block->authorEnabled()) { ?>
+                            <?php if ($_author = $_post->getAuthor()) { ?>
+                                <div class="item post-author">
+                                        <span class="label"><?= $block->escapeHtml(__('By:')) ?></span>
+                                        <span class="value">
+                                        <?php if ($authorPageEnabled = $block->authorPageEnabled()) { ?>
+                                        <a title="<?= $block->escapeHtml($_author->getTitle()) ?>"
+                                           href="<?= $block->escapeUrl($_author->getAuthorUrl()) ?>">
+                                        <?php } ?>
+
+                                        <?= $block->escapeHtml($_author->getTitle()) ?>
+
+                                        <?php if ($authorPageEnabled) { ?>
+                                        </a>
+                                        <?php } ?>
+                                    </span>
+                                </div>
+                            <?php } ?>
+                        <?php } ?>
+
                         <?php if ($block->getDisplayImage() && $_post->isPublishDateEnabled()) { ?>
                             <span class="post-item-date">/<?= $block->escapeHtml($_post->getPublishDate()) ?>/</span>
                         <?php } ?>
                     </p>
                     <p class="post-shortdata">
-                        <span class="post-category"><?= __('General, How to Hookah Education') ?></span>
+                        <span class="post-category"><?= __($_post->getShortFilteredContent(null, '...')); ?></span>
                     </p>
                     <div class="post-desc">
-                        <?= __('Body Text Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean massa. ') ?>
+                        <?= /*@noEscape*/ $block->getContent() ?>
                     </div>
-                    <a class="action primary read-more"><span><?= __('Read more') ?></span></a>
+                    <a class="action primary read-more" href="<?= $_postUrl ?>"><span><?= __('Read more') ?></span></a>
                 </div>
             </div>
         <?php } ?>

@@ -200,7 +200,7 @@
         }
 
         .minicart-widgets {
-            margin-top: 15px;
+            margin-top: 10px;
         }
     }
 
@@ -290,6 +290,8 @@
         .product-item-name {
             font-weight: @font-weight__regular;
             margin: 0 0 @indent__s;
+            font-size: 16px;
+            min-height: 0;
 
             a {
                 .lib-css(color, @link__color);
@@ -527,17 +529,29 @@
                                 .product{
                                     .product-image-container{
                                         width: 60px!important;
-                                        img{
+                                        height: 60px;
+                                        .product-image-wrapper {
+                                            height: 60px;
+                                        }
+                                        .product-image-photo{
                                             margin-left: 0;
+                                            height: 60px !important;
+                                            object-fit: cover;
                                         }
                                     }
                                     .product-item-details{
                                         padding-left: 70px;
                                         .product-item-name{
                                             margin: 0;
+                                            font-size: 12px;
+                                            min-height: 0;
                                             a{
                                                 font-size: 12px;
                                                 color: @color_black;
+                                                &:hover {
+                                                    color: @hookah_theme_color;
+                                                    text-decoration: none;
+                                                }
                                             }
                                         }
                                         .minicart-price{
@@ -557,12 +571,18 @@
                                                 font-size: 11px;
                                                 font-family: @montserrat_bold;
                                                 width: 40px;
-                                                height: 17px;
+                                                height: 18px;
                                                 border-color: #E0E0E0;
                                                 font-weight: 600;
+                                                border-width: 1px;
+                                                border-radius: 0;
                                             }
                                             button{
-                                                padding: 1px 4px;
+                                                padding: 0 4px;
+                                                position: relative;
+                                                line-height: 16px;
+                                                top: 2px;
+                                                float: none;
                                                 span{
                                                     font-size: 10px;
                                                     font-weight: @montserrat_regular;
@@ -575,7 +595,11 @@
                                         }
                                     }
                                 }
-                            }                            
+                            }
+                            .product.options {
+                                font-size: 12px;
+                                margin-top: 10px;
+                            }
                         }
                         &::-webkit-scrollbar {
                             width: 5px;
