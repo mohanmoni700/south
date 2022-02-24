@@ -1,0 +1,23 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="quote_address">
+		<column xsi:type="decimal" name="handling_fee" nullable="false" scale="2" precision="10" comment="Handling Fee"/>
+	</table>
+
+	<table name="quote">
+		<column xsi:type="decimal" name="handling_fee" nullable="false" scale="2" precision="10" comment="Handling Fee"/>
+	</table>
+
+	<table name="sales_order">
+		<column xsi:type="decimal" name="handling_fee" nullable="false" scale="2" precision="10" comment="Handling Fee"/>
+		<column xsi:type="decimal" name="handling_fee_invoiced" nullable="false" scale="2" precision="10" comment="Handling Fee"/>
+		<column xsi:type="decimal" name="handling_fee_refunded" nullable="false" scale="2" precision="10" comment="Handling Fee"/>
+	</table>
+
+	<table name="sales_invoice">
+		<column xsi:type="decimal" name="handling_fee" nullable="false" scale="2" precision="10" comment="Handling Fee"/>
+	</table>
+
+	<table name="sales_creditmemo">
+		<column xsi:type="decimal" name="handling_fee" nullable="false" scale="2" precision="10" comment="Handling Fee"/>
+	</table>
+</schema>

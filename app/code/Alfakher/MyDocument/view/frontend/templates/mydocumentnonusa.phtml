@@ -53,7 +53,7 @@
                             <?php endif; ?>
                             <div class="doc-actions">
                                 <!-- added condiition here[BS] -->
-                                <?php if ($val['status'] == 0 && $val['message'] != null || (($expiry_date <= $today && $expiry_date != "") && $val['status'] == 0)): ?>
+                                <?php if ($val['status'] == 0 && $val['message'] != null || (($expiry_date <= $today && $expiry_date != ""))): ?>
                                     <a  class="view-doc-link" href="<?= $block->escapeUrl($fileName); ?>"
                                         target="_blank"></a>
                                     <a class="deletedocument" name="deletedocument" href="#"
@@ -63,6 +63,7 @@
                                         target="_blank"></a>
 
                                 <?php endif; ?>
+
                             </div>
                             <?php if ($val['status'] != 0 && $val['message'] == null): ?>
                             <span class="approved">
@@ -127,6 +128,7 @@
                             href="" target="_blank"></a>
                             <a class="deletedocument-preview deletedocument"
                             id="deletedocument-filename_<?= $block->escapeHtml($val['mydocument_id']); ?>"></a>
+                            <a class="download-doc-preview" id="downloaddocument-filename_<?= $block->escapeHtml($val['mydocument_id']); ?>" href="" target="_blank" download></a>
                         </div>
                     </div>
                     <div class="doc_name" for="document name">
@@ -186,6 +188,10 @@
                     <div class="doc-actions" id="doc-actions-filename-1" style="display:none;">
                         <a class="view-doc-link" id="view-doc-link-filename-1" href="" target="_blank"></a>
                         <a class="deletedocument-preview deletedocument" id="deletedocument-filename-1"></a>
+                        <a class="download-doc-preview" id="downloaddocument-filename-1" href="" target="_blank" download></a>
+                        <!-- <a href="<?= $mediaUrl;?>" 
+                           target="_blank" download>
+                           <img src="<?= $mediaUrl ?>donwload-icon.png" height="20px" width="20px"></a> -->
                     </div>
                 </div>
                 <!-- bv_vv; date:04-02-2022; File Preview End; -->

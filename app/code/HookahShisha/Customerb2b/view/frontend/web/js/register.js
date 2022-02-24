@@ -1,8 +1,9 @@
 define([
     'jquery',
     'Magento_Ui/js/modal/modal',
+    'Magento_Ui/js/modal/alert',
     'mage/mage'
-], function($,modal) {
+], function($,modal,alert) {
     'use strict';
     return function(config) {
         function onCountryChange() {
@@ -188,6 +189,21 @@ define([
                                 $('#form-validate').trigger("reset");
                                 $("#register-success-popup").modal("openModal");
                             } else {
+                                /* Added the Alert popup for the display invalid data or error */
+                                alert({
+                                    title: $.mage.__(data.message),
+                                    content: $.mage.__(''),
+                                    modalClass: 'register-action-error',
+                                    actions: {
+                                        confirm: function(){
+                                            $('#form-validate .action.register.submit.primary').prop("disabled",false);
+                                        },
+                                        cancel: function(){
+                                            $('#form-validate .action.register.submit.primary').prop("disabled",false);
+                                        },
+                                        always: function(){}
+                                    }
+                                });
                                 $(".page.messages").html('<div role="alert" class="messages">' +
                                     '<div class="alert danger alert-danger" data-ui-id="message-danger">' +
                                     '<div>Data could not saved !.</div>' +

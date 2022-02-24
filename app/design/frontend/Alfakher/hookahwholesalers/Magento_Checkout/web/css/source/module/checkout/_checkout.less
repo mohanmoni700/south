@@ -55,10 +55,6 @@
         .nav-toggle {
             display: none;
         }
-
-        .logo {
-            margin-left: 0;
-        }
     }
 
     .checkout-onepage-success {
@@ -79,7 +75,11 @@
         .step-title {
             .lib-css(font-size, @checkout-step-title-mobile__font-size);
             padding-bottom: 20px;
-            margin-bottom: 20px;
+        }
+        .checkout-shipping-address {
+            .step-title {
+                border-bottom: none;
+            }
         }
     }
 }
@@ -92,7 +92,7 @@
     .opc-wrapper {
         &:extend(.abs-add-box-sizing-desktop-m all);
         .lib-layout-column(2, 1, @checkout-wrapper__columns);
-        padding-right: @indent__l;
+        padding-right: @indent__l;        
     }
 
     .checkout-onepage-success {
@@ -101,5 +101,5 @@
             float: right;
             margin: 22px 0 0;
         }
-    }
+    }    
 }
