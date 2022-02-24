@@ -200,7 +200,7 @@
         }
 
         .minicart-widgets {
-            margin-top: 15px;
+            margin-top: 10px;
         }
     }
 
@@ -529,8 +529,14 @@
                                 .product{
                                     .product-image-container{
                                         width: 60px!important;
-                                        img{
+                                        height: 60px;
+                                        .product-image-wrapper {
+                                            height: 60px;
+                                        }
+                                        .product-image-photo{
                                             margin-left: 0;
+                                            height: 60px !important;
+                                            object-fit: cover;
                                         }
                                     }
                                     .product-item-details{
@@ -542,6 +548,10 @@
                                             a{
                                                 font-size: 12px;
                                                 color: @color_black;
+                                                &:hover {
+                                                    color: @hookah_theme_color;
+                                                    text-decoration: none;
+                                                }
                                             }
                                         }
                                         .minicart-price{
