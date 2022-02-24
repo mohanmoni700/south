@@ -1,13 +1,13 @@
 define([
-	'jquery',
-	'mage/url',
-	'mage/validation'
+    'jquery',
+    'mage/url',
+    'mage/validation'
 ], function($, urlBuilder) {
-	'use strict';
+    'use strict';
 
-	return function(config) {
+    return function(config) {
 
-	    $(document).ready(function() {
+        $(document).ready(function() {
             
             $(config.passwordSelector).hide();
 
@@ -21,12 +21,9 @@ define([
             }
 
             $(config.email).bind('change',function(e) {
-               
                 var email_login = $(config.email).val();
                 var status = validateEmail(email_login);
-                
                 if(status === true) {
-                   
                     e.preventDefault();
                     $.ajax({
                         type: "POST",
@@ -35,25 +32,25 @@ define([
                         data: {email : email_login},
                         dataType: "json"
                     })
-                        .done(function (msg) {
-    
-                            if(msg.errors) {
-                                $('.response-msg').html("<div class='error'>"+msg.message+"</div>");
-                                setTimeout(function(){ $('.response-msg').html(null); }, 5000);
-                            } else {
-                                if (msg.migrate_customer == 1){
-                                    $(config.passwordSelector).hide();
-                                    $(config.submitButton).text("Reset Password");
-                                }else{
-                                    $(config.passwordSelector).show();
-                                    $(config.submitButton).text("sign in");
-                                }
+                    .done(function (msg) {
+                        if(msg.errors) {
+                            $('.response-msg').html("<div class='error'>"+msg.message+"</div>");
+                            setTimeout(function(){ $('.response-msg').html(null); }, 5000);
+                        } else {
+                            if (msg.migrate_customer == 1){
+                                $(config.passwordSelector).hide();
+                                $(config.submitButton).text("Reset Password");
+                                $(config.submitButton).prop("disabled",false);
+                            }else{
+                                $(config.passwordSelector).show();
+                                $(config.submitButton).text("sign in");
+                                $(config.submitButton).prop("disabled",false);
                             }
-    
-                        });
+                        }
+
+                    });
                 }
             });
-
-	    });
-	};
+        });
+    };
 });

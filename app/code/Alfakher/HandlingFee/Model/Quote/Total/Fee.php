@@ -7,7 +7,7 @@ namespace Alfakher\HandlingFee\Model\Quote\Total;
  *
  * @author af_bv_op
  */
-class HandlingFee extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal
+class Fee extends \Magento\Quote\Model\Quote\Address\Total\AbstractTotal
 {
     /**
      *

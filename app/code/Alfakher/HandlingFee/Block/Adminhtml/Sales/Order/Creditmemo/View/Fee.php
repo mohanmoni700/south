@@ -7,7 +7,7 @@ namespace Alfakher\HandlingFee\Block\Adminhtml\Sales\Order\Creditmemo\View;
  *
  * @author af_bv_op
  */
-class HandlingFee extends \Magento\Framework\View\Element\Template
+class Fee extends \Magento\Framework\View\Element\Template
 {
     /**
      * Order invoice

@@ -179,7 +179,7 @@
                 .lib-css(border-top, @checkout-shipping-method__border);
                 .lib-css(padding-bottom, @checkout-shipping-method__padding);
                 .lib-css(padding-top, @checkout-shipping-method__padding);
-
+                vertical-align: middle;
                 &:first-child {
                     padding-left: 0;
                     padding-right: 0;
@@ -275,6 +275,13 @@
         .checkout-shipping-address {
             div.new-address-popup {
                 margin: 30px 0;
+            }
+        }
+    }
+    .checkout-shipping-method {
+        .actions-toolbar {
+            .action.primary {
+                width: 160px;
             }
         }
     }

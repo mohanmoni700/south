@@ -5,7 +5,7 @@ namespace Alfakher\HandlingFee\Model\Invoice\Total;
 /**
  * Appending handling fee to invoice
  */
-class HandlingFee extends \Magento\Sales\Model\Order\Invoice\Total\AbstractTotal
+class Fee extends \Magento\Sales\Model\Order\Invoice\Total\AbstractTotal
 {
     /**
      * Collect totals
