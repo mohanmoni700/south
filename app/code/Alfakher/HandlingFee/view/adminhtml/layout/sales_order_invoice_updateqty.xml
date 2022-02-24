@@ -5,5 +5,15 @@
         <referenceBlock name="invoice_totals">
             <block class="Alfakher\HandlingFee\Block\Adminhtml\Sales\Order\Invoice\Fee" name="handling_fee"/>
         </referenceBlock>
+
+        <referenceBlock name="invoice_totals">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Alfakher_HandlingFee::totals.phtml</argument>
+            </action>
+
+            <arguments>
+		        <argument name="view_model" xsi:type="object">Alfakher\HandlingFee\ViewModel\Fee</argument>
+		    </arguments>
+        </referenceBlock>
     </body>
 </page>

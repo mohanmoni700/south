@@ -75,76 +75,7 @@ $canShowFeeEdit = $viewModel->isModuleEnabled($websiteId);
                         <?php endif; ?>
                     </tr>
                 <?php endif; ?>
-
-
-                <?php /* bv_op; date : 18-2-22; edit handling fee; Start */ ?>
-                <?php if ($_total->getCode() == 'handling_fee' && $canShowFeeEdit && !$order->getInvoiceCollection()->count()): ?>
-                    <tr id="edit_handling_fee_btn_tr">
-                        <td></td>
-                        <td id="edit_handling_fee">
-                            <button class="primary" type="button" id="edit_handling_fee_btn">Edit Handling Fee</button>
-                        </td>
-                    </tr>
-                    <tr id="submit_handling_fee_btn_tr" style="display: none;">
-                        <td id="submit_handling_fee">
-                            <button type="button" id="cancle_handling_fee_btn">Cancle</button>
-                            <button class="primary" type="button" id="submit_handling_fee_btn">Submit</button>
-                        </td>
-                        <td>
-                            <input type="hidden" name="updated_handling_fee_for_order" id="updated_handling_fee_for_order" value="<?= $order->getId() ?>">
-                            <input type="text" name="updated_handling_fee" id="updated_handling_fee" placeholder="Amount to update" class="admin__control-textarea" value="0" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-                        </td>
-                    </tr>
-                <?php endif; ?>
-                <?php /* bv_op; date : 18-2-22; edit handling fee; End */ ?>
-
-
             <?php endforeach; ?>
         </tbody>
     <?php endif; ?>
 </table>
-
-
-
-
-
-<?php /* bv_op; date : 18-2-22; edit handling fee; Start */ ?>
-<?php if ($canShowFeeEdit && !$order->getInvoiceCollection()->count()): ?>
-
-<script type="text/javascript">
-    require(['jquery'], function ($) {
-        $(document).on('click', "#edit_handling_fee_btn", function () {
-            $("#edit_handling_fee_btn_tr").hide();
-            $("#submit_handling_fee_btn_tr").show();
-        });
-
-        $(document).on('click', "#cancle_handling_fee_btn", function () {
-            $("#edit_handling_fee_btn_tr").show();
-            $("#submit_handling_fee_btn_tr").hide();
-            $("#updated_handling_fee").val(0);
-        });
-
-        $(document).on('click', "#submit_handling_fee_btn", function () {
-            var updatedHandlingFee = $("#updated_handling_fee").val();
-            var orderId = $("#updated_handling_fee_for_order").val();
-            if (typeof updatedHandlingFee === 'undefined' || updatedHandlingFee == '') {
-                alert("please enter some value");
-                return;
-            }
-
-            $.ajax({
-                url: "<?= $block->getUrl('handlingfee/Order/updatefee/') ?>",
-                showLoader: true,
-                type: 'POST',
-                data: {order_id:orderId, amount : updatedHandlingFee},
-                success: function(response) {
-                    location.reload(true);
-                }
-            });
-
-        });
-    });
-</script>
-
-<?php endif; ?>
-<?php /* bv_op; date : 18-2-22; edit handling fee; End */ ?>
