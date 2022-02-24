@@ -129,7 +129,6 @@ class CustomerSessionContext
     {
         /*1 for not expired*/
         $msg = 1;
-        /*$doc_collection = $this->getMydocuments();*/
         $customer_id = $this->customerSession->getCustomerId();
         $doc_collection = $this->collection->create()
             ->addFieldToFilter('customer_id', ['eq' => $customer_id]);
