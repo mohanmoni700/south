@@ -164,6 +164,9 @@
         }
         .doc_name {
             display: none;
+            input[type='text'] {
+                height: 40px;
+            }
         }
         .upload.active {
             .set_expiry, .doc_name {
@@ -198,12 +201,24 @@
             }
         }
     }
-    .expiry_dates .active-date{
-        background: #961E70;
-        border-color: #961E70;
-        color: #fff;
-        text-align: center;
-        font-weight: 700;
+    .expiry_dates {
+        position: relative;
+        .active-date {
+            background: #961E70;
+            border-color: #961E70;
+            color: #fff;
+            text-align: center;
+            font-weight: 700;
+            + &::after {
+                display: none;
+            }
+        }
+        input {
+            height: 40px;
+            background: url('@{baseDir}images/calender-icon.svg') no-repeat;
+            background-size: 14px 14px;
+            background-position: ~'calc(100% - 14px)' center;
+        }
     }
 
 
@@ -280,10 +295,11 @@
             }
             .download-doc::after {
                 content: "";
-                width: 15px;
+                width: 16px;
                 height: 15px;
                 background: url('@{baseDir}images/download.svg');
                 background-size: 100%;
+                background-repeat: no-repeat;
                 display: block;
                 margin-left: 15px;
             }
@@ -302,10 +318,11 @@
         }
         .comman-download-doc::after {
             content: "";
-            width: 15px;
+            width: 16px;
             height: 15px;
             background: url('@{baseDir}images/download.svg');
             background-size: 100%;
+            background-repeat: no-repeat;
             display: block;
             margin-left: 15px;
         }
@@ -466,6 +483,14 @@
                 margin-bottom: 16px;
                 min-width: 180px;
             }
+            .action-close {
+                display: none;
+            }
+        }
+        .modal-header {
+            .action-close {
+                display: none;
+            }
         }
         #signinredirect {
             min-width: 180px;
@@ -484,7 +509,6 @@
         align-items: start;
         cursor: pointer;
         margin-bottom: 20px;
-
         &:before {
             content: "+";
             padding-right: 5px;
@@ -498,6 +522,7 @@
             font-size: 12px;
             font-weight: 500;
         }
+
     }
     .add-more-field {
         width: 100%;
@@ -605,7 +630,8 @@
             font-size: 30px;
             display: block;
             line-height: 36px;
-            margin-bottom: 20px;
+            margin-bottom: 26px;
+            text-transform: uppercase;
         }
         &.add-more-field {
             text-align: left;
@@ -631,6 +657,14 @@
                 border-bottom: none;
             }
         }
+        .add-more-cont {
+            width: 100%;
+            justify-content: center;
+            a {
+                width: auto;
+                display: inline-block;
+            }
+        }
     }
 
 }
@@ -642,7 +676,7 @@
 //  _____________________________________________
 
 
-@media only screen and (min-width: 481px) {
+@media only screen and (min-width: 480px) {
     .upload-container,
     .updated-container{
         .upload,
@@ -656,6 +690,17 @@
             &:nth-child(1) {
                 margin-right: 20px;
                 
+            }
+        }
+    }
+}
+@media only screen and (max-width: 919px) and (min-width: 480px) {
+    .upload-container,
+    .updated-container{
+        .add-more-cont {
+            margin-top: 204px;
+            &:nth-of-type(3), &:nth-of-type(5), &:nth-of-type(7), &:nth-of-type(9), &:nth-of-type(11) {
+                margin-top: 0;
             }
         }
     }
@@ -679,6 +724,12 @@
                 margin-right: 20px;
             }
         }
+        .add-more-cont {
+            margin-top: 204px;
+            &:nth-of-type(5), &:nth-of-type(9), &:nth-of-type(13), &:nth-of-type(17) {
+                margin-top: 0;
+            }
+        }
     }
 } 
 @media only screen and (min-width: 920px) {
@@ -695,6 +746,17 @@
             &:nth-of-type(3n) {
                 margin-right: 0;
                 
+            }
+        }
+    }
+}
+@media only screen and (max-width: 1179px) and (min-width: 920px) {
+    .upload-container,
+    .updated-container{
+        .add-more-cont {
+            margin-top: 204px;
+            &:nth-of-type(4), &:nth-of-type(7), &:nth-of-type(10), &:nth-of-type(13) {
+                margin-top: 0;
             }
         }
     }

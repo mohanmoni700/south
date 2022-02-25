@@ -77,10 +77,14 @@
             if(!$(this).parent().children(".submenu").hasClass("opened")) {
                 $(this).parent().children(".submenu").addClass("opened");
                 $(this).parent().children("a").addClass("ui-state-active");
+                $(this).parent().children(".subchildmenu").toggle();
+                $(this).parent().children(".ui-menu-item.level1.parent .ui-state-active").toggleClass("active");
             }
             else {
                 $(this).parent().children(".submenu").removeClass("opened");
                 $(this).parent().children("a").removeClass("ui-state-active");
+                $(this).parent().children(".subchildmenu").toggle();
+                $(this).parent().children(".ui-menu-item.level1.parent .ui-state-active").toggleClass("active");
             }
         });
     };
