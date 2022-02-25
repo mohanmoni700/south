@@ -3,6 +3,10 @@ namespace Alfakher\Productpageb2b\Model\Product\Type;
 
 class Grouped extends \Magento\GroupedProduct\Model\Product\Type\Grouped
 {
+
+    /**
+     * @inheritDoc
+     */
     public function getAssociatedProducts($product)
     {
         if (!$product->hasData($this->_keyAssociatedProducts)) {
