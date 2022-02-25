@@ -785,11 +785,11 @@ ul.nav.items{
       border-radius: 0px;
     }
 
-    &:hover + label:before {
-      background: #333333;
-      border: 1px solid #333333;
-      border-radius: 0px;
-    }
+    // &:hover + label:before {
+    //   background: #333333;
+    //   border: 1px solid #333333;
+    //   border-radius: 0px;
+    // }
 
     &:focus + label:before {
       box-shadow: none;
@@ -1752,6 +1752,7 @@ ul.nav.items{
             margin: 0 auto;
             position: relative;
             display: inline-block;
+            top: -3px;
         }
         .user_icon{
             position: absolute;
@@ -2104,7 +2105,7 @@ ul.nav.items{
             } 
         }
         .separator:before{
-            width: calc(~"100% - 30px"); 
+            width: calc(~"100% - 30px");
         }
         .b2b_customer_index{
             .message.success{
@@ -2139,6 +2140,11 @@ ul.nav.items{
                 padding: 60px 20px 35px 20px;
             }
         } 
+        button.action.primary, 
+        button.action-primary{
+            font-size: 15px;
+            letter-spacing: 1px;
+        }
     }
     
 }
@@ -2214,6 +2220,17 @@ ul.nav.items{
     .customer-account-forgotpassword .page-main{
         background: @color-white;
     }
+    .customer-account-create, .customer-account-login, .customer-account-forgotpassword{
+        div.page.messages {
+            max-width: calc(~"100% - 30px");
+            .messages {
+                .message {
+                    margin-bottom: 25px;
+                    margin-top: 0;
+                }
+            }
+        }
+    }
     .b2b_customer_index{
         .message.success{
             width: calc(~"100% - 18px");
@@ -2266,9 +2283,12 @@ ul.nav.items{
             .action.next.primary{
                 float: none;
             } 
+            .field.choice.newsletter {
+                margin-top: 0;
+            }
             .login-container{
                 .actions-toolbar{
-                    margin-top: 50px;
+                    margin-top: 30px;
                     flex-wrap: wrap;
                     &.justify_btn{
                         margin-top: 25px;
@@ -2286,7 +2306,7 @@ ul.nav.items{
                 }
             } 
             .login-container{
-                margin-top: 30px;
+                margin-top: 20px;
                 margin-bottom: 0;
             }
         }
@@ -2298,7 +2318,7 @@ ul.nav.items{
     }
     .control.captcha-image{
         .captcha-reload{
-            padding: 5px 15px;
+            padding: 5px 15px !important;
             line-height: 15px;
             .lib-font-size(10);
             letter-spacing:0;
