@@ -22,7 +22,15 @@ define([
                 if (extensionArr.indexOf(extension) >= 0) {
                     currentElem.closest('.upload').find('.doc_name').remove();
                     currentElem.closest('.upload').find('.set_expiry').remove();
-                    $('<div class="doc_name" for="document name">' +
+                    var filesrc = URL.createObjectURL(e.target.files[0]);
+                    var filename = jQuery('#'+ docActionInsertAfter + showId).val();
+                    var nameArr = filename.split('\\');
+                    var name = nameArr[2];
+                    
+                    $('<div class="comman-doc-name document'+ showId + '">' + 
+                        '<span>'+name+'</span>'+
+                        '<a class="comman-download-doc" id="downloaddocument-filename-'+showId+'" href="' + filesrc + '" target="_blank" download></a>' +
+                        '</div>'+'<div class="doc_name" for="document name">' +
                         '<label>Document Name</label>' +
                         '<input type="text" id="name' + showId + '" name="name' + showId + '" data-validate="{required:true}"/>' +
                         '</div><div class="set_expiry" data-id=' + showId + ' for="document expiry data">' +
@@ -57,11 +65,11 @@ define([
                                 '<div class="doc-actions" id="doc-actions-filename-' + showId + '">' +
                                 '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + filesrc + '" target="_blank"></a>' +
                                 '<a class="deletedocument-preview deletedocument" id="deletedocument-filename-' + showId + '"></a>' +
-                                '<a class="download-doc-preview" id="downloaddocument-filename-' + showId + '" href="' + filesrc + '" target="_blank" download></a>' +
                                 '</div>').insertAfter($('#' + docActionInsertAfter + showId));
 
                             $("#deletedocument-filename-" + showId).click(function() {
                                 $('.previewimage-filename-' + showId).remove();
+                                $('.document'+ showId).remove();
                                 $("#doc-actions-filename-" + showId).remove();
                                 $('#' + docActionInsertAfter + showId).val('');
                                 currentElem.closest('.upload').removeClass('active');
@@ -296,16 +304,22 @@ define([
                                     var filesrc = URL.createObjectURL(e.target.files[0]);
                                     var imgClass = "";
                                 }
-    			              
+                                var updatename = nameArr[2];
+
+                                $('<div class="comman-doc-name document'+ fileId + '">' +
+                                '<span>'+updatename+'</span>'+
+                                '<a class="comman-download-doc" id="downloaddocument-filename_'+fileId+'" href="' + filesrc + '" target="_blank" download></a>' +
+                                '</div>').insertAfter('.update-doc-'+ fileId);
+
     			                $('<img class="previewimage-filename_' + fileId + ' ' + imgClass + '" height="170" width="170" src="' + filePreview + '" title="' + filename + '"/>' +
                                     '<div class="doc-actions" id="doc-actions-filename_' + fileId + '">' +
                                     '<a class="view-doc-link" id="view-doc-link-filename_' + fileId + '" href="' + filesrc + '" target="_blank"></a>' +
                                     '<a class="deletedocument-preview deletedocument" id="deletedocument-filename_' + fileId + '"></a>' +
-                                    '<a class="download-doc-preview" id="downloaddocument-filename_' + fileId + '" href="' + filesrc + '" target="_blank" download></a>' +
                                     '</div>').insertAfter("#updatefile_" + fileId);
 
     			                 $("#deletedocument-filename_" + fileId).click(function() {
     	                                $("#doc-actions-filename_" + fileId).remove();
+                                        $('.document'+ fileId).remove();
     	                                $('.previewimage-filename_' + fileId).remove();
                                         $(".update-doc-" + fileId).closest('.upload').removeClass('active');
     	                            });
