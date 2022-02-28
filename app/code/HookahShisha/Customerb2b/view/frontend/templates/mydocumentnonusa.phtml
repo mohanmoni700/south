@@ -4,6 +4,14 @@ $customResultUrl = $block->getUrl('mydocument/customer/hookahresult');
 $deleteDocumentUrl = $block->getUrl('mydocument/customer/deletedocument');
 $updateDocumentUrl = $block->getUrl('mydocument/customer/updatedocument');
 ?>
+<div class="document-title">
+    <span class="title">
+        <?= $block->escapeHtml(__('Upload Your Document')); ?>
+    </span>
+    <span class="note">
+        <?= $block->escapeHtml(__('(File type supported are JPG, PNG and PDF)')); ?>
+    </span>
+</div>
 <div class="my_document">
     <form name="myformdynamic"
     id="myformdynamic"

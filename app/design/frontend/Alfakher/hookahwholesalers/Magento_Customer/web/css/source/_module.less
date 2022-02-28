@@ -161,6 +161,7 @@ ul.nav.items{
             color: @account_color-font;
             text-decoration: underline; 
             font-weight: @font-weight__semibold;
+            font-size: 12px;
         }
     }
 }
@@ -243,7 +244,10 @@ ul.nav.items{
             width: 300px;
         }
     } 
-} 
+}
+.additional-addresses {
+    margin-bottom: 0;
+}
 .block.block-addresses-default{
     .block-content{
         .lib-vendor-prefix-display(flex);
@@ -260,20 +264,24 @@ ul.nav.items{
         }
         .box-content{
             address{
-                line-height: 20px;
+                line-height: 22px;
                 color: @account_color-font;
                 line-break: anywhere;
+                &::first-line {
+                    font-weight: @font-weight__bold;
+                }
                 a{
                     color: @account_color-font;
                 }
             }
-        }
+        }        
         .box-actions{
             margin-top: 8px;
             .edit{
                 color: @account_color-font;
                 text-decoration: underline; 
                 font-weight: @font-weight__semibold;
+                font-size: 12px;
             }
         }
     }
@@ -393,6 +401,9 @@ ul.nav.items{
 /*============= Account style ==============*/
 .customer-account-index{
     background: @account-wrapperbg;
+    .page-main {
+        max-width: @layout_container_xl;
+    }
 }
 .account{
     .pending{
@@ -924,6 +935,7 @@ ul.nav.items{
         z-index: 1;
     }
     select {
+      color: @color_black;
       -webkit-appearance: none;
       -moz-appearance: none;
       text-indent: 1px;
@@ -1054,17 +1066,7 @@ ul.nav.items{
                     }
                 }
             }
-        }
-        .field.street{
-            .field .label{
-                position: relative;
-                font-weight: 700;    
-                margin-bottom: 10px;
-                display: block;
-                width: 100%;
-                height: auto;
-            }
-        } 
+        }         
         .actions-toolbar.justify_btn{
             .lib-vendor-prefix-display(flex);
             width: 100%;
@@ -1325,6 +1327,17 @@ ul.nav.items{
         }
 
     }
+    .field.street{
+        .field .label{
+            position: relative;
+            font-weight: @font-weight__bold;
+            margin: 0 0 10px 0;
+            display: block;
+            width: 100%;
+            height: auto;
+            font-size: 1.2rem;
+        }
+    }
     .login-container {
         .block {
             &-new-customer {
@@ -1571,6 +1584,7 @@ ul.nav.items{
 
             strong {
                 .lib-heading(h4);
+                font-weight: @font-weight__regular;
                 .column.main & {
                     font-size: @h3__font-size;
                 }
@@ -2120,6 +2134,18 @@ ul.nav.items{
             }
         } 
     }
+    @media only screen and (max-width: 767px) and (min-width: 400px) {
+        .account {
+            .my_account_b2b {
+                li {
+                    width: 33.33%;
+                    > a {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
     @media only screen and (max-width: 360px) {
         .customer-account-login{
             .block-content{
@@ -2312,7 +2338,8 @@ ul.nav.items{
         }
         .register_nav {
             li legend.legend {
-                .lib-font-size(16);
+                .lib-font-size(12);
+                padding: 0;
             }
         }
     }
@@ -2578,7 +2605,8 @@ ul.nav.items{
                 } 
             } 
             .block.block-addresses-list{
-                margin-bottom: 0;
+                margin-bottom: 30px;
+                border-color: @color_black;
             }
             .form-address-edit{
                 .fieldset{
@@ -2624,6 +2652,7 @@ ul.nav.items{
         .block.block-addresses-default{
             .block-title{
                 text-align: center;
+                border-color: @color_black;
             }
         } 
         .additional-addresses{

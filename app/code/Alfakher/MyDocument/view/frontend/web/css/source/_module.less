@@ -78,7 +78,7 @@
                 border-radius: 100%;
                 text-align: center;
                 display: block;
-                margin: 0 5px;
+                margin: 0 20px;
             }
             .deletedocument {
                 border:  none;
@@ -89,7 +89,7 @@
                 display: block;
             }
             .deletedocument::before {
-                content: url('@{baseDir}images/doc_delete.svg');
+                content: url('@{baseDir}images/delete-icon.svg');
                 margin-top: 10px;
                 display: block;
             }
@@ -608,6 +608,17 @@
             font-size: 26px;
         }
     }
+    .my_document {
+        form {
+            .upload {
+                > label {
+                    font-size: 16px;
+                    margin-bottom: 8px;
+                    display: inline-block;
+                }
+            }
+        }
+    }
 }
 
 
@@ -635,6 +646,7 @@
         }
         &.add-more-field {
             text-align: left;
+            margin-top: 0;
         }
     }
 }
@@ -652,6 +664,10 @@
             padding-bottom: 20px;
             .input-file {
                 max-width: 100%;
+                min-height: 260px;
+            }
+            .view-doc-link, .deletedocument, .download-doc-preview {
+                margin: 0 30px;
             }
             &:last-child {
                 border-bottom: none;
@@ -666,7 +682,6 @@
             }
         }
     }
-
 }
 
 
@@ -692,7 +707,7 @@
                 
             }
         }
-    }
+    }    
 }
 @media only screen and (max-width: 919px) and (min-width: 480px) {
     .upload-container,

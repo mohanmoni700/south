@@ -152,6 +152,7 @@ define([
                             $('#' + resetId).trigger("reset");
                             $("#popup-modal-non-usa").show();
                             $("#myformdynamic").hide();
+                            $("#non_usa_customer_tab .document-title").hide();
                             $('.page-title-wrapper').hide();
                             $('.form-create-account').hide();
                         } else {
@@ -202,17 +203,11 @@ define([
             });
 
             $('button#nonusabtnsave').click( function(e) {
+                $(".pending-tooltip").hide(); 
             	if($('#myformdynamic').valid()) {
             		formSubmitById('myformdynamic', 'myformdynamic', config.customResultUrl);
             	}
 		    });
-
-            $('button#nonusabtnsave').click( function(e) {
-                 $(".pending-tooltip").hide(); 
-                if($('#myformdynamic').valid()) {
-                    formSubmitById('myformdynamic', 'myformdynamic', config.customResultUrl);
-                }
-            });
         });
     };
 });

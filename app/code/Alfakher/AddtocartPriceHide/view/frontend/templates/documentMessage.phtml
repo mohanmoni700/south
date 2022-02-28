@@ -31,7 +31,7 @@
         </div>
     <?php endif; ?>
 <?php else: ?>
-     <div class="pending-tooltip"><div class="tooltip-inner"><?= $block->escapeHtml(__($guest_user_documnet_msg)) ?><a href="<?= $block->getBaseUrl()."/customer/account/create/" ?>"><?= $block->escapeHtml(__(" CLICK HERE ")) ?></a></div>
+     <div class="pending-tooltip"><div class="tooltip-inner"><?= $block->escapeHtml(__($guest_user_documnet_msg)) ?><a href="<?= $block->getBaseUrl()."customer/account/create/" ?>"><?= $block->escapeHtml(__(" CLICK HERE ")) ?></a></div>
      </div>
 <?php endif; ?>    
 
