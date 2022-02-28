@@ -49,28 +49,38 @@ class DefaultRendererPlugin
         if ($column == 'tax-amount') {
             $currency = $this->CurrencyFactory->load($item->getOrder()->getOrderCurrencyCode());
             $currencySymbol = $currency->getCurrencySymbol();
+            $html = $currencySymbol . number_format($item->getTaxAmount(), 2);
 
-            $html = $currencySymbol.number_format($item->getTaxAmount(), 2);
             if (!empty($item->getExciseTax())) {
-                $html.= "<br/>Excise Tax - ".$currencySymbol.$item->getExciseTax();
+                $html .= "<br/>Excise Tax - " . $currencySymbol . $item->getExciseTax();
             }
+
             if (!empty($item->getSalesTax())) {
-                $html.= "<br/>Sales Tax - ".$currencySymbol.$item->getSalesTax();
+                $html .= "<br/>Sales Tax - " . $currencySymbol . $item->getSalesTax();
             }
+
             $result = $html;
         } elseif ($column == 'tax-percent') {
-            $itemTotal = (($item->getPrice()*$item->getQtyOrdered())-$item->getDiscountAmount());
-            $orderTaxRate = number_format($itemTotal ? ($item->getTaxAmount()*100) / $itemTotal : 0, 2);
-            $html = $orderTaxRate."%";
+            $itemTotal = (($item->getPrice() * $item->getQtyOrdered()) - $item->getDiscountAmount());
+            $orderTaxRate = number_format($itemTotal ? ($item->getTaxAmount() * 100) / $itemTotal : 0, 2);
+            $html = $orderTaxRate . "%";
 
             if (!empty($item->getExciseTax())) {
-                $exciseTaxRate = number_format(($item->getExciseTax()*100) / $itemTotal, 2);
-                $html.= "<br/>Excise Tax - ".$exciseTaxRate."%";
+                $exciseTaxRate = number_format(
+                    $itemTotal ? ($item->getExciseTax() * 100) / $itemTotal : 0,
+                    2
+                );
+                $html .= "<br/>Excise Tax - " . $exciseTaxRate . "%";
             }
+
             if (!empty($item->getSalesTax())) {
-                $salesTaxRate = number_format(($item->getSalesTax()*100) / $itemTotal, 2);
-                $html.= "<br/>Sales Tax - ".$salesTaxRate."%";
+                $salesTaxRate = number_format(
+                    $itemTotal ?($item->getSalesTax() * 100) / $itemTotal : 0,
+                    2
+                );
+                $html .= "<br/>Sales Tax - " . $salesTaxRate . "%";
             }
+
             $result = $html;
         } else {
             if ($field) {
