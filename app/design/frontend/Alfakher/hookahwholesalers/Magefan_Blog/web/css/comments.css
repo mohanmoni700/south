@@ -39,7 +39,6 @@
 
 /* Form */
 .c-replyform .c-btn-hld {margin-top: 30px;}
-.c-replyform.no-active .c-btn-hld {display: none;}
 .c-replyform .c-btn-hld .lr-hld {
     display: -webkit-flex;display: -ms-flexbox;display: flex;
     -webkit-justify-content: center;-ms-flex-pack: justify;justify-content: space-between;
@@ -66,7 +65,7 @@
     .c-replyform button {
         -webkit-order: 3;-ms-flex-order: 3;order: 3;
     }
-    .c-replyform .left-hld {padding: 0 0 20px 0;}
+    .c-replyform .left-hld {padding: 0 0 30px 0;}
 }
 
 
@@ -138,11 +137,14 @@
     }
     .c-post .p-actions a{
         margin-top: 20px;
-    }
-    .c-replyform button{
-        margin-top: 0;
-    }
+    }    
     #post-comments{
-        margin-bottom: 80px;
+        margin-bottom: 40px;
+    }
+    .c-replyform textarea, .c-replyform input {
+        padding: 0 12px;
+    }
+    .c-replyform textarea {
+        padding: 8px 12px;
     }
 }

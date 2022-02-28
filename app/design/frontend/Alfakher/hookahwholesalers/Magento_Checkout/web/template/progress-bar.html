@@ -5,7 +5,7 @@
  */
 -->
 <div class="back-button">
-    <a class="go-back" href="javascript:history.go(-2)"><!-- ko i18n: "Back"--><!-- /ko --></a>
+    <a class="go-back" data-bind="attr: {'href': checkout.shoppingCartUrl}"><!-- ko i18n: "Back"--><!-- /ko --></a>
 </div>
 <ul class="opc-progress-bar">
     <!-- ko foreach: { data: steps().sort(sortItems), as: 'item' } -->

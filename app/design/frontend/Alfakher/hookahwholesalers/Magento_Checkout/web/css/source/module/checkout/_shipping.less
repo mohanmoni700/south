@@ -24,8 +24,8 @@
 @checkout-shipping-item-mobile__width: 100%;
 @checkout-shipping-item__active__border-color: @hookah_theme_color;
 
-@checkout-shipping-item-icon__selected__height: 27px;
-@checkout-shipping-item-icon__selected__width: 29px;
+@checkout-shipping-item-icon__selected__height: 20px;
+@checkout-shipping-item-icon__selected__width: 20px;
 
 @checkout-shipping-item-mobile__padding: 0 0 15px;
 @checkout-shipping-item-mobile__margin: @checkout-shipping-item-mobile__padding;
@@ -84,7 +84,12 @@
             vertical-align: top;
             word-wrap: break-word;
             border-radius: 10px;
-
+            &::first-line {
+                font-weight: @font-weight__bold;
+            }
+            a {
+                color: @font-gray;
+            }
             &.selected-item {
                 .lib-css(border-color, @checkout-shipping-item__active__border-color);
 
@@ -95,9 +100,9 @@
                     .lib-css(font-family, @icons__font-name);
                     .lib-css(height, @checkout-shipping-item-icon__selected__height);
                     .lib-css(width, @checkout-shipping-item-icon__selected__width);
-                    font-size: 27px;
-                    line-height: 21px;
-                    padding-top: 2px;
+                    font-size: 20px;
+                    line-height: 20px;
+                    padding-top: 0;
                     position: absolute;
                     right: @indent__base;
                     text-align: center;
@@ -180,6 +185,7 @@
                 .lib-css(padding-bottom, @checkout-shipping-method__padding);
                 .lib-css(padding-top, @checkout-shipping-method__padding);
                 vertical-align: middle;
+                cursor: pointer;
                 &:first-child {
                     padding-left: 0;
                     padding-right: 0;
@@ -221,10 +227,9 @@
         .shipping-address-item {
             .lib-css(margin, @checkout-shipping-item-mobile__margin);
             width: 100%;
-
+            .lib-css(padding, @checkout-shipping-item-mobile__active__padding);
             &.selected-item {
                 .lib-css(padding, @checkout-shipping-item-mobile__active__padding);
-                border-bottom-width: 2px;
 
                 .edit-address-link {
                     .lib-css(right, @checkout-shipping-item-icon__selected__width + @indent__l);
