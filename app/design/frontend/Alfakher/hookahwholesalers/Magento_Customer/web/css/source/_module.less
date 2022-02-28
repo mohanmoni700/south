@@ -401,6 +401,9 @@ ul.nav.items{
 /*============= Account style ==============*/
 .customer-account-index{
     background: @account-wrapperbg;
+    .page-main {
+        max-width: @layout_container_xl;
+    }
 }
 .account{
     .pending{
@@ -1581,6 +1584,7 @@ ul.nav.items{
 
             strong {
                 .lib-heading(h4);
+                font-weight: @font-weight__regular;
                 .column.main & {
                     font-size: @h3__font-size;
                 }
