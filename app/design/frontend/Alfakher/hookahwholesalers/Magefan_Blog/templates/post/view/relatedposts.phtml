@@ -14,7 +14,11 @@
  * @var $block \Magefan\Blog\Block\Catalog\Product\RelatedPosts
  */
 ?>
-
+<?php 
+    $_helper = $this->helper('Magento\Catalog\Helper\Output');
+    $imageHelper = $this->helper(\Magento\Catalog\Helper\Image::class);
+    $placeholderImageUrl = $imageHelper->getDefaultPlaceholderUrl('small_image');
+?>
 <?php if ($block->displayPosts()) { ?>
     <?php $postCollection = $block->getPostCollection(); ?>
     <?php if (count($postCollection)) { ?>
@@ -29,9 +33,10 @@
                 $featuredImage = $post->getFeaturedListImage() ?: $post->getFeaturedImage();
                     if($featuredImage){
                         $featuredImageHtml = '<img src="' . $featuredImage . '" height="100" width="100" alt="img" />';
+                    /*set default image start*/ 
                     }else{
-                        $featuredImageHtml = '';  
-                    }
+                        $featuredImageHtml = '<img src="' . $placeholderImageUrl . '" height="200" width="200" alt="img" />';  
+                    }/* End */
                 ?>
                 <div class="item">
                     <!-- for featured image show start[BS] -->

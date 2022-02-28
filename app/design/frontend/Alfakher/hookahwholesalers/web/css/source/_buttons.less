@@ -15,12 +15,6 @@
         .lib-css(border-radius, @button__border-radius);
     }
 
-    button {
-        &:active {
-            .lib-css(box-shadow, @button__shadow);
-        }
-    }
-
     a.action.primary {
         .lib-link-as-button();
     }
@@ -85,6 +79,13 @@
         &.no-radius {
             border-radius: 0;
         }
+    }
+
+    @media only screen and (max-width: 360px) {
+        .action.primary, .action-primary {
+            padding-left: 20px;
+            padding-right: 20px;
+        }        
     }
 }
 

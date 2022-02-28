@@ -93,13 +93,15 @@
                 }); 
               
             }
-        	$(".ui-menu-item.parent.level1").hover(function(){
-			    $(this).closest('ul').find('li').not($(this)).removeClass('current');
-			   	$(this).addClass('current');
-			   	 
-			    }, function(){
-			     $(this).closest('ul').find('li').not($(this)).removeClass('current');
-			});
+            if ($(window).width() > 1025) {
+                $(".ui-menu-item.parent.level1").hover(function(){
+                    $(this).closest('ul').find('li').not($(this)).removeClass('current');
+                    $(this).addClass('current');
+                    
+                    }, function(){
+                    $(this).closest('ul').find('li').not($(this)).removeClass('current');
+                });
+            }
 
             //passvisible 
             jQuery(document).on('click','#showlgpass',function(){

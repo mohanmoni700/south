@@ -383,7 +383,10 @@
                 transition-delay: 0s;
                 transition: .2s opacity;
                 position: relative;
-                margin-right: 58px;
+                margin-right: 45px;
+                &:last-child {
+                    margin-right: 0;
+                }
             >  a{
                     position: relative;
                 }
@@ -762,6 +765,9 @@
         }
         .level1.parent {
             &.current > a span:after {
+                transform: rotate(0deg);
+            }
+           > .ui-state-active.active span:after {
                 transform: rotate(0deg);
             }
             > a span{
