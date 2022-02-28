@@ -62,27 +62,27 @@
                         <?php if ($block->authorEnabled()) { ?>
                             <?php if ($_author = $_post->getAuthor()) { ?>
                                 <div class="item post-author">
-                                        <span class="label"><?= $block->escapeHtml(__('By:')) ?></span>
+                                        <span class="label"><?= $block->escapeHtml(__('By ')) ?></span>
                                         <span class="value">
                                         <?= $block->escapeHtml($_author->getTitle()) ?>
                                         </span>
                                 <?php if ($block->getDisplayImage() && $_post->isPublishDateEnabled()) { ?>
-                                        <span class="post-item-date">/<?= $block->escapeHtml($_post->getPublishDate()) ?>/</span>
+                                        <span class="post-item-date"><?= $block->escapeHtml("/ ".$_post->getPublishDate()." /") ?></span>
                                 <?php } ?>
                                 </div>
                             <?php } ?>
                         <?php } ?>
 
-                        <?php if ($_categoriesCount = $_post->getCategoriesCount()) { ?>
+                        <?php if ($_categoriesCount = $_post->getCategoriesCount()): ?>
                             <div class="item post-categories">
                                 <?php $catetitle = []; ?>
-                                <?php foreach ($_post->getParentCategories() as $ct) { ?>
+                                <?php foreach ($_post->getParentCategories() as $ct): ?>
                                     <?php $catetitle[] = $ct->getTitle(); ?>
-                                <?php } ?>
+                                <?php endforeach; ?>
                                 <?php $catename = implode(', ', $catetitle); ?>
                                 <?= $block->escapeHtml($catename) ?>
                             </div>
-                        <?php } ?>
+                        <?php endif; ?>
                     </p>
                     <p class="post-shortdata">
                         <span class="post-category"><?= __($_post->getShortFilteredContent(null, '...')); ?></span>

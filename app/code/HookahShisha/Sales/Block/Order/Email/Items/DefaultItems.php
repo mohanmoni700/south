@@ -7,9 +7,13 @@
 
 namespace HookahShisha\Sales\Block\Order\Email\Items;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\View\Element\Template;
 use Magento\Sales\Block\Order\Email\Items\DefaultItems as SourceDefaultItems;
 use HookahShisha\Sales\Helper\Block\AlfaBundle;
+use Magento\Sales\Model\Order\Creditmemo\Item as CreditmemoItem;
+use Magento\Sales\Model\Order\Invoice\Item as InvoiceItem;
+use Magento\Sales\Model\Order\Item as OrderItem;
 
 class DefaultItems extends SourceDefaultItems
 {
@@ -58,5 +62,27 @@ class DefaultItems extends SourceDefaultItems
         }
 
         return array_merge(array_merge([], ...$result), $alfaBundleOptions);
+    }
+
+    /**
+     * Get the html for item price
+     *
+     * @param OrderItem|InvoiceItem|CreditmemoItem $item
+     * @return string
+     * @throws LocalizedException
+     */
+    public function getItemPrice($item): string
+    {
+        $block = $this->getLayout()->getBlock('item_price');
+        $items = $this->getOrder()->getAllItems();
+        $superPackItemPrice = $this->helper->getSuperPackItemPrice($item, $items);
+        $price = $superPackItemPrice ?: $item->getPrice();
+
+        $item->setRowTotal((float) $price * (float) $this->getItem()->getQty());
+        $item->setBaseRowTotal((float) $price * (float) $this->getItem()->getQty());
+
+        $block->setItem($item);
+
+        return $block->toHtml();
     }
 }
