@@ -7,9 +7,11 @@
 
 namespace HookahShisha\Sales\Block\Order\Email\Items\Order;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\View\Element\Template;
 use Magento\Sales\Block\Order\Email\Items\Order\DefaultOrder as SourceDefaultOrder;
 use HookahShisha\Sales\Helper\Block\AlfaBundle;
+use Magento\Sales\Model\Order\Item as OrderItem;
 
 class DefaultOrder extends SourceDefaultOrder
 {
@@ -58,5 +60,27 @@ class DefaultOrder extends SourceDefaultOrder
         }
 
         return array_merge(array_merge([], ...$result), $alfaBundleOptions);
+    }
+
+    /**
+     * Get the html for item price
+     *
+     * @param OrderItem $item
+     * @return string
+     * @throws LocalizedException
+     */
+    public function getItemPrice(OrderItem $item): string
+    {
+        $block = $this->getLayout()->getBlock('item_price');
+        $items = $this->getOrder()->getAllItems();
+        $superPackItemPrice = $this->helper->getSuperPackItemPrice($item, $items);
+
+        if ($superPackItemPrice) {
+            $item->setRowTotal((float) $this->getItem()->getQtyOrdered() * $superPackItemPrice);
+            $item->setBaseRowTotal((float) $this->getItem()->getQtyOrdered() * $superPackItemPrice);
+        }
+
+        $block->setItem($item);
+        return $block->toHtml();
     }
 }
