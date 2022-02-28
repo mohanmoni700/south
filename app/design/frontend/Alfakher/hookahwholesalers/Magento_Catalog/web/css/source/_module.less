@@ -53,6 +53,10 @@
     }
 
     .catalog-product-view{
+        .page-main {
+            max-width: @list_page_container;
+            padding: 0 (@indent__s + @indent__xs);
+        }
         .page-title{
             .base{
                 font-family: @DMSerifDisplay;
@@ -1347,7 +1351,23 @@
                 padding-left: 0;
             }
         }
-    }  
+    }
+    .pending-tooltip {
+        .tooltip-inner {
+            padding-left: 50px;
+            &:after {
+                width: 32px;
+                height: 32px;
+            }
+        }
+        &.rejected {
+            .tooltip-inner {
+                &:after {
+                    background-size: 20px auto;
+                }
+            }
+        }
+    }
 }
 
 //
@@ -1929,6 +1949,7 @@
             max-width: @layout_container;
             margin: 0 auto;
             padding-left: 40px;
+            line-height: 1.6;
             &:after {
                 content: '';
                 background: url('@{baseDir}/images/pending.svg') no-repeat;
