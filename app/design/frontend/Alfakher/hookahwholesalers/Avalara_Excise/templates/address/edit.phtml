@@ -42,7 +42,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                         id="email_address" 
                         placeholder="<?php /* @escapeNotVerified */ echo __('Email') ?>"
                         autocomplete="off" 
-                        value="<?php echo $block->escapeHtml($block->getCustomer()->getEmail()) ?>" 
+                        value="<?= $block->escapeHtml($block->getCustomer()->getEmail()) ?>" 
                         title="<?php /* @escapeNotVerified */ echo __('Email') ?>" 
                         class="input-text"
                         disabled="disabled"
@@ -113,6 +113,18 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
             </div>
         <?php endif; ?>
 
+        <div class="field county">
+            <?php
+            $title = $block->getAttributeData() ? $block->getAttributeData()->getFrontendLabel('county') : $block->escapeHtml(__('County'));
+            ?>
+            <label class="label" for="county">
+                <span><?= /* @noEscape */ $title ?></span>
+            </label>
+            <div class="control">
+                <input type="text" id="county" name="county" value="<?= $block->escapeHtmlAttr(!empty($block->getAddress()->getCustomAttribute('county')) ? $block->getAddress()->getCustomAttribute('county')->getValue() : ''); ?>" title="<?= /* @noEscape */ $title ?>" class="input-text" />
+            </div>
+        </div>
+
         <div class="field country required">
             <?php
             $title = $block->getAttributeData() ? $block->getAttributeData()->getFrontendLabel('country_id') : $block->escapeHtml(__('Country'));
@@ -136,18 +148,6 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                         title="<?= $title ?>"
                         class="input-text <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('city')) ?>"
                         id="city">
-            </div>
-        </div>
-
-        <div class="field county" style="display:none;">
-            <?php
-            $title = $block->getAttributeData() ? $block->getAttributeData()->getFrontendLabel('county') : $block->escapeHtml(__('County'));
-            ?>
-            <label class="label" for="county">
-                <span><?= /* @noEscape */ $title ?></span>
-            </label>
-            <div class="control">
-                <input type="text" id="county" name="county" value="<?= $block->escapeHtmlAttr(!empty($block->getAddress()->getCustomAttribute('county')) ? $block->getAddress()->getCustomAttribute('county')->getValue() : ''); ?>" title="<?= /* @noEscape */ $title ?>" class="input-text" />
             </div>
         </div>
 
