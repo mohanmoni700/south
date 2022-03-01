@@ -260,6 +260,13 @@
                     }   
                 }
             }
+            &.my_payment{
+                a{
+                    &:before{
+                      background: url('@{baseDir}images/payment_option.svg') no-repeat;  
+                    }   
+                }
+            }
             &.logout{
                 margin: 0 !important;
                 position: relative;
@@ -1005,6 +1012,8 @@
             text-align: center;
             padding: 15px 30px 36px 30px;
             background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #D378FF;
+            border-top-left-radius: 10px;
+            border-bottom-left-radius: 10px;
             h3 {
                 .lib-font-size(24);
                 letter-spacing: 10px;
