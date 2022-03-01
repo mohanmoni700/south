@@ -14,10 +14,10 @@
 <?php $block->setPreconfiguredValue(); ?>
 <?php $_product = $block->getProduct(); ?>
 <?php $_associatedProducts = $block->getAssociatedProducts(); ?>
-<?php $_hasAssociatedProducts = count($_associatedProducts) > 0;?>
+<?php $_hasAssociatedProducts = count($_associatedProducts) > 0; ?>
 <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php $is_document_upload = $_helperB2b->getDocuments();?>
-<div id="validation-message-box"></div>
+
 <div class="table-wrapper grouped">
     <table class="table data grouped"
            id="super-product-table"
@@ -31,8 +31,8 @@
                     <strong class="product-item-name"><?= $block->escapeHtml($_item->getName()) ?></strong>
                 </td>
                 <!-- show price start -->
-                 <?php if($_helperB2b->getDocMessageData() == 2 && $is_document_upload == 1 ): ?>
-                 <?php if ($_helperB2b->getDocMessageData() == 2 && $is_document_upload == 1): ?>                <td>
+                 <?php if ($_helperB2b->getDocMessageData() == 2 && $is_document_upload == 1): ?>
+                <td>
                         <?php if ($block->getCanShowProductPrice($_product)): ?>
                             <?php if ($block->getCanShowProductPrice($_item)): ?>
                                 <?= /* @noEscape */ $block->getProductPrice($_item) ?>
@@ -99,6 +99,8 @@
         <?php endif; ?>
     </table>
 </div>
+<div id="validation-message-box"></div>
+
 
 <?php /* bv_op; date : 10-2-22; Start */ ?>
 <script>
