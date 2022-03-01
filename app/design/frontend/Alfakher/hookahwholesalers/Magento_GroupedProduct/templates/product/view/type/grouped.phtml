@@ -17,7 +17,7 @@
 <?php $_hasAssociatedProducts = count($_associatedProducts) > 0; ?>
 <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php $is_document_upload = $_helperB2b->getDocuments();?>
-
+<div id="validation-message-box"></div>
 <div class="table-wrapper grouped">
     <table class="table data grouped"
            id="super-product-table"
@@ -99,7 +99,6 @@
         <?php endif; ?>
     </table>
 </div>
-<div id="validation-message-box"></div>
 
 
 <?php /* bv_op; date : 10-2-22; Start */ ?>
