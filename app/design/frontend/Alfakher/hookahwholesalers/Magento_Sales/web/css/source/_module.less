@@ -12,6 +12,9 @@
         .order-references{
             border: 0;
         }
+        .column.main {
+            position: relative;
+        }
     }
     .order-links {
         border-bottom: @border-width__base solid @border-color__base;
@@ -277,6 +280,26 @@
                 }
             }
         }
+        .actions-toolbar {
+            > .secondary {
+                .action.back {
+                    color: @color_black;
+                    margin: 0;                    
+                    display: inline-flex;
+                    align-items: center;
+                    text-decoration: none !important;
+                    &::before {
+                        content: "";
+                        background: url('@{baseDir}images/left_arrow_black.svg') no-repeat center left;
+                        width: 10px;
+                        height: 16px;
+                        display: inline-block;
+                        vertical-align: middle;
+                        margin-right: 14px;
+                    }
+                }
+            }
+        }
     }
 
     .order-pager-wrapper {
@@ -458,6 +481,9 @@
             border-top: 1px solid #cdcaca;
         }
         .block-content{
+            address {
+                line-break: anywhere;
+            }
             &:before{
                 display: none !important;
             }
@@ -655,22 +681,6 @@
                 margin-bottom: 30px;
                 &:last-child{
                     margin-bottom: 0;
-                }
-            }
-        }
-    }
-    .order-details-items{
-        .actions-toolbar{
-            > .secondary{
-                .action.back{
-                    display: block;
-                    background: #000;
-                    color: #fff;
-                    padding: 14px;
-                    border-radius: 25px;
-                    font-size: 16px;
-                    font-weight: 600;
-                    text-transform: uppercase;
                 }
             }
         }
