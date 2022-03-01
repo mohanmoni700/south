@@ -7,11 +7,11 @@
 use Magento\Framework\App\Action\Action;
 
 /** @var \Magento\Catalog\Helper\Output $_helper */
-$_helper = $block->helper(\Magento\Catalog\Helper\Output::class);
-$priceHelper = $block->helper(\Magento\Framework\Pricing\Helper\Data::class);
+$_helper = $this->helper(\Magento\Catalog\Helper\Output::class);
+$priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
 ?>
 <!-- Check the Document is verified or not vy -->
-        <?php $_helperB2b = $block->helper(Alfakher\Productpageb2b\Helper\Data::class);
+        <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
                $docdata = $_helperB2b->getDocMessageData();
                $is_document_upload = $_helperB2b->getDocuments();
         ?>
