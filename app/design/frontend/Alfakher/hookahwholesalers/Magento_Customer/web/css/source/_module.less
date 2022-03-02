@@ -238,10 +238,11 @@ ul.nav.items{
         }
     }
     .page-main {
-        > .pending-tooltip {            
+        > .pending-tooltip {
             max-width: 1200px;
             margin: 30px auto 0 auto;
             display: block;
+            top: 14px;
         }
     }
 }
@@ -2353,6 +2354,7 @@ ul.nav.items{
             > .pending-tooltip {
                 margin-top: 10px;
                 margin-bottom: 10px;
+                top: 0;
             }
         }
     }
@@ -2700,6 +2702,13 @@ ul.nav.items{
     .account .page-main .sidebar.sidebar-main {
         position: relative;
         top: 0;
+    }
+    .customer-account-create {
+        .page-main {
+            > .pending-tooltip  {
+                top: 0;
+            }
+        }
     }
 }
 
