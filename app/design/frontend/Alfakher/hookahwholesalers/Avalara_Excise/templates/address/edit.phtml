@@ -10,11 +10,11 @@
 <?php $_company = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Company::class) ?>
 <?php $_telephone = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Telephone::class) ?>
 <?php $_fax = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Fax::class) ?>
-<?php 
+<?php
 /* Start Change the region_id Label if the Country is US for State and Other for the State */
 $regionStateLabel = $block->escapeHtml(__('State'));
 $regionProvinceLabel = $block->escapeHtml(__('Province'));
-$regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel; 
+$regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvinceLabel;
 /* End Change the region_id Label if the Country is US for State and Other for the State */
 ?>
 <form class="form-address-edit" 
@@ -40,10 +40,10 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 <input type="email" 
                         name="email" 
                         id="email_address" 
-                        placeholder="<?php /* @escapeNotVerified */ echo __('Email') ?>"
+                        placeholder="<?= $block->escapeHtml(__('Email')) ?>"
                         autocomplete="off" 
                         value="<?= $block->escapeHtml($block->getCustomer()->getEmail()) ?>" 
-                        title="<?php /* @escapeNotVerified */ echo __('Email') ?>" 
+                        title="<?= $block->escapeHtml(__('Email')) ?>" 
                         class="input-text"
                         disabled="disabled"
                         readonly="readonly"/>
@@ -121,7 +121,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 <span><?= /* @noEscape */ $title ?></span>
             </label>
             <div class="control">
-                <input type="text" id="county" name="county" value="<?= $block->escapeHtmlAttr(!empty($block->getAddress()->getCustomAttribute('county')) ? $block->getAddress()->getCustomAttribute('county')->getValue() : ''); ?>" title="<?= /* @noEscape */ $title ?>" class="input-text" />
+                <input type="text" id="county" name="county" value="<?= $block->escapeHtmlAttr(!empty($block->getAddress()->getCustomAttribute('county')) ? $block->getAddress()->getCustomAttribute('county')->getValue() : ''); ?>" title="<?= /* @noEscape */ $title ?>" class="input-text"  />
             </div>
         </div>
 
@@ -191,12 +191,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 <span><?= $block->escapeHtml(__("It's a default billing address.")) ?></span>
             </div>
         <?php elseif ($block->canSetAsDefaultBilling()): ?>
-            <div class="field choice set billing">
-                <input type="checkbox" id="primary_billing" name="default_billing" value="1" class="checkbox">
-                <label class="label" for="primary_billing">
-                    <span><?= $block->escapeHtml(__('Use as my default billing address')) ?></span>
-                </label>
-            </div>
+            <input type="hidden" id="primary_billing" name="default_billing" value="0" >
         <?php else: ?>
             <input type="hidden" name="default_billing" value="1" />
         <?php endif; ?>
@@ -206,12 +201,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 <span><?= $block->escapeHtml(__("It's a default shipping address.")) ?></span>
             </div>
         <?php elseif ($block->canSetAsDefaultShipping()): ?>
-            <div class="field choice set shipping">
-                <input type="checkbox" id="primary_shipping" name="default_shipping" value="1" class="checkbox">
-                <label class="label" for="primary_shipping">
-                    <span><?= $block->escapeHtml(__('Use as my default shipping address')) ?></span>
-                </label>
-            </div>
+                <input type="hidden" name="default_shipping" value="0">
         <?php else: ?>
             <input type="hidden" name="default_shipping" value="1">
         <?php endif; ?>
@@ -252,22 +242,43 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
         }
     }
 </script>
-<script type="text/javascript">
+<script>
+  
 function onCountryChange() {
     require(['jquery'], function($){
         var countryval = $('#country option:selected').val();
-        if(countryval=='US'){
-            $('#region_id_label').children('span').html("<?= $regionStateLabel ?>");
-            $('#region_id').attr('placeholder',"<?= $regionStateLabel ?>");
-        }else{
-            $('#region_id_label').children('span').html("<?= $regionProvinceLabel ?>");
-            $('#region').attr('placeholder',"<?= $regionProvinceLabel ?>");
+        if (countryval=='US') {
+            $('#region_id_label').children('span').html("<?= $block->escapeHtmlAttr($regionStateLabel) ?>");
+            $('#region_id').attr('placeholder',"<?= $block->escapeHtmlAttr($regionStateLabel) ?>");
+        } else {
+            $('#region_id_label').children('span').html("<?= $block->escapeHtmlAttr($regionProvinceLabel) ?>");
+            $('#region').attr('placeholder',"<?= $block->escapeHtmlAttr($regionProvinceLabel) ?>");
         }
     });
 }
 require(['jquery', 'jquery/ui','mage/mage'], function($){
+      $(document).ready(function(){
+         if($('div').hasClass('message info') == true){
+                $("#form-validate #country").attr("disabled","true");
+                $("#form-validate #zip").attr("disabled","true");
+                $("#form-validate #city").attr("disabled","true");
+                setTimeout(function(){
+                    $("#form-validate #region_id").attr("disabled","true");
+                }, 500);
+              }  
+            });
+
+            //right before the form submits, we re-enable the fields, to make them submit.
+            $( "#form-validate" ).submit(function( event ) {
+                $("body").trigger('processStart');
+                $("#city").prop( "disabled", false );
+                $("#country").prop( "disabled", false );
+                $("#zip").prop( "disabled", false );
+                $("#region_id").prop( "disabled", false );
+            });
     $("#country").change(function () {
         onCountryChange();
     });
 });
+            
 </script>
