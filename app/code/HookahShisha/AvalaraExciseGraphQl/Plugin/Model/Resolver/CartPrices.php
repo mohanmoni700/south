@@ -39,17 +39,15 @@ class CartPrices
         array $value = null, // NOSONAR
         array $args = null // NOSONAR
     ) {
-        if (empty($result['applied_taxes'])) {
-            $quote = $result['model'];
-            if (!empty($quote && ($quote->getShippingAddress()) && ($quote->getShippingAddress()->getTaxAmount()))) {
-                $result['applied_taxes'][] = [
-                    'label' => "Avalara_Excise_Tax",
-                    'amount' => [
-                        'value' => $quote->getShippingAddress()->getTaxAmount(),
-                        'currency' => $result['grand_total']['currency']
-                    ]
-                ];
-            }
+        $quote = $result['model'];
+        if (!empty($quote && ($quote->getShippingAddress()) && ($quote->getShippingAddress()->getTaxAmount()))) {
+            $result['applied_taxes'] = [[
+                'label' => "Avalara_Excise_Tax",
+                'amount' => [
+                    'value' => $quote->getShippingAddress()->getTaxAmount(),
+                    'currency' => $result['grand_total']['currency']
+                ]
+            ]];
         }
         return $result;
     }
