@@ -2441,23 +2441,16 @@ ul.nav.items{
                 border-bottom: 1px solid @border-color__base-table;
             }
         }
+        .actions-toolbar{            
+            > .secondary {
+                width: 100%;
+            }
+        } 
+    }
+    .customer-address-index {
         .actions-toolbar{
-            > .secondary .action.back{
-                display: block;
-                padding: 8px 20px;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 2px;
-                color: @color-white;
-                .lib-font-size(18);
-                text-align: center;
-                background: @color-black;
-                border: 1px solid @color-black;
-                border-radius: 30px;
-                max-width: 200px;
-                margin: 0 auto;
-                margin-top: 30px;
-                text-decoration: none;
+            > .secondary {
+                width: 100%;
             }
         } 
     }
@@ -2681,6 +2674,7 @@ ul.nav.items{
             .actions-toolbar{
                 .lib-vendor-prefix-display(flex);
                 justify-content: center;
+                flex-wrap: wrap;
             }
             &.account{
                 .page-main{
