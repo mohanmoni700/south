@@ -49,6 +49,8 @@ class Saveform extends \Magento\Backend\App\Action implements HttpPostActionInte
                 $newArray[$key]['mydocument_id'] = $post['mydocument_id'][$key];
                 $newArray[$key]['status'] = empty($post['message'][$key]) ? 1 : 0;
                 $newArray[$key]['message'] = $post['message'][$key];
+                $newArray[$key]['expiry_date'] = $post['expiry_date'][$key];
+
             }
 
             foreach ($newArray as $key => $value) {
@@ -56,6 +58,7 @@ class Saveform extends \Magento\Backend\App\Action implements HttpPostActionInte
                 if ($entity) {
                     $entity->setStatus($value['status']);
                     $entity->setMessage($value['message']);
+                    $entity->setExpiryDate($value['expiry_date']);
                     $entity->save();
                 }
             }

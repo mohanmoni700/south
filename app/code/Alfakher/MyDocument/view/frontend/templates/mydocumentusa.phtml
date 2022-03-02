@@ -40,8 +40,10 @@ $today = date("Y-m-d");
         data-mage-init='{"validation":{}}'
         method="post">
         <div class="updated-container">
+
         <?php foreach ($data as $val): ?>
             <?php if ($val['is_add_more_form'] == 0): ?>
+
                 <?php if ($val['is_delete'] == 0): ?>
                     <?php $expiry_date = $val['expiry_date']; ?>
                     <?php if (($val['status'] == 0 && $val['message'] != null) ||
@@ -56,6 +58,7 @@ $today = date("Y-m-d");
                             $checkext = $block->checkExtension($fileName);
                             $extension = $checkext['extension'];
                         ?>
+                        <label><?= $block->escapeHtml(__($val['document_name'])); ?></label>
                         <div class="input-file">
                             <?php if ($extension == "pdf"): ?>
                                 <img src="<?= $block->escapeUrl($pdfImg); ?>" height="34" width="43"
@@ -89,15 +92,8 @@ $today = date("Y-m-d");
                             <a  href="<?= $block->escapeUrl($fileName); ?>"
                                 target="_blank" download class="download-doc"></a>
                         </div>
-                        <div class="field">
-                            <label><?= $block->escapeHtml(__("Document Name"));  ?></label>
-                            <div class="value">
-                                <?= $block->escapeHtml($val['document_name']); ?>
-                            </div>
-                        </div>
                         <?php if (isset($val['expiry_date'])): ?>
                             <div class="field">
-                                <label><?= $block->escapeHtml(__("Expiry Date"));  ?></label>
                                 <div class="value date">
                                     <?= $block->escapeHtml(__('Expiry Date: ') . $val['expiry_date']); ?>
                                 </div>
@@ -116,6 +112,7 @@ $today = date("Y-m-d");
                     </div>
                 <?php else: ?>
                     <div class="upload" for="document uploader">
+                        <label><?= $block->escapeHtml(__($val['document_name'])); ?></label>
                         <div class="input-file" id="input-updatefile-<?= $block->escapeHtml($val['mydocument_id']);?>">
                             <input type="hidden" name="documentid[]"
                             value="<?= $block->escapeHtml($val['mydocument_id']); ?>" />
@@ -142,8 +139,8 @@ $today = date("Y-m-d");
                                 id="deletedocument-filename<?= $block->escapeHtml($val['mydocument_id']);?>"></a>
                             </div>
                             <!-- bv_vv; date:04-02-2022; File Preview End; -->
-                        </div>
-                        <div class="doc_name" for="document name" style="display:none;">
+                        </div>  
+                        <div class="doc_name" for="document name" style="display:none !important;">
                             <label><?= $block->escapeHtml(__('Document Name')); ?></label>
                             <input type="text" id="name-<?= $block->escapeHtml($val['mydocument_id']);?>"
                             name="name<?= $block->escapeHtml($val['mydocument_id']);?>"
@@ -243,7 +240,6 @@ $today = date("Y-m-d");
                             </div>
                                 <?php if (isset($val['expiry_date'])): ?>
                                 <div class="field">
-                                    <label><?= $block->escapeHtml(__("Expiry Date"));  ?></label>
                                     <div class="value date">
                                         <?= $block->escapeHtml(__('Expiry Date: ') . $val['expiry_date']); ?>
                                     </div>
@@ -369,7 +365,7 @@ foreach ($data as $val) {
                     </div>
                     <!-- bv_vv; date:04-02-2022; File Preview End; -->
                 </div>
-                <div class="doc_name" for="document name" style="display:none;">
+                <div class="doc_name" for="document name" style="display:none !important;">
                     <label><?= $block->escapeHtml(__('Document Name')); ?></label>
                     <input type="text"
                     id="name-<?= $block->escapeHtml($counter); ?>"
