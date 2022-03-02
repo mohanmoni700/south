@@ -57,6 +57,11 @@
             max-width: @list_page_container;
             padding: 0 (@indent__s + @indent__xs);
         }
+        .page-wrapper {
+            > .pending-tooltip {
+                margin-bottom: 0;
+            }
+        }
         .page-title{
             .base{
                 font-family: @DMSerifDisplay;
@@ -1109,6 +1114,11 @@
             .lib-vendor-prefix-display(flex);
             .lib-vendor-prefix-flex-direction(column);
             padding-bottom: 0;
+        }
+        .page-wrapper {
+            > .pending-tooltip {
+                margin-bottom: 20px;
+            }
         }
         .page-title .base{
             .lib-font-size(30);
