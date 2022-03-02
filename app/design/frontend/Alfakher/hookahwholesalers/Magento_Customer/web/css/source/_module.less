@@ -407,7 +407,7 @@ ul.nav.items{
 /*============= Account Disable End ==============*/
 
 /*============= Account style ==============*/
-.customer-account-index{
+.customer-account-index, body.account {
     background: @account-wrapperbg;
     .page-main {
         max-width: @layout_container_xl;
@@ -470,8 +470,8 @@ ul.nav.items{
         } 
     }
     .page-main{
-        margin-top: 41px;
-        margin-bottom: 150px;
+        margin-top: 40px;
+        margin-bottom: 80px;
     }
     .columns{
         .lib-vendor-prefix-display(flex);
@@ -1051,7 +1051,7 @@ ul.nav.items{
     .customer-account-create,
     .customer-account-forgotpassword,
     .customer-account-create {
-         background: @account_bgclr;
+         background: @account-wrapperbg;
     }
     .customer-account-create{
         .login-container{
@@ -1835,6 +1835,7 @@ ul.nav.items{
     }
     .login-container{
         background: @color-white;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         padding-top: 65px;
         padding-bottom: 75px;
@@ -1845,7 +1846,7 @@ ul.nav.items{
                 margin-bottom: 0;
                 text-align: center;
                 .lib-font-size(32);
-                line-height: @indent__l - 4;
+                line-height: @indent__l;
                 .lib-css(color, @color-black);
                 .lib-css(text-align, center); 
                 font-weight: 700;
@@ -1965,7 +1966,7 @@ ul.nav.items{
             padding: (@indent__xl + @indent__s + @indent__xs) 0;
         }
         .page-wrapper{
-            background: #EAEAEA;
+            background: @account-wrapperbg;
         }
     }
     .successful_box{
@@ -2375,6 +2376,7 @@ ul.nav.items{
     .login-container {
         padding-top: 0;
         padding-bottom: 0;
+        box-shadow: none;
         .fieldset {
             &:after {
                 text-align: center;

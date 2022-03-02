@@ -76,19 +76,32 @@
         .post-content {
             padding: 16px;
             a.post-read-more {
-                padding-top: 18px;
+                margin-top: 22px;
                 float: left;
                 color: @gray2_color;
                 font-size: 12px;
                 text-transform: uppercase;
                 font-weight: @font-weight__bold;
                 text-decoration: none;
+                padding: 0;
+                border-radius: 30px;
+                line-height: 30px;
+                padding: 0 10px 0 20px;
+                &:hover {
+                    background: @hookah_theme_gradient;
+                    color: @color_white;                    
+                    .svg_icon {
+                        path {
+                            stroke: @color_white;
+                        }
+                    }
+                }
                 .svg_icon {
                     margin-left: 6px;
                     display: inline-block;
                     vertical-align: middle;
                     position: relative;
-                    top: 1px;
+                    top: 2px;
                 }
             }
         }

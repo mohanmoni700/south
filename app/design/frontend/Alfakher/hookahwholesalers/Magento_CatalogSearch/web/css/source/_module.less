@@ -441,10 +441,13 @@
                         }
                         .kuProdBottom {
                             height: auto;
+                            .kuPrice {
+                                display: none;
+                            }
                         }
                     }
                     .kuName {
-                        margin-bottom: 16px;
+                        margin-bottom: 10px;
                         a {
                             font-size: 20px;
                             &:hover {
@@ -456,9 +459,11 @@
                 }
             }
         }
-        [data-result-view="grid"] {
+        [data-result-view="grid"], [data-result-view="productList"] {
             .kuResults {
                 ul {
+                    .lib-vendor-prefix-display(flex);
+                    flex-wrap: wrap;
                     li.klevuProduct {
                         text-align: center;
                     }
@@ -508,6 +513,7 @@
             border-radius: 20px;
             font-weight: @font-weight__bold;
             padding: 6px 16px;
+            min-width: 130px;
             &:hover {
                 background: @hookah_theme_gradient;
                 border-color: transparent;
