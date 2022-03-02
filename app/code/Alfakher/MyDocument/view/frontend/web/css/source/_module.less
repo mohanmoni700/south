@@ -291,7 +291,10 @@
             align-items: start;
             margin: 10px 0;
             span {
-                word-break: break-word;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 100%;
             }
             .download-doc::after {
                 content: "";
