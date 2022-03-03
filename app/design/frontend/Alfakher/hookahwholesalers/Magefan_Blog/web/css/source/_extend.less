@@ -76,19 +76,32 @@
         .post-content {
             padding: 16px;
             a.post-read-more {
-                padding-top: 18px;
+                margin-top: 22px;
                 float: left;
                 color: @gray2_color;
                 font-size: 12px;
                 text-transform: uppercase;
                 font-weight: @font-weight__bold;
                 text-decoration: none;
+                padding: 0;
+                border-radius: 30px;
+                line-height: 30px;
+                padding: 0 10px 0 20px;
+                &:hover {
+                    background: @hookah_theme_gradient;
+                    color: @color_white;                    
+                    .svg_icon {
+                        path {
+                            stroke: @color_white;
+                        }
+                    }
+                }
                 .svg_icon {
                     margin-left: 6px;
                     display: inline-block;
                     vertical-align: middle;
                     position: relative;
-                    top: 1px;
+                    top: 2px;
                 }
             }
         }
@@ -101,8 +114,6 @@
             display: inline-block;
             vertical-align: middle;
             margin-right: 6px;
-            position: relative;
-            top: -2px;
             img {
                 width: auto !important;
             }
@@ -137,12 +148,30 @@
     }
     .view-more {
         text-align: center;
-        margin-top: 10px;
+        margin-top: 40px;
         a.action.primary {
             text-transform: uppercase;
             border-radius: 30px;
             padding-top: 9px;
             padding-bottom: 9px;
+        }
+    }
+    .c-comments {
+        .c-allcomments.more-comments-action {
+            background-color: @color_black;
+            border-radius: 30px;
+            width: auto;
+            display: table;
+            padding: 0px 30px;
+            line-height: 50px;
+            font-size: 16px;
+            text-transform: uppercase;
+            margin: 0 auto;
+            letter-spacing: 2px;
+            transition: none;
+            &:hover {
+                background: @hookah_theme_gradient;
+            }
         }
     }
 
@@ -447,11 +476,16 @@
                     margin-left: 10px;
                 }
                 &:last-child:after {
-                    opacity: 0;
+                    display: none;
                 }
                 &.post-author{
                     .label{
                         text-transform: capitalize;
+                    }
+                }
+                &.post-categories {
+                    &:after {
+                        display: none;
                     }
                 }
                 a{
@@ -629,7 +663,6 @@
                 font-size: 15px;
                 a.post-read-more {
                     font-size: 10px;
-                    padding-top: 10px;
                     svg {
                         width: 10px;
                         height: 12px;
@@ -655,6 +688,13 @@
     }  
     .block.related, .blog-page-list .block-products-list {
         margin-right: -15px;
+    }
+    .c-comments {
+        a.c-allcomments.more-comments-action {
+            padding: 0px 24px;
+            line-height: 44px;
+            font-size: 15px;
+        }
     }
 }
 

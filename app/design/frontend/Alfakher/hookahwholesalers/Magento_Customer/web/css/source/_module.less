@@ -237,6 +237,14 @@ ul.nav.items{
             margin-top: 30px;
         }
     }
+    .page-main {
+        > .pending-tooltip {
+            max-width: 1200px;
+            margin: 30px auto 0 auto;
+            display: block;
+            top: 14px;
+        }
+    }
 }
 .form-address-edit{
     .actions-toolbar{
@@ -399,7 +407,7 @@ ul.nav.items{
 /*============= Account Disable End ==============*/
 
 /*============= Account style ==============*/
-.customer-account-index{
+.customer-account-index, body.account {
     background: @account-wrapperbg;
     .page-main {
         max-width: @layout_container_xl;
@@ -462,8 +470,8 @@ ul.nav.items{
         } 
     }
     .page-main{
-        margin-top: 41px;
-        margin-bottom: 150px;
+        margin-top: 40px;
+        margin-bottom: 80px;
     }
     .columns{
         .lib-vendor-prefix-display(flex);
@@ -1043,7 +1051,7 @@ ul.nav.items{
     .customer-account-create,
     .customer-account-forgotpassword,
     .customer-account-create {
-         background: @account_bgclr;
+         background: @account-wrapperbg;
     }
     .customer-account-create{
         .login-container{
@@ -1827,6 +1835,7 @@ ul.nav.items{
     }
     .login-container{
         background: @color-white;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         padding-top: 65px;
         padding-bottom: 75px;
@@ -1837,7 +1846,7 @@ ul.nav.items{
                 margin-bottom: 0;
                 text-align: center;
                 .lib-font-size(32);
-                line-height: @indent__l - 4;
+                line-height: @indent__l;
                 .lib-css(color, @color-black);
                 .lib-css(text-align, center); 
                 font-weight: 700;
@@ -1957,7 +1966,7 @@ ul.nav.items{
             padding: (@indent__xl + @indent__s + @indent__xs) 0;
         }
         .page-wrapper{
-            background: #EAEAEA;
+            background: @account-wrapperbg;
         }
     }
     .successful_box{
@@ -2342,6 +2351,13 @@ ul.nav.items{
                 padding: 0;
             }
         }
+        .page-main {
+            > .pending-tooltip {
+                margin-top: 10px;
+                margin-bottom: 10px;
+                top: 0;
+            }
+        }
     }
     .control.captcha-image{
         .captcha-reload{
@@ -2360,6 +2376,7 @@ ul.nav.items{
     .login-container {
         padding-top: 0;
         padding-bottom: 0;
+        box-shadow: none;
         .fieldset {
             &:after {
                 text-align: center;
@@ -2428,23 +2445,16 @@ ul.nav.items{
                 border-bottom: 1px solid @border-color__base-table;
             }
         }
+        .actions-toolbar{            
+            > .secondary {
+                width: 100%;
+            }
+        } 
+    }
+    .customer-address-index {
         .actions-toolbar{
-            > .secondary .action.back{
-                display: block;
-                padding: 8px 20px;
-                font-weight: 700;
-                text-transform: uppercase;
-                letter-spacing: 2px;
-                color: @color-white;
-                .lib-font-size(18);
-                text-align: center;
-                background: @color-black;
-                border: 1px solid @color-black;
-                border-radius: 30px;
-                max-width: 200px;
-                margin: 0 auto;
-                margin-top: 30px;
-                text-decoration: none;
+            > .secondary {
+                width: 100%;
             }
         } 
     }
@@ -2668,6 +2678,7 @@ ul.nav.items{
             .actions-toolbar{
                 .lib-vendor-prefix-display(flex);
                 justify-content: center;
+                flex-wrap: wrap;
             }
             &.account{
                 .page-main{
@@ -2693,6 +2704,13 @@ ul.nav.items{
     .account .page-main .sidebar.sidebar-main {
         position: relative;
         top: 0;
+    }
+    .customer-account-create {
+        .page-main {
+            > .pending-tooltip  {
+                top: 0;
+            }
+        }
     }
 }
 

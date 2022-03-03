@@ -30,7 +30,31 @@
 
         > .secondary {
             .action.back {
+                color: @color_black;
+                margin: 0;
+                align-items: center;
+                text-decoration: none !important;
+                margin-top: 16px;
+                width: auto;
                 display: none;
+                &::before {
+                    content: "";
+                    background: url('@{baseDir}images/left_arrow_black.svg') no-repeat center left;
+                    width: 10px;
+                    height: 16px;
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-right: 14px;
+                }
+            }
+        }
+    }
+    .customer-address-index, .order-details-items, .customer-address-form, .customer-paymentinfo-index {
+        .actions-toolbar {
+            > .secondary {
+                .action.back {
+                    display: inline-flex;
+                }
             }
         }
     }

@@ -56,16 +56,20 @@ $docdata = $documentData->getData();
                     <span class="admin__form_value"><a href="<?= $block->getUrl('mydoc/document/download', ['_query' => $queryParams])?>"><?= $document->getFilename();?></a></span>
                 </div>
 
-                <?php if (!empty($document->getExpiryDate())) {  ?>
-               
                  <div class="admin__form_field">
                     <span class="admin__form_label">Expiry Date:</span>
-                     <span class="admin__form_value"><?= $document->getExpiryDate() ?></span>
+                     
+                     <input type="text"
+                                placeholder="Expiry Date"
+                                name="expiry_date[]"
+                                id="expiry_date-<?= $block->escapeHtml($document['mydocument_id']); ?>"
+                                class="update-date"
+                                data-validate="{required:true}"
+                                value="<?= $document->getExpiryDate() ?>"/>
                 </div> 
-                <?php } ?>
                 <?php $val=$document->getMydocumentId(); ?>
 
-                 <div class="admin__form_field">
+                <div class="admin__form_field">
                     <span class="admin__form_label">Document Verified:</span>
                     <label class="switch admin__form_value">
                      <!-- bv-hd toggle disable after admin action -->
@@ -130,9 +134,16 @@ $docdata = $documentData->getData();
                    }else{
                      jQuery("#message_"+splitid[1]).find('input').prop('readonly',false);
                    }
+                    jQuery("#expiry_date-"+splitid[1]).datepicker({
+                    minDate: 1,
+                    showMonthAfterYear: false,
+                    dateFormat: 'yy-mm-dd',
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: '2020:2030',
+                });
                }).change();
+        });
 
-
-           });
-       });
+    });
 </script>

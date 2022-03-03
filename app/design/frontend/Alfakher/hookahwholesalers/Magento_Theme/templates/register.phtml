@@ -25,19 +25,19 @@
             <li class="guest-content my_account">
                 <a class= "create_an_account_link" href="<?php echo $this->getUrl("customer/account/");?>"><?php echo __('My Account')?></a>
             </li>
-            <li class="documents"><a href="<?php echo $this->getUrl("mydocument/customer/index");?>"><?php echo __('My Documents') ?></a></li>
             <li class="order_reorder"><a href="<?php echo $this->getUrl("sales/order/history");?>"><?php echo __('My Orders & Reorders') ?></a></li>
-            <li class="product_pricing"><a href="<?php echo $this->getUrl("customerb2b/account/myproductpricing");?>"><?php echo __('My Product Pricing') ?></a></li>
             <li class="manage_address"><a href="<?php echo $this->getUrl("customer/address");?>"><?php echo __('Manage Addresses') ?></a></li>
+            <li class="my_payment"><a href="<?php echo $this->getUrl("customer/paymentinfo");?>"><?php echo __('My Payment Options') ?></a></li>
             <li class="changepassword"><a href="<?php echo $this->getUrl("changepassword/index/index");?>"><?php echo __('Change Password') ?></a></li>
-           
+            <li class="documents"><a href="<?php echo $this->getUrl("mydocument/customer/index");?>"><?php echo __('My Documents') ?></a></li>   
+            <li class="product_pricing"><a href="<?php echo $this->getUrl("customerb2b/account/myproductpricing");?>"><?php echo __('My Product Pricing') ?></a></li>          
             <li class="logout"><a class= "sign_in_link" href="<?php echo $this->getUrl("customer/account/logout");?>"><?php echo __('Logout')?></a></li>
          </ul>
    </div>
 <?php else: ?>
      <div class="sign-in">
      <!--  <a class= "header_account_link" href="<?php //echo $this->getUrl("customer/account/login");?>"><?php //echo __('Sign in')?></a> -->
-     <span class="sign-up"><?php echo __('Sign in/Sign Up')?></span>
+     <span class="sign-up"><?php echo __('Sign In / Sign Up')?></span>
         <ul class="sign-up-ul" style="display: none;">
             <li class="guest-heading"><span class="guest-content-heading">Welcome Guest!</span></li>
             <li class="guest-content">

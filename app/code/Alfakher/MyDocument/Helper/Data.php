@@ -95,12 +95,9 @@ class Data extends AbstractHelper
         $rejected_doc = [];
 
         foreach ($docdata as $val) {
-            if (isset($val['document_name']) && isset($val['message'])) {
-                $docname = $val['document_name'];
-                $docmsg = $val['message'];
-                $rejected_doc[] = ['docmsg' => $docmsg, 'docname' => $docname];
-
-            }
+            $docname = $val['document_name'];
+            $docmsg = $val['message'];
+            $rejected_doc[] = ['docmsg' => $docmsg, 'docname' => $docname];
         }
 
         $this->_inlineTranslation->suspend();

@@ -122,6 +122,7 @@
                         padding: 15px 22px;
                         border: 1px solid #CDCACA;
                         right: -1px;
+                        cursor: default;
                         .guest-heading{
                             background: transparent;
                             margin-bottom: 15px;
@@ -174,6 +175,7 @@
                         width: 100%;
                         display: block;
                         text-align: center;
+                        text-transform: uppercase;
                     }
                 }
                 .welcome_info{
@@ -201,6 +203,7 @@
                 padding-left: 30px;
                 position: relative;
                 white-space: nowrap;
+                display: block;
                 &:before{
                     content:'';
                     position: absolute;
@@ -257,6 +260,13 @@
                 a{
                     &:before{
                       background: url('@{baseDir}images/manage_address.svg') no-repeat;  
+                    }   
+                }
+            }
+            &.my_payment{
+                a{
+                    &:before{
+                      background: url('@{baseDir}images/payment_option.svg') no-repeat;  
                     }   
                 }
             }
@@ -387,7 +397,7 @@
                         }
                     }
                     .klevuQuickProductPrice {
-                        display: none;
+                        display: none !important;
                     }
                     .kuQuickCaptionStockOut {
                         min-height: 0;
@@ -1005,6 +1015,8 @@
             text-align: center;
             padding: 15px 30px 36px 30px;
             background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #D378FF;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
             h3 {
                 .lib-font-size(24);
                 letter-spacing: 10px;
@@ -1363,7 +1375,7 @@
         }
     }
     .welcomesale_block {
-        padding: 30px 0 0 0;
+        padding: 50px 0 0 0;
         background-color: transparent;
     }    
     .collection_box {
@@ -1378,6 +1390,26 @@
             .action-ouline-primary {
                 min-width: 116px;
             }
+        }
+        .col_image {
+            &.top-spacing {
+                top: 0;
+                text-align: center;
+            }
+        }
+        .align_right {
+            text-align: center;
+        }
+    }
+    .limited_sale {
+        .per_off_bg {
+            padding: 0 14px;
+            display: inline-block;
+        }
+    }
+    .private_hookahbox {
+        .phbox_image {
+            right: 12px;
         }
     }
     .cms-home {
@@ -2346,6 +2378,12 @@
             }
         }
 
+        .cms-home {
+            .page-header {
+                margin-bottom: 0;
+            }
+        }
+
         #html-body .page-header {
             border-bottom: 0;
             .warning-section-wrapper .warning-section {
@@ -2685,6 +2723,15 @@
                         }
                     }
                 } 
+                .header-links-wrapper {
+                    .header-links {
+                        .header-item {
+                            .header-text {
+                                margin-left: 0;
+                            }
+                        }
+                    }
+                }
             } 
         }
         .block-content{

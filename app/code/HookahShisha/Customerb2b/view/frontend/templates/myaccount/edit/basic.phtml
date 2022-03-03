@@ -15,6 +15,8 @@ $formDisable = 1;
 <?php $_city = $block->getAttributeData()->getFrontendLabel('city'); ?>
 <?php $_selectRegion = 'Please select a region, state or province.'; ?>
 <?php $_displayAll = $block->getConfig('general/region/display_all'); ?>
+<?php $_county = $block->getAttributeData()->getFrontendLabel('county'); ?>
+
 
 <?php $_vatidValidationClass = $viewModel->addressGetAttributeValidationClass('vat_id'); ?>
 <?php $_cityValidationClass = $viewModel->addressGetAttributeValidationClass('city'); ?>
@@ -129,6 +131,19 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                 </div>
             </div>
         <?php endif; ?>
+
+        <div class="field county">
+                    <label for="county" class="label">
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?></span>
+                    </label>
+                        <input type="text"
+                               name="county"
+                               placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
+                               value="<?= $block->escapeHtmlAttr(!empty($block->getAddress()->getCustomAttribute('county')) ? $block->getAddress()->getCustomAttribute('county')->getValue() : ''); ?>"
+                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
+                               id="county"
+                               class="input-text <?= $escaper->escapeHtmlAttr($_county) ?>"/>
+        </div> 
         <div class="field country required">
             <label class="label" for="country">
                 <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>

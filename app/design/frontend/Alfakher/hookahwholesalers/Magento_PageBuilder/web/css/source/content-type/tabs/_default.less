@@ -126,6 +126,18 @@
             }
         }
     }
+
+    @media only screen and (max-width: 360px) {
+        div[data-content-type='tabs'] {
+            ul.tabs-navigation {
+                li.tab-header {
+                    a.tab-title {
+                        font-size: 15px;
+                    }
+                }
+            }
+        }
+    }
 }
 
 & when (@media-target = 'desktop'), (@media-target = 'all') {
