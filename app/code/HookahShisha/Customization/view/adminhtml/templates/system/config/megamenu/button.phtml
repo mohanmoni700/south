@@ -5,7 +5,7 @@
         $(document).on('click','#generate_mega_menu', function (){
             var url      = window.location.href;
             $.ajax({
-                url : "<?= $block->getAjaxUrl() ?>",
+                url : "<?= /* @noEscape */ $block->getAjaxUrl() ?>",
                 type : 'POST',
                 showLoader : true,
                 success : function (data){
