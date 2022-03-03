@@ -56,8 +56,6 @@ $docdata = $documentData->getData();
                     <span class="admin__form_value"><a href="<?= $block->getUrl('mydoc/document/download', ['_query' => $queryParams])?>"><?= $document->getFilename();?></a></span>
                 </div>
 
-                <?php //if (!empty($document->getExpiryDate())) {  ?>
-               
                  <div class="admin__form_field">
                     <span class="admin__form_label">Expiry Date:</span>
                      
@@ -69,7 +67,6 @@ $docdata = $documentData->getData();
                                 data-validate="{required:true}"
                                 value="<?= $document->getExpiryDate() ?>"/>
                 </div> 
-                <?php //} ?>
                 <?php $val=$document->getMydocumentId(); ?>
 
                 <div class="admin__form_field">
