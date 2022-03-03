@@ -268,23 +268,6 @@
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .checkout-payment-method {
-        .payment-methods {
-            .lib-css(margin, 0 -(@checkout-payment-method-title-mobile__padding));
-        }
-
-        .step-title {
-            .lib-css(padding-left, @checkout-payment-method-title-mobile__padding);
-            .lib-css(padding-right, @checkout-payment-method-title-mobile__padding)
-        }
-
-        .payment-method-title {
-            .lib-css(padding, @checkout-payment-method-title-mobile__padding)
-        }
-
-        .payment-method-content {
-            .lib-css(padding, 0 @checkout-payment-method-title-mobile__padding @indent__base);
-        }
-
         .checkout-billing-address {
             .fieldset .actions-toolbar {
                 width: 100%;
