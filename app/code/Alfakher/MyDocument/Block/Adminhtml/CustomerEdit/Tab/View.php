@@ -2,6 +2,7 @@
 namespace Alfakher\MyDocument\Block\Adminhtml\CustomerEdit\Tab;
 
 use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory;
+use Magento\Customer\Model\AddressFactory;
 use Magento\Customer\Model\CustomerFactory;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Data\Form\FormKey;
@@ -50,7 +51,9 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Ui\Compon
      * @param DirectoryList $directory
      * @param CustomerFactory $customer
      * @param CollectionFactory $collection
+     * @param AddressFactory $address
      * @param FormKey $formKey
+     * @param    \HookahShisha\Customerb2b\Model\ResourceModel\Companydata\CollectionFactory $company
      * @param array $data = []
      */
     public function __construct(
@@ -60,7 +63,9 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Ui\Compon
         DirectoryList $directory,
         CustomerFactory $customer,
         CollectionFactory $collection,
+        AddressFactory $address,
         FormKey $formKey,
+        \HookahShisha\Customerb2b\Model\ResourceModel\Companydata\CollectionFactory $company,
         array $data = []
     ) {
         $this->fileFactory = $fileFactory;
@@ -68,6 +73,8 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Ui\Compon
         $this->_coreRegistry = $registry;
         $this->customer = $customer;
         $this->collection = $collection;
+        $this->address = $address;
+        $this->company = $company;
         $this->formKey = $formKey;
         parent::__construct($context, $data);
     }
@@ -121,6 +128,25 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Ui\Compon
         return $customer;
     }
 
+    /**
+     * @inheritDoc
+     */
+
+    public function getCustomeraddress($customerid)
+    {
+        $customer = $this->customer->create()->load($customerid);
+        $billingAddressId = $customer->getDefaultBilling();
+        $billingAddress = $this->address->create()->load($billingAddressId);
+        return $billingAddress;
+    }
+    /**
+     * @inheritDoc
+     */
+    public function getCompanycollection($email)
+    {
+        $company = $this->company->create()->addFieldToFilter('company_email', ['eq' => $email])->getData();
+        return $company;
+    }
     /**
      * @inheritDoc
      */
