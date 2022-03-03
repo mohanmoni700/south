@@ -250,12 +250,9 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                         return $resultRedirect;
 
                     } else {
-                        if (!$this->getScopeConfig()->getValue('customer/startup/redirect_dashboard') && $redirectUrl) {
-                            $this->accountRedirect->clearRedirectCookie();
-                            $resultRedirect = $this->resultRedirectFactory->create();
-                            $resultRedirect->setUrl($this->_redirect->success($redirectUrl));
-                            return $resultRedirect;
-                        }
+                        $resultRedirect = $this->resultRedirectFactory->create();
+                        $resultRedirect->setPath('');
+                        return $resultRedirect;
                     }
                 } catch (EmailNotConfirmedException $e) {
                     $this->messageManager->addComplexErrorMessage(
