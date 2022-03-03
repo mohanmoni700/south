@@ -1,37 +1,76 @@
 <?php
 /* Start Document Varification msgs */
-   //helper boolean
-    $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
-    $docdata = $_helperB2b->getDocMessageData();
-    $exp_msg = $_helperB2b->getExpiryMsg();
-    $is_document_upload = $_helperB2b->getDocuments();
-    
-    //get System config values 
-    $documents_required_msg = $_helperB2b->getConfigValue('hookahshisha/productpage/productpageb2b_documents_verification_required');
-    $document_Verification_msg = $_helperB2b->getConfigValue('hookahshisha/productpage/productpageb2b_document_Verification_section');
-    $document_Reject_msg = $_helperB2b->getConfigValue('hookahshisha/productpage/productpageb2b_document_rejection_sections');
-    $document_expir_msg = $_helperB2b->getConfigValue('hookahshisha/productpage/productpageb2b_documents_expired_sections');
-    $guest_user_documnet_msg = $_helperB2b->getConfigValue('hookahshisha/productpage/productpageb2b_documents_msg_for_guest');
+//helper boolean
+$_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
+$docdata = $_helperB2b->getDocMessageData();
+$exp_msg = $_helperB2b->getExpiryMsg();
+$is_document_upload = $_helperB2b->getDocuments();
+
+//get System config values
+$documents_required_msg = $_helperB2b->getConfigValue(
+    'hookahshisha/productpage/productpageb2b_documents_verification_required'
+);
+$document_Verification_msg = $_helperB2b->getConfigValue(
+    'hookahshisha/productpage/productpageb2b_document_Verification_section'
+);
+$document_Reject_msg = $_helperB2b->getConfigValue(
+    'hookahshisha/productpage/productpageb2b_document_rejection_sections'
+);
+$document_expir_msg = $_helperB2b->getConfigValue(
+    'hookahshisha/productpage/productpageb2b_documents_expired_sections'
+);
+$guest_user_documnet_msg = $_helperB2b->getConfigValue(
+    'hookahshisha/productpage/productpageb2b_documents_msg_for_guest'
+);
 ?>
-<?php if($_helperB2b->isCustomerLoggedIn()) : ?>
+<?php if ($_helperB2b->isCustomerLoggedIn()): ?>
     <?php if ($docdata == 0): ?>
-        <div class="pending-tooltip"><div class="tooltip-inner"><?= $block->escapeHtml(__($document_Verification_msg)) ?></div>
+        <div class="pending-tooltip">
+            <div class="tooltip-inner">
+                <?= $block->escapeHtml(__($document_Verification_msg)) ?>
+            </div>
         </div>
      
     <?php elseif ($docdata == 1): ?>
-        <div class="pending-tooltip rejected"><div class="tooltip-inner"><?= $block->escapeHtml(__($document_Reject_msg)) ?> <a href="<?= $block->getBaseUrl()."mydocument/customer/" ?>"><?= $block->escapeHtml(__("ClICK HERE ")) ?></a></div></div>
+        <div class="pending-tooltip rejected">
+            <div class="tooltip-inner">
+                <?= $block->escapeHtml(__($document_Reject_msg)) ?>
+                <a href="<?= /* @noEscape */ $block->getBaseUrl()."mydocument/customer/" ?>">
+                    <?= /* @noEscape */ $block->escapeHtml(__("ClICK HERE ")) ?>
+                </a>
+            </div>
+        </div>
     <?php endif; ?>
 
     <?php if ($exp_msg == 0): ?>
-        <div class="pending-tooltip exp"><div class="tooltip-inner"><?= $block->escapeHtml(__($document_expir_msg)) ?> <a href="<?= $block->getBaseUrl()."mydocument/customer/" ?>"><?= $block->escapeHtml(__("ClICK HERE ")) ?></a></div></div>
+        <div class="pending-tooltip exp">
+            <div class="tooltip-inner">
+                <?= $block->escapeHtml(__($document_expir_msg)) ?>
+                <a href="<?= /* @noEscape */ $block->getBaseUrl()."mydocument/customer/" ?>">
+                    <?= $block->escapeHtml(__("ClICK HERE ")) ?>
+                </a>
+            </div>
+        </div>
     <?php endif; ?>
     
     <?php if ($is_document_upload == 0): ?>
-        <div class="pending-tooltip"><div class="tooltip-inner"><?= $block->escapeHtml(__($documents_required_msg)) ?> <a href="<?= $block->getBaseUrl()."mydocument/customer/" ?>"><?= $block->escapeHtml(__("ClICK HERE ")) ?></a></div>
+        <div class="pending-tooltip">
+            <div class="tooltip-inner">
+                <?= $block->escapeHtml(__($documents_required_msg)) ?>
+                <a href="<?= /* @noEscape */ $block->getBaseUrl()."mydocument/customer/" ?>">
+                    <?= $block->escapeHtml(__("ClICK HERE ")) ?>
+                </a>
+            </div>
         </div>
     <?php endif; ?>
 <?php else: ?>
-     <div class="pending-tooltip"><div class="tooltip-inner"><?= $block->escapeHtml(__($guest_user_documnet_msg)) ?> <a href="<?= $block->getBaseUrl()."customer/account/create/" ?>"><?= $block->escapeHtml(__("CLICK HERE ")) ?></a></div>
+     <div class="pending-tooltip">
+        <div class="tooltip-inner">
+            <?= $block->escapeHtml(__($guest_user_documnet_msg)) ?>
+            <a href="<?= /* @noEscape */ $block->getBaseUrl()."customer/account/create/" ?>">
+                <?= $block->escapeHtml(__("CLICK HERE ")) ?>
+            </a>
+        </div>
      </div>
 <?php endif; ?>    
 

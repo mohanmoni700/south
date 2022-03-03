@@ -10,20 +10,20 @@ $docdata = $documentData->getData();
 <div class="fieldset-wrapper customer-information">
    
    <div class="fieldset-wrapper-title">
-      <span class="title"><?=  __('Documents') ?></span>
+      <span class="title"><?= /* @noEscape */ __('Documents') ?></span>
    </div>
    
    <div class="fieldset-wrapper-title">
-      <span class="title"><?=  __('Customer Information') ?></span>
+      <span class="title"><?= /* @noEscape */ __('Customer Information') ?></span>
    </div>
    <div class="fieldset-wrapper-title">
-        <b>Name: </b><?= $customerData->getFirstname();?>
+        <b>Name: </b><?= /* @noEscape */ $customerData->getFirstname();?>
         <span style="padding-left: 34em;">
-         <b>Email: </b><?= $customerData->getEmail(); ?>
+         <b>Email: </b><?= /* @noEscape */ $customerData->getEmail(); ?>
         </span>
     </div>
    <div class="fieldset-wrapper-title">
-      <span class="title"><?=  __('') ?></span>
+      <span class="title"><?= /* @noEscape */ __('') ?></span>
    </div>
    
 <!-- Document Information. -->
@@ -34,16 +34,23 @@ $docdata = $documentData->getData();
     ?>
 
 <!-- Form start BS 24-1-22 -->
-    <form action="<?= $block->getUrl('mydoc/document/saveform', ['_query' => $customer_id]) ?>" method="post" class="form doc-form">
+    <form
+    action="<?= /* @noEscape */ $block->getUrl('mydoc/document/saveform', ['_query' => $customer_id]) ?>"
+    method="post"
+    class="form doc-form">
 
-        <input name="form_key" type="hidden" value="<?= $block->getFormKey() ?>" />
+        <input name="form_key" type="hidden" value="<?= /* @noEscape */ $block->getFormKey() ?>" />
         <?php foreach ($items as $document) { ?>
       
             <div class="doc-box">
-                <input type="hidden" class="doc_id" name="mydocument_id[]" value="<?= $document->getMydocumentId()?>">
+                <input
+                type="hidden"
+                class="doc_id"
+                name="mydocument_id[]"
+                value="<?= /* @noEscape */ $document->getMydocumentId()?>">
                 <div class="admin__form_field">
                   <span class="admin__form_label">Document name:</span>
-                  <span class="admin__form_value"><?= $document->getDocumentName() ?></span>
+                  <span class="admin__form_value"><?= /* @noEscape */ $document->getDocumentName() ?></span>
                 </div>
                 
                 <?php
@@ -53,7 +60,12 @@ $docdata = $documentData->getData();
                
                 <div class="admin__form_field">
                     <span class="admin__form_label">File:</span>
-                    <span class="admin__form_value"><a href="<?= $block->getUrl('mydoc/document/download', ['_query' => $queryParams])?>"><?= $document->getFilename();?></a></span>
+                    <span class="admin__form_value">
+                      <a
+                      href="<?= /* @noEscape */ $block->getUrl('mydoc/document/download', ['_query' => $queryParams])?>">
+                        <?= /* @noEscape */ $document->getFilename();?>
+                      </a>
+                    </span>
                 </div>
 
                  <div class="admin__form_field">
@@ -65,7 +77,7 @@ $docdata = $documentData->getData();
                                 id="expiry_date-<?= $block->escapeHtml($document['mydocument_id']); ?>"
                                 class="update-date"
                                 data-validate="{required:true}"
-                                value="<?= $document->getExpiryDate() ?>"/>
+                                value="<?= /* @noEscape */ $document->getExpiryDate() ?>"/>
                 </div> 
                 <?php $val=$document->getMydocumentId(); ?>
 
@@ -75,11 +87,26 @@ $docdata = $documentData->getData();
                      <!-- bv-hd toggle disable after admin action -->
                     <?php if ($document->getStatus() == 1) { ?>
                     
-                    <input type="checkbox" id='toggle_<?= $document->getMydocumentId()?>' class='cmn-toggle cmn-toggle-round' value="0" name='status[]' <?= $document->getStatus()== '1' ? 'checked' : ''; ?> disabled>
+                    <input
+                    type="checkbox"
+                    id='toggle_<?= /* @noEscape */ $document->getMydocumentId()?>'
+                    class='cmn-toggle cmn-toggle-round'
+                    value="0"
+                    name='status[]' <?= $document->getStatus()== '1' ? 'checked' : ''; ?> disabled>
                     <?php } elseif ($document->getStatus() == 0 && $document->getMessage() !=null) { ?>
-                        <input type="checkbox" id='toggle_<?= $document->getMydocumentId()?>' class='cmn-toggle cmn-toggle-round' value="0" name='status[]' <?= $document->getStatus()== '1' ? 'checked' : ''; ?> disabled>
+                        <input
+                        type="checkbox"
+                        id='toggle_<?= /* @noEscape */ $document->getMydocumentId()?>'
+                        class='cmn-toggle cmn-toggle-round'
+                        value="0"
+                        name='status[]' <?= $document->getStatus()== '1' ? 'checked' : ''; ?> disabled>
                     <?php } else { ?>
-                        <input type="checkbox" id='toggle_<?= $document->getMydocumentId()?>' class='cmn-toggle cmn-toggle-round' value="0" name='status[]' <?= $document->getStatus()== '1' ? 'checked' : ''; ?> >
+                        <input
+                        type="checkbox"
+                        id='toggle_<?= /* @noEscape */ $document->getMydocumentId()?>'
+                        class='cmn-toggle cmn-toggle-round'
+                        value="0"
+                        name='status[]' <?= $document->getStatus()== '1' ? 'checked' : ''; ?> >
                     <?php } ?>
                     <!-- bv-hd toggle disable after admin action -->
                         <span class="slider round"></span>
@@ -88,10 +115,16 @@ $docdata = $documentData->getData();
 
 
 
-                <div class="admin__form_field" id="message_<?= $document->getMydocumentId()?>">
+                <div
+                class="admin__form_field"
+                id="message_<?= /* @noEscape */ $document->getMydocumentId()?>">
                     <span class="admin__form_label">Rejected Reason:</span>
                   
-                    <input type="text" name="message[]" class="admin__form_value" value="<?= $document->getMessage() ?>" >
+                    <input
+                    type="text"
+                    name="message[]"
+                    class="admin__form_value"
+                    value="<?= /* @noEscape */ $document->getMessage() ?>" >
                 </div>
 
                <?php $i++; ?>
