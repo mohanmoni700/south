@@ -193,7 +193,7 @@ $regionLabel = ($block->getAddress()->getCountryId() == 'US')?$regionStateLabel:
                     <input type="text" title="<?= $block->escapeHtmlAttr(__('Card Verification Number')) ?>" class="input-text cvv" id="<?= $code ?>-cc-cid" name="payment[cc_cid]" value="" data-validate='{"required-number":true, "validate-cc-cvn":"#<?= $code ?>-cc-type"}' autocomplete="cc-csc" maxlength="4" />
                     <?php $_content = '<img src=\"' . $block->escapeUrl($block->getViewFileUrl('Magento_Checkout::cvv.png')) . '\" alt=\"' . $block->escapeHtmlAttr(__('Card Verification Number Visual Reference')) . '\" title=\"' . $block->escapeHtmlAttr(__('Card Verification Number Visual Reference')) . '\" />'; ?>
                     <div class="note">
-                        <a href="#" class="action cvv" title="<?= $block->escapeHtmlAttr(__('What is this?')) ?>" data-mage-init='{"tooltip": {"content": "<?= $_content ?>"}}'><span><?= $block->escapeHtml(__('What is this?')) ?></span></a>
+                        <a href="javascript:void(0)" class="action cvv" title="<?= $block->escapeHtmlAttr(__('What is this?')) ?>" data-mage-init='{"tooltip": {"content": "<?= $_content ?>"}}'><span><?= $block->escapeHtml(__('What is this?')) ?></span></a>
                     </div>
                 </div>
             </div>

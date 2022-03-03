@@ -109,8 +109,12 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                     display: -webkit-box;
-                    -webkit-line-clamp: 2;
+                    -webkit-line-clamp: 4;
                     -webkit-box-orient: vertical;
+                    margin-bottom: 10px;
+                    p {
+                        margin-bottom: 0;
+                    }
                 }
             }     
 
@@ -465,6 +469,11 @@
             }
             .catalog.description-item {
                 font-size: 13px;
+            }
+            &-details {
+                .stock.unavailable {
+                    font-size: 13px;
+                }
             }
         }
     }
