@@ -28,6 +28,7 @@ class Topmenu extends \Smartwave\Megamenu\Block\Topmenu
             if ($level == 1) {
                 $parentId = '';
             }
+            $childShop = '';
             foreach ($children as $child) {
                 if ($level == 2) {
                     $i++;
@@ -76,16 +77,17 @@ class Topmenu extends \Smartwave\Megamenu\Block\Topmenu
                     $html .= '</li>';
 
                     $parentId = $cat_model->getParentId();
-                    if ($level == 2 && ($i == count($children) || $i % 7 == 0)) {                        
+                    if ($level == 2 && ($i == count($children) || $i % 7 == 0)) {
+                        if ($i == count($children)) {
+                            $catData = $this->getCategoryModel($cat_model->getParentId());
+                            $childShop = '<li class="subcat-show-all"><a class="link-subcat" href=' . $catData->getUrl() . '>' . $catData->getData('show_all_label') . '</a></li>';
+                        }
                         $html .= '</ul>';
                     }
                 }
             }
-            if ($level == 2 && ($i == count($children) || $i % 7 == 0)) {
-                if ($i == count($children)) {
-                    $catData = $this->getCategoryModel($cat_model->getParentId());
-                    $html .= '<li class="subcat-show-all"><a class="link-subcat" href=' . $catData->getUrl() . '>' . $catData->getData('show_all_label') . '</a></li>';
-                }
+            if ($level == 2) {
+                $html .= $childShop;
             }
             if ($level == 1) {
                 $parentId = (int) $parentId;
