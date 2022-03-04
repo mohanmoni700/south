@@ -240,7 +240,6 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                     $document = $doc_collection->getData();
                     $dataSize = count($document);
                     $status = [];
-                    $expiry_date = [];
 
                     $todate = date("Y-m-d");
                     foreach ($document as $value) {
