@@ -25,6 +25,9 @@ class Topmenu extends \Smartwave\Megamenu\Block\Topmenu
             }
             $html = '<ul class="subchildmenu ' . $column_class . '">';
             $i = 0;
+            if ($level == 1) {
+                $parentId = '';
+            }
             foreach ($children as $child) {
                 if ($level == 2) {
                     $i++;
@@ -72,11 +75,22 @@ class Topmenu extends \Smartwave\Megamenu\Block\Topmenu
                     }
                     $html .= '</li>';
 
-                    if ($level == 2 && ($i == count($children) || $i % 7 == 0)) {
+                    $parentId = $cat_model->getParentId();
+                    if ($level == 2 && ($i == count($children) || $i % 7 == 0)) {                        
                         $html .= '</ul>';
                     }
-
                 }
+            }
+            if ($level == 2 && ($i == count($children) || $i % 7 == 0)) {
+                if ($i == count($children)) {
+                    $catData = $this->getCategoryModel($cat_model->getParentId());
+                    $html .= '<li class="subcat-show-all"><a class="link-subcat" href=' . $catData->getUrl() . '>' . $catData->getData('show_all_label') . '</a></li>';
+                }
+            }
+            if ($level == 1) {
+                $parentId = (int) $parentId;
+                $catData = $this->getCategoryModel($parentId);
+                $html .= '<li class="subcat-show-all"><a class="link-subcat" href=' . $catData->getUrl() . '>' . $catData->getData('show_all_label') . '</a></li>';
             }
             $html .= '</ul>';
         }
