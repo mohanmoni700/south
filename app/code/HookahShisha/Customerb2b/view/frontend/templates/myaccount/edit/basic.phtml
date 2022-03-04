@@ -29,7 +29,7 @@ $formDisable = 1;
 /* Start Change the region_id Label if the Country is US for State and Other for the State */
 $regionStateLabel = $block->escapeHtml(__('State'));
 $regionProvinceLabel = $block->escapeHtml(__('Province'));
-$_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel; 
+$_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel;
 /* End Change the region_id Label if the Country is US for State and Other for the State */
 ?>
 <?php $messageData = $block->getMessagedata(); ?>
@@ -49,7 +49,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
         <?= $block->getBlockHtml('formkey') ?>
         <input type="hidden" name="success_url" value="<?= $escaper->escapeUrl($block->getSuccessUrl()) ?>">
         <input type="hidden" name="error_url" value="<?= $escaper->escapeUrl($block->getErrorUrl()) ?>">
-        <input type="hidden" name="id" value="<?= $block->getCustomer()->getDefaultBilling(); ?>">
+        <input type="hidden" name="id" value="<?= /* @noEscape */ $block->getCustomer()->getDefaultBilling(); ?>">
         <input type="hidden" name="cst_account_verified" value="0"/>
         <input type="hidden" name="cst_details_changed" value="1"/>
         <?= $block->getNameBlockHtml() ?>
@@ -63,10 +63,10 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                 <input type="email" 
                         name="email" 
                         id="email_address" 
-                        placeholder="<?php /* @escapeNotVerified */ echo __('Email') ?>"
+                        placeholder="<?php /* @noEscape */ __('Email') ?>"
                         autocomplete="off" 
-                        value="<?php echo $block->escapeHtml($block->getCustomer()->getEmail()) ?>" 
-                        title="<?php /* @escapeNotVerified */ echo __('Email') ?>" 
+                        value="<?= /* @noEscape */ $block->escapeHtml($block->getCustomer()->getEmail()) ?>" 
+                        title="<?php /* @noEscape */ __('Email') ?>" 
                         class="input-text"
                         disabled="disabled"
                         readonly="readonly"/>

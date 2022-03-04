@@ -18,17 +18,17 @@ if(!empty($size)){
     ?>
     <div class="toolbar toolbar-products" data-mage-init='{"productListToolbarForm":<?= /* @noEscape */ $widgetOptions ?>}'>
         <?php if ($block->isExpanded()):?>
-            <?php include ($block->getTemplateFile('Magento_Catalog::product/list/toolbar/viewmode.phtml')) ?>
+            <?= $block->fetchView($block->getTemplateFile('Magento_Catalog::product/list/toolbar/viewmode.phtml')) ?>
         <?php endif; ?>
 
-        <?php include ($block->getTemplateFile('Magento_Catalog::product/list/toolbar/amount.phtml')) ?>
+        <?= $block->fetchView($block->getTemplateFile('Magento_Catalog::product/list/toolbar/amount.phtml')) ?>
 
         <?= $block->getPagerHtml() ?>
 
-        <?php include ($block->getTemplateFile('Magento_Catalog::product/list/toolbar/limiter.phtml')) ?>
+        <?= $block->fetchView($block->getTemplateFile('Magento_Catalog::product/list/toolbar/limiter.phtml')) ?>
         
         <?php if ($block->isExpanded()):?>
-            <?php include ($block->getTemplateFile('Magento_Catalog::product/list/toolbar/sorter.phtml')) ?>
+            <?= $block->fetchView($block->getTemplateFile('Magento_Catalog::product/list/toolbar/sorter.phtml')) ?>
             <div class="cate-filter"><a href="javascript:void(0)" class="filter_button" id="is_filter">Hide Filter</a></div>
         <?php endif; ?>
     </div>

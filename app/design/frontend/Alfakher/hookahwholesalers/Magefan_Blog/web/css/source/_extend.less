@@ -527,6 +527,7 @@
             border: none;
             .post-item-link {
                 margin-bottom: 0;
+                display: block;
                 img{
                     max-width: 920px;
                     max-height: 625px;
@@ -546,6 +547,13 @@
             background: #E3D8FA;
             padding: 60px;
             box-shadow: 0px 0px 20px rgba(0,0, 0, 0.1);
+            [data-content-type='html'] {
+                margin-top: 22px;
+                display: -webkit-box;
+                -webkit-line-clamp: 5;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
         }
         .post-author, .post-categories {
             font-weight: @font-weight__bold;
@@ -554,8 +562,12 @@
             font-size: 2.6rem;
             font-family: @DMSerifDisplay;
             color: #000;
-            margin-bottom: 25px;
+            margin-bottom: 12px;
             display: block;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
         .post-shortdata {
             margin-bottom: 0;
@@ -564,7 +576,7 @@
         }
         .post-desc {
             color: #000;
-            margin: 30px 0;
+            margin: 20px 0;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
@@ -597,7 +609,8 @@
             background-color: transparent;
             border: solid 2px #961e70;
             top: auto;
-            bottom: 2rem;
+            bottom: 1.5rem;
+            right: 25px;
             &:before {
                 color: #961e70;
                 font-size: 18px;
@@ -606,7 +619,7 @@
         }
         button.slick-prev {
             left: auto;
-            right: 80px;
+            right: 85px;
         }
     }
 
@@ -694,6 +707,11 @@
             padding: 0px 24px;
             line-height: 44px;
             font-size: 15px;
+        }
+    }
+    .block-featured-posts {
+        div.post-desc {
+            margin: 15px 0;
         }
     }
 }

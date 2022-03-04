@@ -2328,7 +2328,12 @@ ul.nav.items{
                     &.justify_btn{
                         margin-top: 25px;
                         .primary{
-                            width: 100%;
+                            &.prev, &.regis {
+                                width: 100%;
+                                min-width: 100%;
+                            }
+                            width: auto;
+                            min-width: 210px;
                             float: none;
                             &.regis{
                                 margin-top: 40px !important;
@@ -2664,7 +2669,15 @@ ul.nav.items{
                 text-align: center;
                 border-color: @color_black;
             }
-        } 
+        }
+        .form-address-edit {
+            .fieldset {
+                legend.legend {
+                    text-align: center;
+                    border-color: @color_black;
+                }
+            }
+        }
         .additional-addresses{
             #additional-addresses-table{
                 flex-direction: column;

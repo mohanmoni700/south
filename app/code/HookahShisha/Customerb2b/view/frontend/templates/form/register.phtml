@@ -351,7 +351,9 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                 <?= $block->escapeHtml(__('Please select business type.')) ?>
                             </option>
                             <?php foreach ($block->getBusinessType() as $key => $value): ?>
-                                <option value="<?= $value['value']?>"><?= $value['label']?></option>
+                                <option value="<?= /* @noEscape */ $value['value']?>">
+                                    <?= /* @noEscape */ $value['label']?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -369,7 +371,9 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                 <?= $block->escapeHtml(__('Please select your annual turn over.')) ?>
                             </option>
                             <?php foreach ($block->getAnnualTurnOver() as $kAto => $valAto): ?>
-                                <option value="<?= $valAto['value']?>"><?= $valAto['label']?></option>
+                                <option value="<?= /* @noEscape */ $valAto['value']?>">
+                                    <?= /* @noEscape */ $valAto['label']?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -387,7 +391,9 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                 <?= $block->escapeHtml(__('Please select number of employees')) ?>
                             </option>
                             <?php foreach ($block->getNumberOfEmp() as $knoe => $valnoe): ?>
-                                <option value="<?= $valnoe['value']?>"><?= $valnoe['label']?></option>
+                                <option value="<?= /* @noEscape */ $valnoe['value']?>">
+                                    <?= /* @noEscape */ $valnoe['label']?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -454,7 +460,9 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                 <?= $block->escapeHtml(__('Please select you hear about us')) ?>
                             </option>
                             <?php foreach ($block->getHearAboutUs() as $khau => $valhau): ?>
-                                <option value="<?= $valhau['value']?>"><?= $valhau['label']?></option>
+                                <option value="<?= /* @noEscape */ $valhau['value']?>">
+                                    <?= /* @noEscape */ $valhau['label']?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -545,7 +553,11 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 </div>
             </div>
             <div class="action_back">
-              <span>Do you have an account? <a href="<?= $block->getUrl("customer/account/login");?>"><?= $block->escapeHtml(__('Log In')) ?> </a></span> 
+              <span>Do you have an account?
+                <a href="<?= /* @noEscape */ $block->getUrl("customer/account/login");?>">
+                    <?= $block->escapeHtml(__('Log In')) ?>
+                </a>
+            </span> 
             </div>
         </fieldset>
     </div>
@@ -566,9 +578,9 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
     <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/success_union.svg')); ?>"
     alt="success_union" width="60" height="60" loading="lazy" />
     <h1 class="success_msg"><?= $block->escapeHtml(__('Documents are uploaded successfully')); ?></h1>
-    <h5><?= $block->escapeHtml(__('Once it is approved by Admin, Product price would be visible to you')); ?></h5>
+    <h5><?= $block->escapeHtml(__('Once it is approved by Admin, Product price would be visible to you.')); ?></h5>
     <button type="button" id="signinredirect" class="action submit primary">
-        <span><?= $block->escapeHtml(__('Sign In')); ?></span>
+        <span><?= $block->escapeHtml(__('Continue')); ?></span>
     </button>
 </div>
 <?php if ($block->getShowAddressFields()): ?>
@@ -620,7 +632,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 "regionStateLabel": "<?= $block->escapeHtml($regionStateLabel); ?>",
                 "regionProvinceLabel": "<?= $block->escapeHtml($regionProvinceLabel); ?>",
                 "createPostUrl": "<?= $block->escapeUrl($block->getUrl('customerb2b/account/createPost')); ?>",
-                "signInUrl": "<?= $block->escapeUrl($block->getUrl('customer/account/login')); ?>"
+                "signInUrl": "<?= $block->escapeUrl($block->getUrl('mydocument/customer/index/')); ?>"
             }
         },
         ".field.password": {

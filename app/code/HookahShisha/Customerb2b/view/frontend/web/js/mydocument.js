@@ -188,7 +188,7 @@ define([
             $("#add_more_non_usa").click(function() {
             	var id = jQuery('#myformdynamic').find('input[type="file"]').length;
                 var showId = ++id;
-                if (showId <= 10) {
+                if (showId <= 25) {
                     $('<div class="upload" for="document uploader">' +
                         '<div class="input-file">' +
                         '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" data-validate="{required:true}" />' +
@@ -196,6 +196,10 @@ define([
                         '<span class="input-note">' + config.inputNote + '</span>' +
                         '<input type="hidden" id="is_add_more_form' + showId + '" name="is_add_more_form[]" value="0"/>' +
                         '</div></div>').insertBefore('.upload-container .add-more-cont');
+                }
+                if (showId == 25){
+                    $(".add-more-cont").hide();
+                    $("#add_more_non_usa").hide();
                 }
             	$('#filename-' + showId).change(function(e) {
                 	fileRender(showId, 'filename-',$(this),e);

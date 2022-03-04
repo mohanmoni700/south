@@ -67,7 +67,11 @@ $today = date("Y-m-d");
                                 <img src="<?= $block->escapeUrl($fileName); ?>" height="170" width="170" />
                             <?php endif; ?>
                             <div class="doc-actions">
-                                <?php if ($val['status'] == 0 && $val['message'] != null || (($expiry_date <= $today && $expiry_date != ""))): ?>
+                                <?php if ($val['status'] == 0
+                                &&
+                                $val['message'] != null
+                                ||
+                                (($expiry_date <= $today && $expiry_date != ""))): ?>
                                     <a  class="view-doc-link" href="<?= $block->escapeUrl($fileName); ?>"
                                         target="_blank"></a>
                                     <a  class="deletedocument" name="deletedocument" href="#"
@@ -189,11 +193,11 @@ $today = date("Y-m-d");
                         <?php
                         if (($val['status'] == 0 && $val['message'] != null) ||
                         (($val['expiry_date'] <= $today && $val['expiry_date'] != ""))):?>
-                        <?php $rejectedClass = "rejected" ; ?>
+                            <?php $rejectedClass = "rejected"; ?>
                         <?php else: ?>
                             <?php $rejectedClass = ""; ?>
                         <?php endif;?>
-                        <div class="document <?= $rejectedClass; ?>" for="document uploader">
+                        <div class="document <?= /* @noEscape */ $rejectedClass; ?>" for="document uploader">
                             <?php
                             $fileName = $mediaUrl.$val['filename'];
                             $checkext = $block->checkExtension($fileName);
@@ -207,7 +211,11 @@ $today = date("Y-m-d");
                                     <img src="<?= $block->escapeUrl($fileName); ?>" height="170" width="170" />
                                 <?php endif; ?>
                                 <div class="doc-actions">
-                                    <?php if ($val['status'] == 0 && $val['message'] != null || (($val['expiry_date'] <= $today && $val['expiry_date'] != ""))): ?>
+                                    <?php if ($val['status'] == 0
+                                    &&
+                                    $val['message'] != null
+                                    ||
+                                    (($val['expiry_date'] <= $today && $val['expiry_date'] != ""))): ?>
                                         <a  class="view-doc-link" href="<?= $block->escapeUrl($fileName); ?>"
                                             target="_blank"></a>
                                         <a  class="deletedocument" name="deletedocument" href="#"
@@ -434,7 +442,7 @@ foreach ($data as $val) {
     <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/success_union.svg')); ?>"
     alt="success_union" width="60" height="60" loading="lazy" />
     <h1 class="success_msg"><?= $block->escapeHtml(__('DOCUMENTS ARE UPLOADED SUCCESSFULLY')); ?></h1>
-    <h5><?= $block->escapeHtml(__('Once it is approved by Admin, Product price would be visible to you')); ?></h5>
+    <h5><?= $block->escapeHtml(__('Once it is approved by Admin, Product price would be visible to you.')); ?></h5>
 </div>
 <script type="text/x-magento-init">
 {
