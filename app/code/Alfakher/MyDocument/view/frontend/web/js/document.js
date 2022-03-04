@@ -185,7 +185,7 @@ define([
             var id = 1;
             $("#add_more").click(function() {
                 var showId = ++id;
-                if (showId <= 10) {
+                if (showId <= 25) {
                     $('<div class="upload" for="document uploader">' +
                         '<div class="input-file">' +
                         '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" />' +
@@ -193,6 +193,10 @@ define([
                         '<span class="input-note">' + config.inputNote + '</span>' +
                         '<input type="hidden" id="is_add_more_form' + showId + ' ?>" name="is_add_more_form[]" value="0"/>' +
                         '</div></div>').insertBefore('.upload-container .add-more-cont');
+                }
+                if (showId == 25){
+                    $(".add-more-cont").hide();
+                    $("#add_more").hide();
                 }
             	$('#filename-' + showId).change(function(e) {
                 	fileRender(showId, 'filename-',$(this),e);
@@ -243,7 +247,7 @@ define([
             	}
 		    });
 
-            $(".deletedocument").click(function() {
+            $(".deletedocument").click(function() { 
                 var documentId = $(this).attr('id');
                 $.ajax({
                     url: config.deleteDocumentUrl,
@@ -255,6 +259,7 @@ define([
                     showLoader: true,
                     complete: function(result) {
                         location.reload(true);
+                        $('html, body').animate({scrollTop:70});
                     },
                     error: function(xhr, status, errorThrown) {}
                 });

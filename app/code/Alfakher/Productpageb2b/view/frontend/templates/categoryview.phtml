@@ -21,7 +21,7 @@ foreach ($subcats as $subcat):
             $subcaturl = $subcat->getUrl();
             $_imgHtml = '';
             $_imgUrl = $_category->getImageUrl();
-            $_disc = $_category->getDescription();
+            $_disc = $_category->getCategoryDesc();
         if ($_imgUrl) {
             $_imgHtml = '<img src="' . $_imgUrl . '" height="300" width="300" alt="Product" />';
         } else {
