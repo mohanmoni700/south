@@ -636,6 +636,18 @@
                 font-size: 18px;
                 padding-right: 0;
             }
+            &:hover {
+                background-color: @hookah_theme_color;
+                &:before {
+                    color: @color_white;
+                }
+                &.slick-disabled {
+                    background-color: transparent;
+                    &:before {
+                        color: @hookah_theme_color;
+                    }
+                }
+            }
         }
         button.slick-prev {
             left: auto;

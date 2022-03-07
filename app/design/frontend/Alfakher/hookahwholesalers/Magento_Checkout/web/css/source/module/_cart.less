@@ -656,7 +656,7 @@
 }
 
 & when (@media-target = 'mobile'), (@media-target = 'all') {
-     @media only screen and (min-width: 799px) and (max-width: 1024px) {
+     @media only screen and (min-width: 992px) and (max-width: 1024px) {
         .page-wrapper{
             .cart-summary{
                 max-width: 30%;
@@ -676,7 +676,7 @@
             }
         }
      }
-     @media only screen and (max-width: 768px) {
+     @media only screen and (max-width: 991px) {
         .cart-container {
             display: inline-block;
             width: 100%;
@@ -685,6 +685,13 @@
                 margin-top: 40px;
                 margin-bottom: 0px;
                 width: 100%;
+            }
+            form.form-cart {
+                max-width: 100%;
+                width: 100%;
+            }
+            .cart-summary {
+                max-width: 100%;
             }
         }
         .checkout-cart-index{
@@ -856,6 +863,9 @@
                 }
              } 
         } 
+        .message.error, .message.success {
+            letter-spacing: 0.5px;
+        }
     } 
     .cart {
         &.table-wrapper {

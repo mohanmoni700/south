@@ -440,13 +440,6 @@
     //
     // Document Modal Popup design [AR]
     // __________________________________________________________
-    .mydocument-customer-index, .customer-account-create {
-        .document-modal, #popup-modal-non-usa {
-            ~ .modals-overlay {
-                pointer-events: none;
-            }
-        }
-    }
     .document-modal, #popup-modal-non-usa {
         text-align: center;
     
@@ -600,6 +593,9 @@
         right: 15px;
         top: 30px;
         bottom: auto;
+        top: 50%;
+        transform: translate(0, -50%);
+        -webkit-transform: translate(0, -50%);
     }
     .modals-wrapper {
         .document-modal.modal-popup {
