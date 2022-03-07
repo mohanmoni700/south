@@ -10,7 +10,6 @@
 ?>
 <?php $checkmigratedcustomerurl = $block->getUrl('changepassword/ajax/checkmigratedcustomer'); ?>
 <div class="block block-customer-login">
-
     <div class="block-title">
         <div class="separator"><span class="user_icon"></span> </div>
         <strong id="block-customer-login-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Registered Customer')) ?></strong>
@@ -37,7 +36,7 @@
                                data-validate="{required:true, 'validate-email':true}">
                     </div>
                 </div>
-                <div class="field password required">
+                <div class="field password required" style="display: none;">
                     <div class="lable_n_link">
                         <label for="pass" class="label"><span><?= $block->escapeHtml(__('Password*')) ?></span></label>
                         <div class="actions-toolbar">
@@ -65,6 +64,7 @@
             <div class="register_link"> Don't have an account? <a href="<?= $block->escapeUrl($block->getUrl("customer/account/create"));?>"><?= $block->escapeHtml(__('Register Here')) ?> </a></div>
         </form>
     </div>
+
     <script type="text/x-magento-init">
         {
             "*": {
