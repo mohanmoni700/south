@@ -9,6 +9,7 @@
 
 /* Styles For All Blocks*/
 .c-count {margin-bottom: 15px;font-weight: 700;padding-bottom: 10px;font-size: 16px;border-bottom: 1px solid #bbbbbb;color: #222;}
+.c-count.block-title::before { width: 165px; }
 .c-img {width: 48px;position: absolute; left: 0;top: 0;z-index: 5;}
 .c-img img {width: 100%;}
 .c-reply, .c-comment {position: relative;margin-bottom: 18px;}
@@ -100,6 +101,7 @@
 .c-post .p-actions a:hover {text-decoration: underline; }
 .c-post .p-actions span {color: #90949c;}
 .c-post .p-actions a:before{content: ""; background:url('../images/reply.svg') no-repeat center; background-size: cover; width: 30px; height: 21px; display: inline-block;}
+.c-post .p-actions a:hover:before { background-image: url('../images/reply-hover.svg'); }
 
 /* Post's replies and reply form */
 .p-replies {border-left: 1px dotted #bdbdbd; padding-left: 10px;}

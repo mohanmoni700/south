@@ -103,7 +103,7 @@ if ($commentsCount) {
     <!-- comments list -->
     <div class="c-comments" >
     <div class="c-count block-title title">
-        <?= $block->escapeHtml(__('Comments( %1 )', $block->getPost()->getCommentsCount())) ?>
+        <?= $block->escapeHtml(__('Comments (%1)', $block->getPost()->getCommentsCount())) ?>
     </div>
     <?php $i = 0 ?>
     <?php foreach ($comments as $comment) { ?>
