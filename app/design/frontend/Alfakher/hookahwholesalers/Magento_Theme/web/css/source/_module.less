@@ -122,6 +122,7 @@
                         padding: 15px 22px;
                         border: 1px solid #CDCACA;
                         right: -1px;
+                        cursor: default;
                         .guest-heading{
                             background: transparent;
                             margin-bottom: 15px;
@@ -174,6 +175,7 @@
                         width: 100%;
                         display: block;
                         text-align: center;
+                        text-transform: uppercase;
                     }
                 }
                 .welcome_info{
@@ -201,6 +203,7 @@
                 padding-left: 30px;
                 position: relative;
                 white-space: nowrap;
+                display: block;
                 &:before{
                     content:'';
                     position: absolute;
@@ -257,6 +260,13 @@
                 a{
                     &:before{
                       background: url('@{baseDir}images/manage_address.svg') no-repeat;  
+                    }   
+                }
+            }
+            &.my_payment{
+                a{
+                    &:before{
+                      background: url('@{baseDir}images/payment_option.svg') no-repeat;  
                     }   
                 }
             }
@@ -387,7 +397,7 @@
                         }
                     }
                     .klevuQuickProductPrice {
-                        display: none;
+                        display: none !important;
                     }
                     .kuQuickCaptionStockOut {
                         min-height: 0;
@@ -1005,6 +1015,8 @@
             text-align: center;
             padding: 15px 30px 36px 30px;
             background: linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), #D378FF;
+            border-top-left-radius: 8px;
+            border-bottom-left-radius: 8px;
             h3 {
                 .lib-font-size(24);
                 letter-spacing: 10px;
@@ -1252,7 +1264,16 @@
                 .lib-font-size(30);
             }
         } 
-    } 
+    }
+    .customer-account-forgotpassword {
+        .login-container{
+            .page-title-wrapper{
+                .page-title{
+                    .lib-font-size(24);
+                }
+            } 
+        }
+    }
     .customer-account-login, 
     .customer-account-forgotpassword{
         .page-main{
@@ -1363,7 +1384,7 @@
         }
     }
     .welcomesale_block {
-        padding: 30px 0 0 0;
+        padding: 50px 0 0 0;
         background-color: transparent;
     }    
     .collection_box {
@@ -1378,6 +1399,26 @@
             .action-ouline-primary {
                 min-width: 116px;
             }
+        }
+        .col_image {
+            &.top-spacing {
+                top: 0;
+                text-align: center;
+            }
+        }
+        .align_right {
+            text-align: center;
+        }
+    }
+    .limited_sale {
+        .per_off_bg {
+            padding: 0 14px;
+            display: inline-block;
+        }
+    }
+    .private_hookahbox {
+        .phbox_image {
+            right: 12px;
         }
     }
     .cms-home {
@@ -1903,7 +1944,7 @@
                     .header-top-right{
                         display: flex;
                         //gap: @indent__m + 1;
-                        padding-right: (@indent__xl * 2);
+                        padding-right: 20px;
                         .phone {
                             padding-left: @indent__s + @indent__xs;
                             padding-right: @indent__l;
@@ -2075,23 +2116,26 @@
                         .lib-css(font-weight, @font-weight__semibold);
                         position: relative;
                         .lib-css(text-decoration, none);
-                    }
-                &::after{
-                    content: '';
-                    background-size: contain;
-                    background-position: center;
-                    background-repeat: no-repeat;
-                    width: 21px;
-                    height: 17px;
-                    position: absolute;
-                    background-image: url('@{baseDir}images/Union.svg');
-                    order: 2;
-                    top: 30%;
-                }
+                        display: block;
+                        &::after{
+                            content: '';
+                            background-size: contain;
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            width: 21px;
+                            height: 17px;
+                            position: absolute;
+                            background-image: url('@{baseDir}images/Union.svg');
+                            order: 2;
+                            top: 30%;
+                            left: 50%;
+                            transform: translate(-50%,0);
+                            -webkit-transform: translate(-50%,0);
+                        }
+                    }                
             }
             .sign-in{
                 position: relative;
-                margin-right: @indent__base + 1;
                 span.sign-up{
                     padding-top: @indent__xl - 1; //50px
                     font-size: 12px;
@@ -2271,7 +2315,7 @@
                 padding: 0 (@indent__base - @indent__xs);
             }
             .header.content {
-                padding: 15px;
+                padding: 15px 15px 63px 15px;
             }
         }
     }
@@ -2346,6 +2390,12 @@
             }
         }
 
+        .cms-home, .catalog-category-view, .catalog-product-view {
+            .page-header {
+                margin-bottom: 0;
+            }
+        }
+
         #html-body .page-header {
             border-bottom: 0;
             .warning-section-wrapper .warning-section {
@@ -2369,12 +2419,11 @@
                 }
             }
             .header.content {
-                padding: @indent__s + @indent__xs;
+                padding: 15px 15px 63px 15px;
                 flex-wrap: wrap;
                 box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-                
-                .reorder-wrapper::after{
-                    position: unset;
+                &::after {
+                    display: none;
                 }
                 .minicart-wrapper .action.showcart{
                     padding-top: 0;
@@ -2383,6 +2432,18 @@
                     &::before {
                         position: unset;
                         transform: unset;
+                    }
+                }
+                .reorder-wrapper {
+                    a.header_account_link {
+                        font-size: 0;
+                        width: 22px;
+                        height: 17px;
+                        padding: 0;
+                        &::after {
+                            display: block;
+                            top: 0;
+                        }
                     }
                 }
                 .sign-in {
@@ -2427,9 +2488,12 @@
                     }
                 }
                 .block-search {
-                    width: 100%;
+                    width: calc(~'100% - 30px');
                     margin-top: 0;
                     max-width: 100%;
+                    position: absolute;
+                    left: 15px;
+                    bottom: 15px;
                     #search_mini_form {
                         position: relative;
                     }
@@ -2595,11 +2659,11 @@
                     flex-direction: column;                    
                 }
                 .one{
-                    margin-bottom: (@indent__m*4) - 2;
+                    margin-bottom: (@indent__m*2);
                 }
                 .two {
                     display: flex;
-                    padding-bottom: @indent__xl + @indent__s;
+                    padding-bottom: @indent__xl;
                     .header-item {
                         margin-right: @indent__l;
                     }
@@ -2645,7 +2709,7 @@
             }
             .block-search{
                 padding: 0;
-                width:100%;
+                width: calc(~'100% - 30px');
                 max-width: 100%;
             }
             .sign-in {
@@ -2685,6 +2749,15 @@
                         }
                     }
                 } 
+                .header-links-wrapper {
+                    .header-links {
+                        .header-item {
+                            .header-text {
+                                margin-left: 0;
+                            }
+                        }
+                    }
+                }
             } 
         }
         .block-content{

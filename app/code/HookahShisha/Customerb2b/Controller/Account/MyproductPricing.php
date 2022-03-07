@@ -21,12 +21,15 @@ class MyproductPricing extends \Magento\Framework\App\Action\Action
      *
      * @param \Magento\Framework\App\Action\Context $context
      * @param PageFactory $resultPageFactory
+     * @param \Magento\Customer\Model\Session $session
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
-        PageFactory $resultPageFactory
+        PageFactory $resultPageFactory,
+        \Magento\Customer\Model\Session $session
     ) {
         $this->resultPageFactory = $resultPageFactory;
+        $this->_customerSession = $session;
         return parent::__construct($context);
     }
 
@@ -37,8 +40,14 @@ class MyproductPricing extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
-        $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->set('My Product Pricing');
-        return $resultPage;
+        if ($this->_customerSession->isLoggedIn()) {
+            $resultPage = $this->resultPageFactory->create();
+            $resultPage->getConfig()->getTitle()->set('My Product Pricing');
+            return $resultPage;
+        } else {
+            $resultRedirect = $this->resultRedirectFactory->create();
+            $resultRedirect->setPath('customer/account/login/');
+            return $resultRedirect;
+        }
     }
 }

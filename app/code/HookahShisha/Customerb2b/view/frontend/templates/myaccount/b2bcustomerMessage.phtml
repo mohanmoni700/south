@@ -7,6 +7,17 @@
  * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
  */
 ?>
+<?php $formMessages = $block->getFormMessages(); ?>
+<?php if (!empty($formMessages)): ?>
+    <div id="company_edit_form_messages">
+        <?php foreach ($formMessages as $formMessage): ?>
+            <div class="message error">
+                <span><?= $block->escapeHtml($formMessage) ?></span>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
 <?php $message = $block->getMessageData(); ?>
 <?php foreach ($message['message'] as $key => $value): ?>
     <div class="<?= $block->escapeHtml(__($value[0])) ?>"><?= $block->escapeHtml(__($value[1])) ?></div>

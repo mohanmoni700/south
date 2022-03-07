@@ -118,6 +118,7 @@
                 cursor: pointer;
             }
             .input-note {
+                color: #000000;
                 display: block;
                 font-size: 9px;
                 position: absolute;
@@ -149,13 +150,16 @@
             label {
                 font-size: 12px;
                 font-weight: 700;
-                line-height: 30px;
-                padding-left: 5px;
+                margin-bottom: 14px;
+                display: block;
             }
             button.submit {
                 margin: 20px auto 20px 50%;
                 transform: translateX(-50%);
                 min-width: 200px;
+            }
+            .value {
+                margin-bottom: 16px;
             }
         }
         .set_expiry {
@@ -169,8 +173,11 @@
             }
         }
         .upload.active {
-            .set_expiry, .doc_name {
+            .set_expiry {
                 display: block !important;
+            }
+            .doc_name {
+                display: block;
             }
             .input-note {
                 display: none;
@@ -231,7 +238,6 @@
     }
     .updatedocument {
         .field .value {
-            padding-left: 5px;
             &.date {
                 background: #961E70;
                 color: #fff;
@@ -244,13 +250,17 @@
                 padding: 0 9px;
                 display: block;
                 line-height: 32px;
+                margin-bottom: 0;
             }
         }
         label {
             font-size: 12px;
             font-weight: 700;
-            line-height: 30px;
-            padding-left: 5px;
+            margin-bottom: 14px;
+            display: block;
+        }
+        .value {
+            margin-bottom: 10px;
         }
         
         .document {
@@ -288,10 +298,13 @@
             font-size: 10px;
             display: flex;
             justify-content: space-between;
-            align-items: start;
+            align-items: center;
             margin: 10px 0;
             span {
-                word-break: break-word;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                width: 100%;
             }
             .download-doc::after {
                 content: "";
@@ -671,6 +684,8 @@
             }
             &:last-child {
                 border-bottom: none;
+                padding-bottom: 0;
+                margin-bottom: 0;
             }
         }
         .add-more-cont {

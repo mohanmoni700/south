@@ -15,6 +15,8 @@ $formDisable = 1;
 <?php $_city = $block->getAttributeData()->getFrontendLabel('city'); ?>
 <?php $_selectRegion = 'Please select a region, state or province.'; ?>
 <?php $_displayAll = $block->getConfig('general/region/display_all'); ?>
+<?php $_county = $block->getAttributeData()->getFrontendLabel('county'); ?>
+
 
 <?php $_vatidValidationClass = $viewModel->addressGetAttributeValidationClass('vat_id'); ?>
 <?php $_cityValidationClass = $viewModel->addressGetAttributeValidationClass('city'); ?>
@@ -27,7 +29,7 @@ $formDisable = 1;
 /* Start Change the region_id Label if the Country is US for State and Other for the State */
 $regionStateLabel = $block->escapeHtml(__('State'));
 $regionProvinceLabel = $block->escapeHtml(__('Province'));
-$_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel; 
+$_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel;
 /* End Change the region_id Label if the Country is US for State and Other for the State */
 ?>
 <?php $messageData = $block->getMessagedata(); ?>
@@ -47,7 +49,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
         <?= $block->getBlockHtml('formkey') ?>
         <input type="hidden" name="success_url" value="<?= $escaper->escapeUrl($block->getSuccessUrl()) ?>">
         <input type="hidden" name="error_url" value="<?= $escaper->escapeUrl($block->getErrorUrl()) ?>">
-        <input type="hidden" name="id" value="<?= $block->getCustomer()->getDefaultBilling(); ?>">
+        <input type="hidden" name="id" value="<?= /* @noEscape */ $block->getCustomer()->getDefaultBilling(); ?>">
         <input type="hidden" name="cst_account_verified" value="0"/>
         <input type="hidden" name="cst_details_changed" value="1"/>
         <?= $block->getNameBlockHtml() ?>
@@ -61,10 +63,10 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                 <input type="email" 
                         name="email" 
                         id="email_address" 
-                        placeholder="<?php /* @escapeNotVerified */ echo __('Email') ?>"
+                        placeholder="<?php /* @noEscape */ __('Email') ?>"
                         autocomplete="off" 
-                        value="<?php echo $block->escapeHtml($block->getCustomer()->getEmail()) ?>" 
-                        title="<?php /* @escapeNotVerified */ echo __('Email') ?>" 
+                        value="<?= /* @noEscape */ $block->escapeHtml($block->getCustomer()->getEmail()) ?>" 
+                        title="<?php /* @noEscape */ __('Email') ?>" 
                         class="input-text"
                         disabled="disabled"
                         readonly="readonly"/>
@@ -129,6 +131,19 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                 </div>
             </div>
         <?php endif; ?>
+
+        <div class="field county">
+                    <label for="county" class="label">
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?></span>
+                    </label>
+                        <input type="text"
+                               name="county"
+                               placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
+                               value="<?= $block->escapeHtmlAttr(!empty($block->getAddress()->getCustomAttribute('county')) ? $block->getAddress()->getCustomAttribute('county')->getValue() : ''); ?>"
+                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
+                               id="county"
+                               class="input-text <?= $escaper->escapeHtmlAttr($_county) ?>"/>
+        </div> 
         <div class="field country required">
             <label class="label" for="country">
                 <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>
