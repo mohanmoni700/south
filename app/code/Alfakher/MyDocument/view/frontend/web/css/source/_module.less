@@ -150,13 +150,16 @@
             label {
                 font-size: 12px;
                 font-weight: 700;
-                line-height: 30px;
-                padding-left: 5px;
+                margin-bottom: 14px;
+                display: block;
             }
             button.submit {
                 margin: 20px auto 20px 50%;
                 transform: translateX(-50%);
                 min-width: 200px;
+            }
+            .value {
+                margin-bottom: 16px;
             }
         }
         .set_expiry {
@@ -235,7 +238,6 @@
     }
     .updatedocument {
         .field .value {
-            padding-left: 5px;
             &.date {
                 background: #961E70;
                 color: #fff;
@@ -248,13 +250,17 @@
                 padding: 0 9px;
                 display: block;
                 line-height: 32px;
+                margin-bottom: 0;
             }
         }
         label {
             font-size: 12px;
             font-weight: 700;
-            line-height: 30px;
-            padding-left: 5px;
+            margin-bottom: 14px;
+            display: block;
+        }
+        .value {
+            margin-bottom: 10px;
         }
         
         .document {
@@ -292,7 +298,7 @@
             font-size: 10px;
             display: flex;
             justify-content: space-between;
-            align-items: start;
+            align-items: center;
             margin: 10px 0;
             span {
                 white-space: nowrap;
@@ -434,13 +440,6 @@
     //
     // Document Modal Popup design [AR]
     // __________________________________________________________
-    .mydocument-customer-index, .customer-account-create {
-        .document-modal, #popup-modal-non-usa {
-            ~ .modals-overlay {
-                pointer-events: none;
-            }
-        }
-    }
     .document-modal, #popup-modal-non-usa {
         text-align: center;
     
@@ -594,6 +593,9 @@
         right: 15px;
         top: 30px;
         bottom: auto;
+        top: 50%;
+        transform: translate(0, -50%);
+        -webkit-transform: translate(0, -50%);
     }
     .modals-wrapper {
         .document-modal.modal-popup {
@@ -678,6 +680,8 @@
             }
             &:last-child {
                 border-bottom: none;
+                padding-bottom: 0;
+                margin-bottom: 0;
             }
         }
         .add-more-cont {

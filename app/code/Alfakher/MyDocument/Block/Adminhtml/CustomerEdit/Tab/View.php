@@ -2,12 +2,20 @@
 namespace Alfakher\MyDocument\Block\Adminhtml\CustomerEdit\Tab;
 
 use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory;
+use Magento\Backend\Block\Template;
+use Magento\Backend\Block\Template\Context;
+use Magento\Company\Api\CompanyRepositoryInterface;
+use Magento\Company\Api\Data\CompanyCustomerInterface;
+use Magento\Company\Api\Data\CompanyInterface;
+use Magento\Company\Model\Customer\Source\CustomerType as CustomerTypeSource;
+use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Customer\Model\AddressFactory;
 use Magento\Customer\Model\CustomerFactory;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Data\Form\FormKey;
+use Magento\Framework\Exception\NoSuchEntityException;
 
-class View extends \Magento\Backend\Block\Template implements \Magento\Ui\Component\Layout\Tabs\TabInterface
+class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInterface
 {
     /**
      * @var \Magento\Framework\App\Response\Http\FileFactory
@@ -45,27 +53,36 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Ui\Compon
     protected $_template = 'tab/customer_view.phtml';
 
     /**
+     * @var CompanyCustomerInterface
+     */
+    private $customerAttributes;
+
+    /**
      * @param \Magento\Framework\App\Response\Http\FileFactory $fileFactory
-     * @param \Magento\Backend\Block\Template\Context $context
+     * @param Context $context
      * @param \Magento\Framework\Registry $registry
      * @param DirectoryList $directory
      * @param CustomerFactory $customer
      * @param CollectionFactory $collection
      * @param AddressFactory $address
      * @param FormKey $formKey
-     * @param    \HookahShisha\Customerb2b\Model\ResourceModel\Companydata\CollectionFactory $company
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param CompanyRepositoryInterface $companyRepository
+     * @param CustomerTypeSource $customerTypeSource
      * @param array $data = []
      */
     public function __construct(
         \Magento\Framework\App\Response\Http\FileFactory $fileFactory,
-        \Magento\Backend\Block\Template\Context $context,
+        Context $context,
         \Magento\Framework\Registry $registry,
         DirectoryList $directory,
         CustomerFactory $customer,
         CollectionFactory $collection,
         AddressFactory $address,
         FormKey $formKey,
-        \HookahShisha\Customerb2b\Model\ResourceModel\Companydata\CollectionFactory $company,
+        CustomerRepositoryInterface $customerRepository,
+        CompanyRepositoryInterface $companyRepository,
+        CustomerTypeSource $customerTypeSource,
         array $data = []
     ) {
         $this->fileFactory = $fileFactory;
@@ -74,8 +91,10 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Ui\Compon
         $this->customer = $customer;
         $this->collection = $collection;
         $this->address = $address;
-        $this->company = $company;
         $this->formKey = $formKey;
+        $this->customerRepository = $customerRepository;
+        $this->companyRepository = $companyRepository;
+        $this->customerTypeSource = $customerTypeSource;
         parent::__construct($context, $data);
     }
 
@@ -139,22 +158,6 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Ui\Compon
         $billingAddress = $this->address->create()->load($billingAddressId);
         return $billingAddress;
     }
-    /**
-     * @inheritDoc
-     */
-    public function getCompanycollection($email)
-    {
-        $company = $this->company->create()->addFieldToFilter('company_email', ['eq' => $email])->getData();
-        return $company;
-    }
-    /**
-     * @inheritDoc
-     */
-    public function myfunction($id)
-    {
-        $customerdata = $this->customer->create()->load($id);
-        return $customerdata;
-    }
 
     /**
      * @inheritDoc
@@ -210,5 +213,127 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Ui\Compon
     public function isAjaxLoaded()
     {
         return false;
+    }
+
+    /**
+     * Retrieve customer extension attributes.
+     *
+     * @return CompanyCustomerInterface|null
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    public function getCustomerAttributes()
+    {
+        if (!$this->customerAttributes) {
+            if (isset($this->_backendSession->getCustomerData()['account']['id'])) {
+                $customer = $this->_backendSession->getCustomerData()['account'];
+                $this->customerAttributes = $this->customerRepository->getById($customer['id'])
+                    ->getExtensionAttributes()->getCompanyAttributes();
+            }
+        }
+        return $this->customerAttributes;
+    }
+
+    /**
+     * Retrieve company name.
+     *
+     * @return string
+     */
+    public function getCompanyName()
+    {
+        $companyName = '';
+        if ($this->getCompany()) {
+            $companyName = $this->getCompany()->getCompanyName();
+        }
+        return $companyName;
+    }
+
+    /**
+     * Get company.
+     *
+     * @return CompanyInterface|null
+     */
+    public function getCompany()
+    {
+        $company = null;
+        if ($this->getCustomerAttributes()) {
+            $companyId = $this->getCustomerAttributes()->getCompanyId();
+            try {
+                $company = $this->companyRepository->get($companyId);
+            } catch (NoSuchEntityException $e) {
+                $company = null;
+            }
+        }
+        return $company;
+    }
+
+    /**
+     * Get vatTaxId.
+     *
+     * @return CompanyInterface|null
+     */
+    public function getVatTaxId()
+    {
+        $vatTaxId = '';
+        if ($this->getCompany()) {
+            $vatTaxId = $this->getCompany()->getVatTaxId();
+        }
+        return $vatTaxId;
+    }
+
+    /**
+     * Get resellerId.
+     *
+     * @return CompanyInterface|null
+     */
+    public function getResellerId()
+    {
+        $resellerId = '';
+        if ($this->getCompany()) {
+            $resellerId = $this->getCompany()->getResellerId();
+        }
+        return $resellerId;
+    }
+
+    /**
+     * Get numberOfEmp.
+     *
+     * @return CompanyInterface|null
+     */
+    public function getNumberOfEmp()
+    {
+        $numberOfEmp = '';
+        if ($this->getCompany()) {
+            $numberOfEmp = $this->getCompany()->getNumberOfEmp();
+        }
+        return $numberOfEmp;
+    }
+
+    /**
+     * Get tinNumber.
+     *
+     * @return CompanyInterface|null
+     */
+    public function getTinNumber()
+    {
+        $tinNumber = '';
+        if ($this->getCompany()) {
+            $tinNumber = $this->getCompany()->getTinNumber();
+        }
+        return $tinNumber;
+    }
+
+    /**
+     * Get tobaccoPermitNumber.
+     *
+     * @return CompanyInterface|null
+     */
+    public function getTobaccoPermitNumber()
+    {
+        $tobaccoPermitNumber = '';
+        if ($this->getCompany()) {
+            $tobaccoPermitNumber = $this->getCompany()->getTobaccoPermitNumber();
+        }
+        return $tobaccoPermitNumber;
     }
 }

@@ -1,15 +1,18 @@
 <?php
+/**
+ * @var \Alfakher\MyDocument\Block\Adminhtml\CustomerEdit\Tab\View $block
+ */
+?>
+<?php
 $customerid=$block->getCustomer();
 $customerData= $block->getCustomercollection($customerid);
-$email=$customerData->getEmail();
 $data= $customerData->getData();
 $customeradd=$block->getCustomeraddress($customerid);
 $country=$customeradd->getData('country_id');
-$companyData=$block->getCompanycollection($email);
 $documentData= $block->getDocumentCollection();
 $docdata = $documentData->getData();
 $helper = $this->helper('HookahShisha\Customerb2b\Helper\Data');
-$emp=$companyData[0]['number_of_emp'];
+$emp=$block->getNumberOfEmp();
 $empno=$helper->getEmployees($emp);
 ?>
 <?php if (!empty($docdata)) { ?>
@@ -23,30 +26,40 @@ $empno=$helper->getEmployees($emp);
       <span class="title"><?= $block->escapeHtml('Customer Information') ?></span>
    </div>
    <div class="fieldset-wrapper-title">
-        <b>Name: </b><?= $customerData->getName();?>
-        <span style="padding-left: 30em;">
-        <b>Email: </b><?= $customerData->getEmail(); ?>
-        </span>
-    <?php if ($country == 'US') { ?>
-        <?php if ($companyData[0]['company_name']) { ?> 
-             <b>Company Name: </b><?= $companyData[0]['company_name'];?><br>
-        <?php }
-        if ($companyData[0]['vat_tax_id']) { ?> 
-            <b>Sales Tax ID: </b><?= $companyData[0]['vat_tax_id'];?><br>
-        <?php }
-        if ($companyData[0]['reseller_id']) { ?> 
-            <b>Reseller ID: </b><?= $companyData[0]['reseller_id'];?><br>
-        <?php }
-        if ($empno) { ?> 
-            <b>Number Of Emp: </b><?= $empno;?><br>
-        <?php }
-        if ($companyData[0]['tin_number']) { ?> 
-            <b>Tin Number: </b><?= $companyData[0]['tin_number'];?><br>
-        <?php }
-        if ($companyData[0]['tobacco_permit_number']) { ?> 
-            <b>Tobacco Permit Number: </b><?= $companyData[0]['tobacco_permit_number'];?>
-        <?php } }
-    ?>
+        <?= $block->escapeHtml('Customer Name:');?><?= $customerData->getName();?><br>
+        <?= $block->escapeHtml('Email:');?><?= $customerData->getEmail(); ?>
+        </span><br>
+        <?php if ($country == 'US') {?>
+            <?php if ($block->getCompanyName()) { ?>
+                <?= $block->escapeHtml('Company Name:');?>
+                <?= $block->getCompanyName(); ?><br>
+            <?php } ?>
+
+            <?php if ($block->getVatTaxId()) { ?>
+                <?= $block->escapeHtml('Sales Tax ID:');?>
+                <?= $block->getVatTaxId(); ?><br>
+            <?php } ?>
+
+            <?php if ($block->getResellerId()) { ?>
+                <?= $block->escapeHtml('Reseller ID:');?>
+                <?= $block->getResellerId(); ?><br>
+            <?php } ?>
+
+            <?php if ($block->getNumberOfEmp()) { ?>
+                <?= $block->escapeHtml('Number of Emp:');?>
+                <?= $empno;?><br>
+            <?php } ?>
+
+            <?php if ($block->getTinNumber()) { ?>
+                <?= $block->escapeHtml('Tin Number:');?>
+                <?= $block->getTinNumber(); ?><br>
+            <?php } ?>
+
+            <?php if ($block->getTobaccoPermitNumber()) { ?>
+                <?= $block->escapeHtml('Tobacco Permit Number:');?>
+            <?= $block->getTobaccoPermitNumber(); } ?>        
+        <?php } ?>
+    
     </div>
 
    <div class="fieldset-wrapper-title">

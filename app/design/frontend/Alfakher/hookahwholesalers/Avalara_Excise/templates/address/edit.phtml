@@ -243,7 +243,6 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
     }
 </script>
 <script>
-  
 function onCountryChange() {
     require(['jquery'], function($){
         var countryval = $('#country option:selected').val();
@@ -257,28 +256,34 @@ function onCountryChange() {
     });
 }
 require(['jquery', 'jquery/ui','mage/mage'], function($){
-      $(document).ready(function(){
-         if($('div').hasClass('message info') == true){
-                $("#form-validate #country").attr("disabled","true");
-                $("#form-validate #zip").attr("disabled","true");
-                $("#form-validate #city").attr("disabled","true");
-                setTimeout(function(){
-                    $("#form-validate #region_id").attr("disabled","true");
-                }, 500);
-              }  
-            });
-
-            //right before the form submits, we re-enable the fields, to make them submit.
-            $( "#form-validate" ).submit(function( event ) {
-                $("body").trigger('processStart');
-                $("#city").prop( "disabled", false );
-                $("#country").prop( "disabled", false );
-                $("#zip").prop( "disabled", false );
-                $("#region_id").prop( "disabled", false );
-            });
+    $(document).ready(function(){
+        if($('div').hasClass('message info') == true){
+            $("#form-validate #country").attr("disabled","true");
+            $("#form-validate #zip").attr("disabled","true");
+            $("#form-validate #city").attr("disabled","true");
+            setTimeout(function(){
+                $("#form-validate #region_id").attr("disabled","true");
+            }, 500);
+        }
+    });
     $("#country").change(function () {
         onCountryChange();
     });
 });
-            
 </script>
+<?php if ($block->isDefaultBilling()): ?>
+    <script>
+    require(['jquery','jquery/ui','mage/mage'], function($){
+        //right before the form submits, we re-enable the fields, to make them submit.
+        $("#form-validate").submit(function( event ) {
+            if($('#form-validate').valid()){
+                $("body").trigger('processStart');
+                $("#city").prop("disabled", false);
+                $("#country").prop("disabled", false);
+                $("#zip").prop("disabled", false);
+                $("#region_id").prop("disabled", false);
+            }
+        });
+    });
+    </script>
+<?php endif; ?>
