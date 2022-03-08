@@ -517,8 +517,21 @@
        } 
     }
 
-    .sales-order-print {
+    .sales-order-print.page-print {
+        .logo {
+            margin-bottom: 20px;
+            height: auto;
+            img {
+                width: auto;
+                max-width: none;
+            }
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: @font-weight__regular;
+        }
         .order-details-items {
+            border-top: solid 1px @border-color__base;
             .actions-toolbar {
                 > .secondary {
                     .action.back {
@@ -691,6 +704,15 @@
                     margin-bottom: 0;
                 }
             }
+        }
+    }
+    .sales-order-print.page-print {
+        h1 {
+            font-size: 26px;
+        }
+        .page-main {
+            margin-top: 0;
+            padding-top: 30px;
         }
     }
 }
