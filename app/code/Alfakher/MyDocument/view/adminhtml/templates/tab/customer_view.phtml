@@ -12,8 +12,8 @@ $country=$customeradd->getData('country_id');
 $documentData= $block->getDocumentCollection();
 $docdata = $documentData->getData();
 $helper = $this->helper('HookahShisha\Customerb2b\Helper\Data');
-$emp=$block->getNumberOfEmp();
-$empno=$helper->getEmployees($emp);
+$empno=$block->getNumberOfEmp();
+// $empno=$helper->getEmployees($emp);
 ?>
 <?php if (!empty($docdata)) { ?>
 
