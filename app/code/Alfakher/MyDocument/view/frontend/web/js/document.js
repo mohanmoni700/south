@@ -153,6 +153,16 @@ define([
                         if (data.success == 1) {
                             $('#' + resetId).trigger("reset");
                             $("#popup-modal").modal("openModal");
+
+                        //start -disable element after popup message
+                            var form = document.querySelector("form#" + id);
+                            Array.from(form.elements).forEach(formElement => formElement.disabled = true);
+                            $(".view-doc-link").hide();
+                            $(".deletedocument-preview").hide();
+                            $(".add-more-cont").hide();
+                            $("#btnsave").hide();
+                         //end -disable element after popup message
+
                         } else {
                             $(".page.messages").html('<div role="alert" class="messages">' +
                                 '<div class="alert danger alert-danger" data-ui-id="message-danger">' +

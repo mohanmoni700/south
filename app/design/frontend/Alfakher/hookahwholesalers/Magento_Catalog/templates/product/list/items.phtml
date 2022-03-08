@@ -8,9 +8,15 @@ use Magento\Catalog\ViewModel\Product\Listing\PreparePostData;
 use Magento\Framework\App\ActionInterface;
 
 /* @var $block \Magento\Catalog\Block\Product\AbstractProduct */
+/* @var $helper \Alfakher\Productpageb2b\Helper\Data */
 /** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
 ?>
-
+<?php
+ $helper = $this->helper('Alfakher\Productpageb2b\Helper\Data');
+ $doc_status=$helper->getDocMessageData();
+ $doc_uploaded=$helper->getDocuments();
+ $doc_expired=$helper->getExpiryMsg();
+?>
 <?php
 switch ($type = $block->getType()) {
 
@@ -215,7 +221,11 @@ $_item = null;
                                                 href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>">
                                             <?= $block->escapeHtml($_item->getName()) ?></a>
                                     </strong>
+                                    <!-- if documents approved then only show price start[BS] -->
+                                    <?php if ($doc_status == 2 && $doc_uploaded == 1 && $doc_expired == 1) { ?>
                                     <?= /* @noEscape */ $block->getProductPrice($_item) ?>
+                                <?php } ?>
+                                <!-- if documents approved then only show price end[BS] -->
                                     <?php if ($templateType):?>
                                         <?= $block->getReviewsSummaryHtml($_item, $templateType) ?>
                                     <?php endif; ?>
