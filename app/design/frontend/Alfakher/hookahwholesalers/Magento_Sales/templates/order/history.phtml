@@ -64,5 +64,6 @@
         <div class="order-products-toolbar toolbar bottom"><?= $block->getPagerHtml() ?></div>
     <?php endif ?>
 <?php else : ?>
-    <div class="message info empty"><span><?= $block->escapeHtml($block->getEmptyOrdersMessage()) ?></span></div>
+    <!-- change message 08/03/2022[BS] -->
+    <div class="message info empty"><span><?= $block->escapeHtml('You have placed no orders.') ?></span></div>
 <?php endif ?>

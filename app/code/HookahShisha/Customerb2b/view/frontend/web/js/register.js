@@ -188,6 +188,12 @@ define([
 
                                 $('#form-validate').trigger("reset");
                                 $("#register-success-popup").modal("openModal");
+                                //start -disable element after popup message
+                                $("#number_of_emp").prop("disabled", true);
+                                $("#annual_turn_over").prop("disabled", true);
+                                $("#hear_about_us").prop("disabled", true);
+                                $("#business_type").prop("disabled", true);
+                                //start -disable element after popup message
                             } else {
                                 /* Added the Alert popup for the display invalid data or error */
                                 alert({

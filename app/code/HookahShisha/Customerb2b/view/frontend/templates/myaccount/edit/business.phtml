@@ -10,6 +10,9 @@ $company = $block->getCustomerCompany();
 $actionURL = "#";
 $formDisable = 1;
 $selectedElement = "selected='selected'";
+$country = $block->getLayout()->createBlock(HookahShisha\Customerb2b\Block\Myaccount\BasicDetail::class);
+$count_id=$country->getCountryId();
+
 ?>
 <?php $messageData = $block->getMessagedata(); ?>
 <?php if ($messageData['comAccountVerified'] == 0 && $messageData['comDetailsChanged'] == 0): ?>
@@ -121,6 +124,8 @@ $selectedElement = "selected='selected'";
                 </select>
             </div>
         </div>
+        <!-- added condition for showing below fields for USA only 08/03/2022 start[BS]  -->
+        <?php if($count_id == 'US') { ?>
         <div class="field vat-tax-id">
             <?php $salesTaxID = __('Sales Tax ID'); ?>
             <label class="label" for="vat_tax_id">
@@ -145,7 +150,7 @@ $selectedElement = "selected='selected'";
                        value="<?= $block->escapeHtmlAttr($company->getVatTaxId()) ?>"
                        placeholder="<?= $block->escapeHtmlAttr($salesTaxID) ?>"
                        title="<?= $block->escapeHtmlAttr($salesTaxID) ?>"
-                       class="input-text">
+                       class="input-text validate-alphanum-with-spaces">
             </div>
         </div>
         <div class="field tin-number">
@@ -158,7 +163,7 @@ $selectedElement = "selected='selected'";
                        value="<?= $block->escapeHtmlAttr($company->getTinNumber()) ?>"
                        placeholder="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
                        title="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
-                       class="input-text">
+                       class="input-text validate-alphanum-with-spaces">
             </div>
         </div>
         <div class="field tobacco-permit-number">
@@ -171,9 +176,11 @@ $selectedElement = "selected='selected'";
                        value="<?= $block->escapeHtmlAttr($company->getTobaccoPermitNumber()) ?>"
                        placeholder="<?= $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
                        title="<?= $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
-                       class="input-text">
+                       class="input-text validate-alphanum-with-spaces">
             </div>
         </div>
+    <?php } ?>
+      <!-- condition for showing below fields for USA only 08/03/2022 end[BS] -->
         <div class="field hear-about-us required">
             <label class="label" for="hear_about_us">
                 <span><?= $block->escapeHtml(__('How did you hear about us ?')) ?></span>
