@@ -63,8 +63,15 @@
 
         .sorter-action {
             position: relative;
-            top: -2px;
-            display: none;
+            z-index: 1;
+            &:before {
+                color: @color_black;
+            }
+            &:hover {
+                &:before {
+                    color: @color_black;
+                }   
+            }
         }
         .sorter-label {
             font-weight: @font-weight__bold;
