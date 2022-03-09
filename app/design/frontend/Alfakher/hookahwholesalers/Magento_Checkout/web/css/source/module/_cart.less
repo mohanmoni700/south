@@ -254,6 +254,7 @@
                 .coupon{
                     position: relative;
                     .control{
+                        width: 100%;
                         input{
                             height: 35px;
                             border-color: #961E70;
@@ -666,6 +667,7 @@
             .cart-container{
                 .form-cart{
                     max-width: 70%; 
+                    width: 69%;
                     padding-right: 20px;
                 }
                 .checkout-methods-items{
@@ -673,6 +675,11 @@
                         letter-spacing: 0;
                     }
                 } 
+            }            
+        }
+        .cart.table-wrapper {
+            .product-item-name {
+                .lib-font-size(18);
             }
         }
      }
@@ -692,6 +699,7 @@
             }
             .cart-summary {
                 max-width: 100%;
+                width: 100%;
             }
         }
         .checkout-cart-index{
@@ -940,6 +948,7 @@
         .form-cart {
             &:extend(.abs-shopping-cart-items-desktop all);
             max-width: 820px;
+            width: 65%;
         }
 
         .widget {
@@ -954,7 +963,7 @@
     .cart-summary {
         float: right;
         position: relative;
-        width: 100%;
+        width: 33%;
         max-width: 410px;
 
         .actions-toolbar {
