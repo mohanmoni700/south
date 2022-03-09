@@ -31,7 +31,7 @@
                     <strong class="product-item-name"><?= $block->escapeHtml($_item->getName()) ?></strong>
                 </td>
                 <!-- show price start -->
-                 <?php if ($_helperB2b->getDocMessageData() == 2 && $is_document_upload == 1): ?>
+                 <?php if ($_helperB2b->getDocMessageData() == 2 && $is_document_upload == 1 && $_helperB2b->getExpiryMsg()==1): ?>
                 <td>
                         <?php if ($block->getCanShowProductPrice($_product)): ?>
                             <?php if ($block->getCanShowProductPrice($_item)): ?>

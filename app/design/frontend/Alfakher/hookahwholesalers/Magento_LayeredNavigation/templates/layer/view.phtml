@@ -107,7 +107,7 @@ $stateBlock = $block->getLayout()->createBlock('\Magento\LayeredNavigation\Block
                                 <div role="heading" aria-level="3" class="filter-options-title"><?= $block->escapeHtml(__($filter->getName())) ?></div>
                                 <div class="filter-options-content"><?= /* @noEscape */ $block->getChildBlock('renderer')->render($filter) ?></div>
                     <?php else: ?>
-                       <?php if($_helperB2b->getDocMessageData() == 2 && $_helperB2b->getDocuments() == 1 ): ?>
+                       <?php if($_helperB2b->getDocMessageData() == 2 && $_helperB2b->getDocuments() == 1 && $_helperB2b->getExpiryMsg() == 1): ?>
                                  <div role="heading" aria-level="3" class="filter-options-title"><?= $block->escapeHtml(__($filter->getName())) ?></div>
                                 <div class="filter-options-content"><?= /* @noEscape */ $block->getChildBlock('renderer')->render($filter) ?></div>
                         <?php endif; ?>   
