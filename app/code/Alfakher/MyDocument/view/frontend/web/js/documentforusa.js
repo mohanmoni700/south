@@ -269,15 +269,6 @@ define([
 	                        } else {
 	                            $('body').loader('hide');
 	                        }
-	                        //start -disable element after popup message
-                            var form = document.querySelector("form#" + id);
-                            Array.from(form.elements).forEach(formElement => formElement.disabled = true);
-                            $(".view-doc-link").hide();
-                            $(".deletedocument-preview").hide();
-                            $(".add-more-cont").hide();
-                            $("#btnsave").hide();
-							//end -disable element after popup message
-
 	                    } else {
 	                        $(".page.messages").html('<div role="alert" class="messages">' +
 	                            '<div class="alert danger alert-danger" data-ui-id="message-danger">' +
@@ -367,6 +358,7 @@ define([
 	            responsive: true,
 	            innerScroll: true,
 	            modalClass: 'document-modal',
+	            clickableOverlay: false,
 	            buttons: [{
 	                text: $.mage.__('Continue'),
 	                class: 'mymodal1',
