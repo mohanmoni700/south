@@ -12,12 +12,13 @@
         $showCart = $_helperB2b->isCustomerLoggedIn();
         $docdata = $_helperB2b->getDocMessageData();
         $is_document_upload = $_helperB2b->getDocuments();
+        $doc_expired = $_helperB2b->getExpiryMsg();
 
 ?>
 <?php if ($_product->isSaleable()):?>
 <div class="box-tocart">
     <?php if ($showCart): ?>
-        <?php if ($docdata == 2 && $is_document_upload == 1): ?>
+        <?php if ($docdata == 2 && $is_document_upload == 1 && $doc_expired == 1): ?>
             <div class="fieldset">
                 <?php if ($block->shouldRenderQuantity()):?>
                 <div class="field qty">
