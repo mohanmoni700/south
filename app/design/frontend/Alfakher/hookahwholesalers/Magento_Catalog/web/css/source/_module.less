@@ -236,6 +236,48 @@
         }
     }
 
+    .clp_faq_main {
+        background-color: @hookah_primary_light;
+        .clp_faq_inner {
+            display: none;
+            margin: 0 auto;
+            max-width: @layout_container_xl;            
+            padding: 20px;
+        }
+        .clp_faq_toggle {
+            text-align: center;
+            padding: 10px 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            cursor: pointer;
+            &::after {
+                content: "+";
+                margin-left: 6px;
+                font-size: 26px;
+                font-weight: normal;
+                line-height: 0;
+                vertical-align: middle;
+                position: relative;
+                top: -2px;
+                min-width: 18px;
+                display: inline-block;
+            }
+            &.active {
+                &::after {
+                    content: "-";
+                    font-size: 30px;
+                    top: -4px;
+                }
+            }
+        }
+        .accordion_comman {
+            .accordion_content {
+                .lib-font-size(14);
+                color: @font-gray;
+            }
+        }
+    }    
+
 .block.upsell, .blog-page-list .block-products-list .slick-slider {
   .slick-prev {
     left: -46px;
