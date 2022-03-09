@@ -109,8 +109,12 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                     display: -webkit-box;
-                    -webkit-line-clamp: 2;
+                    -webkit-line-clamp: 4;
                     -webkit-box-orient: vertical;
+                    margin-bottom: 10px;
+                    p {
+                        margin-bottom: 0;
+                    }
                 }
             }     
 
@@ -298,6 +302,37 @@
         }
     }
 
+    .mpproductlabel-label {
+        width: auto !important;
+        height: auto !important;
+        opacity: 1 !important;
+        line-height: 1; 
+        .mpproductlabel-text-label {
+            background-color: #E12D41;
+            color: @color_white;
+            font-weight: @font-weight__bold !important;
+            font-family: @montserrat_regular !important;
+            text-transform: uppercase;
+            padding: 0 10px;
+            line-height: 25px;
+            font-size: 10px !important;
+            border-radius: 30px;
+            letter-spacing: 0.5px;
+            min-width: 60px;
+            position: relative;
+            height: auto !important;
+            width: auto !important;
+            left: 0 !important;
+            top: 0 !important;
+            transform: translate(0, 0) !important;
+            -webkit-transform: translate(0, 0) !important;
+            display: inline-block;
+            &:empty {
+                padding: 0;
+            }
+        }
+    }
+
     .logged-in-action {
         a {
             color: @color_white;
@@ -391,6 +426,19 @@
                     display: table-cell;
                     vertical-align: top;
                 }
+                &-name {
+                    min-height: 0;
+                }
+                .product-item-inner {
+                    .product-item-description.product {
+                        a {
+                            color: @color_black;
+                        }
+                        .action.more {
+                            display: none;
+                        }
+                    }
+                }
             }
         }
 
@@ -465,6 +513,11 @@
             }
             .catalog.description-item {
                 font-size: 13px;
+            }
+            &-details {
+                .stock.unavailable {
+                    font-size: 13px;
+                }
             }
         }
     }

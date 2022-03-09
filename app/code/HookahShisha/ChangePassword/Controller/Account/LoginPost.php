@@ -240,22 +240,27 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                     $document = $doc_collection->getData();
                     $dataSize = count($document);
                     $status = [];
+
+                    $todate = date("Y-m-d");
                     foreach ($document as $value) {
                         $status[] = $value['status'];
+                        $expired = $value['expiry_date'];
+                        if ($expired <= $todate && $expired != "") {
+                            $msg[] = "exp";
+                        } else {
+                            $msg[] = "not exp";
+                        }
                     }
 
-                    if (in_array(0, $status) || empty($dataSize)) {
+                    if (in_array(0, $status) || empty($dataSize) || (in_array("exp", $msg))) {
                         $resultRedirect = $this->resultRedirectFactory->create();
                         $resultRedirect->setPath('mydocument/customer/index');
                         return $resultRedirect;
 
                     } else {
-                        if (!$this->getScopeConfig()->getValue('customer/startup/redirect_dashboard') && $redirectUrl) {
-                            $this->accountRedirect->clearRedirectCookie();
-                            $resultRedirect = $this->resultRedirectFactory->create();
-                            $resultRedirect->setUrl($this->_redirect->success($redirectUrl));
-                            return $resultRedirect;
-                        }
+                        $resultRedirect = $this->resultRedirectFactory->create();
+                        $resultRedirect->setPath('');
+                        return $resultRedirect;
                     }
                 } catch (EmailNotConfirmedException $e) {
                     $this->messageManager->addComplexErrorMessage(

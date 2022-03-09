@@ -81,6 +81,7 @@
                     padding-right: 130px;
                     border-radius: 30px;
                     color: #000000;
+                    text-transform: capitalize;
                 }
                 .actions-toolbar .primary {
                     position: absolute;
@@ -207,6 +208,9 @@
                 .input-text {
                     width: 120px;
                 }
+                .action.cvv {
+                    color: @color_black;
+                }
             }
 
             &.fieldset {
@@ -282,26 +286,7 @@
 //  _____________________________________________
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
-    .checkout-payment-method {
-        .payment-option {
-            .lib-css(margin, 0 -(@checkout-payment-option-title-mobile__padding));
-
-            .payment-option-title {
-                .lib-css(padding, @checkout-payment-option-title-mobile__padding)
-            }
-
-            .payment-option-content {
-                .lib-css(padding, 0 @checkout-payment-option-title-mobile__padding @indent__base);
-            }
-            &._collapsible {
-                .payment-option-title, .payment-option-content {
-                    padding-left: 15px;
-                }
-                &.discount-code {
-                    margin-top: 3rem;
-                }
-            }
-        }
+    .checkout-payment-method {        
         .payment-method-content {
             .fieldset {
                 > .field {

@@ -53,7 +53,7 @@
         </div>
     <?php } ?>
     <?php if ($block->magefanCommentsEnabled() && $_post->getCommentsCount()) { ?>
-        <div class="item post-comments">
+        <div class="item post-comments" style="display: none;">
             <a title="<?= $block->escapeHtml($_post->getTitle()) ?>"
                href="<?= $block->escapeUrl($_post->getPostUrl()) ?>#post-comments"
             ><?= $block->escapeHtml($_post->getCommentsCount()) ?></a>
@@ -62,7 +62,7 @@
 
     <?php if ($block->viewsCountEnabled()) { ?>
         <?php if ($viewsCount = $_post->getViewsCount()) { ?>
-            <div class="item post-views">
+            <div class="item post-views" style="display: none;">
                 <span class="value">
                     <?= $block->escapeHtml($viewsCount)?>
                 </span>

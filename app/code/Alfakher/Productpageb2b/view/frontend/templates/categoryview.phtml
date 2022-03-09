@@ -1,7 +1,7 @@
 <?php
 $category = $block->getCurrentCategory();
 $subcats = $category->getChildrenCategories();
-$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$_helper = $this->helper(Magento\Catalog\Helper\Output::class);
 $imageHelper = $this->helper(\Magento\Catalog\Helper\Image::class);
 $placeholderImageUrl = $imageHelper->getDefaultPlaceholderUrl('image');
 
@@ -16,36 +16,35 @@ $placeholderImageUrl = $imageHelper->getDefaultPlaceholderUrl('image');
 <?php
 foreach ($subcats as $subcat):
     if ($subcat->getIsActive()):
-        // echo "<pre>";
             $_category = $block->getChildCategory($subcat->getId());
-            // print_r($_category->getData());die;
-            $_outputhelper = $this->helper('Magento\Catalog\Helper\Output');
+            $_outputhelper = $this->helper(Magento\Catalog\Helper\Output::class);
             $subcaturl = $subcat->getUrl();
             $_imgHtml = '';
             $_imgUrl = $_category->getImageUrl();
-            $_disc = $_category->getDescription();
-            if($_imgUrl){
-            $_imgHtml = '<img src="' . $_imgUrl . '" height="300" width="300" alt="Product" />';
-            }else{
-            $_imgHtml = '<img src="' . $placeholderImageUrl . '" height="300" width="300" alt="Product" />';  
-            }
+            $_disc = $_category->getCategoryDesc();
+        if ($_imgUrl) {
+            $_imgHtml = '<img class="cateshop_img" src="' . $_imgUrl . '" height="300" width="300" alt="Product" />';
+        } else {
+            $_imgHtml = '<img class="cateshop_img" src="' . $placeholderImageUrl . '" height="300" width="300" alt="Product" />';
+        }
             $_imgHtml = $_outputhelper->categoryAttribute($_category, $_imgHtml, 'image');
 
-            ?>
+        ?>
 
             <div class="item product product-item">
                 <div class="product-item-info">
-                        <a href="<?= $subcaturl ?>" class="product photo product-item-photo"><?= $_imgHtml ?>
+                        <a href="<?= /* @noEscape */ $subcaturl ?>" class="product photo product-item-photo">
+                            <?= /* @noEscape */ $_imgHtml ?>
                         </a>
                     <div class="product details product-item-details">                        
                         <strong class="product name product-item-name"><a
                                 class="product-item-link"
-                                title="<?= $subcat->getName() ?>"
-                                href="<?= $subcaturl ?>">
-                            <?= $subcat->getName() ?></a>
+                                title="<?= /* @noEscape */ $subcat->getName() ?>"
+                                href="<?= /* @noEscape */ $subcaturl ?>">
+                            <?= /* @noEscape */ $subcat->getName() ?></a>
                         </strong>
                         <div class="catalog description-item">
-                            <?= $_disc; ?>
+                            <?= /* @noEscape */ $_disc; ?>
                         </div>
                     </div>
                 </div>

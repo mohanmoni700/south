@@ -42,6 +42,7 @@ define([
                                 $(config.submitButton).text("Reset Password");
                                 $(config.submitButton).prop("disabled",false);
                             }else{
+                                $(config.email).focus();
                                 $(config.passwordSelector).show();
                                 $(config.submitButton).text("sign in");
                                 $(config.submitButton).prop("disabled",false);

@@ -243,4 +243,15 @@ class Data extends AbstractHelper
             $this->_logger->debug($e->getMessage());
         }
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getEmployees($emp)
+    {
+        $numberof_emp = $this->numberffemp->getOptionArray();
+        if (in_array($emp, $numberof_emp)) {
+            return $numberof_emp[$emp];
+        }
+    }
 }

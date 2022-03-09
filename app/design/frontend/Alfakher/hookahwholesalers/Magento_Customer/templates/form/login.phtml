@@ -10,7 +10,6 @@
 ?>
 <?php $checkmigratedcustomerurl = $block->getUrl('changepassword/ajax/checkmigratedcustomer'); ?>
 <div class="block block-customer-login">
-
     <div class="block-title">
         <div class="separator"><span class="user_icon"></span> </div>
         <strong id="block-customer-login-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Registered Customer')) ?></strong>
@@ -31,13 +30,13 @@
                         <input name="login[username]" value="<?= $block->escapeHtmlAttr($block->getUsername()) ?>"
                             <?php if ($block->isAutocompleteDisabled()): ?> autocomplete="off"<?php endif; ?>
                                id="email" type="email" class="input-text"
-                               placeholder="Username"
+                               placeholder="Email"
                                title="<?= $block->escapeHtmlAttr(__('Email')) ?>"
                                data-mage-init='{"mage/trim-input":{}}'
                                data-validate="{required:true, 'validate-email':true}">
                     </div>
                 </div>
-                <div class="field password required">
+                <div class="field password required" style="display: none;">
                     <div class="lable_n_link">
                         <label for="pass" class="label"><span><?= $block->escapeHtml(__('Password*')) ?></span></label>
                         <div class="actions-toolbar">
@@ -62,9 +61,10 @@
                     <?php /* <div class="secondary"><a class="action remind" href="<?= $block->escapeUrl($block->getForgotPasswordUrl()) ?>"><span><?= $block->escapeHtml(__('Forgot Your Password?')) ?></span></a></div> */?>
                 </div>
             </fieldset>
-            <div class="register_link"> Don't have an account? <a href="<?php echo $this->getUrl("customer/account/create");?>"><?= $block->escapeHtml(__('Register Here')) ?> </a></div>
+            <div class="register_link"> Don't have an account? <a href="<?= $block->escapeUrl($block->getUrl("customer/account/create"));?>"><?= $block->escapeHtml(__('Register Here')) ?> </a></div>
         </form>
     </div>
+
     <script type="text/x-magento-init">
         {
             "*": {
@@ -80,7 +80,7 @@
                     }
                 }
             }
-        }
+        } 
     </script>
     <!-- bv_vv; 18-02-2022; check for migrated customer; start-->
     <script type="text/x-magento-init">
