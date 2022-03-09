@@ -230,6 +230,38 @@ ul.nav.items{
         border-top: 1px solid @border-color__base-table;
         padding-top:15px;
     }
+    .pages {
+        .item {
+            margin: 0 8px 0 0;
+        }
+        .action {
+            width: 30px;
+            height: 30px;
+            line-height: 29px;
+            border-color: @hookah_theme_color;
+            border-radius: 100%;
+            &:hover {
+                background-color: @hookah_theme_color;
+                &::before {
+                    color: @color_white !important;
+                }
+            }
+            &.previous {
+                &:before {
+                    color: @hookah_theme_color;
+                    font-size: 40px;
+                }
+            }
+            &.next {
+                margin-left: 0;
+                &:before {
+                    color: @hookah_theme_color;
+                    font-size: 40px;
+                    margin: 0 0 0 -5px;
+                }
+            }
+        }
+    }
 } 
 .customer-account-create{
     .page.messages{
@@ -2210,6 +2242,13 @@ ul.nav.items{
         .column.main,
         .sidebar-additional {
             margin: 0;
+        }
+        &.customerb2b-account-myproductpricing {
+            .toolbar {
+                .pages {
+                    float: none;
+                }
+            }
         }
     }
 }
