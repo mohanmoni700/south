@@ -58,10 +58,6 @@
 
         $(document).ready(function(){
 
-            $(".open-children-toggle").click(function() {
-               $(this).parent().find('.level0').toggleClass('opened');
-            });
-
             $(window).scroll(function() {
                 if ($(this).scrollTop() >= 50) {        
                     $('#top-return').fadeIn(200);    

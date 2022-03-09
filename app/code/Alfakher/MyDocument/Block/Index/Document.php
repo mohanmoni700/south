@@ -92,13 +92,6 @@ class Document extends \Magento\Framework\View\Element\Template
 
             $message = [];
 
-            if (in_array(0, $status) && empty($str_msg)) {
-                $verification = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_document_Verification_section', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-                $message[] = ["pending", $verification];
-            } else {
-                $verification = "";
-            }
-
             if (in_array(0, $status) && !empty($str_msg)) {
                 $rejected = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_document_rejection_sections', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
                 $message[] = ["reject", $rejected];
@@ -117,7 +110,7 @@ class Document extends \Magento\Framework\View\Element\Template
                 }
             }
 
-            if (in_array('expired', $msg)) {
+            if (in_array('expired', $msg) && !(in_array(0, $status) && empty($str_msg))) {
                 $docexpired = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_documents_expired_sections', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
             } else {
                 $docexpired = "";
@@ -127,11 +120,26 @@ class Document extends \Magento\Framework\View\Element\Template
 
                 $message[] = ["reject", $docexpired];
             }
+
+            if (in_array(0, $status) && empty($str_msg) && !(in_array('expired', $msg))) {
+                $verification = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_document_Verification_section', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+                $message[] = ["pending", $verification];
+            } else {
+                $verification = "";
+            }
+
+            if (in_array('expired', $msg) && in_array(0, $status) && empty($str_msg)) {
+                $expunderveri = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_documents_underverification_and_expired', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+                $message[] = ["pending", $expunderveri];
+            } else {
+                $expunderveri = "";
+            }
             return [
                 'message' => $message,
                 'pending' => $verification,
                 'reject' => $rejected,
                 'reject' => $docexpired,
+                'pending' => $expunderveri,
             ];
         } else {
             $verification = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_documents_verification_required', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);

@@ -248,8 +248,10 @@
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .opc-block-summary, .opc-block-shipping-information  {
             background: transparent;
-            padding: 0 0 22px 0;
+            padding: 0 0 10px 0;
             margin: 0;
     }
-    
+    .opc-block-summary .minicart-items-wrapper {
+        max-height: none;
+    }
 }

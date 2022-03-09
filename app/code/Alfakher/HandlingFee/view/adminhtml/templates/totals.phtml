@@ -51,9 +51,9 @@ $canShowFeeEdit = $viewModel->isModuleEnabled($websiteId);
                         <td <?= /* @noEscape */ $block->getLabelProperties() ?> class="label">
                             <?php if ($_total->getCode() == "shipping" && $canShowFeeEdit): ?>
                                 <?php if ($_total->getStrong()): ?>
-                                <strong><?= __("Shipping") ?></strong>
+                                <strong><?= /* @noEscape */ __("Shipping") ?></strong>
                                 <?php else: ?>
-                                    <?= __("Shipping") ?>
+                                    <?= /* @noEscape */ __("Shipping") ?>
                                 <?php endif?>
                             <?php else: ?>
                                 <?php if ($_total->getStrong()): ?>

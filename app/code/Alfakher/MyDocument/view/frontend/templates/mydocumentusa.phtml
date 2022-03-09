@@ -40,8 +40,10 @@ $today = date("Y-m-d");
         data-mage-init='{"validation":{}}'
         method="post">
         <div class="updated-container">
+
         <?php foreach ($data as $val): ?>
             <?php if ($val['is_add_more_form'] == 0): ?>
+
                 <?php if ($val['is_delete'] == 0): ?>
                     <?php $expiry_date = $val['expiry_date']; ?>
                     <?php if (($val['status'] == 0 && $val['message'] != null) ||
@@ -56,6 +58,7 @@ $today = date("Y-m-d");
                             $checkext = $block->checkExtension($fileName);
                             $extension = $checkext['extension'];
                         ?>
+                        <label><?= $block->escapeHtml(__($val['document_name'])); ?></label>
                         <div class="input-file">
                             <?php if ($extension == "pdf"): ?>
                                 <img src="<?= $block->escapeUrl($pdfImg); ?>" height="34" width="43"
@@ -64,7 +67,11 @@ $today = date("Y-m-d");
                                 <img src="<?= $block->escapeUrl($fileName); ?>" height="170" width="170" />
                             <?php endif; ?>
                             <div class="doc-actions">
-                                <?php if ($val['status'] == 0 && $val['message'] != null || (($expiry_date <= $today && $expiry_date != ""))): ?>
+                                <?php if ($val['status'] == 0
+                                &&
+                                $val['message'] != null
+                                ||
+                                (($expiry_date <= $today && $expiry_date != ""))): ?>
                                     <a  class="view-doc-link" href="<?= $block->escapeUrl($fileName); ?>"
                                         target="_blank"></a>
                                     <a  class="deletedocument" name="deletedocument" href="#"
@@ -89,15 +96,8 @@ $today = date("Y-m-d");
                             <a  href="<?= $block->escapeUrl($fileName); ?>"
                                 target="_blank" download class="download-doc"></a>
                         </div>
-                        <div class="field">
-                            <label><?= $block->escapeHtml(__("Document Name"));  ?></label>
-                            <div class="value">
-                                <?= $block->escapeHtml($val['document_name']); ?>
-                            </div>
-                        </div>
                         <?php if (isset($val['expiry_date'])): ?>
                             <div class="field">
-                                <label><?= $block->escapeHtml(__("Expiry Date"));  ?></label>
                                 <div class="value date">
                                     <?= $block->escapeHtml(__('Expiry Date: ') . $val['expiry_date']); ?>
                                 </div>
@@ -116,6 +116,7 @@ $today = date("Y-m-d");
                     </div>
                 <?php else: ?>
                     <div class="upload" for="document uploader">
+                        <label><?= $block->escapeHtml(__($val['document_name'])); ?></label>
                         <div class="input-file" id="input-updatefile-<?= $block->escapeHtml($val['mydocument_id']);?>">
                             <input type="hidden" name="documentid[]"
                             value="<?= $block->escapeHtml($val['mydocument_id']); ?>" />
@@ -142,8 +143,8 @@ $today = date("Y-m-d");
                                 id="deletedocument-filename<?= $block->escapeHtml($val['mydocument_id']);?>"></a>
                             </div>
                             <!-- bv_vv; date:04-02-2022; File Preview End; -->
-                        </div>
-                        <div class="doc_name" for="document name" style="display:none;">
+                        </div>  
+                        <div class="doc_name" for="document name" style="display:none !important;">
                             <label><?= $block->escapeHtml(__('Document Name')); ?></label>
                             <input type="text" id="name-<?= $block->escapeHtml($val['mydocument_id']);?>"
                             name="name<?= $block->escapeHtml($val['mydocument_id']);?>"
@@ -163,7 +164,7 @@ $today = date("Y-m-d");
                                 name="expiry_date<?= $block->escapeHtml($val['mydocument_id']);?>"
                                 id="expiry_date<?= $block->escapeHtml($val['mydocument_id']);?>"
                                 data-validate="{required:true}"
-                                value="<?= $block->escapeHtml($val['expiry_date']); ?>" />
+                                value="" />
                             </div>
                         </div>
                         <input type="hidden"
@@ -192,11 +193,11 @@ $today = date("Y-m-d");
                         <?php
                         if (($val['status'] == 0 && $val['message'] != null) ||
                         (($val['expiry_date'] <= $today && $val['expiry_date'] != ""))):?>
-                        <?php $rejectedClass = "rejected" ; ?>
+                            <?php $rejectedClass = "rejected"; ?>
                         <?php else: ?>
                             <?php $rejectedClass = ""; ?>
                         <?php endif;?>
-                        <div class="document <?= $rejectedClass; ?>" for="document uploader">
+                        <div class="document <?= /* @noEscape */ $rejectedClass; ?>" for="document uploader">
                             <?php
                             $fileName = $mediaUrl.$val['filename'];
                             $checkext = $block->checkExtension($fileName);
@@ -210,7 +211,11 @@ $today = date("Y-m-d");
                                     <img src="<?= $block->escapeUrl($fileName); ?>" height="170" width="170" />
                                 <?php endif; ?>
                                 <div class="doc-actions">
-                                    <?php if ($val['status'] == 0 && $val['message'] != null || (($val['expiry_date'] <= $today && $val['expiry_date'] != ""))): ?>
+                                    <?php if ($val['status'] == 0
+                                    &&
+                                    $val['message'] != null
+                                    ||
+                                    (($val['expiry_date'] <= $today && $val['expiry_date'] != ""))): ?>
                                         <a  class="view-doc-link" href="<?= $block->escapeUrl($fileName); ?>"
                                             target="_blank"></a>
                                         <a  class="deletedocument" name="deletedocument" href="#"
@@ -243,7 +248,6 @@ $today = date("Y-m-d");
                             </div>
                                 <?php if (isset($val['expiry_date'])): ?>
                                 <div class="field">
-                                    <label><?= $block->escapeHtml(__("Expiry Date"));  ?></label>
                                     <div class="value date">
                                         <?= $block->escapeHtml(__('Expiry Date: ') . $val['expiry_date']); ?>
                                     </div>
@@ -286,7 +290,7 @@ $today = date("Y-m-d");
                                 id="deletedocument-filename<?= $block->escapeHtml($val['mydocument_id']);?>"></a>
                             </div>
                         </div>
-                        <div class="doc_name" for="document name" style="display:none;">
+                        <div class="doc_name" for="document name">
                             <label><?= $block->escapeHtml(__('Document Name')); ?></label>
                             <input type="text"
                             id="name-<?= $block->escapeHtml($val['mydocument_id']);?>"
@@ -308,7 +312,7 @@ $today = date("Y-m-d");
                                 name="expiry_date<?= $block->escapeHtml($val['mydocument_id']);?>"
                                 id="expiry_date<?= $block->escapeHtml($val['mydocument_id']);?>"
                                 data-validate="{required:true}" 
-                                value="<?= $block->escapeHtml($val['expiry_date']); ?>"/>
+                                value=""/>
                             </div>
                         </div>
                     </div>
@@ -369,7 +373,7 @@ foreach ($data as $val) {
                     </div>
                     <!-- bv_vv; date:04-02-2022; File Preview End; -->
                 </div>
-                <div class="doc_name" for="document name" style="display:none;">
+                <div class="doc_name" for="document name" style="display:none !important;">
                     <label><?= $block->escapeHtml(__('Document Name')); ?></label>
                     <input type="text"
                     id="name-<?= $block->escapeHtml($counter); ?>"
@@ -438,7 +442,7 @@ foreach ($data as $val) {
     <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/success_union.svg')); ?>"
     alt="success_union" width="60" height="60" loading="lazy" />
     <h1 class="success_msg"><?= $block->escapeHtml(__('DOCUMENTS ARE UPLOADED SUCCESSFULLY')); ?></h1>
-    <h5><?= $block->escapeHtml(__('Once it is approved by Admin, Product price would be visible to you')); ?></h5>
+    <h5><?= $block->escapeHtml(__('Once it is approved by Admin, Product price would be visible to you.')); ?></h5>
 </div>
 <script type="text/x-magento-init">
 {

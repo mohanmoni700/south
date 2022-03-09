@@ -1,31 +1,69 @@
 <?php
+/**
+ * @var \Alfakher\MyDocument\Block\Adminhtml\CustomerEdit\Tab\View $block
+ */
+?>
+<?php
 $customerid=$block->getCustomer();
 $customerData= $block->getCustomercollection($customerid);
 $data= $customerData->getData();
+$customeradd=$block->getCustomeraddress($customerid);
+$country=$customeradd->getData('country_id');
 $documentData= $block->getDocumentCollection();
 $docdata = $documentData->getData();
+$helper = $this->helper('HookahShisha\Customerb2b\Helper\Data');
+$empno=$block->getNumberOfEmp();
 ?>
 <?php if (!empty($docdata)) { ?>
 
 <div class="fieldset-wrapper customer-information">
-   
    <div class="fieldset-wrapper-title">
-      <span class="title"><?=  __('Documents') ?></span>
+      <span class="title"><?= $block->escapeHtml('Documents') ?></span>
    </div>
    
    <div class="fieldset-wrapper-title">
-      <span class="title"><?=  __('Customer Information') ?></span>
+      <span class="title"><?= $block->escapeHtml('Customer Information') ?></span>
    </div>
    <div class="fieldset-wrapper-title">
-        <b>Name: </b><?= $customerData->getFirstname();?>
-        <span style="padding-left: 34em;">
-         <b>Email: </b><?= $customerData->getEmail(); ?>
-        </span>
+        <?= $block->escapeHtml('Customer Name:');?><?= $customerData->getName();?><br>
+        <?= $block->escapeHtml('Email:');?><?= $customerData->getEmail(); ?>
+        </span><br>
+        <?php if ($country == 'US') {?>
+            <?php if ($block->getCompanyName()) { ?>
+                <?= $block->escapeHtml('Company Name:');?>
+                <?= $block->getCompanyName(); ?><br>
+            <?php } ?>
+
+            <?php if ($block->getVatTaxId()) { ?>
+                <?= $block->escapeHtml('Sales Tax ID:');?>
+                <?= $block->getVatTaxId(); ?><br>
+            <?php } ?>
+
+            <?php if ($block->getResellerId()) { ?>
+                <?= $block->escapeHtml('Reseller ID:');?>
+                <?= $block->getResellerId(); ?><br>
+            <?php } ?>
+
+            <?php if ($block->getNumberOfEmp()) { ?>
+                <?= $block->escapeHtml('Number of Emp:');?>
+                <?= $empno;?><br>
+            <?php } ?>
+
+            <?php if ($block->getTinNumber()) { ?>
+                <?= $block->escapeHtml('Tin Number:');?>
+                <?= $block->getTinNumber(); ?><br>
+            <?php } ?>
+
+            <?php if ($block->getTobaccoPermitNumber()) { ?>
+                <?= $block->escapeHtml('Tobacco Permit Number:');?>
+            <?= $block->getTobaccoPermitNumber(); } ?>        
+        <?php } ?>
+    
     </div>
+
    <div class="fieldset-wrapper-title">
-      <span class="title"><?=  __('') ?></span>
+      <span class="title"><?= $block->escapeHtml('') ?></span>
    </div>
-   
 <!-- Document Information. -->
     <?php
         $items= $block->getDocumentCollection();
@@ -55,17 +93,22 @@ $docdata = $documentData->getData();
                     <span class="admin__form_label">File:</span>
                     <span class="admin__form_value"><a href="<?= $block->getUrl('mydoc/document/download', ['_query' => $queryParams])?>"><?= $document->getFilename();?></a></span>
                 </div>
-
-                <?php if (!empty($document->getExpiryDate())) {  ?>
                
-                 <div class="admin__form_field">
+                <div class="admin__form_field">
                     <span class="admin__form_label">Expiry Date:</span>
-                     <span class="admin__form_value"><?= $document->getExpiryDate() ?></span>
+                     
+                     <input type="text"
+                                placeholder="Expiry Date"
+                                name="expiry_date[]"
+                                id="expiry_date-<?= $block->escapeHtml($document['mydocument_id']); ?>"
+                                class="update-date"
+                                data-validate="{required:true}"
+                                value="<?= $document->getExpiryDate() ?>"/>
                 </div> 
-                <?php } ?>
+
                 <?php $val=$document->getMydocumentId(); ?>
 
-                 <div class="admin__form_field">
+                <div class="admin__form_field">
                     <span class="admin__form_label">Document Verified:</span>
                     <label class="switch admin__form_value">
                      <!-- bv-hd toggle disable after admin action -->
@@ -130,9 +173,16 @@ $docdata = $documentData->getData();
                    }else{
                      jQuery("#message_"+splitid[1]).find('input').prop('readonly',false);
                    }
+                    jQuery("#expiry_date-"+splitid[1]).datepicker({
+                    minDate: 1,
+                    showMonthAfterYear: false,
+                    dateFormat: 'yy-mm-dd',
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: '2020:2030',
+                });
                }).change();
+        });
 
-
-           });
-       });
+    });
 </script>

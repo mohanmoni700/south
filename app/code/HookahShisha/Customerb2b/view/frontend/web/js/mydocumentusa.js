@@ -287,7 +287,7 @@ define([
 	        $("#add_more").click(function() {
 	        	var id = jQuery('#usaform').find('input[type="file"]').length;
 	        	var showId = ++id;
-	            if (showId <= 10) {
+	            if (showId <= 25) {
 	                $('<input type="hidden" name="is_customerfrom_usa' + showId + '" value="1"/>'+
                 	'<div class="upload" for="document uploader"><div class="input-file" id="input-file-' + showId + '">' +
                     '<input type="file" id="filename-' + showId + '" class="upload-filename-' + showId +'" name="filename' + showId + '" data-validate="{required:true}" />' +
@@ -295,6 +295,10 @@ define([
                     '<span id="image-error-message'+showId+'" style="color:red;"></span>'+
                     '</div></div>').insertBefore('.upload-container .usa-add-more');
 	            }
+	            if (showId == 25){
+                    $(".add-more-cont").hide();
+                    $("#add_more").hide();
+                }
 	            $('#filename-' + showId).change(function(e) {
 	                var val = $(this).val();
 	                fileUploading(showId, 'filename-', $(this), e);

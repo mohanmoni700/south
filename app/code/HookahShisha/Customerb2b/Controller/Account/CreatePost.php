@@ -200,7 +200,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
             $customer->setAddresses($addresses);
             $password = $this->getRequest()->getParam('password');
             $confirmation = $this->getRequest()->getParam('password_confirmation');
-            // $redirectUrl = $this->session->getBeforeAuthUrl();
+            //$redirectUrl = $this->session->getBeforeAuthUrl();
             $this->checkPasswordConfirmation($password, $confirmation);
 
             $extensionAttributes = $customer->getExtensionAttributes();
@@ -209,11 +209,14 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
 
             $customer = $this->customerAccountManagement
                 ->createAccount($customer, $password);
-
             $this->_eventManager->dispatch(
                 'customer_register_success',
                 ['account_controller' => $this, 'customer' => $customer]
             );
+
+            /*set Customer session for when user register success*/
+            $this->session->setCustomerDataAsLoggedIn($customer);
+            /*End*/
 
             /* end create customer accounts */
 

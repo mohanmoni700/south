@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	
+
+	<!-- overriding for the sales order view -->
+	<preference for="Magento\Sales\Block\Order\Totals" type="Alfakher\HandlingFee\Block\Magento\Sales\Order\Totals" />
+
+	<!-- overriding for the sales order invoice -->
+	<preference for="Magento\Sales\Block\Order\Invoice\Totals" type="Alfakher\HandlingFee\Block\Magento\Sales\Order\Invoice\Totals" />
+
+	<!-- overriding for the sales order creditmemo -->
+	<preference for="Magento\Sales\Block\Order\Creditmemo\Totals" type="Alfakher\HandlingFee\Block\Magento\Sales\Order\Creditmemo\Totals" />
+</config>

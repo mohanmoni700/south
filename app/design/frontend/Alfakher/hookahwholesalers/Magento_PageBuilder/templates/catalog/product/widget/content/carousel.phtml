@@ -43,7 +43,7 @@ use Magento\Framework\App\Action\Action;
                         <?= $block->getReviewsSummaryHtml($_item, $templateType) ?>
                     <?php endif; ?>
                      <!-- check the documnet is uploaded or verified  -->
-                    <?php if($showCart && $_helperB2b->getDocuments() == 1 && $_helperB2b->getDocMessageData() == 2) : ?>
+                    <?php if($showCart && $_helperB2b->getDocuments() == 1 && $_helperB2b->getDocMessageData() == 2 && $_helperB2b->getExpiryMsg() == 1) : ?>
                       
                       <?= $block->getProductPriceHtml($_item, $type) ?>
                       <?= $block->getProductDetailsHtml($_item) ?>
@@ -53,7 +53,7 @@ use Magento\Framework\App\Action\Action;
                         <div class="product-item-inner">
                             <div class="product-item-actions">
                                 <!-- check the documnet is uploaded or verified  -->
-                                <?php if ($showCart && $_helperB2b->getDocuments() != 1 || $_helperB2b->getDocMessageData() != 2) : ?>
+                                <?php if ($showCart && $_helperB2b->getDocuments() != 1 || $_helperB2b->getDocMessageData() != 2 || $_helperB2b->getExpiryMsg() != 1) : ?>
                                     <div class="actions-primary">
                                         <?php if ($_item->isSaleable()) : ?>
                                             <?php $postParams = $block->getAddToCartPostParams($_item); ?>
@@ -61,11 +61,11 @@ use Magento\Framework\App\Action\Action;
                                                 <input type="hidden" name="product" value="<?= $block->escapeHtmlAttr($postParams['data']['product']) ?>">
                                                 <input type="hidden" name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
                                                 <?= $block->getBlockHtml('formkey') ?>
-                                                <button type="submit"
-                                                        title="<?= $block->escapeHtml(__('View Details')) ?>"
-                                                        class="action tocart primary">
-                                                    <span><?= $block->escapeHtml(__('View Details')) ?></span>
-                                                </button>
+                                                 <div class="actions-primary">
+                                                        <div class="logged-in-action">
+                                                            <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"><?= $block->escapeHtml(__('View Details')) ?></a>
+                                                        </div>
+                                                </div>
                                             </form>
                                         <?php else : ?>
                                             <?php if ($_item->getIsSalable()) : ?>
@@ -78,7 +78,7 @@ use Magento\Framework\App\Action\Action;
                                 <?php elseif(!$showCart) : ?>
                                     <div class="actions-primary">
                                         <div class="logged-in-action">
-                                            <a href="<?= $block->getUrl('customer/account/login') ?>"><?= $block->escapeHtml(__('Sign in / Register')) ?></a>
+                                            <a href="<?= $block->getUrl('customer/account/login') ?>"><?= $block->escapeHtml(__('Signin / Signup')) ?></a>
                                         </div>
                                     </div>
                                 <?php endif; ?>

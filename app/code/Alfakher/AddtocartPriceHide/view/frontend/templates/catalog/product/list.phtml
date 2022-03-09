@@ -76,7 +76,9 @@ $_helper = $block->getData('outputHelper');
                         <!-- start Sign in / Register btn -->
                                     <div class="actions-primary">
                                         <div class="logged-in-action">
-                                            <a href="<?= $block->getUrl('customer/account/login') ?>"><?= $block->escapeHtml(__('Sign in / Register')) ?></a>
+                                            <a
+                                            href="<?= /* @noEscape */ $block->getUrl('customer/account/login') ?>">
+                                            <?= $block->escapeHtml(__('Signin / Signup')) ?></a>
                                         </div>
                                     </div>
                         <!-- end -->
@@ -90,7 +92,8 @@ $_helper = $block->getData('outputHelper');
                                               data-product-sku="<?= $escaper->escapeHtml($_product->getSku()) ?>"
                                               action="<?= $escaper->escapeUrl($postParams['action']) ?>"
                                               method="post">
-                                            <?php $optionsData = $block->getData('viewModel')->getOptionsData($_product); ?>
+                                            <?php
+                                            $optionsData = $block->getData('viewModel')->getOptionsData($_product); ?>
                                             <?php foreach ($optionsData as $optionItem): ?>
                                                 <input type="hidden"
                                                        name="<?= $escaper->escapeHtml($optionItem['name']) ?>"

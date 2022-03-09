@@ -12,6 +12,9 @@
         .order-references{
             border: 0;
         }
+        .column.main {
+            position: relative;
+        }
     }
     .order-links {
         border-bottom: @border-width__base solid @border-color__base;
@@ -247,6 +250,7 @@
                 margin-top: 0;
                 margin-bottom: 0;
                 font-size: 14px;
+                min-height: 0;
             }
 
             tbody + tbody {
@@ -274,6 +278,13 @@
 
                 dd {
                     margin: 0;
+                }
+            }
+        }
+        .actions-toolbar {
+            > .secondary {
+                .action.back {
+                    margin-top: 0;
                 }
             }
         }
@@ -458,6 +469,9 @@
             border-top: 1px solid #cdcaca;
         }
         .block-content{
+            address {
+                line-break: anywhere;
+            }
             &:before{
                 display: none !important;
             }
@@ -501,6 +515,31 @@
                 }
             }
        } 
+    }
+
+    .sales-order-print.page-print {
+        .logo {
+            margin-bottom: 20px;
+            height: auto;
+            img {
+                width: auto;
+                max-width: none;
+            }
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: @font-weight__regular;
+        }
+        .order-details-items {
+            border-top: solid 1px @border-color__base;
+            .actions-toolbar {
+                > .secondary {
+                    .action.back {
+                        display: none;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -623,6 +662,14 @@
                 font-size: 1.6rem;
             }
         }
+        .actions-toolbar {
+            > .secondary {
+                .action.back {
+                    width: 100%;
+                    margin-bottom: 10px;
+                }
+            }
+        }
     }
     .order-items.table-wrapper{
         border-bottom: 1px solid #000;
@@ -659,20 +706,13 @@
             }
         }
     }
-    .order-details-items{
-        .actions-toolbar{
-            > .secondary{
-                .action.back{
-                    display: block;
-                    background: #000;
-                    color: #fff;
-                    padding: 14px;
-                    border-radius: 25px;
-                    font-size: 16px;
-                    font-weight: 600;
-                    text-transform: uppercase;
-                }
-            }
+    .sales-order-print.page-print {
+        h1 {
+            font-size: 26px;
+        }
+        .page-main {
+            margin-top: 0;
+            padding-top: 30px;
         }
     }
 }
