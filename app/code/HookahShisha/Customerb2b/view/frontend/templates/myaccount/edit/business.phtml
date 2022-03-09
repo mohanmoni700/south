@@ -244,6 +244,11 @@ $count_id=$country->getCountryId();
 <?php endif; ?>
 <?php
     $scriptString .= <<<script
+            $("#company-edit-form").submit(function( event ) {
+                if($('#company-edit-form').valid()){
+                    $("body").trigger('processStart');
+                }
+            });
         });
     script; ?>
 <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
