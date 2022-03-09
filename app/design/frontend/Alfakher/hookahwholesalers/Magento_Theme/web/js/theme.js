@@ -28,4 +28,9 @@ define([
     keyboardHandler.apply();
 
     $('.blog-page-list .block.block-products-list.grid').insertAfter('.blog-page-list .page-main > .columns');
+
+    $(".clp_faq_toggle").click(function(){
+        $(".clp_faq_toggle").toggleClass('active');
+        $(".clp_faq_inner").toggle();
+    });
 });
