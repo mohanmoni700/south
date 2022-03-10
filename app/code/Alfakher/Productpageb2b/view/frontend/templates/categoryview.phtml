@@ -1,3 +1,10 @@
+<script>
+    require(['jquery'], function ($) {
+        $(".toolbar-products").hide();
+        $(".amscroll-load-button").hide();
+    });
+</script>
+
 <?php
 $category = $block->getCurrentCategory();
 $subcats = $category->getChildrenCategories();
@@ -61,9 +68,3 @@ endforeach;
 <!-- Show child category image and name start[BS] -->
 
 
-<script>
-    require(['jquery'], function ($) {
-        $(".toolbar-products").hide();
-        $(".amscroll-load-button").hide();
-    });
-</script>
