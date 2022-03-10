@@ -239,11 +239,16 @@
     .clp_faq_main {
         background-color: @hookah_primary_light;
         color: @font-gray;
+        .lib-font-size(16);
         .clp_faq_inner {
             display: none;
             margin: 0 auto;
             max-width: @layout_container_xl;            
-            padding: 20px;
+            padding: 20px 20px 30px 20px;
+            > p {
+                padding-left: 50px;
+                margin-bottom: 0;
+            }
         }
         .clp_faq_toggle {
             text-align: center;
@@ -273,7 +278,6 @@
         }
         .accordion_comman {
             .accordion_content {
-                .lib-font-size(14);
                 color: @font-gray;
             }
         }
@@ -1530,6 +1534,14 @@
                 &:after {
                     background-size: 20px auto;
                 }
+            }
+        }
+    }
+    .clp_faq_main {
+        .lib-font-size(12);
+        .clp_faq_inner {
+            > p {
+                padding-left: 40px;
             }
         }
     }
