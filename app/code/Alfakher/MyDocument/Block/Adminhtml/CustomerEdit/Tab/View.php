@@ -255,6 +255,19 @@ class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInte
         }
         return $companyName;
     }
+    /**
+     * Retrieve company id.
+     *
+     * @return string
+     */
+    public function getEntityId()
+    {
+        $companyName = '';
+        if ($this->getCompany()) {
+            $companyId = $this->getCompany()->getEntityId();
+        }
+        return $companyId;
+    }
 
     /**
      * Get company.
@@ -313,7 +326,7 @@ class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInte
         $numberOfEmp = '';
         if ($this->getCompany()) {
             // $this->getCompany()->getNumberOfEmp();
-            $numberOfEmp = $this->helperData->getEmployees($this->getCompany()->getNumberOfEmp());
+            $numberOfEmp = $this->helperData->getEmployees((int) $this->getCompany()->getNumberOfEmp());
         }
         return $numberOfEmp;
     }
