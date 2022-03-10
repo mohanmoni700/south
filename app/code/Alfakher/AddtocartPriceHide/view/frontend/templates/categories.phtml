@@ -1,17 +1,17 @@
 <?php
 /*Get Current Category*/
 $category = $block->getCurrentCategory();
-$subcats = $category->getChildrenCategories();
+//$subcats = $category->getChildrenCategories();
 ?>
 
 <div class="site-container category_title">
     <h2 class="cat_tite"><?= /* @noEscape */ $category->getName(); ?></h2>
 </div>
 <!-- this condition to check wether sub category exists[BS]start -->
-<?php  if(!empty($subcats->getData())){ ?>
+<?php if (!empty($subcats->getData())){ ?>
 <div class="shorting_main">
     <div class="shorting_slider">
-        foreach ($subcats as $subcat):
+       <?php foreach ($subcats as $subcat):
             $_category = $block->getChildCategory($subcat->getId());
             $subcaturl = $subcat->getUrl();?>
             <div class="shorting_title"><a href="<?= $subcaturl?>"><?= $subcat->getName();?></a></div>
@@ -19,8 +19,9 @@ $subcats = $category->getChildrenCategories();
     </div>
 </div>
 <?php } ?>
-
 <!-- condition to check wether sub category exists[BS]end -->
+
+
 <script type="text/javascript">
     require([
         "jquery",
@@ -42,4 +43,3 @@ $subcats = $category->getChildrenCategories();
         });
     });
 </script>
- ?>
