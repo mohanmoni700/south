@@ -1,5 +1,7 @@
 
-@hookah_theme_gradient: linear-gradient(274.47deg, #9B2269 4.86%, #D378FF 92.75%);
+@hookah_theme_gradient: linear-gradient(275deg, #9B2269 5%, #D378FF 100%);
+@border_left_gradient: #D378FF;
+@border_right_gradient: #9B2269;
 
 //
 //  Common
@@ -497,6 +499,8 @@
                     &:hover {
                         border-color: transparent;
                         background: @hookah_theme_gradient;
+                        border-left-color: @border_left_gradient;
+                        border-right-color: @border_right_gradient;
                     }
                 }
             }
