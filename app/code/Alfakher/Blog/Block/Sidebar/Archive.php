@@ -10,6 +10,7 @@ class Archive extends \Magefan\Blog\Block\Sidebar\Archive
 
     /**
      * Retrieve available months
+     *
      * @return array
      */
     public function getMonths()
@@ -25,5 +26,4 @@ class Archive extends \Magefan\Blog\Block\Sidebar\Archive
 
         return $this->_months;
     }
-
 }
