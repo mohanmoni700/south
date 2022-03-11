@@ -29,7 +29,7 @@
             <div class="p-name"><?= $block->escapeHtml($comment->getAuthor()->getNickname()) ?></div>
         </div>
 
-        <div class="p-text"><?= /*@noEscape*/ nl2br($block->escapeHtml($comment->getText())) ?></div>
+        <div class="p-text"><?= /*@noEscape*/ nl2br(html_entity_decode($comment->getText())) ?></div>
         <div class="p-actions">
             <div class="publish-date"><?php echo $block->escapeHtml($block->getPublishDate()) ?></div>
             <a href="#" class="reply-action"

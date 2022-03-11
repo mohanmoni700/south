@@ -269,7 +269,6 @@ define([
 	                        } else {
 	                            $('body').loader('hide');
 	                        }
-
 	                    } else {
 	                        $(".page.messages").html('<div role="alert" class="messages">' +
 	                            '<div class="alert danger alert-danger" data-ui-id="message-danger">' +
@@ -359,6 +358,7 @@ define([
 	            responsive: true,
 	            innerScroll: true,
 	            modalClass: 'document-modal',
+	            clickableOverlay: false,
 	            buttons: [{
 	                text: $.mage.__('Continue'),
 	                class: 'mymodal1',

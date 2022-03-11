@@ -13,6 +13,9 @@
                     color: #333 !important;
                     text-decoration: underline !important;
                     text-transform: capitalize;
+                    &:hover {
+                        color: @hookah_theme_color !important;
+                    }
                 }
             }
         }
@@ -181,7 +184,7 @@
                         padding: 0;
                         &.current{
                             .subchildmenu {
-                                display:block;
+                                display:block !important;
                         } 
                         }
                         /*&:hover{
@@ -208,7 +211,6 @@
                             width: 33.33%;
                             float: left;
                             margin-top: 5px;
-                            padding-bottom: 20px;
                             border-right: 1px solid #E0E0E0;
                             &:last-child{
                                 border-right: 0;
@@ -763,12 +765,9 @@
             } 
         } 
         .level1.parent.current .subchildmenu {
-            display: block !important;
+            display: block;
         }
         .level1.parent {
-            &.current > a span:after {
-                transform: rotate(0deg);
-            }
            > .ui-state-active.active span:after {
                 transform: rotate(0deg);
             }
@@ -822,6 +821,9 @@
         .level0.opened {
             .subchildmenu {
                 padding-left: @indent__l;
+                .subchildmenu {
+                    display: none;
+                }
             }
             .level1.parent .subchildmenu.active {
                 display: block !important;

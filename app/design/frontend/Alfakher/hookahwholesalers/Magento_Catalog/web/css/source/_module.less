@@ -236,6 +236,54 @@
         }
     }
 
+    .clp_faq_main {
+        background-color: @hookah_primary_light;
+        color: @font-gray;
+        .lib-font-size(16);
+        .clp_faq_inner {
+            display: none;
+            margin: 0 auto;
+            max-width: @layout_container_xl;            
+            padding: 20px 20px 30px 20px;
+            > p {
+                padding-left: 50px;
+                margin-bottom: 0;
+            }
+        }
+        .clp_faq_toggle {
+            text-align: center;
+            padding: 12px 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            .lib-font-size(14);
+            cursor: pointer;
+            &::after {
+                content: "+";
+                margin-left: 6px;
+                font-size: 26px;
+                font-weight: normal;
+                line-height: 0;
+                vertical-align: middle;
+                position: relative;
+                top: -1px;
+                min-width: 18px;
+                display: inline-block;
+            }
+            &.active {
+                &::after {
+                    content: "-";
+                    font-size: 30px;
+                    top: -4px;
+                }
+            }
+        }
+        .accordion_comman {
+            .accordion_content {
+                color: @font-gray;
+            }
+        }
+    }    
+
 .block.upsell, .blog-page-list .block-products-list .slick-slider {
   .slick-prev {
     left: -46px;
@@ -422,6 +470,10 @@
           text-transform: uppercase;
           width: 220px;
           text-align: center;
+          &:hover {
+              background: transparent @hookah_theme_gradient;
+              border-color: transparent;
+          }
       }
     }
     .modals-wrapper{
@@ -1486,6 +1538,14 @@
             }
         }
     }
+    .clp_faq_main {
+        .lib-font-size(12);
+        .clp_faq_inner {
+            > p {
+                padding-left: 40px;
+            }
+        }
+    }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
@@ -2198,6 +2258,11 @@
                     .column.main {
                         min-height: 0;
                     }
+                }
+            }
+            .category-cms {
+                .amscroll-load-button {
+                    display: none !important;
                 }
             }
         }

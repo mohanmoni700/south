@@ -12,7 +12,7 @@ $urlForm = $block->getViewDetailsUrl() . '#description';
     <?php $clickHereAlertString = __('Are you sure you want to leave ?'); ?>
 <?php endif; ?>
 <!-- show view details only when there is short description start 08/03/2022[BS] -->
-<?php if(!empty($_product->getShortDescription())) { ?>
+<?php if(!empty($_product->getDescription())) { ?>
 <div class="view-details-actions">
     <a href="<?= $block->escapeUrl($urlForm) ?>" class="viewdetails action add" id="tab-viewdetails">
         <?= $block->escapeHtml(__('View Details')) ?>
