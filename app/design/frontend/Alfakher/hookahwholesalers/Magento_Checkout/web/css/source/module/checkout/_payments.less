@@ -82,7 +82,17 @@
         .payment-method-title {
             .lib-css(padding, @checkout-payment-method-title__padding 0);
             margin: 0;
-
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            input[type="radio"] {
+                margin: 0 12px 0 0;
+                &:checked {
+                    ~ label {
+                        color: @hookah_theme_color;
+                    }
+                }
+            }
             .payment-icon {
                 display: inline-block;
                 margin-right: @indent__xs;
