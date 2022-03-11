@@ -185,6 +185,9 @@
 
     input[type="radio"] {
         position: relative;
+        & + label {
+            cursor: pointer;
+        }
         &:before {
             content: "";
             width: 16px;
