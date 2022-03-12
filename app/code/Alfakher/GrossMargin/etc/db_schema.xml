@@ -1,0 +1,9 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="sales_order_item">
+		<column xsi:type="decimal" name="gross_margin" nullable="false" scale="2" precision="10" comment="Gross Margin"/>
+	</table>
+
+	<table name="quote_item">
+		<column xsi:type="decimal" name="gross_margin" nullable="false" scale="2" precision="10" comment="Gross Margin"/>
+	</table>
+</schema>
