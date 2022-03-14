@@ -16,13 +16,19 @@ class Documentcheck extends Column
      * @param array              $components
      * @param array              $data
      */
+    protected $_customerRepositoryInterface;
+
     public function __construct(
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface,
+        \Magento\Customer\Model\CustomerFactory $customerFactory,
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
         CollectionFactory $collection,
         array $components = [],
         array $data = []
     ) {
+        $this->_customerRepositoryInterface = $customerRepositoryInterface;
+        $this->_customerFactory = $customerFactory;
         $this->collection = $collection;
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
@@ -38,13 +44,24 @@ class Documentcheck extends Column
             foreach ($dataSource['data']['items'] as &$item) {
                 $collection = $this->collection->create()
                     ->addFieldToFilter('customer_id', ['eq' => $item['entity_id']]);
+                $customerId = $item['entity_id'];
+
+                $customer = $this->_customerFactory->create()->load($customerId)->getDataModel();
                 if ($collection->getdata()) {
-                    $item[$this->getData('name')] = 'Yes';
+
+                    $item[$this->getData('name')] = '1';
+                    $customer->setCustomAttribute('uploaded_doc', 1);
+                    $this->_customerRepositoryInterface->save($customer);
+
                 } else {
-                    $item[$this->getData('name')] = 'No';
+                    $item[$this->getData('name')] = '0';
+                    $customer->setCustomAttribute('uploaded_doc', 0);
+                    $this->_customerRepositoryInterface->save($customer);
                 }
             }
+
         }
+
         return $dataSource;
     }
 }
