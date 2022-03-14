@@ -29,7 +29,19 @@ class Richsnippets extends Opengraph
             if (!$logoBlock) {
                 $logoBlock = $this->getLayout()->getBlock('amp.logo');
             }
-
+            if ($post->getAuthor()) {
+                $authorData = [
+                    "@type" => "Person",
+                    "name" => $post->getAuthor()->getTitle(),
+                    "url" => $post->getAuthor()->getAuthorUrl(),
+                ];
+            } else {
+                $authorData = [
+                    "@type" => "Person",
+                    "name" => '',
+                    "url" => '',
+                ];
+            }
             $this->_options = [
                 '@context' => 'http://schema.org',
                 '@type' => 'Article',
@@ -40,11 +52,7 @@ class Richsnippets extends Opengraph
                 'headline' => $this->getTitle(),
                 'image' => $this->getImage() ?:
                 ($logoBlock ? $logoBlock->getLogoSrc() : ''),
-                'author' => [
-                    "@type" => "Person",
-                    "name" => $this->getAuthor(),
-                    "url" => $this->getAuthorUrl(),
-                ],
+                'author' => $authorData,
                 'publisher' => [
                     '@type' => 'Organization',
                     'name' => $this->getPublisher(),

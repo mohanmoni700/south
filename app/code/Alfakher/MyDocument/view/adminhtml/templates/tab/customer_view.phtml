@@ -129,7 +129,7 @@ $docdata = $documentData->getData();
                                 id="expiry_date-<?= $block->escapeHtml($document['mydocument_id']); ?>"
                                 class="update-date"
                                 data-validate="{required:true}"
-                                value="<?= $document->getExpiryDate() ?>"/>
+                                value="<?= $document->getExpiryDate() ?>" readonly/>
                 </div> 
 
                 <?php $val=$document->getMydocumentId(); ?>
