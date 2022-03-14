@@ -84,6 +84,7 @@
                 text-align: center;
                 display: block;
                 margin: 0 20px;
+                cursor: pointer;
             }
             .deletedocument {
                 border:  none;
@@ -214,6 +215,15 @@
             }
             .comman-doc-name {
                 display: flex;
+            }
+            .input-file {
+                cursor: default;
+                &::before {
+                    cursor: default;
+                }
+                input[type="file"] {
+                    display: none;
+                }
             }
         }
     }
