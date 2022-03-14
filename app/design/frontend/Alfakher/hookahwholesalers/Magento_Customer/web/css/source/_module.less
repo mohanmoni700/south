@@ -958,16 +958,6 @@ ul.nav.items{
     html {
       scroll-behavior: smooth;
     }
-    nav.navigation.sw-megamenu:before{
-        content: '';
-        position: absolute;
-        height: 60px;
-        background: #ffffff;
-        top: -50px;
-        width: 100%;
-        left: 0px;
-        pointer-events: none;
-    }
     .nav-open{
         .page-main {
             position: relative;
@@ -1742,6 +1732,8 @@ ul.nav.items{
             &:hover{
                 border-color: transparent;
                 background: @hookah_theme_gradient;
+                border-left-color: @border_left_gradient;
+                border-right-color: @border_right_gradient;
             }
         }
     }
@@ -1971,6 +1963,8 @@ ul.nav.items{
                     &:hover {
                         border-color: transparent;
                         background: @hookah_theme_gradient;
+                        border-left-color: @border_left_gradient;
+                        border-right-color: @border_right_gradient;
                     }
                 }
             }
@@ -2058,6 +2052,8 @@ ul.nav.items{
             line-height: 38px;
             &:hover {
                 background: @hookah_theme_gradient;
+                border-left-color: @border_left_gradient;
+                border-right-color: @border_right_gradient;
             }
         }
     }
@@ -2191,6 +2187,20 @@ ul.nav.items{
             .actions-toolbar {
                 .primary {
                     max-width: 230px;
+                }
+            }
+        }
+        .account {
+            &.customerb2b-account-myproductpricing {
+                .toolbar {
+                    .pages {
+                        position: relative;
+                        float: right;
+                        width: auto;
+                    }
+                    .limiter {
+                        margin-top: 10px;
+                    }
                 }
             }
         }

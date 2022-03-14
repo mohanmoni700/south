@@ -80,10 +80,15 @@ $_helper = $block->getData('outputHelper');
                                 <?=/* @noEscape */ $_helper->productAttribute($_product, $_product->getName(), 'name')?>
                             </a>
                         </strong>
+                       
                         <?php if ($docdata == 2 && $is_document_upload == 1 && $doc_expired == 1): ?>
                             <?= $block->getReviewsSummaryHtml($_product, $templateType) ?>
                             <?= /* @noEscape */ $block->getProductPrice($_product) ?>
                             <?= $block->getProductDetailsHtml($_product) ?>
+                        <?php else: ?>
+                            <div class="price-disp" style="display:none;">
+                               <?= /* @noEscape */ $block->getProductPrice($_product) ?>
+                            </div>
                         <?php endif; ?>
                         <div class="product-item-inner">
                             <div class="product actions product-item-actions">
@@ -112,6 +117,7 @@ $_helper = $block->getData('outputHelper');
                                         <?php if ($docdata == 2 && $is_document_upload == 1 && $doc_expired == 1): ?>
                                         <?php else: ?>
                                              <!-- start view details btn -->
+                                               
                                                 <div class="actions-primary">
                                                         <div class="logged-in-action">
                                                             <a href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>"><?= $block->escapeHtml(__('View Details')) ?></a>

@@ -1183,6 +1183,8 @@
                 &:hover{
                     background: @hookah_theme_gradient;
                     border-color: transparent;
+                    border-left-color: @border_left_gradient;
+                    border-right-color: @border_right_gradient;
                 }
             }
         }
@@ -2300,14 +2302,14 @@
                 }   
             }
         }
-        
-    }
-    @media only screen and (min-width: @screen__m) and (max-width: 1280px) {
         #html-body .page-wrapper {
             .navigation {
                 padding: 0 (@indent__base - @indent__xs);
             }
         }
+        
+    }
+    @media only screen and (min-width: @screen__m) and (max-width: 1280px) {
         #html-body .page-header {
             .header-links-wrapper {
                 padding: 0 (@indent__base - @indent__xs);
@@ -2568,6 +2570,7 @@
             .action.showcart{
                 .counter.qty{
                     top: -@indent__s;
+                    max-width: 36px;
                 }
             }
             .block-minicart {

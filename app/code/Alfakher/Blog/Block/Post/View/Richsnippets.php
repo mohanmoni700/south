@@ -11,7 +11,7 @@ use Magento\Store\Model\ScopeInterface;
 class Richsnippets extends Opengraph
 {
     /**
-     * @param  array
+     * @var  array
      */
     protected $_options;
 
