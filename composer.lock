@@ -3208,6 +3208,7 @@
                 "issues": "https://github.com/facebook/php-graph-sdk/issues",
                 "source": "https://github.com/facebook/php-graph-sdk/tree/5.7.0"
             },
+            "abandoned": true,
             "time": "2018-12-11T22:56:31+00:00"
         },
         {
@@ -7407,21 +7408,52 @@
             "time": "2021-11-04T13:16:06+00:00"
         },
         {
-            "name": "magefan/module-blog",
-            "version": "2.10.4",
+            "name": "magefan/module-admin-user-guide",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/magefan/module-blog.git",
-                "reference": "e61a5e187c6963ed5e1d4bb1d06d943850d52f9f"
+                "url": "https://github.com/magefan/module-admin-user-guide.git",
+                "reference": "35f950396e7a443cf93e00603e45b2da23c03b58"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/magefan/module-blog/zipball/e61a5e187c6963ed5e1d4bb1d06d943850d52f9f",
-                "reference": "e61a5e187c6963ed5e1d4bb1d06d943850d52f9f",
+                "url": "https://api.github.com/repos/magefan/module-admin-user-guide/zipball/35f950396e7a443cf93e00603e45b2da23c03b58",
+                "reference": "35f950396e7a443cf93e00603e45b2da23c03b58",
+                "shasum": ""
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magefan\\AdminUserGuide\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Admin panel user guides.",
+            "support": {
+                "issues": "https://github.com/magefan/module-admin-user-guide/issues",
+                "source": "https://github.com/magefan/module-admin-user-guide/tree/2.0.1"
+            },
+            "time": "2021-12-30T07:25:20+00:00"
+        },
+        {
+            "name": "magefan/module-blog",
+            "version": "2.10.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magefan/module-blog.git",
+                "reference": "e8080a34f76a3bab83c84a7b58d54968e7911898"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magefan/module-blog/zipball/e8080a34f76a3bab83c84a7b58d54968e7911898",
+                "reference": "e8080a34f76a3bab83c84a7b58d54968e7911898",
                 "shasum": ""
             },
             "require": {
-                "magefan/module-community": ">=2.1.6",
+                "magefan/module-community": ">=2.1.8",
                 "magefan/module-wysiwyg-advanced": ">=2.0.10"
             },
             "suggest": {
@@ -7442,16 +7474,16 @@
             "description": "Implements Blog functionality on Magento 2 store",
             "support": {
                 "issues": "https://github.com/magefan/module-blog/issues",
-                "source": "https://github.com/magefan/module-blog/tree/2.10.4"
+                "source": "https://github.com/magefan/module-blog/tree/2.10.6"
             },
-            "time": "2021-11-16T07:36:41+00:00"
+            "time": "2022-03-09T11:18:17+00:00"
         },
         {
             "name": "magefan/module-blog-author",
-            "version": "2.10.4",
+            "version": "2.10.6",
             "dist": {
                 "type": "zip",
-                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-author/version/2.10.4/"
+                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-author/version/2.10.6/"
             },
             "type": "magento2-module",
             "autoload": {
@@ -7469,16 +7501,16 @@
         },
         {
             "name": "magefan/module-blog-extra",
-            "version": "2.10.4",
+            "version": "2.10.6",
             "dist": {
                 "type": "zip",
-                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-extra/version/2.10.4/"
+                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-extra/version/2.10.6/"
             },
             "require": {
-                "magefan/module-blog-author": ">= 2.10.4",
-                "magefan/module-blog-import": ">= 2.10.4",
-                "magefan/module-blog-plus": ">= 2.10.4",
-                "magefan/module-productwidget": ">=2.0.7",
+                "magefan/module-blog-author": ">= 2.10.6",
+                "magefan/module-blog-import": ">= 2.10.6",
+                "magefan/module-blog-plus": ">= 2.10.6",
+                "magefan/module-productwidget": ">=2.0.8",
                 "magefan/module-youtube-widget": ">=2.0.11"
             },
             "type": "magento2-module",
@@ -7537,10 +7569,10 @@
         },
         {
             "name": "magefan/module-blog-import",
-            "version": "2.10.4",
+            "version": "2.10.6",
             "dist": {
                 "type": "zip",
-                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-import/version/2.10.4/"
+                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-import/version/2.10.6/"
             },
             "type": "magento2-module",
             "autoload": {
@@ -7558,14 +7590,14 @@
         },
         {
             "name": "magefan/module-blog-plus",
-            "version": "2.10.4",
+            "version": "2.10.6",
             "dist": {
                 "type": "zip",
-                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-plus/version/2.10.4/"
+                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-plus/version/2.10.6/"
             },
             "require": {
                 "facebook/graph-sdk": "^5.6.3",
-                "magefan/module-blog": ">=2.10.4"
+                "magefan/module-blog": ">=2.10.6"
             },
             "type": "magento2-module",
             "autoload": {
@@ -7583,17 +7615,20 @@
         },
         {
             "name": "magefan/module-community",
-            "version": "2.1.6",
+            "version": "2.1.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/magefan/module-community.git",
-                "reference": "897a54d543d4a29bbc304f35defec8c0480fda26"
+                "reference": "1ba131ffe9d60f01194fb28785bc004803f0f97b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/magefan/module-community/zipball/897a54d543d4a29bbc304f35defec8c0480fda26",
-                "reference": "897a54d543d4a29bbc304f35defec8c0480fda26",
+                "url": "https://api.github.com/repos/magefan/module-community/zipball/1ba131ffe9d60f01194fb28785bc004803f0f97b",
+                "reference": "1ba131ffe9d60f01194fb28785bc004803f0f97b",
                 "shasum": ""
+            },
+            "require": {
+                "magefan/module-admin-user-guide": ">=2.0.0"
             },
             "type": "magento2-module",
             "autoload": {
@@ -7607,19 +7642,19 @@
             "notification-url": "https://packagist.org/downloads/",
             "support": {
                 "issues": "https://github.com/magefan/module-community/issues",
-                "source": "https://github.com/magefan/module-community/tree/2.1.6"
+                "source": "https://github.com/magefan/module-community/tree/2.1.8"
             },
-            "time": "2021-11-01T15:54:54+00:00"
+            "time": "2021-12-22T11:09:27+00:00"
         },
         {
             "name": "magefan/module-productwidget",
-            "version": "2.0.7",
+            "version": "2.0.8",
             "dist": {
                 "type": "zip",
-                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-productwidget/version/2.0.7/"
+                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-productwidget/version/2.0.8/"
             },
             "require": {
-                "magefan/module-community": ">=2.0.14",
+                "magefan/module-community": ">=2.1.8",
                 "magefan/module-wysiwyg-advanced": ">=2.0.10"
             },
             "type": "magento2-module",
