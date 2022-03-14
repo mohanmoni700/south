@@ -516,6 +516,31 @@
             }
        } 
     }
+
+    .sales-order-print.page-print {
+        .logo {
+            margin-bottom: 20px;
+            height: auto;
+            img {
+                width: auto;
+                max-width: none;
+            }
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: @font-weight__regular;
+        }
+        .order-details-items {
+            border-top: solid 1px @border-color__base;
+            .actions-toolbar {
+                > .secondary {
+                    .action.back {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
 }
 
 //
@@ -524,18 +549,6 @@
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
     .account {
-        .order-details-items {
-            .table-order-items {
-                .product-item-name,
-                .price-including-tax,
-                .price-excluding-tax,
-                .items-qty {
-                    display: inline-block;
-                    vertical-align: top;
-                }
-            }
-        }
-
         .toolbar {
             &:extend(.abs-add-clearfix-mobile all);
 
@@ -583,6 +596,19 @@
 }
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .account {
+        .order-details-items {
+            .table-order-items {
+                .product-item-name,
+                .price-including-tax,
+                .price-excluding-tax,
+                .items-qty {
+                    display: inline-block;
+                    vertical-align: top;
+                }
+            }
+        }
+    }
     .order-pager-wrapper {
         .toolbar-amount {
             left: inherit;
@@ -678,6 +704,28 @@
                 &:last-child{
                     margin-bottom: 0;
                 }
+            }
+        }
+    }
+    .sales-order-print.page-print {
+        h1 {
+            font-size: 26px;
+        }
+        .page-main {
+            margin-top: 0;
+            padding-top: 30px;
+        }
+    }
+    .table-wrapper.orders-history{
+        .table-order-items{            
+            tbody{
+                tr{
+                    .col.shipping {
+                        &::before {
+                            content: "Ship To:" !important;
+                        }
+                    }
+                }   
             }
         }
     }

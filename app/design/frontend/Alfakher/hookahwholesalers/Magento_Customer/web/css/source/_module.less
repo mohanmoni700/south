@@ -94,9 +94,13 @@ ul.nav.items{
                     text-transform: uppercase;
                     letter-spacing: 1px;
                     box-shadow: none;
+                    margin-bottom: 0;
+                    font-size: 14px;
                     &.replace{
                         background: @color_primary;
                         border-color: #961E70;
+                        margin-right: 0;
+                        margin-left: 10px;
                     }
                 }
             }
@@ -199,10 +203,23 @@ ul.nav.items{
             }
         }
     }
+    &.customer-address-form {
+        .form-address-edit {
+            .fieldset{
+                + .fieldset{
+                    margin-top: 30px;
+                }
+            }
+            .field.street {
+                > .label {
+                    display: none;
+                }
+            }
+        }
+    }
     .form-address-edit{
         .fieldset{
             + .fieldset{
-                margin-top: 30px;
                 legend{
                     display: none;
                 }
@@ -229,6 +246,38 @@ ul.nav.items{
     .block.block-addresses-list{
         border-top: 1px solid @border-color__base-table;
         padding-top:15px;
+    }
+    .pages {
+        .item {
+            margin: 0 8px 0 0;
+        }
+        .action {
+            width: 30px;
+            height: 30px;
+            line-height: 29px;
+            border-color: @hookah_theme_color;
+            border-radius: 100%;
+            &:hover {
+                background-color: @hookah_theme_color;
+                &::before {
+                    color: @color_white !important;
+                }
+            }
+            &.previous {
+                &:before {
+                    color: @hookah_theme_color;
+                    font-size: 40px;
+                }
+            }
+            &.next {
+                margin-left: 0;
+                &:before {
+                    color: @hookah_theme_color;
+                    font-size: 40px;
+                    margin: 0 0 0 -5px;
+                }
+            }
+        }
     }
 } 
 .customer-account-create{
@@ -526,7 +575,6 @@ ul.nav.items{
                 width: 100%;
                 .field.additional{
                     width: 100%;
-                    margin-top: 30px;
                 }
             }
             .field.choice{
@@ -787,8 +835,9 @@ ul.nav.items{
         outline: none;
       }
       & + label{
-        padding-left: 25px;
-        padding-top: 2px;
+        padding-left: 30px;
+        padding-top: 1px;
+        cursor: pointer;
       }
     & + label:before {
       content: '';
@@ -924,15 +973,6 @@ ul.nav.items{
     }
     html {
       scroll-behavior: smooth;
-    }
-    nav.navigation.sw-megamenu:before{
-        content: '';
-        position: absolute;
-        height: 60px;
-        background: #ffffff;
-        top: -30px;
-        width: 100%;
-        left: 0px;
     }
     .nav-open{
         .page-main {
@@ -1345,6 +1385,7 @@ ul.nav.items{
             width: 100%;
             height: auto;
             font-size: 1.2rem;
+            color: @color_black;
         }
     }
     .login-container {
@@ -1707,6 +1748,8 @@ ul.nav.items{
             &:hover{
                 border-color: transparent;
                 background: @hookah_theme_gradient;
+                border-left-color: @border_left_gradient;
+                border-right-color: @border_right_gradient;
             }
         }
     }
@@ -1936,6 +1979,8 @@ ul.nav.items{
                     &:hover {
                         border-color: transparent;
                         background: @hookah_theme_gradient;
+                        border-left-color: @border_left_gradient;
+                        border-right-color: @border_right_gradient;
                     }
                 }
             }
@@ -2023,6 +2068,8 @@ ul.nav.items{
             line-height: 38px;
             &:hover {
                 background: @hookah_theme_gradient;
+                border-left-color: @border_left_gradient;
+                border-right-color: @border_right_gradient;
             }
         }
     }
@@ -2159,6 +2206,29 @@ ul.nav.items{
                 }
             }
         }
+        .customer-account-index {
+            .form-address-edit{
+                .actions-toolbar{
+                    .action.primary{
+                        width: 300px;
+                    }
+                } 
+            }
+        }
+        .account {
+            &.customerb2b-account-myproductpricing {
+                .toolbar {
+                    .pages {
+                        position: relative;
+                        float: right;
+                        width: auto;
+                    }
+                    .limiter {
+                        margin-top: 10px;
+                    }
+                }
+            }
+        }
     }
     @media only screen and (max-width: 767px) and (min-width: 400px) {
         .account {
@@ -2210,6 +2280,28 @@ ul.nav.items{
         .sidebar-additional {
             margin: 0;
         }
+        &.customerb2b-account-myproductpricing {
+            .toolbar {
+                .pages {
+                    float: none;
+                }
+            }
+        }
+    }
+    .modals-wrapper {
+        .modal-popup.popup-reorder-quote {
+            .modal-title {
+                padding-right: 20px;
+            }
+            .actions-toolbar {
+                > .primary {
+                    .action.replace {
+                        margin-left: 0;
+                        margin-top: 10px;
+                    }
+                }
+            }
+        }        
     }
 }
 
@@ -2314,6 +2406,15 @@ ul.nav.items{
                 width: 20px;
                 height: 20px;
                 left: 28px;
+            }
+        }
+        &.customer-address-form {
+            .form-address-edit {
+                .fieldset{
+                    + .fieldset{
+                        margin-top: 0;
+                    }
+                }
             }
         }
     }
@@ -2480,6 +2581,17 @@ ul.nav.items{
         }
     }
 
+    .form-address-edit,
+    .form-edit-company{        
+        .fieldset{
+            .street{
+                .field.additional{
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+
     .control.captcha-image {
         .captcha-img {
             .lib-css(margin-bottom, @indent__s);
@@ -2536,6 +2648,13 @@ ul.nav.items{
                 margin-right: auto;
             }
         }
+    }
+    .modals-wrapper {
+        .modal-popup.popup-reorder-quote {
+            .modal-inner-wrap {
+                max-width: 100%;
+            }
+        }        
     }
 }
 
@@ -2664,6 +2783,16 @@ ul.nav.items{
     .control.captcha-image {
         .captcha-img {
             margin: 0 @indent__s @indent__s 0;
+        }
+    }
+    .form-address-edit,
+    .form-edit-company{        
+        .fieldset{
+            .street{
+                .field.additional{
+                    margin-top: 30px;
+                }
+            }
         }
     }
 }

@@ -86,7 +86,6 @@
                         </div>
                         <?php if (isset($val['expiry_date'])): ?>
                         <div class="field">
-                            <label><?= $block->escapeHtml(__("Expiry Date"));  ?></label>
                             <div class="value date">
                                 <?= $block->escapeHtml(__('Expiry Date: ') . $val['expiry_date']); ?>
                             </div>
@@ -152,7 +151,7 @@
                                 name="expiry_date<?= $block->escapeHtml($val['mydocument_id']); ?>"
                                 id="expiry_date-<?= $block->escapeHtml($val['mydocument_id']); ?>"
                                 data-validate="{required:true}"
-                                class="update-date" value=""/>
+                                class="update-date" value="" readonly/>
                         </div>
                     </div>
                 </div>
@@ -204,7 +203,7 @@
                         <input type="text"
                             placeholder="Expiry Date"
                             name="expiry_date1"
-                            id="expiry_date-1" data-validate="{required:true}" />
+                            id="expiry_date-1" data-validate="{required:true}" readonly />
                     </div>    
                 </div>
             </div>

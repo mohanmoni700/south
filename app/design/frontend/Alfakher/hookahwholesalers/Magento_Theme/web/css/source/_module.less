@@ -703,8 +703,6 @@
     }
 
     .copyright {
-        .lib-css(background-color, @color-yellow-light2);
-        .lib-css(color, @color-white);
         box-sizing: border-box;
         display: block;
         padding: @indent__s;
@@ -1185,6 +1183,8 @@
                 &:hover{
                     background: @hookah_theme_gradient;
                     border-color: transparent;
+                    border-left-color: @border_left_gradient;
+                    border-right-color: @border_right_gradient;
                 }
             }
         }
@@ -1197,7 +1197,7 @@
         text-align: left;
         margin: 5px !important;
         min-height: 512px !important;
-        width: 230px !important;
+        width: 250px !important;
         float: left;
         border: 2px solid @color_black;
         position: relative;
@@ -1218,7 +1218,7 @@
         background-color: @color_black;
     }
     #contactBoxpad {
-        padding: 10px;
+        padding: 20px;
         font-size: 11px;
     }
     .strongcontact {
@@ -1876,9 +1876,10 @@
                             top: 50%;
                             transform: translateY(-50%);
                         }
-                        h1{
+                        h1, h2, h3{
                             font-size: 16px;
                             margin-bottom: 0;
+                            margin-top: 0;
                             line-height: @indent__base - 4;
                             font-weight: bold;
                             .lib-css(font-weight, @font-weight__bold);
@@ -2302,25 +2303,30 @@
                 }   
             }
         }
-        
-    }
-    @media only screen and (min-width: @screen__m) and (max-width: 1280px) {
         #html-body .page-wrapper {
             .navigation {
                 padding: 0 (@indent__base - @indent__xs);
             }
         }
+        
+    }
+    @media only screen and (min-width: @screen__m) and (max-width: 1280px) {
         #html-body .page-header {
             .header-links-wrapper {
                 padding: 0 (@indent__base - @indent__xs);
+                .header-links {
+                    .header-top-right {
+                        padding-right: 0;
+                    }
+                }
             }
             .header.content {
                 padding: 15px 15px 63px 15px;
             }
-        }
+        }        
     }
     
-    @media only screen and (min-width: @screen__m) and (max-width: 1140px) {
+    @media only screen and (min-width: @screen__m) and (max-width: 1079px) {
         #html-body .page-header .header-links-wrapper {
             .header-links .header-top-left {
                 flex-direction: column;
@@ -2400,10 +2406,12 @@
             border-bottom: 0;
             .warning-section-wrapper .warning-section {
                 padding: @indent__s @indent__l;
-                .heading-section h1{
-                    font-size: 12px;
-                    line-height: @indent__base - 2;
-                    margin-left: @indent__xl;
+                .heading-section {
+                    h1, h2, h3 {
+                        font-size: 12px;
+                        line-height: @indent__base - 2;
+                        margin-left: @indent__xl;
+                    }
                 }
             }
             .header-links-wrapper .header-links {
@@ -2565,6 +2573,7 @@
             .action.showcart{
                 .counter.qty{
                     top: -@indent__s;
+                    max-width: 36px;
                 }
             }
             .block-minicart {
@@ -2659,11 +2668,11 @@
                     flex-direction: column;                    
                 }
                 .one{
-                    margin-bottom: (@indent__m*2);
+                    margin-bottom: (@indent__m*1.8);
                 }
                 .two {
                     display: flex;
-                    padding-bottom: @indent__xl;
+                    padding-bottom: 20px;
                     .header-item {
                         margin-right: @indent__l;
                     }
@@ -2726,8 +2735,10 @@
                     }
                     .left_section {
                         flex-basis: 65%;
+                        justify-content: flex-start;
                         .logo{
                             margin-bottom: 0;
+                            margin-left: 20px;
                         }
                     }
                 } 

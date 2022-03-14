@@ -1,18 +1,17 @@
 <?php
 /*Get Current Category*/
 $category = $block->getCurrentCategory();
-//$subcats = $category->getChildrenCategories();
+$subcats = $category->getChildrenCategories();
 ?>
 
 <div class="site-container category_title">
-    <h2 class="cat_tite"><?= /* @noEscape */ $category->getName(); ?></h2>
+    <h1 class="cat_tite"><?= /* @noEscape */ $category->getName(); ?></h1>
 </div>
-<?php /*
 <!-- this condition to check wether sub category exists[BS]start -->
-<?php if(!empty($subcats->getData())){ ?>
+<?php if (!empty($subcats->getData())){ ?>
 <div class="shorting_main">
     <div class="shorting_slider">
-        foreach ($subcats as $subcat):
+       <?php foreach ($subcats as $subcat):
             $_category = $block->getChildCategory($subcat->getId());
             $subcaturl = $subcat->getUrl();?>
             <div class="shorting_title"><a href="<?= $subcaturl?>"><?= $subcat->getName();?></a></div>
@@ -37,11 +36,10 @@ $category = $block->getCurrentCategory();
                     slidesToShow: 1,
                     slidesToScroll: 1,
                     autoplay: false,
-                    infinite: false,
+                    infinite: true,
                     variableWidth: true
                 });
             }, 0);
         });
     });
 </script>
-*/ ?>

@@ -13,6 +13,9 @@
                     color: #333 !important;
                     text-decoration: underline !important;
                     text-transform: capitalize;
+                    &:hover {
+                        color: @hookah_theme_color !important;
+                    }
                 }
             }
         }
@@ -181,7 +184,7 @@
                         padding: 0;
                         &.current{
                             .subchildmenu {
-                                display:block;
+                                display:block !important;
                         } 
                         }
                         /*&:hover{
@@ -208,7 +211,6 @@
                             width: 33.33%;
                             float: left;
                             margin-top: 5px;
-                            padding-bottom: 20px;
                             border-right: 1px solid #E0E0E0;
                             &:last-child{
                                 border-right: 0;
@@ -418,7 +420,7 @@
                     }
                 }
                 .submenu {
-                    display: block;
+                    display: none;
                     visibility: hidden;
                     opacity: 0;
                     transition: .2s opacity;
@@ -461,6 +463,7 @@
                         > .submenu {
                             visibility: visible;
                             opacity: 1;
+                            display: block;
                         }
                     }
                     .submenu {
@@ -726,7 +729,7 @@
                     > .parent .subcat-show-all {
                         right: @indent__l + @indent__xs;
                         padding: 0;
-                        bottom: @indent__l;
+                        bottom: @indent__l - 5px;
                         text-transform: capitalize;
                         a {
                             padding: 0;
@@ -738,17 +741,23 @@
     }
 }
 //m - L
-    @media only screen and (max-width: 1025px) {
+@media only screen and (max-width: 1025px) {
+    body.active-menu {
+        overflow: hidden;
+    }
     .sw-megamenu.navigation {
         .lib-css(background, @color-white);
-        padding: 0 @indent__l;
+        padding: 15px @indent__l 0 @indent__l;
         width: 100%;
         display: none;
         &.active {
             display: block !important;
-            position: absolute;
-            top: 220px;
+            position: fixed;
+            height: calc(~"100% - 188px");
+            overflow: auto;
+            top: 188px;
             z-index: 998;
+            left: 0;
         }
         .submenu{
             .subchildmenu{
@@ -762,12 +771,9 @@
             } 
         } 
         .level1.parent.current .subchildmenu {
-            display: block !important;
+            display: block;
         }
         .level1.parent {
-            &.current > a span:after {
-                transform: rotate(0deg);
-            }
            > .ui-state-active.active span:after {
                 transform: rotate(0deg);
             }
@@ -821,6 +827,9 @@
         .level0.opened {
             .subchildmenu {
                 padding-left: @indent__l;
+                .subchildmenu {
+                    display: none;
+                }
             }
             .level1.parent .subchildmenu.active {
                 display: block !important;
@@ -932,6 +941,25 @@
                     margin: 15px;
                 }
             }
+        }
+    }
+}
+
+@media only screen and (max-width: 560px) {
+    .sw-megamenu.navigation {
+        padding-top: 20px;
+        &.active {            
+            height: calc(~"100% - 200px");
+            top: 200px;
+        }
+    }   
+}
+
+@media only screen and (max-width: 360px) {
+    .sw-megamenu.navigation {
+        &.active {            
+            height: calc(~"100% - 215px");
+            top: 215px;
         }
     }
 }

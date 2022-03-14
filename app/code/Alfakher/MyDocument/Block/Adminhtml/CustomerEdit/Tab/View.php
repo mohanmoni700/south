@@ -58,6 +58,11 @@ class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInte
     private $customerAttributes;
 
     /**
+     * @var \HookahShisha\Customerb2b\Helper\Data
+     */
+    private $helperData;
+
+    /**
      * @param \Magento\Framework\App\Response\Http\FileFactory $fileFactory
      * @param Context $context
      * @param \Magento\Framework\Registry $registry
@@ -69,6 +74,7 @@ class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInte
      * @param CustomerRepositoryInterface $customerRepository
      * @param CompanyRepositoryInterface $companyRepository
      * @param CustomerTypeSource $customerTypeSource
+     * @param \HookahShisha\Customerb2b\Helper\Data $helperData
      * @param array $data = []
      */
     public function __construct(
@@ -83,6 +89,7 @@ class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInte
         CustomerRepositoryInterface $customerRepository,
         CompanyRepositoryInterface $companyRepository,
         CustomerTypeSource $customerTypeSource,
+        \HookahShisha\Customerb2b\Helper\Data $helperData,
         array $data = []
     ) {
         $this->fileFactory = $fileFactory;
@@ -95,6 +102,7 @@ class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInte
         $this->customerRepository = $customerRepository;
         $this->companyRepository = $companyRepository;
         $this->customerTypeSource = $customerTypeSource;
+        $this->helperData = $helperData;
         parent::__construct($context, $data);
     }
 
@@ -247,6 +255,19 @@ class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInte
         }
         return $companyName;
     }
+    /**
+     * Retrieve company id.
+     *
+     * @return string
+     */
+    public function getEntityId()
+    {
+        $companyName = '';
+        if ($this->getCompany()) {
+            $companyId = $this->getCompany()->getEntityId();
+        }
+        return $companyId;
+    }
 
     /**
      * Get company.
@@ -304,7 +325,8 @@ class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInte
     {
         $numberOfEmp = '';
         if ($this->getCompany()) {
-            $numberOfEmp = $this->getCompany()->getNumberOfEmp();
+            // $this->getCompany()->getNumberOfEmp();
+            $numberOfEmp = $this->helperData->getEmployees((int) $this->getCompany()->getNumberOfEmp());
         }
         return $numberOfEmp;
     }

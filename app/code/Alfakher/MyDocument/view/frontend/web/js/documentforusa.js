@@ -139,7 +139,7 @@ define([
                         '<span class="slider round"></span>' +
                         '<div class="expiry_dates expiry_dates' + showId + '" for="document expiry data" style="display:none">' +
                         '<label>Set Expiry Date</label>' +
-                        '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date' + showId + '" data-validate="{required:true}" />' +
+                        '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date' + showId + '" data-validate="{required:true}" readonly/>' +
                         '<input type="hidden" id="is_add_more_form'+ showId +'" name="is_add_more_form[]" value="1"/>'+
                         '</div></div>').insertAfter("#input-file-" + showId);
 
@@ -358,6 +358,7 @@ define([
 	            responsive: true,
 	            innerScroll: true,
 	            modalClass: 'document-modal',
+	            clickableOverlay: false,
 	            buttons: [{
 	                text: $.mage.__('Continue'),
 	                class: 'mymodal1',

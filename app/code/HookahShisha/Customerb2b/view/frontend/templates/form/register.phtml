@@ -418,7 +418,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                value=""
                                placeholder="<?= /* @noEscape */ $block->escapeHtmlAttr($salesTaxID) ?>"
                                title="<?= /* @noEscape */ $block->escapeHtmlAttr($salesTaxID) ?>"
-                               class="input-text">
+                               class="input-text validate-alphanum-with-spaces">
                     </div>
                 </div>
                 <div class="field tin-number">
@@ -431,7 +431,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                value=""
                                placeholder="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
                                title="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
-                               class="input-text">
+                               class="input-text validate-alphanum-with-spaces">
                     </div>
                 </div>
                 <div class="field tobacco-permit-number">
@@ -444,7 +444,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                value=""
                                placeholder="<?= /* @noEscape */ $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
                                title="<?= /* @noEscape */ $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
-                               class="input-text">
+                               class="input-text validate-alphanum-with-spaces">
                     </div>
                 </div>
                 <div class="field hear-about-us required">

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+        <section id="hookahshisha">
+            <group id="sales_approve_group" translate="label" type="text" sortOrder="100" showInDefault="0" showInWebsite="1" showInStore="0">
+                <label>Sales Approve</label>
+                <field id="sales_approve_enable" translate="label" type="select" sortOrder="1" showInDefault="0" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+	</system>
+</config>

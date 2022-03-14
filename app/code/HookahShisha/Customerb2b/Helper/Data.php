@@ -250,6 +250,8 @@ class Data extends AbstractHelper
     public function getEmployees($emp)
     {
         $numberof_emp = $this->numberffemp->getOptionArray();
-        return $numberof_emp[$emp];
+        if (in_array($emp, $numberof_emp)) {
+            return $numberof_emp[$emp];
+        }
     }
 }

@@ -39,7 +39,7 @@ define([
                         '<span class="slider round"></span>' +
                         '<div class="expiry_dates expiry_date-' + showId + '" for="document expiry data" style="display:none" >' +
                         '<label>Set Expiry Date</label>' +
-                        '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date-' + showId + '" data-validate="{required:true}" />' +
+                        '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date-' + showId + '" data-validate="{required:true}" readonly/>' +
                         '</div></div>').insertAfter(currentElem.closest('.upload .input-file'));
                     $("#image-error-message-" + showId).html("");
 
@@ -153,6 +153,7 @@ define([
                         if (data.success == 1) {
                             $('#' + resetId).trigger("reset");
                             $("#popup-modal").modal("openModal");
+
                         } else {
                             $(".page.messages").html('<div role="alert" class="messages">' +
                                 '<div class="alert danger alert-danger" data-ui-id="message-danger">' +
@@ -208,6 +209,7 @@ define([
                 responsive: true,
                 innerScroll: true,
                 modalClass: 'document-modal',
+                clickableOverlay: false,
                 buttons: [{
                     text: $.mage.__('Continue'),
                     class: 'mymodal1',

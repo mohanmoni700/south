@@ -96,10 +96,9 @@
                 .lib-css(border-color, @checkout-shipping-item__active__border-color);
 
                 &:after {
-                    .lib-css(background, @checkout-shipping-item-icon__background-color);
                     .lib-css(color, @checkout-shipping-item-icon__color);
-                    .lib-css(content, @checkout-shipping-item-icon__content);
-                    .lib-css(font-family, @icons__font-name);
+                    content: "";
+                    background: @hookah_theme_color url('@{baseDir}images/true_arrow.svg') no-repeat center center;
                     .lib-css(height, @checkout-shipping-item-icon__selected__height);
                     .lib-css(width, @checkout-shipping-item-icon__selected__width);
                     font-size: 20px;
@@ -131,7 +130,7 @@
         }
 
         .action-show-popup {
-            margin: 0 0 @indent__base;
+            margin: @indent__base 0 @indent__base;
             min-width: 308px;
         }
 
@@ -170,6 +169,8 @@
             &:hover {
                 background: @hookah_theme_gradient;
                 border-color: transparent;
+                border-left-color: @border_left_gradient;
+                border-right-color: @border_right_gradient;
             }
         }
     }
@@ -207,6 +208,9 @@
                 .price {
                     font-weight: @font-weight__bold;
                 }
+                input[type="radio"] {
+                    margin: 5px 5px 0 0;
+                }
             }
 
             tr {
@@ -231,6 +235,26 @@
             }
         }
     }
+
+    #opc-new-shipping-address {
+        #shipping-new-address-form {
+            > .street {
+                > .label {
+                    display: none;
+                }
+            }
+            .field:not(.choice) {
+                > .label {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+            }
+            .field.additional {
+                margin-top: 30px;
+            }
+        }
+    }
+    
     @media only screen and (max-width: 991px) {
         .opc-wrapper {
             .shipping-address-item {
@@ -252,12 +276,19 @@
     .opc-wrapper {
         .checkout-shipping-address {
             div.new-address-popup {
-                margin: 20px 0;
+                margin: 20px 0 30px 0;
                 text-align: center;
             }
         }
         .action-show-popup {
             min-width: 276px;
+        }
+    }
+    #opc-new-shipping-address {
+        #shipping-new-address-form {
+            .field.additional {
+                margin-top: 20px;
+            }
         }
     }
 }

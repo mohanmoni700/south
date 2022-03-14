@@ -11,60 +11,85 @@ $customeradd=$block->getCustomeraddress($customerid);
 $country=$customeradd->getData('country_id');
 $documentData= $block->getDocumentCollection();
 $docdata = $documentData->getData();
-$helper = $this->helper('HookahShisha\Customerb2b\Helper\Data');
-$emp=$block->getNumberOfEmp();
-$empno=$helper->getEmployees($emp);
 ?>
 <?php if (!empty($docdata)) { ?>
 
 <div class="fieldset-wrapper customer-information">
-   <div class="fieldset-wrapper-title">
+    <div class="fieldset-wrapper-title">
       <span class="title"><?= $block->escapeHtml('Documents') ?></span>
-   </div>
-   
-   <div class="fieldset-wrapper-title">
-      <span class="title"><?= $block->escapeHtml('Customer Information') ?></span>
-   </div>
-   <div class="fieldset-wrapper-title">
-        <?= $block->escapeHtml('Customer Name:');?><?= $customerData->getName();?><br>
-        <?= $block->escapeHtml('Email:');?><?= $customerData->getEmail(); ?>
-        </span><br>
+    </div>
+    <div class="fieldset-wrapper-title">
+        <span class="title"><?= $block->escapeHtml(__('Customer Information')) ?></span>
+    </div>
+    <table class="admin__table-secondary">
+        <tbody>
+        <?= $block->getChildHtml() ?>
+        <tr>
+            <th><?= $block->escapeHtml(__('Customer Name:')) ?></th>
+            <td><?= $block->escapeHtml($customerData->getName())?></td>
+        </tr>
+
+        <tr>
+            <th><?= $block->escapeHtml(__('Customer Email:')) ?></th>
+            <td><?= $block->escapeHtml($customerData->getEmail())?></td>
+        </tr>
         <?php if ($country == 'US') {?>
+
             <?php if ($block->getCompanyName()) { ?>
-                <?= $block->escapeHtml('Company Name:');?>
-                <?= $block->getCompanyName(); ?><br>
-            <?php } ?>
+        <tr>
+            <th><?= $block->escapeHtml(__('Company Name:')) ?></th>
+            <td><a href="<?= $block->getUrl('company/index/edit/id/'.$block->getEntityId())?>" target="_blank" rel="noopener">
+            <span><?= $block->escapeHtml($block->getCompanyName()) ?></span>
+            </a></td>
+        </tr>
+        <?php } ?>
 
             <?php if ($block->getVatTaxId()) { ?>
-                <?= $block->escapeHtml('Sales Tax ID:');?>
-                <?= $block->getVatTaxId(); ?><br>
-            <?php } ?>
+        <tr>
+            <th><?= $block->escapeHtml(__('Sales Tax ID:')) ?></th>
+            <td><?= $block->escapeHtml($block->getVatTaxId())?></td>
+        </tr>
+        <?php } ?>
+
 
             <?php if ($block->getResellerId()) { ?>
-                <?= $block->escapeHtml('Reseller ID:');?>
-                <?= $block->getResellerId(); ?><br>
-            <?php } ?>
+        <tr>
+            <th><?= $block->escapeHtml(__('Reseller ID:')) ?></th>
+            <td><?= $block->escapeHtml($block->getResellerId())?></td>
+        </tr>
+        <?php } ?>
+
 
             <?php if ($block->getNumberOfEmp()) { ?>
-                <?= $block->escapeHtml('Number of Emp:');?>
-                <?= $empno;?><br>
-            <?php } ?>
+        <tr>
+            <th><?= $block->escapeHtml(__('Number of Emp:')) ?></th>
+            <td><?= $block->escapeHtml($block->getNumberOfEmp())?></td>
+        </tr>
+        <?php } ?>
+
 
             <?php if ($block->getTinNumber()) { ?>
-                <?= $block->escapeHtml('Tin Number:');?>
-                <?= $block->getTinNumber(); ?><br>
-            <?php } ?>
+        <tr>
+            <th><?= $block->escapeHtml(__('Tin Number:')) ?></th>
+            <td><?= $block->escapeHtml($block->getTinNumber())?></td>
+        </tr>
+        <?php } ?>
 
             <?php if ($block->getTobaccoPermitNumber()) { ?>
-                <?= $block->escapeHtml('Tobacco Permit Number:');?>
-            <?= $block->getTobaccoPermitNumber(); } ?>        
+        <tr>
+            <th><?= $block->escapeHtml(__('Tobacco Permit Number:')) ?></th>
+            <td><?= $block->escapeHtml($block->getTobaccoPermitNumber())?></td>
+        </tr>
         <?php } ?>
-    
-    </div>
+        <?php } ?>
+        </tbody>
+    </table>
+</div>
 
-   <div class="fieldset-wrapper-title">
-      <span class="title"><?= $block->escapeHtml('') ?></span>
-   </div>
+
+<div class="fieldset-wrapper-title">
+    <span class="title"><?= $block->escapeHtml('') ?></span>
+</div>
 <!-- Document Information. -->
     <?php
         $items= $block->getDocumentCollection();
@@ -104,7 +129,7 @@ $empno=$helper->getEmployees($emp);
                                 id="expiry_date-<?= $block->escapeHtml($document['mydocument_id']); ?>"
                                 class="update-date"
                                 data-validate="{required:true}"
-                                value="<?= $document->getExpiryDate() ?>"/>
+                                value="<?= $document->getExpiryDate() ?>" readonly/>
                 </div> 
 
                 <?php $val=$document->getMydocumentId(); ?>
