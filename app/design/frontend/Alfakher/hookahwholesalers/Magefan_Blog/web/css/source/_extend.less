@@ -89,7 +89,9 @@
                 padding: 0 10px 0 20px;
                 &:hover {
                     background: @hookah_theme_gradient;
-                    color: @color_white;                    
+                    border-left-color: @border_left_gradient;
+                    border-right-color: @border_right_gradient;
+                    color: @color_white;
                     .svg_icon {
                         path {
                             stroke: @color_white;
@@ -171,6 +173,8 @@
             transition: none;
             &:hover {
                 background: @hookah_theme_gradient;
+                border-left-color: @border_left_gradient;
+                border-right-color: @border_right_gradient;
             }
         }
     }

@@ -102,6 +102,8 @@
                     background: @color-black url('@{baseDir}images/right_arrow1.svg') center no-repeat;
                     &:hover {
                         background: @hookah_theme_gradient;
+                        border-left-color: @border_left_gradient;
+                        border-right-color: @border_right_gradient;
                         &::before {
                             content: "";
                             width: 100%;
@@ -119,6 +121,8 @@
                     background: @color-black url('@{baseDir}images/left_arrow.svg') center no-repeat;
                     &:hover {
                         background: @hookah_theme_gradient;
+                        border-left-color: @border_left_gradient;
+                        border-right-color: @border_right_gradient;
                         &::before {
                             content: "";
                             width: 100%;
@@ -473,6 +477,8 @@
           &:hover {
               background: transparent @hookah_theme_gradient;
               border-color: transparent;
+              border-left-color: @border_left_gradient;
+              border-right-color: @border_right_gradient;
           }
       }
     }
@@ -2278,6 +2284,8 @@
         }
         &:hover {
             background: @hookah_theme_gradient !important;
+            border-left-color: @border_left_gradient;
+            border-right-color: @border_right_gradient;
             > .amscroll-text {
                 filter: brightness(1);
             }
