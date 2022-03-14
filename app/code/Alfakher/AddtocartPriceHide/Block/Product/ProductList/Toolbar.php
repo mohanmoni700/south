@@ -292,7 +292,6 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
     {
         $documentcollection = $this->documentcollection->create()
             ->addFieldToFilter('customer_id', ['eq' => $customerid])->addFieldToFilter('status', ['eq' => 1]);
-
         if ($documentcollection->getSize()) {
             return true;
         } else {
