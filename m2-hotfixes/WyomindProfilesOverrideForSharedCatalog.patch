@@ -1,0 +1,53 @@
+diff --git a/vendor/wyomind/massstockupdate/Model/Profiles.php b/vendor/wyomind/massstockupdate/Model/Profiles.php
+index 0516da0..8a4ccfb 100644
+--- a/vendor/wyomind/massstockupdate/Model/Profiles.php
++++ b/vendor/wyomind/massstockupdate/Model/Profiles.php
+@@ -82,7 +82,13 @@ class Profiles extends \Magento\Framework\Model\AbstractModel
+      * @var \Magento\CatalogUrlRewrite\Model\ProductUrlRewriteGeneratorFactory
+      */
+     public $_productUrlRewriteGenerator;
+-    public function __construct(\Wyomind\MassStockUpdate\Helper\Delegate $wyomind, \Magento\Framework\Model\Context $context, \Magento\Framework\Registry $registry, \Magento\Framework\Indexer\IndexerInterfaceFactory $indexerFactory, \Wyomind\MassStockUpdate\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory, \Magento\CatalogUrlRewrite\Model\ProductUrlRewriteGeneratorFactory $productUrlRewriteGenerator, \Magento\Framework\Model\ResourceModel\AbstractResource $abstractResource = null, \Magento\Framework\Data\Collection\AbstractDb $abstractDb = null, array $data = [])
++
++    protected $searchCriteriaBuilder;
++    protected $productRepositoryInterface;
++    protected $sharedCatalogRepositoryInterface;
++    protected $productManagementInterface;
++
++    public function __construct(\Wyomind\MassStockUpdate\Helper\Delegate $wyomind, \Magento\Framework\Model\Context $context, \Magento\Framework\Registry $registry, \Magento\Framework\Indexer\IndexerInterfaceFactory $indexerFactory, \Wyomind\MassStockUpdate\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory, \Magento\CatalogUrlRewrite\Model\ProductUrlRewriteGeneratorFactory $productUrlRewriteGenerator, \Magento\Framework\Model\ResourceModel\AbstractResource $abstractResource = null, \Magento\Framework\Data\Collection\AbstractDb $abstractDb = null, array $data = [], \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder, \Magento\Catalog\Api\ProductRepositoryInterface $productRepositoryInterface, \Magento\SharedCatalog\Api\SharedCatalogRepositoryInterface $sharedCatalogRepositoryInterface, \Magento\SharedCatalog\Api\ProductManagementInterface $productManagementInterface)
+     {
+         $wyomind->constructor($this, $wyomind, __CLASS__);
+         $this->_helperClass = "\\Wyomind\\" . $this->module . "\\Helper\\Data";
+@@ -98,6 +104,10 @@ class Profiles extends \Magento\Framework\Model\AbstractModel
+         $this->_productUrlRewriteGenerator = $productUrlRewriteGenerator;
+         parent::__construct($context, $registry, $abstractResource, $abstractDb, $data);
+         $this->progressHelper = $this->objectManager->create("Wyomind\\" . $this->module . "\\Helper\\Progress");
++        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
++        $this->productRepositoryInterface = $productRepositoryInterface;
++        $this->sharedCatalogRepositoryInterface = $sharedCatalogRepositoryInterface;
++        $this->productManagementInterface = $productManagementInterface;
+     }
+     protected function _construct()
+     {
+@@ -824,6 +834,22 @@ class Profiles extends \Magento\Framework\Model\AbstractModel
+                             }
+                         }
+                     }
++                    /* Start : Custom code for assign product to shared catalog*/
++                    $skus = array_merge($this->_notices, $this->_success);
++                    $searchCriteria = $this->searchCriteriaBuilder
++                        ->addFilter('sku', $skus, 'in')
++                        ->create();
++                    $sharedCatalogProductcollection = $this->productRepositoryInterface->getList($searchCriteria)->getItems();
++
++                    if($sharedCatalogProductcollection){
++                        $searchCriteria = $this->searchCriteriaBuilder->create();
++                        $sharedCatalogList = $this->sharedCatalogRepositoryInterface->getList($searchCriteria)->getItems();
++                        foreach ($sharedCatalogList as $sharedCatalog) {
++                            $sharedCatalogId = $sharedCatalog->getId();
++                            $this->productManagementInterface->assignProducts($sharedCatalogId, $sharedCatalogProductcollection);
++                        }
++                    }
++                    /* End : Custom code for assign product to shared catalog*/
+                     $msg = ucwords(str_replace("_", " ", $index)) . " " . __("re-indexed");
+                     $this->progressHelper->log("{$msg}", true, ProgressHelper::PROCESSING, 100);
+                     continue;
