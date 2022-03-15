@@ -52,21 +52,15 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                             ?>
                             <?php // Product Image ?>
                             <div class="product_box_info">
-                            <a href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>"
-                               class="product photo product-item-photo"
-                               tabindex="-1">
                                 <?= $productImage->toHtml() ?>
-                            </a>
-                            <div class="merge_box">
-                            <strong class="product name product-item-name">
-                                <a class="product-item-link"
-                                   href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>">
-                                    <?=/* @noEscape */ $_helper->productAttribute($_product, $_product->getName(), 'name')?>
-                                </a>
-                            </strong>
-
-                            <strong class="product sku product-item-sku"><?= $block->escapeHtml(__('SKU:')) ?> <?= /* @noEscape */ $_product->getSku() ?></strong>
-                            </div>
+                                <div class="merge_box">
+                                    <strong class="product name product-item-name">
+                                        <?=/* @noEscape */ $_helper->productAttribute($_product, $_product->getName(), 'name')?>
+                                    </strong>
+                                    <strong class="product sku product-item-sku">
+                                        <?= $block->escapeHtml(__('SKU:')) ?> <?= /* @noEscape */ $_product->getSku() ?>
+                                    </strong>
+                                </div>
                             </div>
                         </td>
                         <?php if ($docdata == 2 && $is_document_upload == 1 && $doc_expired == 1): ?>

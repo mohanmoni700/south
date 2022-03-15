@@ -82,7 +82,17 @@
         .payment-method-title {
             .lib-css(padding, @checkout-payment-method-title__padding 0);
             margin: 0;
-
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            input[type="radio"] {
+                margin: 0 12px 0 0;
+                &:checked {
+                    ~ label {
+                        color: @hookah_theme_color;
+                    }
+                }
+            }
             .payment-icon {
                 display: inline-block;
                 margin-right: @indent__xs;
@@ -138,6 +148,9 @@
                     > .label {
                         display: none;
                     }
+                }
+                .field.additional {
+                    margin-top: 30px;
                 }
             }
         }
@@ -238,6 +251,8 @@
                 &:hover {
                     border-color: transparent;
                     background: @hookah_theme_gradient;
+                    border-left-color: @border_left_gradient;
+                    border-right-color: @border_right_gradient;
                 }
             }
         }
@@ -281,6 +296,8 @@
                 &:hover{
                     background: @hookah_theme_gradient;
                     border-color: transparent;
+                    border-left-color: @border_left_gradient;
+                    border-right-color: @border_right_gradient;
                 }
             }
         }
@@ -332,6 +349,8 @@
             &:hover {
                 background: @hookah_theme_gradient;
                 border-color: transparent;
+                border-left-color: @border_left_gradient;
+                border-right-color: @border_right_gradient;
             }
         }
     }
@@ -377,7 +396,22 @@
                 width: 260px;
             }
         }
-    } 
+        .field-select-billing,
+        .billing-address-form {
+            .fieldset {
+                .field.additional {
+                    margin-top: 20px;
+                }
+            }
+        }
+        .payment-method-content {
+            .fieldset {
+                .field.field-select-billing {
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }        
     
     //
     //  Order Success
@@ -427,7 +461,7 @@
         .payment-method-content {
             .fieldset {
                 > .field {
-                    margin: 0 0 @indent__base;
+                    margin: 0 0 @indent__base + 10px;
                     
                     &.choice {
                         &:before {

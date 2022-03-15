@@ -36,13 +36,23 @@ if (trim($block->getPageHeading())) {
 <!-- End -->
 
 <div class="page-title-wrapper<?= $block->escapeHtmlAttr($cssClass) ?>">
-    <h1 class="page-title"
-        <?php if ($block->getId()) : ?> id="<?= $block->escapeHtmlAttr($block->getId()) ?>" <?php endif; ?>
-        <?php if ($block->getAddBaseAttributeAria()) : ?>
-            aria-labelledby="<?= $block->escapeHtmlAttr($block->getAddBaseAttributeAria()) ?>"
-        <?php endif; ?>>
-        <?= /* @noEscape */ $titleHtml ?>
-    </h1>
+    <?php if($cssClass == ' product'): ?>
+        <h1 class="page-title"
+            <?php if ($block->getId()) : ?> id="<?= $block->escapeHtmlAttr($block->getId()) ?>" <?php endif; ?>
+            <?php if ($block->getAddBaseAttributeAria()) : ?>
+                aria-labelledby="<?= $block->escapeHtmlAttr($block->getAddBaseAttributeAria()) ?>"
+            <?php endif; ?>>
+            <?= /* @noEscape */ $titleHtml ?>
+        </h1>
+    <?php else: ?>
+        <h2 class="page-title"
+            <?php if ($block->getId()) : ?> id="<?= $block->escapeHtmlAttr($block->getId()) ?>" <?php endif; ?>
+            <?php if ($block->getAddBaseAttributeAria()) : ?>
+                aria-labelledby="<?= $block->escapeHtmlAttr($block->getAddBaseAttributeAria()) ?>"
+            <?php endif; ?>>
+            <?= /* @noEscape */ $titleHtml ?>
+        </h2>
+    <?php endif; ?>
     <?= $block->getChildHtml() ?>
 </div>
 

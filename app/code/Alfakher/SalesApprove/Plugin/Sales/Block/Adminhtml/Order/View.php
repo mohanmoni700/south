@@ -9,6 +9,19 @@ use Magento\Sales\Block\Adminhtml\Order\View as OrderView;
 
 class View
 {
+    const MODULE_ENABLE = "hookahshisha/sales_approve_group/sales_approve_enable";
+
+    /**
+     * Constructor
+     *
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     */
+    public function __construct(
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+    ) {
+        $this->scopeConfig = $scopeConfig;
+    }
+
     /**
      * Adding sales approve button to the order view page
      *
@@ -19,8 +32,9 @@ class View
 
         $order = $subject->getOrder();
         $history = $order->getStatusHistoryCollection()->addFieldToFilter('status', ['eq' => 'sales_approved'])->load();
+        $moduleEnable = $this->isModuleEnabled($order->getStore()->getWebsiteId());
 
-        if (!$history->toArray()['totalRecords']) {
+        if (!$history->toArray()['totalRecords'] && $moduleEnable) {
 
             $subject->addButton(
                 'sales_approve_button',
@@ -32,5 +46,16 @@ class View
                 ]
             );
         }
+    }
+
+    /**
+     * Check if module is enable
+     *
+     * @param int $websiteId
+     */
+    public function isModuleEnabled($websiteId)
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE;
+        return $this->scopeConfig->getValue(self::MODULE_ENABLE, $storeScope, $websiteId);
     }
 }
