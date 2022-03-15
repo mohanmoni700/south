@@ -8,21 +8,24 @@ $subcats = $category->getChildrenCategories();
     <h1 class="cat_tite"><?= /* @noEscape */ $category->getName(); ?></h1>
 </div>
 <!-- this condition to check wether sub category exists[BS]start -->
-<?php if (!empty($subcats->getData())){ ?>
-<div class="shorting_main">
-    <div class="shorting_slider">
-       <?php foreach ($subcats as $subcat):
-            $_category = $block->getChildCategory($subcat->getId());
-            $subcaturl = $subcat->getUrl();?>
-            <div class="shorting_title"><a href="<?= $subcaturl?>"><?= $subcat->getName();?></a></div>
-        <?php endforeach; ?>
+<?php if (!empty($subcats->getData())): ?>
+    <div class="shorting_main">
+        <div class="shorting_slider">
+           <?php foreach ($subcats as $subcat): ?>
+                <?php if ($subcat->getIsActive()): ?>
+                    <?php $subcaturl = $subcat->getUrl(); ?>
+                    <div class="shorting_title">
+                        <a href="<?= /* @noEscape */ $subcaturl?>"><?= /* @noEscape */ $subcat->getName();?></a>
+                    </div>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
-</div>
-<?php } ?>
+<?php endif; ?>
 <!-- condition to check wether sub category exists[BS]end -->
 
 
-<script type="text/javascript">
+<script>
     require([
         "jquery",
         "Magento_PageBuilder/js/resource/slick/slick",
