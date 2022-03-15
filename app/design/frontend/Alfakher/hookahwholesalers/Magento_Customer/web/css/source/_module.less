@@ -545,6 +545,13 @@ ul.nav.items{
             display: none;
         }
     }
+    .fieldset {
+        > .legend {
+            + br {
+                display: none;
+            }
+        }
+    }
     .form-address-edit,
     .form-edit-company{
         max-width: 710px;
@@ -2216,15 +2223,17 @@ ul.nav.items{
             }
         }
         .account {
-            &.customerb2b-account-myproductpricing {
-                .toolbar {
-                    .pages {
-                        position: relative;
-                        float: right;
-                        width: auto;
-                    }
-                    .limiter {
+            .toolbar {
+                div.pages {
+                    position: relative;
+                    float: right;
+                    width: auto;
+                    top: 0px;
+                }
+                .pages {
+                    ~ .limiter {
                         margin-top: 10px;
+                        width: 100%;
                     }
                 }
             }
@@ -2280,11 +2289,9 @@ ul.nav.items{
         .sidebar-additional {
             margin: 0;
         }
-        &.customerb2b-account-myproductpricing {
-            .toolbar {
-                .pages {
-                    float: none;
-                }
+        .toolbar {
+            .pages {
+                float: none !important;
             }
         }
     }

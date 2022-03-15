@@ -1244,13 +1244,14 @@
         }
         .page-wrapper {
             > .pending-tooltip {
-                margin-bottom: 20px;
+                margin-bottom: 10px;
             }
         }
         .page-main {
             > .page.messages {
                 .message {
                     margin-bottom: 20px;
+                    margin-top: 20px;
                 }
             }
         }
@@ -1308,6 +1309,16 @@
         footer.page-footer {
             padding-bottom: 78px;
             margin-top: 0;
+        }
+        #hubspot-messages-iframe-container.widget-align-left {
+            bottom: 72px !important;
+        }
+        #hubspot-messages-iframe-container {
+            .shadow-container.active {
+                ~ iframe {
+                    margin-bottom: -72px;
+                }
+            }
         }
     }
     .catalog-product-view{
@@ -2119,7 +2130,7 @@
         .products {
             margin: 20px 0;
             ~ .toolbar.toolbar-products {
-                display: none;
+                display: none !important;
             }
         }
         .sidebar {
@@ -2160,6 +2171,7 @@
             border-radius: 100%;
             border: solid 1px @color-black;
             z-index: 1;
+            line-height: 26px;
             &::before, &:after {
                 font-size: 11px;
                 color: @color-black;
@@ -2273,7 +2285,7 @@
     }
     #amasty-shopby-product-list {
         ~ .toolbar.toolbar-products {
-            display: none;
+            display: none !important;
         }
     }
     .amscroll-load-button {
