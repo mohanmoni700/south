@@ -36,13 +36,13 @@ if (trim($block->getPageHeading())) {
 <!-- End -->
 
 <div class="page-title-wrapper<?= $block->escapeHtmlAttr($cssClass) ?>">
-    <h1 class="page-title"
+    <h2 class="page-title"
         <?php if ($block->getId()) : ?> id="<?= $block->escapeHtmlAttr($block->getId()) ?>" <?php endif; ?>
         <?php if ($block->getAddBaseAttributeAria()) : ?>
             aria-labelledby="<?= $block->escapeHtmlAttr($block->getAddBaseAttributeAria()) ?>"
         <?php endif; ?>>
         <?= /* @noEscape */ $titleHtml ?>
-    </h1>
+    </h2>
     <?= $block->getChildHtml() ?>
 </div>
 
