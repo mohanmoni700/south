@@ -136,6 +136,15 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
 
                 <?php $_streetValidationClass = $addressHelper->getAttributeValidationClass('street'); ?>
                 <?php $_streetLabel = $block->getAttributeData()->getFrontendLabel('street'); ?>
+                <div class="field country required">
+                    <label for="country" class="label">
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>
+                    </label>
+                    <div class="control">
+                        <?= $block->getCountryHtmlSelect() ?>
+                    </div>
+                </div>
+
                 <div class="field street required">
                     <label for="street_1" class="label">
                         <span><?= $block->escapeHtml(__($_streetLabel . ' 1')) ?></span>
@@ -172,28 +181,31 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     </div>
                 </div>
 
-                <div class="field county">
-                    <label for="county" class="label">
-                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?></span>
-                    </label>
-                        <input type="text"
-                               name="county"
-                               placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
-                               value="<?= $block->escapeHtml($formData->getCounty()) ?>"
-                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
-                               id="county"
-                               class="county"/>
-                </div> 
-
-                <div class="field country required">
-                    <label for="country" class="label">
-                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>
+                <div class="field required">
+                    <label for="city" class="label">
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?></span>
                     </label>
                     <div class="control">
-                        <?= $block->getCountryHtmlSelect() ?>
+                        <input type="text"
+                               name="city"
+                               placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>"
+                               value="<?= $block->escapeHtmlAttr($formData->getCity()) ?>"
+                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>"
+                               class="input-text <?= /* @noEscape */ $addressHelper->getAttributeValidationClass('city') ?>"
+                               id="city"/>
                     </div>
                 </div>
 
+                <?= /* @noEscape */
+                $secureRenderer->renderTag(
+                    'style',
+                    [],
+                    '#region_id { display:none; }
+                        #region { display:none; }
+                    ',
+                    true
+                );
+                ?>
 
                 <div class="field region required">
                     <label for="region_id" class="label">
@@ -219,30 +231,6 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                class="input-text <?= /* @noEscape */ $addressHelper->getAttributeValidationClass('region') ?>"/>
                     </div>
                 </div>
-                <div class="field required">
-                    <label for="city" class="label">
-                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?></span>
-                    </label>
-                    <div class="control">
-                        <input type="text"
-                               name="city"
-                               placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>"
-                               value="<?= $block->escapeHtmlAttr($formData->getCity()) ?>"
-                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>"
-                               class="input-text <?= /* @noEscape */ $addressHelper->getAttributeValidationClass('city') ?>"
-                               id="city"/>
-                    </div>
-                </div>
-                <?= /* @noEscape */
-                $secureRenderer->renderTag(
-                    'style',
-                    [],
-                    '#region_id { display:none; }
-                        #region { display:none; }
-                    ',
-                    true
-                );
-                ?>   
 
                 <div class="field zip required">
                     <label for="zip" class="label">
@@ -260,6 +248,21 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                data-validate="{'required':true, 'validate-zip-international':true}"/>
                     </div>
                 </div>
+
+                <div class="field county">
+                    <label for="county" class="label">
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?></span>
+                    </label>
+                        <input type="text"
+                               name="county"
+                               placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
+                               value="<?= $block->escapeHtml($formData->getCounty()) ?>"
+                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
+                               id="county"
+                               class="county"/>
+                </div> 
+                
+  
 
                 <?php if ($addressHelper->isVatAttributeVisible()): ?>
                     <?php $_vatidValidationClass = $addressHelper->getAttributeValidationClass('vat_id'); ?>

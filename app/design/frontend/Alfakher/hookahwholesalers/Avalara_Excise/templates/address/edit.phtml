@@ -62,6 +62,16 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
         <legend class="legend"><span><?= $block->escapeHtml(__('Address')) ?></span></legend><br>
         <?php $_streetValidationClass = $this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('street'); ?>
         <?php $_streetLabel = $block->getAttributeData() ? $block->getAttributeData()->getFrontendLabel('street') : $block->escapeHtml(__('Street Address')); ?>
+        <div class="field country required">
+            <?php
+            $title = $block->getAttributeData() ? $block->getAttributeData()->getFrontendLabel('country_id') : $block->escapeHtml(__('Country'));
+            ?>
+            <label class="label" for="country"><span><?= /* @noEscape */ $title ?></span></label>
+            <div class="control">
+                <?= $block->getCountryHtmlSelect() ?>
+            </div>
+        </div>
+
         <div class="field street required">
             <label for="street_1" class="label">
                 <span><?= $block->escapeHtml(__($_streetLabel . ' 1')) ?></span>
@@ -99,42 +109,6 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
             </div>
         </div>
 
-        <?php if ($this->helper(\Magento\Customer\Helper\Address::class)->isVatAttributeVisible()): ?>
-            <div class="field taxvat">
-                <?php
-                $title = $block->getAttributeData() ? $block->getAttributeData()->getFrontendLabel('vat_id') : $block->escapeHtml(__('VAT Number'));
-                ?>
-                <label class="label" for="vat_id">
-                    <span><?= /* @noEscape */ $title ?></span>
-                </label>
-                <div class="control">
-                    <input type="text" name="vat_id" value="<?= $block->escapeHtmlAttr($block->getAddress()->getVatId()) ?>" title="<?= /* @noEscape */ $title ?>" class="input-text <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('vat_id')) ?>" id="vat_id">
-                </div>
-            </div>
-        <?php endif; ?>
-
-        <div class="field county">
-            <?php
-            $title = $block->getAttributeData() ? $block->getAttributeData()->getFrontendLabel('county') : $block->escapeHtml(__('County'));
-            ?>
-            <label class="label" for="county">
-                <span><?= /* @noEscape */ $title ?></span>
-            </label>
-            <div class="control">
-                <input type="text" id="county" name="county" value="<?= $block->escapeHtmlAttr(!empty($block->getAddress()->getCustomAttribute('county')) ? $block->getAddress()->getCustomAttribute('county')->getValue() : ''); ?>" title="<?= /* @noEscape */ $title ?>" class="input-text"  />
-            </div>
-        </div>
-
-        <div class="field country required">
-            <?php
-            $title = $block->getAttributeData() ? $block->getAttributeData()->getFrontendLabel('country_id') : $block->escapeHtml(__('Country'));
-            ?>
-            <label class="label" for="country"><span><?= /* @noEscape */ $title ?></span></label>
-            <div class="control">
-                <?= $block->getCountryHtmlSelect() ?>
-            </div>
-        </div>
-
         <div class="field city required">
             <?php
             $title = $block->getAttributeData() ? $block->getAttributeData()->getFrontendLabel('city') : $block->escapeHtml(__('City'));
@@ -165,6 +139,7 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
                 <input type="text" id="region" name="region" value="<?= $block->escapeHtmlAttr($block->getRegion()) ?>" title="<?= /* @noEscape */ $title ?>" class="input-text validate-not-number-first <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('region')) ?>" <?= !$block->getConfig('general/region/display_all') ? ' disabled="disabled"' : '' ?> />
             </div>
         </div>
+
         <div class="field zip required">
             <?php
             $title = $block->getAttributeData() ? $block->getAttributeData()->getFrontendLabel('postcode') : $block->escapeHtml(__('Zip/Postal Code'));
@@ -185,6 +160,31 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
                 </div>
             </div>
         </div>
+
+        <div class="field county">
+            <?php
+            $title = $block->getAttributeData() ? $block->getAttributeData()->getFrontendLabel('county') : $block->escapeHtml(__('County'));
+            ?>
+            <label class="label" for="county">
+                <span><?= /* @noEscape */ $title ?></span>
+            </label>
+            <div class="control">
+                <input type="text" id="county" name="county" value="<?= $block->escapeHtmlAttr(!empty($block->getAddress()->getCustomAttribute('county')) ? $block->getAddress()->getCustomAttribute('county')->getValue() : ''); ?>" title="<?= /* @noEscape */ $title ?>" class="input-text"  />
+            </div>
+        </div>
+        <?php if ($this->helper(\Magento\Customer\Helper\Address::class)->isVatAttributeVisible()): ?>
+            <div class="field taxvat">
+                <?php
+                $title = $block->getAttributeData() ? $block->getAttributeData()->getFrontendLabel('vat_id') : $block->escapeHtml(__('VAT Number'));
+                ?>
+                <label class="label" for="vat_id">
+                    <span><?= /* @noEscape */ $title ?></span>
+                </label>
+                <div class="control">
+                    <input type="text" name="vat_id" value="<?= $block->escapeHtmlAttr($block->getAddress()->getVatId()) ?>" title="<?= /* @noEscape */ $title ?>" class="input-text <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('vat_id')) ?>" id="vat_id">
+                </div>
+            </div>
+        <?php endif; ?>
 
         <?php if ($block->isDefaultBilling()): ?>
             <div class="message info">
