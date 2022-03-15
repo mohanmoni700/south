@@ -1876,9 +1876,10 @@
                             top: 50%;
                             transform: translateY(-50%);
                         }
-                        h1{
+                        h1, h2, h3{
                             font-size: 16px;
                             margin-bottom: 0;
+                            margin-top: 0;
                             line-height: @indent__base - 4;
                             font-weight: bold;
                             .lib-css(font-weight, @font-weight__bold);
@@ -2405,10 +2406,12 @@
             border-bottom: 0;
             .warning-section-wrapper .warning-section {
                 padding: @indent__s @indent__l;
-                .heading-section h1{
-                    font-size: 12px;
-                    line-height: @indent__base - 2;
-                    margin-left: @indent__xl;
+                .heading-section {
+                    h1, h2, h3 {
+                        font-size: 12px;
+                        line-height: @indent__base - 2;
+                        margin-left: @indent__xl;
+                    }
                 }
             }
             .header-links-wrapper .header-links {

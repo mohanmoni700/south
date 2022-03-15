@@ -38,7 +38,7 @@ define([
                         '<span class="slider round"></span>' +
                         '<div class="expiry_dates expiry_date-' + showId + '" for="document expiry data" style="display:none" >' +
                         '<label>Set Expiry Date</label>' +
-                        '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date-' + showId + '" data-validate="{required:true}" />' +
+                        '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date-' + showId + '" data-validate="{required:true}" readonly/>' +
                         '</div></div>').insertAfter(currentElem.closest('.upload .input-file'));
                     $("#image-error-message-" + showId).html("");
 

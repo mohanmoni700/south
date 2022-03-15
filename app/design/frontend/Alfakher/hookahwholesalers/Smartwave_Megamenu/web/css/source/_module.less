@@ -16,6 +16,9 @@
                     &:hover {
                         color: @hookah_theme_color !important;
                     }
+                    &:empty {
+                        padding: 0;
+                    }
                 }
             }
         }
@@ -729,7 +732,7 @@
                     > .parent .subcat-show-all {
                         right: @indent__l + @indent__xs;
                         padding: 0;
-                        bottom: @indent__l;
+                        bottom: @indent__l - 5px;
                         text-transform: capitalize;
                         a {
                             padding: 0;

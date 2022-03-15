@@ -39,7 +39,8 @@ $today = date("Y-m-d");
         enctype="multipart/form-data"
         data-mage-init='{"validation":{}}'
         method="post">
-        <div class="updated-container">
+
+    <div class="updated-container">
 
         <?php foreach ($data as $val): ?>
             <?php if ($val['is_add_more_form'] == 0): ?>
@@ -164,7 +165,7 @@ $today = date("Y-m-d");
                                 name="expiry_date<?= $block->escapeHtml($val['mydocument_id']);?>"
                                 id="expiry_date<?= $block->escapeHtml($val['mydocument_id']);?>"
                                 data-validate="{required:true}"
-                                value="" />
+                                value="" readonly/>
                             </div>
                         </div>
                         <input type="hidden"
@@ -173,21 +174,26 @@ $today = date("Y-m-d");
                     </div>
                 <?php endif; ?>
             <?php else: ?>
+
                 <?php if ($count == 0): ?>
-                <div class="document-title add-more-field">
-                    <div class="field">
-                        <input type="checkbox" class="checkbox" checked disabled>
-                        <label class="label">
+                <span class="document-title add-more-field">
+                    <span class="field">
+                   <input type="checkbox" class="checkbox" checked disabled>
+                   <label class="label" style="width:100%">
                             <span>
                                 <?= $block->escapeHtml(__('Do you want to upload other document?')); ?>
                             </span>
-                        </label>
-                    </div>
+                    </label>
+                </span>
                     <span class="note">
                         <?= $block->escapeHtml(__('(File type supported are JPG, PNG and PDF)')); ?>
                     </span>
-                </div>
-                <?php endif;?>
+
+                </span>
+           <?php endif;?>
+    
+               
+
                 <?php if ($val['is_add_more_form'] == 1):?>
                     <?php if ($val['is_delete'] == 0): ?>
                         <?php
@@ -312,7 +318,7 @@ $today = date("Y-m-d");
                                 name="expiry_date<?= $block->escapeHtml($val['mydocument_id']);?>"
                                 id="expiry_date<?= $block->escapeHtml($val['mydocument_id']);?>"
                                 data-validate="{required:true}" 
-                                value=""/>
+                                value="" readonly/>
                             </div>
                         </div>
                     </div>
@@ -322,6 +328,7 @@ $today = date("Y-m-d");
             <?php endif; ?>
         <?php endforeach; ?>
        </div>
+
         <?php if (in_array(1, $is_delete)): ?>
             <button type="submit" id="updatebtnsave" class="action submit primary">
                 <span><?= $block->escapeHtml(__('Submit')); ?></span>
@@ -393,7 +400,7 @@ foreach ($data as $val) {
                         placeholder="Expiry Date"
                         name="expiry_date<?= $block->escapeHtml($counter); ?>"
                         id="expiry_date<?= $block->escapeHtml($counter); ?>"
-                        data-validate="{required:true}" />
+                        data-validate="{required:true}" readonly/>
                     </div>
                 </div>
                 <input type="hidden"

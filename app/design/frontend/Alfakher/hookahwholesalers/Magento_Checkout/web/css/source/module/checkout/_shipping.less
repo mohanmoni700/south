@@ -235,6 +235,26 @@
             }
         }
     }
+
+    #opc-new-shipping-address {
+        #shipping-new-address-form {
+            > .street {
+                > .label {
+                    display: none;
+                }
+            }
+            .field:not(.choice) {
+                > .label {
+                    padding-left: 0;
+                    padding-right: 0;
+                }
+            }
+            .field.additional {
+                margin-top: 30px;
+            }
+        }
+    }
+    
     @media only screen and (max-width: 991px) {
         .opc-wrapper {
             .shipping-address-item {
@@ -262,6 +282,13 @@
         }
         .action-show-popup {
             min-width: 276px;
+        }
+    }
+    #opc-new-shipping-address {
+        #shipping-new-address-form {
+            .field.additional {
+                margin-top: 20px;
+            }
         }
     }
 }

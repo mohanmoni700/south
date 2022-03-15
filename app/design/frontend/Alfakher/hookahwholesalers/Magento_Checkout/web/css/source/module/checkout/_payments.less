@@ -149,6 +149,9 @@
                         display: none;
                     }
                 }
+                .field.additional {
+                    margin-top: 30px;
+                }
             }
         }
 
@@ -393,7 +396,22 @@
                 width: 260px;
             }
         }
-    } 
+        .field-select-billing,
+        .billing-address-form {
+            .fieldset {
+                .field.additional {
+                    margin-top: 20px;
+                }
+            }
+        }
+        .payment-method-content {
+            .fieldset {
+                .field.field-select-billing {
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }        
     
     //
     //  Order Success
@@ -443,7 +461,7 @@
         .payment-method-content {
             .fieldset {
                 > .field {
-                    margin: 0 0 @indent__base;
+                    margin: 0 0 @indent__base + 10px;
                     
                     &.choice {
                         &:before {

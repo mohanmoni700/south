@@ -143,6 +143,7 @@
         .fotorama__stage, 
         .fotorama__nav{
             margin-bottom: 20px;
+            text-align: center;
         }
         .fotorama__thumb-border{
             border-color: #000000;
@@ -801,7 +802,7 @@
                     > .value {
                         display: inline-block;
                         vertical-align: top;
-                        word-break: break-all;
+                        word-break: break-word;
                         color: @color_primary;
                         font-weight: @font-weight__bold;
                         .lib-font-size(16);
@@ -1243,13 +1244,14 @@
         }
         .page-wrapper {
             > .pending-tooltip {
-                margin-bottom: 20px;
+                margin-bottom: 10px;
             }
         }
         .page-main {
             > .page.messages {
                 .message {
                     margin-bottom: 20px;
+                    margin-top: 20px;
                 }
             }
         }
@@ -2093,6 +2095,7 @@
                             height: 12px;
                             position: absolute;
                             right: 0;
+                            top: 23px;
                             transition: all 0.5s ease-out;                   
                         }
                         &.rotate::after{
@@ -2156,8 +2159,9 @@
             height: 20px;
             background-color: transparent;
             border-radius: 100%;
-            border: solid 2px @color-black;
+            border: solid 1px @color-black;
             z-index: 1;
+            line-height: 26px;
             &::before, &:after {
                 font-size: 11px;
                 color: @color-black;
@@ -2166,11 +2170,20 @@
             &.slick-disabled {
                 opacity: 1;
             }
+            &:hover {
+                background: @hookah_theme_gradient;
+                border-color: transparent;
+                border-left-color: @border_left_gradient;
+                border-right-color: @border_right_gradient;
+                &::before, &:after {
+                    color: @color_white;
+                }
+            }
         }
         .slick-prev {
             left: 20px;
             &:before {
-                padding-left: 2px;
+                padding-left: 3px;
             }
         }
         .slick-next {
