@@ -1310,6 +1310,16 @@
             padding-bottom: 78px;
             margin-top: 0;
         }
+        #hubspot-messages-iframe-container.widget-align-left {
+            bottom: 72px !important;
+        }
+        #hubspot-messages-iframe-container {
+            .shadow-container.active {
+                ~ iframe {
+                    margin-bottom: -72px;
+                }
+            }
+        }
     }
     .catalog-product-view{
         .block-content{
@@ -2120,7 +2130,7 @@
         .products {
             margin: 20px 0;
             ~ .toolbar.toolbar-products {
-                display: none;
+                display: none !important;
             }
         }
         .sidebar {
@@ -2275,7 +2285,7 @@
     }
     #amasty-shopby-product-list {
         ~ .toolbar.toolbar-products {
-            display: none;
+            display: none !important;
         }
     }
     .amscroll-load-button {
