@@ -1919,6 +1919,26 @@ ul.nav.items{
             .lib-font-size(20);
         }
     }
+    .validator.validator-email {
+        > input {
+            padding-right: 36px;
+        }
+        .feedback {
+            height: 22px !important;
+            width: 22px !important;
+            background-size: 12px auto !important;
+            top: 12px !important;
+            right: 8px !important;
+        }        
+        &.validation-no {
+            .feedback {
+                background-size: 10px auto !important;
+            }
+        }
+        div.mage-error[generated] {
+            float: left;
+        }
+    }
     .block-content {
         .form.password.forget{
             .fieldset {
@@ -2366,7 +2386,7 @@ ul.nav.items{
                 }
             }
         }
-        &.sales-order-view {
+        &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment {
             .columns {
                 .sidebar-main {
                     border-bottom: solid 1px @color_black;
@@ -2867,7 +2887,7 @@ ul.nav.items{
                     margin-bottom: 60px;
                 }
             }
-            &.sales-order-view {
+            &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment {
                 .column.main {
                     .block:not(.widget) {
                         .block-content {
