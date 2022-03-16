@@ -261,11 +261,6 @@ require(['jquery', 'jquery/ui','mage/mage'], function($){
     $(document).ready(function(){
         if($('div').hasClass('message info') == true){
             $("#form-validate #country").attr("disabled","true");
-            $("#form-validate #zip").attr("disabled","true");
-            $("#form-validate #city").attr("disabled","true");
-            setTimeout(function(){
-                $("#form-validate #region_id").attr("disabled","true");
-            }, 500);
         }
     });
     $("#country").change(function () {
@@ -280,10 +275,7 @@ require(['jquery', 'jquery/ui','mage/mage'], function($){
         $("#form-validate").submit(function( event ) {
             if($('#form-validate').valid()){
                 $("body").trigger('processStart');
-                $("#city").prop("disabled", false);
                 $("#country").prop("disabled", false);
-                $("#zip").prop("disabled", false);
-                $("#region_id").prop("disabled", false);
             }
         });
     });
