@@ -1,0 +1,12 @@
+<?xml version="1.0"?>   
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+  <preference for="Magento\CatalogUrlRewrite\Model\ProductUrlPathGenerator" type="Alfakher\SeoUrlPrefix\Model\CatalogUrlRewrite\ProductUrlPathGenerator"/>
+
+  <preference for="Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator" type="Alfakher\SeoUrlPrefix\Model\CatalogUrlRewrite\CategoryUrlPathGenerator"/>
+
+  <preference for="Magento\CmsUrlRewrite\Model\CmsPageUrlRewriteGenerator" type="Alfakher\SeoUrlPrefix\Model\CmsPageUrlRewriteGenerator"/>
+  
+  <preference for="Magento\CatalogUrlRewrite\Model\Category\Plugin\Storage" type="Alfakher\SeoUrlPrefix\Model\Category\Plugin\Storage" />
+
+</config>
