@@ -48,6 +48,7 @@ class Expirydocument
      */
     public function execute()
     {
+        // Check Expired Mail is enabled from configuration
         if ($this->documentHelper->getExpirymailEnable()) {
             $documentArray = $this->getDocumentCollection();
             if ($documentArray) {
