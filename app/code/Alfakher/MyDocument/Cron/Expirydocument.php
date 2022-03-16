@@ -48,22 +48,24 @@ class Expirydocument
      */
     public function execute()
     {
+        // Check Expired Mail is enabled from configuration
+        if ($this->documentHelper->getExpirymailEnable()) {
+            $documentArray = $this->getDocumentCollection();
+            if ($documentArray) {
 
-        $documentArray = $this->getDocumentCollection();
-        if ($documentArray) {
+                foreach ($documentArray as $customerId => $document) {
+                    $documentName = '';
+                    $documentNameArray = array_column($document, 'docname');
+                    $documentIdArray = array_column($document, 'mydocument_id');
+                    $documentName = implode(",", array_column($document, 'docname'));
 
-            foreach ($documentArray as $customerId => $document) {
-                $documentName = '';
-                $documentNameArray = array_column($document, 'docname');
-                $documentIdArray = array_column($document, 'mydocument_id');
-                $documentName = implode(",", array_column($document, 'docname'));
-
-                $sendEmail = $this->documentHelper->sendExpiryMail($documentNameArray, $customerId);
-                if ($sendEmail) {
-                    $this->setExpiredEmailFlag($documentIdArray, $customerId);
+                    $sendEmail = $this->documentHelper->sendExpiryMail($documentNameArray, $customerId);
+                    if ($sendEmail) {
+                        $this->setExpiredEmailFlag($documentIdArray, $customerId);
+                    }
                 }
-            }
 
+            }
         }
     }
 
@@ -111,13 +113,16 @@ class Expirydocument
      */
     public function setExpiredEmailFlag($documentIdArray, $customerId)
     {
-        foreach ($documentIdArray as $documentId) {
-
-            $document = $this->documentRepository->get($documentId);
-            if ($document->getCustomerId() == $customerId) {
-                $document->setNotifyExpireDocMail(1);
-                $this->documentRepository->save($document);
+        try {
+            foreach ($documentIdArray as $documentId) {
+                $document = $this->documentRepository->get($documentId);
+                if ($document->getCustomerId() == $customerId) {
+                    $document->setNotifyExpireDocMail(1);
+                    $this->documentRepository->save($document);
+                }
             }
+        } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+            return false;
         }
     }
 }

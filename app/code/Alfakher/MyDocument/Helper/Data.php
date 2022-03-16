@@ -209,4 +209,14 @@ class Data extends AbstractHelper
             return false;
         }
     }
+    /**
+     * @inheritDoc
+     */
+    public function getExpirymailEnable()
+    {
+        // Check expiry document mail enable from configuration
+        $configPath = 'hookahshisha/productpage/productpageb2b_documents_expired_mail_enable';
+        $enableMail = $this->_scopeConfig->getValue($configPath, ScopeInterface::SCOPE_STORE);
+        return $enableMail;
+    }
 }
