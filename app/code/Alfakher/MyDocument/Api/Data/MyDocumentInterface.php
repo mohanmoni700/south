@@ -9,7 +9,7 @@ namespace Alfakher\MyDocument\Api\Data;
 
 interface MyDocumentInterface
 {
-
+    // @codingStandardsIgnoreStart
     const CUSTOMER_ID = 'customer_id';
     const FILENAME = 'filename';
     const MESSAGE = 'message';
@@ -19,7 +19,8 @@ interface MyDocumentInterface
     const CREATED_AT = 'created_at';
     const EXPIRY_DATE = 'expiry_date';
     const IS_CUSTOMERFROM_USA = 'is_customerfrom_usa';
-
+    const EXPIRED_FLAG = 'notify_expire_doc_mail';
+    // @codingStandardsIgnoreStart
     /**
      * Get mydocument_id
 
@@ -124,6 +125,21 @@ interface MyDocumentInterface
      * @return \Alfakher\MyDocument\MyDocument\Api\Data\MyDocumentInterface
      */
     public function setDocumentName($documentName);
+
+    /**
+     * Get notify_expire_doc_mail
+
+     * @return bool|null
+     */
+    public function getNotifyExpireDocMail();
+
+    /**
+     * Set notify_expire_doc_mail
+
+     * @param string $expiredflag
+     * @return \Alfakher\MyDocument\MyDocument\Api\Data\MyDocumentInterface
+     */
+    public function setNotifyExpireDocMail($expiredflag);
 
     /**
      * Get created_at

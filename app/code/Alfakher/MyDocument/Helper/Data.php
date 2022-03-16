@@ -126,8 +126,7 @@ class Data extends AbstractHelper
             ->setTemplateOptions(
                 [
                     'area' => 'frontend',
-                    /** passed storeId here [BS]*/
-                    'store' => $storeId,
+                    'store' => $storeId, /** Passed storeId here [BS]*/
                 ]
             )
 
@@ -142,5 +141,72 @@ class Data extends AbstractHelper
             ->getTransport();
 
         $transport->sendMessage();
+    }
+    /**
+     * @inheritDoc
+     */
+    public function sendExpiryMail($post, $customerid)
+    {
+        try {
+            $customer = $this->customer->create()->load($customerid);
+            $customerEmail = $customer->getEmail();
+            $customerName = $customer->getFirstname();
+
+            $collection = $this->collection->create()
+                ->addFieldToFilter('customer_id', ['eq' => $customerid]);
+            $docdata = $collection->getData();
+
+            $rejected_doc = [];
+
+            foreach ($post as $val) {
+                $docname = $val;
+
+                $rejected_doc[] = ['docname' => $docname];
+            }
+
+            $this->_inlineTranslation->suspend();
+            $fromEmail = $this->_scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE);
+            $fromName = $this->_scopeConfig->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE);
+
+            $sender = [
+                'name' => $fromName,
+                'email' => $fromEmail,
+            ];
+
+            /** Get current storeId start[BS]*/
+            $storeManagerDataList = $this->storeManager->getStores();
+            $options = [];
+
+            foreach ($storeManagerDataList as $key => $value) {
+                $options[] = ['label' => $value['code'], 'value' => $key];
+                if ($value['code'] == "hookah_wholesalers_store_view") {
+                    $storeId = $key;
+                }
+            }
+            /** Get current storeId end[BS]*/
+
+            $transport = $this->_transportBuilder
+                ->setTemplateIdentifier('custom_expiry_doc_email')
+                ->setTemplateOptions(
+                    [
+                        'area' => 'frontend',
+                        /** passed storeId here [BS]*/
+                        'store' => $storeId,
+                    ]
+                )
+
+                ->setTemplateVars([
+                    'name' => $customerName,
+                    'documentarray' => $rejected_doc,
+                ])
+                ->setFromByScope($sender)
+                ->addTo([$customerEmail])
+                ->getTransport();
+
+            $transport->sendMessage();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
