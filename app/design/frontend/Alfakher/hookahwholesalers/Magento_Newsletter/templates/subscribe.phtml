@@ -28,7 +28,7 @@
                             />
                         </label>
                         <div class="actions">
-                            <button class="action subscribe primary"
+                            <button class="action subscribe primary subscribe-enable"
                                     title="<?= $block->escapeHtmlAttr(__('Subscribe')) ?>"
                                     type="submit"
                                     aria-label="Subscribe">
@@ -43,6 +43,13 @@
     </div>
 </div>
 <a href="javascript:" class="top_scroll" id="top-return"><i class="icon-chevron-up"></i></a>
+<script type="text/x-magento-init"> 
+    {   
+        "*": {  
+            "Magento_Newsletter/js/newsletter_subscriber_ajax": { } 
+        }   
+    }   
+</script>
 <script type="text/x-magento-init">
     {
         "*": {
@@ -53,7 +60,7 @@
     }
 </script>
 
-<script type="text/javascript">
+<script>
     require(['jquery'], function($){
 
         $(document).ready(function(){
