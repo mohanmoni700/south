@@ -1919,6 +1919,26 @@ ul.nav.items{
             .lib-font-size(20);
         }
     }
+    .validator.validator-email {
+        > input {
+            padding-right: 36px;
+        }
+        .feedback {
+            height: 22px !important;
+            width: 22px !important;
+            background-size: 12px auto !important;
+            top: 12px !important;
+            right: 8px !important;
+        }        
+        &.validation-no {
+            .feedback {
+                background-size: 10px auto !important;
+            }
+        }
+        div.mage-error[generated] {
+            float: left;
+        }
+    }
     .block-content {
         .form.password.forget{
             .fieldset {
