@@ -13,6 +13,8 @@ class AttributeMerger
         \Magento\Checkout\Block\Checkout\AttributeMerger $subject,
         $result
     ) {
+        $result['firstname']['placeholder'] = __('First Name');
+        $result['lastname']['placeholder'] = __('Last Name');
         $result['street']['children'][0]['placeholder'] = __('Address Line 1');
         $result['street']['children'][1]['placeholder'] = __('Address Line 2');
         $result['city']['placeholder'] = __('City');
