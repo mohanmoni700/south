@@ -9,6 +9,7 @@
 /** @var \Magento\Customer\Block\Form\Login $block */
 ?>
 <?php $checkmigratedcustomerurl = $block->getUrl('changepassword/ajax/checkmigratedcustomer'); ?>
+<?php $loginUrl=$block->getUrl('customer/account/loginPost'); ?>
 <div class="block block-customer-login">
     <div class="block-title">
         <div class="separator"><span class="user_icon"></span> </div>
@@ -17,10 +18,9 @@
     <div class="block-content" aria-labelledby="block-customer-login-heading" id="customer-login">
     <div class="response-msg"></div>
         <form class="form form-login"
-              action="<?= $block->escapeUrl($block->getPostActionUrl()) ?>"
-              method="post"
-              id="login-form"
-              data-mage-init='{"validation":{}}'>
+        id="login-form" method="post" 
+        data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>" 
+        data-mage-init='{"validation":{}}' >
             <?= $block->getBlockHtml('formkey') ?>
             <fieldset class="fieldset login" data-hasrequired="<?= $block->escapeHtml(__('* Required Fields')) ?>">
                 <?php /*<div class="field note"><?= //$block->escapeHtml(__('If you have an account, sign in with your email address.')) ?></div> */?>
@@ -32,8 +32,7 @@
                                id="email" type="email" class="input-text"
                                placeholder="Email"
                                title="<?= $block->escapeHtmlAttr(__('Email')) ?>"
-                               data-mage-init='{"mage/trim-input":{}}'
-                               data-validate="{required:true, 'validate-email':true}">
+                               data-validate="{required:true, 'validate-email':true}" required>
                     </div>
                 </div>
                 <div class="field password required" style="display: none;">
@@ -49,9 +48,12 @@
                                class="input-text" id="pass"
                                placeholder="Password"
                                title="<?= $block->escapeHtmlAttr(__('Password')) ?>"
-                               data-validate="{required:true}">
+                               data-validate="{required:true}" required>
                     </div>
                 </div>
+                <!-- bv-hd migrate customer customization -->
+                <input type="hidden" name="login[migrate_customer]" id="migrate_customer" value="0" data-validate="{required:false}">
+                <!-- bv-hd migrate customer customization -->
                 <?php /*<div class="field choice" data-bind="scope: 'showPassword'">
                     <!-- ko template: getTemplate() --><!-- /ko -->
                 </div> */ ?> 
@@ -91,10 +93,18 @@
                 "passwordSelector": "#customer-login .password",
                 "checkmigratedcustomerurl": "<?= $block->escapeUrl($checkmigratedcustomerurl); ?>",
                 "submitButton": "#send2",
-                "migratedcustomer": "#migrate_customer"
+                "migratedcustomer": "#migrate_customer",
+                "loginUrl":"<?= $block->escapeUrl($loginUrl); ?>"
             }
         }
     }
     </script>
     <!-- bv_vv; 18-02-2022; check for migrated customer; end-->
+    <script type="text/x-magento-init">
+    {
+        "#login-form": {
+        "validation": {}
+        }
+    }
+    </script>
 </div>
