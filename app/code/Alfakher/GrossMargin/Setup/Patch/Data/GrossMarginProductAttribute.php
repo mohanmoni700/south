@@ -16,17 +16,19 @@ class GrossMarginProductAttribute implements DataPatchInterface
 {
 
     /**
-     * ModuleDataSetupInterface
+     * Module Data Setup Interface
      *
      * @var ModuleDataSetupInterface
      */
     private $moduleDataSetup;
+
     /**
-     * EavSetupFactory
+     * Eav Setup Factory Var
      *
      * @var EavSetupFactory
      */
     private $eavSetupFactory;
+
     /**
      * @param ModuleDataSetupInterface $moduleDataSetup
      * @param EavSetupFactory          $eavSetupFactory
@@ -40,7 +42,7 @@ class GrossMarginProductAttribute implements DataPatchInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function apply()
     {
@@ -71,14 +73,14 @@ class GrossMarginProductAttribute implements DataPatchInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public static function getDependencies()
     {
         return [];
     }
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getAliases()
     {
