@@ -1,57 +1,42 @@
-define([
-    'jquery',
-    'mage/url',
-    'mage/validation'
-], function($, urlBuilder) {
-    'use strict';
+define(["jquery", "jquery/ui", 'mage/url'], function($, ui, urlBuilder) {
+    "use strict";
 
-    return function(config) {
-
+    function main(config, element) {
         $(document).ready(function() {
-            
-            $(config.passwordSelector).hide();
+            $(config.passwordSelector).show();
+            $(config.email).focus();
+            $(config.submitButton).text("sign in");
+            $(config.submitButton).prop("disabled", false);
+        });
 
-            function validateEmail(email) {
-                var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-                if(!regex.test(email)) {
-                    return false;
-                }else{
-                    return true;
-                }
+        $("#login-form").submit(function(e) {
+            e.preventDefault();
+            var form = $('form#login-form');
+            if (form.validation('isValid')) {
+                var form_data = jQuery("#login-form").serialize();
+                $.ajax({
+                    type: "POST",
+                    showLoader: true,
+                    url: config.loginUrl,
+                    data: form_data,
+                }).done(function(msg) {
+                    if (msg.migrate_customer == 1) {
+                        $(config.passwordSelector).hide();
+                        $(config.submitButton).text("Reset Password");
+                        $(config.submitButton).prop("disabled", false);
+                        $('#migrate_customer').val(1);
+                    } else if (msg.documentredirect) {
+                        var docurl = urlBuilder.build(msg.documentredirect);
+                        window.location.href = docurl;
+                    } else if (msg.homeredirect) {
+                        var homeurl = urlBuilder.build(msg.homeredirect);
+                        window.location.href = homeurl;
+                    } else {
+                        location.reload();
+                    }
+                });
             }
-
-            $(config.email).bind('change',function(e) {
-                var email_login = $(config.email).val();
-                var status = validateEmail(email_login);
-                if(status === true) {
-                    e.preventDefault();
-                    $.ajax({
-                        type: "POST",
-                        showLoader: true,
-                        url: config.checkmigratedcustomerurl,
-                        data: {email : email_login},
-                        dataType: "json"
-                    })
-                    .done(function (msg) {
-                        if(msg.errors) {
-                            $('.response-msg').html("<div class='error'>"+msg.message+"</div>");
-                            setTimeout(function(){ $('.response-msg').html(null); }, 5000);
-                        } else {
-                            if (msg.migrate_customer == 1){
-                                $(config.passwordSelector).hide();
-                                $(config.submitButton).text("Reset Password");
-                                $(config.submitButton).prop("disabled",false);
-                            }else{
-                                $(config.email).focus();
-                                $(config.passwordSelector).show();
-                                $(config.submitButton).text("sign in");
-                                $(config.submitButton).prop("disabled",false);
-                            }
-                        }
-
-                    });
-                }
-            });
         });
     };
+    return main;
 });
