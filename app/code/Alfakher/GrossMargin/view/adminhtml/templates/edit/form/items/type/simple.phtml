@@ -354,8 +354,8 @@ $canDeleteItem = $block->getCanDeleteItem();
               name="item[<?=$block->escapeHtmlAttr($itemId)?>][gross_margin]"
               readonly="readonly"
               title="<?=$block->escapeHtmlAttr(__("Gross Margin"))?>"
-              class="mw-order-editor-order-item required-entry validate-number disabled gross_margin"
-              value="<?=$block->escapeHtmlAttr($item->getGrossMargin());?>"/>
+              class="mw-order-editor-order-item disabled gross_margin"
+              value="<?=$block->escapeHtmlAttr($item->getGrossMargin())."%";?>"/>
           <input type="hidden" name="item[<?= /* @noEscape */ $block->escapeHtmlAttr($itemId)?>][cost]" value="<?= /* @noEscape */ $item->getProduct()->getCost() ?>">
       </td>
     <?php endif; ?>

@@ -9,7 +9,11 @@
                 <argument name="add_attribute" xsi:type="string">itemprop="tier_prices_text"</argument>
             </arguments>
         </block>
-        <referenceBlock name="product.attributes.exclude.pagebuilder" remove="true" /> 
+        <referenceBlock name="product.attributes.exclude.pagebuilder" remove="true" />
+        <!-- removed tab from PDP 16 March KM -->
+        <referenceBlock name="product.info.details" remove="true" />
+        <referenceBlock name="product.info.blog.relatedposts.tab" remove="true" />
+        <referenceBlock name="product.attributes" remove="true" />
         <!-- SEO Schema Start -->
         <block class="Alfakher\Productpageb2b\Block\Product\ViewDetailRenderer" name="product.info.seo" template="Alfakher_Productpageb2b::product/view/seoschema.phtml"  />
         <!-- SEO Schema End -->
