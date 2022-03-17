@@ -905,7 +905,7 @@ define(
             */
             updateGrossMargin: function (cost, price, id) {
                 var grossMargin = (price-cost)/price*100;
-                $("[name='item["+id+"][gross_margin]']").val(grossMargin.toFixed(2));
+                $("[name='item["+id+"][gross_margin]']").val(grossMargin.toFixed(2)+"%");
             }
         });
 
