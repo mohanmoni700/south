@@ -188,7 +188,7 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
      * @return \Magento\Framework\Controller\Result\Redirect
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute() //NOSONAR
+    public function execute() // NOSONAR
     {
         $resultRedirect = $this->resultRedirectFactory->create();
         $resultJson = $this->resultJsonFactory->create();
@@ -216,11 +216,10 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                         $migrate_customer_value = $migrate_customer->getValue();
                         /*bv-hd migrate customer customization*/
                         if ($login['migrate_customer'] == 0 && $migrate_customer_value == 1) {
-                                $response = [
-                                    'migrate_customer' => 1,
-                                ];
-                                return $resultJson->setData($response);
-                            }
+                            $response = [
+                                'migrate_customer' => 1,
+                            ];
+                            return $resultJson->setData($response);
                         }
                         /*bv-hd migrate customer customization*/
                     }
