@@ -188,9 +188,8 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
      * @return \Magento\Framework\Controller\Result\Redirect
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute()
+    public function execute() // NOSONAR
     {
-        // NOSONAR
         $resultRedirect = $this->resultRedirectFactory->create();
         $resultJson = $this->resultJsonFactory->create();
         if ($this->session->isLoggedIn() || !$this->formKeyValidator->validate($this->getRequest())) {
