@@ -215,7 +215,7 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                     if (!empty($migrate_customer)) {
                         $migrate_customer_value = $migrate_customer->getValue();
                         /*bv-hd migrate customer customization*/
-                        if ($login['migrate_customer'] == 0) {
+                        if ($login['migrate_customer'] == 0 && $migrate_customer_value == 1) {
                             if ($migrate_customer_value == 1) {
                                 $response = [
                                     'migrate_customer' => 1,
@@ -291,18 +291,12 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                     }
                     $baseurl = $this->_storemanager->getStore()->getBaseUrl();
                     if (in_array(0, $status) || empty($dataSize) || (in_array("exp", $msg))) {
-                        /*$resultRedirect = $this->resultRedirectFactory->create();
-                                                                                                                                            $resultRedirect->setPath('mydocument/customer/index');
-                        */
                         $response = [
                             'documentredirect' => $baseurl . "/mydocument/customer/index",
                         ];
                         return $resultJson->setData($response);
 
                     } else {
-                        /*$resultRedirect = $this->resultRedirectFactory->create();
-                        $resultRedirect->setPath('');*/
-                        // return $resultRedirect;
                         $response = [
                             'homeredirect' => $baseurl,
                         ];
