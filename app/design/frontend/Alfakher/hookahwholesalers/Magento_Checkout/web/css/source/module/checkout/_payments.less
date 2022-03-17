@@ -216,7 +216,7 @@
                     margin-right: 0;
                     min-width: 160px;
                 }
-                .action-cancel, .action-cancel:hover {
+                .action-cancel {
                     display: inline-block;
                     margin: 0 0 0 20px;
                     min-width: 160px;
@@ -235,7 +235,7 @@
             .billing-address-details {
                 .lib-css(line-height, @checkout-billing-address-details__line-height);
                 .lib-css(padding, @checkout-billing-address-details__padding);
-                line-break: anywhere;
+                word-break: break-word;
                 &::first-line {
                     font-weight: @font-weight__bold;
                 }

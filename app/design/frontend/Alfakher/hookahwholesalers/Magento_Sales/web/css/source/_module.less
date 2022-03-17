@@ -8,7 +8,7 @@
 //  _____________________________________________
 @lib-action_clr:#404040;
 & when (@media-common = true) {
-    .sales-order-view{
+    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment {
         .order-references{
             border: 0;
         }
@@ -23,7 +23,14 @@
         .item {
             display: inline-block;
             margin-right: 20px;
+            a {
+                color: @color_black;
+                text-decoration: none;
+            }
         }
+    }
+    .action.track {
+        margin-right: 20px;
     }
     .page_title{
         padding-bottom: 10px;
@@ -51,7 +58,7 @@
             margin-bottom: 30px;
         }   
     }
-    .sales-order-view{
+    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment {
         &.account{
             .page-title-wrapper{
                 .page-title{
@@ -61,6 +68,7 @@
                     font-weight: @font-weight__bold;
                     float: left;
                     margin-bottom: 0;
+                    margin-top: 0;
                     margin-right: 20px;
                 }
             }
@@ -76,10 +84,12 @@
             .negotiable-quote-order-information{
                 float:left;
                 width: 100%;
-                margin-top: 17px;
+                margin-top: 0;
+                margin-bottom: 0;
             }
-            .order-actions-toolbar{
-                float:left;
+
+            .actions-toolbar{
+                display: inline-block;
                 width: 100%;   
                 a.action.order{
                     color: #404040;
@@ -87,6 +97,7 @@
                 }
                 a.action.print{
                     position: relative;
+                    display: inline-block;
                     &:before{
                         content:'';
                         background-image: url('@{baseDir}images/print_icon.svg');
@@ -97,6 +108,11 @@
                         height: 12px;
                         margin-right: 12px;
                     }
+                }
+            }
+            .price-including-tax, .price-excluding-tax {
+                .price {
+                    .lib-font-size(15);
                 }
             }
         } 
@@ -427,6 +443,7 @@
 
         .tracking-title {
             display: inline-block;
+            margin-bottom: 0;
         }
 
         .tracking-content {
@@ -471,7 +488,7 @@
         }
         .block-content{
             address {
-                line-break: anywhere;
+                word-break: break-word;
             }
             &:before{
                 display: none !important;
@@ -528,9 +545,9 @@
        } 
     }
 
-    .sales-order-print.page-print {
+    .sales-order-print.page-print, .sales-order-printinvoice, .sales-order-printshipment {
         .logo {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
             height: auto;
             img {
                 width: auto;
@@ -547,6 +564,54 @@
                 > .secondary {
                     .action.back {
                         display: none;
+                    }
+                }
+            }
+        }
+    }
+    .sales-order-printinvoice, .sales-order-printshipment {
+        .page-wrapper nav.navigation.sw-megamenu {
+            display: none !important;
+        }
+        .order-details-items {
+            display: inline-block;
+            width: 100%;
+        }
+    }
+
+    .table-wrapper.order-items, .table-order-items.invoice, .order-details-items.shipments {
+        .col {
+            &.name {
+                .item-options, .item.options {
+                    display: none;
+                }
+            }
+        }
+    }
+
+
+    @media only screen and (max-width: 360px) {
+        body.sales-order-view, body.sales-order-invoice, body.sales-order-shipment {
+            &.account {
+                .column.main {
+                    .items.order-links {
+                        .nav.item.current {
+                            strong {
+                                padding: 8px 8px;
+                                font-size: 12px;
+                            }
+                        }
+                    }
+                }
+                .order-links {
+                    .item {
+                        margin-right: 10px;
+                        &:last-child {
+                            margin-right: 0;
+                        }
+                        a {
+                            font-size: 12px;
+                        }
                     }
                 }
             }
@@ -672,6 +737,10 @@
             > strong{
                 font-weight: 600;
                 font-size: 1.6rem;
+                margin-top: 0;
+            }
+            .action.print, .action.track {
+                display: none;
             }
         }
         .actions-toolbar {
@@ -721,7 +790,38 @@
             }
         }
     }
-    .sales-order-print.page-print {
+    .sales-order-view, .sales-order-invoice, .sales-order-shipment {
+        &.account {
+            .column.main {
+                .items.order-links {
+                    .nav.item.current {
+                        strong {
+                            display: block;
+                            padding: 8px 10px;
+                            font-size: 13px;
+                        }
+                    }
+                }
+            }
+            .order-links {
+                display: block;
+                margin-bottom: 20px !important;
+                .item {
+                    margin-right: 15px;
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                    a {
+                        font-size: 13px;
+                    }
+                }
+            }
+            .actions-toolbar {
+                margin-bottom: 20px;
+            }
+        }
+    }
+    .sales-order-print.page-print, .sales-order-printinvoice, .sales-order-printshipment {
         h1 {
             font-size: 26px;
         }
@@ -796,10 +896,22 @@
         }
     }
 
-    .page-title-wrapper {
-        .order-date {
-            @order-status-indent: ceil(@h1__margin-bottom__desktop/2);
-            .lib-css(margin-top, -@order-status-indent);
+    .table-wrapper.order-items, .table-order-items.invoice, .order-details-items.shipments {
+        overflow-x: auto;
+        .col {
+            &.name {
+                min-width: 180px;
+            }
+            &.sku {
+                min-width: 180px;
+            }
+            &.action {
+                min-width: 120px;
+            }
+        }
+        table > thead > tr > th, table > tbody > tr > th, table > tfoot > tr > th, table > thead > tr > td, table > tbody > tr > td, table > tfoot > tr > td {
+            vertical-align: middle;
+            padding-bottom: 10px;
         }
     }
 
