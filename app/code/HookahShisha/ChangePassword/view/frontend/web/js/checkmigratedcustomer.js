@@ -14,6 +14,7 @@ define(["jquery", "jquery/ui", 'mage/url'], function($, ui, urlBuilder) {
             var form = $('form#login-form');
             if (form.validation('isValid')) {
                 var form_data = jQuery("#login-form").serialize();
+                var formData = new FormData(this);
                 $.ajax({
                     type: "POST",
                     showLoader: true,
@@ -25,12 +26,9 @@ define(["jquery", "jquery/ui", 'mage/url'], function($, ui, urlBuilder) {
                         $(config.submitButton).text("Reset Password");
                         $(config.submitButton).prop("disabled", false);
                         $('#migrate_customer').val(1);
-                    } else if (msg.documentredirect) {
-                        var docurl = urlBuilder.build(msg.documentredirect);
-                        window.location.href = docurl;
-                    } else if (msg.homeredirect) {
-                        var homeurl = urlBuilder.build(msg.homeredirect);
-                        window.location.href = homeurl;
+                    }  else if (msg.url) {
+                        var url = urlBuilder.build(msg.url);
+                        window.location.href = url;
                     } else {
                         location.reload();
                     }
