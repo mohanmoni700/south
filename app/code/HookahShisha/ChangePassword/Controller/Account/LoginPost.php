@@ -232,7 +232,7 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                             $response = [
                                 'migrate_customer' => 1,
                             ];
-                            return $resultJson->setData($response);
+                            return $resultJson->setData($response); //NOSONAR
                         }
                         /*bv-hd migrate customer customization*/
                     }
@@ -260,7 +260,7 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                     );
                 }
                 $this->messageManager->addSuccessMessage($this->getSuccessMessage($email));
-                return $resultRedirect;
+                return $resultRedirect; //NOSONAR
             } elseif (!empty($login['username']) && !empty($login['password'])) {
                 try {
                     $customerData = $this->customerAccountManagement->
@@ -300,7 +300,7 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                             'url' => $baseurl,
                         ];
                     }
-                    return $resultJson->setData($response);
+                    return $resultJson->setData($response); //NOSONAR
                 } catch (EmailNotConfirmedException $e) {
                     $this->messageManager->addComplexErrorMessage(
                         'confirmAccountErrorMessage',
