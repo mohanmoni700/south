@@ -228,13 +228,11 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                     if (!empty($migrate_customer)) {
                         $migrate_customer_value = $migrate_customer->getValue();
                         /*bv-hd migrate customer customization*/
-                        if ($login['migrate_customer'] == 0) {
-                            if ($migrate_customer_value == 1) {
-                                $response = [
-                                    'migrate_customer' => 1,
-                                ];
-                                return $resultJson->setData($response);
-                            }
+                        if ($login['migrate_customer'] == 0 && $migrate_customer_value == 1) {
+                            $response = [
+                                'migrate_customer' => 1,
+                            ];
+                            return $resultJson->setData($response);
                         }
                         /*bv-hd migrate customer customization*/
                     }
@@ -245,15 +243,6 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
             /* Here we are checking the Reset password */
             if (!empty($login['username']) && !empty($migrate_customer_value) && $migrate_customer_value == 1) {
                 /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
-
-                /*if (!\Zend_Validate::is($email, \Magento\Framework\Validator\EmailAddress::class)) {
-                $this->session->setForgottenEmail($email);
-                $this->messageManager->addErrorMessage(
-                __('The email address is incorrect. Verify the email address and try again.')
-                );
-                return $resultRedirect;
-                }*/
-
                 try {
                     $this->customerAccountManagement->initiatePasswordReset(
                         $email,
@@ -306,13 +295,10 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                         $response = [
                             'url' => $baseurl . "/mydocument/customer/index",
                         ];
-                        // return $resultJson->setData($response);
-
                     } else {
                         $response = [
                             'url' => $baseurl,
                         ];
-                        // return $resultJson->setData($response);
                     }
                     return $resultJson->setData($response);
                 } catch (EmailNotConfirmedException $e) {

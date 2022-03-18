@@ -14,7 +14,6 @@ define(["jquery", "jquery/ui", 'mage/url'], function($, ui, urlBuilder) {
             var form = $('form#login-form');
             if (form.validation('isValid')) {
                 var form_data = jQuery("#login-form").serialize();
-                var formData = new FormData(this);
                 $.ajax({
                     type: "POST",
                     showLoader: true,
