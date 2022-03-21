@@ -31,8 +31,6 @@ $subcats = $category->getChildrenCategories();
         "Magento_PageBuilder/js/resource/slick/slick",
         "domReady!"
     ], function ($) {
-        $(window).load(function() {
-             setTimeout(function () {
                  $('.shorting_slider').slick({
                     dots: false,
                     arrows: true,
@@ -42,7 +40,5 @@ $subcats = $category->getChildrenCategories();
                     infinite: true,
                     variableWidth: true
                 });
-            }, 0);
-        });
     });
 </script>
