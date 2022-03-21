@@ -101,6 +101,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param \Magento\Company\Model\CompanyUser|null $companyUser
      * @param EmailAddress $emailValidator
+     * @param \Magento\LoginAsCustomerAssistance\Model\ResourceModel\SaveLoginAsCustomerAssistanceAllowed $saveLoginAsCustomerAssistanceAllowed
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -121,7 +122,9 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
         \HookahShisha\Customerb2b\Helper\Data $helperdata,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Magento\Company\Model\CompanyUser $companyUser = null,
-        EmailAddress $emailValidator
+        EmailAddress $emailValidator,
+        \Magento\LoginAsCustomerAssistance\Model\ResourceModel\
+        SaveLoginAsCustomerAssistanceAllowed $saveLoginAsCustomerAssistanceAllowed
     ) {
         parent::__construct($context);
         $this->userContext = $userContext;
@@ -143,6 +146,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
         $this->helperdata = $helperdata;
         $this->resultJsonFactory = $resultJsonFactory;
         $this->emailValidator = $emailValidator;
+        $this->saveLoginAsCustomerAssistanceAllowed = $saveLoginAsCustomerAssistanceAllowed;
     }
 
     /**
@@ -221,6 +225,14 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
             /* end create customer accounts */
 
             $this->companyCreateSession->setCustomerId($customer->getId());
+
+            /*bv-hd customization for Allow remote shopping assistance */
+            $customerId = $customer->getId();
+            if ($customerId) {
+                $assistanceAllowed = $this->saveLoginAsCustomerAssistanceAllowed->execute((int) $customerId);
+            }
+            /*bv-hd customization for Allow remote shopping assistance */
+
             $this->helperdata->sendEmail($data);
 
             $resultJson->setData([
