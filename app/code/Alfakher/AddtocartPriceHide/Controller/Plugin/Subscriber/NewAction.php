@@ -111,7 +111,7 @@ class NewAction extends \Magento\Newsletter\Controller\Subscriber\NewAction
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
                 $response = [
                     'status' => 'ERROR',
-                    'msg' => __('There was a problem with the subscription: %1', $e->getMessage()),
+                    'msg' => __($e->getMessage()),
                 ];
             } catch (\Exception $e) {
                 $response = [
