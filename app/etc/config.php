@@ -831,7 +831,6 @@ return [
         'Mageplaza_Sitemap' => 1,
         'Mageplaza_Webhook' => 1,
         'OlegKoval_RegenerateUrlRewrites' => 1,
-        'Onesaas_Connect' => 1,
         'PCAPredict_Tag' => 1,
         'ParadoxLabs_TokenBase' => 1,
         'ParadoxLabs_FirstData' => 1,
