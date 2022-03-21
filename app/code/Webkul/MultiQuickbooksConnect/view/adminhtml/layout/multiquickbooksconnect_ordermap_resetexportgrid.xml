@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Webkul MultiQuickbooksConnect order layout
+ * @category  Webkul
+ * @package   Webkul_MultiQuickbooksConnect
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited(https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+ -->
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+	<update handle="formkey"/>
+    <container name="root">
+    	<block class="Webkul\MultiQuickbooksConnect\Block\Adminhtml\Account\Edit\Tab\ExportOrderGrid" name="order-export-grid"/>
+        <block class="Magento\Framework\View\Element\Template" name="multiquickbooksconnect-require-check-remove" template="Webkul_MultiQuickbooksConnect::account/require-check-remove.phtml" />
+    </container>
+</layout>
