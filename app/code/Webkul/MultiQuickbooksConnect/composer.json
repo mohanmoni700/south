@@ -1,0 +1,22 @@
+{
+    "name": "webkul/multi-quickbooks-online-connect",
+    "description": "Webkul Magento2 Multi Quickbooks Connect Module",
+    "require": {
+        "magento/framework": "102.0.*",
+        "magento/module-backend": "101.0.*",
+        "quickbooks/v3-php-sdk": "5.0.5"
+    },
+    "type": "magento2-module",
+    "version": "3.0.1",
+    "license": [
+        "proprietary"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Webkul\\MultiQuickbooksConnect\\": ""
+        }
+    }
+}
