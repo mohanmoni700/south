@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_MultiQuickbooksConnect
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited(https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="webkul" translate="label" sortOrder="10">
+            <label>Webkul</label>
+        </tab>
+        <section id="wk_multi_quickbooks_connect" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Multi Quickbooks Connect</label>
+            <!-- Assign section to tab -->
+            <tab>webkul</tab>
+            <resource>Webkul_MultiQuickbooksConnect::config_quickbooksconnect</resource>
+            <!-- create group for fields in section -->
+            <group id="general_settings" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+                <field id="enable" translate="label comment" sortOrder="0" type="select" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="account_type" translate="label comment" sortOrder="7" type="select" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Account Type</label>
+                    <validate>authentication-field</validate>
+                    <source_model>Webkul\MultiQuickbooksConnect\Model\Config\Source\AccountType</source_model>
+                </field>
+                <field id="client_id" translate="label comment" sortOrder="10" type="text" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Client Id</label>
+                    <validate>required-entry authentication-field</validate>
+                    <depends>
+                        <field id="app_integrates_with">oauth2</field>
+                    </depends>
+                </field>
+                <field id="client_secret" translate="label comment" sortOrder="11" type="obscure" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Client Secret</label>
+                    <validate>required-entry authentication-field</validate>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <depends>
+                        <field id="app_integrates_with">oauth2</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="notification" translate="label" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Notification for sync Tax Rates</label>
+                <field id="authenticateabc" translate="label" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>Webkul\MultiQuickbooksConnect\Block\System\Config\TaxRates</frontend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

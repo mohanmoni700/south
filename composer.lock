@@ -1,10 +1,10 @@
-{
+﻿{
     "_readme": [
         "This file locks the dependencies of your project to a known state",
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ecce767cae051506c916a1f37b52adb",
+    "content-hash": "dbc6a6be71522f41881907ece3ec941c",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -1978,11 +1978,11 @@
         },
         {
             "name": "corra/module-amasty-promo-graph-ql",
-            "version": "1.1.9",
+            "version": "1.1.10",
             "dist": {
                 "type": "zip",
-                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-amasty-promo-graph-ql/1.1.9.0/cc69fdbe47c5cc4830bcbbe29770f96f3fa24917.zip",
-                "reference": "cc69fdbe47c5cc4830bcbbe29770f96f3fa24917",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-amasty-promo-graph-ql/1.1.10.0/2f0823d0775e56f2d1507b149a8e016ac1e06b04.zip",
+                "reference": "2f0823d0775e56f2d1507b149a8e016ac1e06b04",
                 "mirrors": [
                     {
                         "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
@@ -2016,10 +2016,10 @@
             "homepage": "https://bitbucket.org/corratech/amastypromographql",
             "support": {
                 "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/2064515388/Amasty+Promo+GraphQl",
-                "source": "https://bitbucket.org/corratech/amastypromographql/src/cc69fdbe47c5cc4830bcbbe29770f96f3fa24917/?at=1.1.9",
+                "source": "https://bitbucket.org/corratech/amastypromographql/src/2f0823d0775e56f2d1507b149a8e016ac1e06b04/?at=1.1.10",
                 "issues": "https://bitbucket.org/corratech/amastypromographql/issues"
             },
-            "time": "2022-02-16T08:28:49+00:00"
+            "time": "2022-03-18T08:39:10+00:00"
         },
         {
             "name": "corra/module-page-builder-customisation",
@@ -27756,6 +27756,63 @@
             "time": "2017-10-23T01:57:42+00:00"
         },
         {
+            "name": "quickbooks/v3-php-sdk",
+            "version": "6.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/intuit/QuickBooks-V3-PHP-SDK.git",
+                "reference": "63419280bccebd4803fac1fd5077633c76c15fda"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/intuit/QuickBooks-V3-PHP-SDK/zipball/63419280bccebd4803fac1fd5077633c76c15fda",
+                "reference": "63419280bccebd4803fac1fd5077633c76c15fda",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^5.0 || ^6.0 || ^7.0"
+            },
+            "suggest": {
+                "ext-curl": "Uses Curl to make HTTP Requests",
+                "guzzlehttp/guzzle": "Uses Guzzle to make HTTP Requests"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "QuickBooksOnline\\API\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "abisalehalliprasan",
+                    "email": "anil_kumar3@intuit.com"
+                }
+            ],
+            "description": "The Official PHP SDK for QuickBooks Online Accounting API",
+            "homepage": "http://developer.intuit.com",
+            "keywords": [
+                "api",
+                "http",
+                "quickbooks",
+                "rest",
+                "smallbusiness"
+            ],
+            "support": {
+                "issues": "https://github.com/intuit/QuickBooks-V3-PHP-SDK/issues",
+                "source": "https://github.com/intuit/QuickBooks-V3-PHP-SDK/tree/6.0.3"
+            },
+            "time": "2022-02-04T00:41:34+00:00"
+        },
+        {
             "name": "ralouphie/getallheaders",
             "version": "3.0.3",
             "source": {
@@ -32575,5 +32632,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "2.1.0"
 }
