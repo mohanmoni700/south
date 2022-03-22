@@ -8,8 +8,13 @@ $subcats = $category->getChildrenCategories();
     <h1 class="cat_tite"><?= /* @noEscape */ $category->getName(); ?></h1>
 </div>
 <!-- this condition to check wether sub category exists[BS]start -->
+<?php $arrow = "false"; ?>
+<?php if ($subcats->getSize() >= 7):
+         $arrow = "true";
+      endif; ?>
 <?php if (!empty($subcats->getData())): ?>
     <div class="shorting_main">
+
         <div class="shorting_slider">
            <?php foreach ($subcats as $subcat): ?>
                 <?php if ($subcat->getIsActive()): ?>
@@ -31,6 +36,7 @@ $subcats = $category->getChildrenCategories();
         "Magento_PageBuilder/js/resource/slick/slick",
         "domReady!"
     ], function ($) {
+                if (<?= /* @noEscape */ $arrow ?> == true ) {
                  $('.shorting_slider').slick({
                     dots: false,
                     arrows: true,
@@ -40,5 +46,6 @@ $subcats = $category->getChildrenCategories();
                     infinite: true,
                     variableWidth: true
                 });
+             }
     });
 </script>
