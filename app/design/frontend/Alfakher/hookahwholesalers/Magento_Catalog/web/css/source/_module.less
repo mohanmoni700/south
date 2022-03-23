@@ -53,9 +53,11 @@
     }
 
     .catalog-product-view{
-        .page-main {
+        .page-main, .page-main-full-width {
             max-width: @list_page_container;
             padding: 0 (@indent__s + @indent__xs);
+            margin: 0 auto;
+            width: 100%;
             > .page.messages {
                 .message {
                     margin-top: 0;
@@ -2167,26 +2169,6 @@
         padding-left: 40px;
         padding-right: 55px;
         margin: 0 auto;
-        &:not(.slick-slider) {
-            white-space: nowrap;
-            overflow: auto;
-            scrollbar-width: thin;
-            scrollbar-color: @button_color_secondary transparent;
-            &::-webkit-scrollbar {
-                width: 5px;
-                height: 5px;
-                -webkit-overflow-scrolling: touch;
-            }
-            &::-webkit-scrollbar-thumb {
-                background: @button_color_secondary;
-                -webkit-overflow-scrolling: touch;
-            }
-            &::-webkit-scrollbar-track {
-                background-color: #ccc;
-                border-left: 1px solid #ccc;
-                -webkit-overflow-scrolling: touch;
-            }
-        }
         .slick-prev, .slick-next {
             width: 20px;
             height: 20px;
