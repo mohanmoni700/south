@@ -7,6 +7,7 @@ namespace HookahShisha\Customerb2b\Controller\Account;
 use Laminas\Validator\EmailAddress;
 use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
 use Magento\Framework\Exception\InputException;
+use Magento\LoginAsCustomerAssistance\Model\ResourceModel\SaveLoginAsCustomerAssistanceAllowed;
 
 /**
  * Create company account action.
@@ -121,10 +122,9 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
         \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory,
         \HookahShisha\Customerb2b\Helper\Data $helperdata,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Magento\Company\Model\CompanyUser $companyUser = null,
         EmailAddress $emailValidator,
-        \Magento\LoginAsCustomerAssistance\Model\ResourceModel\
-        SaveLoginAsCustomerAssistanceAllowed $saveLoginAsCustomerAssistanceAllowed
+        SaveLoginAsCustomerAssistanceAllowed $saveLoginAsCustomerAssistanceAllowed,
+        \Magento\Company\Model\CompanyUser $companyUser = null
     ) {
         parent::__construct($context);
         $this->userContext = $userContext;
@@ -229,7 +229,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
             /*bv-hd customization for Allow remote shopping assistance */
             $customerId = $customer->getId();
             if ($customerId) {
-                $assistanceAllowed = $this->saveLoginAsCustomerAssistanceAllowed->execute((int) $customerId);
+                $this->saveLoginAsCustomerAssistanceAllowed->execute((int) $customerId);
             }
             /*bv-hd customization for Allow remote shopping assistance */
 

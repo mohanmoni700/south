@@ -154,7 +154,7 @@ return [
                     'minify_html' => '0',
                 ],
                 'js' => [
-                    'merge_files' => '0',
+                    'merge_files' => '1',
                     'enable_js_bundling' => null,
                     'minify_files' => '0',
                     'move_script_to_bottom' => '0',
@@ -166,7 +166,7 @@ return [
                     ],
                 ],
                 'css' => [
-                    'merge_css_files' => null,
+                    'merge_css_files' => '1',
                     'minify_files' => '0',
                     'use_css_critical_path' => '0',
                     'minify_exclude' => [
@@ -831,7 +831,6 @@ return [
         'Mageplaza_Sitemap' => 1,
         'Mageplaza_Webhook' => 1,
         'OlegKoval_RegenerateUrlRewrites' => 1,
-        'Onesaas_Connect' => 1,
         'PCAPredict_Tag' => 1,
         'ParadoxLabs_TokenBase' => 1,
         'ParadoxLabs_FirstData' => 1,
@@ -849,6 +848,7 @@ return [
         'Vertex_RequestLogging' => 1,
         'Vertex_AddressValidation' => 1,
         'Vertex_TaxStaging' => 1,
+        'Webkul_MultiQuickbooksConnect' => 1,
         'Wyomind_Framework' => 1,
         'Wyomind_MassStockUpdate' => 1,
         'Wyomind_MassProductImport' => 1,
