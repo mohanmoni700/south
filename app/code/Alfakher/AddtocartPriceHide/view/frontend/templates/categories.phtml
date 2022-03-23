@@ -5,13 +5,12 @@ $subcats = $category->getChildrenCategories();
 ?>
 
 <div class="site-container category_title">
-    <h1 class="cat_tite"><?= /* @noEscape */ $category->getName(); ?></h1>
+    <h1 class="cat_tite"><?= /* @noEscape */ $category->getTagLabel(); ?></h1>
 </div>
 <!-- this condition to check wether sub category exists[BS]start -->
-   
+<?php $size = 0; ?>   
 <?php if (!empty($subcats->getData())): ?>
     <div class="shorting_main">
-        <?php $size = 0; ?>
         <div class="shorting_slider">
            <?php foreach ($subcats as $subcat): ?>
                 <?php if ($subcat->getIsActive()): ?>
