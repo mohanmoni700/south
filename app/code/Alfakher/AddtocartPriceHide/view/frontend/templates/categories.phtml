@@ -8,13 +8,10 @@ $subcats = $category->getChildrenCategories();
     <h1 class="cat_tite"><?= /* @noEscape */ $category->getName(); ?></h1>
 </div>
 <!-- this condition to check wether sub category exists[BS]start -->
-<?php $arrow = "false"; ?>
-<?php if ($subcats->getSize() >= 7):
-         $arrow = "true";
-      endif; ?>
+   
 <?php if (!empty($subcats->getData())): ?>
     <div class="shorting_main">
-
+        <?php $size = 0; ?>
         <div class="shorting_slider">
            <?php foreach ($subcats as $subcat): ?>
                 <?php if ($subcat->getIsActive()): ?>
@@ -22,6 +19,7 @@ $subcats = $category->getChildrenCategories();
                     <div class="shorting_title">
                         <a href="<?= /* @noEscape */ $subcaturl?>"><?= /* @noEscape */ $subcat->getName();?></a>
                     </div>
+                    <?php $size++; ?>
                 <?php endif; ?>
             <?php endforeach; ?>
         </div>
@@ -29,14 +27,26 @@ $subcats = $category->getChildrenCategories();
 <?php endif; ?>
 <!-- condition to check wether sub category exists[BS]end -->
 
-
 <script>
     require([
         "jquery",
         "Magento_PageBuilder/js/resource/slick/slick",
         "domReady!"
     ], function ($) {
-                if (<?= /* @noEscape */ $arrow ?> == true ) {
+        if ($( window ).width() >= 820){
+            if (<?= /* @noEscape */$size ?> >= 7){
+               $arrow = "true";
+            }else{
+                $arrow = "false";
+            }
+        }else{ 
+            if (<?= /* @noEscape */$size ?> >= 3){ 
+                $arrow = "true";
+            }else{
+                $arrow = "false";  
+            }
+        }
+        if ($arrow == "true" ) {
                  $('.shorting_slider').slick({
                     dots: false,
                     arrows: true,
@@ -46,6 +56,6 @@ $subcats = $category->getChildrenCategories();
                     infinite: true,
                     variableWidth: true
                 });
-             }
+        }
     });
 </script>
