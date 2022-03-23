@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "966175df5824b6f83b8cb07d4e77f489",
+    "content-hash": "42d9c1d37163e25a7aadcd680b71e9d0",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -660,6 +660,45 @@
                 "AFL-3.0"
             ],
             "description": "ShipStation is a web-based shipping solution that is integrated with the Magento API for retrieving order information and updating shipping details."
+        },
+        {
+            "name": "avalara/excise",
+            "version": "1.2.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/avalara/excise/1.2.0.0/f229307c104aa32952f5ef8b7bd4f11bee93eb67.zip",
+                "reference": "f229307c104aa32952f5ef8b7bd4f11bee93eb67",
+                "mirrors": [
+                    {
+                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6",
+                "magento/framework": "^100.1.0|^101.0.0|>=102.0.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Avalara\\Excise\\": ""
+                }
+            },
+            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
+            "license": [
+                "OSL-3.0"
+            ],
+            "description": "Magento module for Avalara's Excise Tax suite of business tax calculation and processing services. Uses the AvaTax REST API.",
+            "homepage": "https://bitbucket.org/corratech/avalara_excise",
+            "support": {
+                "source": "https://bitbucket.org/corratech/avalara_excise/src/f229307c104aa32952f5ef8b7bd4f11bee93eb67/?at=1.2.0",
+                "issues": "https://bitbucket.org/corratech/avalara_excise/issues"
+            },
+            "time": "2022-03-23T16:05:06+00:00"
         },
         {
             "name": "aws/aws-crt-php",
