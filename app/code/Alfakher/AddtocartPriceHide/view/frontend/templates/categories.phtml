@@ -5,9 +5,10 @@ $subcats = $category->getChildrenCategories();
 ?>
 
 <div class="site-container category_title">
-    <h1 class="cat_tite"><?= /* @noEscape */ $category->getName(); ?></h1>
+    <h1 class="cat_tite"><?= /* @noEscape */ $category->getTagLabel(); ?></h1>
 </div>
 <!-- this condition to check wether sub category exists[BS]start -->
+<?php $size = 0; ?>   
 <?php if (!empty($subcats->getData())): ?>
     <div class="shorting_main">
         <div class="shorting_slider">
@@ -17,6 +18,7 @@ $subcats = $category->getChildrenCategories();
                     <div class="shorting_title">
                         <a href="<?= /* @noEscape */ $subcaturl?>"><?= /* @noEscape */ $subcat->getName();?></a>
                     </div>
+                    <?php $size++; ?>
                 <?php endif; ?>
             <?php endforeach; ?>
         </div>
@@ -24,15 +26,26 @@ $subcats = $category->getChildrenCategories();
 <?php endif; ?>
 <!-- condition to check wether sub category exists[BS]end -->
 
-
 <script>
     require([
         "jquery",
         "Magento_PageBuilder/js/resource/slick/slick",
         "domReady!"
     ], function ($) {
-        $(window).load(function() {
-             setTimeout(function () {
+        if ($( window ).width() >= 820){
+            if (<?= /* @noEscape */$size ?> >= 7){
+               $arrow = "true";
+            }else{
+                $arrow = "false";
+            }
+        }else{ 
+            if (<?= /* @noEscape */$size ?> >= 3){ 
+                $arrow = "true";
+            }else{
+                $arrow = "false";  
+            }
+        }
+        if ($arrow == "true" ) {
                  $('.shorting_slider').slick({
                     dots: false,
                     arrows: true,
@@ -42,7 +55,6 @@ $subcats = $category->getChildrenCategories();
                     infinite: true,
                     variableWidth: true
                 });
-            }, 0);
-        });
+        }
     });
 </script>

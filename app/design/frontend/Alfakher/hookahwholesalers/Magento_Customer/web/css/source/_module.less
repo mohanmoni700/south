@@ -1919,7 +1919,8 @@ ul.nav.items{
             .lib-font-size(20);
         }
     }
-    .validator.validator-email {
+    .validator.validator-email, .validator.validator-phone {
+        width: 100% !important;
         > input {
             padding-right: 36px;
         }
@@ -1962,7 +1963,7 @@ ul.nav.items{
                 }
             }
             .field {
-                display: flex;
+                display: flex !important;
                 flex-direction: column;
                 margin-bottom: @indent__m;
             }
@@ -2218,6 +2219,25 @@ ul.nav.items{
             }
         } 
     }
+    @media only screen and (max-width: 1199px) and (min-width: 768px) {
+        .account {
+            .toolbar {
+                div.pages {
+                    position: relative;
+                    float: right;
+                    width: auto;
+                    top: 0px;
+                    max-width: 280px;
+                }
+                .pages {
+                    ~ .limiter {
+                        margin-top: 10px;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
     @media only screen and (max-width: 991px) and (min-width: 768px) {
         .form-address-edit{
             .actions-toolbar{
@@ -2240,22 +2260,6 @@ ul.nav.items{
                         width: 300px;
                     }
                 } 
-            }
-        }
-        .account {
-            .toolbar {
-                div.pages {
-                    position: relative;
-                    float: right;
-                    width: auto;
-                    top: 0px;
-                }
-                .pages {
-                    ~ .limiter {
-                        margin-top: 10px;
-                        width: 100%;
-                    }
-                }
             }
         }
     }
@@ -2386,7 +2390,7 @@ ul.nav.items{
                 }
             }
         }
-        &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment {
+        &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
             .columns {
                 .sidebar-main {
                     border-bottom: solid 1px @color_black;
@@ -2683,6 +2687,22 @@ ul.nav.items{
             }
         }        
     }
+    
+    .myproduct-pricing{
+        &.table-wrapper {
+            .table.table-myproduct-pricing {
+                >tbody {
+                    >tr {
+                        td.col.action {
+                            &:before {
+                                content: "Action:";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 //
@@ -2887,7 +2907,7 @@ ul.nav.items{
                     margin-bottom: 60px;
                 }
             }
-            &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment {
+            &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
                 .column.main {
                     .block:not(.widget) {
                         .block-content {
@@ -2981,6 +3001,15 @@ ul.nav.items{
     .account{
         .page-main{
             margin-bottom: 80px;
+        }
+    }
+}
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = (@screen__m + 1)) {
+    .modals-wrapper {
+        .modal-popup {
+            .modal-inner-wrap {
+                width: 75%;
+            }
         }
     }
 }

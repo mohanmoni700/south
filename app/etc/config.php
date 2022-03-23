@@ -154,7 +154,7 @@ return [
                     'minify_html' => '0',
                 ],
                 'js' => [
-                    'merge_files' => '0',
+                    'merge_files' => '1',
                     'enable_js_bundling' => null,
                     'minify_files' => '0',
                     'move_script_to_bottom' => '0',
@@ -166,7 +166,7 @@ return [
                     ],
                 ],
                 'css' => [
-                    'merge_css_files' => null,
+                    'merge_css_files' => '1',
                     'minify_files' => '0',
                     'use_css_critical_path' => '0',
                     'minify_exclude' => [

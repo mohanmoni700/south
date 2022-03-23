@@ -18,4 +18,20 @@
             </argument>
         </field>
     </fieldset>
+     <fieldset name="search_engine_optimization">
+        <field name="tag_label">
+            <argument name="data" xsi:type="array">
+                 <item name="config" xsi:type="array">
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">false</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">333</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="label" translate="true" xsi:type="string">H1 Tag</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
 </form>
