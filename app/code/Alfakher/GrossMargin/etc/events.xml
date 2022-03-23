@@ -6,5 +6,8 @@
 
     <event name="checkout_submit_all_after">
         <observer name="add_gross_margin_to_order_observer" instance="Alfakher\GrossMargin\Observer\GrossMarginToOrder" />
+
+        <observer name="purchase_order_to_order_observer" instance="Alfakher\GrossMargin\Observer\PurchaseOrderToOrder" />
+
     </event>
 </config>
