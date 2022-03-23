@@ -3,4 +3,8 @@
     <event name="checkout_cart_product_add_after">
         <observer name="alfakher_checkout_cart_product_add_after" instance="Alfakher\GrossMargin\Observer\CheckoutCartProductAddAfterObserver" />
     </event>
+
+    <event name="checkout_submit_all_after">
+        <observer name="add_gross_margin_to_order_observer" instance="Alfakher\GrossMargin\Observer\GrossMarginToOrder" />
+    </event>
 </config>

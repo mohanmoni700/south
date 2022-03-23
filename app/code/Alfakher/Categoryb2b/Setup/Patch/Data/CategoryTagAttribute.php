@@ -1,29 +1,25 @@
 <?php
+declare (strict_types = 1);
 
-namespace Alfakher\GrossMargin\Setup\Patch\Data;
+namespace Alfakher\Categoryb2b\Setup\Patch\Data;
 
-/**
- * @author af_bv_op
- */
-
-use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
 use Magento\Eav\Setup\EavSetup;
 use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 
-class GrossMarginProductAttribute implements DataPatchInterface
+/**
+ * Category Desc text Attribute
+ */
+class CategoryTagAttribute implements DataPatchInterface
 {
-
     /**
-     * Module Data Setup Interface
      *
      * @var ModuleDataSetupInterface
      */
     private $moduleDataSetup;
 
     /**
-     * Eav Setup Factory Var
      *
      * @var EavSetupFactory
      */
@@ -46,30 +42,26 @@ class GrossMarginProductAttribute implements DataPatchInterface
      */
     public function apply()
     {
-        /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
-        $eavSetup->addAttribute('catalog_product', 'gross_margin', [
-            'type' => 'text',
-            'backend' => '',
-            'frontend' => '',
-            'label' => 'Gross Margin',
-            'input' => 'text',
-            'class' => '',
-            'source' => '',
-            'global' => ScopedAttributeInterface::SCOPE_GLOBAL,
-            'visible' => true,
-            'required' => false,
-            'user_defined' => false,
-            'default' => '0',
-            'searchable' => false,
-            'filterable' => false,
-            'comparable' => false,
-            'visible_on_front' => false,
-            'used_in_product_listing' => false,
-            'unique' => false,
-            'apply_to' => '',
-            'sort_order' => 8,
-        ]);
+
+        $eavSetup->addAttribute(
+            \Magento\Catalog\Model\Category::ENTITY,
+            'tag_label',
+            [
+                'type' => 'text',
+                'label' => 'H1 Tag',
+                'input' => 'text',
+                'sort_order' => 100,
+                'source' => '',
+                'global' => 1,
+                'visible' => true,
+                'required' => false,
+                'user_defined' => false,
+                'default' => null,
+                'group' => 'General Information',
+                'backend' => '',
+            ]
+        );
     }
 
     /**
@@ -79,6 +71,7 @@ class GrossMarginProductAttribute implements DataPatchInterface
     {
         return [];
     }
+
     /**
      * @inheritdoc
      */

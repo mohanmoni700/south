@@ -11,7 +11,7 @@ define([
                 var loadingMessage = $('#loading-message');
 
                 if(loadingMessage.length == 0) {
-                    $('<div id="loading-message" style="display:none;padding-top:10px;">&nbsp;</div>').insertBefore("#newsletter");
+                    $('<div id="loading-message" style="display:none;padding-bottom:15px">&nbsp;</div>').insertBefore("#newslettermsg");
                     var loadingMessage = $('#loading-message');
                 }
                 e.preventDefault();

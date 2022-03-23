@@ -1,14 +1,14 @@
 <?php
-/**
- * @author Renato Medina <medina@mdnsolutions.com>
- * @package MDN_Newsletter
- */
 namespace Alfakher\AddtocartPriceHide\Controller\Plugin\Subscriber;
 
 use Magento\Customer\Api\AccountManagementInterface as CustomerAccountManagement;
 use Magento\Customer\Model\Session;
 use Magento\Customer\Model\Url as CustomerUrl;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Validator\EmailAddress as EmailValidator;
+use Magento\Newsletter\Model\Subscriber;
 use Magento\Newsletter\Model\SubscriberFactory;
 use Magento\Newsletter\Model\SubscriptionManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
@@ -39,6 +39,7 @@ class NewAction extends \Magento\Newsletter\Controller\Subscriber\NewAction
      * @param CustomerUrl $customerUrl
      * @param CustomerAccountManagement $customerAccountManagement
      * @param SubscriptionManagerInterface $subscriptionManager
+     * @param EmailValidator $emailValidator = null
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      */
     public function __construct(
@@ -49,9 +50,12 @@ class NewAction extends \Magento\Newsletter\Controller\Subscriber\NewAction
         CustomerUrl $customerUrl,
         CustomerAccountManagement $customerAccountManagement,
         SubscriptionManagerInterface $subscriptionManager,
+        EmailValidator $emailValidator = null,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
     ) {
         $this->customerAccountManagement = $customerAccountManagement;
+        $this->subscriptionManager = $subscriptionManager;
+        $this->emailValidator = $emailValidator ?: ObjectManager::getInstance()->get(EmailValidator::class);
         $this->resultJsonFactory = $resultJsonFactory;
         parent::__construct(
             $context,
@@ -80,7 +84,19 @@ class NewAction extends \Magento\Newsletter\Controller\Subscriber\NewAction
                 $this->validateEmailFormat($email);
                 $this->validateGuestSubscription();
                 $this->validateEmailAvailable($email);
+
+                $websiteId = (int) $this->_storeManager->getStore()->getWebsiteId();
+                /** @var Subscriber $subscriber */
+                $subscriber = $this->_subscriberFactory->create()->loadBySubscriberEmail($email, $websiteId);
+                if ($subscriber->getId()
+                    && (int) $subscriber->getSubscriberStatus() === Subscriber::STATUS_SUBSCRIBED) {
+                    throw new LocalizedException(
+                        __('This email address is already subscribed.')
+                    );
+                }
+
                 $status = $this->_subscriberFactory->create()->subscribe($email);
+
                 if ($status == \Magento\Newsletter\Model\Subscriber::STATUS_NOT_ACTIVE) {
                     $response = [
                         'status' => 'OK',
@@ -95,7 +111,7 @@ class NewAction extends \Magento\Newsletter\Controller\Subscriber\NewAction
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
                 $response = [
                     'status' => 'ERROR',
-                    'msg' => __('There was a problem with the subscription: %1', $e->getMessage()),
+                    'msg' => __($e->getMessage()),
                 ];
             } catch (\Exception $e) {
                 $response = [
@@ -104,6 +120,7 @@ class NewAction extends \Magento\Newsletter\Controller\Subscriber\NewAction
                 ];
             }
         }
+
         return $this->resultJsonFactory->create()->setData($response);
     }
 }

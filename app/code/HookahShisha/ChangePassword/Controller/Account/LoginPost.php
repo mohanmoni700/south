@@ -181,6 +181,20 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
         }
         return $this->cookieMetadataFactory;
     }
+    public function errorMessage()
+    {
+        $resultRedirect = $this->resultRedirectFactory->create();
+        $this->messageManager->addErrorMessage(__('Please enter your email.'));
+        return $resultRedirect;
+    }
+    public function checkSession()
+    {
+        $resultRedirect = $this->resultRedirectFactory->create();
+        /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
+        $resultRedirect->setPath('*/*/');
+        return $resultRedirect;
+
+    }
 
     /**
      * Login post action
@@ -188,14 +202,13 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
      * @return \Magento\Framework\Controller\Result\Redirect
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute() // NOSONAR
+    public function execute() //NOSONAR
     {
         $resultRedirect = $this->resultRedirectFactory->create();
         $resultJson = $this->resultJsonFactory->create();
         if ($this->session->isLoggedIn() || !$this->formKeyValidator->validate($this->getRequest())) {
-            /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
-            $resultRedirect->setPath('*/*/');
-            return $resultRedirect;
+
+            $this->checkSession();
         }
 
         if ($this->getRequest()->isPost()) {
@@ -219,27 +232,17 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                             $response = [
                                 'migrate_customer' => 1,
                             ];
-                            return $resultJson->setData($response);
+                            return $resultJson->setData($response); //NOSONAR
                         }
                         /*bv-hd migrate customer customization*/
                     }
                 }
             } else {
-                $this->messageManager->addErrorMessage(__('Please enter your email.'));
-                return $resultRedirect;
+                $this->errorMessage();
             }
             /* Here we are checking the Reset password */
             if (!empty($login['username']) && !empty($migrate_customer_value) && $migrate_customer_value == 1) {
                 /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
-
-                if (!\Zend_Validate::is($email, \Magento\Framework\Validator\EmailAddress::class)) {
-                    $this->session->setForgottenEmail($email);
-                    $this->messageManager->addErrorMessage(
-                        __('The email address is incorrect. Verify the email address and try again.')
-                    );
-                    return $resultRedirect;
-                }
-
                 try {
                     $this->customerAccountManagement->initiatePasswordReset(
                         $email,
@@ -257,7 +260,7 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                     );
                 }
                 $this->messageManager->addSuccessMessage($this->getSuccessMessage($email));
-                return $resultRedirect;
+                return $resultRedirect; //NOSONAR
             } elseif (!empty($login['username']) && !empty($login['password'])) {
                 try {
                     $customerData = $this->customerAccountManagement->
@@ -290,16 +293,14 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                     $baseurl = $this->_storemanager->getStore()->getBaseUrl();
                     if (in_array(0, $status) || empty($dataSize) || (in_array("exp", $msg))) {
                         $response = [
-                            'documentredirect' => $baseurl . "/mydocument/customer/index",
+                            'url' => $baseurl . "/mydocument/customer/index",
                         ];
-                        return $resultJson->setData($response);
-
                     } else {
                         $response = [
-                            'homeredirect' => $baseurl,
+                            'url' => $baseurl,
                         ];
-                        return $resultJson->setData($response);
                     }
+                    return $resultJson->setData($response); //NOSONAR
                 } catch (EmailNotConfirmedException $e) {
                     $this->messageManager->addComplexErrorMessage(
                         'confirmAccountErrorMessage',
