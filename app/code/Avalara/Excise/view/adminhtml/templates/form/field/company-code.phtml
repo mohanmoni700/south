@@ -1,0 +1,21 @@
+<?php $url = $block->getUrl(
+    'excise/companycodes/get',
+    ['form_key' => $block->getFormKey()]
+); ?>
+<input id="<?= $block->escapeHtml($block->getData('excise_company_id')) ?>" 
+name="groups[<?= $block->escapeHtml($block->getData('company_code_group')) ?>][fields][<?=
+$block->escapeHtml($block->getData('company_code_field')) ?>][value]" value="" type="hidden">
+<script type="text/x-magento-init">
+    {
+    "#<?= $block->escapeHtml($block->getData('company_code_id')) ?>": {
+        "companyCode": {
+            "url": "<?= $block->escapeUrl($url) ?>",
+            "accountNumberId": "<?= $block->escapeHtml($block->getData('account_number_id')) ?>",
+            "licenseKeyId": "<?= $block->escapeHtml($block->getData('license_key_id')) ?>",
+            "companyCodeId": "<?= $block->escapeHtml($block->getData('excise_company_id')) ?>",
+            "mode": "<?= $block->escapeHtml($block->getData('avatax_mode')) ?>",
+            "api_type": "<?= $block->escapeHtml($block->getData('api_type')) ?>"
+        }
+    }
+}
+</script>
