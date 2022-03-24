@@ -67,6 +67,15 @@
                 border: 1px solid @qtyborder-color;
                 border-radius: 30px;
                 .lib-font-size(16);
+                min-width: 60px;
+            }
+            select {             
+                &.qty {
+                    text-align: left;
+                    background-size: 8px auto;
+                    background-position: calc(~'100% - 8px');
+                    padding: 0 20px 0 10px;
+                }
             }
         }
 
