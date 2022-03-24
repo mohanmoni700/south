@@ -6,7 +6,7 @@ define([
 ], function($,modal) {
 	'use strict';
 
-	return function(config) {
+	return function(config) { //NOSONAR
 
 	    /**
 	     * Expiry Date Picker
