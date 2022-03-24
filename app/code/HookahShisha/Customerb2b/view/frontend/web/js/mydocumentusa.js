@@ -6,7 +6,7 @@ define([
 ], function($,modal) {
 	'use strict';
 
-	return function(config) {
+	return function(config) { //NOSONAR
 
 	    /**
 	     * Expiry Date Picker
@@ -89,6 +89,17 @@ define([
 	                $(usabtnsave).show();
 
 	                $("#deletedocument-" + fileId).click(function() {
+	                	var splitid = fileId.match(/\d+/g);
+	                	$("#toggle" + splitid[0]).val("0");
+	                	this.value = this.checked ? 1 : 0;
+						if ($(this).val() == "1") {
+							$(".expiry_dates" + splitid[0]).show();
+						} else {
+							$("#toggle" + splitid[0]).attr('checked',false);
+							$(".expiry_dates" + splitid[0]).hide();
+						}
+	                    $("#expiry_date" + splitid[0]).val("");
+                        $("#expiry_date" + splitid[0]).attr('class',"");
 	                    $("#doc-actions-" + fileId).hide();
 	                    $(".previewimage-" + fileId).hide();
 	                    $(".document" + fileId).hide();
