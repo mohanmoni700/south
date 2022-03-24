@@ -719,6 +719,7 @@ return [
         'Alfakher_Categoryb2b' => 1,
         'Alfakher_CheckoutPage' => 1,
         'Alfakher_CmsCanonical' => 1,
+        'Alfakher_CompanyImport' => 1,
         'Alfakher_DocumentStatus' => 1,
         'MageWorx_OrdersBase' => 1,
         'Alfakher_HandlingFee' => 1,
