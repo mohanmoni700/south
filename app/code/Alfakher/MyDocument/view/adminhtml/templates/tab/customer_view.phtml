@@ -13,7 +13,7 @@ $documentData= $block->getDocumentCollection();
 $docdata = $documentData->getData();
 $mediaUrl = $block->getMediaUrl();
 $mediaUrl = $mediaUrl."myDocument/";
-$pdfImg = $block->getViewFileUrl('images/pdf.svg');
+$pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
 ?>
 <?php if (!empty($docdata)) { ?>
 
@@ -106,33 +106,30 @@ $pdfImg = $block->getViewFileUrl('images/pdf.svg');
     ?>
 
 <!-- Form start BS 24-1-22 -->
-    <form action="<?= $block->escapeHtml($block->getUrl('mydoc/document/saveform', ['_query' => $customer_id])) ?>"
-        method="post"
-        class="form doc-form"
-        accept-charset="utf-8"
-        enctype="multipart/form-data">
+    <div class="my_document">
+        <form action="<?= $block->escapeHtml($block->getUrl('mydoc/document/saveform', ['_query' => $customer_id])) ?>"
+            method="post"
+            class="form doc-form"
+            accept-charset="utf-8"
+            enctype="multipart/form-data">
 
-        <input name="form_key" type="hidden" value="<?= $block->escapeHtml($block->getFormKey()) ?>" />
-        <?php foreach ($items as $document) { ?>
-      
-            <div class="doc-box">
-                <input type="hidden"
-                class="doc_id"
-                name="mydocument_id[]"
-                value="<?= $block->escapeHtml($document->getMydocumentId()) ?>">
-                <div class="admin__form_field">
-                  <span class="admin__form_label">Document name:</span>
-                  <span class="admin__form_value"><?= $block->escapeHtml($document->getDocumentName()) ?></span>
-                </div>
-                
-                <?php
-                    $filename=$document->getFilename();
-                    $queryParams = ['filename' => $filename,];
-                ?>
-                <div class="admin__form_field">
-                    <span class="admin__form_label">File:</span>
+            <input name="form_key" type="hidden" value="<?= $block->escapeHtml($block->getFormKey()) ?>" />
+            <div class="updated-container">        
+            <?php foreach ($items as $document) { ?>
+        
+                <div class="upload">
+                    <input type="hidden"
+                    class="doc_id"
+                    name="mydocument_id[]"
+                    value="<?= $block->escapeHtml($document->getMydocumentId()) ?>">
+                    <label class="admin__form_value"><?= $block->escapeHtml($document->getDocumentName()) ?></label>                
+                    <?php
+                        $filename=$document->getFilename();
+                        $queryParams = ['filename' => $filename,];
+                    ?>
+                    <!-- <span class="admin__form_label">File:</span> -->
                     <?php if (!$document->getIsDelete()) { ?>
-                        <div class="input-file"
+                        <div class="input-file pdf"
                         id="input-updatefile-<?= $block->escapeHtml($document['mydocument_id']); ?>">
                             <?php
                             //$fileName = $block->getUrl('mydoc/document/download', ['_query' => $queryParams])
@@ -140,10 +137,9 @@ $pdfImg = $block->getViewFileUrl('images/pdf.svg');
                             $checkext = $block->checkExtension($fileName);
                             $extension = $checkext['extension'];
                             ?>
-                            <div class="input-file">
+                            <div>
                                 <?php if ($extension == "pdf"): ?>
-                                    <img src="<?= $block->escapeUrl($pdfImg); ?>" height="34" width="43"
-                                    class="pdf-image" alt="pdf documents" />
+                                    <img src="<?= $block->escapeUrl($pdfImg); ?>" class="pdf-image" alt="pdf documents" />
                                 <?php else: ?>
                                     <img src="<?= $block->escapeUrl($fileName); ?>" height="170" width="170" />
                                 <?php endif; ?>
@@ -163,7 +159,7 @@ $pdfImg = $block->getViewFileUrl('images/pdf.svg');
                             </div>
                         </div>
                     <?php } else { ?>
-                        <div class="input-file"
+                        <div class="input-file jpg"
                         id="input-updatefile-<?= $block->escapeHtml($document['mydocument_id']);?>">
                             <input type="hidden"
                             name="documentid[]"
@@ -193,69 +189,73 @@ $pdfImg = $block->getViewFileUrl('images/pdf.svg');
                             </div>
                         </div> 
                     <?php } ?>
-                </div>
-                <div class="admin__form_field">
-                    <span class="admin__form_label">Expiry Date:</span>
-                     
-                     <input type="text"
-                                placeholder="Expiry Date"
-                                name="expiry_date[]"
-                                id="expiry_date-<?= $block->escapeHtml($document['mydocument_id']); ?>"
-                                class="update-date"
-                                data-validate="{required:true}"
-                                value="<?= $block->escapeHtml($document->getExpiryDate()) ?>" readonly/>
-                </div> 
+                    <div class="expiry_dates" style="margin: 14px 0;">
+                        <label class="admin__form_label">Expiry Date:</label>                        
+                        <input type="text"
+                                    placeholder="Expiry Date"
+                                    name="expiry_date[]"
+                                    id="expiry_date-<?= $block->escapeHtml($document['mydocument_id']); ?>"
+                                    class="update-date"
+                                    data-validate="{required:true}"
+                                    value="<?= $block->escapeHtml($document->getExpiryDate()) ?>" readonly/>
+                    </div> 
 
-                <?php $val=$document->getMydocumentId(); ?>
+                    <?php $val=$document->getMydocumentId(); ?>
 
-                <div class="admin__form_field">
-                    <span class="admin__form_label">Document Verified:</span>
-                    <label class="switch admin__form_value">
-                     <!-- bv-hd toggle disable after admin action -->
-                    <?php if ($document->getStatus() == 1) { ?>
+                    <div class="set_expiry" style="display: block;">
+                        <label class="admin__form_label">Document Verified:</label>
+                        <label class="switch admin__form_value">
+                        <!-- bv-hd toggle disable after admin action -->
+                        <?php if ($document->getStatus() == 1) { ?>
+                        
+                        <input type="checkbox"
+                        id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
+                        class='cmn-toggle cmn-toggle-round'
+                        value="0"
+                        name='status[]' <?= $document->getStatus() == '1' ? 'checked' : ''; ?>
+                        disabled />
+                        <?php } elseif ($document->getStatus() == 0 && $document->getMessage() !=null) { ?>
+                            <input type="checkbox"
+                            id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
+                            class='cmn-toggle cmn-toggle-round'
+                            value="0"
+                            name='status[]'
+                            <?= $document->getStatus()== '1' ? 'checked' : ''; ?> disabled />
+                        <?php } else { ?>
+                            <input type="checkbox"
+                            id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
+                            class='cmn-toggle cmn-toggle-round'
+                            value="0"
+                            name='status[]'
+                            <?= $document->getStatus()== '1' ? 'checked' : ''; ?> />
+                        <?php } ?>
+                        <!-- bv-hd toggle disable after admin action -->
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+
+
+                    <div class="doc_name" id="message_<?= $block->escapeHtml($document->getMydocumentId()) ?>">
+                        <label class="admin__form_label">Rejected Reason:</label>
                     
-                    <input type="checkbox"
-                    id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
-                    class='cmn-toggle cmn-toggle-round'
-                    value="0"
-                    name='status[]' <?= $document->getStatus() == '1' ? 'checked' : ''; ?>
-                    disabled />
-                    <?php } elseif ($document->getStatus() == 0 && $document->getMessage() !=null) { ?>
-                        <input type="checkbox"
-                        id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
-                        class='cmn-toggle cmn-toggle-round'
-                        value="0"
-                        name='status[]'
-                        <?= $document->getStatus()== '1' ? 'checked' : ''; ?> disabled />
-                    <?php } else { ?>
-                        <input type="checkbox"
-                        id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
-                        class='cmn-toggle cmn-toggle-round'
-                        value="0"
-                        name='status[]'
-                        <?= $document->getStatus()== '1' ? 'checked' : ''; ?> />
-                    <?php } ?>
-                    <!-- bv-hd toggle disable after admin action -->
-                        <span class="slider round"></span>
-                    </label>
+                        <input type="text"
+                        name="message[]"
+                        class="admin__form_value"
+                        value="<?= $block->escapeHtml($document->getMessage()) ?>" />
+                    </div>
+
+                <?php $i++; ?>
+            </div>  
+        <?php } ?>                
+            </div>
+            <div class="actions-toolbar justify_btn">
+                <div class="primary regis">
+                    <button type="submit" value="submit" id="custom_btn" class="action submit primary">Save</button>
                 </div>
-
-
-
-                <div class="admin__form_field" id="message_<?= $block->escapeHtml($document->getMydocumentId()) ?>">
-                    <span class="admin__form_label">Rejected Reason:</span>
-                  
-                    <input type="text"
-                    name="message[]"
-                    class="admin__form_value"
-                    value="<?= $block->escapeHtml($document->getMessage()) ?>" />
-                </div>
-
-               <?php $i++; ?>
-        </div>
-      <?php } ?>
-                <button type="submit" value="submit" id="custom_btn">Save</button>
-    </form>
+            </div>
+        </form>
+    </div>
    <!-- Form End BS 24-1-22 -->
 </div>
 
