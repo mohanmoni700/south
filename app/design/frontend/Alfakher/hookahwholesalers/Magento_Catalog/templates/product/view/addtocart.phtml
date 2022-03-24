@@ -8,24 +8,44 @@
 ?>
 <?php $_product = $block->getProduct(); ?>
 <?php $buttonTitle = __('Add to Cart'); ?>
-<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
-<?php if($_helperB2b->isCustomerLoggedIn()): ?>
-<?php if ($_product->isSaleable()) :?>
+<?php $_helperB2b = $block->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
+<?php if ($_helperB2b->isCustomerLoggedIn()): ?>
+    <?php if ($_product->isSaleable()):?>
 <div class="box-tocart">
     <div class="fieldset">
-        <?php if ($block->shouldRenderQuantity()) :?>
+        <?php if ($block->shouldRenderQuantity()):?>
         <div class="field qty">
             <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
             <div class="control">
-                <input type="number"
+                <?php
+                $qtyCounter=$block->getProductDefaultQty() * 1 ;
+                $dataValidate=json_encode($block->getQuantityValidators());
+                ?>
+                <select 
+                    class="input-text qty" 
+                    name="qty" 
+                    id="qty" 
+                    data-validate="<?= /* @noEscape */ $block->escapeHtml($dataValidate) ?>">
+                    <?php for ($qtyCounter; $qtyCounter<=100; $qtyCounter++):
+                        $selected='';
+                        if (($block->getProductDefaultQty() * 1) == $qtyCounter):
+                            $selected='selected';
+                        endif; ?>
+                        <option value="<?= /* @noEscape */ $qtyCounter; ?>"
+                            <?= /* @noEscape */  $selected; ?>>
+                            <?= /* @noEscape */ $qtyCounter; ?>
+                        </option>
+                    <?php endfor; ?>
+                </select> 
+                <!-- <input type="number"
                        name="qty"
                        id="qty"
                        min="0"
-                       value="<?= $block->getProductDefaultQty() * 1 ?>"
-                       title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                       value="<?php // $block->getProductDefaultQty() * 1 ?>"
+                       title="<?php // $block->escapeHtmlAttr(__('Qty')) ?>"
                        class="input-text qty"
-                       data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
-                       />
+                       data-validate="<?php // $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                       /> -->
             </div>
         </div>
         <?php endif; ?>
@@ -36,11 +56,11 @@
                     id="product-addtocart-button" disabled>
                 <span><?= $block->escapeHtml($buttonTitle) ?></span>
             </button>
-            <?= $block->getChildHtml('', true) ?>
+                <?= $block->getChildHtml('', true) ?>
         </div>
     </div>
 </div>
-<?php endif; ?>
+    <?php endif; ?>
 <script type="text/x-magento-init">
     {
         "#product_addtocart_form": {
@@ -48,10 +68,17 @@
         }
     }
 </script>
-<?php else :?>
+<?php else:?>
     <div class="message info notlogged" id="review-form">
         <div>
-            <?= $block->escapeHtml(__('Only registered users can see the price. Please <a href="%1">Sign in</a> or <a href="%2">create an account</a>', $block->getUrl('customer/account/login'), $block->getUrl('customer/account/create')), ['a']) ?>
+            <?php $loginUrl=$block->getUrl('customer/account/login');
+            $creatUrl=$block->getUrl('customer/account/create'); ?>
+            <?= $block->escapeHtml(
+                __('Only registered users can see the price. 
+                    Please <a href="%1">Sign in</a> or <a href="%2">create an account</a>', $loginUrl, $creatUrl),
+                ['a']
+            )
+            ?>
         </div>
     </div>
 <?php endif;?>
