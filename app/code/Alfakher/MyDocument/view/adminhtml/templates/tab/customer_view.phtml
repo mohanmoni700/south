@@ -117,7 +117,7 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
             <div class="updated-container">        
             <?php foreach ($items as $document) { ?>
         
-                <div class="upload">
+                <div class="upload <?php if (!$document->getIsDelete()) { echo 'active'; } ?>" >
                     <input type="hidden"
                     class="doc_id"
                     name="mydocument_id[]"
