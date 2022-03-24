@@ -8,7 +8,7 @@
 ?>
 <?php $_product = $block->getProduct(); ?>
 <?php $buttonTitle = __('Add to Cart'); ?>
-<?php $_helperB2b = $block->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
+<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
     <?php if ($_product->isSaleable()):?>
 <div class="box-tocart">
