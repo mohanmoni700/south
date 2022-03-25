@@ -544,6 +544,166 @@
             }            
         }
     }
+
+    //
+    //  Search Autocomplete
+    //  _____________________________________________
+    .amsearch-item-container {
+        &:not(.recent_searches) {
+            .amsearch-highlight {
+                color: @color_black;
+                font-weight: @font-weight__bold;
+            }
+        }
+        .amsearch-highlight {
+            font-size: 14px;
+        }
+    }
+    .amsearch-results {
+        flex-wrap: wrap;
+        .amsearch-item-container:not(.recent_searches) {
+            .amsearch-item {
+                .item-name {
+                    color: @color_black;
+                }
+            }
+        }
+        .amsearch-item {
+            .item-name {
+                font-size: 14px;
+            }
+        }
+        div.amsearch-item-container {
+            padding-bottom: 0;
+        }
+    }
+    .form.amsearch-form-container {
+        .control {
+            min-height: 42px;
+        }
+        .search-autocomplete {
+            .amsearch-results {
+                .amsearch-leftside {
+                    width: 100% !important;
+                }
+                .amsearch-item {
+                    &:hover {
+                        background-color: transparent;
+                    }
+                }
+            }
+        }
+        .amsearch-products {
+            width: 100% !important;
+            order: -1;
+            padding-top: 0;
+            .amsearch-highlight {
+                color: @color_black;
+                background-color: transparent;
+            }
+            .amsearch-more-results {
+                padding-top: 0;
+            }
+            &.-waste {
+                padding-top: 15px;
+            }
+        }
+        .amsearch-wrapper-content {
+            > .amsearch-item {
+                width: 100%;
+                flex-direction: row;
+            }
+            .product-item-details {
+                padding-right: 0;
+                margin-top: 0;
+                min-height: 0;
+            }
+            .amsearch-autocomplete-information {
+                text-align: left;
+                width: ~"calc(100% - 100px)";
+                padding-left: 20px;
+                margin-top: 0;
+            }
+            .amsearch-autocomplete-image {
+                width: 100px;
+                text-decoration: none;
+            }
+        }
+        .product-item-details {
+            text-align: left;
+        }
+        .amsearch-wrapper-content {
+            .product-item-link {
+                color: @color_black;
+                text-decoration: none;
+            }
+        }
+        .amsearch-close {
+            display: none !important;
+        }
+        .amasty-xsearch-loader {
+            right: 40px;
+        }
+        .search {
+            .amsearch-loupe {
+                right: 18px;
+                left: auto;
+                background: transparent;
+                width: auto;
+                height: auto;
+                top: -2px;
+                &:hover {
+                    -webkit-filter: brightness(100%);
+                    filter: brightness(100%);
+                }
+                &:before {
+                    -webkit-font-smoothing: antialiased;
+                    -moz-osx-font-smoothing: grayscale;
+                    font-size: 22px;
+                    line-height: 22px;
+                    color: @hookah_theme_color;
+                    content: '\e615';
+                    font-family: 'icons-blank-theme';
+                    margin: 0;
+                    vertical-align: top;
+                    display: inline-block;
+                    font-weight: normal;
+                    overflow: hidden;
+                    speak: none;
+                    text-align: center;
+                }
+            }
+        }
+    }
+    .amsearch-more-results {
+        .amsearch-link {
+            border-bottom-color: @hookah_theme_color;
+            color: @hookah_theme_color;
+            &:hover {
+                border-bottom-color: @hookah_theme_color;
+                color: @hookah_theme_color;
+            }
+        }
+    }
+    @media only screen and (max-width: 1280px) {
+        .form.amsearch-form-container {
+            .search {
+                .amsearch-loupe {
+                    right: 10px;
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 1024px) {
+        form.amsearch-form-container.-opened .amsearch-wrapper-input, .search-autocomplete, .amsearch-results {
+            max-width: 100%;
+        }
+        form.amsearch-form-container.-opened {
+            .action.search {
+                display: none;
+            }
+        }
+    }
 }
 
 //
