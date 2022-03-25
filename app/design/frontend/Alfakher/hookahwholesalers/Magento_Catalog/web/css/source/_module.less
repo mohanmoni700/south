@@ -252,6 +252,14 @@
             margin: 0 auto;
             max-width: @layout_container_xl;            
             padding: 20px 20px 30px 20px;
+            h1, h2, h3 {
+                font-weight: @font-weight__semibold;
+                margin-top: 0;
+                .lib-font-size(22);
+            }
+            > p {
+                margin-bottom: 0;
+            }
         }
         .clp_faq_toggle {
             text-align: center;
@@ -1564,7 +1572,13 @@
         }
     }
     .clp_faq_main {
-        .lib-font-size(12);        
+        .lib-font-size(12);
+        .clp_faq_inner {
+            padding: 15px;
+            h1, h2, h3 {
+                .lib-font-size(20);
+            }
+        }
     }
 
     .product.data.items {
