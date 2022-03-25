@@ -85,9 +85,23 @@ define([
 	                $(btnsave).show();
 
 	                $("#deletedocument-" + fileId).click(function() {
+	                	var splitid = fileId.match(/\d+/g);
+	                	$("#toggle" + splitid[0]).val("0");
+	                	this.value = this.checked ? 1 : 0;
+						if ($(this).val() == "1") {
+							$(".expiry_dates" + splitid[0]).show();
+						} else {
+							$("#toggle" + splitid[0]).attr('checked',false);
+							$(".expiry_dates" + splitid[0]).hide();
+						}
+	                    $("#expiry_date" + splitid[0]).val("");
+                        $("#expiry_date" + splitid[0]).attr('class',"");
 	                    $("#doc-actions-" + fileId).hide();
 	                    $(".previewimage-" + fileId).hide();
 	                    $(".document" + fileId).hide();
+	                    $(".exp_remove" + fileId).remove();
+
+
 	                    // remove pdf class[BS]
 	                    $(".previewimage-" + fileId).removeClass(imgClass);
 	                    $("#view-doc-link-" + fileId).hide();
@@ -136,7 +150,7 @@ define([
                         '<span class="slider round"></span>' +
                         '<div class="expiry_dates expiry_dates' + showId + '" for="document expiry data" style="display:none">' +
                         '<label>Set Expiry Date</label>' +
-                        '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date' + showId + '" data-validate="{required:true}" />' +
+                        '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date' + showId + '" data-validate="{required:true}" readonly/>' +
                         '<input type="hidden" id="is_add_more_form'+ showId +'" name="is_add_more_form[]" value="1"/>'+
                         '</div></div>').insertAfter("#input-file-" + showId);
 
@@ -297,13 +311,17 @@ define([
 	        $("#add_more").click(function() {
 	        	var id = jQuery('#usaform').find('input[type="file"]').length;
 	        	var showId = ++id;
-	            if (showId <= 10) {
+	            if (showId <= 25) {
 	                $('<div class="upload" for="document uploader"><div class="input-file" id="input-file-' + showId + '">' +
 	                    '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" />' +
 	                    '<span class="input-note">' + config.inputNote + '</span>'+
 	                    '<span id="image-error-message'+showId+'" style="color:red;"></span>'+
 	                    '</div></div>').insertBefore('.upload-container .add-more-cont');
 	            }
+	            if (showId == 25){
+                    $(".add-more-cont").hide();
+                    $("#add_more").hide();
+                }
 	            $('#filename-' + showId).change(function(e) {
 	                var val = $(this).val();
 	                fileUploading(showId, 'filename-', $(this), e);
@@ -351,6 +369,7 @@ define([
 	            responsive: true,
 	            innerScroll: true,
 	            modalClass: 'document-modal',
+	            clickableOverlay: false,
 	            buttons: [{
 	                text: $.mage.__('Continue'),
 	                class: 'mymodal1',
@@ -402,6 +421,7 @@ define([
 	                showLoader: true,
 	                complete: function(result) {
 	                    location.reload(true);
+	                    $('html, body').animate({scrollTop:70});
 	                },
 	                error: function(xhr, status, errorThrown) {}
 	            });

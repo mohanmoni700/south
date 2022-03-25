@@ -9,7 +9,7 @@
  * @var \Magento\Framework\Escaper $escaper
  */
 $dataPostParam = '';
-$label='Sign In/Sign Up';
+$label='Sign In / Sign Up';
 if ($block->isLoggedIn()) {
     $dataPostParam = sprintf(" data-post='%s'", $block->getPostParams());
     $label='Sign Out';

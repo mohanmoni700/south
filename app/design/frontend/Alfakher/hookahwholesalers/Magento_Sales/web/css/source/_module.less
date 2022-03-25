@@ -8,9 +8,12 @@
 //  _____________________________________________
 @lib-action_clr:#404040;
 & when (@media-common = true) {
-    .sales-order-view{
+    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
         .order-references{
             border: 0;
+        }
+        .column.main {
+            position: relative;
         }
     }
     .order-links {
@@ -20,6 +23,16 @@
         .item {
             display: inline-block;
             margin-right: 20px;
+            a {
+                color: @color_black;
+                text-decoration: none;
+            }
+        }
+    }
+    .action.track {
+        margin-right: 20px;
+        &:hover {
+            text-decoration: none;
         }
     }
     .page_title{
@@ -48,7 +61,7 @@
             margin-bottom: 30px;
         }   
     }
-    .sales-order-view{
+    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
         &.account{
             .page-title-wrapper{
                 .page-title{
@@ -58,6 +71,7 @@
                     font-weight: @font-weight__bold;
                     float: left;
                     margin-bottom: 0;
+                    margin-top: 0;
                     margin-right: 20px;
                 }
             }
@@ -73,10 +87,12 @@
             .negotiable-quote-order-information{
                 float:left;
                 width: 100%;
-                margin-top: 17px;
+                margin-top: 0;
+                margin-bottom: 0;
             }
-            .order-actions-toolbar{
-                float:left;
+
+            .actions-toolbar{
+                display: inline-block;
                 width: 100%;   
                 a.action.order{
                     color: #404040;
@@ -84,6 +100,10 @@
                 }
                 a.action.print{
                     position: relative;
+                    display: inline-block;
+                    &:hover {
+                        text-decoration: none;
+                    }
                     &:before{
                         content:'';
                         background-image: url('@{baseDir}images/print_icon.svg');
@@ -94,6 +114,11 @@
                         height: 12px;
                         margin-right: 12px;
                     }
+                }
+            }
+            .price-including-tax, .price-excluding-tax {
+                .price {
+                    .lib-font-size(15);
                 }
             }
         } 
@@ -209,6 +234,7 @@
         border-top: 0;
         tfoot{
             background: #F3F3F3;
+            border-top: solid 1px @input-border_color;
             .amount{
                 text-align: left !important;
                 padding-left: 10px !important;
@@ -247,6 +273,7 @@
                 margin-top: 0;
                 margin-bottom: 0;
                 font-size: 14px;
+                min-height: 0;
             }
 
             tbody + tbody {
@@ -274,6 +301,13 @@
 
                 dd {
                     margin: 0;
+                }
+            }
+        }
+        .actions-toolbar {
+            > .secondary {
+                .action.back {
+                    margin-top: 0;
                 }
             }
         }
@@ -415,6 +449,7 @@
 
         .tracking-title {
             display: inline-block;
+            margin-bottom: 0;
         }
 
         .tracking-content {
@@ -458,6 +493,9 @@
             border-top: 1px solid #cdcaca;
         }
         .block-content{
+            address {
+                word-break: break-word;
+            }
             &:before{
                 display: none !important;
             }
@@ -469,6 +507,16 @@
             }
         }
         .box{
+            width: ~"calc(100% / 4)" !important;
+            float: left;
+            padding-left: 10px;
+            padding-right: 10px;
+            &:first-child {
+                padding-left: 0;
+            }
+            &:last-child {
+                padding-right: 0;
+            }
             .box-title{
                 span{
                     font-size: 16px;
@@ -502,6 +550,69 @@
             }
        } 
     }
+
+    .sales-order-print.page-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-printcreditmemo {
+        .logo {
+            margin-bottom: 30px;
+            height: auto;
+            img {
+                width: auto;
+                max-width: none;
+            }
+        }
+        h1 {
+            font-size: 36px;
+            font-weight: @font-weight__regular;
+        }
+        .order-details-items {
+            border-top: solid 1px @border-color__base;
+            .actions-toolbar {
+                > .secondary {
+                    .action.back {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+    .sales-order-printinvoice, .sales-order-printshipment, .sales-order-printcreditmemo {
+        .page-wrapper nav.navigation.sw-megamenu {
+            display: none !important;
+        }
+        .order-details-items {
+            display: inline-block;
+            width: 100%;
+        }
+    }
+
+    .table-wrapper.order-items, .table-order-items.invoice, .order-details-items.shipments, .table-order-items.creditmemo {
+        .col {
+            &.name {
+                .item-options, .item.options {
+                    display: none;
+                }
+            }
+        }
+    }
+
+    @media only screen and (max-width: 991px) and (min-width: 768px) {
+        body.account {
+            .column.main {
+                .items.order-links .nav.item.current {
+                    strong {
+                        padding: 14px 30px;
+                    }
+                }
+                .order-links {
+                    .item {
+                        &:last-child {
+                            margin-right: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 //
@@ -510,18 +621,6 @@
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
     .account {
-        .order-details-items {
-            .table-order-items {
-                .product-item-name,
-                .price-including-tax,
-                .price-excluding-tax,
-                .items-qty {
-                    display: inline-block;
-                    vertical-align: top;
-                }
-            }
-        }
-
         .toolbar {
             &:extend(.abs-add-clearfix-mobile all);
 
@@ -569,6 +668,19 @@
 }
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .account {
+        .order-details-items {
+            .table-order-items {
+                .product-item-name,
+                .price-including-tax,
+                .price-excluding-tax,
+                .items-qty {
+                    display: inline-block;
+                    vertical-align: top;
+                }
+            }
+        }
+    }
     .order-pager-wrapper {
         .toolbar-amount {
             left: inherit;
@@ -621,7 +733,22 @@
             > strong{
                 font-weight: 600;
                 font-size: 1.6rem;
+                margin-top: 0;
             }
+            .action.print, .action.track {
+                display: none;
+            }
+        }
+        .actions-toolbar {
+            > .secondary {
+                .action.back {
+                    width: 100%;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+        tfoot {
+            border-top: none;
         }
     }
     .order-items.table-wrapper{
@@ -659,20 +786,91 @@
             }
         }
     }
-    .order-details-items{
-        .actions-toolbar{
-            > .secondary{
-                .action.back{
-                    display: block;
-                    background: #000;
-                    color: #fff;
-                    padding: 14px;
-                    border-radius: 25px;
-                    font-size: 16px;
-                    font-weight: 600;
-                    text-transform: uppercase;
+    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
+        &.account {
+            .column.main {
+                .items.order-links {
+                    .nav.item.current {
+                        strong {
+                            color: @hookah_theme_color;
+                            display: block;
+                            padding: 0;
+                            font-size: 14px;
+                            border: none;
+                            font-weight: @font-weight__bold;
+                        }
+                    }
                 }
             }
+            .order-links {
+                display: block;
+                margin-bottom: 20px !important;
+                overflow: auto;
+                padding-bottom: 12px;
+                margin-top: 6px;
+                white-space: nowrap;
+                scrollbar-width: thin;
+                scrollbar-color: @button_color_secondary transparent;
+                &::-webkit-scrollbar {
+                    width: 2px;
+                    height: 2px;
+                    -webkit-overflow-scrolling: touch;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background: @button_color_secondary;
+                    -webkit-overflow-scrolling: touch;
+                }
+                &::-webkit-scrollbar-track {
+                    background-color: #ccc;
+                    border-left: 1px solid #ccc;
+                    -webkit-overflow-scrolling: touch;
+                }
+                .item {
+                    &:last-child {
+                        margin-right: 0;
+                    }
+                    a {
+                        font-size: 14px;
+                    }
+                }
+            }
+            .actions-toolbar {
+                margin-bottom: 20px;
+            }
+        }
+    }
+    .sales-order-print.page-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-printcreditmemo {
+        h1 {
+            font-size: 26px;
+        }
+        .page-main {
+            margin-top: 0;
+            padding-top: 30px;
+        }
+    }
+    .table-wrapper.orders-history{
+        .table-order-items{            
+            tbody{
+                tr{
+                    .col.shipping {
+                        &::before {
+                            content: "Ship To:" !important;
+                        }
+                    }
+                }   
+            }
+        }
+    }
+    .block-order-details-view {
+        .box {
+            width: 100% !important;
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+    .sales-order-print.page-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-printcreditmemo {
+        .order-details-items {
+            border-top: none;
         }
     }
 }
@@ -721,10 +919,22 @@
         }
     }
 
-    .page-title-wrapper {
-        .order-date {
-            @order-status-indent: ceil(@h1__margin-bottom__desktop/2);
-            .lib-css(margin-top, -@order-status-indent);
+    .table-wrapper.order-items, .table-order-items.invoice, .order-details-items.shipments, .table-wrapper.order-items-creditmemo {
+        overflow-x: auto;
+        .col {
+            &.name {
+                min-width: 180px;
+            }
+            &.sku {
+                min-width: 180px;
+            }
+            &.action {
+                min-width: 120px;
+            }
+        }
+        table > thead > tr > th, table > tbody > tr > th, table > tfoot > tr > th, table > thead > tr > td, table > tbody > tr > td, table > tfoot > tr > td {
+            vertical-align: middle;
+            padding-bottom: 10px;
         }
     }
 
@@ -770,7 +980,17 @@
             justify-content: space-between;
         }
         .box{
-            width: ~"calc(100% / 4 - 20px)" !important;
+            width: ~"calc(100% / 4)" !important;
+        }
+    }
+}
+@media screen and (max-width: @screen__l){
+    .block-order-details-view {
+        .box {
+            width: 50% !important;
+            &:nth-child(3n) {
+                padding-left: 0;
+            }
         }
     }
 }

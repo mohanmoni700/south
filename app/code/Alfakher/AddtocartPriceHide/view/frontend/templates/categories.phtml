@@ -1,48 +1,60 @@
 <?php
 /*Get Current Category*/
 $category = $block->getCurrentCategory();
-//$subcats = $category->getChildrenCategories();
+$subcats = $category->getChildrenCategories();
 ?>
 
 <div class="site-container category_title">
-    <h2 class="cat_tite"><?php echo $category->getName(); ?></h2>
+    <h1 class="cat_tite"><?= /* @noEscape */ $category->getTagLabel(); ?></h1>
 </div>
-<?php /*
 <!-- this condition to check wether sub category exists[BS]start -->
-<?php if(!empty($subcats->getData())){ ?>
-<div class="shorting_main">
-    <div class="shorting_slider">
-        
-        foreach ($subcats as $subcat):
-            $_category = $block->getChildCategory($subcat->getId());
-            $subcaturl = $subcat->getUrl();?>
-            <div class="shorting_title"><a href="<?= $subcaturl?>"><?= $subcat->getName();?></a></div>
-        <?php endforeach; ?>
+<?php $size = 0; ?>   
+<?php if (!empty($subcats->getData())): ?>
+    <div class="shorting_main">
+        <div class="shorting_slider">
+           <?php foreach ($subcats as $subcat): ?>
+                <?php if ($subcat->getIsActive()): ?>
+                    <?php $subcaturl = $subcat->getUrl(); ?>
+                    <div class="shorting_title">
+                        <a href="<?= /* @noEscape */ $subcaturl?>"><?= /* @noEscape */ $subcat->getName();?></a>
+                    </div>
+                    <?php $size++; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
-</div>
-<?php } ?>
+<?php endif; ?>
 <!-- condition to check wether sub category exists[BS]end -->
 
-
-<script type="text/javascript">
+<script>
     require([
         "jquery",
         "Magento_PageBuilder/js/resource/slick/slick",
         "domReady!"
     ], function ($) {
-        $(window).load(function() {
-             setTimeout(function () {
+        if ($( window ).width() >= 820){
+            if (<?= /* @noEscape */$size ?> >= 7){
+               $arrow = "true";
+            }else{
+                $arrow = "false";
+            }
+        }else{ 
+            if (<?= /* @noEscape */$size ?> >= 3){ 
+                $arrow = "true";
+            }else{
+                $arrow = "false";  
+            }
+        }
+        if ($arrow == "true" ) {
                  $('.shorting_slider').slick({
                     dots: false,
                     arrows: true,
                     slidesToShow: 1,
                     slidesToScroll: 1,
                     autoplay: false,
-                    infinite: false,
+                    infinite: true,
                     variableWidth: true
                 });
-            }, 0);
-        });
+        }
     });
 </script>
-*/ ?>

@@ -3,13 +3,19 @@
  * @var \HookahShisha\Customerb2b\Block\Account\MyProducts $block
  */
 ?>
-<?php 
+<?php
 use Magento\Framework\App\Action\Action;
 
 /** @var \Magento\Catalog\Helper\Output $_helper */
 $_helper = $this->helper(\Magento\Catalog\Helper\Output::class);
 $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
 ?>
+<!-- Check the Document is verified or not vy -->
+        <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
+               $docdata = $_helperB2b->getDocMessageData();
+               $is_document_upload = $_helperB2b->getDocuments();
+               $doc_expired = $_helperB2b->getExpiryMsg();
+        ?>
 <div class="block-title page-title">
     <h1>My Product Pricing</h1>
 </div>
@@ -20,17 +26,19 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
         <thead>
             <tr>
                 <th class="col name"><?= $block->escapeHtml(__('Item')) ?></th>
+                <?php if ($docdata == 2 && $is_document_upload == 1 && $doc_expired==1): ?>
                 <th class="col sku"><?= $block->escapeHtml(__('Actual Price')) ?></th>
                 <th class="col price"><?= $block->escapeHtml(__('Special Price')) ?></th>
                 <th class="col qty"><?= $block->escapeHtml(__('Qty')) ?></th>
                 <th class="col action"><?= $block->escapeHtml(__('Action')) ?></th>
+                <?php endif; ?>
             </tr>
         </thead>
-        <?php 
+        <?php
             $sharedCatalog = $block->getSharedCatalogCollection();
         ?>
-        <?php if(count($sharedCatalog)): ?>
-            <?php foreach ($sharedCatalog as $_product) : ?>
+        <?php if (count($sharedCatalog)): ?>
+            <?php foreach ($sharedCatalog as $_product): ?>
                 <tbody>
                     <tr id="order-item-row-<?= (int) $_product->getId() ?>">
                         <td class="col name" data-th="<?= $block->escapeHtml(__('Product Name')) ?>">
@@ -44,33 +52,28 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                             ?>
                             <?php // Product Image ?>
                             <div class="product_box_info">
-                            <a href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>"
-                               class="product photo product-item-photo"
-                               tabindex="-1">
                                 <?= $productImage->toHtml() ?>
-                            </a>
-                            <div class="merge_box">
-                            <strong class="product name product-item-name">
-                                <a class="product-item-link"
-                                   href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>">
-                                    <?=/* @noEscape */ $_helper->productAttribute($_product, $_product->getName(), 'name')?>
-                                </a>
-                            </strong>
-
-                            <strong class="product sku product-item-sku"><?= $block->escapeHtml(__('SKU:')) ?> <?= /* @noEscape */ $_product->getSku() ?></strong>
-                            </div>
+                                <div class="merge_box">
+                                    <strong class="product name product-item-name">
+                                        <?=/* @noEscape */ $_helper->productAttribute($_product, $_product->getName(), 'name')?>
+                                    </strong>
+                                    <strong class="product sku product-item-sku">
+                                        <?= $block->escapeHtml(__('SKU:')) ?> <?= /* @noEscape */ $_product->getSku() ?>
+                                    </strong>
+                                </div>
                             </div>
                         </td>
-
-                        <?php 
+                        <?php if ($docdata == 2 && $is_document_upload == 1 && $doc_expired == 1): ?>
+                            <?php
                             $regularPrice = $_product->getPriceInfo()->getPrice('regular_price')->getAmount()->getValue();
                             $specialprice = $_product->getPriceInfo()->getPrice('final_price')->getAmount()->getValue();
-                        ?>
+                            ?>
+
                         <td class="col actual-price" data-th="<?= $block->escapeHtml(__('Actual Price')) ?>">
                             <span class="old-price">
                                 <span class="price-container price-final_price tax weee">
                                     <span id="old-price-<?= /* @noEscape */ $_product->getId() ?>" data-price-amount="<?= /* @noEscape */ $regularPrice ?>" data-price-type="oldPrice" class="price-wrapper ">
-                                        <span class="price"><?= /* @noEscape */ $priceHelper->currency($regularPrice,true, false); ?></span>
+                                        <span class="price"><?= /* @noEscape */ $priceHelper->currency($regularPrice, true, false); ?></span>
                                     </span>
                                 </span>
                             </span>
@@ -80,14 +83,14 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                             <span class="special-price">
                                 <span class="price-container price-final_price tax weee">
                                     <span id="product-price-<?= /* @noEscape */ $_product->getId() ?>" data-price-amount="<?= /* @noEscape */ $regularPrice ?>" data-price-type="finalPrice" class="price-wrapper ">
-                                        <span class="price"><?= /* @noEscape */ $priceHelper->currency($specialprice,true, false); ?></span>
+                                        <span class="price"><?= /* @noEscape */ $priceHelper->currency($specialprice, true, false); ?></span>
                                     </span>
                                 </span>
                             </span>
                         </td>
-
+                       
                         <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
-                            <input type="number" name="qty-clone" id="qty-clone" min="0" value="1" title="Qty" class="input-text qty" data-id = "<?= $escaper->escapeHtml($_product->getId()) ?>">
+                            <input type="number" name="qty-clone" id="qty-clone" min="0" value="1" title="Qty" class="input-text qty" data-id = "<?= $escaper->escapeHtml($_product->getId()) ?>" onclick="this.select();">
                         </td>
 
                         <td class="col action" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
@@ -108,12 +111,14 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                                                 ?>">
                                         <input type="hidden" name="qty" id="qty" min="0" value="1" title="Qty" class="input-text qty qty-<?= $escaper->escapeHtml($_product->getId()) ?>" >
                                         <?= $block->getBlockHtml('formkey') ?>
+                                        
                                         <button style="background: transparent;margin-top: 0;letter-spacing: 0;text-transform: none;" type="submit"
                                                 title="<?= $escaper->escapeHtmlAttr(__('Add to Cart')) ?>"
                                                 class="action tocart primary"
                                                 disabled>
                                             <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
                                         </button>
+                                        
                                     </form>
                                 <?php else:?>
                                     <?php if ($_product->isAvailable()):?>
@@ -126,6 +131,7 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                                 <?php endif; ?>
                             </div>
                         </td>
+                         <?php endif; ?> 
                     </tr>
                 </tbody>
                 <script type="text/x-magento-init">
@@ -151,9 +157,7 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
     </table>
 </div>
 
-
-
-<script type="text/javascript">
+<script>
     require(['jquery'], function ($) 
     {
         $(document).ready(function(){

@@ -1,0 +1,9 @@
+<?php if ($_item = $block->getItem()): ?>
+    <?php
+        $viewModel = $block->getViewModel();
+        $moduleEnable = $viewModel->isModuleEnabled($_item->getOrder()->getStore()->getWebsiteId());
+    ?>
+    <?php if ($moduleEnable): ?>
+        <?= /* @noEscape */ $_item->getGrossMargin()."%" ?>
+    <?php endif; ?>
+<?php endif; ?>

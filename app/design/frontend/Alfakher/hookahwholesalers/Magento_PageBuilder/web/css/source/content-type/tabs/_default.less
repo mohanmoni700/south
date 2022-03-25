@@ -13,7 +13,7 @@
             display: block;
             font-size: 0;
             margin: 0 0 -1px !important;
-            padding: 0 0 0 36px;
+            padding: 0 0 0 20px;
 
             li:first-child {
                 margin-left: 0 !important;
@@ -42,9 +42,9 @@
                     color: @color-black;
                     cursor: pointer !important;
                     display: block;
-                    font-size: 20px;
+                    font-size: 17px;
                     font-weight: @font-weight__regular;
-                    padding: 1.5rem 3rem;
+                    padding: 1.5rem 1.6rem;
                     position: relative;
                     transition: all .3s;
                     vertical-align: middle;
@@ -126,21 +126,44 @@
             }
         }
     }
+
+    @media only screen and (max-width: 360px) {
+        div[data-content-type='tabs'] {
+            ul.tabs-navigation {
+                li.tab-header {
+                    a.tab-title {
+                        font-size: 9px;
+                        min-height: 32px;
+                    }
+                }
+            }
+        }
+    }
 }
 
 & when (@media-target = 'desktop'), (@media-target = 'all') {
     //
     // Responsive Tablet
     //  ---------------------------------------------
-    @media only screen and (max-width: 992px) {
+    @media only screen and (max-width: 1399px) and  (min-width: 1280px) {
+        div[data-content-type='tabs'] {
+            .tabs-navigation {
+                li.tab-header {
+                    a.tab-title {
+                        font-size: 16px;
+                        padding: 1.5rem 1.4rem;
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 1279px) and  (min-width: 768px) {
         div[data-content-type='tabs'] {
             .tabs-navigation {
                 padding: 0;
                 li.tab-header {
                     a.tab-title {
-                        font-size: 18px;
-                        font-weight: @font-weight__regular;
-                        padding: 1.5rem 2.2rem;                        
+                        font-size: 16px;
                     }
                 }
             }
@@ -155,6 +178,28 @@
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = (@screen__m)) {
     .pagebuilder-mobile-only {
         display: none !important;
+    }
+    div[data-content-type='tabs'] {
+        .tabs-navigation {
+            white-space: nowrap;
+            overflow: auto;
+            scrollbar-width: thin;
+            scrollbar-color: @button_color_secondary transparent;
+            &::-webkit-scrollbar {
+                width: 2px;
+                height: 5px;
+                -webkit-overflow-scrolling: touch;
+            }
+            &::-webkit-scrollbar-thumb {
+                background: @button_color_secondary;
+                -webkit-overflow-scrolling: touch;
+            }
+            &::-webkit-scrollbar-track {
+                background-color: #ccc;
+                border-left: 1px solid #ccc;
+                -webkit-overflow-scrolling: touch;
+            }
+        }
     }
 }
 
@@ -175,12 +220,14 @@
             border: solid 1px @hookah_theme_color;
             border-top: none;
             background-color: @hookah_primary_light2;
+            display: flex;
+            flex-wrap: wrap;
             li.tab-header {
                 width: 33.33%;
                 border-top-width: 1px !important;
                 border-top: solid 1px @hookah_theme_color;
                 border-left: solid 1px @hookah_theme_color;
-                border-right: none;
+                border-right: none;                
                 &:first-child, &:nth-child(4n) {
                     border-left: none;
                 }
@@ -201,10 +248,16 @@
                     }
                 }
                 a.tab-title {
-                    font-size: 17px;
+                    font-size: 14px;
                     font-weight: @font-weight__regular;
                     padding: 0.8rem 0.5rem;
-                    text-align: center;                    
+                    text-align: center;         
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    justify-content: center;
+                    height: 100%;
+                    min-height: 42px;
                     &::after {
                         display: none;
                     }
@@ -213,6 +266,19 @@
         }
         .tabs-content {
             border-top: none;
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
+    div[data-content-type='tabs'] {
+        .tabs-navigation {
+            li.tab-header {
+                a.tab-title {
+                    font-size: 11px;
+                    min-height: 36px;
+                }
+            }
         }
     }
 }

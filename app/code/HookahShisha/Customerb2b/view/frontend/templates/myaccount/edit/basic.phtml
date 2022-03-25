@@ -15,6 +15,8 @@ $formDisable = 1;
 <?php $_city = $block->getAttributeData()->getFrontendLabel('city'); ?>
 <?php $_selectRegion = 'Please select a region, state or province.'; ?>
 <?php $_displayAll = $block->getConfig('general/region/display_all'); ?>
+<?php $_county = $block->getAttributeData()->getFrontendLabel('county'); ?>
+
 
 <?php $_vatidValidationClass = $viewModel->addressGetAttributeValidationClass('vat_id'); ?>
 <?php $_cityValidationClass = $viewModel->addressGetAttributeValidationClass('city'); ?>
@@ -27,7 +29,7 @@ $formDisable = 1;
 /* Start Change the region_id Label if the Country is US for State and Other for the State */
 $regionStateLabel = $block->escapeHtml(__('State'));
 $regionProvinceLabel = $block->escapeHtml(__('Province'));
-$_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel; 
+$_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel;
 /* End Change the region_id Label if the Country is US for State and Other for the State */
 ?>
 <?php $messageData = $block->getMessagedata(); ?>
@@ -47,7 +49,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
         <?= $block->getBlockHtml('formkey') ?>
         <input type="hidden" name="success_url" value="<?= $escaper->escapeUrl($block->getSuccessUrl()) ?>">
         <input type="hidden" name="error_url" value="<?= $escaper->escapeUrl($block->getErrorUrl()) ?>">
-        <input type="hidden" name="id" value="<?= $block->getCustomer()->getDefaultBilling(); ?>">
+        <input type="hidden" name="id" value="<?= /* @noEscape */ $block->getCustomer()->getDefaultBilling(); ?>">
         <input type="hidden" name="cst_account_verified" value="0"/>
         <input type="hidden" name="cst_details_changed" value="1"/>
         <?= $block->getNameBlockHtml() ?>
@@ -61,10 +63,10 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                 <input type="email" 
                         name="email" 
                         id="email_address" 
-                        placeholder="<?php /* @escapeNotVerified */ echo __('Email') ?>"
+                        placeholder="<?php /* @noEscape */ __('Email') ?>"
                         autocomplete="off" 
-                        value="<?php echo $block->escapeHtml($block->getCustomer()->getEmail()) ?>" 
-                        title="<?php /* @escapeNotVerified */ echo __('Email') ?>" 
+                        value="<?= /* @noEscape */ $block->escapeHtml($block->getCustomer()->getEmail()) ?>" 
+                        title="<?php /* @noEscape */ __('Email') ?>" 
                         class="input-text"
                         disabled="disabled"
                         readonly="readonly"/>
@@ -80,6 +82,15 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
 
     </fieldset>
     <fieldset class="fieldset">
+                <div class="field country required">
+            <label class="label" for="country">
+                <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>
+            </label>
+            <div class="control">
+                <?= $block->getCountryHtmlSelect() ?>
+            </div>
+        </div>
+
         <legend></legend>
         <div class="field street required">
             <label for="street_1" class="label"><span><?= $block->escapeHtml(__($_street . ' 1')) ?></span></label>
@@ -113,30 +124,21 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
             </div>
         </div>
 
-        <?php if ($viewModel->addressIsVatAttributeVisible()): ?>
-            <div class="field taxvat">
-                <label class="label" for="vat_id">
-                    <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('vat_id') ?></span>
-                </label>
-                <div class="control">
-                    <input type="text"
-                           name="vat_id"
-                           value="<?= $escaper->escapeHtmlAttr($block->getAddress()->getVatId()) ?>"
-                           title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('vat_id') ?>"
-                           placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('vat_id') ?>"
-                           class="input-text <?= $escaper->escapeHtmlAttr($_vatidValidationClass) ?>"
-                           id="vat_id">
-                </div>
-            </div>
-        <?php endif; ?>
-        <div class="field country required">
-            <label class="label" for="country">
-                <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>
+        <div class="field city required">
+            <label class="label" for="city">
+                <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?></span>
             </label>
             <div class="control">
-                <?= $block->getCountryHtmlSelect() ?>
+                <input type="text"
+                       name="city"
+                       value="<?= $escaper->escapeHtmlAttr($block->getAddress()->getCity()) ?>"
+                       title="<?= $escaper->escapeHtmlAttr(__('City')) ?>"
+                       placeholder="<?= $escaper->escapeHtmlAttr(__('City')) ?>"
+                       class="input-text <?= $escaper->escapeHtmlAttr($_cityValidationClass) ?>"
+                       id="city">
             </div>
         </div>
+
         <div class="field region required">
             <label class="label" for="region_id" id="region_id_label">
                 <span><?= /* @noEscape */ $_region ?></span>
@@ -160,20 +162,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                         <?= !$_displayAll ? ' disabled="disabled"' : '' ?>/>
             </div>
         </div>
-        <div class="field city required">
-            <label class="label" for="city">
-                <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?></span>
-            </label>
-            <div class="control">
-                <input type="text"
-                       name="city"
-                       value="<?= $escaper->escapeHtmlAttr($block->getAddress()->getCity()) ?>"
-                       title="<?= $escaper->escapeHtmlAttr(__('City')) ?>"
-                       placeholder="<?= $escaper->escapeHtmlAttr(__('City')) ?>"
-                       class="input-text <?= $escaper->escapeHtmlAttr($_cityValidationClass) ?>"
-                       id="city">
-            </div>
-        </div>
+
         <div class="field zip required">
             <label class="label" for="zip">
                 <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?></span>
@@ -193,18 +182,51 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                 <?= /* @noEscape */ $secureRenderer->renderStyleAsTag("display: none;", 'div.message.warning') ?>
             </div>
         </div>
-            <div class="field choice newsletter">
-                <input type="checkbox"
-                       name="is_subscribed"
-                       title="<?= $block->escapeHtmlAttr(__('Would you like to join our Monthly Mailing list for discounts and promotions?')) ?>"
-                       value="1"
-                       id="is_subscribed"
-                       <?php if ($block->getIsSubscribed()) : ?> checked="checked"<?php endif; ?>
-                       class="checkbox"/>
-                <label for="is_subscribed" class="label">
-                    <span><?= $block->escapeHtml(__('Would you like to join our Monthly Mailing list for discounts and promotions?')) ?></span>
+
+        <div class="field county">
+                    <label for="county" class="label">
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?></span>
+                    </label>
+                        <input type="text"
+                               name="county"
+                               placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
+                               value="<?= $block->escapeHtmlAttr(!empty($block->getAddress()->getCustomAttribute('county')) ? $block->getAddress()->getCustomAttribute('county')->getValue() : ''); ?>"
+                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
+                               id="county"
+                               class="input-text <?= $escaper->escapeHtmlAttr($_county) ?>"/>
+        </div> 
+
+
+        <?php if ($viewModel->addressIsVatAttributeVisible()): ?>
+            <div class="field taxvat">
+                <label class="label" for="vat_id">
+                    <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('vat_id') ?></span>
                 </label>
+                <div class="control">
+                    <input type="text"
+                           name="vat_id"
+                           value="<?= $escaper->escapeHtmlAttr($block->getAddress()->getVatId()) ?>"
+                           title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('vat_id') ?>"
+                           placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('vat_id') ?>"
+                           class="input-text <?= $escaper->escapeHtmlAttr($_vatidValidationClass) ?>"
+                           id="vat_id">
+                </div>
             </div>
+        <?php endif; ?>
+
+    
+        <div class="field choice newsletter">
+            <input type="checkbox"
+                   name="is_subscribed"
+                   title="<?= $block->escapeHtmlAttr(__('Would you like to join our Monthly Mailing list for discounts and promotions?')) ?>"
+                   value="1"
+                   id="is_subscribed"
+                   <?php if ($block->getIsSubscribed()): ?> checked="checked"<?php endif; ?>
+                   class="checkbox"/>
+            <label for="is_subscribed" class="label">
+                <span><?= $block->escapeHtml(__('Would you like to join our Monthly Mailing list for discounts and promotions?')) ?></span>
+            </label>
+        </div>
     </fieldset>
     <div class="actions-toolbar">
         <div class="primary">
@@ -241,10 +263,10 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
 </script>
 <?php
     $scriptString = <<<script
-        require(['jquery'], function($){
+        require(['jquery','jquery/ui','mage/mage'], function($){
     script;
 ?>
-<?php if($formDisable == 1): ?>
+<?php if ($formDisable == 1): ?>
     <?php
         $scriptString .= <<<script
             $(document).ready(function(){
@@ -260,20 +282,14 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
     $scriptString .= <<<script
             $(document).ready(function(){
                 jQuery("#form-validate #country").attr("disabled","true");
-                jQuery("#form-validate #zip").attr("disabled","true");
-                jQuery("#form-validate #city").attr("disabled","true");
-                setTimeout(function(){
-                    jQuery("#form-validate #region_id").attr("disabled","true");
-                }, 3000);
             });
 
             //right before the form submits, we re-enable the fields, to make them submit.
-            $( "#form-validate" ).submit(function( event ) {
-                $("body").trigger('processStart');
-                $("#city").prop( "disabled", false );
-                $("#country").prop( "disabled", false );
-                $("#zip").prop( "disabled", false );
-                $("#region_id").prop( "disabled", false );
+            $("#form-validate").submit(function( event ) {
+                if($('#form-validate').valid()){
+                    $("body").trigger('processStart');
+                    $("#country").prop( "disabled", false );
+                }
             });
 
 
@@ -303,5 +319,5 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
             });
         }
     script;
-    ?>
+?>
 <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>

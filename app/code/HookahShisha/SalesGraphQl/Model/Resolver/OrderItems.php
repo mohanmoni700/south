@@ -1,7 +1,7 @@
 <?php
 /**
  * @category  HookahShisha
- * @package   HookahShisha_QuoteGraphQl
+ * @package   HookahShisha_SalesGraphQl
  * @author    Janis Verins <info@corra.com>
  */
 

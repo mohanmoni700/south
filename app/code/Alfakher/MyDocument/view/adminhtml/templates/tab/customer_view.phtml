@@ -1,31 +1,103 @@
 <?php
-$customerid=$block->getCustomer();
+/**
+ * @var \Alfakher\MyDocument\Block\Adminhtml\CustomerEdit\Tab\View $block
+ */
+?>
+<?php
+$customerid=$block->getCustomerId();
 $customerData= $block->getCustomercollection($customerid);
 $data= $customerData->getData();
+$customeradd=$block->getCustomeraddress($customerid);
+$country=$customeradd->getData('country_id');
 $documentData= $block->getDocumentCollection();
 $docdata = $documentData->getData();
+$mediaUrl = $block->getMediaUrl();
+$mediaUrl = $mediaUrl."myDocument/";
+$pdfImg = $block->getViewFileUrl('images/pdf.svg');
 ?>
 <?php if (!empty($docdata)) { ?>
 
 <div class="fieldset-wrapper customer-information">
-   
-   <div class="fieldset-wrapper-title">
-      <span class="title"><?=  __('Documents') ?></span>
-   </div>
-   
-   <div class="fieldset-wrapper-title">
-      <span class="title"><?=  __('Customer Information') ?></span>
-   </div>
-   <div class="fieldset-wrapper-title">
-        <b>Name: </b><?= $customerData->getFirstname();?>
-        <span style="padding-left: 34em;">
-         <b>Email: </b><?= $customerData->getEmail(); ?>
-        </span>
+    <div class="fieldset-wrapper-title">
+      <span class="title"><?= $block->escapeHtml('Documents') ?></span>
     </div>
-   <div class="fieldset-wrapper-title">
-      <span class="title"><?=  __('') ?></span>
-   </div>
-   
+    <div class="fieldset-wrapper-title">
+        <span class="title"><?= $block->escapeHtml(__('Customer Information')) ?></span>
+    </div>
+    <table class="admin__table-secondary">
+        <tbody>
+        <?php //= $block->getChildHtml() ?>
+        <tr>
+            <th><?= $block->escapeHtml(__('Customer Name:')) ?></th>
+            <td><?= $block->escapeHtml($customerData->getName())?></td>
+        </tr>
+
+        <tr>
+            <th><?= $block->escapeHtml(__('Customer Email:')) ?></th>
+            <td><?= $block->escapeHtml($customerData->getEmail())?></td>
+        </tr>
+        <?php if ($country == 'US') {?>
+
+            <?php if ($block->getCompanyName()) { ?>
+        <tr>
+            <th><?= $block->escapeHtml(__('Company Name:')) ?></th>
+            <td>
+                <a href="
+                <?= $block->escapeHtml(__($block->getUrl('company/index/edit/', ['id' => $block->getEntityId()]))); ?>" 
+                target="_blank" 
+                rel="noopener">
+                    <span><?= $block->escapeHtml($block->getCompanyName()) ?></span>
+                </a>
+            </td>
+        </tr>
+        <?php } ?>
+
+            <?php if ($block->getVatTaxId()) { ?>
+        <tr>
+            <th><?= $block->escapeHtml(__('Sales Tax ID:')) ?></th>
+            <td><?= $block->escapeHtml($block->getVatTaxId())?></td>
+        </tr>
+        <?php } ?>
+
+
+            <?php if ($block->getResellerId()) { ?>
+        <tr>
+            <th><?= $block->escapeHtml(__('Reseller ID:')) ?></th>
+            <td><?= $block->escapeHtml($block->getResellerId())?></td>
+        </tr>
+        <?php } ?>
+
+
+            <?php if ($block->getNumberOfEmp()) { ?>
+        <tr>
+            <th><?= $block->escapeHtml(__('Number of Emp:')) ?></th>
+            <td><?= $block->escapeHtml($block->getNumberOfEmp())?></td>
+        </tr>
+        <?php } ?>
+
+
+            <?php if ($block->getTinNumber()) { ?>
+        <tr>
+            <th><?= $block->escapeHtml(__('Tin Number:')) ?></th>
+            <td><?= $block->escapeHtml($block->getTinNumber())?></td>
+        </tr>
+        <?php } ?>
+
+            <?php if ($block->getTobaccoPermitNumber()) { ?>
+        <tr>
+            <th><?= $block->escapeHtml(__('Tobacco Permit Number:')) ?></th>
+            <td><?= $block->escapeHtml($block->getTobaccoPermitNumber())?></td>
+        </tr>
+        <?php } ?>
+        <?php } ?>
+        </tbody>
+    </table>
+</div>
+
+
+<div class="fieldset-wrapper-title">
+    <span class="title"><?= $block->escapeHtml('') ?></span>
+</div>
 <!-- Document Information. -->
     <?php
         $items= $block->getDocumentCollection();
@@ -34,48 +106,134 @@ $docdata = $documentData->getData();
     ?>
 
 <!-- Form start BS 24-1-22 -->
-    <form action="<?= $block->getUrl('mydoc/document/saveform', ['_query' => $customer_id]) ?>" method="post" class="form doc-form">
+    <form action="<?= $block->escapeHtml($block->getUrl('mydoc/document/saveform', ['_query' => $customer_id])) ?>"
+        method="post"
+        class="form doc-form"
+        accept-charset="utf-8"
+        enctype="multipart/form-data">
 
-        <input name="form_key" type="hidden" value="<?= $block->getFormKey() ?>" />
+        <input name="form_key" type="hidden" value="<?= $block->escapeHtml($block->getFormKey()) ?>" />
         <?php foreach ($items as $document) { ?>
       
             <div class="doc-box">
-                <input type="hidden" class="doc_id" name="mydocument_id[]" value="<?= $document->getMydocumentId()?>">
+                <input type="hidden"
+                class="doc_id"
+                name="mydocument_id[]"
+                value="<?= $block->escapeHtml($document->getMydocumentId()) ?>">
                 <div class="admin__form_field">
                   <span class="admin__form_label">Document name:</span>
-                  <span class="admin__form_value"><?= $document->getDocumentName() ?></span>
+                  <span class="admin__form_value"><?= $block->escapeHtml($document->getDocumentName()) ?></span>
                 </div>
                 
                 <?php
                     $filename=$document->getFilename();
                     $queryParams = ['filename' => $filename,];
                 ?>
-               
                 <div class="admin__form_field">
                     <span class="admin__form_label">File:</span>
-                    <span class="admin__form_value"><a href="<?= $block->getUrl('mydoc/document/download', ['_query' => $queryParams])?>"><?= $document->getFilename();?></a></span>
+                    <?php if (!$document->getIsDelete()) { ?>
+                        <div class="input-file"
+                        id="input-updatefile-<?= $block->escapeHtml($document['mydocument_id']); ?>">
+                            <?php
+                            //$fileName = $block->getUrl('mydoc/document/download', ['_query' => $queryParams])
+                            $fileName = $mediaUrl.$filename;
+                            $checkext = $block->checkExtension($fileName);
+                            $extension = $checkext['extension'];
+                            ?>
+                            <div class="input-file">
+                                <?php if ($extension == "pdf"): ?>
+                                    <img src="<?= $block->escapeUrl($pdfImg); ?>" height="34" width="43"
+                                    class="pdf-image" alt="pdf documents" />
+                                <?php else: ?>
+                                    <img src="<?= $block->escapeUrl($fileName); ?>" height="170" width="170" />
+                                <?php endif; ?>
+                                <div class="doc-actions">
+                                    <a  class="view-doc-link"
+                                    href="<?= $block->escapeUrl($fileName); ?>"
+                                    target="_blank">
+                                        View
+                                    </a>
+                                    <a  class="deletedocument deleteuploadeddoc"
+                                    name="deletedocument"
+                                    href="#"
+                                    id="<?= $block->escapeHtml($document->getMydocumentId()) ?>">
+                                        Delete
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } else { ?>
+                        <div class="input-file"
+                        id="input-updatefile-<?= $block->escapeHtml($document['mydocument_id']);?>">
+                            <input type="hidden"
+                            name="documentid[]"
+                            value="<?= $block->escapeHtml($document['mydocument_id']); ?>"
+                            />
+                            <input type="file" id="updatefile_<?= $block->escapeHtml($document['mydocument_id']);?>"
+                            class="upload-filename"
+                            name="updatefile<?= $block->escapeHtml($document['mydocument_id']);?>"
+                            data-validate="{required:true}" required/>
+                            <span class="input-note">
+                                <?= $block->escapeHtml(__('(Only one document can be uploaded)')); ?>
+                            </span>
+                            <span id="image-error-message<?= $block->escapeHtml($document['mydocument_id']);?>"
+                                style="color:red;"></span>
+                            <!-- bv_vv; date:04-02-2022; File Preview Start; -->
+                            <img class="previewimage-filename<?= $block->escapeHtml($document['mydocument_id']);?>"
+                            height="170" width="170"
+                            src="" title="" style="display:none;"/>
+                            <div class="doc-actions"
+                            id="doc-actions-filename<?= $block->escapeHtml($document['mydocument_id']);?>"
+                            style="display:none;">
+                                <a class="view-doc-link"
+                                id="view-doc-link-filename<?= $block->escapeHtml($document['mydocument_id']);?>"
+                                href="" target="_blank"></a>
+                                <a class="deletedocument-preview deletedocument"
+                                id="deletedocument-filename<?= $block->escapeHtml($document['mydocument_id']);?>"></a>
+                            </div>
+                        </div> 
+                    <?php } ?>
                 </div>
-
-                <?php if (!empty($document->getExpiryDate())) {  ?>
-               
-                 <div class="admin__form_field">
+                <div class="admin__form_field">
                     <span class="admin__form_label">Expiry Date:</span>
-                     <span class="admin__form_value"><?= $document->getExpiryDate() ?></span>
+                     
+                     <input type="text"
+                                placeholder="Expiry Date"
+                                name="expiry_date[]"
+                                id="expiry_date-<?= $block->escapeHtml($document['mydocument_id']); ?>"
+                                class="update-date"
+                                data-validate="{required:true}"
+                                value="<?= $block->escapeHtml($document->getExpiryDate()) ?>" readonly/>
                 </div> 
-                <?php } ?>
+
                 <?php $val=$document->getMydocumentId(); ?>
 
-                 <div class="admin__form_field">
+                <div class="admin__form_field">
                     <span class="admin__form_label">Document Verified:</span>
                     <label class="switch admin__form_value">
                      <!-- bv-hd toggle disable after admin action -->
                     <?php if ($document->getStatus() == 1) { ?>
                     
-                    <input type="checkbox" id='toggle_<?= $document->getMydocumentId()?>' class='cmn-toggle cmn-toggle-round' value="0" name='status[]' <?= $document->getStatus()== '1' ? 'checked' : ''; ?> disabled>
+                    <input type="checkbox"
+                    id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
+                    class='cmn-toggle cmn-toggle-round'
+                    value="0"
+                    name='status[]' <?= $document->getStatus() == '1' ? 'checked' : ''; ?>
+                    disabled />
                     <?php } elseif ($document->getStatus() == 0 && $document->getMessage() !=null) { ?>
-                        <input type="checkbox" id='toggle_<?= $document->getMydocumentId()?>' class='cmn-toggle cmn-toggle-round' value="0" name='status[]' <?= $document->getStatus()== '1' ? 'checked' : ''; ?> disabled>
+                        <input type="checkbox"
+                        id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
+                        class='cmn-toggle cmn-toggle-round'
+                        value="0"
+                        name='status[]'
+                        <?= $document->getStatus()== '1' ? 'checked' : ''; ?> disabled />
                     <?php } else { ?>
-                        <input type="checkbox" id='toggle_<?= $document->getMydocumentId()?>' class='cmn-toggle cmn-toggle-round' value="0" name='status[]' <?= $document->getStatus()== '1' ? 'checked' : ''; ?> >
+                        <input type="checkbox"
+                        id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
+                        class='cmn-toggle cmn-toggle-round'
+                        value="0"
+                        name='status[]'
+                        <?= $document->getStatus()== '1' ? 'checked' : ''; ?> />
                     <?php } ?>
                     <!-- bv-hd toggle disable after admin action -->
                         <span class="slider round"></span>
@@ -84,10 +242,13 @@ $docdata = $documentData->getData();
 
 
 
-                <div class="admin__form_field" id="message_<?= $document->getMydocumentId()?>">
+                <div class="admin__form_field" id="message_<?= $block->escapeHtml($document->getMydocumentId()) ?>">
                     <span class="admin__form_label">Rejected Reason:</span>
                   
-                    <input type="text" name="message[]" class="admin__form_value" value="<?= $document->getMessage() ?>" >
+                    <input type="text"
+                    name="message[]"
+                    class="admin__form_value"
+                    value="<?= $block->escapeHtml($document->getMessage()) ?>" />
                 </div>
 
                <?php $i++; ?>
@@ -100,7 +261,8 @@ $docdata = $documentData->getData();
 
 
 <?php } else {
-        echo "No Documents are uploaded!";
+        //echo "No Documents are uploaded!";
+        echo $block->getChildHtml('add_documents');
 } ?>
 
 <script>
@@ -130,9 +292,16 @@ $docdata = $documentData->getData();
                    }else{
                      jQuery("#message_"+splitid[1]).find('input').prop('readonly',false);
                    }
+                    jQuery("#expiry_date-"+splitid[1]).datepicker({
+                    minDate: 1,
+                    showMonthAfterYear: false,
+                    dateFormat: 'yy-mm-dd',
+                    changeMonth: true,
+                    changeYear: true,
+                    yearRange: '2020:2030',
+                });
                }).change();
+        });
 
-
-           });
-       });
+    });
 </script>

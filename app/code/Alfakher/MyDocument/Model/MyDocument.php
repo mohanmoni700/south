@@ -132,6 +132,22 @@ class MyDocument extends AbstractModel implements MyDocumentInterface
     /**
      * @inheritDoc
      */
+    public function getNotifyExpireDocMail()
+    {
+        return $this->getData(self::EXPIRED_FLAG);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setNotifyExpireDocMail($expiredflag)
+    {
+        return $this->setData(self::EXPIRED_FLAG, $expiredflag);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getCreatedAt()
     {
         return $this->getData(self::CREATED_AT);

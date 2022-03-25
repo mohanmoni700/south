@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<columns name="shared_catalog_product_columns">
+		<column name="gross_margin">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="priceStorage" xsi:type="string">${ $.ns}.${ $.ns}.additional.price_storage</item>
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Gross Margin</label>
+                <sortable>false</sortable>
+                <controlVisibility>false</controlVisibility>
+                <fieldClass>
+                    <class name="configure-pricing-gross-margin">true</class>
+                </fieldClass>
+            </settings>
+        </column>
+	</columns>
+</listing>

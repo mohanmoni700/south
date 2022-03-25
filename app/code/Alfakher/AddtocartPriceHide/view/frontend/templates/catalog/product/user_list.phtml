@@ -25,6 +25,7 @@ $_helper = $block->getData('outputHelper');
 <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
        $docdata = $_helperB2b->getDocMessageData();
        $is_document_upload = $_helperB2b->getDocuments();
+       $doc_expired = $_helperB2b->getExpiryMsg();
 ?>
 <?php if (!$_productCollection->count()): ?>
     <div class="message info empty">
@@ -79,10 +80,15 @@ $_helper = $block->getData('outputHelper');
                                 <?=/* @noEscape */ $_helper->productAttribute($_product, $_product->getName(), 'name')?>
                             </a>
                         </strong>
-                        <?php if ($docdata == 2 && $is_document_upload == 1): ?>
+                       
+                        <?php if ($docdata == 2 && $is_document_upload == 1 && $doc_expired == 1): ?>
                             <?= $block->getReviewsSummaryHtml($_product, $templateType) ?>
                             <?= /* @noEscape */ $block->getProductPrice($_product) ?>
                             <?= $block->getProductDetailsHtml($_product) ?>
+                        <?php else: ?>
+                            <div class="price-disp" style="display:none;">
+                               <?= /* @noEscape */ $block->getProductPrice($_product) ?>
+                            </div>
                         <?php endif; ?>
                         <div class="product-item-inner">
                             <div class="product actions product-item-actions">
@@ -108,9 +114,10 @@ $_helper = $block->getData('outputHelper');
                                                    /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED]
                                                     ?>">
                                             <?= $block->getBlockHtml('formkey') ?>
-                                        <?php if ($docdata == 2 && $is_document_upload == 1): ?>
+                                        <?php if ($docdata == 2 && $is_document_upload == 1 && $doc_expired == 1): ?>
                                         <?php else: ?>
                                              <!-- start view details btn -->
+                                               
                                                 <div class="actions-primary">
                                                         <div class="logged-in-action">
                                                             <a href="<?= $escaper->escapeUrl($_product->getProductUrl()) ?>"><?= $block->escapeHtml(__('View Details')) ?></a>

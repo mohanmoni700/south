@@ -38,7 +38,7 @@ define([
                         '<span class="slider round"></span>' +
                         '<div class="expiry_dates expiry_date-' + showId + '" for="document expiry data" style="display:none" >' +
                         '<label>Set Expiry Date</label>' +
-                        '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date-' + showId + '" data-validate="{required:true}" />' +
+                        '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date-' + showId + '" data-validate="{required:true}" readonly/>' +
                         '</div></div>').insertAfter(currentElem.closest('.upload .input-file'));
                     $("#image-error-message-" + showId).html("");
 
@@ -188,7 +188,7 @@ define([
             $("#add_more_non_usa").click(function() {
             	var id = jQuery('#myformdynamic').find('input[type="file"]').length;
                 var showId = ++id;
-                if (showId <= 10) {
+                if (showId <= 25) {
                     $('<div class="upload" for="document uploader">' +
                         '<div class="input-file">' +
                         '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" data-validate="{required:true}" />' +
@@ -196,6 +196,10 @@ define([
                         '<span class="input-note">' + config.inputNote + '</span>' +
                         '<input type="hidden" id="is_add_more_form' + showId + '" name="is_add_more_form[]" value="0"/>' +
                         '</div></div>').insertBefore('.upload-container .add-more-cont');
+                }
+                if (showId == 25){
+                    $(".add-more-cont").hide();
+                    $("#add_more_non_usa").hide();
                 }
             	$('#filename-' + showId).change(function(e) {
                 	fileRender(showId, 'filename-',$(this),e);

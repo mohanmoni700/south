@@ -1,5 +1,7 @@
 
-@hookah_theme_gradient: linear-gradient(274.47deg, #9B2269 4.86%, #D378FF 92.75%);
+@hookah_theme_gradient: linear-gradient(275deg, #9B2269 5%, #D378FF 100%);
+@border_left_gradient: #D378FF;
+@border_right_gradient: #9B2269;
 
 //
 //  Common
@@ -57,7 +59,10 @@
                 }
                 &:hover .doc-actions  {
                     opacity: 1;
-                }
+                }                
+            }
+            > * {
+                max-width: 220px;
             }
             .doc-actions {
                 position: absolute;
@@ -79,6 +84,7 @@
                 text-align: center;
                 display: block;
                 margin: 0 20px;
+                cursor: pointer;
             }
             .deletedocument {
                 border:  none;
@@ -118,6 +124,7 @@
                 cursor: pointer;
             }
             .input-note {
+                color: #000000;
                 display: block;
                 font-size: 9px;
                 position: absolute;
@@ -149,18 +156,24 @@
             label {
                 font-size: 12px;
                 font-weight: 700;
-                line-height: 30px;
-                padding-left: 5px;
+                margin-bottom: 14px;
+                display: block;
             }
             button.submit {
                 margin: 20px auto 20px 50%;
                 transform: translateX(-50%);
                 min-width: 200px;
             }
+            .value {
+                margin-bottom: 14px;
+            }
         }
         .set_expiry {
             display: none;
             position: relative;
+            .slider {
+                top: 0;
+            }
         }
         .doc_name {
             display: none;
@@ -169,8 +182,12 @@
             }
         }
         .upload.active {
-            .set_expiry, .doc_name {
+            .set_expiry {
                 display: block !important;
+                margin-top: 18px;
+            }
+            .doc_name {
+                display: block;
             }
             .input-note {
                 display: none;
@@ -198,6 +215,15 @@
             }
             .comman-doc-name {
                 display: flex;
+            }
+            .input-file {
+                cursor: default;
+                &::before {
+                    cursor: default;
+                }
+                input[type="file"] {
+                    display: none;
+                }
             }
         }
     }
@@ -231,7 +257,6 @@
     }
     .updatedocument {
         .field .value {
-            padding-left: 5px;
             &.date {
                 background: #961E70;
                 color: #fff;
@@ -244,13 +269,17 @@
                 padding: 0 9px;
                 display: block;
                 line-height: 32px;
+                margin-bottom: 0;
             }
         }
         label {
             font-size: 12px;
             font-weight: 700;
-            line-height: 30px;
-            padding-left: 5px;
+            margin-bottom: 14px;
+            display: block;
+        }
+        .value {
+            margin-bottom: 10px;
         }
         
         .document {
@@ -288,10 +317,16 @@
             font-size: 10px;
             display: flex;
             justify-content: space-between;
-            align-items: start;
-            margin: 10px 0;
+            align-items: center;
+            margin: 14px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
             span {
-                word-break: break-word;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
             .download-doc::after {
                 content: "";
@@ -312,9 +347,15 @@
         display: none;
         justify-content: space-between;
         align-items: start;
-        margin: 10px 0;
+        margin: 14px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         span {
             word-break: break-word;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
         .comman-download-doc::after {
             content: "";
@@ -325,6 +366,7 @@
             background-repeat: no-repeat;
             display: block;
             margin-left: 15px;
+            margin-top: -2px;
         }
     }
     
@@ -427,13 +469,6 @@
     //
     // Document Modal Popup design [AR]
     // __________________________________________________________
-    .mydocument-customer-index, .customer-account-create {
-        .document-modal, #popup-modal-non-usa {
-            ~ .modals-overlay {
-                pointer-events: none;
-            }
-        }
-    }
     .document-modal, #popup-modal-non-usa {
         text-align: center;
     
@@ -474,6 +509,8 @@
                     &:hover {
                         border-color: transparent;
                         background: @hookah_theme_gradient;
+                        border-left-color: @border_left_gradient;
+                        border-right-color: @border_right_gradient;
                     }
                 }
             }
@@ -529,7 +566,7 @@
         border-bottom: 1px solid #000;
         padding-bottom: 10px;
         margin-bottom: 20px;
-        margin-top: 4rem;
+        margin-top: 3rem;
         position: relative;
     }
     .add-more-field input[type="checkbox"] {
@@ -537,6 +574,8 @@
         width: 20px;
         height: 20px;
         z-index: 9;
+        cursor: pointer;
+        top: -2px;
         &:disabled {
             + label{
                 &:before {
@@ -550,7 +589,12 @@
         }
     }
     .add-more-field .field label {
-        padding: 4px 0 5px 28px;
+        padding: 1px 0 5px 30px;
+        margin-bottom: 0;
+        cursor: text;
+        &::before, &::after {
+            cursor: pointer;
+        }
     }
     .pdf-image {
         position: absolute;
@@ -587,6 +631,9 @@
         right: 15px;
         top: 30px;
         bottom: auto;
+        top: 50%;
+        transform: translate(0, -50%);
+        -webkit-transform: translate(0, -50%);
     }
     .modals-wrapper {
         .document-modal.modal-popup {
@@ -666,11 +713,16 @@
                 max-width: 100%;
                 min-height: 260px;
             }
+            > * {
+                max-width: 100%;
+            }
             .view-doc-link, .deletedocument, .download-doc-preview {
                 margin: 0 30px;
             }
             &:last-child {
                 border-bottom: none;
+                padding-bottom: 0;
+                margin-bottom: 0;
             }
         }
         .add-more-cont {

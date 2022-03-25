@@ -11,6 +11,7 @@ use Magento\Customer\Model\Session;
 use Magento\Customer\Model\Url as CustomerUrl;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\Data\Form\FormKey\Validator;
 use Magento\Framework\Escaper;
@@ -87,7 +88,21 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
      * @var StoreManagerInterface
      */
     private $_storemanager;
-
+    /**
+     * [__construct description]
+     * @param Context                                                               $context
+     * @param Session                                                               $customerSession
+     * @param AccountManagementInterface                                            $customerAccountManagement
+     * @param CustomerUrl                                                           $customerHelperData
+     * @param Validator                                                             $formKeyValidator
+     * @param AccountRedirect                                                       $accountRedirect
+     * @param Escaper                                                               $escaper
+     * @param CustomerRepositoryInterface                                           $customerRepository
+     * @param Customer                                                              $customer
+     * @param StoreManagerInterface                                                 $storemanager
+     * @param \Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory $collection
+     * @param JsonFactory                                                           $resultJsonFactory
+     */
     public function __construct(
         Context $context,
         Session $customerSession,
@@ -99,14 +114,23 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
         CustomerRepositoryInterface $customerRepository,
         Customer $customer,
         StoreManagerInterface $storemanager,
-        \Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory $collection
+        \Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory $collection,
+        JsonFactory $resultJsonFactory
     ) {
         $this->escaper = $escaper;
         $this->customerRepository = $customerRepository;
         $this->customer = $customer;
         $this->_storemanager = $storemanager;
         $this->collection = $collection;
-        parent::__construct($context, $customerSession, $customerAccountManagement, $customerHelperData, $formKeyValidator, $accountRedirect);
+        $this->resultJsonFactory = $resultJsonFactory;
+        parent::__construct(
+            $context,
+            $customerSession,
+            $customerAccountManagement,
+            $customerHelperData,
+            $formKeyValidator,
+            $accountRedirect
+        );
     }
 
     /**
@@ -157,6 +181,20 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
         }
         return $this->cookieMetadataFactory;
     }
+    public function errorMessage()
+    {
+        $resultRedirect = $this->resultRedirectFactory->create();
+        $this->messageManager->addErrorMessage(__('Please enter your email.'));
+        return $resultRedirect;
+    }
+    public function checkSession()
+    {
+        $resultRedirect = $this->resultRedirectFactory->create();
+        /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
+        $resultRedirect->setPath('*/*/');
+        return $resultRedirect;
+
+    }
 
     /**
      * Login post action
@@ -164,13 +202,13 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
      * @return \Magento\Framework\Controller\Result\Redirect
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function execute()
+    public function execute() //NOSONAR
     {
         $resultRedirect = $this->resultRedirectFactory->create();
+        $resultJson = $this->resultJsonFactory->create();
         if ($this->session->isLoggedIn() || !$this->formKeyValidator->validate($this->getRequest())) {
-            /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
-            $resultRedirect->setPath('*/*/');
-            return $resultRedirect;
+
+            $this->checkSession();
         }
 
         if ($this->getRequest()->isPost()) {
@@ -189,31 +227,30 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
 
                     if (!empty($migrate_customer)) {
                         $migrate_customer_value = $migrate_customer->getValue();
+                        /*bv-hd migrate customer customization*/
+                        if ($login['migrate_customer'] == 0 && $migrate_customer_value == 1) {
+                            $response = [
+                                'migrate_customer' => 1,
+                            ];
+                            return $resultJson->setData($response); //NOSONAR
+                        }
+                        /*bv-hd migrate customer customization*/
                     }
                 }
             } else {
-                $this->messageManager->addErrorMessage(__('Please enter your email.'));
-                return $resultRedirect;
+                $this->errorMessage();
             }
             /* Here we are checking the Reset password */
             if (!empty($login['username']) && !empty($migrate_customer_value) && $migrate_customer_value == 1) {
                 /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
-
-                if (!\Zend_Validate::is($email, \Magento\Framework\Validator\EmailAddress::class)) {
-                    $this->session->setForgottenEmail($email);
-                    $this->messageManager->addErrorMessage(
-                        __('The email address is incorrect. Verify the email address and try again.')
-                    );
-                    return $resultRedirect;
-                }
-
                 try {
                     $this->customerAccountManagement->initiatePasswordReset(
                         $email,
                         AccountManagement::EMAIL_RESET
                     );
                 } catch (NoSuchEntityException $exception) {
-                    // Do nothing, we don't want anyone to use this action to determine which email accounts are registered.
+                    // Do nothing, we don't want anyone to use this action to
+                    // determine which email accounts are registered.
                 } catch (SecurityViolationException $exception) {
                     $this->messageManager->addErrorMessage($exception->getMessage());
                 } catch (\Exception $exception) {
@@ -223,10 +260,11 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                     );
                 }
                 $this->messageManager->addSuccessMessage($this->getSuccessMessage($email));
-                return $resultRedirect;
+                return $resultRedirect; //NOSONAR
             } elseif (!empty($login['username']) && !empty($login['password'])) {
                 try {
-                    $customerData = $this->customerAccountManagement->authenticate($login['username'], $login['password']);
+                    $customerData = $this->customerAccountManagement->
+                        authenticate($login['username'], $login['password']);
                     $this->session->setCustomerDataAsLoggedIn($customerData);
                     if ($this->getCookieManager()->getCookie('mage-cache-sessid')) {
                         $metadata = $this->getCookieMetadataFactory()->createCookieMetadata();
@@ -236,27 +274,33 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
 
                     $customer_id = $customerData->getId();
 
-                    $doc_collection = $this->collection->create()->addFieldToFilter('customer_id', ['eq' => $customer_id]);
+                    $doc_collection = $this->collection->create()->
+                        addFieldToFilter('customer_id', ['eq' => $customer_id]);
                     $document = $doc_collection->getData();
                     $dataSize = count($document);
                     $status = [];
+
+                    $todate = date("Y-m-d");
                     foreach ($document as $value) {
                         $status[] = $value['status'];
-                    }
-
-                    if (in_array(0, $status) || empty($dataSize)) {
-                        $resultRedirect = $this->resultRedirectFactory->create();
-                        $resultRedirect->setPath('mydocument/customer/index');
-                        return $resultRedirect;
-
-                    } else {
-                        if (!$this->getScopeConfig()->getValue('customer/startup/redirect_dashboard') && $redirectUrl) {
-                            $this->accountRedirect->clearRedirectCookie();
-                            $resultRedirect = $this->resultRedirectFactory->create();
-                            $resultRedirect->setUrl($this->_redirect->success($redirectUrl));
-                            return $resultRedirect;
+                        $expired = $value['expiry_date'];
+                        if ($expired <= $todate && $expired != "") {
+                            $msg[] = "exp";
+                        } else {
+                            $msg[] = "not exp";
                         }
                     }
+                    $baseurl = $this->_storemanager->getStore()->getBaseUrl();
+                    if (in_array(0, $status) || empty($dataSize) || (in_array("exp", $msg))) {
+                        $response = [
+                            'url' => $baseurl . "/mydocument/customer/index",
+                        ];
+                    } else {
+                        $response = [
+                            'url' => $baseurl,
+                        ];
+                    }
+                    return $resultJson->setData($response); //NOSONAR
                 } catch (EmailNotConfirmedException $e) {
                     $this->messageManager->addComplexErrorMessage(
                         'confirmAccountErrorMessage',

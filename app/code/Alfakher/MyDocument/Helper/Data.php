@@ -40,7 +40,16 @@ class Data extends AbstractHelper
     protected $storeManager;
 
     /**
-     *
+     * @var \Magento\Customer\Api\AddressRepositoryInterface
+     */
+    protected $addressRepositoryInterface;
+
+    /**
+     * @var \Magento\Framework\Filesystem\Io\File
+     */
+    protected $filesystem;
+
+    /**
      * @param \Magento\Framework\Translate\Inline\StateInterface $inlineTranslation
      * @param \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
@@ -48,9 +57,10 @@ class Data extends AbstractHelper
      * @param StoreManagerInterface $storeManager
      * @param CustomerFactory $customer
      * @param CollectionFactory $collection
-     * @param array $data = []
+     * @param \Magento\Customer\Api\AddressRepositoryInterface $addressRepositoryInterface
+     * @param \Magento\Framework\Filesystem\Io\File $filesystem
+     * @param array $data
      */
-
     public function __construct(
         \Magento\Framework\Translate\Inline\StateInterface $inlineTranslation,
         \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder,
@@ -59,6 +69,8 @@ class Data extends AbstractHelper
         StoreManagerInterface $storeManager,
         CustomerFactory $customer,
         CollectionFactory $collection,
+        \Magento\Customer\Api\AddressRepositoryInterface $addressRepositoryInterface,
+        \Magento\Framework\Filesystem\Io\File $filesystem,
         array $data = []
     ) {
         $this->_inlineTranslation = $inlineTranslation;
@@ -68,6 +80,8 @@ class Data extends AbstractHelper
         $this->customer = $customer;
         $this->collection = $collection;
         $this->storeManager = $storeManager;
+        $this->addressRepositoryInterface = $addressRepositoryInterface;
+        $this->filesystem = $filesystem;
     }
 
     /**
@@ -95,12 +109,9 @@ class Data extends AbstractHelper
         $rejected_doc = [];
 
         foreach ($docdata as $val) {
-            if (isset($val['document_name']) && isset($val['message'])) {
-                $docname = $val['document_name'];
-                $docmsg = $val['message'];
-                $rejected_doc[] = ['docmsg' => $docmsg, 'docname' => $docname];
-
-            }
+            $docname = $val['document_name'];
+            $docmsg = $val['message'];
+            $rejected_doc[] = ['docmsg' => $docmsg, 'docname' => $docname];
         }
 
         $this->_inlineTranslation->suspend();
@@ -129,8 +140,7 @@ class Data extends AbstractHelper
             ->setTemplateOptions(
                 [
                     'area' => 'frontend',
-                    /** passed storeId here [BS]*/
-                    'store' => $storeId,
+                    'store' => $storeId, /** Passed storeId here [BS]*/
                 ]
             )
 
@@ -144,6 +154,129 @@ class Data extends AbstractHelper
             ->addTo([$customerEmail])
             ->getTransport();
 
-        $transport->sendMessage();
+        try {
+            $transport->sendMessage();
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+    /**
+     * @inheritDoc
+     */
+    public function sendExpiryMail($post, $customerid)
+    {
+        try {
+            $customer = $this->customer->create()->load($customerid);
+            $customerEmail = $customer->getEmail();
+            $customerName = $customer->getFirstname();
+
+            $collection = $this->collection->create()
+                ->addFieldToFilter('customer_id', ['eq' => $customerid]);
+            $docdata = $collection->getData();
+
+            $rejected_doc = [];
+
+            foreach ($post as $val) {
+                $docname = $val;
+
+                $rejected_doc[] = ['docname' => $docname];
+            }
+
+            $this->_inlineTranslation->suspend();
+            $fromEmail = $this->_scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE);
+            $fromName = $this->_scopeConfig->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE);
+
+            $sender = [
+                'name' => $fromName,
+                'email' => $fromEmail,
+            ];
+
+            /** Get current storeId start[BS]*/
+            $storeManagerDataList = $this->storeManager->getStores();
+            $options = [];
+
+            foreach ($storeManagerDataList as $key => $value) {
+                $options[] = ['label' => $value['code'], 'value' => $key];
+                if ($value['code'] == "hookah_wholesalers_store_view") {
+                    $storeId = $key;
+                }
+            }
+            /** Get current storeId end[BS]*/
+
+            $transport = $this->_transportBuilder
+                ->setTemplateIdentifier('custom_expiry_doc_email')
+                ->setTemplateOptions(
+                    [
+                        'area' => 'frontend',
+                        /** passed storeId here [BS]*/
+                        'store' => $storeId,
+                    ]
+                )
+
+                ->setTemplateVars([
+                    'name' => $customerName,
+                    'documentarray' => $rejected_doc,
+                ])
+                ->setFromByScope($sender)
+                ->addTo([$customerEmail])
+                ->getTransport();
+
+            $transport->sendMessage();
+            return true;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+    /**
+     * @inheritDoc
+     */
+    public function getExpirymailEnable()
+    {
+        // Check expiry document mail enable from configuration
+        $configPath = 'hookahshisha/productpage/productpageb2b_documents_expired_mail_enable';
+        $enableMail = $this->_scopeConfig->getValue($configPath, ScopeInterface::SCOPE_STORE);
+        return $enableMail;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isCustomerFromUsa($customer)
+    {
+        if ($customer) {
+            $addressId = $customer->getDefaultBilling();
+            if (!$addressId) {
+                $addressId = $customer->getDefaultShipping();
+            }
+            if ($addressId) {
+                try {
+                    $address = $this->addressRepositoryInterface->getById($addressId);
+                    if ($address && $address->getCountryId() == 'US') {
+                        return true;
+                    }
+                } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+                    return false;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getMediaUrl()
+    {
+        $mediaUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+        return $mediaUrl;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function checkExtension($file)
+    {
+        $pathInfo = $this->filesystem->getPathInfo($file, PATHINFO_EXTENSION);
+        return $pathInfo;
     }
 }

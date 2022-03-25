@@ -121,6 +121,39 @@
     }
   }
 
+  .cms-about-us-for-hookah-wholesalers {
+    [data-content-type='heading'] {
+      font-weight: @font-weight__bold;
+      margin-top: 0;
+    }
+  }
+  .sitemap-index-index {
+    .page-main {
+      padding-top: 36px;
+      max-width: @layout_container_xl;
+    }
+    .page-title {
+      margin-bottom: 20px;
+      font-size: 32px;
+      font-weight: @font-weight__regular;
+    }
+  }
+  .mp-sitemap-listing {
+    padding-left: 0;
+    li {
+      margin-bottom: 16px;
+      a {
+        color: @color_black;
+        text-decoration: underline;
+      }
+    }
+  }
+  #mageplaza-seo-html-sitemap {
+    h2 {
+      font-weight: @font-weight__regular;
+    }
+  }
+
   //
   //  Homepage Category Slider Sontent [Section 2] (D)
   //  ------------------------------------------------------
@@ -152,6 +185,7 @@
       img {
         border-right: 1px solid #D9D9D9;
         position: relative;
+        padding: 0 10px;
       }
       .pagebuilder-button-link {
         .lib-css(padding, 0);
@@ -289,6 +323,7 @@
         padding-right: 140px;
         .pagebuilder-column {
           width: 100% !important;
+          max-width: 250px;
           &:nth-child(1) {
             ~ .pagebuilder-column {
               display: none !important;
@@ -386,7 +421,25 @@
     }
     .privacy-policy-head{
         width: 60%;
-    }    
+    }
+    #contactBox {
+      width: 100% !important;
+    }
+
+    .sitemap-index-index {
+      .page-main {
+        padding-top: 10px;
+      }
+      .page-title {
+        margin-bottom: 10px;
+        font-size: 26px;
+      }
+    }
+    #mageplaza-seo-html-sitemap {
+      h2 {
+        font-size: 22px;
+      }
+    }
 }
 
 
@@ -442,11 +495,19 @@
     .About-us-colums{
         width: 380px !important;
         height: 250px;
+        padding: 0 !important;
     }
     .About-us-content{
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
+    }
+    .cms-contact-us-for-hookah-wholesalers {
+      [data-content-type='row'][data-appearance='contained'] {
+        max-width: @layout_container_xl;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
     }
 }
 
@@ -458,7 +519,6 @@
     .privacy-policy-head{
         width: 95%;
     }
-
 }
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs){
     .About-us-colums {
@@ -475,7 +535,8 @@
 & when (@media-target = 'desktop'), (@media-target = 'all') {
   @media (max-width:1024px){
       .About-us-colums {
-          width: 450px !important ;
-      }      
+          padding: 0 !important;
+          width: 450px !important ;          
+      }
   }    
 }

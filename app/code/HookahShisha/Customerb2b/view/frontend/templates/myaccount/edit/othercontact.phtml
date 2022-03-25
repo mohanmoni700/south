@@ -22,7 +22,7 @@ $formDisable = 1;
     <fieldset class="fieldset">
         <legend></legend>
         <?= $block->getBlockHtml('formkey') ?>
-        <input type="hidden" name="id" value="<?= $block->getCustomer()->getId(); ?>">
+        <input type="hidden" name="id" value="<?= /* @noEscape */ $block->getCustomer()->getId(); ?>">
         <div class="field contact_name">
             <?php $contactNameLabel = __('Contact Name'); ?>
             <label class="label" for="contact_name">
@@ -38,8 +38,9 @@ $formDisable = 1;
                        id="contact_name">
             </div>
         </div>
+        <!-- changed label for contact number[BS] -->
         <div class="field contact_phone">
-            <?php $contactPhoneLabel = __('Contact Phone'); ?>
+            <?php $contactPhoneLabel = __('Contact Number'); ?>
             <label class="label" for="contact_phone">
                 <span><?= /* @noEscape */ $escaper->escapeHtmlAttr($contactPhoneLabel) ?></span>
             </label>
@@ -65,7 +66,7 @@ $formDisable = 1;
                         title="<?= /* @noEscape */ $block->escapeHtml($contactEmaillabel) ?>" 
                         class="input-text"
                         data-validate="{'validate-email': true}"
-                        value="<?php echo $block->escapeHtml($contact['contact_email']) ?>"
+                        value="<?= $block->escapeHtml($contact['contact_email']) ?>"
                         />
 
             </div>
@@ -87,7 +88,7 @@ $formDisable = 1;
         </div>
     </div>
 </form>
-<?php if($formDisable == 1): ?>
+<?php if ($formDisable == 1): ?>
 <?php
     $scriptString = <<<script
         require(['jquery'], function($){

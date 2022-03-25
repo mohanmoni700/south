@@ -99,6 +99,7 @@ define([
                                     responsive: true,
                                     innerScroll: true,
                                     modalClass: 'document-modal',
+                                    clickableOverlay: false,
                                     buttons: [{
                                         text: $.mage.__('Continue'),
                                         class: 'action primary',
@@ -188,6 +189,7 @@ define([
 
                                 $('#form-validate').trigger("reset");
                                 $("#register-success-popup").modal("openModal");
+
                             } else {
                                 /* Added the Alert popup for the display invalid data or error */
                                 alert({
