@@ -63,6 +63,11 @@ class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInte
     private $helperData;
 
     /**
+     * @var \Alfakher\MyDocument\Helper\Data
+     */
+    protected $documentHelperData;
+
+    /**
      * @param \Magento\Framework\App\Response\Http\FileFactory $fileFactory
      * @param Context $context
      * @param \Magento\Framework\Registry $registry
@@ -75,7 +80,8 @@ class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInte
      * @param CompanyRepositoryInterface $companyRepository
      * @param CustomerTypeSource $customerTypeSource
      * @param \HookahShisha\Customerb2b\Helper\Data $helperData
-     * @param array $data = []
+     * @param \Alfakher\MyDocument\Helper\Data $documentHelperData
+     * @param array $data
      */
     public function __construct(
         \Magento\Framework\App\Response\Http\FileFactory $fileFactory,
@@ -90,6 +96,7 @@ class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInte
         CompanyRepositoryInterface $companyRepository,
         CustomerTypeSource $customerTypeSource,
         \HookahShisha\Customerb2b\Helper\Data $helperData,
+        \Alfakher\MyDocument\Helper\Data $documentHelperData,
         array $data = []
     ) {
         $this->fileFactory = $fileFactory;
@@ -103,7 +110,28 @@ class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInte
         $this->companyRepository = $companyRepository;
         $this->customerTypeSource = $customerTypeSource;
         $this->helperData = $helperData;
+        $this->documentHelperData = $documentHelperData;
         parent::__construct($context, $data);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function _prepareLayout()
+    {
+        if ($this->documentHelperData->isCustomerFromUsa($this->getCustomer())) {
+            $this->addChild(
+                'add_documents',
+                'Alfakher\MyDocument\Block\Adminhtml\CustomerEdit\Tab\AddDocuments',
+                ['template' => 'Alfakher_MyDocument::tab/add_documents_usa.phtml']
+            );
+        } else {
+            $this->addChild(
+                'add_documents',
+                'Alfakher\MyDocument\Block\Adminhtml\CustomerEdit\Tab\AddDocuments',
+                ['template' => 'Alfakher_MyDocument::tab/add_documents_nonusa.phtml']
+            );
+        }
     }
 
     /**
@@ -127,7 +155,7 @@ class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInte
      */
     public function getCustomer()
     {
-        return $this->_coreRegistry->registry('current_customer_id');
+        return $this->customer->create()->load($this->getCustomerId());
     }
 
     /**
@@ -357,5 +385,21 @@ class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInte
             $tobaccoPermitNumber = $this->getCompany()->getTobaccoPermitNumber();
         }
         return $tobaccoPermitNumber;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getMediaUrl()
+    {
+        return $this->documentHelperData->getMediaUrl();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function checkExtension($file)
+    {
+        return $this->documentHelperData->checkExtension($file);
     }
 }
