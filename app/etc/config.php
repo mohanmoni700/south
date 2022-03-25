@@ -748,6 +748,7 @@ return [
         'Corra_AttributesGraphQl' => 1,
         'Corra_Log' => 1,
         'Corra_LogCloudSupport' => 1,
+        'Corra_LoginAsCustomer' => 1,
         'Corra_NewRelicReportingGraphql' => 1,
         'Corra_PageBuilderCustomisation' => 1,
         'Corra_PwaMaintenanceCheck' => 1,
