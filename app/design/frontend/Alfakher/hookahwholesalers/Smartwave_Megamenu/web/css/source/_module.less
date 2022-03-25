@@ -394,6 +394,11 @@
                 &:last-child {
                     margin-right: 0;
                 }
+                &.parent {
+                    > .level-top {
+                        cursor: default;
+                    }
+                }
             >  a{
                     position: relative;
                 }
@@ -729,6 +734,7 @@
                         bottom: @indent__base;
                         padding-left: (@indent__base - @indent__xs);
                         text-transform: capitalize;
+                        max-width: 260px;
                     }
                     > .parent .subcat-show-all {
                         right: @indent__l + @indent__xs;
