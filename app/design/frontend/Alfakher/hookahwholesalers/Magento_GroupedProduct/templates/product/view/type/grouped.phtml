@@ -31,58 +31,35 @@
                     <strong class="product-item-name"><?= $block->escapeHtml($_item->getName()) ?></strong>
                 </td>
                 <!-- show price start -->
-
-                 <?php
-                    $messageData=$_helperB2b->getDocMessageData();
-                    $expiryMsg=$_helperB2b->getExpiryMsg();
-                    if ($messageData == 2 && $is_document_upload == 1 && $expiryMsg==1): ?>
+                 <?php if ($_helperB2b->getDocMessageData() == 2 && $is_document_upload == 1 && $_helperB2b->getExpiryMsg()==1): ?>
                 <td>
-                           <?php if ($block->getCanShowProductPrice($_product)): ?>
-                                <?php if ($block->getCanShowProductPrice($_item)): ?>
-                                    <?= /* @noEscape */ $block->getProductPrice($_item) ?>
+                        <?php if ($block->getCanShowProductPrice($_product)): ?>
+                            <?php if ($block->getCanShowProductPrice($_item)): ?>
+                                <?= /* @noEscape */ $block->getProductPrice($_item) ?>
                         <?php endif; ?>
                     <?php endif; ?>
 
-                           <?php /* bv_op; date : 10-2-22; Start */ ?>
+                        <?php /* bv_op; date : 10-2-22; Start */ ?>
                     <div class="bv-special-price-<?= $block->escapeHtmlAttr($_item->getId()) ?>"></div>
-                           <?php /* bv_op; date : 10-2-22; End */ ?>
+                        <?php /* bv_op; date : 10-2-22; End */ ?>
 
                 </td>
-                           <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
-                                <?php if ($_product->isSaleable()): ?>
+                        <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
+                            <?php if ($_product->isSaleable()): ?>
                 <td data-th="<?= $block->escapeHtml(__('Qty')) ?>" class="col qty">
-                                    <?php if ($_item->isSaleable()): ?>
+                                <?php if ($_item->isSaleable()): ?>
                     <div class="control qty">
-                          <select class="input-text qty" 
-                            name="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]" 
-                            data-selector="super_group[<?= /* @noEscape */ $block->escapeHtmlAttr($_item->getId()) ?>]"
-                            id="qty" 
-                            data-validate="{'validate-custom-grouped-qty':'#super-product-table'}"
-                            data-errors-message-box="#validation-message-box"
-                            data-product-id="<?= /* @noEscape */ $block->escapeHtmlAttr($_item->getId()) ?>"
-                            >
-                                        <?php $qtyCounter = $block->escapeHtmlAttr($_item->getQty() * 1);
-                                        for ($qtyCounter; $qtyCounter<=100; $qtyCounter++):
-                                            $selected='';
-                                            if ($block->escapeHtmlAttr($_item->getQty() * 1) == $qtyCounter):
-                                                $selected='selected';
-                                            endif; ?>
-                                            <option value="<?= /* @noEscape */ $qtyCounter; ?>" 
-                                            <?= /* @noEscape */  $selected; ?>>
-                                            <?= /* @noEscape */  $qtyCounter; ?></option>
-                                        <?php endfor; ?>
-                        </select> 
-                                        <?php /* <input type="number"
+                        <input type="number"
                                name="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
                                data-selector="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
-                               value="<?=  $block->escapeHtmlAttr($_item->getQty() * 1) ?>"
+                               value="<?= $block->escapeHtmlAttr($_item->getQty() * 1) ?>"
                                title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
                                class="input-text qty"
                                data-validate="{'validate-grouped-qty':'#super-product-table'}"
                                data-errors-message-box="#validation-message-box"
-                               data-product-id="<?=  $block->escapeHtmlAttr($_item->getId()) ?>"
-                               onclick="this.select();"/> */ ?>
-                    </div> 
+                               data-product-id="<?= $block->escapeHtmlAttr($_item->getId()) ?>"
+                               onclick="this.select();"/>
+                    </div>
                 <?php else: ?>
                     <div class="stock unavailable" title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
                         <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
@@ -91,7 +68,7 @@
                 <?php endif; ?>
                 </td>
                 <?php endif; ?>
-                   <?php endif; ?>
+                <?php endif; ?>
             </tr>
                 <?php if ($block->getCanShowProductPrice($_product)
                 && $block->getCanShowProductPrice($_item)
@@ -123,13 +100,7 @@
     </table>
 </div>
 
-<script type="text/x-magento-init">
-   {
-       "*": {
-           "validateCustomGroupedQty": {}
-       }
-   }
-</script>
+
 <?php /* bv_op; date : 10-2-22; Start */ ?>
 <script>
     require(['jquery'], function ($) {
@@ -150,8 +121,7 @@
                     });
 
                     if (bvSpecialPrice != 0) {
-                        var priceHtml="<span><strong>$"+parseFloat(bvSpecialPrice).toFixed(2)+"</strong></span>";
-                        $(".bv-special-price-"+productId).html(priceHtml);
+                        $(".bv-special-price-"+productId).html("<span><strong>$"+parseFloat(bvSpecialPrice).toFixed(2)+"</strong></span>");
                         $(this).parents('td').prev('td').find("span.price").addClass('old-price');
                     }else{
                         $(".bv-special-price-"+productId).html("");
