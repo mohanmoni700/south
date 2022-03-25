@@ -184,7 +184,6 @@ class CompanyAccount extends Command
         $this->registry = $registry;
         $this->newfileSystem = $newfileSystem;
         $this->registry->register('isSecureArea', true);
-        $this->state->setAreaCode(Area::AREA_ADMINHTML);
         parent::__construct();
     }
 
@@ -213,6 +212,7 @@ class CompanyAccount extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->state->setAreaCode(Area::AREA_ADMINHTML);
         $filename = $input->getOption(self::NAME);
         if (!$filename) {
             return $output->writeln('<error>The name param is missing.
