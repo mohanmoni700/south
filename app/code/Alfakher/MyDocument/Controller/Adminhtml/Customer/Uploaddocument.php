@@ -155,10 +155,7 @@ class Uploaddocument extends \Magento\Backend\App\Action
                     "expiry_date" => $this->convertDate($post['expiry_date' . ($i + 1)]),
                     "is_customerfrom_usa" => $is_usa,
                     "status" => 0,
-                    "is_add_more_form" => !empty($newArray) &&
-                    isset($newArray[$i]['is_add_more_form']) ?
-                    $newArray[$i]['is_add_more_form'] :
-                    0,
+                    "is_add_more_form" => $newArray[$i]['is_add_more_form'],
                 ]);
                 $model->setIsDelete(false);
                 $model->setStatus(0);
