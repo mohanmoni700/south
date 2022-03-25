@@ -43,19 +43,6 @@ $canShowFeeEdit = $viewModel->isModuleEnabled($websiteId);
     <?php $_totals = $block->getTotals('')?>
     <?php if ($_totals): ?>
         <tbody>
-
-            <!-- af_bv_op; date : 17-3-22; Start -->
-            <tr class="col-gross-margin">
-                <td class="label">
-                    <?= /* @noEscape */ __("Gross Margin") ?>
-                </td>
-                <td>
-                    <span><?= /* @noEscape */ $order->getGrossMargin()."%" ?></span>
-                </td>
-            </tr>
-            <!-- af_bv_op; date : 17-3-22; Start -->
-
-
             <?php foreach ($_totals as $_code => $_total): ?>
                 <?php if ($_total->getBlockName()): ?>
                     <?= $block->getChildHtml($_total->getBlockName(), false) ?>
