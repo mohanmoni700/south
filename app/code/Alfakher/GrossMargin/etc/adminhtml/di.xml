@@ -6,4 +6,15 @@
 
     <preference for="Magento\SharedCatalog\Ui\DataProvider\Configure\Pricing" type="Alfakher\GrossMargin\Ui\Magento\SharedCatalog\DataProvider\Configure\Pricing" />
 
+    <type name="Magento\Sales\Block\Adminhtml\Order\Create\Form\Account">
+        <plugin name="after_order_create_account" type="Alfakher\GrossMargin\Plugin\Sales\Block\Adminhtml\Order\Create\AccountPlugin" sortOrder="10"/>
+    </type>
+
+    <type name="Magento\Sales\Model\AdminOrder\Create">
+        <plugin name="around_admin_order_create" type="Alfakher\GrossMargin\Plugin\Sales\Model\AdminOrder\CreatePlugin" sortOrder="10"/>
+    </type>
+
+
+    <preference for="Magento\VisualMerchandiser\Model\Category\Products" type="Alfakher\GrossMargin\Model\Magento\VisualMerchandiser\Category\Products" />
+
 </config>
