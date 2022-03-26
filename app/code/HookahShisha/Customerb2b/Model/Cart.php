@@ -146,6 +146,7 @@ class Cart extends \Magento\Checkout\Model\Cart
         $this->quoteRepository = $quoteRepository;
         $this->productRepository = $productRepository;
         $this->RedirectInterface = $redirectInterface;
+        parent::__construct($eventManager, $scopeConfig, $storeManager, $resourceCart, $checkoutSession, $customerSession, $messageManager, $stockRegistry, $stockState, $quoteRepository, $productRepository, $data);
     }
     /**
      * Get shopping cart resource model
@@ -308,6 +309,13 @@ class Cart extends \Magento\Checkout\Model\Cart
         } else {
             throw new \Magento\Framework\Exception\LocalizedException(__('The product does not exist.'));
         }
+
+        $this->_eventManager->dispatch(
+            'checkout_cart_product_add_after',
+            ['quote_item' => $result, 'product' => $product]
+        );
+        $this->_checkoutSession->setLastAddedProductId($productId);
+        return $this;
     }
 
     /**
