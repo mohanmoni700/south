@@ -38,7 +38,7 @@ $regionLabel = ($block->getAddress()->getCountryId() == 'US')?$regionStateLabel:
                         value="<?= $block->escapeHtmlAttr($block->getAddress()->getTelephone()) ?>" 
                         title="<?= $block->escapeHtmlAttr(__('Phone Number')) ?>" 
                         placeholder="<?= $block->escapeHtmlAttr(__('Phone Number')) ?>" 
-                        class="input-text validate-number<?= $block->escapeHtmlAttr($phoneValidation) ?>" 
+                        class="input-text validate-number <?= $block->escapeHtmlAttr($phoneValidation) ?>" 
                         id="telephone">
             </div>
         </div>
