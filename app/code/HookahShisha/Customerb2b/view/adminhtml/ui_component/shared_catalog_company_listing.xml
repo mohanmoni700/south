@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <columns name="shared_catalog_company_columns">
+        <column name="company_email" sortOrder="40">
+            <settings>
+                <filter>text</filter>
+                <editor>
+                    <editorType>text</editorType>
+                </editor>
+                <label translate="true">Customer Email</label>
+            </settings>
+        </column>
+         <column name="country_id" class="Magento\Company\Ui\Component\Listing\Column\Country" sortOrder="40">
+            <settings>
+                <controlVisibility>false</controlVisibility>
+                <options class="Magento\Directory\Model\ResourceModel\Country\Collection"/>
+                <dataType>select</dataType>
+                <label translate="true">Country</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="region" sortOrder="50">
+            <settings>
+                <controlVisibility>false</controlVisibility>
+                <label translate="true">State/Province</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+    </columns>
+</listing>

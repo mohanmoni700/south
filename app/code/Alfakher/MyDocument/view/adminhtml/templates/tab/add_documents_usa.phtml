@@ -32,7 +32,7 @@ $customer_id = $block->getCustomerId();
             <?php foreach ($uploaderType as $key => $value): ?>
                 <?php $counter = $key + 1;?>
                 <input type="hidden"
-                name="is_customerfrom_usa<?= $block->escapeHtml($counter); ?>"
+                name="is_customerfrom_usa[]"
                 value="1"/>
                 <div class="upload" for="document uploader">
                     <label><?= $block->escapeHtml(__($value)); ?></label>
@@ -85,7 +85,7 @@ $customer_id = $block->getCustomerId();
                     </div>
                     <input type="hidden"
                     id="is_add_more_form<?= $block->escapeHtml($counter); ?>"
-                    name="is_add_more_form<?= $block->escapeHtml($counter); ?>"
+                    name="is_add_more_form[]"
                     value="0"/>
                 </div>
             <?php endforeach; ?>
