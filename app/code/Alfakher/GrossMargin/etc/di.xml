@@ -27,4 +27,11 @@
     </type>
     <!-- extension attribute; End -->
 
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <plugin name="order_grid_purchase_order" type="Alfakher\GrossMargin\Plugin\OrderGridPurchaseOrder" sortOrder="5" />
+    </type>
+
+    <!-- invoice PDF -->
+    <preference for="Magento\Sales\Model\Order\Pdf\Invoice" type="Alfakher\GrossMargin\Model\Magento\Sales\Order\Pdf\Invoice" />
+
 </config>

@@ -14,6 +14,12 @@
                 <aspect name="to_order"/>
             </field>
         </fieldset>
+
+        <fieldset id="sales_convert_order">
+            <field name="purchase_order">
+                <aspect name="to_invoice"/>
+            </field>
+        </fieldset>
         
     </scope>
 </config>

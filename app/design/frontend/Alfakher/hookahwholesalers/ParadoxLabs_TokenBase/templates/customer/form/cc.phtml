@@ -28,17 +28,7 @@ $regionLabel = ($block->getAddress()->getCountryId() == 'US')?$regionStateLabel:
         <legend class="legend"><span><?= $block->escapeHtml(__('Cardholder Information')) ?></span></legend><br>
 
         <?= $block->getNameBlockHtml() ?>
-        <div class="field company" style="display: none;">
-            <label class="label" for="company"><span><?= $block->escapeHtml(__('Company')) ?></span></label>
-            <div class="control">
-                <input type="text" 
-                        name="billing[company]" 
-                        id="company" 
-                        title="<?= $block->escapeHtmlAttr(__('Company')) ?>" 
-                        value="<?= $block->escapeHtmlAttr($block->getAddress()->getCompany()) ?>" 
-                        class="input-text <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('company')) ?>">
-            </div>
-        </div>
+        
         <?php $phoneValidation = $this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('telephone'); ?>
         <div class="field telephone<?php if (strpos($phoneValidation, 'required') !== false): ?> required<?php endif; ?>">
             <label class="label" for="telephone"><span><?= $block->escapeHtml(__('Phone Number')) ?></span></label>
@@ -48,7 +38,7 @@ $regionLabel = ($block->getAddress()->getCountryId() == 'US')?$regionStateLabel:
                         value="<?= $block->escapeHtmlAttr($block->getAddress()->getTelephone()) ?>" 
                         title="<?= $block->escapeHtmlAttr(__('Phone Number')) ?>" 
                         placeholder="<?= $block->escapeHtmlAttr(__('Phone Number')) ?>" 
-                        class="input-text <?= $block->escapeHtmlAttr($phoneValidation) ?>" 
+                        class="input-text validate-number <?= $block->escapeHtmlAttr($phoneValidation) ?>" 
                         id="telephone">
             </div>
         </div>
@@ -56,6 +46,13 @@ $regionLabel = ($block->getAddress()->getCountryId() == 'US')?$regionStateLabel:
     <fieldset class="fieldset">
         <legend class="legend"><span><?= $block->escapeHtml(__('Cardholder Address')) ?></span></legend><br>
 
+        <div class="field country required">
+            <label class="label" for="country"><span><?= $block->escapeHtml(__('Country')) ?></span></label>
+            <div class="control">
+                <?= $block->getCountryHtmlSelect($block->getAddress()->getCountryId(), 'billing[country_id]') ?>
+            </div>
+        </div>
+        
         <?php $_streetValidationClass = $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('street')); ?>
         <?php $_streetLabel = $block->escapeHtml(__('Address Line')); ?>
         <div class="field street required">
@@ -90,12 +87,7 @@ $regionLabel = ($block->getAddress()->getCountryId() == 'US')?$regionStateLabel:
                 </div>
             </div>
         </div>
-        <div class="field country required">
-            <label class="label" for="country"><span><?= $block->escapeHtml(__('Country')) ?></span></label>
-            <div class="control">
-                <?= $block->getCountryHtmlSelect($block->getAddress()->getCountryId(), 'billing[country_id]') ?>
-            </div>
-        </div>
+        
         <div class="field city required">
             <label class="label" for="city"><span><?= $block->escapeHtml(__('City')) ?></span></label>
             <div class="control">

@@ -1253,6 +1253,7 @@
     #privy-widget {
         .privy-tab-container {
             z-index: 111;
+            margin-top: 50px;
         }
         .bXtbDo  {
             background-color: @color_black;
@@ -1530,6 +1531,7 @@
     #privy-widget {
         .privy-tab-container {
             width: auto;
+            margin-top: 60px;
         }
         .privy-widget-image {
             object-position: top center;
@@ -2136,7 +2138,8 @@
                             font-size: 12px;
                             &::placeholder{
                                 font-size: 12px;
-                                color: @color_C4C4C4;                                
+                                color: @color_C4C4C4;
+                                font-style: normal;
                             }
                             &:focus {
                                 box-shadow: none;
@@ -2607,7 +2610,7 @@
                         padding: 0;
                         input {
                             position: unset;
-                            margin: 12px 0 0;
+                            margin: 0;
                             font-size: 12px;
                             height: 36px;
                             min-height: 36px;
@@ -2624,9 +2627,10 @@
                         border: 0;
                         padding: 0;
                         position: absolute;
-                        top: 18px;
+                        top: 6px;
                         right: 15px;
                         display: block;
+                        z-index: 99;
                         span {
                             display: none;
                         }

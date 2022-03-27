@@ -8,6 +8,10 @@
         <observer name="add_gross_margin_to_order_observer" instance="Alfakher\GrossMargin\Observer\GrossMarginToOrder" />
 
         <observer name="purchase_order_to_order_observer" instance="Alfakher\GrossMargin\Observer\PurchaseOrderToOrder" />
-
     </event>
+
+    <event name="sales_order_invoice_pay">
+        <observer name="purchase_order_invoice_collect" instance="Alfakher\GrossMargin\Observer\PurchaseOrderToInvoice" />
+    </event>
+
 </config>

@@ -68,11 +68,9 @@ class ReorderProduct extends \Magento\Checkout\Controller\Cart implements HttpPo
             try {
                 $this->addOrderItem($item);
             } catch (\Magento\Framework\Exception\LocalizedException $e) {
-                if ($this->checkoutSession->getUseNotice(true)) {
-                    $this->messageManager->addNoticeMessage($e->getMessage());
-                } else {
-                    $this->messageManager->addErrorMessage($e->getMessage());
-                }
+
+                $this->messageManager->addErrorMessage($e->getMessage());
+
             } catch (\Exception $e) {
                 $this->messageManager->addExceptionMessage(
                     $e,
