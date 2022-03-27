@@ -172,7 +172,7 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
         \Magento\Framework\Data\Helper\PostHelper $postDataHelper,
         \Magento\Customer\Model\Session $customerSession,
         DocumentCollectionFactory $documentcollection,
-        array $data = null,
+        array $data = [],
         ToolbarMemorizer $toolbarMemorizer,
         \Magento\Framework\App\Http\Context $httpContext,
         \Magento\Framework\Data\Form\FormKey $formKey
@@ -182,7 +182,7 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
         $this->customerSession = $customerSession;
         $this->httpContext = $httpContext;
         $this->documentcollection = $documentcollection;
-        parent::__construct($context, $catalogSession, $catalogConfig, $toolbarModel, $urlEncoder, $productListHelper, $postDataHelper, $data, $toolbarMemorizer, $httpContext, $formKey); //phpcs:ignore
+        return parent::__construct($context, $catalogSession, $catalogConfig, $toolbarModel, $urlEncoder, $productListHelper, $postDataHelper, $data, $toolbarMemorizer, $httpContext, $formKey); //phpcs:ignore
     }
 
     /**
@@ -268,7 +268,7 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
      */
     public function getCustomerBasedPriceSort()
     {
-        if ($this->customerSession->isLoggedIn()) {
+        if ($this->getCustomerIsLoggedIn()) {
             $customerid = $this->getCustomerId();
             if ($this->getDocumentCollection($customerid)) {
                 return true;

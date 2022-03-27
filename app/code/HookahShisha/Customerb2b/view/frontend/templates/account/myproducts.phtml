@@ -170,5 +170,9 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                 console.log('.qty-'+$(this).data("id"));
             }); 
         });
+        $(".action.tocart.primary").click(function(){
+           $('div.message-error.error.message').remove();
+        });
     });
 </script>
+

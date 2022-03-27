@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<referenceContainer name="content">
+		<!-- <referenceBlock name="sales.order.view"> -->
+			<block name="order_po" template="Alfakher_GrossMargin::order/view/purchaseOrder.phtml" before="-" after="order.comments" class="Magento\Sales\Block\Order\View" />
+		<!-- </referenceBlock> -->
+	</referenceContainer>
+</page>

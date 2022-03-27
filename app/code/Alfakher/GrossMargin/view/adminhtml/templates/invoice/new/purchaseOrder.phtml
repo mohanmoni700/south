@@ -1,0 +1,10 @@
+<?php
+$order = $block->getOrder();
+$poNumber = $order->getPurchaseOrder();
+$poNumber = $poNumber == null ? "N/A" : $poNumber;
+?>
+
+<tr>
+    <th><strong><?=$block->escapeHtml(__('Purchase Order'))?></strong></th>
+    <td><strong><?= /* @noEscape */ $poNumber ?></strong></td>
+</tr>

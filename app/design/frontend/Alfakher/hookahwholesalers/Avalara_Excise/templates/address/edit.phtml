@@ -24,7 +24,16 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
     enctype="multipart/form-data" 
     data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
     <fieldset class="fieldset">
-        <legend class="legend"><span><?= $block->escapeHtml(__('Contact Information')) ?></span></legend><br>
+        <legend class="legend">
+            <span>
+                <?php if($block->getAddress()->getId()): ?>
+                    <?= $block->escapeHtml(__('Edit Address')) ?>
+                <?php else: ?>
+                    <?= $block->escapeHtml(__('New Address')) ?>
+                <?php endif; ?>
+            </span>
+        </legend>
+        <br>
         <?= $block->getBlockHtml('formkey') ?>
         <input type="hidden" name="success_url" value="<?= $block->escapeUrl($block->getSuccessUrl()) ?>">
         <input type="hidden" name="error_url" value="<?= $block->escapeUrl($block->getErrorUrl()) ?>">

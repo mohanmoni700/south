@@ -421,7 +421,9 @@ define([
 	                showLoader: true,
 	                complete: function(result) {
 	                    location.reload(true);
-	                    $('html, body').animate({scrollTop:70});
+	                    $('html, body').animate({
+                    	scrollTop: $(".columns").offset().top
+                		}, 0);
 	                },
 	                error: function(xhr, status, errorThrown) {}
 	            });
