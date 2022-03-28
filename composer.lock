@@ -101,31 +101,6 @@
             "description": "Amasty Base"
         },
         {
-            "name": "amasty/cron-schedule-list",
-            "version": "1.0.5",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/cron-schedule-list-1.0.5-ee.zip"
-            },
-            "require": {
-                "amasty/base": "^1.3.5",
-                "php": "7.0.2|7.0.4|~7.0.6|^7.1.0"
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ],
-                "psr-4": {
-                    "Amasty\\CronScheduleList\\": ""
-                }
-            },
-            "license": [
-                "Commercial"
-            ],
-            "description": "Cron Schedule List by Amasty"
-        },
-        {
             "name": "amasty/module-advanced-conditions",
             "version": "1.5.4",
             "dist": {
@@ -174,39 +149,6 @@
                 "Commercial"
             ],
             "description": "Promo Banners Lite by Amasty"
-        },
-        {
-            "name": "amasty/module-elastic-search",
-            "version": "1.13.3",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/module-elastic-search-1.13.3-ee.zip"
-            },
-            "require": {
-                "amasty/base": ">=1.9.4",
-                "amasty/cron-schedule-list": ">=1.0.5",
-                "amasty/xsearch": ">=1.17.11",
-                "elasticsearch/elasticsearch": ">=5.1",
-                "php": "^7.3.0"
-            },
-            "suggest": {
-                "amasty/module-elastic-search-graphql": "Install module-elastic-search-graphql module to activate Graphql and Elastic Search",
-                "amasty/module-elastic-search-mftf-2": "Install elastic-search-mftf-2 module to be able to run ElasticSearch MFTF tests for Magento 2.3.5+ version",
-                "amasty/module-elastic-search-mftf-3": "Install elastic-search-mftf-3 module to be able to run ElasticSearch MFTF tests for Magento 2.4.0+ version"
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ],
-                "psr-4": {
-                    "Amasty\\ElasticSearch\\": ""
-                }
-            },
-            "license": [
-                "Commercial"
-            ],
-            "description": "Elastic Search Module by Amasty"
         },
         {
             "name": "amasty/module-improved-layered-navigation-page",
@@ -464,36 +406,6 @@
                 "Commercial"
             ],
             "description": "Improved Layered Navigation by Amasty - SEO sub-module"
-        },
-        {
-            "name": "amasty/xsearch",
-            "version": "1.17.11",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/xsearch-1.17.11-ee.zip"
-            },
-            "require": {
-                "amasty/base": ">=1.10.8",
-                "magento/module-cms": "*",
-                "php": "^7.3.0"
-            },
-            "suggest": {
-                "amasty/module-xsearch-mftf-2": "Install xsearch-mftf-2 module to be able to run Advanced Search MFTF tests for Magento 2.3.5+ version",
-                "amasty/module-xsearch-mftf-3": "Install xsearch-mftf-3 module to be able to run Advanced Search MFTF tests for Magento 2.4.0+ version"
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ],
-                "psr-4": {
-                    "Amasty\\Xsearch\\": ""
-                }
-            },
-            "license": [
-                "Commercial"
-            ],
-            "description": "Search Autocomplete by Amasty"
         },
         {
             "name": "amzn/amazon-pay-and-login-magento-2-module",
