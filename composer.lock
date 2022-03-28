@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c5257c494403cce8c7864fa5190fe9ee",
+    "content-hash": "dda8a88df89f838284596d510d838697",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -59,7 +59,7 @@
                 "url": "https://composer.amasty.com/enterprise/packages/ajax-scroll-1.4.5-ee.zip"
             },
             "require": {
-                "amasty/base": "*",
+                "amasty/base": ">=1.13.1",
                 "php": "^7.3.0"
             },
             "type": "magento2-module",
@@ -78,13 +78,13 @@
         },
         {
             "name": "amasty/base",
-            "version": "1.13.2",
+            "version": "1.13.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/base-1.13.2-ee.zip"
+                "url": "https://composer.amasty.com/enterprise/packages/base-1.13.1-ee.zip"
             },
             "require": {
-                "php": ">=7.3"
+                "php": ">=7.3.0"
             },
             "type": "magento2-module",
             "autoload": {
@@ -99,31 +99,6 @@
                 "Commercial"
             ],
             "description": "Amasty Base"
-        },
-        {
-            "name": "amasty/cron-schedule-list",
-            "version": "1.0.5",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/cron-schedule-list-1.0.5-ee.zip"
-            },
-            "require": {
-                "amasty/base": "^1.3.5",
-                "php": "7.0.2|7.0.4|~7.0.6|^7.1.0"
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ],
-                "psr-4": {
-                    "Amasty\\CronScheduleList\\": ""
-                }
-            },
-            "license": [
-                "Commercial"
-            ],
-            "description": "Cron Schedule List by Amasty"
         },
         {
             "name": "amasty/module-advanced-conditions",
@@ -174,40 +149,6 @@
                 "Commercial"
             ],
             "description": "Promo Banners Lite by Amasty"
-        },
-        {
-            "name": "amasty/module-elastic-search",
-            "version": "1.14.0",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/module-elastic-search-1.14.0-ee.zip"
-            },
-            "require": {
-                "amasty/base": ">=1.13.2",
-                "amasty/cron-schedule-list": ">=1.0.5",
-                "amasty/xsearch": ">=1.17.11",
-                "elasticsearch/elasticsearch": ">=5.1",
-                "php": ">=7.3.0"
-            },
-            "suggest": {
-                "amasty/module-elastic-search-graphql": "Install module-elastic-search-graphql module to activate Graphql and Elastic Search",
-                "amasty/module-elastic-search-mftf-2": "Install elastic-search-mftf-2 module to be able to run ElasticSearch MFTF tests for Magento 2.3.5+ version",
-                "amasty/module-elastic-search-mftf-3": "Install elastic-search-mftf-3 module to be able to run ElasticSearch MFTF tests for Magento 2.4.0+ version",
-                "amasty/module-meta-tags-to-elastic-search": "Install meta-tags-to-elastic-search module to activate Amasty Meta Tags and Elastic Search compatibility"
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ],
-                "psr-4": {
-                    "Amasty\\ElasticSearch\\": ""
-                }
-            },
-            "license": [
-                "Commercial"
-            ],
-            "description": "Elastic Search Module by Amasty"
         },
         {
             "name": "amasty/module-improved-layered-navigation-page",
@@ -404,16 +345,16 @@
         },
         {
             "name": "amasty/shopby",
-            "version": "2.18.2",
+            "version": "2.18.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/shopby-2.18.2-ee.zip"
+                "url": "https://composer.amasty.com/enterprise/packages/shopby-2.18.1-ee.zip"
             },
             "require": {
-                "amasty/base": ">=1.12.4",
+                "amasty/base": ">=1.13.1",
                 "amasty/module-improved-layered-navigation-page": ">=2.7.13",
                 "amasty/module-shop-by-base": ">=2.15.2",
-                "amasty/module-shop-by-brand": ">=2.12.5",
+                "amasty/module-shop-by-brand": ">=2.12.4",
                 "amasty/shopby-seo": ">=2.13.0",
                 "magento/module-catalog-search": ">=101.0.2",
                 "magento/module-layered-navigation": ">=100.2.0",
@@ -465,36 +406,6 @@
                 "Commercial"
             ],
             "description": "Improved Layered Navigation by Amasty - SEO sub-module"
-        },
-        {
-            "name": "amasty/xsearch",
-            "version": "1.17.11",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/xsearch-1.17.11-ee.zip"
-            },
-            "require": {
-                "amasty/base": ">=1.10.8",
-                "magento/module-cms": "*",
-                "php": "^7.3.0"
-            },
-            "suggest": {
-                "amasty/module-xsearch-mftf-2": "Install xsearch-mftf-2 module to be able to run Advanced Search MFTF tests for Magento 2.3.5+ version",
-                "amasty/module-xsearch-mftf-3": "Install xsearch-mftf-3 module to be able to run Advanced Search MFTF tests for Magento 2.4.0+ version"
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ],
-                "psr-4": {
-                    "Amasty\\Xsearch\\": ""
-                }
-            },
-            "license": [
-                "Commercial"
-            ],
-            "description": "Search Autocomplete by Amasty"
         },
         {
             "name": "amzn/amazon-pay-and-login-magento-2-module",
@@ -3253,57 +3164,6 @@
                 "source": "https://github.com/ezimuel/ringphp/tree/1.2.0"
             },
             "time": "2021-11-16T11:51:30+00:00"
-        },
-        {
-            "name": "ezyang/htmlpurifier",
-            "version": "v4.14.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/ezyang/htmlpurifier.git",
-                "reference": "12ab42bd6e742c70c0a52f7b82477fcd44e64b75"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/ezyang/htmlpurifier/zipball/12ab42bd6e742c70c0a52f7b82477fcd44e64b75",
-                "reference": "12ab42bd6e742c70c0a52f7b82477fcd44e64b75",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.2"
-            },
-            "type": "library",
-            "autoload": {
-                "files": [
-                    "library/HTMLPurifier.composer.php"
-                ],
-                "psr-0": {
-                    "HTMLPurifier": "library/"
-                },
-                "exclude-from-classmap": [
-                    "/library/HTMLPurifier/Language/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1-or-later"
-            ],
-            "authors": [
-                {
-                    "name": "Edward Z. Yang",
-                    "email": "admin@htmlpurifier.org",
-                    "homepage": "http://ezyang.com"
-                }
-            ],
-            "description": "Standards compliant HTML filter written in PHP",
-            "homepage": "http://htmlpurifier.org/",
-            "keywords": [
-                "html"
-            ],
-            "support": {
-                "issues": "https://github.com/ezyang/htmlpurifier/issues",
-                "source": "https://github.com/ezyang/htmlpurifier/tree/v4.14.0"
-            },
-            "time": "2021-12-25T01:21:49+00:00"
         },
         {
             "name": "facebook/graph-sdk",
@@ -7167,77 +7027,6 @@
                 "source": "https://github.com/kalimatas/php-liquid/tree/1.4.25"
             },
             "time": "2021-11-04T13:16:06+00:00"
-        },
-        {
-            "name": "maennchen/zipstream-php",
-            "version": "2.1.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/maennchen/ZipStream-PHP.git",
-                "reference": "c4c5803cc1f93df3d2448478ef79394a5981cc58"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/maennchen/ZipStream-PHP/zipball/c4c5803cc1f93df3d2448478ef79394a5981cc58",
-                "reference": "c4c5803cc1f93df3d2448478ef79394a5981cc58",
-                "shasum": ""
-            },
-            "require": {
-                "myclabs/php-enum": "^1.5",
-                "php": ">= 7.1",
-                "psr/http-message": "^1.0",
-                "symfony/polyfill-mbstring": "^1.0"
-            },
-            "require-dev": {
-                "ext-zip": "*",
-                "guzzlehttp/guzzle": ">= 6.3",
-                "mikey179/vfsstream": "^1.6",
-                "phpunit/phpunit": ">= 7.5"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "ZipStream\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Paul Duncan",
-                    "email": "pabs@pablotron.org"
-                },
-                {
-                    "name": "Jonatan Männchen",
-                    "email": "jonatan@maennchen.ch"
-                },
-                {
-                    "name": "Jesse Donat",
-                    "email": "donatj@gmail.com"
-                },
-                {
-                    "name": "András Kolesár",
-                    "email": "kolesar@kolesar.hu"
-                }
-            ],
-            "description": "ZipStream is a library for dynamically streaming dynamic zip files from PHP without writing to the disk at all on the server.",
-            "keywords": [
-                "stream",
-                "zip"
-            ],
-            "support": {
-                "issues": "https://github.com/maennchen/ZipStream-PHP/issues",
-                "source": "https://github.com/maennchen/ZipStream-PHP/tree/master"
-            },
-            "funding": [
-                {
-                    "url": "https://opencollective.com/zipstream",
-                    "type": "open_collective"
-                }
-            ],
-            "time": "2020-05-30T13:11:16+00:00"
         },
         {
             "name": "magefan/module-admin-user-guide",
@@ -26058,113 +25847,6 @@
             "description": "Extended Orders module for the Magento 2"
         },
         {
-            "name": "markbaker/complex",
-            "version": "3.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MarkBaker/PHPComplex.git",
-                "reference": "ab8bc271e404909db09ff2d5ffa1e538085c0f22"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/MarkBaker/PHPComplex/zipball/ab8bc271e404909db09ff2d5ffa1e538085c0f22",
-                "reference": "ab8bc271e404909db09ff2d5ffa1e538085c0f22",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.2 || ^8.0"
-            },
-            "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
-                "phpcompatibility/php-compatibility": "^9.0",
-                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.3",
-                "squizlabs/php_codesniffer": "^3.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Complex\\": "classes/src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mark Baker",
-                    "email": "mark@lange.demon.co.uk"
-                }
-            ],
-            "description": "PHP Class for working with complex numbers",
-            "homepage": "https://github.com/MarkBaker/PHPComplex",
-            "keywords": [
-                "complex",
-                "mathematics"
-            ],
-            "support": {
-                "issues": "https://github.com/MarkBaker/PHPComplex/issues",
-                "source": "https://github.com/MarkBaker/PHPComplex/tree/3.0.1"
-            },
-            "time": "2021-06-29T15:32:53+00:00"
-        },
-        {
-            "name": "markbaker/matrix",
-            "version": "3.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/MarkBaker/PHPMatrix.git",
-                "reference": "c66aefcafb4f6c269510e9ac46b82619a904c576"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/MarkBaker/PHPMatrix/zipball/c66aefcafb4f6c269510e9ac46b82619a904c576",
-                "reference": "c66aefcafb4f6c269510e9ac46b82619a904c576",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1 || ^8.0"
-            },
-            "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
-                "phpcompatibility/php-compatibility": "^9.0",
-                "phpdocumentor/phpdocumentor": "2.*",
-                "phploc/phploc": "^4.0",
-                "phpmd/phpmd": "2.*",
-                "phpunit/phpunit": "^7.0 || ^8.0 || ^9.3",
-                "sebastian/phpcpd": "^4.0",
-                "squizlabs/php_codesniffer": "^3.4"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Matrix\\": "classes/src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Mark Baker",
-                    "email": "mark@demon-angel.eu"
-                }
-            ],
-            "description": "PHP Class for working with matrices",
-            "homepage": "https://github.com/MarkBaker/PHPMatrix",
-            "keywords": [
-                "mathematics",
-                "matrix",
-                "vector"
-            ],
-            "support": {
-                "issues": "https://github.com/MarkBaker/PHPMatrix/issues",
-                "source": "https://github.com/MarkBaker/PHPMatrix/tree/3.0.0"
-            },
-            "time": "2021-07-01T19:01:15+00:00"
-        },
-        {
             "name": "monolog/monolog",
             "version": "1.27.0",
             "source": {
@@ -27456,110 +27138,6 @@
                 "source": "https://github.com/PhpGt/Dom/tree/v2.1.6"
             },
             "time": "2020-01-15T08:28:10+00:00"
-        },
-        {
-            "name": "phpoffice/phpspreadsheet",
-            "version": "1.22.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/PHPOffice/PhpSpreadsheet.git",
-                "reference": "3a9e29b4f386a08a151a33578e80ef1747037a48"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/PHPOffice/PhpSpreadsheet/zipball/3a9e29b4f386a08a151a33578e80ef1747037a48",
-                "reference": "3a9e29b4f386a08a151a33578e80ef1747037a48",
-                "shasum": ""
-            },
-            "require": {
-                "ext-ctype": "*",
-                "ext-dom": "*",
-                "ext-fileinfo": "*",
-                "ext-gd": "*",
-                "ext-iconv": "*",
-                "ext-libxml": "*",
-                "ext-mbstring": "*",
-                "ext-simplexml": "*",
-                "ext-xml": "*",
-                "ext-xmlreader": "*",
-                "ext-xmlwriter": "*",
-                "ext-zip": "*",
-                "ext-zlib": "*",
-                "ezyang/htmlpurifier": "^4.13",
-                "maennchen/zipstream-php": "^2.1",
-                "markbaker/complex": "^3.0",
-                "markbaker/matrix": "^3.0",
-                "php": "^7.3 || ^8.0",
-                "psr/http-client": "^1.0",
-                "psr/http-factory": "^1.0",
-                "psr/simple-cache": "^1.0"
-            },
-            "require-dev": {
-                "dealerdirect/phpcodesniffer-composer-installer": "dev-master",
-                "dompdf/dompdf": "^1.0",
-                "friendsofphp/php-cs-fixer": "^3.2",
-                "jpgraph/jpgraph": "^4.0",
-                "mpdf/mpdf": "8.0.17",
-                "phpcompatibility/php-compatibility": "^9.3",
-                "phpstan/phpstan": "^1.1",
-                "phpstan/phpstan-phpunit": "^1.0",
-                "phpunit/phpunit": "^8.5 || ^9.0",
-                "squizlabs/php_codesniffer": "^3.6",
-                "tecnickcom/tcpdf": "^6.4"
-            },
-            "suggest": {
-                "dompdf/dompdf": "Option for rendering PDF with PDF Writer (doesn't yet support PHP8)",
-                "jpgraph/jpgraph": "Option for rendering charts, or including charts with PDF or HTML Writers",
-                "mpdf/mpdf": "Option for rendering PDF with PDF Writer",
-                "tecnickcom/tcpdf": "Option for rendering PDF with PDF Writer (doesn't yet support PHP8)"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PhpOffice\\PhpSpreadsheet\\": "src/PhpSpreadsheet"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Maarten Balliauw",
-                    "homepage": "https://blog.maartenballiauw.be"
-                },
-                {
-                    "name": "Mark Baker",
-                    "homepage": "https://markbakeruk.net"
-                },
-                {
-                    "name": "Franck Lefevre",
-                    "homepage": "https://rootslabs.net"
-                },
-                {
-                    "name": "Erik Tilt"
-                },
-                {
-                    "name": "Adrien Crivelli"
-                }
-            ],
-            "description": "PHPSpreadsheet - Read, Create and Write Spreadsheet documents in PHP - Spreadsheet engine",
-            "homepage": "https://github.com/PHPOffice/PhpSpreadsheet",
-            "keywords": [
-                "OpenXML",
-                "excel",
-                "gnumeric",
-                "ods",
-                "php",
-                "spreadsheet",
-                "xls",
-                "xlsx"
-            ],
-            "support": {
-                "issues": "https://github.com/PHPOffice/PhpSpreadsheet/issues",
-                "source": "https://github.com/PHPOffice/PhpSpreadsheet/tree/1.22.0"
-            },
-            "time": "2022-02-18T12:57:07+00:00"
         },
         {
             "name": "phpseclib/mcrypt_compat",
@@ -32890,89 +32468,6 @@
             ]
         },
         {
-            "name": "xtento/orderimport",
-            "version": "2.6.2",
-            "dist": {
-                "type": "zip",
-                "url": "https://repo.xtento.com/composer/download/file/m/xtento_orderimport/h/1fad68f74dfb22caf63f6932f87dd152/v/2.6.2",
-                "reference": "6a2e4f94a97072708f65e699da02d0c7c15f1faa"
-            },
-            "require": {
-                "magento/framework": "^100.0||^101.0||^102.0||^103.0",
-                "magento/module-backend": "^100.0||^101.0||^102.0",
-                "magento/module-sales": "^100.0||^101.0||^102.0||^103.0",
-                "php": "7.0.2|7.0.4|~7.0.6|~7.1.0|~7.2.0|~7.3.0|~7.4.0",
-                "phpoffice/phpspreadsheet": "^1.0",
-                "xtento/xtcore": "~2.0"
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ],
-                "psr-4": {
-                    "Xtento\\OrderImport\\": ""
-                }
-            },
-            "notification-url": "https://repo.xtento.com/composer/download/notify",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "XTENTO GmbH & Co. KG",
-                    "email": "info@xtento.com",
-                    "homepage": "http://www.xtento.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "XTENTO Order Import Module",
-            "support": {
-                "email": "info@xtento.com"
-            },
-            "time": "2022-03-08T20:41:34+00:00"
-        },
-        {
-            "name": "xtento/xtcore",
-            "version": "2.12.0",
-            "dist": {
-                "type": "zip",
-                "url": "https://repo.xtento.com/composer/download/file/m/xtento_xtcore/h/1f65d80818a8fc7cd47f76c0b0eb2b3a/v/2.12.0",
-                "reference": "6d0f494e881da2971b7ac7d191d6a8b073a382d6"
-            },
-            "require": {
-                "magento/framework": "^100.0||^101.0||^102.0||^103.0",
-                "magento/module-backend": "^100.0||^101.0||^102.0",
-                "php": "7.0.2|7.0.4|~7.0.6|~7.1.0|~7.2.0|~7.3.0|~7.4.0"
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ],
-                "psr-4": {
-                    "Xtento\\XtCore\\": ""
-                }
-            },
-            "notification-url": "https://repo.xtento.com/composer/download/notify",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "XTENTO GmbH & Co. KG",
-                    "email": "info@xtento.com",
-                    "homepage": "http://www.xtento.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "XTENTO Core Module",
-            "support": {
-                "email": "info@xtento.com"
-            },
-            "time": "2021-07-12T20:39:53+00:00"
-        },
-        {
             "name": "yotpo/magento2-module-yotpo-loyalty",
             "version": "1.2.5",
             "dist": {
@@ -33124,5 +32619,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.1.0"
 }
