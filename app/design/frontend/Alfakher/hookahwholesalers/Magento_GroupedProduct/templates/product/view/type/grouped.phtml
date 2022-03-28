@@ -15,7 +15,7 @@
 <?php $_product = $block->getProduct(); ?>
 <?php $_associatedProducts = $block->getAssociatedProducts(); ?>
 <?php $_hasAssociatedProducts = count($_associatedProducts) > 0; ?>
-<?php $_helperB2b = $block->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
+<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php $is_document_upload = $_helperB2b->getDocuments();?>
 <div id="validation-message-box"></div>
 <div class="table-wrapper grouped">
