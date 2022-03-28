@@ -8,7 +8,7 @@
 ?>
 <?php $_product = $block->getProduct(); ?>
 <?php $buttonTitle = __('Add to Cart'); ?>
-<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
+<?php $_helperB2b = $block->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
     <?php if ($_product->isSaleable()):?>
 <div class="box-tocart">
@@ -18,34 +18,46 @@
             <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
             <div class="control">
                 <?php
-                $qtyCounter=$block->getProductDefaultQty() * 1 ;
-                $dataValidate=json_encode($block->getQuantityValidators());
-                ?>
-                <select 
-                    class="input-text qty" 
-                    name="qty" 
-                    id="qty" 
-                    data-validate="<?= /* @noEscape */ $block->escapeHtml($dataValidate) ?>">
-                    <?php for ($qtyCounter; $qtyCounter<=100; $qtyCounter++):
-                        $selected='';
-                        if (($block->getProductDefaultQty() * 1) == $qtyCounter):
-                            $selected='selected';
-                        endif; ?>
-                        <option value="<?= /* @noEscape */ $qtyCounter; ?>"
-                            <?= /* @noEscape */  $selected; ?>>
-                            <?= /* @noEscape */ $qtyCounter; ?>
-                        </option>
-                    <?php endfor; ?>
-                </select> 
-                <!-- <input type="number"
+                $userAgent = $block->getRequest()->getHeader('useragent');
+                $server    = $block->getRequest()->getServer();
+
+                $isMobileDevice = \Zend_Http_UserAgent_Mobile::match($userAgent, $server);
+                $isDesktopDevice = \Zend_Http_UserAgent_Desktop::match($userAgent, $server);
+                if (!$isDesktopDevice):
+                    //Write your code here for Mobile view
+                    $qtyCounter=$block->getProductDefaultQty() * 1 ;
+                    $dataValidate=json_encode($block->getQuantityValidators());
+                    ?>
+                    <select 
+                        class="input-text qty" 
+                        name="qty" 
+                        id="qty" 
+                        data-validate="<?= /* @noEscape */ $block->escapeHtml($dataValidate) ?>">
+                        <?php for ($qtyCounter; $qtyCounter<=100; $qtyCounter++):
+                            $selected='';
+                            if (($block->getProductDefaultQty() * 1) == $qtyCounter):
+                                $selected='selected';
+                            endif; ?>
+                            <option value="<?= /* @noEscape */ $qtyCounter; ?>"
+                                <?= /* @noEscape */  $selected; ?>>
+                                <?= /* @noEscape */ $qtyCounter; ?>
+                            </option>
+                        <?php endfor; ?>
+                    </select> 
+                    <?php else:
+                        $dataValidate=json_encode($block->getQuantityValidators());
+                        ?>
+                
+                 <input type="number"
                        name="qty"
                        id="qty"
                        min="0"
-                       value="<?php // $block->getProductDefaultQty() * 1 ?>"
-                       title="<?php // $block->escapeHtmlAttr(__('Qty')) ?>"
+                       value="<?= /* @noEscape */ $block->getProductDefaultQty() * 1 ?>"
+                       title="<?= /* @noEscape */ $block->escapeHtmlAttr(__('Qty')) ?>"
                        class="input-text qty"
-                       data-validate="<?php // $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
-                       /> -->
+                       data-validate="<?= /* @noEscape */ $block->escapeHtml($dataValidate) ?>"
+                       /> 
+                  <?php endif; ?>  
             </div>
         </div>
         <?php endif; ?>
