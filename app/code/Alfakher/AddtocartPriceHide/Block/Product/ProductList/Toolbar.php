@@ -172,7 +172,7 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
         \Magento\Framework\Data\Helper\PostHelper $postDataHelper,
         \Magento\Customer\Model\Session $customerSession,
         DocumentCollectionFactory $documentcollection,
-        array $data = null,
+        array $data = [],
         ToolbarMemorizer $toolbarMemorizer,
         \Magento\Framework\App\Http\Context $httpContext,
         \Magento\Framework\Data\Form\FormKey $formKey
