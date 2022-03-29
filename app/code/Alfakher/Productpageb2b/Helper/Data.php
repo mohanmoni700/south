@@ -105,8 +105,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
 	 * @inheritDoc
 	 */
 	public function isMobileDevice() {
-		$userAgent = $this->httpHeader->getHttpUserAgent();
-		return \Zend_Http_UserAgent_Mobile::match($userAgent, $_SERVER);
+		return $this->httpContext->getValue('is_mobiledevice');
+		// $userAgent = $this->httpHeader->getHttpUserAgent();
+		// return \Zend_Http_UserAgent_Mobile::match($userAgent, $_SERVER);
 	}
 
 	/**
