@@ -15,6 +15,7 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                $docdata = $_helperB2b->getDocMessageData();
                $is_document_upload = $_helperB2b->getDocuments();
                $doc_expired = $_helperB2b->getExpiryMsg();
+               $migrateDocument=$_helperB2b->getMigrateDocument();
         ?>
 <div class="block-title page-title">
     <h1>My Product Pricing</h1>
@@ -26,7 +27,7 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
         <thead>
             <tr>
                 <th class="col name"><?= $block->escapeHtml(__('Item')) ?></th>
-                <?php if ($docdata == 2 && $is_document_upload == 1 && $doc_expired==1): ?>
+                <?php if ( ($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1 && $doc_expired==1)): ?>
                 <th class="col sku"><?= $block->escapeHtml(__('Actual Price')) ?></th>
                 <th class="col price"><?= $block->escapeHtml(__('Special Price')) ?></th>
                 <th class="col qty"><?= $block->escapeHtml(__('Qty')) ?></th>
@@ -63,7 +64,7 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                                 </div>
                             </div>
                         </td>
-                        <?php if ($docdata == 2 && $is_document_upload == 1 && $doc_expired == 1): ?>
+                        <?php if ( ($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1 && $doc_expired == 1)): ?>
                             <?php
                             $regularPrice = $_product->getPriceInfo()->getPrice('regular_price')->getAmount()->getValue();
                             $specialprice = $_product->getPriceInfo()->getPrice('final_price')->getAmount()->getValue();
