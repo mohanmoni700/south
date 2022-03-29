@@ -55,6 +55,7 @@ class Pricing extends \Magento\SharedCatalog\Ui\DataProvider\Configure\Pricing
         );
         $this->stepDataProcessor = $stepDataProcessor;
 
+        $this->oprequest = $request;
         $this->_productRepository = $productRepository;
     }
 
@@ -96,23 +97,45 @@ class Pricing extends \Magento\SharedCatalog\Ui\DataProvider\Configure\Pricing
      */
     protected function calculateGrossMargin($item)
     {
-        $cost = 0;
-        $price = 0;
-        $product = $this->_productRepository->get($item->getSku());
+        $itemData = $item->getData();
+        $requestParams = $this->oprequest->getParams();
+        if (isset($itemData['custom_price']) && isset($requestParams['isAjax']) && $requestParams['isAjax'] == true) {
+            $cost = $itemData['cost'] ? $itemData['cost'] : 0;
+            $price = $itemData['price'] ? $itemData['price'] : 0;
 
-        if ($product->getCost() > -1) {
-            $cost = $product->getCost();
-        }
+            if ($itemData['price_type'] == 'percent') {
+                $discountValue = $price * ($itemData['custom_price'] / 100);
+                $price = $price - $discountValue;
+            } else {
+                $price = $itemData['custom_price'];
+            }
 
-        if ($product->getPrice() > -1) {
-            $price = $product->getPrice();
-        }
+            try {
+                $grossMargin = ($price - $cost) / $price * 100;
+                return number_format($grossMargin, 2) . "%";
+            } catch (\Exception $e) {
+                return "0.00%";
+            }
 
-        try {
-            $grossMargin = ($price - $cost) / $price * 100;
-            return number_format($grossMargin, 2) . "%";
-        } catch (\Exception $e) {
-            return "0.00%";
+        } else {
+            $cost = 0;
+            $price = 0;
+            $product = $this->_productRepository->get($item->getSku());
+
+            if ($product->getCost() > -1) {
+                $cost = $product->getCost();
+            }
+
+            if ($product->getPrice() > -1) {
+                $price = $product->getPrice();
+            }
+
+            try {
+                $grossMargin = ($price - $cost) / $price * 100;
+                return number_format($grossMargin, 2) . "%";
+            } catch (\Exception $e) {
+                return "0.00%";
+            }
         }
     }
 }
