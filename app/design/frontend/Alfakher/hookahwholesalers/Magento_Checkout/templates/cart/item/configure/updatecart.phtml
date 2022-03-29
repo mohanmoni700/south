@@ -9,6 +9,7 @@
 <?php $_product = $block->getProduct(); ?>
 <?php $buttonTitle = __('Update Cart'); ?>
 <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
+<?php $is_mobile = $_helperB2b->isMobileDevice();?>
 <?php if ($_product->isSaleable()):?>
     <div class="box-tocart update">
         <fieldset class="fieldset">
@@ -17,8 +18,7 @@
                 <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
                 <div class="control">
                     <?php
-                    $isMobile = $_helperB2b->isMobile();
-                    if ($isMobile): ?>
+                    if ($is_mobile): ?>
                     <select 
                         class="input-text qty" 
                         name="qty" 

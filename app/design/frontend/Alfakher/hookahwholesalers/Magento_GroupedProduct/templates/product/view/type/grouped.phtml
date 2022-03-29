@@ -17,110 +17,124 @@
 <?php $_hasAssociatedProducts = count($_associatedProducts) > 0; ?>
 <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php $is_document_upload = $_helperB2b->getDocuments();?>
+<?php $is_mobile = $_helperB2b->isMobileDevice();?>
+<?php $migrateDocument=$_helperB2b->getMigrateDocument();?>
 <div id="validation-message-box"></div>
 <div class="table-wrapper grouped">
     <table class="table data grouped"
-           id="super-product-table"
-           data-mage-init='{ "Magento_GroupedProduct/js/product-ids-resolver": {} }'>
-        <caption class="table-caption"><?= $block->escapeHtml(__('Grouped product items')) ?></caption>
-        <?php if ($_hasAssociatedProducts): ?>
+    id="super-product-table"
+    data-mage-init='{ "Magento_GroupedProduct/js/product-ids-resolver": {} }'>
+    <caption class="table-caption"><?= $block->escapeHtml(__('Grouped product items')) ?></caption>
+    <?php if ($_hasAssociatedProducts): ?>
         <tbody>
             <?php foreach ($_associatedProducts as $_item): ?>
-            <tr>
-                <td data-th="<?= $block->escapeHtml(__('Product Name')) ?>" class="col item">
-                    <strong class="product-item-name"><?= $block->escapeHtml($_item->getName()) ?></strong>
-                </td>
-                <!-- show price start -->
+                <tr>
+                    <td data-th="<?= $block->escapeHtml(__('Product Name')) ?>" class="col item">
+                        <strong class="product-item-name"><?= $block->escapeHtml($_item->getName()) ?></strong>
+                    </td>
+                    <!-- show price start -->
 
-                 <?php
+                    <?php
                     $messageData=$_helperB2b->getDocMessageData();
                     $expiryMsg=$_helperB2b->getExpiryMsg();
-                    if ($messageData == 2 && $is_document_upload == 1 && $expiryMsg==1): ?>
-                <td>
+                    if ( ($migrateDocument == 1) || ($messageData == 2 && $is_document_upload == 1)): ?>
+                        <td>
                            <?php if ($block->getCanShowProductPrice($_product)): ?>
                                 <?php if ($block->getCanShowProductPrice($_item)): ?>
                                     <?= /* @noEscape */ $block->getProductPrice($_item) ?>
+                            <?php endif; ?>
                         <?php endif; ?>
-                    <?php endif; ?>
 
-                           <?php /* bv_op; date : 10-2-22; Start */ ?>
-                    <div class="bv-special-price-<?= $block->escapeHtmlAttr($_item->getId()) ?>"></div>
-                           <?php /* bv_op; date : 10-2-22; End */ ?>
+                        <?php /* bv_op; date : 10-2-22; Start */ ?>
+                        <div class="bv-special-price-<?= $block->escapeHtmlAttr($_item->getId()) ?>"></div>
+                        <?php /* bv_op; date : 10-2-22; End */ ?>
 
-                </td>
-                           <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
-                                <?php if ($_product->isSaleable()): ?>
-                <td data-th="<?= $block->escapeHtml(__('Qty')) ?>" class="col qty">
-                                    <?php if ($_item->isSaleable()): ?>
-                    <div class="control qty">
-                          <select class="input-text qty" 
-                            name="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]" 
-                            data-selector="super_group[<?= /* @noEscape */ $block->escapeHtmlAttr($_item->getId()) ?>]"
-                            id="qty" 
-                            data-validate="{'validate-custom-grouped-qty':'#super-product-table'}"
-                            data-errors-message-box="#validation-message-box"
-                            data-product-id="<?= /* @noEscape */ $block->escapeHtmlAttr($_item->getId()) ?>"
-                            >
-                                        <?php $qtyCounter = $block->escapeHtmlAttr($_item->getQty() * 1);
-                                        for ($qtyCounter; $qtyCounter<=100; $qtyCounter++):
-                                            $selected='';
-                                            if ($block->escapeHtmlAttr($_item->getQty() * 1) == $qtyCounter):
-                                                $selected='selected';
-                                            endif; ?>
-                                            <option value="<?= /* @noEscape */ $qtyCounter; ?>" 
-                                            <?= /* @noEscape */  $selected; ?>>
-                                            <?= /* @noEscape */  $qtyCounter; ?></option>
-                                        <?php endfor; ?>
-                        </select> 
-                                        <?php /* <input type="number"
-                               name="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
-                               data-selector="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
-                               value="<?=  $block->escapeHtmlAttr($_item->getQty() * 1) ?>"
-                               title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
-                               class="input-text qty"
-                               data-validate="{'validate-grouped-qty':'#super-product-table'}"
-                               data-errors-message-box="#validation-message-box"
-                               data-product-id="<?=  $block->escapeHtmlAttr($_item->getId()) ?>"
-                               onclick="this.select();"/> */ ?>
-                    </div> 
-                <?php else: ?>
-                    <div class="stock unavailable" title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
-                        <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
-                    </div>
+                    </td>
+                        <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
+                            <?php if ($_product->isSaleable()): ?>
+                            <td data-th="<?= $block->escapeHtml(__('Qty')) ?>" class="col qty">
+                                <?php if ($_item->isSaleable()): ?>
+                                    <div class="control qty">
+                                        <?php
+                                        
+                                        if ($is_mobile):
+                                            //Write your code here for Mobile view
+                                            $qtyCounter=$block->getProductDefaultQty() * 1 ;
+                                            $dataValidate=json_encode($block->getQuantityValidators());
+                                            ?>
+                                            <select class="input-text qty" 
+                                            name="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]" 
+                                            data-selector="super_group[
+                                            <?= /* @noEscape */ $block->escapeHtmlAttr($_item->getId()) ?>]"
+                                            id="qty" 
+                                            data-validate="{'validate-custom-grouped-qty':'#super-product-table'}"
+                                            data-errors-message-box="#validation-message-box"
+                                            data-product-id="
+                                            <?= /* @noEscape */ $block->escapeHtmlAttr($_item->getId()) ?>"
+                                            >
+                                            <?php $qtyCounter = $block->escapeHtmlAttr($_item->getQty() * 1);
+                                            for ($qtyCounter; $qtyCounter<=100; $qtyCounter++):
+                                                $selected='';
+                                                if ($block->escapeHtmlAttr($_item->getQty() * 1) == $qtyCounter):
+                                                    $selected='selected';
+                                                endif; ?>
+                                                <option value="<?= /* @noEscape */ $qtyCounter; ?>" 
+                                                    <?= /* @noEscape */  $selected; ?>>
+                                                    <?= /* @noEscape */  $qtyCounter; ?></option>
+                                                <?php endfor; ?>
+                                            </select> 
+                                        <?php else: ?>
+                                           <input type="number"
+                                           name="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
+                                           data-selector="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
+                                           value="<?=  $block->escapeHtmlAttr($_item->getQty() * 1) ?>"
+                                           title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                                           class="input-text qty"
+                                           data-validate="{'validate-grouped-qty':'#super-product-table'}"
+                                           data-errors-message-box="#validation-message-box"
+                                           data-product-id="<?=  $block->escapeHtmlAttr($_item->getId()) ?>"
+                                           onclick="this.select();"/> 
+                                       <?php endif; ?>
+                                   </div> 
+                               <?php else: ?>
+                                <div class="stock unavailable" 
+                                title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
+                                    <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
+                                </div>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </td>
                 <?php endif; ?>
-                <?php endif; ?>
-                </td>
-                <?php endif; ?>
-                   <?php endif; ?>
-            </tr>
+            <?php endif; ?>
+        </tr>
                 <?php if ($block->getCanShowProductPrice($_product)
                 && $block->getCanShowProductPrice($_item)
                 && trim($block->getProductPriceHtml(
                     $_item,
                     \Magento\Catalog\Pricing\Price\TierPrice::PRICE_CODE
                 ))): ?>
-                <tr class="row-tier-price" style="display: none;">
-                    <td colspan="2">
-                        <?= $block->getProductPriceHtml(
-                            $_item,
-                            \Magento\Catalog\Pricing\Price\TierPrice::PRICE_CODE
-                        ) ?>
-                    </td>
-                </tr>
-            <?php endif; ?>
-        <?php endforeach; ?>
-        </tbody>
-        <?php else: ?>
-        <tbody>
-            <tr>
-                <td class="unavailable"
-                    colspan="<?php if ($_product->isSaleable()): ?>4<?php else: ?>3<?php endif; ?>">
-                    <?= $block->escapeHtml(__('No options of this product are available.')) ?>
+            <tr class="row-tier-price" style="display: none;">
+                <td colspan="2">
+                    <?= $block->getProductPriceHtml(
+                        $_item,
+                        \Magento\Catalog\Pricing\Price\TierPrice::PRICE_CODE
+                    ) ?>
                 </td>
             </tr>
-        </tbody>
         <?php endif; ?>
-    </table>
+    <?php endforeach; ?>
+</tbody>
+<?php else: ?>
+    <tbody>
+        <tr>
+            <td class="unavailable"
+            colspan="<?php if ($_product->isSaleable()): ?>4<?php else: ?>3<?php endif; ?>">
+            <?= $block->escapeHtml(__('No options of this product are available.')) ?>
+        </td>
+    </tr>
+</tbody>
+<?php endif; ?>
+</table>
 </div>
 
 <script type="text/x-magento-init">
