@@ -17,6 +17,7 @@ use Magento\Framework\App\ActionInterface;
  $doc_uploaded=$helper->getDocuments();
  $doc_expired=$helper->getExpiryMsg();
  $login = $helper->isCustomerLoggedIn();
+ $migrateDocument=$helper->getMigrateDocument();
  $showCart = true;
 ?>
 
@@ -225,29 +226,31 @@ $_item = null;
                                             <?= $block->escapeHtml($_item->getName()) ?></a>
                                     </strong>
                                     <!-- if documents approved then only show price start[BS] -->
-                                    <?php if ($login && $doc_status == 2 && $doc_uploaded == 1 && $doc_expired == 1) { ?>
-
+                                    <?php if ($migrateDocument == 1): ?>
                                         <?= /* @noEscape */ $block->getProductPrice($_item) ?>
-                                <?php } ?>
-                                <?php if ($login && ($doc_status != 2 || $doc_uploaded != 1 || $doc_expired != 1)) { ?>
-                                        <div class="actions-primary">
-                                                        <div class="logged-in-action">
-                                                            <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"><?= $block->escapeHtml(__('View Details')) ?></a>
-                                                        </div>
+                                    <?php else: ?>
+                                        <?php if ($login && $doc_status == 2 && $doc_uploaded == 1) { ?>
+                                            <?= /* @noEscape */ $block->getProductPrice($_item) ?>
+                                        <?php } ?>
+                                        <?php if ($login && ($doc_status != 2 || $doc_uploaded != 1)) { ?>
+                                            <div class="actions-primary">
+                                                <div class="logged-in-action">
+                                                    <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"><?= $block->escapeHtml(__('View Details')) ?></a>
                                                 </div>
-                                <?php } ?>
+                                            </div>
+                                        <?php } ?>
+                                    <?php endif;?>
+                                    <?php if (!$login) { ?>
 
-                                <?php if (!$login) { ?>
-
-                                     <div class="actions-primary">
-                                        <div class="logged-in-action">
-                                        <a
-                                        href="<?= /* @noEscape */ $block->getUrl('customer/account/login') ?>">
-                                        <?= $block->escapeHtml(__('Signin / Register')) ?></a>
-                                         </div>
-                                    </div> 
-                                <?php } ?>
-                                <!-- if documents approved then only show price end[BS] -->
+                                        <div class="actions-primary">
+                                            <div class="logged-in-action">
+                                                <a
+                                                href="<?= /* @noEscape */ $block->getUrl('customer/account/login') ?>">
+                                                <?= $block->escapeHtml(__('Signin / Register')) ?></a>
+                                            </div>
+                                        </div> 
+                                    <?php } ?>
+                                    <!-- if documents approved then only show price end[BS] -->
                                     <?php if ($templateType):?>
                                         <?= $block->getReviewsSummaryHtml($_item, $templateType) ?>
                                     <?php endif; ?>

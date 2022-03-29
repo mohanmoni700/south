@@ -13,18 +13,47 @@
         $docdata = $_helperB2b->getDocMessageData();
         $is_document_upload = $_helperB2b->getDocuments();
         $doc_expired = $_helperB2b->getExpiryMsg();
-
+        $migrateDocument=$_helperB2b->getMigrateDocument();
 ?>
 <?php if ($_product->isSaleable()):?>
 <div class="box-tocart">
     <?php if ($showCart): ?>
-        <?php if ($docdata == 2 && $is_document_upload == 1 && $doc_expired == 1): ?>
+        <?php if ($migrateDocument == 1): ?>
             <div class="fieldset">
-                <?php if ($block->shouldRenderQuantity()):?>
-                <div class="field qty">
-                    <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
-                    <div class="control">
-                        <input type="number"
+                    <?php if ($block->shouldRenderQuantity()):?>
+                        <div class="field qty">
+                            <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
+                            <div class="control">
+                                <input type="number"
+                                   name="qty"
+                                   id="qty"
+                                   min="0"
+                                   value="<?= $block->getProductDefaultQty() * 1 ?>"
+                                   title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                                   class="input-text qty"
+                                   data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                                   />
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <div class="actions">
+                        <button type="submit"
+                                title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                                class="action primary tocart"
+                                id="product-addtocart-button" disabled>
+                            <span><?= $block->escapeHtml($buttonTitle) ?></span>
+                        </button>
+                        <?= $block->getChildHtml('', true) ?>
+                    </div>
+                </div>
+        <?php else: ?>
+            <?php if ($docdata == 2 && $is_document_upload == 1): ?>
+                <div class="fieldset">
+                    <?php if ($block->shouldRenderQuantity()):?>
+                    <div class="field qty">
+                        <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
+                        <div class="control">
+                            <input type="number"
                                name="qty"
                                id="qty"
                                min="0"
@@ -33,21 +62,21 @@
                                class="input-text qty"
                                data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
                                />
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                    <div class="actions">
+                        <button type="submit"
+                                title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                                class="action primary tocart"
+                                id="product-addtocart-button" disabled>
+                            <span><?= $block->escapeHtml($buttonTitle) ?></span>
+                        </button>
+                        <?= $block->getChildHtml('', true) ?>
                     </div>
                 </div>
-                <?php endif; ?>
-                <div class="actions">
-                    <button type="submit"
-                            title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
-                            class="action primary tocart"
-                            id="product-addtocart-button" disabled>
-                        <span><?= $block->escapeHtml($buttonTitle) ?></span>
-                    </button>
-                    <?= $block->getChildHtml('', true) ?>
-                </div>
-            </div>
-        <?php endif; ?>
-    
+            <?php endif; ?>
+        <?php endif; ?>    
     <?php else: ?>
     <div class="actions-primary">
         <div class="logged-in-action">
