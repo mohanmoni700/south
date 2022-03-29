@@ -57,15 +57,17 @@ define([
 	                var filename = jQuery("#" + fileId).val();
 	                var extension = filename.replace(/^.*\./, '');
 	                var nameArr = filename.split('\\');
-
+	                var filePreview = "";
+	                var filesrc = "";
+	                var imgClass = "";
 	                if (extension == 'pdf') {
-                        var filePreview = config.pdfImg;
-                    	var filesrc = URL.createObjectURL(e.target.files[0]);
-                        var imgClass = "pdf-image";
+                         filePreview = config.pdfImg;
+                    	 filesrc = URL.createObjectURL(e.target.files[0]);
+                         imgClass = "pdf-image";
                     } else {
-                        var filePreview = URL.createObjectURL(e.target.files[0]);
-                        var filesrc = URL.createObjectURL(e.target.files[0]);
-                        var imgClass = "";
+                         filePreview = URL.createObjectURL(e.target.files[0]);
+                         filesrc = URL.createObjectURL(e.target.files[0]);
+                         imgClass = "";
                     }
                     
                     $('<div class="comman-doc-name document'+fileId+'">' +
@@ -167,12 +169,14 @@ define([
                 reader.onload = function(event) {
                     if (event.target.result) {
                     	var filesource = URL.createObjectURL(e.target.files[0]);
+                    	var fileView = "";
+                    	var imgClass = "";
                         if (extension == 'pdf') {
-	                        var fileView = config.pdfImg;
-	                        var imgClass = "pdf-image";
+	                         fileView = config.pdfImg;
+	                         imgClass = "pdf-image";
 	                    } else {
-	                        var fileView = URL.createObjectURL(e.target.files[0]);
-	                        var imgClass = "";
+	                         fileView = URL.createObjectURL(e.target.files[0]);
+	                         imgClass = "";
 	                    }
 
                         $('<img class="previewimage-filename-' + showId + ' ' + imgClass + '" height="170" width="170" src="' + fileView + '" title="' + filename + '"/>' +
