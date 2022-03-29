@@ -29,7 +29,7 @@ if (!empty($size)) {
         
         <?php if ($block->isExpanded()):?>
             <?= $block->fetchView($block->getTemplateFile('Magento_Catalog::product/list/toolbar/sorter.phtml')) ?>
-             <div class="cate-filter"><a href="javascript:void(0)" class="filter_button" id="is_filter"><span id="filter_text">Hide Filter</span></a></div>
+             <div class="cate-filter"><a href="javascript:void(0)" class="filter_button" id="is_filter"><span class="filter-text-span">Hide Filter</span></a></div>
         <?php endif; ?>
     </div>
 <?php endif;
@@ -40,17 +40,17 @@ if (!empty($size)) {
 <script>
     require(['jquery'], function($) {
         if($("div").hasClass("filter-collapse")){
-            $("#filter_text").html('Show Filter');
+            $(".filter-text-span").html('Show Filter');
         }else{
-             $("#filter_text").html('Hide Filter');
+             $(".filter-text-span").html('Hide Filter');
         }
         $(document).on("click", '.cate-filter', function(event) { 
             if ($(".sidebar.sidebar-main").css("display") == 'block') {       
-                $("#filter_text").html('Show Filter');
+                $(".filter-text-span").html('Show Filter');
                 $(".sidebar.sidebar-main").css("display", "none");
                 $(".column.main").addClass("filter-collapse");
             } else {
-                $("#filter_text").html('Hide Filter');
+                $(".filter-text-span").html('Hide Filter');
                 $(".sidebar.sidebar-main").css("display", "block");
                 $(".column.main").removeClass("filter-collapse");
             }
