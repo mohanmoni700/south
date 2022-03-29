@@ -32,4 +32,24 @@ class GrossMargin implements \Magento\Framework\View\Element\Block\ArgumentInter
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE;
         return $this->scopeConfig->getValue(self::MODULE_ENABLE, $storeScope, $websiteId);
     }
+
+    /**
+     * Validate gross margin
+     *
+     * @param \Magento\Sales\Model\Order\Item $item
+     */
+    public function validateGrossMargin($item)
+    {
+        if ($item->getGrossMargin() <= 0) {
+            $cost = $item->getProduct()->getCost();
+            $price = $item->getPrice();
+            try {
+                $grossMargin = ($price - $cost) / $price * 100;
+                return number_format($grossMargin, 2, ".", "");
+            } catch (\Exception $e) {
+                return 0.00;
+            }
+        }
+        return $item->getGrossMargin();
+    }
 }
