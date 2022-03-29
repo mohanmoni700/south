@@ -22,8 +22,12 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     protected $httpContext;
 
     /**
-     * @param \Magento\Customer\Model\Session $session,
+     * @param \Magento\Customer\Model\Session $session
+     * @param \Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory $collection
      * @param \Magento\Framework\App\Http\Context $httpContext
+     * @param \Magento\Company\Api\CompanyManagementInterface $companyRepository
+     * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         \Magento\Customer\Model\Session $session,
@@ -58,16 +62,36 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return $this->httpContext->getValue('document_status');
         //return $document_status;
     }
+    /**
+     * @inheritDoc
+     *
+     * @return bool
+     */
+    public function isMobile()
+    {
+        $userAgent = $this->httpContext->getHttpUserAgent();
+        $isMobile = \Zend_Http_UserAgent_Mobile::match($userAgent, $_SERVER);
+        return $isMobile;
+    }
+    /**
+     * @inheritDoc
+     */
     public function getExpiryMsg()
     {
         return $this->httpContext->getValue('document_expiry_date');
         //return $document_expiry_date;
     }
+    /**
+     * @inheritDoc
+     */
     public function getDocuments()
     {
         return $this->httpContext->getValue('is_document_upload');
         //return $document_expiry_date;
     }
+    /**
+     * @inheritDoc
+     */
     public function getConfigValue($section)
     {
         return $this->scopeConfig->getValue($section, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
