@@ -70,10 +70,6 @@ class CategoryUrlPathGenerator extends \Magento\CatalogUrlRewrite\Model\Category
      */
     public function getUrlPath($category, $parentCategory = null)
     {
-        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/caturlstore.log');
-        $logger = new \Zend_Log();
-        $logger->addWriter($writer);
-
         $storeManagerDataList = $this->storeManager->getStores();
         foreach ($storeManagerDataList as $key => $value) {
             $storeid = $key;
@@ -82,21 +78,9 @@ class CategoryUrlPathGenerator extends \Magento\CatalogUrlRewrite\Model\Category
                 $rootId = $this->storeManager->getStore($storeid)->getRootCategoryId();
             }
         }
-        // $logger->info(print_r($category->getData()));
-        // $logger->info(print_r($category->getParentIds()));
 
         $All_Id = [];
         $All_Id = $category->getParentIds();
-
-        // foreach ($category->getParentIds() as $key => $value) {
-        //     $logger->info($value);
-        // }
-
-        // $parentCategories = $category->getParentCategories();
-        // foreach ($parentCategories as $cat) {
-        //     // echo ;
-        //     $logger->info($cat->getId());
-        // }
 
         $storeId = $category->getStoreId();
         $prifix = $storeId == $storeid ? 'c/' : '';
@@ -116,8 +100,6 @@ class CategoryUrlPathGenerator extends \Magento\CatalogUrlRewrite\Model\Category
             $parentCategory = $parentCategory === null ?
             $this->categoryRepository->get($category->getParentId(), $category->getStoreId()) : $parentCategory;
             $parentPath = $this->getUrlPath($parentCategory);
-
-            $logger->info($parentPath);
 
             $first = strtok($parentPath, '/');
             if ($first == 'c') {

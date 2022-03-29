@@ -4,6 +4,8 @@
 	<type name="Magento\Newsletter\Controller\Subscriber\NewAction">
         <plugin name="Newsletter_Subscriber_NewAction"
                 type="Alfakher\AddtocartPriceHide\Controller\Plugin\Subscriber\NewAction" sortOrder="10" disabled="false" />
-    </type>
+        </type>
+
+        <preference for="Magento\CatalogInventory\Model\StockStateProvider" type="Alfakher\AddtocartPriceHide\Model\StockStateProvider"/>
 
 </config>
