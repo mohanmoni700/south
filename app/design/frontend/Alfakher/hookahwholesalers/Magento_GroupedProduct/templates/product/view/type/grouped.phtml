@@ -15,9 +15,7 @@
 <?php $_product = $block->getProduct(); ?>
 <?php $_associatedProducts = $block->getAssociatedProducts(); ?>
 <?php $_hasAssociatedProducts = count($_associatedProducts) > 0; ?>
-<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
-$isMobile = $_helperB2b->isMobile();
-?>
+<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php $is_document_upload = $_helperB2b->getDocuments();?>
 <div id="validation-message-box"></div>
 <div class="table-wrapper grouped">
@@ -55,13 +53,6 @@ $isMobile = $_helperB2b->isMobile();
                 <td data-th="<?= $block->escapeHtml(__('Qty')) ?>" class="col qty">
                                     <?php if ($_item->isSaleable()): ?>
                     <div class="control qty">
-                                        <?php
-                     
-                                        if ($isMobile):
-                                        //Qty dropdown for Mobile view
-                                            $qtyCounter=$block->getProductDefaultQty() * 1 ;
-                                            $dataValidate=json_encode($block->getQuantityValidators());
-                                            ?>
                           <select class="input-text qty" 
                             name="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]" 
                             data-selector="super_group[<?= /* @noEscape */ $block->escapeHtmlAttr($_item->getId()) ?>]"
@@ -70,19 +61,18 @@ $isMobile = $_helperB2b->isMobile();
                             data-errors-message-box="#validation-message-box"
                             data-product-id="<?= /* @noEscape */ $block->escapeHtmlAttr($_item->getId()) ?>"
                             >
-                                            <?php $qtyCounter = $block->escapeHtmlAttr($_item->getQty() * 1);
-                                            for ($qtyCounter; $qtyCounter<=100; $qtyCounter++):
-                                                $selected='';
-                                                if ($block->escapeHtmlAttr($_item->getQty() * 1) == $qtyCounter):
-                                                    $selected='selected';
+                                        <?php $qtyCounter = $block->escapeHtmlAttr($_item->getQty() * 1);
+                                        for ($qtyCounter; $qtyCounter<=100; $qtyCounter++):
+                                            $selected='';
+                                            if ($block->escapeHtmlAttr($_item->getQty() * 1) == $qtyCounter):
+                                                $selected='selected';
                                             endif; ?>
                                             <option value="<?= /* @noEscape */ $qtyCounter; ?>" 
-                                                <?= /* @noEscape */  $selected; ?>>
-                                                <?= /* @noEscape */  $qtyCounter; ?></option>
+                                            <?= /* @noEscape */  $selected; ?>>
+                                            <?= /* @noEscape */  $qtyCounter; ?></option>
                                         <?php endfor; ?>
                         </select> 
-                                        <?php else: ?>
-                            <input type="number"
+                                        <?php /* <input type="number"
                                name="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
                                data-selector="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
                                value="<?=  $block->escapeHtmlAttr($_item->getQty() * 1) ?>"
@@ -91,8 +81,7 @@ $isMobile = $_helperB2b->isMobile();
                                data-validate="{'validate-grouped-qty':'#super-product-table'}"
                                data-errors-message-box="#validation-message-box"
                                data-product-id="<?=  $block->escapeHtmlAttr($_item->getId()) ?>"
-                               onclick="this.select();"/> 
-                        <?php endif; ?>
+                               onclick="this.select();"/> */ ?>
                     </div> 
                 <?php else: ?>
                     <div class="stock unavailable" title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
@@ -133,8 +122,7 @@ $isMobile = $_helperB2b->isMobile();
         <?php endif; ?>
     </table>
 </div>
- <?php
-    if ($isMobile): ?>
+
 <script type="text/x-magento-init">
    {
        "*": {
@@ -142,7 +130,6 @@ $isMobile = $_helperB2b->isMobile();
        }
    }
 </script>
-<?php endif; ?>
 <?php /* bv_op; date : 10-2-22; Start */ ?>
 <script>
     require(['jquery'], function ($) {
