@@ -128,7 +128,7 @@ define([
                 /*bv-hd Dynaminc Image and PDF validation*/
                 var extension = val.substring(val.lastIndexOf('.') + 1).toLowerCase();
                 var extensionArr = ['pdf', 'jpg', 'png'];
-                if (extensionArr.indexOf(extension) >= 0) {
+                if (extensionArr.indexOf(extension) >= 0) { //NOSONAR
 
                     $(this).closest('.upload').find('.doc_name').remove();
                     $(this).closest('.upload').find('.set_expiry').remove();
@@ -167,7 +167,7 @@ define([
 
                 var reader = new FileReader();
                 reader.onload = function(event) {
-                    if (event.target.result) {
+                    if (event.target.result) { //NOSONAR
                     	var filesource = URL.createObjectURL(e.target.files[0]);
                     	var fileView = "";
                     	var imgClass = "";
