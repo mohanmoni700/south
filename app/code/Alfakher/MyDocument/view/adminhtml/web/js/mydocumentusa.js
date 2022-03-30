@@ -92,6 +92,24 @@ define([
 	                
 	                $(document).on("click", "#deletedocument-" + fileId, function(e){
 	                //$("#deletedocument-" + fileId).click(function() {
+	                	
+	                	/*remove expiry date-start[BS]*/
+	                	var splitid = fileId.match(/\d+/g);
+	                	$("#toggle" + splitid[0]).val("0");
+	                	this.value = this.checked ? 1 : 0;
+						if ($(this).val() == "1") {
+							$(".expiry_dates" + splitid[0]).show();
+						} else {
+							$("#toggle" + splitid[0]).attr('checked',false);
+							$(".expiry_dates" + splitid[0]).hide();
+						}
+	                    $("#expiry_date" + splitid[0]).val("");
+                        $("#expiry_date" + splitid[0]).attr('class',"");
+	                	/*remove expiry date-end*/
+
+                        /*pdf-class remove-start[BS]*/
+	                    $(".previewimage-" + fileId).removeClass(imgClass);
+                        /*pdf class remove-end*/
 	                    $("#doc-actions-" + fileId).hide();
 	                    $(".previewimage-" + fileId).hide();
 	                    $(".document" + fileId).hide();
@@ -178,6 +196,7 @@ define([
 
                         $(document).on("click", "#deletedocument-filename" + showId, function(e){
                         //$("#deletedocument-filename" + showId).click(function() {
+                        	
                             $("#doc-actions-filename-" + showId).remove();
                             //remove multi div append[BS]
                             $(".add-new_"+showId).remove();
@@ -196,7 +215,7 @@ define([
 
                 $(document).on('change', "#expiry_date" + showId, function() {
                     if ($(this).val()) {
-                        var date_val = $(this).val();
+                        var date_val = $(this).val().indexOf('Expiry Date: ') == -1 ? $(this).val() : $(this).val().split('Expiry Date: ')[1];
                         $(this).val('Expiry Date: ' + date_val);
                         $(this).addClass('active-date');
                     }
