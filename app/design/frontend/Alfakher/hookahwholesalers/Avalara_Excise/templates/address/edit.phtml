@@ -131,7 +131,7 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
                         placeholder="<?= /* @noEscape */ $title ?>"
                         value="<?= $block->escapeHtmlAttr($block->getAddress()->getCity()) ?>"
                         title="<?= $title ?>"
-                        class="input-text <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('city')) ?>"
+                        class="input-text wholesalers-validate-text <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('city')) ?>"
                         id="city">
             </div>
         </div>
@@ -165,7 +165,7 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
                         title="<?= /* @noEscape */ $title ?>" 
                         placeholder="<?= /* @noEscape */ $title ?>" 
                         id="zip" 
-                        class="input-text validate-zip-international <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('postcode')) ?>">
+                        class="input-text validate-zip-international wholesalers-validate-text <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('postcode')) ?>">
                 <div role="alert" class="message warning" style="display:none">
                     <span></span>
                 </div>
