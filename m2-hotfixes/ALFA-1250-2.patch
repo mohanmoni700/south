@@ -1,0 +1,28 @@
+Index: vendor/avalara/excise/Model/Config/Source/CustomerType.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vendor/avalara/excise/Model/Config/Source/CustomerType.php b/vendor/avalara/excise/Model/Config/Source/CustomerType.php
+--- a/vendor/avalara/excise/Model/Config/Source/CustomerType.php	
++++ b/vendor/avalara/excise/Model/Config/Source/CustomerType.php	(date 1648667715378)
+@@ -17,16 +17,16 @@
+  * Customer type config values
+  */
+ class CustomerType extends AbstractSource
+-{   
++{
+     /**
+      * @return array
+      */
+     public function getAllOptions()
+     {
+        return [
+-                ['label'=>__('Direct'), 'value'=>'DIRECT'],
+-                ['label'=>__('Wholesale'), 'value'=>'WHOLESALE'],
+                 ['label'=>__('Retail'), 'value'=>'RETAIL'],
++                ['label'=>__('Wholesale'), 'value'=>'WHOLESALE'],
++                ['label'=>__('Direct'), 'value'=>'DIRECT'],
+             ];
+     }
+ }
