@@ -19,6 +19,10 @@
 <?php $is_document_upload = $_helperB2b->getDocuments();?>
 <?php $is_mobile = $_helperB2b->isMobileDevice();?>
 <?php $migrateDocument=$_helperB2b->getMigrateDocument();?>
+
+
+
+
 <div id="validation-message-box"></div>
 <div class="table-wrapper grouped">
     <table class="table data grouped"
@@ -28,12 +32,12 @@
     <?php if ($_hasAssociatedProducts): ?>
         <tbody>
             <?php foreach ($_associatedProducts as $_item): ?>
+                <?php $productAvailableQty = $_helperB2b->getStockQty($_item->getId()); ?>
                 <tr>
                     <td data-th="<?= $block->escapeHtml(__('Product Name')) ?>" class="col item">
                         <strong class="product-item-name"><?= $block->escapeHtml($_item->getName()) ?></strong>
                     </td>
                     <!-- show price start -->
-
                     <?php
                     $messageData=$_helperB2b->getDocMessageData();
                     $expiryMsg=$_helperB2b->getExpiryMsg();
@@ -66,11 +70,13 @@
                                             name="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]" 
                                             data-selector="super_group[
                                             <?= /* @noEscape */ $block->escapeHtmlAttr($_item->getId()) ?>]"
-                                            id="qty" 
+                                            id="qtydrop_<?= $block->escapeHtmlAttr($_item->getId()) ?>" 
                                             data-validate="{'validate-custom-grouped-qty':'#super-product-table'}"
                                             data-errors-message-box="#validation-message-box"
-                                            data-product-id="
-                                            <?= /* @noEscape */ $block->escapeHtmlAttr($_item->getId()) ?>"
+                                            data-product-id
+                                            ="<?= /* @noEscape */ $block->escapeHtmlAttr($_item->getId()) ?>"
+                                            data-product-available-qty
+                                            ="<?= $block->escapeHtmlAttr($productAvailableQty) ?>"
                                             >
                                             <?php $qtyCounter = $block->escapeHtmlAttr($_item->getQty() * 1);
                                             for ($qtyCounter; $qtyCounter<=100; $qtyCounter++):
@@ -82,19 +88,24 @@
                                                     <?= /* @noEscape */  $selected; ?>>
                                                     <?= /* @noEscape */  $qtyCounter; ?></option>
                                                 <?php endfor; ?>
-                                            </select> 
+                                            </select>
                                         <?php else: ?>
                                            <input type="number"
                                            name="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
                                            data-selector="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
                                            value="<?=  $block->escapeHtmlAttr($_item->getQty() * 1) ?>"
                                            title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                                           id="qtytext_<?= $block->escapeHtmlAttr($_item->getId()) ?>"
                                            class="input-text qty"
                                            data-validate="{'validate-grouped-qty':'#super-product-table'}"
                                            data-errors-message-box="#validation-message-box"
                                            data-product-id="<?=  $block->escapeHtmlAttr($_item->getId()) ?>"
-                                           onclick="this.select();"/> 
+                                           data-product-available-qty
+                                           ="<?= $block->escapeHtmlAttr($productAvailableQty) ?>"
+                                           onclick="this.select();"/>
                                        <?php endif; ?>
+                                            <span id="qtymessage_<?= $block->escapeHtmlAttr($_item->getId()) ?>"
+                                                style="color: red;"></span>
                                    </div> 
                                <?php else: ?>
                                 <div class="stock unavailable" 
@@ -180,7 +191,35 @@
             }
 
         });
-
+        /*bv-hd for desktop checkqty*/
+        $("[id^='qtytext_']").keyup(function(){
+            var requestQty = this.value;
+            var productId= $(this).data('product-id');
+            var availableProductQty = $(this).data('product-available-qty');
+            if(requestQty > availableProductQty){
+                $(this).val(0);
+                // $("#qtymessage_"+productId).html("Requested Qty Is Not Available");
+                $("#qtymessage_"+productId)
+                .html("Requested Qty "+requestQty+" Is Not Available")
+                .show().delay(10000).fadeOut();
+            }else{
+                $("#qtymessage_"+productId).html("");
+            }
+        });
+        /*bv-hd for desktop checkqty*/
+        $("[id^='qtydrop_']").on('change',function(){
+            var requestQty = this.value;
+            var productId= $(this).data('product-id');
+            var availableProductQty = $(this).data('product-available-qty');
+            if(requestQty > availableProductQty){
+                $(this).val(0);
+                $("#qtymessage_"+productId)
+                .html("Requested Qty "+requestQty+" Is Not Available")
+                .show().delay(10000).fadeOut();
+            }else{
+                $("#qtymessage_"+productId).html("");
+            }
+        });
     });
 </script>
 <?php /* bv_op; date : 10-2-22; End */ ?>
