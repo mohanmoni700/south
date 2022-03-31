@@ -2,9 +2,9 @@
     <?php
         $viewModel = $block->getViewModel();
         $moduleEnable = $viewModel->isModuleEnabled($_item->getOrder()->getStore()->getWebsiteId());
-        $validGrossMargin = $viewModel->validateGrossMargin($_item);
     ?>
     <?php if ($moduleEnable): ?>
+        <?php $validGrossMargin = $viewModel->validateGrossMargin($_item); ?>
         <?= /* @noEscape */ $_item->getGrossMargin() > 0 ? $_item->getGrossMargin()."%" : $validGrossMargin ."%" ?>
     <?php endif; ?>
 <?php endif; ?>
