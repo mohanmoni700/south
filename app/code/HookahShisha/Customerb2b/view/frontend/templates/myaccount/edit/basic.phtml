@@ -134,7 +134,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                        value="<?= $escaper->escapeHtmlAttr($block->getAddress()->getCity()) ?>"
                        title="<?= $escaper->escapeHtmlAttr(__('City')) ?>"
                        placeholder="<?= $escaper->escapeHtmlAttr(__('City')) ?>"
-                       class="input-text <?= $escaper->escapeHtmlAttr($_cityValidationClass) ?>"
+                       class="input-text wholesalers-validate-text <?= $escaper->escapeHtmlAttr($_cityValidationClass) ?>"
                        id="city">
             </div>
         </div>
@@ -174,7 +174,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                        title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?>"
                        placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?>"
                        id="zip"
-                       class="input-text validate-zip-international
+                       class="input-text validate-zip-international wholesalers-validate-text
                         <?= $escaper->escapeHtmlAttr($_postcodeValidationClass) ?>">
                 <div role="alert" class="message warning">
                     <span></span>

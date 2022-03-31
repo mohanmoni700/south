@@ -9,7 +9,7 @@ define([
             $.validator.addMethod(
                 'wholesalers-validate-text',
                 function (value, params) {
-                    var text = /[^\w-]|_/g;
+                    var text = /[^\w- ]|_/g;
 
                     if((value.match(text))){
                         return false;
