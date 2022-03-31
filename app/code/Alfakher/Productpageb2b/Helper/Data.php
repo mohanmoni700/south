@@ -75,7 +75,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
 	 */
 	public function getDocMessageData() {
 		return $this->httpContext->getValue('document_status');
-		//return $document_status;
 	}
 
 	/**
@@ -83,7 +82,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
 	 */
 	public function getExpiryMsg() {
 		return $this->httpContext->getValue('document_expiry_date');
-		//return $document_expiry_date;
 	}
 
 	/**
@@ -91,7 +89,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
 	 */
 	public function getDocuments() {
 		return $this->httpContext->getValue('is_document_upload');
-		//return $document_expiry_date;
 	}
 
 	/**
@@ -106,8 +103,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
 	 */
 	public function isMobileDevice() {
 		return $this->httpContext->getValue('is_mobiledevice');
-		// $userAgent = $this->httpHeader->getHttpUserAgent();
-		// return \Zend_Http_UserAgent_Mobile::match($userAgent, $_SERVER);
 	}
 
 	/**
