@@ -2,7 +2,10 @@
 $customerid = $block->getCustomerId();
 $customerdata=$block->getCustomercollection($customerid);
 $customeradd=$block->getCustomeraddress($customerid);
-$country=$customeradd->getData('country_id'); ?>
+$country=$customeradd->getData('country_id');
+$docdata=$block->getDocumentCollection($customerid); ?>
+<?php if ($docdata->getData()) { ?>
+
     <?php if ($country=='US') { ?>
         <div id="usa_customer" class="basic_details_tab">
             <?= $block->getChildHtml('my_document_usa'); ?>
@@ -10,5 +13,10 @@ $country=$customeradd->getData('country_id'); ?>
 <?php } else { ?>
         <div id="business_details" class="document_details_tab">
             <?= $block->getChildHtml('my_document_non_usa'); ?>
+        </div>
+    <?php } ?>
+    <?php } else { ?>
+        <div id="empty-doc">
+        <h3><?= $block->escapeHtml(__('Thanks for Registering with us, one of our customer service team will be in-touch with you for document verification.')); ?></h3>
         </div>
     <?php } ?>
