@@ -5,7 +5,8 @@
  */
 -->
 <tr class="row"
-    click="element.selectShippingMethod">
+    click="element.selectShippingMethod"
+    attr="'class': 'row tr_method_' + method.method_code + '_' + method.carrier_code">
     <td class="col col-method">
         <input type="radio"
                class="radio"
