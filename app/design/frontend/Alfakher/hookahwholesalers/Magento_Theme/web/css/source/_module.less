@@ -1414,9 +1414,38 @@
                         }
                     }
                 }
+                &.privy-tab-container.privy-basic {                    
+                    z-index: 990;
+                    right: auto;
+                    min-width: 110px;
+                    width: auto;
+                    bottom: auto;
+                    transform: rotate(-90deg);
+                    -webkit-transform: rotate(-90deg);
+                    left: -40px;
+                    top: 60%;
+                }
+                &.privy-tab-container.privy-side.privy-side-left {
+                    .privy-side-tab-wrapper {
+                        left: 0;
+                        transform: rotate(0);
+                        -webkit-transform: rotate(0);
+                    }
+                }
             }
-        }         
-    } 
+
+            div.privy-tab.privy-basic.privy-side.privy-left {
+                top: 0;
+                padding: 0 12px !important;
+                font-size: 12px;
+                background-color: @color_black !important;
+                outline: none !important;
+                &:hover {
+                    top: 0;
+                }
+            }
+        }
+    }
 }
 
 
