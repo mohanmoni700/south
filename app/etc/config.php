@@ -723,6 +723,7 @@ return [
         'Alfakher_DocumentStatus' => 1,
         'MageWorx_OrdersBase' => 1,
         'Alfakher_HandlingFee' => 1,
+        'Alfakher_MigrationDocument' => 1,
         'Alfakher_MyDocument' => 1,
         'Alfakher_Productpageb2b' => 1,
         'Alfakher_SalesApprove' => 1,

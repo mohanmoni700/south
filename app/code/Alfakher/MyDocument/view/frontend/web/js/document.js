@@ -123,7 +123,7 @@ define([
         function expireOnChange(showId) {
             $("#expiry_date-" + showId).on('change', function() {
                 if ($(this).val()) {
-                    var date_val = $(this).val();
+                    var date_val = $(this).val().indexOf('Expiry Date: ') == -1 ? $(this).val() : $(this).val().split('Expiry Date: ')[1];
                     $(this).val('Expiry Date: ' + date_val);
                     $(this).addClass('active-date');
                 }

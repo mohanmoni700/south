@@ -105,7 +105,9 @@ define([
                                         class: 'action primary',
                                         click: function() {
                                             this.closeModal();
-                                            $("#basic_details").hide();
+                                            window.location.href = config.homeUrl;
+
+                                            /*$("#basic_details").hide();
                                             $("#basic_details").removeClass("show");
                                             $(".basic_details").removeClass("active");
 
@@ -126,9 +128,10 @@ define([
                                             {
                                                 $('#cust_id_non_usa').val(data.id);
                                                 $("#non_usa_customer_tab").show();
-                                            }
+                                            }*/
                                         }
-                                    },{
+                                    },
+/*                                    {
                                     class: 'action-close',
                                     click: function() {
                                         this.closeModal();
@@ -155,11 +158,12 @@ define([
                                             $("#non_usa_customer_tab").show();
                                         }  
                                     }
-                                }]
+                                }*/
+                                ]
                                 };
 
                                 // Reload the page on Esc key
-                                $(document).keydown(function(event) {
+/*                                $(document).keydown(function(event) {
                                     if (event.keyCode == 27) { 
                                         $("#basic_details").hide();
                                         $("#basic_details").removeClass("show");
@@ -184,7 +188,7 @@ define([
                                             $("#non_usa_customer_tab").show();
                                         }
                                     }
-                                });
+                                });*/
                                 var popup = modal(options, $('#register-success-popup'));
 
                                 $('#form-validate').trigger("reset");

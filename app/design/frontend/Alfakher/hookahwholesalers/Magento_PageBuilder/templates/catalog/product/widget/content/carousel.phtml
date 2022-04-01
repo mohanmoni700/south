@@ -21,6 +21,7 @@ use Magento\Framework\App\Action\Action;
     $showCart = true;
     $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
     $showCart = $_helperB2b->isCustomerLoggedIn();
+    $migrateDocument=$_helperB2b->getMigrateDocument();
     $templateType = \Magento\Catalog\Block\Product\ReviewRendererInterface::SHORT_VIEW;
     ?>
     <ol class="product-items <?= /* @noEscape */ $type ?>">
@@ -42,33 +43,32 @@ use Magento\Framework\App\Action\Action;
                     <?php if ($templateType): ?>
                         <?= $block->getReviewsSummaryHtml($_item, $templateType) ?>
                     <?php endif; ?>
-                    <div class="price-disp" style="display:none;">
+                    <?php if (($migrateDocument == 1) || ($showCart && $_helperB2b->getDocuments() == 1 && $_helperB2b->getDocMessageData() == 2)): ?>
+                          
                             <?= $block->getProductPriceHtml($_item, $type) ?>
-                    </div>
-                     <!-- check the documnet is uploaded or verified  -->
-                    <?php if ($showCart && $_helperB2b->getDocuments() == 1 && $_helperB2b->getDocMessageData() == 2 && $_helperB2b->getExpiryMsg() == 1): ?>
-                      
-                        <?= $block->getProductPriceHtml($_item, $type) ?>
-                        <?= $block->getProductDetailsHtml($_item) ?>
-                    
+                            <?= $block->getProductDetailsHtml($_item) ?>
                     <?php endif; ?>
-                    
                         <div class="product-item-inner">
                             <div class="product-item-actions">
                                 <!-- check the documnet is uploaded or verified  -->
-                                <?php if ($showCart && $_helperB2b->getDocuments() != 1 || $_helperB2b->getDocMessageData() != 2 || $_helperB2b->getExpiryMsg() != 1): ?>
+                          
+                                <?php if ($showCart && $_helperB2b->getDocuments() != 1 || $_helperB2b->getDocMessageData() != 2): ?>
                                     <div class="actions-primary">
+                                        
                                         <?php if ($_item->isSaleable()): ?>
                                             <?php $postParams = $block->getAddToCartPostParams($_item); ?>
                                             <form data-role="tocart-form" data-product-sku="<?= $block->escapeHtml($_item->getSku()) ?>" action="<?= $block->escapeUrl($postParams['action']) ?>" method="post">
                                                 <input type="hidden" name="product" value="<?= $block->escapeHtmlAttr($postParams['data']['product']) ?>">
                                                 <input type="hidden" name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
                                                 <?= $block->getBlockHtml('formkey') ?>
+                                                <?php if ($migrateDocument ==1): ?>
+                                                <?php else: ?>  
                                                  <div class="actions-primary">
                                                         <div class="logged-in-action">
                                                             <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"><?= $block->escapeHtml(__('View Details')) ?></a>
                                                         </div>
                                                 </div>
+                                            <?php endif; ?>
                                             </form>
                                         <?php else: ?>
                                             <?php if ($_item->getIsSalable()): ?>
