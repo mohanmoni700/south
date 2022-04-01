@@ -45,11 +45,11 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
             <legend class="legend"><span><?= $block->escapeHtml(__('Business Details')) ?></span></legend>
             <span class="user_icon business"></span>
         </li>
-        <li class="document_upload">
+       <!--  <li class="document_upload">
             <p><label class="step_list"><?= $block->escapeHtml(__('Step 3')) ?></label></p>
             <legend class="legend"><span><?= $block->escapeHtml(__('Document Upload')) ?></span></legend>
             <span class="user_icon docs"></span>
-        </li>
+        </li> -->
     </ul>
     <div id="basic_details" class="show">
         <fieldset class="fieldset create info">
@@ -575,7 +575,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
         height="60"
         loading="lazy" />
     <h1 class="success_msg"><?= $block->escapeHtml(__('Registration Successful')); ?></h1>
-    <h5><?= $block->escapeHtml(__('In Next Step you would be redirected to Document upload screen.')); ?></h5>
+    <h5><?= $block->escapeHtml(__('Thanks for Registering with us, one of our customer service team will be in-touch with you for document verification.')); ?></h5>
 </div>
 <div id="popup-modal-non-usa" style="display:none">
     <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/success_union.svg')); ?>"
@@ -635,7 +635,9 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 "regionStateLabel": "<?= $block->escapeHtml($regionStateLabel); ?>",
                 "regionProvinceLabel": "<?= $block->escapeHtml($regionProvinceLabel); ?>",
                 "createPostUrl": "<?= $block->escapeUrl($block->getUrl('customerb2b/account/createPost')); ?>",
-                "signInUrl": "<?= $block->escapeUrl($block->getUrl('mydocument/customer/index/')); ?>"
+                "signInUrl": "<?= $block->escapeUrl($block->getUrl('mydocument/customer/index/')); ?>",
+                "homeUrl": "<?= $block->escapeUrl($block->getUrl('')); ?>"
+
             }
         },
         ".field.password": {

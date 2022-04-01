@@ -4,6 +4,7 @@
         $moduleEnable = $viewModel->isModuleEnabled($_item->getOrder()->getStore()->getWebsiteId());
     ?>
     <?php if ($moduleEnable): ?>
-        <?= /* @noEscape */ $_item->getGrossMargin()."%" ?>
+        <?php $validGrossMargin = $viewModel->validateGrossMargin($_item); ?>
+        <?= /* @noEscape */ $_item->getGrossMargin() > 0 ? $_item->getGrossMargin()."%" : $validGrossMargin ."%" ?>
     <?php endif; ?>
 <?php endif; ?>

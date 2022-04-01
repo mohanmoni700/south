@@ -57,14 +57,17 @@ define([
 	                var filename = jQuery("#" + fileId).val();
 	                var extension = filename.replace(/^.*\./, '');
 	                var nameArr = filename.split('\\');
+	                var filePreview = "";
+	                var filesrc = "";
+	                var imgClass = "";
 	                if (extension == 'pdf') {
-                        var filePreview = config.pdfImg;
-                        var filesrc = URL.createObjectURL(e.target.files[0])
-                        var imgClass = "pdf-image";
+                         filePreview = config.pdfImg;
+                    	 filesrc = URL.createObjectURL(e.target.files[0]);
+                         imgClass = "pdf-image";
                     } else {
-                        var filePreview = URL.createObjectURL(e.target.files[0]);
-                        var filesrc = URL.createObjectURL(e.target.files[0]);
-                        var imgClass = "";
+                         filePreview = URL.createObjectURL(e.target.files[0]);
+                         filesrc = URL.createObjectURL(e.target.files[0]);
+                         imgClass = "";
                     }
                     
                     $('<div class="comman-doc-name document'+fileId+'">' +
@@ -101,6 +104,7 @@ define([
 	                    $("#expiry_date" + splitid[0]).val("");
                         $("#expiry_date" + splitid[0]).attr('class',"");
 	                    $("#doc-actions-" + fileId).hide();
+	                    $(".previewimage-" + fileId).removeClass(imgClass);
 	                    $(".previewimage-" + fileId).hide();
 	                    $(".document" + fileId).hide();
 	                    $("#view-doc-link-" + fileId).hide();
@@ -124,7 +128,7 @@ define([
                 /*bv-hd Dynaminc Image and PDF validation*/
                 var extension = val.substring(val.lastIndexOf('.') + 1).toLowerCase();
                 var extensionArr = ['pdf', 'jpg', 'png'];
-                if (extensionArr.indexOf(extension) >= 0) {
+                if (extensionArr.indexOf(extension) >= 0) { //NOSONAR
 
                     $(this).closest('.upload').find('.doc_name').remove();
                     $(this).closest('.upload').find('.set_expiry').remove();
@@ -163,23 +167,21 @@ define([
 
                 var reader = new FileReader();
                 reader.onload = function(event) {
-                    if (event.target.result) {
-                        var filename = jQuery('#'+ fileId + showId).val();
-                        var extension = filename.replace(/^.*\./, '');
-                        var nameArr = filename.split('\\');
+                    if (event.target.result) { //NOSONAR
+                    	var filesource = URL.createObjectURL(e.target.files[0]);
+                    	var fileView = "";
+                    	var imgClass = "";
                         if (extension == 'pdf') {
-	                        var filePreview = config.pdfImg;
-	                        var filesrc = URL.createObjectURL(e.target.files[0])
-	                        var imgClass = "pdf-image";
+	                         fileView = config.pdfImg;
+	                         imgClass = "pdf-image";
 	                    } else {
-	                        var filePreview = URL.createObjectURL(e.target.files[0]);
-	                        var filesrc = URL.createObjectURL(e.target.files[0]);
-	                        var imgClass = "";
+	                         fileView = URL.createObjectURL(e.target.files[0]);
+	                         imgClass = "";
 	                    }
 
-                        $('<img class="previewimage-filename-' + showId + ' ' + imgClass + '" height="170" width="170" src="' + filePreview + '" title="' + filename + '"/>' +
+                        $('<img class="previewimage-filename-' + showId + ' ' + imgClass + '" height="170" width="170" src="' + fileView + '" title="' + filename + '"/>' +
                             '<div class="doc-actions" id="doc-actions-filename-' + showId + '">' +
-                            '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + filesrc + '" target="_blank"></a>' +
+                            '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + filesource + '" target="_blank"></a>' +
                             '<a class="deletedocument-preview deletedocument" id="deletedocument-filename' + showId + '"></a>' +
                             '</div>').insertAfter("#" + fileId + showId);
 
@@ -202,7 +204,7 @@ define([
 
                 $(document).on('change', "#expiry_date" + showId, function() {
                     if ($(this).val()) {
-                        var date_val = $(this).val();
+                        var date_val = $(this).val().indexOf('Expiry Date: ') == -1 ? $(this).val() : $(this).val().split('Expiry Date: ')[1];
                         $(this).val('Expiry Date: ' + date_val);
                         $(this).addClass('active-date');
                     }
@@ -311,7 +313,6 @@ define([
                     $("#add_more").hide();
                 }
 	            $('#filename-' + showId).change(function(e) {
-	                var val = $(this).val();
 	                fileUploading(showId, 'filename-', $(this), e);
 	            });
 	        });

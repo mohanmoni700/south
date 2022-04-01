@@ -20,5 +20,14 @@
                 <dataType>select</dataType>
             </settings>
         </column>
+        <column name="migrate_customer" class="HookahShisha\Customerb2b\Ui\Component\Listing\Column\MigrateCustomer">
+            <settings>
+                <label translate="true">Migrate Customer</label>
+                <visible>true</visible>
+                <options class="HookahShisha\Customerb2b\Model\Status"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+            </settings>
+        </column>
     </columns>
 </listing>

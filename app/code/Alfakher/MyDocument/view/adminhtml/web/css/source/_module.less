@@ -164,6 +164,7 @@
                     max-height: 100%;
 					height: auto;
 					width: auto;
+                    max-height: 170px;
                 }
                 &:hover .doc-actions  {
                     opacity: 1;
@@ -259,14 +260,32 @@
     // Upload document form design [AR]
     // __________________________________________________________
 
-
+    .mydoc_name{
+        input{
+            font-size: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            border: 0;
+        }
+    }
     .my_document {
         form {
             label {
                 font-size: 12px;
                 font-weight: 700;
-                margin-bottom: 14px;
+                margin-bottom: 5px;
                 display: block;
+                &.error {
+                    margin-top: 7px;
+                    color: #e02b27;
+                    font-weight: 400;
+                }
             }
             button.submit {
                 margin: 20px auto 20px 50%;
@@ -298,7 +317,10 @@
 				box-sizing: border-box;
 				border-radius: 10px;
 				border: 2px solid #000000;
-				width: 100%;				
+				width: 100%;
+                &:focus {
+                    box-shadow: none;
+                }
             }
 			input {
 				&[disabled], &[readonly] {
@@ -378,6 +400,9 @@
 				background-color: #f1f1f1;
 				cursor: not-allowed;
 			}
+            &:focus {
+                box-shadow: none;
+            }
         }
     }
 
@@ -411,6 +436,11 @@
             font-weight: 700;
             margin-bottom: 14px;
             display: block;
+            &.error {
+                margin-top: 7px;
+                color: #e02b27;
+                font-weight: 400;
+            }
         }
         .value {
             margin-bottom: 10px;
@@ -425,6 +455,7 @@
                     max-height: 100%;
 					height: auto;
 					width: auto;
+                    max-height: 170px;
                 }
 
                 &:after {

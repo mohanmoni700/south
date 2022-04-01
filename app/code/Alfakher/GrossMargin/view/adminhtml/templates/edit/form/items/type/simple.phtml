@@ -348,6 +348,8 @@ $canDeleteItem = $block->getCanDeleteItem();
 
     <?php if ($moduleEnable): ?>
       <!-- gross margin -->
+      <?php $validGrossMargin = $viewModel->validateGrossMargin($item); ?>
+      <?php $finalGrossMargin = $item->getGrossMargin() > 0 ? $item->getGrossMargin() : $validGrossMargin; ?>
       <td class="col-gross-margin last">
           <input
               type="text"
@@ -355,7 +357,7 @@ $canDeleteItem = $block->getCanDeleteItem();
               readonly="readonly"
               title="<?=$block->escapeHtmlAttr(__("Gross Margin"))?>"
               class="mw-order-editor-order-item disabled gross_margin"
-              value="<?=$block->escapeHtmlAttr($item->getGrossMargin())."%";?>"/>
+              value="<?=$block->escapeHtmlAttr($finalGrossMargin)."%";?>"/>
           <input type="hidden" name="item[<?= /* @noEscape */ $block->escapeHtmlAttr($itemId)?>][cost]" value="<?= /* @noEscape */ $item->getProduct()->getCost() ?>">
       </td>
     <?php endif; ?>

@@ -15,7 +15,6 @@ $mediaUrl = $block->getMediaUrl();
 $mediaUrl = $mediaUrl."myDocument/";
 $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
 ?>
-<?php if (!empty($docdata)) { ?>
 
 <div class="fieldset-wrapper customer-information">
     <div class="fieldset-wrapper-title">
@@ -98,6 +97,8 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
 <div class="fieldset-wrapper-title">
     <span class="title"><?= $block->escapeHtml('') ?></span>
 </div>
+<?php if (!empty($docdata)) { ?>
+
 <!-- Document Information. -->
     <?php
         $items= $block->getDocumentCollection();
@@ -116,19 +117,24 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
             <input name="form_key" type="hidden" value="<?= $block->escapeHtml($block->getFormKey()) ?>" />
             <div class="updated-container">        
             <?php foreach ($items as $document) { ?>
+
         
                 <div class="upload <?php if (!$document->getIsDelete()) { echo 'active'; } ?>" >
-                    <input type="hidden"
+                  <!--   <input type="hidden"
                     class="doc_id"
                     name="mydocument_id[]"
-                    value="<?= $block->escapeHtml($document->getMydocumentId()) ?>">
-                    <label class="admin__form_value"><?= $block->escapeHtml($document->getDocumentName()) ?></label>                
+                    value="<?= $block->escapeHtml($document->getMydocumentId()) ?>"> -->
+                    <!-- <label class="admin__form_value"><?= $block->escapeHtml($document->getDocumentName()) ?></label>    -->             
                     <?php
                         $filename=$document->getFilename();
                         $queryParams = ['filename' => $filename,];
                     ?>
                     <!-- <span class="admin__form_label">File:</span> -->
                     <?php if (!$document->getIsDelete()) { ?>
+                          <input type="hidden"
+                    class="doc_id"
+                    name="mydocument_id[]"
+                    value="<?= $block->escapeHtml($document->getMydocumentId()) ?>">
                         <div class="input-file pdf"
                         id="input-updatefile-<?= $block->escapeHtml($document['mydocument_id']); ?>">
                             <?php
@@ -162,7 +168,7 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                         <div class="input-file jpg"
                         id="input-updatefile-<?= $block->escapeHtml($document['mydocument_id']);?>">
                             <input type="hidden"
-                            name="documentid[]"
+                            name="mydocument_id[]"
                             value="<?= $block->escapeHtml($document['mydocument_id']); ?>"
                             />
                             <input type="file" id="updatefile_<?= $block->escapeHtml($document['mydocument_id']);?>"
@@ -187,8 +193,40 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                                 <a class="deletedocument-preview deletedocument"
                                 id="deletedocument-filename<?= $block->escapeHtml($document['mydocument_id']);?>"></a>
                             </div>
-                        </div> 
+                        </div>
+
+<!--                         <div class="expiry_dates" style="margin: 14px 0;">
+                        <label class="admin__form_label">Expiry Date:</label>                        
+                        <input type="text"
+                                    placeholder="Expiry Date"
+                                    name="expiry_date[]"
+                                    id="expiry_date-<?= $block->escapeHtml($document['mydocument_id']); ?>"
+                                    class="update-date"
+                                    data-validate="{required:true}"
+                                    value="<?= $block->escapeHtml($document->getExpiryDate()) ?>" readonly/>
+                        </div> --> 
+
                     <?php } ?>
+                    <br>
+
+                <?php $docName=$document->getDocumentName(); ?>
+
+                    <?php if ($docName == "FEIN" || $docName=="Sales Tax/Resale License" || $docName=="State Tobacco License" || $docName=="Unified Resale Certificate") {
+                         $readonly="readonly";
+                    } else {
+                        $readonly = "";
+                    }
+                    ?>
+
+
+                    <div class="mydoc_name" for="document name">
+                            <label><?= $block->escapeHtml(__('Document Name')); ?></label>
+                            <input type="text" id="name-<?= $block->escapeHtml($document['mydocument_id']);?>"
+                            name="document_name[]"
+                            data-validate="{required:true}"
+                            value="<?= $block->escapeHtml($document['document_name']); ?>" <?= $readonly ?>/>
+                    </div>
+
                     <div class="expiry_dates" style="margin: 14px 0;">
                         <label class="admin__form_label">Expiry Date:</label>                        
                         <input type="text"
@@ -205,8 +243,16 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                     <div class="set_expiry" style="display: block;">
                         <label class="admin__form_label">Document Verified:</label>
                         <label class="switch admin__form_value">
+
+                         <input type="checkbox"
+                            id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
+                            class='cmn-toggle cmn-toggle-round'
+                            value="<?=$document->getStatus()?>"
+                            name='status[]' <?= $document->getStatus()== '1' ? 'checked' : ''; ?>
+                            />
+
                         <!-- bv-hd toggle disable after admin action -->
-                        <?php if ($document->getStatus() == 1) { ?>
+                        <!-- <?php if ($document->getStatus() == 1) { ?>
                         
                         <input type="checkbox"
                         id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
@@ -228,7 +274,7 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                             value="0"
                             name='status[]'
                             <?= $document->getStatus()== '1' ? 'checked' : ''; ?> />
-                        <?php } ?>
+                        <?php } ?> -->
                         <!-- bv-hd toggle disable after admin action -->
                             <span class="slider round"></span>
                         </label>
@@ -278,6 +324,7 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                    if(check == 1) {
                        jQuery("#message_"+splitid[1]).hide();
                        jQuery("#message_"+splitid[1]).find('input').prop('required',false);
+                        jQuery("#message_"+splitid[1]).find('input').val('');
                         $("#"+toggle_id).val('1');
                    }
                    else{
@@ -286,12 +333,14 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                         jQuery("#message_"+splitid[1]).find('input').prop('required',true);
                    }
 
-                   if(jQuery("#message_"+splitid[1]).find('input').val()){
+/*                   if(jQuery("#message_"+splitid[1]).find('input').val()){
                      jQuery("#message_"+splitid[1]).find('input').prop('readonly',true);
 
                    }else{
                      jQuery("#message_"+splitid[1]).find('input').prop('readonly',false);
-                   }
+                   }*/
+
+
                     jQuery("#expiry_date-"+splitid[1]).datepicker({
                     minDate: 1,
                     showMonthAfterYear: false,
