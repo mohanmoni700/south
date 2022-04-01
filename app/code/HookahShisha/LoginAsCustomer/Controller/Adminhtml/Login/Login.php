@@ -43,7 +43,11 @@ class Login extends Action implements HttpPostActionInterface
      */
     const ADMIN_RESOURCE = 'Magento_LoginAsCustomer::login';
 
-    const PWA_STORE = 'default';
+    const PWA_STORES = [
+        'default',
+        'hookah_company_store_view',
+        'hookah_store_view'
+        ];
 
     /**
      * @var Session
@@ -251,7 +255,7 @@ class Login extends Action implements HttpPostActionInterface
         $targetStore = $this->storeManager->getStore($storeId);
 
         // Check weather it's a pwa store and return url with token
-        if ($targetStore->getCode() === self::PWA_STORE) {
+        if (in_array($targetStore->getCode(), self::PWA_STORES)) {
             $tokenModel = $this->tokenModelFactory->create();
             $customerToken = $tokenModel->createCustomerToken($customerId)->getToken();
             return $this->url
