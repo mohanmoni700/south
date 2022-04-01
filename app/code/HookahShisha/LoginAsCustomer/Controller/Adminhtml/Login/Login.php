@@ -242,6 +242,7 @@ class Login extends Action implements HttpPostActionInterface
      *
      * @param string $secret
      * @param int $storeId
+     * @param int $customerId
      * @return string
      * @throws NoSuchEntityException
      */
