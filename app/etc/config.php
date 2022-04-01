@@ -845,6 +845,8 @@ return [
         'Wyomind_Framework' => 1,
         'Wyomind_MassStockUpdate' => 1,
         'Wyomind_MassProductImport' => 1,
+        'Xtento_XtCore' => 1,
+        'Xtento_OrderImport' => 1,
         'Corra_YotpoLoyaltyExtended' => 1,
         'Yotpo_Yotpo' => 1,
     ],
