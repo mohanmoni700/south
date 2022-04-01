@@ -18,6 +18,8 @@ use Magento\Framework\App\Action\Action;
     //$_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
     $docdata = $_helperB2b->getDocMessageData();
     $is_document_upload = $_helperB2b->getDocuments();
+    $migrateDocument = $_helperB2b->getMigrateDocument();
+
 ?>
 
 <?php if ($exist = ($block->getProductCollection() && $block->getProductCollection()->getSize())): ?>
@@ -63,7 +65,7 @@ use Magento\Framework\App\Action\Action;
                                     <?= $block->getReviewsSummaryHtml($_item, $templateType) ?>
                                 <?php endif; ?>
                                 
-                                <?php if ($docdata == 2 && $is_document_upload == 1): ?>
+                                <?php if (($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1)): ?>
                                     <?= $block->getProductPriceHtml($_item, $type) ?>
 
                                     <?= $block->getProductDetailsHtml($_item) ?>
@@ -80,9 +82,8 @@ use Magento\Framework\App\Action\Action;
                                                             <input type="hidden" name="product" value="<?= $block->escapeHtmlAttr($postParams['data']['product']) ?>">
                                                             <input type="hidden" name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
                                                             <?= $block->getBlockHtml('formkey') ?>
-                                                            <?php if ($docdata == 2 && $is_document_upload == 1): ?>
-                                                            
-                                                            <?php else: ?>
+                                                            <?php if (($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1)): ?> 
+                                                        <?php else: ?>
                                                          <!-- start view details btn -->
                                                             <div class="actions-primary">
                                                                     <div class="logged-in-action">
@@ -103,7 +104,7 @@ use Magento\Framework\App\Action\Action;
                                                 <?php elseif(!$showCart) : ?>
                                                 <div class="actions-primary">
                                                     <div class="logged-in-action">
-                                                        <a href="<?= $block->getUrl('customer/account/login') ?>"><?= $block->escapeHtml(__('Signin / Signup')) ?></a>
+                                                        <a href="<?= $block->getUrl('customer/account/login') ?>"><?= $block->escapeHtml(__('Signin / Register')) ?></a>
                                                     </div>
                                                 </div>
                                             <?php endif; ?>
