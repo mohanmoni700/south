@@ -54,8 +54,7 @@ class Document extends \Magento\Framework\View\Element\Template
      */
     public function getCustomerId()
     {
-        $customerid = $this->customerSession->getCustomer()->getId();
-        return $customerid;
+        return $this->CustomerSessionContext->getCustomer()->getId();
     }
 
     /**
@@ -63,8 +62,7 @@ class Document extends \Magento\Framework\View\Element\Template
      */
     public function getDocumentCollection($customerid)
     {
-        $collection = $this->collection->create()->addFieldToFilter('customer_id', ['eq' => $customerid]);
-        return $collection;
+        return $this->collection->create()->addFieldToFilter('customer_id', ['eq' => $customerid]);
     }
 
     /**
