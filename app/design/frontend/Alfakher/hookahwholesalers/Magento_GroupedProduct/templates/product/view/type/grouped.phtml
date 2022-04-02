@@ -194,14 +194,16 @@
         /*bv-hd for desktop checkqty*/
         $("[id^='qtytext_']").keyup(function(){
             var requestQty = this.value;
+            var currentId= $(this).attr('id');
             var productId= $(this).data('product-id');
             var availableProductQty = $(this).data('product-available-qty');
             if(requestQty > availableProductQty){
-                $(this).val(0);
-                // $("#qtymessage_"+productId).html("Requested Qty Is Not Available");
                 $("#qtymessage_"+productId)
                 .html("Requested Qty "+requestQty+" Is Not Available")
-                .show().delay(10000).fadeOut();
+                .show().delay(15000).fadeOut();
+                $(this).val("0");
+                $("#"+currentId).blur();
+
             }else{
                 $("#qtymessage_"+productId).html("");
             }
@@ -215,7 +217,7 @@
                 $(this).val(0);
                 $("#qtymessage_"+productId)
                 .html("Requested Qty "+requestQty+" Is Not Available")
-                .show().delay(10000).fadeOut();
+                .show().delay(15000).fadeOut();
             }else{
                 $("#qtymessage_"+productId).html("");
             }

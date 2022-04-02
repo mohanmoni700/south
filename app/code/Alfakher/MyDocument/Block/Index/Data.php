@@ -8,12 +8,19 @@ use Magento\Framework\Filesystem\Io\File;
 
 class Data extends \Magento\Framework\View\Element\Template
 {
+
+    /**
+     * @var \HookahShisha\ChangePassword\Plugin\CustomerSessionContext
+     */
+    protected $CustomerSessionContext;
+
     /**
      *
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Customer\Model\Session $customerSession
+     * @param \HookahShisha\ChangePassword\Plugin\CustomerSessionContext $CustomerSessionContext
      * @param CollectionFactory $collection
      * @param CustomerFactory $customer
      * @param AddressFactory $address
@@ -25,6 +32,7 @@ class Data extends \Magento\Framework\View\Element\Template
         \Magento\Framework\Registry $registry,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Customer\Model\Session $customerSession,
+        \HookahShisha\ChangePassword\Plugin\CustomerSessionContext $CustomerSessionContext,
         CollectionFactory $collection,
         CustomerFactory $customer,
         AddressFactory $address,
@@ -35,6 +43,7 @@ class Data extends \Magento\Framework\View\Element\Template
         $this->storeManager = $storeManager;
         $this->customerSession = $customerSession;
         $this->customer = $customer;
+        $this->CustomerSessionContext = $CustomerSessionContext;
         $this->address = $address;
         $this->collection = $collection;
         $this->file = $file;
@@ -46,8 +55,7 @@ class Data extends \Magento\Framework\View\Element\Template
      */
     public function getCustomerId()
     {
-        $customerid = $this->customerSession->getCustomer()->getId();
-        return $customerid;
+        return $this->CustomerSessionContext->getCustomerId();
     }
 
     /**
