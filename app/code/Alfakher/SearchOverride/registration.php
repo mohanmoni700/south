@@ -1,6 +1,0 @@
-<?php
-\Magento\Framework\Component\ComponentRegistrar::register(
-    \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'Alfakher_SearchOverride',
-    __DIR__
-);

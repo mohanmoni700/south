@@ -728,7 +728,6 @@ return [
         'Alfakher_OrderPdf' => 1,
         'Alfakher_Productpageb2b' => 1,
         'Alfakher_SalesApprove' => 1,
-        'Alfakher_SearchOverride' => 1,
         'Alfakher_SeoUrlPrefix' => 1,
         'Amasty_BannersLite' => 1,
         'Amasty_Base' => 1,
