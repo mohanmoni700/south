@@ -595,6 +595,56 @@
         }
     }
 
+    // Invoice Header and footer
+    .invoice-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 25px;
+        .invoice-logo {
+            max-width: 266px;
+        }
+        .invoice-header-left {
+            width: 30%;
+            hr {
+                margin: 10px auto;
+                border-width: 2px;
+            }
+        }
+        .invoice-header-right {
+            width: 30%;
+            text-align: right;
+            .ihr-inner {
+                border: @hookah_theme_border;
+                display: inline-block;
+                text-align: left;
+            }
+            .ihr-row {
+                padding: 10px;
+                + .ihr-row {
+                    border-top: @hookah_theme_border;
+                }
+            }
+        }
+    }
+    .invoice-footer {
+        padding: 10px;
+    }
+    .sales-order-printinvoice {
+        .page-main {
+            > .logo {
+                display: none !important;
+            }
+            > .page-title-wrapper {
+                display: none;
+            }
+            > .copyright {
+                display: none;
+            }
+        }
+    }
+    
+
     @media only screen and (max-width: 991px) and (min-width: 768px) {
         body.account {
             .column.main {
@@ -871,6 +921,21 @@
     .sales-order-print.page-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-printcreditmemo {
         .order-details-items {
             border-top: none;
+        }
+    }
+
+    .invoice-header {
+        flex-wrap: wrap;
+        .invoice-header-left {
+            width: 100%;
+        }
+        .invoice-header-middle {
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+        .invoice-header-right {
+            width: 100%;
+            text-align: left;
         }
     }
 }

@@ -502,11 +502,13 @@
         flex-direction: row;
         flex-wrap: wrap;
     }
-    .cms-contact-us-for-hookah-wholesalers {
-      [data-content-type='row'][data-appearance='contained'] {
-        max-width: @layout_container_xl;
-        padding-left: 15px;
-        padding-right: 15px;
+    .cms-contact-us-for-hookah-wholesalers, .cms-contact-us {
+      .column.main {
+        > [data-content-type='row'][data-appearance='contained'] {
+          max-width: @layout_container_xl;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
       }
     }
 }
