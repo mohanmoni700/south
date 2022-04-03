@@ -6,7 +6,6 @@ $orderIncrementId =$block->getOrder()->getIncrementId();
 $orderStatusLabel=$block->getOrder()->getStatusLabel();
 $formateDate=$block->formatDate($block->getOrder()->getCreatedAt(), \IntlDateFormatter::LONG);
 $invoiceNumbers=$block->getInvoiceNumber();
-// print_r($invoiceNumbers);
 $mediaUrl=$block->getMediaUrl();
 $logoPath=$block->getLogoUrl();
 $logoUrl=$mediaUrl."sales/store/logo_html/".$logoPath;
@@ -25,3 +24,8 @@ $logoUrl=$mediaUrl."sales/store/logo_html/".$logoPath;
         </div>
     </div>
 </div>
+<style>
+.order-details-items .order-title {
+    display: block;
+}
+</style>
