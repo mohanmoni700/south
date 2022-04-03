@@ -725,6 +725,7 @@ return [
         'Alfakher_HandlingFee' => 1,
         'Alfakher_MigrationDocument' => 1,
         'Alfakher_MyDocument' => 1,
+        'Alfakher_OrderPdf' => 1,
         'Alfakher_Productpageb2b' => 1,
         'Alfakher_SalesApprove' => 1,
         'Alfakher_SeoUrlPrefix' => 1,

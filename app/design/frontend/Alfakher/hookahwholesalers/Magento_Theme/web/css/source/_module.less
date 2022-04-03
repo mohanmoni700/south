@@ -1088,6 +1088,15 @@
             font-weight: @font-weight__semibold;
             text-decoration: none;
         }
+        .action-ouline-primary {
+            border-color: @color_white;
+            color: @color_white;
+            &:hover {
+                border-color: transparent;
+                border-left-color: @border_left_gradient;
+                border-right-color: @border_right_gradient;
+            }
+        }
     }
     .collection_row {
         display: flex;
@@ -1618,6 +1627,9 @@
         .per_off_bg {
             padding: 0 14px;
             display: inline-block;
+        }
+        .action-ouline-primary {
+            margin-top: 16px;
         }
     }
     .private_hookahbox {
@@ -3072,24 +3084,25 @@
                 margin-bottom: 4px;
             }
             .phbox_image {
-                max-width: 170px;
+                max-width: 140px;
                 bottom: 16px;
             }
             .shop_button {
                 margin: 16px 0 0 0;
             }
             .phbox_bottom {
-                max-width: 140px;
+                max-width: 180px;
             }
         }
         .limited_sale {
             .limited_left {
                 padding: 16px;
                 h3 {
-                    font-size: 8px;
-                    letter-spacing: 7px;
+                    font-size: 10px;
+                    letter-spacing: 6px;
                     font-weight: @font-weight__bold;
                     margin-bottom: 2px; 
+                    line-height: 1.8;
                 }
                 h2 {
                     .lib-font-size(65);
