@@ -10,8 +10,18 @@
     <update handle="sales_order_item_price"/>
     <update handle="print" />
     <body>
-         <referenceBlock name="megamenu-desktop" remove="true"/>
+        <referenceBlock name="megamenu-desktop" remove="true"/>
         <attribute name="class" value="account"/>
+        <referenceContainer name="main.content">
+            <block class="Alfakher\OrderPdf\Block\Common"
+                   name="custom_header_view"
+                   before="columns"
+                   template="Alfakher_OrderPdf::order/header.phtml"/>
+            <block class="Alfakher\OrderPdf\Block\Common"
+                   name="custom_footer_view"
+                   after="columns"
+                   template="Alfakher_OrderPdf::order/footer.phtml"/>
+        </referenceContainer>
         <referenceContainer name="header-wrapper">
             <referenceBlock name="logo">
                 <arguments>

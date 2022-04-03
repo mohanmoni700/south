@@ -1,0 +1,31 @@
+<?php
+$headerText =$block->getHeaderConfig();
+$logo=$block->getLogoSrc();
+$createDate=$block->getOrder()->getCreatedAt();
+$orderIncrementId =$block->getOrder()->getIncrementId();
+$orderStatusLabel=$block->getOrder()->getStatusLabel();
+$formateDate=$block->formatDate($block->getOrder()->getCreatedAt(), \IntlDateFormatter::LONG);
+$invoiceNumbers=$block->getInvoiceNumber();
+$mediaUrl=$block->getMediaUrl();
+$logoPath=$block->getLogoUrl();
+$logoUrl=$mediaUrl."sales/store/logo_html/".$logoPath;
+?>
+<div class="invoice-header">
+    <div class="invoice-header-left">
+        <?= $headerText;?>
+    </div>
+    <div class="invoice-header-middle">
+        <img class="invoice-logo" src="<?= $logoUrl;?>">
+    </div>
+    <div class="invoice-header-right">
+        <div class="ihr-inner">
+            <div class="ihr-row"><span>Order Date : </span><span><?= $block->escapeHtml($formateDate) ?></span></div>
+            <div class="ihr-row"><span>Order Id : </span><span><?= $block->escapeHtml($orderIncrementId) ?></span></div>
+        </div>
+    </div>
+</div>
+<style>
+.order-details-items .order-title {
+    display: block;
+}
+</style>
