@@ -146,19 +146,28 @@ class AddProductsToCart extends SourceAddProductsToCart
         $totalPrice = 0;
         $superPackArray = [];
         foreach ($superPack as $item) {
-            try {
-                $product = $this->productRepository->get($item['sku'], false, null, true);
-            } catch (NoSuchEntityException $e) {
-                throw new \Magento\Framework\Exception\LocalizedException(
-                    __('Could not find a product with SKU "%sku"', ['sku' => $item['sku']])
-                );
+            $sku = $item['variant_sku'];
+            // checking if same product exist
+            if (in_array($sku, array_keys($superPackArray))) {
+                $superPackArray[$sku]['quantity'] += 1;
+                $totalPrice +=  $superPackArray[$sku]['final_price'];
+            } else {
+                $item['quantity'] = 1;
+                try {
+                    $product = $this->productRepository->get($item['sku'], false, null, true);
+                } catch (NoSuchEntityException $e) {
+                    throw new \Magento\Framework\Exception\LocalizedException(
+                        __('Could not find a product with SKU "%sku"', ['sku' => $item['sku']])
+                    );
+                }
+                $finalPrice = $product->getFinalPrice();
+                $totalPrice += $finalPrice;
+                $item['final_price'] = $finalPrice;
+                $item['product'] = $product;
+                $superPackArray[$sku] = $item;
             }
-            $finalPrice = $product->getFinalPrice();
-            $totalPrice += $finalPrice;
-            $item['final_price'] = $finalPrice;
-            $item['product'] = $product;
-            $superPackArray[] = $item;
         }
+
         return [$totalPrice, $superPackArray];
     }
 
@@ -256,7 +265,7 @@ class AddProductsToCart extends SourceAddProductsToCart
                 $parentAlfabundle = $cartItem->getAlfaBundle();
                 $simpleProductPrice = $product->getFinalPrice();
                 foreach ($superPackArray as $item) {
-                    $item['quantity'] = $qty;
+                    $item['quantity'] *= $qty ;
                     $item['parent_alfa_bundle'] =  $parentAlfabundle;
                     $finalPrice = $this->calculateSuperPackFinalPrice(
                         $item['final_price'],
