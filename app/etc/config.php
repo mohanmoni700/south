@@ -804,7 +804,7 @@ return [
         'MageModule_Core' => 1,
         'MageModule_OrderImportExport' => 1,
         'MageWorx_Info' => 1,
-        'MageWorx_OrderEditor' => 1,
+        'MageWorx_OrderEditor' => 0,
         'Alfakher_GrossMargin' => 1,
         'Magefan_AdminUserGuide' => 1,
         'Magefan_Blog' => 1,
