@@ -120,6 +120,10 @@ define([
                 success: function (res) {
                     var eventData, parameters;
 
+                    $(".qty").each(function() {
+                       $(this).val("0");
+                    });
+
                     $(document).trigger('ajax:addToCart', {
                         'sku': form.data().productSku,
                         'productIds': productIds,
