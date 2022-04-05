@@ -818,7 +818,7 @@ return [
         'Magefan_WysiwygAdvanced' => 1,
         'Magefan_YouTubeWidget' => 1,
         'Mageplaza_Core' => 1,
-        'Mageplaza_DeleteOrders' => 1,
+        'Mageplaza_DeleteOrders' => 0,
         'Mageplaza_ProductLabels' => 1,
         'Mageplaza_ProductLabelsGraphQl' => 1,
         'Mageplaza_Seo' => 1,
