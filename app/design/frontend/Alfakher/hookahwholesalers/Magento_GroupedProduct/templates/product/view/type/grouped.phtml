@@ -194,6 +194,9 @@
         /*bv-hd for desktop checkqty*/
         $("[id^='qtytext_']").keyup(function(){
             var requestQty = this.value;
+            if(requestQty < 0){
+                $(this).val("0");
+            }
             var currentId= $(this).attr('id');
             var productId= $(this).data('product-id');
             var availableProductQty = $(this).data('product-available-qty');
