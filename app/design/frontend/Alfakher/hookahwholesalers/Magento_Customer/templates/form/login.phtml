@@ -10,6 +10,11 @@
 ?>
 <?php $checkmigratedcustomerurl = $block->getUrl('changepassword/ajax/checkmigratedcustomer'); ?>
 <?php $loginUrl=$block->getUrl('customer/account/loginPost'); ?>
+<?php
+$helper = $this->helper('HookahShisha\ChangePassword\Helper\Data');
+?>
+<?php $getResetHeaderMessageConfig=$helper->getResetHeaderMessageConfig();?>
+
 <div class="block block-customer-login">
     <div class="block-title">
         <div class="separator"><span class="user_icon"></span> </div>
@@ -17,6 +22,9 @@
     </div>
     <div class="block-content" aria-labelledby="block-customer-login-heading" id="customer-login">
     <div class="response-msg"></div>
+        <div class="migrate-customer-header">
+            <span id="migrate-customer-header-text"></span>
+        </div>
         <form class="form form-login"
         id="login-form" method="post" 
         data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>" 
@@ -94,7 +102,8 @@
                 "checkmigratedcustomerurl": "<?= $block->escapeUrl($checkmigratedcustomerurl); ?>",
                 "submitButton": "#send2",
                 "migratedcustomer": "#migrate_customer",
-                "loginUrl":"<?= $block->escapeUrl($loginUrl); ?>"
+                "loginUrl":"<?= $block->escapeUrl($loginUrl); ?>",
+                "getResetHeaderMessageConfig":"<?= $block->escapeHtml($getResetHeaderMessageConfig) ?>"
             }
         }
     }
