@@ -203,6 +203,7 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     public function execute() //NOSONAR
+
     {
         $resultRedirect = $this->resultRedirectFactory->create();
         $resultJson = $this->resultJsonFactory->create();
@@ -293,7 +294,7 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                     $baseurl = $this->_storemanager->getStore()->getBaseUrl();
                     if (in_array(0, $status) || empty($dataSize) || (in_array("exp", $msg))) {
                         $response = [
-                            'url' => $baseurl . "/mydocument/customer/index",
+                            'url' => $baseurl . "mydocument/customer/index",
                         ];
                     } else {
                         $response = [
