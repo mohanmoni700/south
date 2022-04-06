@@ -6,7 +6,6 @@
 namespace HookahShisha\Customerb2b\Controller\Validate;
 
 use Magento\Company\Api\Data\CompanyInterface;
-use Magento\Customer\Api\Data\CustomerInterface;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
@@ -37,17 +36,23 @@ class Validate extends Action implements HttpPostActionInterface, HttpGetActionI
      * @param \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder
      * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
      * @param \Magento\Company\Api\CompanyRepositoryInterface $companyRepository
+     * @param \Magento\Customer\Api\AccountManagementInterface $customerAccountManagement
+     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
         \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
-        \Magento\Company\Api\CompanyRepositoryInterface $companyRepository
+        \Magento\Company\Api\CompanyRepositoryInterface $companyRepository,
+        \Magento\Customer\Api\AccountManagementInterface $customerAccountManagement,
+        \Magento\Store\Model\StoreManagerInterface $storeManager
     ) {
         parent::__construct($context);
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->customerRepository = $customerRepository;
         $this->companyRepository = $companyRepository;
+        $this->customerAccountManagement = $customerAccountManagement;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -89,11 +94,10 @@ class Validate extends Action implements HttpPostActionInterface, HttpGetActionI
      * @return bool
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    private function isCustomerEmailValid($email)
+    private function isCustomerEmailValid($email): bool
     {
-        $searchCriteria = $this->searchCriteriaBuilder
-            ->addFilter(CustomerInterface::EMAIL, $email)
-            ->create();
-        return !$this->customerRepository->getList($searchCriteria)->getTotalCount();
+        $websiteId = (int) $this->storeManager->getWebsite()->getId();
+        $isEmailNotExists = $this->customerAccountManagement->isEmailAvailable($email, $websiteId);
+        return $isEmailNotExists;
     }
 }
