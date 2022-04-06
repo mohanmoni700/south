@@ -50,6 +50,32 @@ input::-webkit-contacts-auto-fill-button {
   position: absolute;
   right: 0;
 }
+.migrate-customer-header,
+#migrate-customer-header-text {
+    max-width: 340px;
+    margin: 0 auto;
+    padding: 12px;
+    border: 2px solid #000000;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    position: relative;
+    &:before{
+        content:'';
+        background: url('@{baseDir}images/alficon.png');
+        position: absolute;
+        width: 40px;
+        height: 39px;
+        top: 7px;
+        left: 0;
+        right: 0;
+        background-size: contain;
+        display: inline-block;
+        background-repeat: no-repeat;
+        align-items: center;
+        display: block;
+        margin: 0 auto;
+    }
+}
 .customer-address-index{
     button.action.primary.add{
         width: 100%;
