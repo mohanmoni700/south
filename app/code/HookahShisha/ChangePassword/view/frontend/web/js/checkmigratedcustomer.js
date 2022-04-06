@@ -23,7 +23,7 @@ define(["jquery", "jquery/ui", 'mage/url'], function($, ui, urlBuilder) {
                     if (msg.migrate_customer == 1) {
                         var headerTextValue=config.getResetHeaderMessageConfig;
                         $(config.passwordSelector).hide();
-                        $("#migrate-customer-header-text").html(headerTextValue);
+                        $("#migrate-customer-header-text").html("<div class='migrate-customer-header'>"+headerTextValue+"</div>");
                         $("#block-customer-login-heading").hide();
                         $(config.submitButton).text("Reset Password");
                         $(config.submitButton).prop("disabled", false);
