@@ -153,7 +153,10 @@ define([
                         '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date' + showId + '" data-validate="{required:true}" readonly/>' +
                         '<input type="hidden" id="is_add_more_form'+ showId +'" name="is_add_more_form[]" value="1"/>'+
                         '</div></div>').insertAfter("#input-file-" + showId);
-
+                    
+                    /*required field remove*/
+                    $("#updatefile_" + showId +"-error").remove();
+                    /*required field remove*/
                     $("#image-error-message" + showId).html("");
                     currentElem.parent().find('.input-note').hide();
                     currentElem.closest('.upload').addClass('active');

@@ -114,15 +114,6 @@ class Data extends AbstractHelper
             $rejected_doc[] = ['docmsg' => $docmsg, 'docname' => $docname];
         }
 
-        $this->_inlineTranslation->suspend();
-        $fromEmail = $this->_scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE);
-        $fromName = $this->_scopeConfig->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE);
-
-        $sender = [
-            'name' => $fromName,
-            'email' => $fromEmail,
-        ];
-
         /** Get current storeId start[BS]*/
         $storeManagerDataList = $this->storeManager->getStores();
         $options = [];
@@ -134,6 +125,15 @@ class Data extends AbstractHelper
             }
         }
         /** Get current storeId end[BS]*/
+
+        $this->_inlineTranslation->suspend();
+        $fromEmail = $this->_scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE, $storeId);
+        $fromName = $this->_scopeConfig->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE, $storeId);
+
+        $sender = [
+            'name' => $fromName,
+            'email' => $fromEmail,
+        ];
 
         $transport = $this->_transportBuilder
             ->setTemplateIdentifier('custom_email')
