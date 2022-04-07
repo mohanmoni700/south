@@ -97,7 +97,6 @@ class Validate extends Action implements HttpPostActionInterface, HttpGetActionI
     private function isCustomerEmailValid($email): bool
     {
         $websiteId = (int) $this->storeManager->getWebsite()->getId();
-        $isEmailNotExists = $this->customerAccountManagement->isEmailAvailable($email, $websiteId);
-        return $isEmailNotExists;
+        return $this->customerAccountManagement->isEmailAvailable($email, $websiteId);
     }
 }

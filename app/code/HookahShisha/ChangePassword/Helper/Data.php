@@ -79,11 +79,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function getResetHeaderMessageConfig()
     {
-        $headerText = $this->scopeConfig
+        return $this->scopeConfig
             ->getValue(
                 'hookahshisha/reset_password_group/reset_password_message',
                 \Magento\Store\Model\ScopeInterface::SCOPE_STORE
             );
-        return $headerText;
     }
 }
