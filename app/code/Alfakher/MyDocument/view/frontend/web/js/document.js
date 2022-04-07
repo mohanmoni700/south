@@ -180,8 +180,8 @@ define([
             }).change();
 
             $('#filename-1').change(function(e) {
-	            fileRender(1, 'filename-',$(this),e);
-	        });
+                fileRender(1, 'filename-',$(this),e);
+            });
 
             var id = 1;
             $("#add_more").click(function() {
@@ -199,8 +199,8 @@ define([
                     $(".add-more-cont").hide();
                     $("#add_more").hide();
                 }
-            	$('#filename-' + showId).change(function(e) {
-                	fileRender(showId, 'filename-',$(this),e);
+                $('#filename-' + showId).change(function(e) {
+                    fileRender(showId, 'filename-',$(this),e);
                 });
             });
             
@@ -244,10 +244,10 @@ define([
                 }
             });
             $('button#btnsave').click( function(e) {
-            	if($('#myformdynamic').valid()) {
-            		formSubmitById('myformdynamic', 'myformdynamic', config.customResultUrl);
-            	}
-		    });
+                if($('#myformdynamic').valid()) {
+                    formSubmitById('myformdynamic', 'myformdynamic', config.customResultUrl);
+                }
+            });
 
             $(".deletedocument").click(function() { 
                 var documentId = $(this).attr('id');
@@ -270,9 +270,9 @@ define([
             });
 
             $('button#updatebtnsave').click( function(e) {
-            	if($('#updatedocument').valid()) {
-            		formSubmitById('updatedocument', 'updatedocument', config.updateDocumentUrl);
-            	}
+                if($('#updatedocument').valid()) {
+                    formSubmitById('updatedocument', 'updatedocument', config.updateDocumentUrl);
+                }
             });
 
             $('.update-toggle').change(function() {
@@ -291,20 +291,20 @@ define([
                 var fileId = $(this).prev().val();
                 // fileRender(fileId, 'updatefile_', $(this),e);
                 var val=$(this).val();
-				var fileId = $(this).prev().val();
-				if (val) {
-			        var extension = val.substring(val.lastIndexOf('.') + 1).toLowerCase();
-			        var extensionArr = ['pdf', 'jpg', 'png'];
+                var fileId = $(this).prev().val();
+                if (val) {
+                    var extension = val.substring(val.lastIndexOf('.') + 1).toLowerCase();
+                    var extensionArr = ['pdf', 'jpg', 'png'];
                     if (extensionArr.indexOf(extension) >= 0) {
                         
-    			        $("#doc-actions-filename_" + fileId).remove();
-    			        var reader = new FileReader();
-    			        reader.onload = function(event) {
-    			            if (event.target.result) {
-    			                var filename = jQuery('#updatefile_' + fileId).val();
-    			                var extension = filename.replace(/^.*\./, '');
-    			                var nameArr = filename.split('\\');
-    			                if (extension == 'pdf') {
+                        $("#doc-actions-filename_" + fileId).remove();
+                        var reader = new FileReader();
+                        reader.onload = function(event) {
+                            if (event.target.result) {
+                                var filename = jQuery('#updatefile_' + fileId).val();
+                                var extension = filename.replace(/^.*\./, '');
+                                var nameArr = filename.split('\\');
+                                if (extension == 'pdf') {
                                     var filePreview = config.pdfImg;
                                     var filesrc = URL.createObjectURL(e.target.files[0])
                                     var imgClass = "pdf-image";
@@ -320,43 +320,52 @@ define([
                                 '<a class="comman-download-doc" id="downloaddocument-filename_'+fileId+'" href="' + filesrc + '" target="_blank" download></a>' +
                                 '</div>').insertAfter('.update-doc-'+ fileId);
 
-    			                $('<img class="previewimage-filename_' + fileId + ' ' + imgClass + '" height="170" width="170" src="' + filePreview + '" title="' + filename + '"/>' +
+                                $('<img class="previewimage-filename_' + fileId + ' ' + imgClass + '" height="170" width="170" src="' + filePreview + '" title="' + filename + '"/>' +
                                     '<div class="doc-actions" id="doc-actions-filename_' + fileId + '">' +
                                     '<a class="view-doc-link" id="view-doc-link-filename_' + fileId + '" href="' + filesrc + '" target="_blank"></a>' +
                                     '<a class="deletedocument-preview deletedocument" id="deletedocument-filename_' + fileId + '"></a>' +
                                     '</div>').insertAfter("#updatefile_" + fileId);
+                                /*remove error & required message*/
+                                $("#image-error-message-" + fileId).html("");
+                                $("#updatefile_" + fileId +"-error").remove();
+                                /*remove error message*/
 
-    			                 $("#deletedocument-filename_" + fileId).click(function() {
-    	                                $("#doc-actions-filename_" + fileId).remove();
+                                 $("#deletedocument-filename_" + fileId).click(function() {
+
+                                        $("#doc-actions-filename_" + fileId).remove();
                                         $('.document'+ fileId).remove();
-    	                                $('.previewimage-filename_' + fileId).remove();
+                                        $('.previewimage-filename_' + fileId).remove();
+                                        /*remove file after delete*/
+                                        $("#updatefile_"+ fileId).val('');
+                                        /*remove file after delete*/
                                         $(".update-doc-" + fileId).closest('.upload').removeClass('active');
-    	                            });
-    			            }
-    			        }
-    			        reader.readAsDataURL(e.target.files[0]);
-    			        $(document).on('change', "#toggle-" + fileId, function() {
-    	                    this.value = this.checked ? 1 : 0;
-    	                    if ($(this).val() == "1") {
-    	                        $(".expiry_date-" + fileId).show();
-    	                        fnDatePicker(fileId);
-    	                    } else {
-    	                        $(".expiry_date-" + fileId).hide();
-    	                    }
-    	                });
-    	                expireOnChange(fileId);
-    	                $(this).closest('.upload').addClass('active');
-    	                $("#btnsave, #updatebtnsave").show();
+                                    });
+                            }
+                        }
+                        reader.readAsDataURL(e.target.files[0]);
+                        $(document).on('change', "#toggle-" + fileId, function() {
+                            this.value = this.checked ? 1 : 0;
+                            if ($(this).val() == "1") {
+                                $(".expiry_date-" + fileId).show();
+                                fnDatePicker(fileId);
+                            } else {
+                                $(".expiry_date-" + fileId).hide();
+                            }
+                        });
+                        expireOnChange(fileId);
+                        $(this).closest('.upload').addClass('active');
+                        $("#btnsave, #updatebtnsave").show();
+
                         
                     } else {
                         $(this).val('');
                         $(this).closest('.upload').removeClass('active');
                         $("#image-error-message-" + fileId).html("File type supported are JPG,PNG and PDF Only");
                     }
-	            } else {
-	                $(this).closest('.upload').removeClass('active');
-	                $("#btnsave, #updatebtnsave").hide();
-	            }
+                } else {
+                    $(this).closest('.upload').removeClass('active');
+                    $("#btnsave, #updatebtnsave").hide();
+                }
             });
         });
     };
