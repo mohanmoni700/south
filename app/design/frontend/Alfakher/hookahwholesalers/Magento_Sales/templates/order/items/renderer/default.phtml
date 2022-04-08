@@ -83,15 +83,17 @@ $_item = $block->getItem();
          $cart = $this->helper(\Magento\Checkout\Helper\Cart::class);
             $itens = $cart->getQuote()->getItems();
            
-        $helper =  $this->helper(\Alfakher\Productpageb2b\Helper\Data::class);
+        $helper =  $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
         $qty = $helper->getStockQty($id);
-        foreach ($itens as $item) {
-            if ($id == $item->getProduct_id()) {
+        if (!empty($itens)) {
+            foreach ($itens as $item) {
+                if ($id == $item->getProduct_id()) {
                     $cartqty = $item->getQty();
                     $qty = $qty - $cartqty;
+                }
             }
         }
-        if ($qty!=0) {?>
+        if ($qty!=0) { ?>
                     <a href="javascript:void(0)" data-post='<?=
                     /* @noEscape */ $this->helper(\Magento\Framework\Data\Helper\PostHelper::class)
                         ->getPostData($this->helper(HookahShisha\Customerb2b\Helper\Data::class)->getReorderUrl($block->getItem()->getItemId()))
