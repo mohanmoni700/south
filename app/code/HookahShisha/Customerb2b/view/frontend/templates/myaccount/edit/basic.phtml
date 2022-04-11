@@ -263,7 +263,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
 </script>
 <?php
     $scriptString = <<<script
-        require(['jquery','jquery/ui','mage/mage'], function($){
+        require(['jquery','Magento_Customer/js/customer-data','jquery/ui','mage/mage'], function($,customerData){
     script;
 ?>
 <?php if ($formDisable == 1): ?>
@@ -281,6 +281,8 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
 <?php
     $scriptString .= <<<script
             $(document).ready(function(){
+                var sections = ['customer'];
+                customerData.reload(sections, true);
                 jQuery("#form-validate #country").attr("disabled","true");
             });
 
