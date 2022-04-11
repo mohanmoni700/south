@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "706e2922a58fb1835ea68d7b89373f71",
+    "content-hash": "94f2b0900603693ad7a24dd9b9363539",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -50,31 +50,6 @@
                 "source": "https://github.com/2tvenom/CBOREncode/tree/1.0.2"
             },
             "time": "2020-10-27T07:22:41+00:00"
-        },
-        {
-            "name": "amasty/ajax-scroll",
-            "version": "1.4.5",
-            "dist": {
-                "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/ajax-scroll-1.4.5-ee.zip"
-            },
-            "require": {
-                "amasty/base": ">=1.13.1",
-                "php": "^7.3.0"
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ],
-                "psr-4": {
-                    "Amasty\\Scroll\\": ""
-                }
-            },
-            "license": [
-                "Commercial"
-            ],
-            "description": "AJAX Scroll by Amasty"
         },
         {
             "name": "amasty/base",
@@ -25822,6 +25797,95 @@
                 "source": "https://github.com/mageplaza/magento-2-webhook/tree/v4.1.2"
             },
             "time": "2021-11-17T01:38:24+00:00"
+        },
+        {
+            "name": "magepow/core",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magepow/magento-2-core.git",
+                "reference": "c722af0e9c3298a4c152d68b91f4234a75a7007b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magepow/magento-2-core/zipball/c722af0e9c3298a4c152d68b91f4234a75a7007b",
+                "reference": "c722af0e9c3298a4c152d68b91f4234a75a7007b",
+                "shasum": ""
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magepow\\Core\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Magepow",
+                    "email": "support@magepow.com",
+                    "homepage": "https://magepow.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "Magepow Core for Magento 2.",
+            "support": {
+                "issues": "https://github.com/magepow/magento-2-core/issues",
+                "source": "https://github.com/magepow/magento-2-core/tree/1.0.3"
+            },
+            "time": "2021-06-04T04:33:41+00:00"
+        },
+        {
+            "name": "magepow/infinitescroll",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magepow/magento-2-infinite-scroll.git",
+                "reference": "43cfbfab43f6818e728a8e7ff0f0ec3d616df89d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magepow/magento-2-infinite-scroll/zipball/43cfbfab43f6818e728a8e7ff0f0ec3d616df89d",
+                "reference": "43cfbfab43f6818e728a8e7ff0f0ec3d616df89d",
+                "shasum": ""
+            },
+            "require": {
+                "magepow/core": "^1.0.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Magepow\\InfiniteScroll\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Magepow",
+                    "email": "support@magepow.com",
+                    "homepage": "https://magepow.com",
+                    "role": "Technical Support"
+                }
+            ],
+            "description": "Infinite scroll for magento 2 automatically loads product catalog without reloading the page.",
+            "support": {
+                "issues": "https://github.com/magepow/magento-2-infinite-scroll/issues",
+                "source": "https://github.com/magepow/magento-2-infinite-scroll/tree/1.0.2"
+            },
+            "time": "2021-06-23T02:07:27+00:00"
         },
         {
             "name": "mageworx/module-info",
