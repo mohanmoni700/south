@@ -1,0 +1,17 @@
+Index: vendor/magento/module-sales-rule/Model/Rule/Action/Discount/CartFixed.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetE
+<+>UTF-8
+===================================================================
+diff --git a/vendor/magento/module-sales-rule/Model/Rule/Action/Discount/CartFixed.php b/vendor/magento/module-sales-rule/Model/Rule/Action/Discount/CartFixed.php
+--- a/vendor/magento/module-sales-rule/Model/Rule/Action/Discount/CartFixed.php
++++ b/vendor/magento/module-sales-rule/Model/Rule/Action/Discount/CartFixed.php
+@@ -96,7 +96,7 @@
+         if (!isset($cartRules[$rule->getId()])) {
+             $cartRules[$rule->getId()] = $rule->getDiscountAmount();
+         }
+-        $availableDiscountAmount = (float) $cartRules[$rule->getId()];
++        $availableDiscountAmount = (float) $rule->getDiscountAmount();
+         $discountType = self::$discountType . $rule->getId();
+
+         if ($availableDiscountAmount > 0) {
