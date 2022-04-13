@@ -112,9 +112,17 @@
                 margin-bottom: 0;
                 font-weight: @font-weight__regular;
             }
+        }
+        .negotiable-quote{
+            button.action{
+               .cart_btn(); 
+            }
         }        
         .cart.main.actions{
             .action.update{
+                .cart_btn();
+            }
+            .action.clear{
                 .cart_btn();
             }
             .action.continue{
@@ -133,13 +141,6 @@
                     &:before{
                         display:none;
                     }
-                }
-            } 
-        } 
-        .checkout.methods.items.checkout-methods-items{
-            .item{
-                + .item{
-                    display: none;
                 }
             } 
         } 
