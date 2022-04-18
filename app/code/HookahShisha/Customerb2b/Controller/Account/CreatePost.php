@@ -100,9 +100,9 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
      * @param \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory
      * @param \HookahShisha\Customerb2b\Helper\Data $helperdata
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Magento\Company\Model\CompanyUser|null $companyUser
      * @param EmailAddress $emailValidator
      * @param \Magento\LoginAsCustomerAssistance\Model\ResourceModel\SaveLoginAsCustomerAssistanceAllowed $saveLoginAsCustomerAssistanceAllowed
+     * @param \Magento\Company\Model\CompanyUser|null $companyUser
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -338,6 +338,10 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
                 default:
                     $addressData[$attributeCode] = $value;
             }
+        }
+        /* unset company name */
+        if (array_key_exists('company', $addressData)) {
+            unset($addressData['company']);
         }
         $addressData = $addressForm->compactData($addressData);
         unset($addressData['region_id'], $addressData['region']);
