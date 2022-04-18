@@ -14,6 +14,9 @@ class LayoutProcessor
         $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
         ['children']['shippingAddress']['children']['shipping-address-fieldset']['children']['street']['children'][1]['label'] = __('Address Line 2');
 
+        $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
+        ['children']['shippingAddress']['children']['shipping-address-fieldset']['children']['company']['label'] = __('Company Name');
+
         /*For billing address form change lable*/
         /* config: checkout/options/display_billing_address_on = payment_method */
         if (isset($jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
@@ -34,6 +37,11 @@ class LayoutProcessor
                     ['form-fields']['children']['street']['children'][1]['label'] = __('Address Line 2');
 
                 }
+                if (isset($payment['children']['form-fields']['children']['company'])) {
+
+                    $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
+                    ['payment']['children']['payments-list']['children'][$key]['children']['form-fields']['children']['company']['label'] = __('Company Name');
+                }
 
                 /*For billing address Validation*/
                 if (isset($payment['children']['form-fields']['children']['firstname'])) {
@@ -51,6 +59,43 @@ class LayoutProcessor
                     $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
                     ['payment']['children']['payments-list']['children'][$key]['children']['form-fields']['children']
                     ['telephone']['validation'] = ['required-entry' => true, 'validate-number' => true];
+
+                    $jsLayout['components']['checkout']['children']['steps']['children']
+                    ['billing-step']['children']['payment']['children']
+                    ['payments-list']['children'][$key]['children']
+                    ['form-fields']['children']['telephone']['sortOrder'] = 69;
+                }
+
+                if (isset($payment['children']['form-fields']['children']['country_id'])) {
+
+                    $jsLayout['components']['checkout']['children']['steps']['children']
+                    ['billing-step']['children']['payment']['children']
+                    ['payments-list']['children'][$key]['children']
+                    ['form-fields']['children']['country_id']['sortOrder'] = 70;
+                }
+
+                if (isset($payment['children']['form-fields']['children']['city'])) {
+
+                    $jsLayout['components']['checkout']['children']['steps']['children']
+                    ['billing-step']['children']['payment']['children']
+                    ['payments-list']['children'][$key]['children']
+                    ['form-fields']['children']['city']['sortOrder'] = 80;
+                }
+
+                if (isset($payment['children']['form-fields']['children']['region_id'])) {
+
+                    $jsLayout['components']['checkout']['children']['steps']['children']
+                    ['billing-step']['children']['payment']['children']
+                    ['payments-list']['children'][$key]['children']
+                    ['form-fields']['children']['region_id']['sortOrder'] = 81;
+                }
+
+                if (isset($payment['children']['form-fields']['children']['postcode'])) {
+
+                    $jsLayout['components']['checkout']['children']['steps']['children']
+                    ['billing-step']['children']['payment']['children']
+                    ['payments-list']['children'][$key]['children']
+                    ['form-fields']['children']['postcode']['sortOrder'] = 93;
                 }
 
             }
