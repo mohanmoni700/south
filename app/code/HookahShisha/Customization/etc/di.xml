@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    
     <preference for="Smartwave\Megamenu\Block\Topmenu" type="HookahShisha\Customization\Block\Topmenu" />
+    
     <preference for="Magento\CheckoutStaging\Plugin\PaymentInformationManagementPlugin" type="HookahShisha\Customization\Plugin\PaymentInformationManagementPlugin" />
+    
+    <!-- add ststus column in customer tab order listin -->
+    <preference for="Magento\Customer\Block\Adminhtml\Edit\Tab\Orders"
+                type="HookahShisha\Customization\Block\Adminhtml\Edit\Tab\Orders"/>
 </config>
