@@ -1,16 +1,9 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace Alfakher\SalesApprove\Block\Adminhtml\Order;
 
 /**
  * Adminhtml sales order create
  *
- * @api
- * @author      Magento Core Team <core@magentocommerce.com>
- * @since 100.0.2
  */
 class Create extends \Magento\Sales\Block\Adminhtml\Order\Create
 {
