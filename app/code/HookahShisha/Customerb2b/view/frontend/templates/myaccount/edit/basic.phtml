@@ -79,18 +79,16 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
         <?php if ($_fax->isEnabled()): ?>
             <?= $_fax->setFax($block->getAddress()->getFax())->toHtml() ?>
         <?php endif ?>
-
-    </fieldset>
-    <fieldset class="fieldset">
-                <div class="field country required">
+          <div class="field country required">
             <label class="label" for="country">
                 <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>
             </label>
             <div class="control">
                 <?= $block->getCountryHtmlSelect() ?>
             </div>
-        </div>
-
+        </div> 
+    </fieldset>
+    <fieldset class="fieldset">
         <legend></legend>
         <div class="field street required">
             <label for="street_1" class="label"><span><?= $block->escapeHtml(__($_street . ' 1')) ?></span></label>
