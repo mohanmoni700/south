@@ -21,6 +21,7 @@ class AttributeMerger
         $result['postcode']['placeholder'] = __('Postal Code');
         $result['telephone']['placeholder'] = __('Phone Number');
         $result['county']['placeholder'] = __('County');
+        $result['company']['placeholder'] = __('Company Name');
         return $result;
     }
 }

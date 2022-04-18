@@ -190,13 +190,13 @@
             /*bv-hd for desktop checkqty*/
             $("[id^='qtytext_']").keyup(function(e){
                 var currentId= $(this).attr('id');
-                if(e.which != 8 && isNaN(String.fromCharCode(e.which))){
-                   $(this).val(0);
-                   $("#"+currentId).blur();
-                }
+                // if(e.which != 8 && isNaN(String.fromCharCode(e.which))){
+                //    $(this).val(0);
+                //    $("#"+currentId).blur();
+                // }
                 var regex = new RegExp("^[0-9]+$");
-                var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-                if (regex.test(str)) {
+                // var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+                if (regex.test(this.value)) {
                     var requestQty = this.value;
                     if(requestQty < 0){
                         $(this).val(0);
@@ -214,8 +214,11 @@
                         $(this).val(parseInt(requestQty));
                         $("#qtymessage_"+productId).html("");
                     }
+                }else{
+                    $(this).val(0);
+                    $("#"+currentId).blur();
                 }
-                return false;
+                // return false;
             });
             /*bv-hd for mobile checkqty*/
             $("[id^='qtydrop_']").on('change',function(){

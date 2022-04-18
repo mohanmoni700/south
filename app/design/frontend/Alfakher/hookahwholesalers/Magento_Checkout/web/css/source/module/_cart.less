@@ -21,6 +21,68 @@
             }
         }
     }
+    .page-wrapper{
+        h4.ampromo-title{
+            font-family: 'DMSerifDisplay-Regular';
+            font-size: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            font-weight: 400;
+        }
+        .ampromo-items-form{
+            .price-new-price{
+                .price-wrapper{
+                    .price{
+                        font-size: 20px;
+                        line-height: 26px;
+                        font-weight: 400;
+                        color: #333;
+                    }
+                }
+            } 
+        }
+        .ampromo-items-form{
+            .ampromo-qty {
+                width: 30%;
+                margin-left: 35%;
+                margin-top: 10%;
+                text-align: center;
+                border: 1px solid #CDCACA;
+                border-radius: 0;
+                padding: 0;
+                height: 32px;
+            }
+        }
+        .ampromo-items-content{
+            .ampromo-item{
+                border-color: #CDCACA;
+                &:hover{
+                    border-color: #961E70;
+                    background: transparent;
+                }
+                &.-selected{
+                    background: transparent;
+                    border-color: #961E70;
+                }
+            }
+            h2{
+                font-size: 2.8rem;
+                margin-bottom: 15px;
+                font-weight: 400;
+                margin-top: 0;
+            }
+            .ampromo-button{
+                border: 1px solid #000000;
+                margin: 0 !important;
+            }
+        }
+        .ampromo-product-select{
+            position: relative;
+            top: -3px
+        } 
+    }  
     #empty-doc{
         h3{
             border-radius: 5px;
@@ -50,9 +112,17 @@
                 margin-bottom: 0;
                 font-weight: @font-weight__regular;
             }
+        }
+        .negotiable-quote{
+            button.action{
+               .cart_btn(); 
+            }
         }        
         .cart.main.actions{
             .action.update{
+                .cart_btn();
+            }
+            .action.clear{
                 .cart_btn();
             }
             .action.continue{
@@ -71,13 +141,6 @@
                     &:before{
                         display:none;
                     }
-                }
-            } 
-        } 
-        .checkout.methods.items.checkout-methods-items{
-            .item{
-                + .item{
-                    display: none;
                 }
             } 
         } 

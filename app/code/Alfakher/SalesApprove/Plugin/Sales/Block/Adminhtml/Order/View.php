@@ -31,7 +31,8 @@ class View
     {
 
         $order = $subject->getOrder();
-        $history = $order->getStatusHistoryCollection()->addFieldToFilter('status', ['eq' => 'sales_approved'])->load();
+        # $history = $order->getStatusHistoryCollection()->addFieldToFilter('status', ['eq' => 'sales_approved'])->load();
+        $history = $order->getStatusHistoryCollection()->addFieldToFilter('comment', ['eq' => 'Sales Approved'])->load();
         $moduleEnable = $this->isModuleEnabled($order->getStore()->getWebsiteId());
 
         if (!$history->toArray()['totalRecords'] && $moduleEnable) {

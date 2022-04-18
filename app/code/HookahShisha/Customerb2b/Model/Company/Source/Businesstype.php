@@ -32,7 +32,7 @@ class Businesstype implements \Magento\Framework\Data\OptionSourceInterface
     {
         return [
             'distributor' => 'Distributor',
-            'retail' => 'Retail Approval',
+            'retail' => 'Retail',
             'hookah_lounge' => 'Hookah Lounge',
             'catering' => 'Catering',
             'bar_night_club' => 'Bar/Night Club',

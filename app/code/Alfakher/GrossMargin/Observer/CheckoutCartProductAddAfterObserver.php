@@ -33,11 +33,14 @@ class CheckoutCartProductAddAfterObserver implements \Magento\Framework\Event\Ob
         $item = $observer->getQuoteItem();
         $websiteId = $item->getQuote()->getStore()->getWebsiteId();
         $moduleEnable = $this->grossMarginViewModel->isModuleEnabled($websiteId);
-
         if ($moduleEnable) {
-            $cost = $this->proRepo->getById($item->getProduct()->getId())->getCost();
-            $grossMargin = ($item->getPrice() - $cost) / $item->getPrice() * 100;
-            $item->setGrossMargin($grossMargin)->save();
+            try {
+                $cost = $this->proRepo->getById($item->getProduct()->getId())->getCost();
+                $grossMargin = ($item->getPrice() - $cost) / $item->getPrice() * 100;
+                $item->setGrossMargin($grossMargin);
+            } catch (\Exception $e) {
+
+            }
         }
     }
 }

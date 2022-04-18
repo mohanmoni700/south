@@ -12,7 +12,8 @@ class Approve extends \Magento\Backend\App\Action
     /**
      * order status
      */
-    const SALES_APPROVED = 'sales_approved';
+    const SALES_APPROVED = 'processing';
+    # const SALES_APPROVED = 'sales_approved';
 
     /**
      * @param \Magento\Backend\App\Action\Context $context

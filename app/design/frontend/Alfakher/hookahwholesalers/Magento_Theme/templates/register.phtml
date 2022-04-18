@@ -14,7 +14,9 @@
         <ul class="sign-up-ul customer_logged_in" style="display: none;">
             <li class="guest-heading" data-bind="scope: 'customer'">
                 <div class="left_circle">
-                    <lable class="cust_short_name"><?= $firstStringCharacter?></lable>
+                    <!-- ko if: customer().firstname  -->
+                        <lable class="cust_short_name" data-bind="text: customer().firstname.charAt(0)"></lable>
+                    <!-- /ko -->
                 </div>
                 <div class="welcome_info">
                     <lable class="welback"><?php echo __('Welcome back!') ?></lable>
