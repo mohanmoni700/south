@@ -825,7 +825,6 @@ return [
         'Mageplaza_ProductLabelsGraphQl' => 1,
         'Mageplaza_Seo' => 1,
         'Mageplaza_Sitemap' => 1,
-        'Mageplaza_Smtp' => 1,
         'Mageplaza_Webhook' => 1,
         'OlegKoval_RegenerateUrlRewrites' => 1,
         'PCAPredict_Tag' => 1,
