@@ -100,7 +100,7 @@ return [
                 'code' => 'default',
                 'website_id' => '1',
                 'group_id' => '1',
-                'name' => 'Hookah-Shisha',
+                'name' => 'Default Store View',
                 'sort_order' => '0',
                 'is_active' => '1'
             ],
@@ -122,12 +122,12 @@ return [
                 'sort_order' => '0',
                 'is_active' => '1'
             ],
-            'hookah_wholesalers' => [
+            'hookah_wholesalers_store_view' => [
                 'store_id' => '8',
-                'code' => 'hookah_wholesalers',
+                'code' => 'hookah_wholesalers_store_view',
                 'website_id' => '8',
                 'group_id' => '8',
-                'name' => 'Hookah-Wholesalers',
+                'name' => 'Hookah Wholesalers (B2B) Store View',
                 'sort_order' => '0',
                 'is_active' => '1'
             ]
@@ -148,12 +148,12 @@ return [
                     'type' => 'server_side_compilation'
                 ],
                 'template' => [
-                    'allow_symlink' => null,
+                    'allow_symlink' => NULL,
                     'minify_html' => '0'
                 ],
                 'js' => [
                     'merge_files' => '1',
-                    'enable_js_bundling' => null,
+                    'enable_js_bundling' => NULL,
                     'minify_files' => '0',
                     'move_script_to_bottom' => '0',
                     'translate_strategy' => 'dictionary',
