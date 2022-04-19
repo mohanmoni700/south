@@ -8,7 +8,7 @@ return [
                 'name' => 'Admin',
                 'sort_order' => '0',
                 'default_group_id' => '0',
-                'is_default' => '0',
+                'is_default' => '0'
             ],
             'base' => [
                 'website_id' => '1',
@@ -16,7 +16,7 @@ return [
                 'name' => 'Main Website',
                 'sort_order' => '0',
                 'default_group_id' => '1',
-                'is_default' => '1',
+                'is_default' => '1'
             ],
             'hookah' => [
                 'website_id' => '2',
@@ -24,24 +24,24 @@ return [
                 'name' => 'Hookah.com (B2C)',
                 'sort_order' => '0',
                 'default_group_id' => '2',
-                'is_default' => '0',
+                'is_default' => '0'
             ],
             'hookah_company' => [
-                'website_id' => '3',
+                'website_id' => '5',
                 'code' => 'hookah_company',
                 'name' => 'Hookah-company.com (B2C)',
                 'sort_order' => '0',
-                'default_group_id' => '3',
-                'is_default' => '0',
+                'default_group_id' => '5',
+                'is_default' => '0'
             ],
             'hookah_wholesalers' => [
-                'website_id' => '4',
+                'website_id' => '8',
                 'code' => 'hookah_wholesalers',
                 'name' => 'Hookah Wholesalers (B2B)',
                 'sort_order' => '0',
-                'default_group_id' => '4',
-                'is_default' => '0',
-            ],
+                'default_group_id' => '8',
+                'is_default' => '0'
+            ]
         ],
         'groups' => [
             0 => [
@@ -50,7 +50,7 @@ return [
                 'name' => 'Default',
                 'root_category_id' => '0',
                 'default_store_id' => '0',
-                'code' => 'default',
+                'code' => 'default'
             ],
             1 => [
                 'group_id' => '1',
@@ -58,32 +58,32 @@ return [
                 'name' => 'Hookah-Shisha.com (B2C) Store',
                 'root_category_id' => '2',
                 'default_store_id' => '1',
-                'code' => 'main_website_store',
+                'code' => 'main_website_store'
             ],
             2 => [
                 'group_id' => '2',
                 'website_id' => '2',
                 'name' => 'Hookah.com (B2C) Store',
-                'root_category_id' => '635',
+                'root_category_id' => '650',
                 'default_store_id' => '2',
-                'code' => 'hookah_store',
+                'code' => 'hookah_store'
             ],
-            3 => [
-                'group_id' => '3',
-                'website_id' => '3',
+            5 => [
+                'group_id' => '5',
+                'website_id' => '5',
                 'name' => 'Hookah-company.com (B2C) Store',
                 'root_category_id' => '2',
-                'default_store_id' => '3',
-                'code' => 'hookah_company_store',
+                'default_store_id' => '5',
+                'code' => 'hookah_company_store'
             ],
-            4 => [
-                'group_id' => '4',
-                'website_id' => '4',
+            8 => [
+                'group_id' => '8',
+                'website_id' => '8',
                 'name' => 'Hookah Wholesalers (B2B) Store',
-                'root_category_id' => '636',
-                'default_store_id' => '4',
-                'code' => 'hookah_wholesalers_store',
-            ],
+                'root_category_id' => '705',
+                'default_store_id' => '8',
+                'code' => 'hookah_wholesalers_store'
+            ]
         ],
         'stores' => [
             'admin' => [
@@ -93,7 +93,7 @@ return [
                 'group_id' => '0',
                 'name' => 'Admin',
                 'sort_order' => '0',
-                'is_active' => '1',
+                'is_active' => '1'
             ],
             'default' => [
                 'store_id' => '1',
@@ -102,7 +102,7 @@ return [
                 'group_id' => '1',
                 'name' => 'Default Store View',
                 'sort_order' => '0',
-                'is_active' => '1',
+                'is_active' => '1'
             ],
             'hookah_store_view' => [
                 'store_id' => '2',
@@ -111,137 +111,74 @@ return [
                 'group_id' => '2',
                 'name' => 'Hookah.com (B2C) Store View',
                 'sort_order' => '0',
-                'is_active' => '1',
+                'is_active' => '1'
             ],
             'hookah_company_store_view' => [
-                'store_id' => '3',
+                'store_id' => '5',
                 'code' => 'hookah_company_store_view',
-                'website_id' => '3',
-                'group_id' => '3',
+                'website_id' => '5',
+                'group_id' => '5',
                 'name' => 'Hookah-company.com (B2C) Store View',
                 'sort_order' => '0',
-                'is_active' => '1',
+                'is_active' => '1'
             ],
             'hookah_wholesalers_store_view' => [
-                'store_id' => '4',
+                'store_id' => '8',
                 'code' => 'hookah_wholesalers_store_view',
-                'website_id' => '4',
-                'group_id' => '4',
+                'website_id' => '8',
+                'group_id' => '8',
                 'name' => 'Hookah Wholesalers (B2B) Store View',
                 'sort_order' => '0',
-                'is_active' => '1',
-            ],
-        ],
+                'is_active' => '1'
+            ]
+        ]
     ],
-    /**
-     * For the section: system
-     * Shared configuration was written to config.php and system-specific configuration to env.php.
-     * Shared configuration file (config.php) doesn't contain sensitive data for security reasons.
-     */
     'system' => [
         'default' => [
             'general' => [
                 'locale' => [
-                    'code' => 'en_US',
-                ],
+                    'code' => 'en_US'
+                ]
             ],
             'dev' => [
+                'static' => [
+                    'sign' => '1'
+                ],
                 'front_end_development_workflow' => [
-                    'type' => 'server_side_compilation',
+                    'type' => 'server_side_compilation'
                 ],
                 'template' => [
-                    'allow_symlink' => null,
-                    'minify_html' => '0',
+                    'allow_symlink' => NULL,
+                    'minify_html' => '0'
                 ],
                 'js' => [
                     'merge_files' => '1',
-                    'enable_js_bundling' => null,
+                    'enable_js_bundling' => NULL,
                     'minify_files' => '0',
                     'move_script_to_bottom' => '0',
                     'translate_strategy' => 'dictionary',
                     'session_storage_logging' => '0',
                     'minify_exclude' => [
                         'tiny_mce' => '/tiny_mce/',
-                        'cardinal_commerce' => '/v1/songbird',
-                    ],
+                        'cardinal_commerce' => '/v1/songbird'
+                    ]
                 ],
                 'css' => [
                     'merge_css_files' => '1',
                     'minify_files' => '0',
                     'use_css_critical_path' => '0',
                     'minify_exclude' => [
-                        'tiny_mce' => '/tiny_mce/',
-                    ],
-                ],
-                'static' => [
-                    'sign' => '1',
-                ],
-                'grid' => [
-                    'async_indexing' => '0',
-                ],
-            ],
+                        'tiny_mce' => '/tiny_mce/'
+                    ]
+                ]
+            ]
         ],
         'stores' => [
-            'admin' => [
-                'design' => [
-                    'package' => [
-                        'name' => 'default',
-                    ],
-                    'theme' => [
-                        'default' => 'default',
-                    ],
-                ],
-            ],
-            'default' => [
-                'design' => [
-                    'theme' => [
-                        'theme_id' => 'frontend/Corra/alfakher',
-                    ],
-                ],
-            ],
+
         ],
         'websites' => [
-            'admin' => [
-                'web' => [
-                    'routers' => [
-                        'frontend' => [
-                            'disabled' => 'true',
-                        ],
-                    ],
-                    'default' => [
-                        'no_route' => 'admin/noroute/index',
-                    ],
-                ],
-            ],
-            'base' => [
-                'design' => [
-                    'theme' => [
-                        'theme_id' => 'frontend/Corra/alfakher',
-                    ],
-                ],
-            ],
-            'hookah' => [
-                'design' => [
-                    'theme' => [
-                        'theme_id' => 'frontend/Corra/alfakher',
-                    ],
-                ],
-            ],
-            'hookah_company' => [
-                'design' => [
-                    'theme' => [
-                        'theme_id' => 'frontend/Corra/alfakher',
-                    ],
-                ],
-            ],
-            'hookah_wholesalers' => [
-                'design' => [
-                    'theme' => [
-                        'theme_id' => 'frontend/Alfakher/hookahwholesalers',
-                    ],
-                ],
-            ],
-        ],
+
+        ]
     ],
     'modules' => [
         'Magento_AdminAnalytics' => 1,
@@ -851,54 +788,13 @@ return [
         'Xtento_XtCore' => 1,
         'Xtento_OrderImport' => 1,
         'Corra_YotpoLoyaltyExtended' => 1,
-        'Yotpo_Yotpo' => 1,
+        'Yotpo_Yotpo' => 1
     ],
     'admin_user' => [
         'locale' => [
             'code' => [
-                0 => 'en_US',
-            ],
-        ],
-    ],
-    'themes' => [
-        'frontend/Magento/blank' => [
-            'parent_id' => null,
-            'theme_path' => 'Magento/blank',
-            'theme_title' => 'Magento Blank',
-            'is_featured' => '0',
-            'area' => 'frontend',
-            'type' => '0',
-            'code' => 'Magento/blank',
-        ],
-        'adminhtml/Magento/backend' => [
-            'parent_id' => null,
-            'theme_path' => 'Magento/backend',
-            'theme_title' => 'Magento 2 backend',
-            'is_featured' => '0',
-            'area' => 'adminhtml',
-            'type' => '0',
-            'code' => 'Magento/backend',
-        ],
-        'frontend/Magento/luma' => [
-            'parent_id' => 'Magento/blank',
-            'theme_path' => 'Magento/luma',
-            'theme_title' => 'Magento Luma',
-            'is_featured' => '0',
-            'area' => 'frontend',
-            'type' => '0',
-            'code' => 'Magento/luma',
-        ],
-        'frontend/Corra/alfakher' => [
-            'parent_id' => 'Magento/luma',
-            'theme_path' => 'Corra/alfakher',
-            'theme_title' => 'Al Fakher',
-            'is_featured' => '0',
-            'area' => 'frontend',
-            'type' => '0',
-            'code' => 'Corra/alfakher',
-        ],
-    ],
-    'i18n' => [
-
-    ],
+                'en_US'
+            ]
+        ]
+    ]
 ];
