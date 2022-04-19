@@ -890,7 +890,7 @@ return [
             'code' => 'Corra/alfakher',
         ],
         'frontend/Alfakher/hookahwholesalers' => [
-            'parent_id' => 'Magento/luma',
+            'parent_id' => 'Magento/blank',
             'theme_path' => 'Alfakher/hookahwholesalers',
             'theme_title' => 'Hookah wholesalers',
             'is_featured' => '0',
