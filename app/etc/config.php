@@ -848,8 +848,58 @@ return [
     'admin_user' => [
         'locale' => [
             'code' => [
-                'en_US'
-            ]
-        ]
-    ]
+                0 => 'en_US',
+            ],
+        ],
+    ],
+    'themes' => [
+        'frontend/Magento/blank' => [
+            'parent_id' => null,
+            'theme_path' => 'Magento/blank',
+            'theme_title' => 'Magento Blank',
+            'is_featured' => '0',
+            'area' => 'frontend',
+            'type' => '0',
+            'code' => 'Magento/blank',
+        ],
+        'adminhtml/Magento/backend' => [
+            'parent_id' => null,
+            'theme_path' => 'Magento/backend',
+            'theme_title' => 'Magento 2 backend',
+            'is_featured' => '0',
+            'area' => 'adminhtml',
+            'type' => '0',
+            'code' => 'Magento/backend',
+        ],
+        'frontend/Magento/luma' => [
+            'parent_id' => 'Magento/blank',
+            'theme_path' => 'Magento/luma',
+            'theme_title' => 'Magento Luma',
+            'is_featured' => '0',
+            'area' => 'frontend',
+            'type' => '0',
+            'code' => 'Magento/luma',
+        ],
+        'frontend/Corra/alfakher' => [
+            'parent_id' => 'Magento/luma',
+            'theme_path' => 'Corra/alfakher',
+            'theme_title' => 'Al Fakher',
+            'is_featured' => '0',
+            'area' => 'frontend',
+            'type' => '0',
+            'code' => 'Corra/alfakher',
+        ],
+        'frontend/Alfakher/hookahwholesalers' => [
+            'parent_id' => 'Magento/luma',
+            'theme_path' => 'Alfakher/hookahwholesalers',
+            'theme_title' => 'Hookah wholesalers',
+            'is_featured' => '0',
+            'area' => 'frontend',
+            'type' => '0',
+            'code' => 'Alfakher/hookahwholesalers',
+        ],
+    ],
+    'i18n' => [
+
+    ],
 ];
