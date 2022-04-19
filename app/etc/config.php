@@ -22,7 +22,7 @@ return [
                 'website_id' => '2',
                 'code' => 'hookah',
                 'name' => 'Hookah.com (B2C)',
-                'sort_order' => '0',
+                'sort_order' => '30',
                 'default_group_id' => '2',
                 'is_default' => '0'
             ],
@@ -30,7 +30,7 @@ return [
                 'website_id' => '5',
                 'code' => 'hookah_company',
                 'name' => 'Hookah-company.com (B2C)',
-                'sort_order' => '0',
+                'sort_order' => '20',
                 'default_group_id' => '5',
                 'is_default' => '0'
             ],
@@ -38,7 +38,7 @@ return [
                 'website_id' => '8',
                 'code' => 'hookah_wholesalers',
                 'name' => 'Hookah Wholesalers (B2B)',
-                'sort_order' => '0',
+                'sort_order' => '10',
                 'default_group_id' => '8',
                 'is_default' => '0'
             ]
