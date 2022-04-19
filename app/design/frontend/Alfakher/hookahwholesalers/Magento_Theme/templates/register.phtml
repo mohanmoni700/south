@@ -52,7 +52,6 @@
    </div>
 <?php else: ?>
      <div class="sign-in">
-     <!--  <a class= "header_account_link" href="<?php //echo $this->getUrl("customer/account/login");?>"><?php //echo __('Sign in')?></a> -->
      <span class="sign-up"><?php echo __('Sign In / Register')?></span>
         <ul class="sign-up-ul" style="display: none;">
             <li class="guest-heading"><span class="guest-content-heading">Welcome Guest!</span></li>
@@ -72,14 +71,6 @@
 <script>
 require(['jquery'], function($){
     $(document).ready(function(){
-        // $('.sign-in').click(function(e){
-        //      $('.sign-up-ul').toggle();
-        //      $('.sign_in_overlay').toggle();
-        // });
-        // $(document).on('click','.sign_in_overlay',function(){
-        //  $('.sign-up-ul').hide();
-        //  $(this).hide();
-        // });
 
         $('.sign-in').click(function(event){
             $('.sign-up-ul').toggle();
