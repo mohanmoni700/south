@@ -233,7 +233,7 @@ return [
                     ],
                 ],
             ],
-        ]
+        ],
     ],
     'modules' => [
         'Magento_AdminAnalytics' => 1,
