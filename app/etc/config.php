@@ -174,10 +174,65 @@ return [
             ]
         ],
         'stores' => [
-
+            'admin' => [
+                'design' => [
+                    'package' => [
+                        'name' => 'default',
+                    ],
+                    'theme' => [
+                        'default' => 'default',
+                    ],
+                ],
+            ],
+            'default' => [
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Corra/alfakher',
+                    ],
+                ],
+            ],
         ],
         'websites' => [
-
+            'admin' => [
+                'web' => [
+                    'routers' => [
+                        'frontend' => [
+                            'disabled' => 'true',
+                        ],
+                    ],
+                    'default' => [
+                        'no_route' => 'admin/noroute/index',
+                    ],
+                ],
+            ],
+            'base' => [
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Corra/alfakher',
+                    ],
+                ],
+            ],
+            'hookah' => [
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Corra/alfakher',
+                    ],
+                ],
+            ],
+            'hookah_company' => [
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Corra/alfakher',
+                    ],
+                ],
+            ],
+            'hookah_wholesalers' => [
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Alfakher/hookahwholesalers',
+                    ],
+                ],
+            ],
         ]
     ],
     'modules' => [
