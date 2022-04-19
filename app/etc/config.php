@@ -715,6 +715,7 @@ return [
         'Magento_WishlistGiftCardGraphQl' => 1,
         'Magento_GiftCardRequisitionListGraphQl' => 0,
         'Alfakher_AddtocartPriceHide' => 1,
+        'Alfakher_AdminReorder' => 1,
         'Alfakher_Blog' => 1,
         'Alfakher_Categoryb2b' => 1,
         'Alfakher_CheckoutPage' => 1,
