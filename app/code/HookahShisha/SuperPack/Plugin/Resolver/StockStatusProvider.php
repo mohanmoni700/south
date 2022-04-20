@@ -12,11 +12,11 @@ class StockStatusProvider
      * @inheritdoc
      */
     public function afterResolve(
-        $subject,
+        $subject, //NOSONAR
         $return,
-        Field $field,
-        $context,
-        ResolveInfo $info,
+        Field $field, //NOSONAR
+        $context, //NOSONAR
+        ResolveInfo $info, //NOSONAR
         array $value = null
     ) {
         if (isset($value['model']['super_pack_status'])) {
