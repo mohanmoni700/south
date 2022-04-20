@@ -112,6 +112,14 @@ class CartItems extends SourceCartItems
                 $shishaSku = $alfaBundle['shisha_sku'] ?? null;
                 $charcoalSku = $alfaBundle['charcoal_sku'] ?? null;
                 $superPack = $alfaBundle['super_pack_flavours'] ?? null;
+
+                if ($shishaSku && !$this->getStockStatusBySku($shishaSku)) {
+                    $productData['model']['super_pack_status'] = true;
+                }
+
+                if ($charcoalSku && !$this->getStockStatusBySku($charcoalSku)) {
+                    $productData['model']['super_pack_status'] = true;
+                }
                 // checking if the superpack child is in stock and passing it to StockStatusProvider
                 if ($superPack && $this->getIsSuperPackOutofStock($alfaBundle['super_pack'] ?? [])) {
                     $productData['model']['super_pack_status'] = true;
