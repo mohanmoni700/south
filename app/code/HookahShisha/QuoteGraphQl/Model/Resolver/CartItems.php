@@ -7,7 +7,6 @@
 
 namespace HookahShisha\QuoteGraphQl\Model\Resolver;
 
-use Magento\CatalogInventory\Api\Data\StockStatusInterface;
 use Magento\CatalogInventory\Api\StockStatusRepositoryInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
