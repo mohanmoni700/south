@@ -14,6 +14,8 @@ $viewModel = $block->getData('view_model');
 $order = $block->getOrder();
 $websiteId = $order->getStore()->getWebsiteId();
 $canShowFeeEdit = $viewModel->isModuleEnabled($websiteId);
+$canShowSubtotalEdit = $viewModel->isSubtotalEditEnabled($websiteId);
+$canShowShippingFeeEdit = $viewModel->isShippingFeeEditEnabled($websiteId);
 ?>
 <?php /* bv_op; date : 18-2-22; edit handling fee; End */ ?>
 
@@ -137,6 +139,88 @@ $canShowFeeEdit = $viewModel->isModuleEnabled($websiteId);
                 <?php endif; ?>
                 <?php /* bv_op; date : 18-2-22; edit handling fee; End */ ?>
 
+                <?php /* bv_op; date : 20-4-22; edit subtotal; Start */ ?>
+                <?php if ($_total->getCode() == 'subtotal'
+                    &&
+                    $canShowSubtotalEdit
+                    &&
+                    !$order->getInvoiceCollection()->count()): ?>
+                    <tr id="edit_subtotal_btn_tr">
+                        <td></td>
+                        <td id="edit_subtotal">
+                            <button class="primary" type="button" id="edit_subtotal_btn">Edit Subtotal</button>
+                        </td>
+                    </tr>
+                    <tr id="submit_subtotal_btn_tr" style="display: none;">
+                        <td id="submit_subtotal">
+                            <button type="button" id="cancle_subtotal_btn">Cancel</button>
+                            <button class="primary" type="button" id="submit_subtotal_btn">Submit</button>
+                        </td>
+                        <td>
+                            <input
+                            type="hidden"
+                            name="updated_subtotal_for_order"
+                            id="updated_subtotal_for_order"
+                            value="<?= /* @noEscape */ $order->getId() ?>">
+
+                            <select name="subtotal_discount_type" id="subtotal_discount_type" class="admin__control-select">
+                                <option value="fix">Amount Discount</option>
+                                <option value="percent">Percentage Discount</option>
+                            </select>
+
+                            <input
+                            type="text"
+                            name="updated_subtotal"
+                            id="updated_subtotal"
+                            placeholder="Discount Amount"
+                            class="admin__control-textarea"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                <?php /* bv_op; date : 20-4-22; edit subtotal; End */ ?>
+
+                <?php /* bv_op; date : 21-4-22; edit shipping; Start */ ?>
+                <?php if ($_total->getCode() == 'shipping'
+                    &&
+                    $canShowShippingFeeEdit
+                    &&
+                    !$order->getInvoiceCollection()->count()): ?>
+                    <tr id="edit_shipping_btn_tr">
+                        <td></td>
+                        <td id="edit_shipping">
+                            <button class="primary" type="button" id="edit_shipping_btn">Edit Shipping Fee</button>
+                        </td>
+                    </tr>
+                    <tr id="submit_shipping_btn_tr" style="display: none;">
+                        <td id="submit_shipping">
+                            <button type="button" id="cancle_shipping_btn">Cancel</button>
+                            <button class="primary" type="button" id="submit_shipping_btn">Submit</button>
+                        </td>
+                        <td>
+                            <input
+                            type="hidden"
+                            name="updated_shipping_for_order"
+                            id="updated_shipping_for_order"
+                            value="<?= /* @noEscape */ $order->getId() ?>">
+
+                            <select name="shipping_discount_type" id="shipping_discount_type" class="admin__control-select">
+                                <option value="fix">Amount Discount</option>
+                                <option value="percent">Percentage Discount</option>
+                            </select>
+
+                            <input
+                            type="text"
+                            name="updated_shipping"
+                            id="updated_shipping"
+                            placeholder="Discount Amount"
+                            class="admin__control-textarea"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                <?php /* bv_op; date : 21-4-22; edit shipping; End */ ?>
+
 
             <?php endforeach; ?>
         </tbody>
@@ -187,3 +271,83 @@ $canShowFeeEdit = $viewModel->isModuleEnabled($websiteId);
 
 <?php endif; ?>
 <?php /* bv_op; date : 18-2-22; edit handling fee; End */ ?>
+
+<?php /* bv_op; date : 20-4-22; edit subtotal; Start */ ?>
+<?php if ($canShowSubtotalEdit && !$order->getInvoiceCollection()->count()): ?>
+
+<script type="text/javascript">
+    require(['jquery'], function ($) {
+        $(document).on('click', "#edit_subtotal_btn", function () {
+            $("#edit_subtotal_btn_tr").hide();
+            $("#submit_subtotal_btn_tr").show();
+        });
+
+        $(document).on('click', "#cancle_subtotal_btn", function () {
+            $("#edit_subtotal_btn_tr").show();
+            $("#submit_subtotal_btn_tr").hide();
+            $("#updated_subtotal").val("");
+        });
+
+        $(document).on('click', "#submit_subtotal_btn", function () {
+            var discountType = $("#subtotal_discount_type").val();
+            var updatedSubtotal = $("#updated_subtotal").val();
+            var orderId = $("#updated_subtotal_for_order").val();
+            if (typeof updatedSubtotal === 'undefined' || updatedSubtotal == '') {
+                alert("please enter some value");
+                return;
+            }
+            $.ajax({
+                url: "<?= /* @noEscape */ $block->getUrl('handlingfee/Order/updatesubtotal/') ?>",
+                showLoader: true,
+                type: 'POST',
+                data: {order_id:orderId, amount : updatedSubtotal, type : discountType},
+                success: function(response) {
+                    location.reload(true);
+                }
+            });
+        });
+    });
+</script>
+
+<?php endif; ?>
+<?php /* bv_op; date : 20-4-22; edit Subtotal; End */ ?>
+
+<?php /* bv_op; date : 21-4-22; edit shipping; Start */ ?>
+<?php if ($canShowShippingFeeEdit && !$order->getInvoiceCollection()->count()): ?>
+
+<script type="text/javascript">
+    require(['jquery'], function ($) {
+        $(document).on('click', "#edit_shipping_btn", function () {
+            $("#edit_shipping_btn_tr").hide();
+            $("#submit_shipping_btn_tr").show();
+        });
+
+        $(document).on('click', "#cancle_shipping_btn", function () {
+            $("#edit_shipping_btn_tr").show();
+            $("#submit_shipping_btn_tr").hide();
+            $("#updated_shipping").val("");
+        });
+
+        $(document).on('click', "#submit_shipping_btn", function () {
+            var discountType = $("#shipping_discount_type").val();
+            var updatedShipping = $("#updated_shipping").val();
+            var orderId = $("#updated_shipping_for_order").val();
+            if (typeof updatedShipping === 'undefined' || updatedShipping == '') {
+                alert("please enter some value");
+                return;
+            }
+            $.ajax({
+                url: "<?= /* @noEscape */ $block->getUrl('handlingfee/Order/updateshippingfee/') ?>",
+                showLoader: true,
+                type: 'POST',
+                data: {order_id:orderId, amount : updatedShipping, type : discountType},
+                success: function(response) {
+                    location.reload(true);
+                }
+            });
+        });
+    });
+</script>
+
+<?php endif; ?>
+<?php /* bv_op; date : 21-4-22; edit Shipping; End */ ?>
