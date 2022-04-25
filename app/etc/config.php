@@ -714,6 +714,7 @@ return [
         'Magento_WishlistGiftCard' => 1,
         'Magento_WishlistGiftCardGraphQl' => 1,
         'Magento_GiftCardRequisitionListGraphQl' => 0,
+        'Alfakher_FinanceVerified' => 1,
         'Alfakher_MyDocument' => 1,
         'Amasty_BannersLite' => 1,
         'Amasty_Base' => 1,
