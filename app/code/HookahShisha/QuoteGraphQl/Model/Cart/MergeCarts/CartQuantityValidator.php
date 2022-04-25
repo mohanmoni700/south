@@ -16,6 +16,7 @@ use Magento\Quote\Api\CartItemRepositoryInterface;
 use Magento\Quote\Api\Data\CartInterface;
 use Magento\Quote\Api\Data\CartItemInterface;
 use Magento\QuoteGraphQl\Model\Cart\MergeCarts\CartQuantityValidator as SourceCartQuantityValidator;
+use Magento\CatalogInventory\Api\StockStateInterface;
 
 class CartQuantityValidator extends SourceCartQuantityValidator
 {
@@ -25,22 +26,24 @@ class CartQuantityValidator extends SourceCartQuantityValidator
     private CartItemRepositoryInterface $cartItemRepository;
 
     /**
-     * @var StockRegistryInterface
+     * @var StockStateInterface
      */
-    private StockRegistryInterface $stockRegistry;
+    private StockStateInterface $stockState;
 
     /**
      * @param CartItemRepositoryInterface $cartItemRepository
      * @param StockRegistryInterface $stockRegistry
+     * @param StockStateInterface $stockState
      */
     public function __construct(
         CartItemRepositoryInterface $cartItemRepository,
-        StockRegistryInterface $stockRegistry
+        StockRegistryInterface $stockRegistry,
+        StockStateInterface $stockState
     ) {
         parent::__construct($cartItemRepository, $stockRegistry);
 
         $this->cartItemRepository = $cartItemRepository;
-        $this->stockRegistry = $stockRegistry;
+        $this->stockState = $stockState;
     }
 
     /**
@@ -54,14 +57,15 @@ class CartQuantityValidator extends SourceCartQuantityValidator
     {
         $modified = false;
         /** @var CartItemInterface $guestCartItem */
-        foreach ($guestCart->getAllVisibleItems() as $guestCartItem) {
+        foreach ($guestCart->getAllItems() as $guestCartItem) {
             foreach ($customerCart->getAllItems() as $customerCartItem) {
                 if ($customerCartItem->compare($guestCartItem)) {
                     $product = $customerCartItem->getProduct();
-                    $stockCurrentQty = $this->stockRegistry->getStockStatus(
+                    $stockCurrentQty = $this->stockState->getStockQty(
                         $product->getId(),
                         $product->getStore()->getWebsiteId()
-                    )->getQty();
+                    );
+
                     if ($stockCurrentQty < $guestCartItem->getQty() + $customerCartItem->getQty()
                         // Need this check because configurable item will always have qty 0 and if its removed, then
                         // simple product which has this parent is also removed, which is what we don't want.

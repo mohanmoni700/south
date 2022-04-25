@@ -10,6 +10,9 @@ $company = $block->getCustomerCompany();
 $actionURL = "#";
 $formDisable = 1;
 $selectedElement = "selected='selected'";
+$country = $block->getLayout()->createBlock(HookahShisha\Customerb2b\Block\Myaccount\BasicDetail::class);
+$count_id=$country->getCountryId();
+
 ?>
 <?php $messageData = $block->getMessagedata(); ?>
 <?php if ($messageData['comAccountVerified'] == 0 && $messageData['comDetailsChanged'] == 0): ?>
@@ -34,7 +37,11 @@ $selectedElement = "selected='selected'";
     <?php if ($block->isEditAccountAllowed()): ?>
     <fieldset class="fieldset info">
         <legend></legend>
-        <input type="hidden" name="company_email" id="company_email" value="<?= $block->escapeHtmlAttr($company->getCompanyEmail()) ?>"/>
+        <input
+        type="hidden"
+        name="company_email"
+        id="company_email"
+        value="<?= /* @noEscape */ $block->escapeHtmlAttr($company->getCompanyEmail()) ?>"/>
         <input type="hidden" name="com_account_verified" value="0"/>
         <input type="hidden" name="com_details_changed" value="1"/>
         <div class="field company-name _required">
@@ -64,9 +71,11 @@ $selectedElement = "selected='selected'";
                         <?= $block->escapeHtml(__('Please select business type.')) ?>
                     </option>
                     <?php foreach ($block->getBusinessType() as $key => $value): ?>
-                        <option value="<?= $value['value']?>"
-                            <?php if($value['value'] == $company->getBusinessType()){ echo $selectedElement; } ?>
-                            ><?= $value['label']?></option>
+                        <option value="<?= /* @noEscape */ $value['value']?>"
+                            <?php if ($value['value'] == $company->getBusinessType()):?>
+                                <?= /* @noEscape */ $selectedElement;?>
+                            <?php endif; ?>
+                            ><?= /* @noEscape */ $value['label']?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -84,9 +93,11 @@ $selectedElement = "selected='selected'";
                         <?= $block->escapeHtml(__('Please select your annual turn over.')) ?>
                     </option>
                     <?php foreach ($block->getAnnualTurnOver() as $kAto => $valAto): ?>
-                        <option value="<?= $valAto['value']?>"
-                            <?php if($valAto['value'] == $company->getAnnualTurnOver()){ echo $selectedElement; } ?>
-                            ><?= $valAto['label']?></option>
+                        <option value="<?= /* @noEscape */ $valAto['value']?>"
+                            <?php if ($valAto['value'] == $company->getAnnualTurnOver()): ?>
+                                <?= /* @noEscape */ $selectedElement ?>
+                            <?php endif; ?>
+                            ><?= /* @noEscape */ $valAto['label']?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -104,21 +115,29 @@ $selectedElement = "selected='selected'";
                         <?= $block->escapeHtml(__('Please select number of employees')) ?>
                     </option>
                     <?php foreach ($block->getNumberOfEmp() as $knoe => $valnoe): ?>
-                        <option value="<?= $valnoe['value']?>"
-                            <?php if($valnoe['value'] == $company->getNumberOfEmp()){ echo $selectedElement; } ?>
-                            ><?= $valnoe['label']?></option>
+                        <option value="<?= /* @noEscape */ $valnoe['value']?>"
+                            <?php if ($valnoe['value'] == $company->getNumberOfEmp()): ?>
+                                <?= /* @noEscape */ $selectedElement; ?>
+                            <?php endif; ?>
+                            ><?= /* @noEscape */ $valnoe['label']?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
         </div>
+        <!-- added condition for showing below fields for USA only 08/03/2022 start[BS]  -->
+        <?php if($count_id == 'US') { ?>
         <div class="field vat-tax-id">
             <?php $salesTaxID = __('Sales Tax ID'); ?>
             <label class="label" for="vat_tax_id">
                 <span class="tax_tooltip">
                 <span><?= $block->escapeHtml($salesTaxID) ?></span>
                 <?php $tooltipSalesTaxEnable = $block->getConfig('hookahshisha/business_details/enable_business'); ?>
-                <?php if($tooltipSalesTaxEnable): ?>
-                    <?php $tooltipSalesTaxId = $block->getConfig('hookahshisha/business_details/tooltip_sales_tax_id'); ?>
+                <?php if ($tooltipSalesTaxEnable): ?>
+                    <?php
+                    $tooltipSalesTaxId = $block->getConfig(
+                        'hookahshisha/business_details/tooltip_sales_tax_id'
+                    );
+                    ?>
                     <span class="sales-tax-tooltip">
                         <a href="javascript::void(0);" class="tooltip-toggle">?</a>
                         <span class="tooltip-content"><?= $block->escapeHtml($tooltipSalesTaxId) ?></span>
@@ -131,7 +150,7 @@ $selectedElement = "selected='selected'";
                        value="<?= $block->escapeHtmlAttr($company->getVatTaxId()) ?>"
                        placeholder="<?= $block->escapeHtmlAttr($salesTaxID) ?>"
                        title="<?= $block->escapeHtmlAttr($salesTaxID) ?>"
-                       class="input-text">
+                       class="input-text validate-alphanum-with-spaces">
             </div>
         </div>
         <div class="field tin-number">
@@ -144,7 +163,7 @@ $selectedElement = "selected='selected'";
                        value="<?= $block->escapeHtmlAttr($company->getTinNumber()) ?>"
                        placeholder="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
                        title="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
-                       class="input-text">
+                       class="input-text validate-alphanum-with-spaces">
             </div>
         </div>
         <div class="field tobacco-permit-number">
@@ -157,9 +176,11 @@ $selectedElement = "selected='selected'";
                        value="<?= $block->escapeHtmlAttr($company->getTobaccoPermitNumber()) ?>"
                        placeholder="<?= $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
                        title="<?= $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
-                       class="input-text">
+                       class="input-text validate-alphanum-with-spaces">
             </div>
         </div>
+    <?php } ?>
+      <!-- condition for showing below fields for USA only 08/03/2022 end[BS] -->
         <div class="field hear-about-us required">
             <label class="label" for="hear_about_us">
                 <span><?= $block->escapeHtml(__('How did you hear about us ?')) ?></span>
@@ -173,9 +194,11 @@ $selectedElement = "selected='selected'";
                         <?= $block->escapeHtml(__('Please select you hear about us')) ?>
                     </option>
                     <?php foreach ($block->getHearAboutUs() as $khau => $valhau): ?>
-                        <option value="<?= $valhau['value']?>"
-                            <?php if($valhau['value'] == $company->getHearAboutUs()){ echo $selectedElement; } ?>
-                            ><?= $valhau['label']?></option>
+                        <option value="<?= /* @noEscape */ $valhau['value']?>"
+                            <?php if ($valhau['value'] == $company->getHearAboutUs()): ?> 
+                                <?= /* @noEscape */ $selectedElement; ?>
+                            <?php endif; ?>
+                            ><?= /* @noEscape */ $valhau['label']?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -195,7 +218,10 @@ $selectedElement = "selected='selected'";
     </fieldset>
     <div class="actions-toolbar">
         <div class="primary">
-            <button type="submit" class="action save primary" title="<?= $block->escapeHtmlAttr(__('Save business details')) ?>">
+            <button
+            type="submit"
+            class="action save primary"
+            title="<?= $block->escapeHtmlAttr(__('Save business details')) ?>">
                 <span><?= $block->escapeHtml(__('Save business details')) ?></span>
             </button>
         </div>
@@ -207,7 +233,7 @@ $selectedElement = "selected='selected'";
         require(['jquery'], function($){
     script;
 ?>
-<?php if($formDisable == 1): ?>
+<?php if ($formDisable == 1): ?>
     <?php
         $scriptString .= <<<script
             $(document).ready(function(){
@@ -216,8 +242,13 @@ $selectedElement = "selected='selected'";
         script;
     ?>
 <?php endif; ?>
-<?php 
+<?php
     $scriptString .= <<<script
+            $("#company-edit-form").submit(function( event ) {
+                if($('#company-edit-form').valid()){
+                    $("body").trigger('processStart');
+                }
+            });
         });
     script; ?>
 <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>

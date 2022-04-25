@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- <referenceBlock name="creditmemo_totals">
+            <block class="Alfakher\HandlingFee\Block\Adminhtml\Sales\Order\Creditmemo\Fee" name="handling_fee" as="handling_fee"/>
+        </referenceBlock> -->
+
+        <referenceBlock name="adjustments">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Alfakher_HandlingFee::order/creditmemo/create/totals/adjustments.phtml</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

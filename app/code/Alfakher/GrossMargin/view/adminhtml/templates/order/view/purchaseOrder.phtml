@@ -1,0 +1,15 @@
+<?php
+$order = $block->getOrder();
+$poNumber = $order->getPurchaseOrder();
+$poNumber = $poNumber == null ? "N/A" : $poNumber;
+?>
+
+
+
+<hr>
+<div class="admin__page-section-item">
+<div class="admin__page-section-item-title">
+<span class="title">Purchase Order: </span>
+<div id="ordereditor-billing-address-link" class="actions block-edit-link"><?= /* @noEscape */ $poNumber ?></div></div>
+</div>
+<hr>

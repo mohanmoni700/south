@@ -26,6 +26,12 @@
 @_password-very-strong: #81b562;
 @link_color: #961E70;
 
+@disable_tabbg:#EAEAEA;
+@disable_font_clr:#D0D0D0;
+@disable_border:#D0D0D0;
+@disable_checkbox_clr: #D0D0D0;
+
+@account_color-font:#333333;
 //
 //  Common
 //  _____________________________________________
@@ -44,21 +50,442 @@ input::-webkit-contacts-auto-fill-button {
   position: absolute;
   right: 0;
 }
+.migrate-customer-header {
+    max-width: 340px;
+    margin: 0 auto;
+    padding: 12px;
+    border: 2px solid #000000;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    position: relative;
+    @media only screen and (max-width: 360px) {
+        max-width: 290px;
+    }
+    &:before{
+        content:'';
+        background: url('@{baseDir}images/alficon.png');
+        position: relative;
+        width: 25px;
+        height: 25px;
+        top: 3px;
+        left: 0;
+        right: 0;
+        background-size: contain;
+        display: inline-block;
+        margin-right: 7px;
+    }
+}
+.customer-address-index{
+    button.action.primary.add{
+        width: 100%;
+    }
+    .actions-toolbar{
+        .primary{
+            width: 100%;
+            max-width: 300px;
+        }
+    }
+}
+.modal-popup.popup-reorder-quote{
+    .modal-title{
+        font-weight: @font-weight__semibold;
+        .lib-font-size(21);
+    }
+} 
+.modals-wrapper{
+    .modal-popup.popup-reorder-quote{
+        .modal-inner-wrap{
+            width: 100%;
+            max-width: 560px;
+        }
+        .actions-toolbar{
+           > .primary{
+            .lib-vendor-prefix-display(flex);
+            justify-content: space-between;
+            width: 100%;
+                .action{
+                    background: @button-primary__background;
+                    border: @button-primary__border;
+                    color:@color-white;     
+                    padding: 4px 15px;
+                    border-radius: 30px;
+                    display: inline-block;
+                    line-height: 30px;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    box-shadow: none;
+                    margin-bottom: 0;
+                    font-size: 14px;
+                    &.replace{
+                        background: @color_primary;
+                        border-color: #961E70;
+                        margin-right: 0;
+                        margin-left: 10px;
+                    }
+                }
+            }
+            .secondary{
+                display: none;
+                .action.cancel{
+                    background: @button-primary__background;
+                    border: @button-primary__border;
+                    color:@color-white;     
+                    padding: 4px 15px;
+                    border-radius: 30px;
+                    display: inline-block;
+                    line-height: 30px;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    min-height: auto;
+                    font-weight: @font-weight__semibold;
+                    margin: 0;
+                }
+            }
+        }
+    } 
+} 
+.myproduct-pricing{
+    .stock.unavailable{
+        .lib-font-size(14);
+    }
+}
+.message.info{
+    width: 100%;
+}
+.additional-addresses{
+    .customer_info{
+        .streetaddress{
+
+        }
+        span{
+            line-height: 20px;
+            margin-bottom: 0;
+        }
+        .block{
+            display: block;
+        }
+    }
+    #additional-addresses-table{
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        .address_list{
+            padding: 20px;
+            border: 1px solid #000000;
+            border-radius: 10px;
+            width: calc(~'50% - 26px');
+            margin-bottom: 15px;
+        }
+    }
+    .customer_actions{
+        display: block;
+        margin-top: 8px;
+        .action{
+            color: @account_color-font;
+            text-decoration: underline; 
+            font-weight: @font-weight__semibold;
+            font-size: 12px;
+        }
+    }
+}
+.customer-addresses-toolbar.toolbar.bottom{
+    display: none;
+}
+.account{
+    .registerform{ 
+        .field_flex{
+            .lib-vendor-prefix-display(flex);
+            flex-wrap: wrap;
+            width: 100%;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            .field_block.password{
+                width: 100%;
+                .control{
+                    width: calc(~'50% - 15px');    
+                }
+            }
+            .field{
+                width: calc(~'50% - 15px');
+                .label{
+                    padding: 0;
+                }
+            }
+        }
+        .primary{
+            width: 100%;
+        }
+        .actions-toolbar{
+            .action.save.primary{
+                max-width: 300px;
+                width: 100%;
+            }
+        }
+    }
+    &.customer-address-form {
+        .form-address-edit {
+            .fieldset{
+                + .fieldset{
+                    margin-top: 30px;
+                }
+            }
+            .field.street {
+                > .label {
+                    display: none;
+                }
+            }
+        }
+    }
+    .form-address-edit{
+        .fieldset{
+            + .fieldset{
+                legend{
+                    display: none;
+                }
+                br{
+                    display: none;
+                }
+            }
+            .field:not(.choice){
+                .label{
+                    padding: 0;
+                }
+            }
+            .field{
+                &.choice.set.billing{
+                    margin-bottom: 10px;
+                    margin-top: 20px;
+                }
+            }
+        } 
+    }
+    .block.block-addresses-default{
+        margin-bottom: 10px;
+    }
+    .block.block-addresses-list{
+        border-top: 1px solid @border-color__base-table;
+        padding-top:15px;
+    }
+    .pages {
+        .item {
+            margin: 0 8px 0 0;
+        }
+        .action {
+            width: 30px;
+            height: 30px;
+            line-height: 29px;
+            border-color: @hookah_theme_color;
+            border-radius: 100%;
+            &:hover {
+                background-color: @hookah_theme_color;
+                &::before {
+                    color: @color_white !important;
+                }
+            }
+            &.previous {
+                &:before {
+                    color: @hookah_theme_color;
+                    font-size: 40px;
+                }
+            }
+            &.next {
+                margin-left: 0;
+                &:before {
+                    color: @hookah_theme_color;
+                    font-size: 40px;
+                    margin: 0 0 0 -5px;
+                }
+            }
+        }
+    }
+} 
 .customer-account-create{
     .page.messages{
         .message{
             margin-top: 30px;
         }
     }
+    .page-main {
+        > .pending-tooltip {
+            max-width: 1200px;
+            margin: 30px auto 0 auto;
+            display: block;
+            top: 14px;
+        }
+    }
 }
+.form-address-edit{
+    .actions-toolbar{
+        .action.primary{
+            width: 300px;
+        }
+    } 
+}
+.additional-addresses {
+    margin-bottom: 0;
+}
+.block.block-addresses-default{
+    .block-content{
+        .lib-vendor-prefix-display(flex);
+        flex-wrap: nowrap;
+        .box-address-billing{
+            margin-right: 54px;
+        }
+        .address_box{
+            width: 100%;
+            padding: 20px;
+            border: 1px solid #000000;
+            border-radius: 10px;
+            background: #FBFBFB;
+        }
+        .box-content{
+            address{
+                line-height: 22px;
+                color: @account_color-font;
+                word-break: break-word;
+                &::first-line {
+                    font-weight: @font-weight__bold;
+                }
+                a{
+                    color: @account_color-font;
+                }
+            }
+        }        
+        .box-actions{
+            margin-top: 8px;
+            .edit{
+                color: @account_color-font;
+                text-decoration: underline; 
+                font-weight: @font-weight__semibold;
+                font-size: 12px;
+            }
+        }
+    }
+    .block-title{
+        padding-bottom: 10px;
+        border-bottom: 1px solid @border-color__base-table;
+        margin-bottom: 10px;
+        strong{
+            font-weight: @font-weight__bold;
+            .lib-font-size(18);
+            line-height: 28px;
+        }
+    }
+}
+.account{
+    .page-wrapper{
+        .column.main{
+            .block.block-addresses-list{
+                .block-title{
+                    strong{
+                        font-weight: @font-weight__bold;
+                        .lib-font-size(14);
+                        line-height: 28px;
+                    }
+                }
+            }
+        }
+    }
+}
+/*============= Account Disable style ==============*/
+.account{
+    .pending{
+        ~ .columns{
+            .my_account_b2b{
+                li{
+                    &.active{
+                        > a{
+                            background: @disable_tabbg;
+                            color: @disable_font_clr;
+                            font-weight: 400;
+                        }
+                    }
+                    a{
+                        background: @disable_tabbg;
+                        color: @disable_font_clr;
+                        font-weight: 400;
+                        pointer-events: none;
+                        opacity: .6;
+                    } 
+                }
+            } 
+            .fieldset{
+                > .field:not(.choice){
+                    > .label{
+                        color: @disable_font_clr;
+                        &:after{
+                            color: @disable_font_clr;
+                        }
+                    }
+                    input,
+                    select,
+                    textarea{
+                        border-color: @disable_border;
+                    }
+                } 
+            } 
+            .checkbox:checked{
+                + label:before{
+                    background: @disable_checkbox_clr;
+                    border-color: @disable_border;
+                }
+            }
+            .checkbox:checked + label:after {
+                 background: @disable_checkbox_clr url('@{baseDir}images/true_arrow.svg');   
+            } 
+            .field.choice.newsletter{
+                .label{
+                    color: @disable_font_clr;
+                }
+            }
+            .add-more-field {
+                .checkbox{
+                    &:checked {
+                        + label{
+                            &:before {
+                                background: @color_black;
+                                border-color: @color_black;
+                            }
+                            &::after {
+                                background-color: @color_black;
+                            }
+                        }                       
+                    }
+                    &:disabled {
+                        + label{
+                            &:before {
+                                background: @disable_checkbox_clr;
+                                border-color: @disable_checkbox_clr;
+                            }
+                            &::after {
+                                background-color: @disable_checkbox_clr;
+                            }
+                        }    
+                    }
+                }
+            }
+         .action.save.primary{
+             background: @disable_tabbg;
+             border-color: @disable_border;
+             pointer-events: none;
+         }
+        }
+    }
+} 
+/*============= Account Disable End ==============*/
+
 /*============= Account style ==============*/
-.customer-account-index{
+.customer-account-index, body.account {
     background: @account-wrapperbg;
+    .page-main {
+        max-width: @layout_container_xl;
+    }
 }
 .account{
     .pending{
         background: @message-warning__background;
-        padding: 16px 32px;
+        padding: 16px 32px 16px 75px;
         border-radius: 12px;
         color: @message-warning__color;
         text-transform: uppercase;
@@ -76,13 +503,16 @@ input::-webkit-contacts-auto-fill-button {
             height: 25px;
             background-size: contain;
             margin-right: 18px;
-            position: relative;
             vertical-align: middle;
+            top: 50%;
+            left:32px;
+            position: absolute;
+            margin-top: -13px;
         } 
     }
     .reject{
         background: @message-warning__background;
-        padding: 16px 32px;
+        padding: 16px 32px 16px 75px;
         border-radius: 12px;
         color: @message-warning__color;
         text-transform: uppercase;
@@ -102,13 +532,18 @@ input::-webkit-contacts-auto-fill-button {
             margin-right: 18px;
             position: relative;
             vertical-align: middle;
+            top: 50%;
+            left:32px;
+            position: absolute;
+            margin-top: -10px;
         } 
     }
     .page-main{
-        margin-top: 41px;
-        margin-bottom: 150px;
+        margin-top: 40px;
+        margin-bottom: 80px;
     }
     .columns{
+        width: 100%;
         .lib-vendor-prefix-display(flex);
         flex-wrap: nowrap;
         background: @color-white;
@@ -128,6 +563,13 @@ input::-webkit-contacts-auto-fill-button {
         }
         .sidebar.sidebar-additional{
             display: none;
+        }
+    }
+    .fieldset {
+        > .legend {
+            + br {
+                display: none;
+            }
         }
     }
     .form-address-edit,
@@ -160,7 +602,6 @@ input::-webkit-contacts-auto-fill-button {
                 width: 100%;
                 .field.additional{
                     width: 100%;
-                    margin-top: 30px;
                 }
             }
             .field.choice{
@@ -247,26 +688,49 @@ input::-webkit-contacts-auto-fill-button {
         }
     } 
     li.nav.item.current{
+        background: #961E70;
         strong{
-            background: #961E70;
-            padding: 15px;
             color:#ffffff;
-            border: 0;
-            padding-left: 56px;
+            background: #961E70;
+            border-left: 0;
+            padding: 15px 15px 15px 56px;
+        }
+        a{
+            &:before{
+                filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+            }
+            strong{
+                padding: 0;
+                &:before{
+                    display: none;
+                }
+            }
         }
     }
 
     button.action.save.primary{
-        width: 301px;
+        // width: 301px;
     }
     .block-collapsible-nav .item a{
         padding: 15px;
         padding-left: 56px;
-    }
-    .block-collapsible-nav .item:nth-child(4){
-        display: none;
+        border-left: 0;
     }
     .nav.items{
+        .nav[class*="myorders"]{
+            a,strong{
+                &:before{
+                  width: 19px;
+                  height: 16px;
+                  background: url('@{baseDir}images/myorder.svg') no-repeat;  
+                }   
+            }
+            strong{
+                &:before{
+                    filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+                }
+            }
+        }
         .nav{
             a, strong{
                 position: relative;
@@ -274,67 +738,111 @@ input::-webkit-contacts-auto-fill-button {
                     content:'';
                     position: absolute;
                     left: 22px;
-                    top: 20px;    
+                    top: 17px;
+                    width: 15px;
+                    height: 17px;    
                 }
             }
-            &.current{
-                &:nth-child(1){
-                    strong{
-                         &:before{
-                          width: 15px;
-                          height: 16px;
-                          background: url('@{baseDir}images/account_active.svg') no-repeat;  
-                        }  
+            &.myaccount{
+                a,strong{
+                    &:before{
+                      width: 15px;
+                      height: 18px;
+                      background: url('@{baseDir}images/myaccount.svg') no-repeat;  
+                    }   
+                }
+                strong{
+                    &:before{
+                        filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
                     }
                 }
             }
-            &:nth-child(1){
-                a{
+            &.myquotes{
+                a,strong{
                     &:before{
-                      width: 15px;
-                      height: 12px;
-                      background: url('@{baseDir}images/account_active.svg') no-repeat;  
-                      margin-top: -2px;
-                    }   
-                }
-            }
-            &:nth-child(2){
-                a{
-                    &:before{
-                      width: 16px;
-                      height: 11px;
+                      width: 19px;
+                      height: 16px;
                       background: url('@{baseDir}images/myorder.svg') no-repeat;  
                     }   
                 }
-            }
-            &:nth-child(3){
-                a{
+                strong{
                     &:before{
-                      width: 15px;
-                      height: 12px;
+                        filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+                    }
+                }
+            }
+            &.mypaymentoptions{
+                a,strong{
+                    &:before{
+                      width: 17px;
+                      height: 17px;
+                      background: url('@{baseDir}images/payment_option.svg') no-repeat;  
+                    }   
+                }
+                strong{
+                    &:before{
+                        filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+                    }
+                }
+            }
+            
+            &.manageaddresses{
+                a,strong{
+                    &:before{
                       background: url('@{baseDir}images/manage_address.svg') no-repeat;  
                     }   
                 }
-            }
-            &:nth-child(4){
-                a{
+                strong{
                     &:before{
-                      width: 15px;
-                      height: 12px;
+                        filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+                    }
+                }
+            }
+            &.changepassword{
+                a,strong{
+                    &:before{
                       background: url('@{baseDir}images/change_password.svg') no-repeat;  
                     }   
                 }
-            }
-            &:nth-child(5){
-                a{
+                strong{
                     &:before{
-                      width: 15px;
-                      height: 12px;
+                        filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+                    }
+                }
+            }
+            &.mydocuments{
+                a,strong{
+                    &:before{
                       background: url('@{baseDir}images/document.svg') no-repeat;  
                     }   
                 }
+                strong{
+                    &:before{
+                        filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+                    }
+                }
+            }
+            &.myproductpricing{
+                a,strong{
+                    &:before{
+                      background: url('@{baseDir}images/product_price.svg') no-repeat;  
+                    }   
+                }
+                strong{
+                    &:before{
+                        filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+                    }
+                }
+            }
+            &.logout{
+                a{
+                    &:before{
+                      background: url('@{baseDir}images/logout.svg') no-repeat;  
+                    } 
+                }
             }
         }
+
     }
 }
 .amcompany-customer-account{
@@ -353,6 +861,11 @@ input::-webkit-contacts-auto-fill-button {
       &:focus{
         outline: none;
       }
+      & + label{
+        padding-left: 30px;
+        padding-top: 1px;
+        cursor: pointer;
+      }
     & + label:before {
       content: '';
       margin-right: 10px;
@@ -368,11 +881,11 @@ input::-webkit-contacts-auto-fill-button {
       border-radius: 0px;
     }
 
-    &:hover + label:before {
-      background: #333333;
-      border: 1px solid #333333;
-      border-radius: 0px;
-    }
+    // &:hover + label:before {
+    //   background: #333333;
+    //   border: 1px solid #333333;
+    //   border-radius: 0px;
+    // }
 
     &:focus + label:before {
       box-shadow: none;
@@ -429,7 +942,7 @@ input::-webkit-contacts-auto-fill-button {
 
     .page-header{
         position: relative;
-        z-index: 9999;
+        z-index: 999;
         background: #ffffff;
     }
     .sales-tax-tooltip{
@@ -488,15 +1001,6 @@ input::-webkit-contacts-auto-fill-button {
     html {
       scroll-behavior: smooth;
     }
-    nav.navigation.sw-megamenu:before{
-        content: '';
-        position: absolute;
-        height: 60px;
-        background: #ffffff;
-        top: -30px;
-        width: 100%;
-        left: 0px;
-    }
     .nav-open{
         .page-main {
             position: relative;
@@ -507,6 +1011,7 @@ input::-webkit-contacts-auto-fill-button {
         z-index: 1;
     }
     select {
+      color: @color_black;
       -webkit-appearance: none;
       -moz-appearance: none;
       text-indent: 1px;
@@ -556,7 +1061,7 @@ input::-webkit-contacts-auto-fill-button {
                 position: absolute;
                 top: 0px;
                 right: 10px;
-                z-index: 9;
+                z-index: 2;
                 color: #7f7f7f;
                 font-size: 24px;
                 text-decoration: none;
@@ -614,7 +1119,7 @@ input::-webkit-contacts-auto-fill-button {
     .customer-account-create,
     .customer-account-forgotpassword,
     .customer-account-create {
-         background: @account_bgclr;
+         background: @account-wrapperbg;
     }
     .customer-account-create{
         .login-container{
@@ -637,17 +1142,7 @@ input::-webkit-contacts-auto-fill-button {
                     }
                 }
             }
-        }
-        .field.street{
-            .field .label{
-                position: relative;
-                font-weight: 700;    
-                margin-bottom: 10px;
-                display: block;
-                width: 100%;
-                height: auto;
-            }
-        } 
+        }         
         .actions-toolbar.justify_btn{
             .lib-vendor-prefix-display(flex);
             width: 100%;
@@ -665,9 +1160,15 @@ input::-webkit-contacts-auto-fill-button {
             .regis{
                 float: right;
                 width: 50%;
-                .register{
-                    float: right;
+                .register, .action.submit {
+                    float: right;                    
                 }
+                .width-auto {
+                    width: auto;
+                }
+            }
+            button.submit {
+                transform: translateX(0);
             }
         }
         .action.next.primary{
@@ -711,6 +1212,17 @@ input::-webkit-contacts-auto-fill-button {
                             background: #961E70;
                         }
                     }
+                    .user_icon.docs{
+                        &:before{
+                             background-image: url('@{baseDir}images/documents-active.svg');
+                        }
+                        &:after{
+                            background: #961E70;
+                        }
+                    }
+                }
+                .step_list {
+                    .lib-font-size(12);
                 }
 
                 .basic{
@@ -794,6 +1306,14 @@ input::-webkit-contacts-auto-fill-button {
                             width: 21px;
                             height: 20px;
                             margin-left: -1px;
+                        }
+                    }
+                    &.docs{
+                        &:before{
+                            background-image: url('@{baseDir}images/documents.svg');
+                            width: 18px;
+                            height: 22px;
+                            top: 18px;
                         }
                     }
                 }
@@ -883,6 +1403,18 @@ input::-webkit-contacts-auto-fill-button {
         }
 
     }
+    .field.street{
+        .field .label{
+            position: relative;
+            font-weight: @font-weight__bold;
+            margin: 0 0 10px 0;
+            display: block;
+            width: 100%;
+            height: auto;
+            font-size: 1.2rem;
+            color: @color_black;
+        }
+    }
     .login-container {
         .block {
             &-new-customer {
@@ -941,6 +1473,7 @@ input::-webkit-contacts-auto-fill-button {
 
         .actions-toolbar .action.primary {
             &:extend(.abs-button-l all);
+            .lib-font-size(16);
         }
     }
 
@@ -1004,6 +1537,16 @@ input::-webkit-contacts-auto-fill-button {
 
             .block:not(.widget) {
                 &:extend(.abs-account-blocks all);
+            }
+            .items.order-links{
+                .nav.item{
+                    &.current{
+                        strong{
+                            padding: 15px;
+                            display: inline-block;
+                        }
+                    }
+                }
             }
         }
 
@@ -1118,6 +1661,7 @@ input::-webkit-contacts-auto-fill-button {
 
             strong {
                 .lib-heading(h4);
+                font-weight: @font-weight__regular;
                 .column.main & {
                     font-size: @h3__font-size;
                 }
@@ -1229,8 +1773,10 @@ input::-webkit-contacts-auto-fill-button {
             box-shadow: none;
             height: 40px;
             &:hover{
-                background: @button-primary__hover__background;
-                border: @button-primary__hover__border;
+                border-color: transparent;
+                background: @hookah_theme_gradient;
+                border-left-color: @border_left_gradient;
+                border-right-color: @border_right_gradient;
             }
         }
     }
@@ -1280,6 +1826,13 @@ input::-webkit-contacts-auto-fill-button {
     //  _________________________________
 
 
+    .response-msg {
+        text-align: center;
+        .error {
+            color: @color-red9;
+            margin-bottom: 10px;
+        }
+    }
     .separator {
         position: relative;
         text-align: center;
@@ -1292,6 +1845,7 @@ input::-webkit-contacts-auto-fill-button {
             margin: 0 auto;
             position: relative;
             display: inline-block;
+            top: -3px;
         }
         .user_icon{
             position: absolute;
@@ -1334,10 +1888,25 @@ input::-webkit-contacts-auto-fill-button {
                 right: -8px;
                 top: 2px;
             }
+            max-width: 1200px;
+            > * {
+                max-width: 940px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .form.create.account {
+                min-width: unset;
+                #basic_details, #business_details {
+                    max-width: 720px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+            }
         }
     }
     .login-container{
         background: @color-white;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         border-radius: 10px;
         padding-top: 65px;
         padding-bottom: 75px;
@@ -1348,7 +1917,7 @@ input::-webkit-contacts-auto-fill-button {
                 margin-bottom: 0;
                 text-align: center;
                 .lib-font-size(32);
-                line-height: @indent__l - 4;
+                line-height: @indent__l;
                 .lib-css(color, @color-black);
                 .lib-css(text-align, center); 
                 font-weight: 700;
@@ -1368,6 +1937,27 @@ input::-webkit-contacts-auto-fill-button {
             margin-bottom: 20px;
             text-align: center;
             .lib-font-size(20);
+        }
+    }
+    .validator.validator-email, .validator.validator-phone {
+        width: 100% !important;
+        > input {
+            padding-right: 36px;
+        }
+        .feedback {
+            height: 22px !important;
+            width: 22px !important;
+            background-size: 12px auto !important;
+            top: 12px !important;
+            right: 8px !important;
+        }        
+        &.validation-no {
+            .feedback {
+                background-size: 10px auto !important;
+            }
+        }
+        div.mage-error[generated] {
+            float: left;
         }
     }
     .block-content {
@@ -1425,7 +2015,7 @@ input::-webkit-contacts-auto-fill-button {
                     margin: 8px auto 0;
                 }
                 .primary.login {
-                    width: 180px;
+                    min-width: 180px;
                     height: 50px;
                     .lib-css(background, @color-black);
                     margin-bottom: @indent__m;
@@ -1434,6 +2024,12 @@ input::-webkit-contacts-auto-fill-button {
                     font-size: 16px;
                     text-transform: uppercase;
                     letter-spacing: 2px;
+                    &:hover {
+                        border-color: transparent;
+                        background: @hookah_theme_gradient;
+                        border-left-color: @border_left_gradient;
+                        border-right-color: @border_right_gradient;
+                    }
                 }
             }
             &:after {
@@ -1464,7 +2060,7 @@ input::-webkit-contacts-auto-fill-button {
             padding: (@indent__xl + @indent__s + @indent__xs) 0;
         }
         .page-wrapper{
-            background: #EAEAEA;
+            background: @account-wrapperbg;
         }
     }
     .successful_box{
@@ -1518,6 +2114,11 @@ input::-webkit-contacts-auto-fill-button {
             text-transform: uppercase;
             letter-spacing: 2px;
             line-height: 38px;
+            &:hover {
+                background: @hookah_theme_gradient;
+                border-left-color: @border_left_gradient;
+                border-right-color: @border_right_gradient;
+            }
         }
     }
     button.action.primary, 
@@ -1573,6 +2174,33 @@ input::-webkit-contacts-auto-fill-button {
         }
     }
 
+    .sales-order-print {
+        > #hubspot-messages-iframe-container {
+            display: none !important;
+        }
+        > #privy-widget {
+            display: none !important;
+        }
+    }
+
+    //
+    //  Logout Page
+    //  _________________________________
+    .customer-account-logoutsuccess{
+        .page-main{
+            margin-top: 8%;
+            text-align: center;
+            .page-title{
+                font-weight: 600;
+                margin-bottom: 20px;
+            }
+        }
+        .column.main{
+            p{
+                font-size: 16px;
+            }
+        }
+    }
 
 }
 
@@ -1605,7 +2233,7 @@ input::-webkit-contacts-auto-fill-button {
             } 
         }
         .separator:before{
-            width: calc(~"100% - 30px"); 
+            width: calc(~"100% - 30px");
         }
         .b2b_customer_index{
             .message.success{
@@ -1619,6 +2247,62 @@ input::-webkit-contacts-auto-fill-button {
                 width: 135px;
             }
         } 
+    }
+    @media only screen and (max-width: 1199px) and (min-width: 768px) {
+        .account {
+            .toolbar {
+                div.pages {
+                    position: relative;
+                    float: right;
+                    width: auto;
+                    top: 0px;
+                    max-width: 280px;
+                }
+                .pages {
+                    ~ .limiter {
+                        margin-top: 10px;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 991px) and (min-width: 768px) {
+        .form-address-edit{
+            .actions-toolbar{
+                .action.primary{
+                    width: 230px;
+                }
+            } 
+        }
+        .customer-address-index {
+            .actions-toolbar {
+                .primary {
+                    max-width: 230px;
+                }
+            }
+        }
+        .customer-account-index {
+            .form-address-edit{
+                .actions-toolbar{
+                    .action.primary{
+                        width: 300px;
+                    }
+                } 
+            }
+        }
+    }
+    @media only screen and (max-width: 767px) and (min-width: 400px) {
+        .account {
+            .my_account_b2b {
+                li {
+                    width: 33.33%;
+                    > a {
+                        width: 100%;
+                    }
+                }
+            }
+        }
     }
     @media only screen and (max-width: 360px) {
         .customer-account-login{
@@ -1640,8 +2324,12 @@ input::-webkit-contacts-auto-fill-button {
                 padding: 60px 20px 35px 20px;
             }
         } 
-    }
-    
+        button.action.primary, 
+        button.action-primary{
+            font-size: 15px;
+            letter-spacing: 1px;
+        }
+    }    
 }
 
 //
@@ -1654,10 +2342,31 @@ input::-webkit-contacts-auto-fill-button {
         .sidebar-additional {
             margin: 0;
         }
+        .toolbar {
+            .pages {
+                float: none !important;
+            }
+        }
+    }
+    .modals-wrapper {
+        .modal-popup.popup-reorder-quote {
+            .modal-title {
+                padding-right: 20px;
+            }
+            .actions-toolbar {
+                > .primary {
+                    .action.replace {
+                        margin-left: 0;
+                        margin-top: 10px;
+                    }
+                }
+            }
+        }        
     }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
     .page-wrapper{
         background: @color-white;
     }
@@ -1702,26 +2411,88 @@ input::-webkit-contacts-auto-fill-button {
         .page-main{
             margin-bottom: 40px;
         } 
-        .pending{
-            padding-left: 75px;
-            &:before{
-                top: 50%;
-                left:32px;
-                position: absolute;
-                margin-top: -13px;
+        &.sales-order-history {
+            .columns {
+                .sidebar-main {
+                    border-bottom: solid 1px @color_black;
+                    padding-bottom: 40px;
+                }
+            }
+        }
+        &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
+            .columns {
+                .sidebar-main {
+                    border-bottom: solid 1px @color_black;
+                }
             }
         }
         .my_account_b2b{
-            li > a{
-                padding: 15px 9px;
-                text-align: center;          
+            li {
+                > a {
+                    padding: 15px 9px;
+                    text-align: center;
+                    span {
+                        display: inline-block;
+                    }
+                }
+                &.basic_details {
+                    span {
+                        max-width: 90px;
+                    }
+                }
+                &.business_details {
+                    span {
+                        max-width: 100px;
+                    }
+                }
+                &.other_contact_details {
+                    span {
+                        max-width: 130px;
+                    }
+                }
             }
         }  
+        .pending {
+            padding-left: 70px;
+            &:before {
+                width: 32px;
+                height: 32px;
+                left: 22px;
+            }
+        }
+        .reject {
+            padding-left: 70px;
+            &:before {
+                width: 20px;
+                height: 20px;
+                left: 28px;
+            }
+        }
+        &.customer-address-form {
+            .form-address-edit {
+                .fieldset{
+                    + .fieldset{
+                        margin-top: 0;
+                    }
+                }
+            }
+        }
     }
 
     .customer-account-login .page-main, 
     .customer-account-forgotpassword .page-main{
         background: @color-white;
+    }
+    .customer-account-create, .customer-account-login, .customer-account-forgotpassword{
+        div.page.messages {
+            max-width: calc(~"100% - 30px");
+            .messages {
+                .message {
+                    margin-bottom: 25px;
+                    margin-top: 0;
+                }
+            }
+        }
     }
     .b2b_customer_index{
         .message.success{
@@ -1775,14 +2546,22 @@ input::-webkit-contacts-auto-fill-button {
             .action.next.primary{
                 float: none;
             } 
+            .field.choice.newsletter {
+                margin-top: 0;
+            }
             .login-container{
                 .actions-toolbar{
-                    margin-top: 50px;
+                    margin-top: 30px;
                     flex-wrap: wrap;
                     &.justify_btn{
                         margin-top: 25px;
                         .primary{
-                            width: 100%;
+                            &.prev, &.regis {
+                                width: 100%;
+                                min-width: 100%;
+                            }
+                            width: auto;
+                            min-width: 210px;
                             float: none;
                             &.regis{
                                 margin-top: 40px !important;
@@ -1795,14 +2574,27 @@ input::-webkit-contacts-auto-fill-button {
                 }
             } 
             .login-container{
-                margin-top: 30px;
+                margin-top: 20px;
                 margin-bottom: 0;
+            }
+        }
+        .register_nav {
+            li legend.legend {
+                .lib-font-size(12);
+                padding: 0;
+            }
+        }
+        .page-main {
+            > .pending-tooltip {
+                margin-top: 10px;
+                margin-bottom: 10px;
+                top: 0;
             }
         }
     }
     .control.captcha-image{
         .captcha-reload{
-            padding: 5px 15px;
+            padding: 5px 15px !important;
             line-height: 15px;
             .lib-font-size(10);
             letter-spacing:0;
@@ -1817,6 +2609,7 @@ input::-webkit-contacts-auto-fill-button {
     .login-container {
         padding-top: 0;
         padding-bottom: 0;
+        box-shadow: none;
         .fieldset {
             &:after {
                 text-align: center;
@@ -1848,6 +2641,17 @@ input::-webkit-contacts-auto-fill-button {
         }
     }
 
+    .form-address-edit,
+    .form-edit-company{        
+        .fieldset{
+            .street{
+                .field.additional{
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+
     .control.captcha-image {
         .captcha-img {
             .lib-css(margin-bottom, @indent__s);
@@ -1861,6 +2665,7 @@ input::-webkit-contacts-auto-fill-button {
         }
     }
 
+
     .form.search.advanced {
         .field.price {
             .with-addon {
@@ -1871,16 +2676,60 @@ input::-webkit-contacts-auto-fill-button {
             }
         }
     }
-    .successful_box {
-        text-align: center;
-        width: 100%;
-        display: inline-block;
-        background: #FFFFFF;
-        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.15);
-        border-radius: 10px;
-        padding: 60px 50px 35px;
-        .block-title strong, .box-account-information {
-            margin-bottom: 30px;
+    .table-wrapper.orders-history{
+        .action_primary{
+            display: inline-block;
+        }
+    } 
+    .sales-order-history{
+        .page_title{
+            margin-bottom: 10px;
+        }
+        .table-order-items{
+            tr{
+                border-bottom: 1px solid @border-color__base-table;
+            }
+        }
+        .actions-toolbar{            
+            > .secondary {
+                width: 100%;
+            }
+        } 
+    }
+    .customer-address-index {
+        .actions-toolbar{
+            > .secondary {
+                width: 100%;
+            }
+        }
+        .actions-toolbar {
+            .primary {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    }
+    .modals-wrapper {
+        .modal-popup.popup-reorder-quote {
+            .modal-inner-wrap {
+                max-width: 100%;
+            }
+        }        
+    }
+    
+    .myproduct-pricing{
+        &.table-wrapper {
+            .table.table-myproduct-pricing {
+                >tbody {
+                    >tr {
+                        td.col.action {
+                            &:before {
+                                content: "Action:";
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }
@@ -1890,6 +2739,7 @@ input::-webkit-contacts-auto-fill-button {
 //  _____________________________________________
 
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
     .login-container {
         &:extend(.abs-add-clearfix-desktop all);
 
@@ -2011,6 +2861,16 @@ input::-webkit-contacts-auto-fill-button {
             margin: 0 @indent__s @indent__s 0;
         }
     }
+    .form-address-edit,
+    .form-edit-company{        
+        .fieldset{
+            .street{
+                .field.additional{
+                    margin-top: 30px;
+                }
+            }
+        }
+    }
 }
 
 & when (@media-target = 'mobile'), (@media-target = 'all') {
@@ -2025,15 +2885,160 @@ input::-webkit-contacts-auto-fill-button {
             }
             .columns{
                 .column.main{
-                    padding: 20px;          
+                    padding: 20px 20px 30px 20px;          
                 }
             }  
+            .column.main{
+                .block:not(.widget){
+                    .block-content{
+                        div.box{
+                            width: 100%;
+                            margin-bottom: 15px;
+                        }
+                    } 
+                } 
+            } 
+            .block.block-addresses-list{
+                margin-bottom: 30px;
+                border-color: @color_black;
+            }
+            .form-address-edit{
+                .fieldset{
+                    + .fieldset{
+                        margin-top: 0;
+                    }
+                    div.field:not(.street).telephone{
+                        margin-bottom: 20px;
+                    }
+                } 
+            } 
+            .form-address-edit,
+            .form-edit-company{
+                .actions-toolbar{
+                    margin-top: 40px;
+                }
+            } 
+            .registerform{
+                .field_flex{
+                    .field{
+                        width: 100%;
+                    }
+                    .field_block.password .control{
+                        width: 100%;
+                    }
+                }
+            }
+            .page_title{
+                text-align: center;
+            } 
+            .form.registerform{
+                .field_flex{
+                    margin-bottom: 60px;
+                }
+            }
+            &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
+                .column.main {
+                    .block:not(.widget) {
+                        .block-content {
+                            div.box {
+                                margin-bottom: 30px;
+                                &:last-child {
+                                    margin-bottom: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .block.block-addresses-default{
+            .block-content{
+                flex-wrap: wrap;
+                flex-direction: column;
+            }
+        }  
+        .block.block-addresses-default{
+            .block-title{
+                text-align: center;
+                border-color: @color_black;
+            }
+        }
+        .form-address-edit {
+            .fieldset {
+                legend.legend {
+                    text-align: center;
+                    border-color: @color_black;
+                }
+            }
+        }
+        .additional-addresses{
+            #additional-addresses-table{
+                flex-direction: column;
+                .address_list{
+                    width: 100%;
+                }
+            }
+        } 
+        .changepassword-index-index{
+            .actions-toolbar{
+                .lib-vendor-prefix-display(flex);
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            &.account{
+                .page-main{
+                    margin-bottom: 10px;
+                }
+            } 
+        } 
+        .customer-address-index{            
+            &.account{
+                .page-main{
+                    margin-bottom: 10px;
+                }
+            } 
         } 
     }
+     @media only screen and (max-width: 360px) {
+        .form-address-edit{
+            .actions-toolbar{
+                .action.primary{
+                    width: 100%;
+                    .primary{
+                        float: none;
+                    }
+                }
+            } 
+        }
+     }
 }
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
     .account .page-main .sidebar.sidebar-main {
         position: relative;
         top: 0;
+    }
+    .customer-account-create {
+        .page-main {
+            > .pending-tooltip  {
+                top: 0;
+            }
+        }
+    }
+}
+
+@media screen and (min-width: @screen__m) and (max-width: (@screen__l - 1)){
+    .account{
+        .page-main{
+            margin-bottom: 80px;
+        }
+    }
+}
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = (@screen__m + 1)) {
+    .modals-wrapper {
+        .modal-popup {
+            .modal-inner-wrap {
+                width: 75%;
+            }
+        }
     }
 }

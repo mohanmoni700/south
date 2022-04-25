@@ -6,8 +6,6 @@
 	
     $(document).ready(function() {
         if ($(window).width() < 1025) {
-            // change block search position
-            jQuery(".left_section .block-search").detach().appendTo('.header.content');
             // add class for mobile view default open
             jQuery('.block-search #search_mini_form').addClass('active');
             

@@ -20,7 +20,7 @@ namespace MageModule\OrderImportExport\Model\Processor;
 use Magento\Sales\Api\Data\OrderInterface;
 
 class Customer extends \MageModule\OrderImportExport\Model\Processor\AbstractProcessor implements
-    \MageModule\OrderImportExport\Model\Processor\ProcessorInterface
+\MageModule\OrderImportExport\Model\Processor\ProcessorInterface
 {
     /**
      * @var \MageModule\OrderImportExport\Model\Cache
@@ -66,10 +66,10 @@ class Customer extends \MageModule\OrderImportExport\Model\Processor\AbstractPro
         $excludedFields = []
     ) {
         parent::__construct($excludedFields);
-        $this->cache                  = $cache;
-        $this->objectFactory          = $objectFactory;
-        $this->repository             = $repository;
-        $this->storeRepository        = $storeRepository;
+        $this->cache = $cache;
+        $this->objectFactory = $objectFactory;
+        $this->repository = $repository;
+        $this->storeRepository = $storeRepository;
         $this->groupCollectionFactory = $groupCollectionFactory;
     }
 
@@ -90,7 +90,7 @@ class Customer extends \MageModule\OrderImportExport\Model\Processor\AbstractPro
         }
 
         $useBillingData = !isset($data[OrderInterface::CUSTOMER_FIRSTNAME]) &&
-                          !isset($data[OrderInterface::CUSTOMER_LASTNAME]);
+        !isset($data[OrderInterface::CUSTOMER_LASTNAME]);
 
         if ($useBillingData) {
             if (isset($data['billing_prefix'])) {
@@ -162,12 +162,12 @@ class Customer extends \MageModule\OrderImportExport\Model\Processor\AbstractPro
      *
      * @return bool|\Magento\Customer\Api\Data\CustomerInterface|\Magento\Customer\Model\Data\Customer
      */
-    private function getByEmail($email)
+    private function getByEmail($email, $websiteId = 1)
     {
         try {
             $object = $this->cache->getCustomer($email);
             if ($email && $object === false) {
-                $object = $this->repository->get($email);
+                $object = $this->repository->get($email, $websiteId);
                 $this->cache->addCustomer($email, $object);
                 $this->cache->addCustomer($object->getId(), $object);
             }
@@ -226,8 +226,8 @@ class Customer extends \MageModule\OrderImportExport\Model\Processor\AbstractPro
             return 2;
         }
 
-        if (is_numeric($value) && ((int)$value === 1 || (int)$value === 2)) {
-            return (int)$value;
+        if (is_numeric($value) && ((int) $value === 1 || (int) $value === 2)) {
+            return (int) $value;
         }
 
         return false;
@@ -246,9 +246,9 @@ class Customer extends \MageModule\OrderImportExport\Model\Processor\AbstractPro
     private function getCustomer(array $data, \Magento\Sales\Api\Data\OrderInterface $order)
     {
         $customer = false;
-
         if (isset($data[OrderInterface::CUSTOMER_EMAIL]) && !$order->getCustomerIsGuest()) {
-            $customer = $this->getByEmail($data[OrderInterface::CUSTOMER_EMAIL]);
+            $customer = $this->getByEmail($data[OrderInterface::CUSTOMER_EMAIL], $order->getStore()->getWebsiteId());
+
         }
 
         if ($customer === false && !$order->getCustomerIsGuest()) {
@@ -326,7 +326,7 @@ class Customer extends \MageModule\OrderImportExport\Model\Processor\AbstractPro
 
             if (!$order->getCustomerIsGuest()) {
                 $this->repository->save($customer);
-                $customer = $this->repository->get($customer->getEmail());
+                $customer = $this->repository->get($customer->getEmail(), 8);
             }
         }
 

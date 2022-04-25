@@ -1,0 +1,15 @@
+<?php
+$rejection=$this->getRejectedDoc();
+if (!empty($rejection)) { ?>
+<h3>Please find your documentation details.</h3>
+<table border="1">
+    <tr><th>Document Name</th><th>Status</th><th>Comment</th></tr>
+    <?php foreach ($rejection as $item): ?>
+        <tr>
+            <td><?= /* @noEscape */ $item['docname'] ?></td>
+            <td><?= /* @noEscape */ isset($item['docmsg']) ? "Rejected" : "Approved" ?></td>
+            <td><?= /* @noEscape */ isset($item['docmsg']) ? $item['docmsg'] : "-" ?></td>
+        </tr>
+    <?php endforeach; ?>
+</table>
+<?php } ?>

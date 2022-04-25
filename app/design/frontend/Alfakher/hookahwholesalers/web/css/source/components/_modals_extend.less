@@ -55,13 +55,24 @@
             }
         }
         input:hover {
-            border-color: #000;
+            border-color: #000 !important;
         }
     }
 
     .modal-custom {
         .action-close {
             .lib-css(margin, @indent__m);
+        }
+    }
+
+    .checkout-index-index {
+        .modals-wrapper {
+            .modal-popup {
+                .modal-title {
+                    .lib-font-size(20);
+                    .lib-css(font-weight, @font-weight__bold);
+                }
+            }
         }
     }
 
@@ -80,6 +91,50 @@
 
         .action-close {
             padding: @indent__s;
+        }
+        &._inner-scroll {
+            .modal-content {
+                scrollbar-width: thin;
+                scrollbar-color: @button_color_secondary transparent;
+                &::-webkit-scrollbar {
+                    width: 5px;
+                    -webkit-overflow-scrolling: touch;
+                }
+                &::-webkit-scrollbar-thumb {
+                    background: @button_color_secondary;
+                    -webkit-overflow-scrolling: touch;
+                }
+                &::-webkit-scrollbar-track {
+                    background-color: #ccc;
+                    border-left: 1px solid #ccc;
+                    -webkit-overflow-scrolling: touch;
+                }
+            }
+        }
+    }
+
+    .modals-wrapper {
+        .modal-popup.register-action-error {
+            .modal-inner-wrap {
+                width: 600px;
+            }
+            .action-accept {
+                margin-bottom: 0;
+            }
+            .modal-title {
+                font-weight: @font-weight__regular;
+                padding-bottom: 0;
+                font-size: 20px;
+                background: url('@{baseDir}images/warning_circle.svg') no-repeat center top;
+                padding-top: 110px;
+                line-height: 1.3;
+                border: none;
+                text-align: center;
+            }
+            .modal-footer {
+                padding-top: 14px;
+                text-align: center;
+            }
         }
     }
 
@@ -113,6 +168,18 @@
                 width: 100vw;
                 z-index: @overlay__z-index;
             }
+            .page-wrapper {
+                nav.navigation.sw-megamenu {
+                    z-index: inherit;
+                }
+            }
+        }
+        &._has-modal {
+            .page-wrapper {
+                nav.navigation.sw-megamenu {
+                    z-index: inherit;
+                }
+            }
         }
     }
 }
@@ -130,6 +197,7 @@
             -webkit-overflow-scrolling: touch;
             overflow-x: hidden;
             overflow-y: auto;
+            z-index: 1111 !important;
         }
 
         .modal-inner-wrap {
@@ -148,10 +216,10 @@
 
             .modal-custom-overlay {
                 .lib-css(background-color, @modal-overlay__background-color);
+                z-index: 1110 !important;
             }
         }
     }
-
     .modal-popup {
         pointer-events: auto;
         &.modal-slide {
@@ -175,6 +243,36 @@
         .modal-title {
             .lib-css(font-size, @modal-popup-title-mobile__font-size);
             .lib-css(font-weight, @font-weight__regular);
+        }
+    }
+    .modals-wrapper {
+        .modal-popup {
+            &.register-action-error {
+                .modal-inner-wrap {
+                    width: 94%;
+                }
+                .modal-title {
+                    font-size: 16px;
+                    padding-top: 90px;
+                    background-size: 66px auto;
+                }
+            }
+            &.document-modal {
+                .modal-footer {
+                    .action-close {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+    .checkout-index-index {
+        .modals-wrapper {
+            .modal-popup {
+                .modal-title {
+                    .lib-font-size(18);
+                }
+            }
         }
     }
 }
@@ -206,7 +304,6 @@
         }
         .action-close {
             margin : 0;
-            top: 1rem;
             padding: 1.1rem 1rem;
         }
         .modal-content {
@@ -215,6 +312,13 @@
         }
         .modal-footer button {
             width: 100%;
+        }
+    }
+    .modals-wrapper {
+        .modal-popup.confirm {
+            .modal-inner-wrap {
+                width: 90%;
+            }
         }
     }
 }

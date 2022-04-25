@@ -10,9 +10,9 @@
 		<column name="document_name" nullable="true" xsi:type="text" comment="document_name"/>
 		<column name="created_at" nullable="true" xsi:type="date" comment="created_at"/>
 		<column name="expiry_date" nullable="true" xsi:type="date" comment="expiry_date"/>
-		<!-- <constraint xsi:type="foreign" referenceId="entity_id" table="alfakher_mydocument_mydocument"
-           column="customer_id" referenceTable="customer_entity" referenceColumn="entity_id"
-           onDelete="CASCADE"/> -->
+		<column name="is_delete" nullable="true" xsi:type="int" comment="is_delete"/>
+		<column name="is_add_more_form" nullable="true" xsi:type="boolean" comment="is_add_more_form"/>
+		<column name="notify_expire_doc_mail" nullable="true" xsi:type="boolean" comment="Flag for Notify customer for document expired mail" default="0" />
         <constraint xsi:type="primary" referenceId="PRIMARY">
 			<column name="mydocument_id"/>
 		</constraint>

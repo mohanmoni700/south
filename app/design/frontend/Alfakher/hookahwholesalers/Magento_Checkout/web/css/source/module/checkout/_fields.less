@@ -39,16 +39,6 @@
                 .lib-css(line-height, @checkout-tooltip-icon__font-size);
             }
         }
-
-        &._error {
-            .control {
-                input,
-                select,
-                textarea {
-                    .lib-css(border-color, @checkout-field-validation__border-color);
-                }
-            }
-        }
     }
 
     .opc-wrapper .form,
@@ -67,6 +57,11 @@
                 }
                 .control {
                     width: 90%;
+                    &._with-tooltip{
+                        .field-tooltip{
+                            right: 10px;
+                        }
+                    }
                 }
             }
         }

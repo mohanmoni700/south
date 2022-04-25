@@ -19,3 +19,8 @@ type SimpleCartItem {
     alfa_bundle_flavour: String @doc(description: "Selected shisha product falvour")
     alfa_bundle_charcoal: String @doc(description: "Selected chracoal product description")
 }
+
+#not used in magento, to connect direct to magento from frontend without service.
+type Cart {
+    checkoutUrl: String
+}

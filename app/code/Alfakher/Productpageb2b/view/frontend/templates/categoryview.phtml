@@ -1,0 +1,76 @@
+<?php
+/**
+ * Category view template
+ *
+ * @var $block \Alfakher\Productpageb2b\Block\Product\Categoryview
+ */
+?>
+<?php
+    $category = $block->getCurrentCategory();
+    $subcats = $category->getChildrenCategories();
+    $imageHelper = $this->helper(\Magento\Catalog\Helper\Image::class);
+    $placeholderImageUrl = $imageHelper->getDefaultPlaceholderUrl('image');
+?>
+<!-- Show child category image and name start[BS] -->
+<div class="block-content content">
+    <div class="products wrapper grid products-grid products">
+        <div class="column main">
+            <div class="products list items product-items">
+                <?php foreach ($subcats as $subcat): ?>
+                    <?php if ($subcat->getIsActive()): ?>
+                        <?php
+                            $_category = $block->getChildCategory($subcat->getId());
+                            $_outputhelper = $this->helper(Magento\Catalog\Helper\Output::class);
+                            $subcaturl = $subcat->getUrl();
+                            $_imgHtmlUrl = '';
+                            $_imgUrl = $_category->getImageUrl();
+                            $_disc = $_category->getCategoryDesc();
+                        ?>
+                        <?php if ($_imgUrl): ?>
+                            <?php $_imgHtmlUrl = $_imgUrl; ?>
+                        <?php else: ?>
+                            <?php $_imgHtmlUrl = $placeholderImageUrl; ?>
+                        <?php endif; ?>
+                        <div class="item product product-item">
+                            <div class="product-item-info">
+                                    <a href="<?= /* @noEscape */ $subcaturl ?>" class="product photo product-item-photo">
+                                        <?php $_imgHtml ='<img class="cateshop_img" src="'
+                                                .$_imgHtmlUrl.'" height="300" width="300" alt="'
+                                                .$subcat->getName().'" />'; ?>
+                                        <?= /* @noEscape */ $_outputhelper->categoryAttribute($_category, $_imgHtml, 'image'); ?>
+                                    </a>
+                                <div class="product details product-item-details">                        
+                                    <strong class="product name product-item-name"><a
+                                            class="product-item-link"
+                                            title="<?= /* @noEscape */ $subcat->getName() ?>"
+                                            href="<?= /* @noEscape */ $subcaturl ?>">
+                                        <?= /* @noEscape */ $subcat->getName() ?></a>
+                                    </strong>
+                                    <div class="catalog description-item">
+                                        <?= /* @noEscape */ $_disc; ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Show child category image and name start[BS] -->
+
+
+<script>
+    require(['jquery'], function ($) {
+        $(".toolbar-products").hide();
+        // $(".amscroll-load-button").hide();
+        
+        $( document ).ready(function() {
+            $(".amscroll-load-button").hide();
+        });
+    });
+
+</script>
+

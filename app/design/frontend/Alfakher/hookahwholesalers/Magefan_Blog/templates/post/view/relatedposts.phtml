@@ -1,0 +1,67 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ *
+ * Glory to Ukraine! Glory to the heroes!
+ */
+?>
+<?php
+/**
+ * Blog related posts template
+ *
+ * @var $block \Magefan\Blog\Block\Post\View\RelatedPosts
+ * @var $block \Magefan\Blog\Block\Catalog\Product\RelatedPosts
+ */
+?>
+<?php 
+    $_helper = $this->helper('Magento\Catalog\Helper\Output');
+    $imageHelper = $this->helper(\Magento\Catalog\Helper\Image::class);
+    $placeholderImageUrl = $imageHelper->getDefaultPlaceholderUrl('small_image');
+?>
+<?php if ($block->displayPosts()) { ?>
+    <?php $postCollection = $block->getPostCollection(); ?>
+    <?php if (count($postCollection)) { ?>
+    <div class="mfblog-replated-posts-block block related">
+        <?php if (!$block->getHideTitle()) { ?>
+        <div class="block-title title">
+                <?= $block->escapeHtml(__('Related Posts')) ?>
+        </div>
+        <?php } ?>
+        <div class="block-content">
+            <?php foreach ($postCollection as $post) { 
+                $featuredImage = $post->getFeaturedListImage() ?: $post->getFeaturedImage();
+                    if($featuredImage){
+                        $featuredImageHtml = '<img src="' . $featuredImage . '" height="100" width="100" alt="img" />';
+                    /*set default image start*/ 
+                    }else{
+                        $featuredImageHtml = '<img src="' . $placeholderImageUrl . '" height="200" width="200" alt="img" />';  
+                    }/* End */
+                ?>
+                <div class="item">
+                    <!-- for featured image show start[BS] -->
+                    <div class="image-container">
+                        <a href="<?= $featuredImage ?>"><?= $featuredImageHtml ?></a>
+                    </div>
+                    <!-- for featured image show start[BS] -->
+
+                    <div class="block-info">
+                        <h3>
+                            <a class="post-item-link" title="<?= $block->escapeHtml($post->getTitle()) ?>" href="<?= $block->escapeUrl($post->getPostUrl()) ?>"><?= $block->escapeHtml($post->getTitle())?>
+                            </a>
+                        </h3>
+                        <!-- for published date start[BS] -->
+                        <?php if ($post->isPublishDateEnabled()) { ?>
+                            <div class="item post-posed-date">
+                                <span class="value"><?= $block->escapeHtml($post->getPublishDate()) ?></span>
+                            </div>
+                        <?php } ?>
+                        <!-- for published date end[BS] -->
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+    <?php } ?>
+<?php } ?>
+

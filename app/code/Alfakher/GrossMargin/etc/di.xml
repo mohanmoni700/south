@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+	<type name="Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer">
+        <plugin name="alfakher_grossMargin_update_default_item_renderer" type="Alfakher\GrossMargin\Plugin\Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer"/>
+    </type>
+
+    <preference for="MageWorx\OrderEditor\Model\Order\Item" type="Alfakher\GrossMargin\Model\MageWorx\OrderEditor\Order\Item" />
+
+    <preference for="MageWorx\OrderEditor\Model\Edit\Quote" type="Alfakher\GrossMargin\Model\MageWorx\OrderEditor\Edit\Quote" />
+
+    <preference for="MageWorx\OrderEditor\Model\Order" type="Alfakher\GrossMargin\Model\MageWorx\OrderEditor\Order" />
+
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+        <plugin name="tipandtrick_to_order_item" type="Alfakher\GrossMargin\Plugin\Quote\Item\ToOrderItem"/>
+    </type>
+
+
+    <!-- extension attribute; Start -->
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="additional_tax_extension_attribute" type="Alfakher\GrossMargin\Plugin\OrderRepositoryPlugin" />
+    </type>
+
+    <type name="Magento\Sales\Api\OrderItemRepositoryInterface">
+        <plugin name="item_additional_tax_extension_attribute" type="Alfakher\GrossMargin\Plugin\OrderItemRepositoryPlugin" />
+    </type>
+    <!-- extension attribute; End -->
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <plugin name="order_grid_purchase_order" type="Alfakher\GrossMargin\Plugin\OrderGridPurchaseOrder" sortOrder="5" />
+    </type>
+
+    <!-- invoice PDF -->
+    <preference for="Magento\Sales\Model\Order\Pdf\Invoice" type="Alfakher\GrossMargin\Model\Magento\Sales\Order\Pdf\Invoice" />
+
+</config>

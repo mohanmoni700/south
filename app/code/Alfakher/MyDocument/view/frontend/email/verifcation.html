@@ -1,0 +1,16 @@
+<!--@subject  {{trans "Document Verification"}}  @-->
+
+<!--@vars {
+	"var name":"Customer Name",
+	"var rejected":"Rejected Documents",
+	"var msg":"Hello, your document has been",
+	"var rejected_doc":"Hello, your document has been"
+
+} @-->
+
+{{template config_path="design/email/header_template"}}
+<h3>Customer Name: {{var name}}</h3>
+
+{{block class='Magento\\Framework\\View\\Element\\Template' area='frontend' template='Alfakher_MyDocument::email_template.phtml' rejected_doc=$rejected_doc}}
+
+{{template config_path="design/email/footer_template"}}

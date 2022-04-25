@@ -1,9 +1,5 @@
 <?php
-/**
- * Copyright ©  All rights reserved.
- * See COPYING.txt for license details.
- */
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Alfakher\MyDocument\Model;
 
@@ -136,6 +132,22 @@ class MyDocument extends AbstractModel implements MyDocumentInterface
     /**
      * @inheritDoc
      */
+    public function getNotifyExpireDocMail()
+    {
+        return $this->getData(self::EXPIRED_FLAG);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setNotifyExpireDocMail($expiredflag)
+    {
+        return $this->setData(self::EXPIRED_FLAG, $expiredflag);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getCreatedAt()
     {
         return $this->getData(self::CREATED_AT);
@@ -165,4 +177,3 @@ class MyDocument extends AbstractModel implements MyDocumentInterface
         return $this->setData(self::EXPIRY_DATE, $expiryDate);
     }
 }
-

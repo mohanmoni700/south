@@ -1,0 +1,23 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="sales_order_item">
+		<column xsi:type="decimal" name="gross_margin" nullable="false" scale="2" precision="10" comment="Gross Margin"/>
+	</table>
+
+	<table name="quote_item">
+		<column xsi:type="decimal" name="gross_margin" nullable="false" scale="2" precision="10" comment="Gross Margin"/>
+	</table>
+
+	<table name="sales_order">
+		<column xsi:type="decimal" name="gross_margin" nullable="false" scale="2" precision="10" comment="Gross Margin"/>
+		<column xsi:type="varchar" name="purchase_order" nullable="true" length="225" comment="Purchase Order"/>
+		<column xsi:type="decimal" name="total_order_weight" nullable="false" scale="2" precision="10" comment="Total Order Weight"/>
+	</table>
+
+	<table name="quote">
+		<column xsi:type="varchar" name="purchase_order" nullable="true" length="225" comment="Purchase Order"/>
+	</table>
+
+	<table name="sales_invoice">
+		<column xsi:type="varchar" name="purchase_order" nullable="true" length="225" comment="Purchase Order"/>
+	</table>
+</schema>

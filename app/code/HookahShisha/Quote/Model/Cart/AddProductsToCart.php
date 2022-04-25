@@ -146,19 +146,28 @@ class AddProductsToCart extends SourceAddProductsToCart
         $totalPrice = 0;
         $superPackArray = [];
         foreach ($superPack as $item) {
-            try {
-                $product = $this->productRepository->get($item['sku'], false, null, true);
-            } catch (NoSuchEntityException $e) {
-                throw new \Magento\Framework\Exception\LocalizedException(
-                    __('Could not find a product with SKU "%sku"', ['sku' => $item['sku']])
-                );
+            $sku = $item['variant_sku'];
+            // checking if same product exist
+            if (in_array($sku, array_keys($superPackArray))) {
+                $superPackArray[$sku]['quantity'] += 1;
+                $totalPrice +=  $superPackArray[$sku]['final_price'];
+            } else {
+                $item['quantity'] = 1;
+                try {
+                    $product = $this->productRepository->get($item['sku'], false, null, true);
+                } catch (NoSuchEntityException $e) {
+                    throw new \Magento\Framework\Exception\LocalizedException(
+                        __('Could not find a product with SKU "%sku"', ['sku' => $item['sku']])
+                    );
+                }
+                $finalPrice = $product->getFinalPrice();
+                $totalPrice += $finalPrice;
+                $item['final_price'] = $finalPrice;
+                $item['product'] = $product;
+                $superPackArray[$sku] = $item;
             }
-            $finalPrice = $product->getFinalPrice();
-            $totalPrice += $finalPrice;
-            $item['final_price'] = $finalPrice;
-            $item['product'] = $product;
-            $superPackArray[] = $item;
         }
+
         return [$totalPrice, $superPackArray];
     }
 
@@ -212,9 +221,7 @@ class AddProductsToCart extends SourceAddProductsToCart
         float $totalPrice,
         float $simpleProductPrice
     ):float {
-        $finalPrice = ($finalPrice/$totalPrice) * $simpleProductPrice;
-        // return by flooring up to 2 decimal point.
-        return floor($finalPrice * 100) / 100;
+        return ($finalPrice/$totalPrice) * $simpleProductPrice;
     }
 
     /**
@@ -257,9 +264,8 @@ class AddProductsToCart extends SourceAddProductsToCart
                 $qty = $cartItem->getQuantity();
                 $parentAlfabundle = $cartItem->getAlfaBundle();
                 $simpleProductPrice = $product->getFinalPrice();
-                $totalFinalPrice = 0;
                 foreach ($superPackArray as $item) {
-                    $item['quantity'] = $qty;
+                    $item['quantity'] *= $qty ;
                     $item['parent_alfa_bundle'] =  $parentAlfabundle;
                     $finalPrice = $this->calculateSuperPackFinalPrice(
                         $item['final_price'],
@@ -267,9 +273,8 @@ class AddProductsToCart extends SourceAddProductsToCart
                         $simpleProductPrice
                     );
                     $this->addSuperPackProductToCart($cart, $item, $finalPrice);
-                    $totalFinalPrice += $finalPrice;
                 }
-                $cartItem->setSuperPackPrice($simpleProductPrice - $totalFinalPrice);
+                $cartItem->setSuperPackPrice(0);
             }
             $result = $cart->addProduct($product, $this->requestBuilder->build($cartItem));
         } catch (\Throwable $e) {

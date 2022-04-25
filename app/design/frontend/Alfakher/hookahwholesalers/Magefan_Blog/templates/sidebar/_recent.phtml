@@ -1,0 +1,167 @@
+<?php
+/**
+ * Copyright © Magefan (support@magefan.com). All rights reserved.
+ * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
+ *
+ * Glory to Ukraine! Glory to the heroes!
+ */
+?>
+<?php
+/**
+ * Blog sidebar posts list template
+ *
+ * @var $block \Magefan\Blog\Block\Post\PostList\AbstractList
+ */
+?>
+
+<?php
+    $_postCollection = $block->getPostCollection();
+?>
+<?php
+    $width = (int)$block->getBlockImageWidth() ?: 920;
+    $height = (int)$block->getBlockImageheight() ?: 625;
+    $imageHelper = $this->helper(\Magefan\Blog\Helper\Image::class);
+?>
+<?php if ($_postCollection->count()) { ?>
+<div class="widget block block-<?= $block->escapeHtml(str_replace('_', '-', $block->getWidgetKey())) ?> block-list-posts" >
+    <div class="block-content">
+        <?php foreach ($_postCollection as $_post) { ?>
+            <?php
+                $_postUrl = $block->escapeUrl($_post->getPostUrl());
+                $_postName = $block->escapeHtml($_post->getTitle());
+            ?>
+            <div class="item clearfix">
+                <?php if ($block->getDisplayImage()) { ?>
+                    <?php $featuredImage = $_post->getFeaturedImage(); ?>
+                    <div class="post-image">
+                        <?php
+                        $featuredImgAlt = $_post->getData('featured_list_img_alt') ?: $_post->getData('featured_img_alt');
+                        if (!$featuredImgAlt) {
+                            $featuredImgAlt =  $_postName;
+                        }
+                        ?>
+                        <a class="post-item-link" title="<?= $_postName ?>" href="<?= $_postUrl ?>">
+                            <?php
+                                if ($featuredImage) {
+                                    $featuredImageUrl = $imageHelper->init($_post->getFeaturedImg())->resize($width, $height);
+                                } else {
+                                    $featuredImageUrl = $this->getViewFileUrl('Magefan_Blog::images/default-no-image.png');
+                                }
+                            ?>
+                            <img data-width-amp="<?= $width ?>" data-height-amp="<?= $height ?>" layout="responsive" src="<?= $block->escapeUrl($featuredImageUrl) ?>"
+                                 alt="<?= $block->escapeHtml($featuredImgAlt) ?>" />
+                        </a>
+                    </div>
+                <?php } ?>
+                <div class="post-content">
+                    <a class="post-item-link" title="<?= $_postName ?>" href="<?= $_postUrl ?>">
+                        <?= $_postName ?>
+                    </a>
+                    <p class="post-shortdata">
+                        <span class="post-author"><?= __('By Admin') ?></span>
+                        <?php if ($block->getDisplayImage() && $_post->isPublishDateEnabled()) { ?>
+                            <span class="post-item-date">/<?= $block->escapeHtml($_post->getPublishDate()) ?>/</span>
+                        <?php } ?>
+                    </p>
+                    <p class="post-shortdata">
+                        <span class="post-category"><?= __('General, How to Hookah Education') ?></span>
+                    </p>
+                    <div class="post-desc">
+                        <?= __('Body Text Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean massa. ') ?>
+                    </div>
+                    <a class="action primary read-more"><span><?= __('Read more') ?></span></a>
+                </div>
+            </div>
+        <?php } ?>
+    </div>
+</div>
+<?php } ?>
+<script type="text/javascript">
+    require([
+        "jquery",
+        "Magento_PageBuilder/js/resource/slick/slick"
+    ], function ($) {
+        $(window).load(function() {
+            $('.block-list-posts .block-content').slick({
+                dots: false,
+                arrows: true,
+                slidesToShow: 1,
+                slidesToScroll: 1,
+                autoplay: false,
+                infinite: false
+            });
+        });
+    });
+</script>
+<style>
+.widget.block.block-recent-posts .item .post-image {
+    width: 100%;
+    border: none;
+}
+.widget.block.block-recent-posts .item .post-image .post-item-link {
+    margin-bottom: 0;
+}
+
+.block-recent-posts .post-content {
+    position: absolute;
+    width: 50%;
+    max-width: 600px;
+    right: 25px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #E3D8FA;
+    padding: 60px;
+    box-shadow: 0px 0px 20px rgba(0,0, 0, 0.1);
+}
+.block-recent-posts .post-item-link {
+    font-size: 2.6rem;
+    font-family: 'DMSerifDisplay-Regular';
+    color: #000;
+    margin-bottom: 25px;
+    display: block;
+}
+.block-recent-posts .post-shortdata {
+    margin-bottom: 0;
+    color: #000;
+    font-size: 1.3rem;
+}
+.block-recent-posts .post-desc {
+    color: #000;
+    margin: 30px 0;
+}
+.block-recent-posts .read-more.action {
+    border-radius: 20px;
+    font-size: 10px;
+    text-transform: uppercase;
+    padding-right: 10px;
+}
+.block-recent-posts .read-more span:after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background-image: url('http://alfakher.loc/static/version1644322635/frontend/Alfakher/hookahwholesalers/en_US/images/right_arrow1.svg');
+    background-size: contain;
+    display: inline-block;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    margin-left: 20px;
+}
+.block-recent-posts button.slick-prev, .block-recent-posts button.slick-next {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-color: transparent;
+    border: solid 1px #961e70;
+    top: auto;
+    bottom: 2rem;
+}
+.block-recent-posts .slick-prev::before, .block-recent-posts .slick-next::before {
+    color: #961e70;
+    font-size: 18px;
+    padding-right: 0;
+}
+.block-recent-posts button.slick-prev {
+    left: auto;
+    right: 100px;
+}
+</style>

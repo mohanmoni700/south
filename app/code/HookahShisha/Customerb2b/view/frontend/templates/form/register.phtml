@@ -21,19 +21,18 @@ $formData = $block->getFormData();
 /* Start Change the region_id Label if the Country is US for State and Other for the State */
 $regionStateLabel = $block->escapeHtml(__('State'));
 $regionProvinceLabel = $block->escapeHtml(__('Province'));
-$regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel; 
+$regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel;
 /* End Change the region_id Label if the Country is US for State and Other for the State */
 ?>
 
 <form class="form create account form-create-account"
-      action="<?= $block->escapeUrl($this->getUrl('customerb2b/account/createPost')) ?>"
       method="post"
       id="form-validate"
       enctype="multipart/form-data"
       autocomplete="off"
       style="width: 100%;">
     <?= /* @noEscape */ $block->getChildHtml('form_fields_before_in_form') ?>
-    <?= /* @noEscape */ $block->getBlockHtml('formkey'); ?>
+    <?= /* @noEscape */ $block->getBlockHtml('formkey'); ?>    
 
     <ul class="register_nav">
         <li class="basic_details active">
@@ -46,6 +45,11 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
             <legend class="legend"><span><?= $block->escapeHtml(__('Business Details')) ?></span></legend>
             <span class="user_icon business"></span>
         </li>
+       <!--  <li class="document_upload">
+            <p><label class="step_list"><?= $block->escapeHtml(__('Step 3')) ?></label></p>
+            <legend class="legend"><span><?= $block->escapeHtml(__('Document Upload')) ?></span></legend>
+            <span class="user_icon docs"></span>
+        </li> -->
     </ul>
     <div id="basic_details" class="show">
         <fieldset class="fieldset create info">
@@ -91,12 +95,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
             <fieldset class="fieldset address">
                 <legend></legend>
                 <input type="hidden" name="create_address" value="1"/>
-                <?php $_company = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Company::class) ?>
-                <?php if ($_company->isEnabled()): ?>
-                    <?= $_company->setCompany($formData->getCompany())->toHtml() ?>
-                <?php endif ?>
-
-                
+                              
                 <?php /* data-validate="{required:true, 'validate-email':true, 'remote':'<?php echo $this->getUrl('customerb2b/customer/emailcheck', ['_secure' => true]); ?>'}" */ ?>
                 <div class="field required">
                     <?php $emailLabel = __('Email'); ?>
@@ -107,7 +106,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                 id="email_address" 
                                 placeholder="<?= $block->escapeHtml($emailLabel) ?>"
                                 autocomplete="off" 
-                                value="<?php echo $block->escapeHtml($formData->getEmail()) ?>" 
+                                value="<?= $block->escapeHtml($formData->getEmail()) ?>" 
                                 title="<?= $block->escapeHtml($emailLabel) ?>"
                                 class="input-text"
                                 data-role="email"
@@ -132,6 +131,15 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
 
                 <?php $_streetValidationClass = $addressHelper->getAttributeValidationClass('street'); ?>
                 <?php $_streetLabel = $block->getAttributeData()->getFrontendLabel('street'); ?>
+                <div class="field country required">
+                    <label for="country" class="label">
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>
+                    </label>
+                    <div class="control">
+                        <?= $block->getCountryHtmlSelect() ?>
+                    </div>
+                </div>
+
                 <div class="field street required">
                     <label for="street_1" class="label">
                         <span><?= $block->escapeHtml(__($_streetLabel . ' 1')) ?></span>
@@ -168,14 +176,31 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     </div>
                 </div>
 
-                <div class="field country required">
-                    <label for="country" class="label">
-                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>
+                <div class="field required">
+                    <label for="city" class="label">
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?></span>
                     </label>
                     <div class="control">
-                        <?= $block->getCountryHtmlSelect() ?>
+                        <input type="text"
+                               name="city"
+                               placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>"
+                               value="<?= $block->escapeHtmlAttr($formData->getCity()) ?>"
+                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>"
+                               class="input-text <?= /* @noEscape */ $addressHelper->getAttributeValidationClass('city') ?>"
+                               id="city"/>
                     </div>
                 </div>
+
+                <?= /* @noEscape */
+                $secureRenderer->renderTag(
+                    'style',
+                    [],
+                    '#region_id { display:none; }
+                        #region { display:none; }
+                    ',
+                    true
+                );
+                ?>
 
                 <div class="field region required">
                     <label for="region_id" class="label">
@@ -201,30 +226,6 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                class="input-text <?= /* @noEscape */ $addressHelper->getAttributeValidationClass('region') ?>"/>
                     </div>
                 </div>
-                <div class="field required">
-                    <label for="city" class="label">
-                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?></span>
-                    </label>
-                    <div class="control">
-                        <input type="text"
-                               name="city"
-                               placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>"
-                               value="<?= $block->escapeHtmlAttr($formData->getCity()) ?>"
-                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>"
-                               class="input-text <?= /* @noEscape */ $addressHelper->getAttributeValidationClass('city') ?>"
-                               id="city"/>
-                    </div>
-                </div>
-                <?= /* @noEscape */
-                $secureRenderer->renderTag(
-                    'style',
-                    [],
-                    '#region_id { display:none; }
-                        #region { display:none; }
-                    ',
-                    true
-                );
-                ?>
 
                 <div class="field zip required">
                     <label for="zip" class="label">
@@ -242,6 +243,21 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                data-validate="{'required':true, 'validate-zip-international':true}"/>
                     </div>
                 </div>
+
+                <div class="field county">
+                    <label for="county" class="label">
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?></span>
+                    </label>
+                        <input type="text"
+                               name="county"
+                               placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
+                               value="<?= $block->escapeHtml($formData->getCounty()) ?>"
+                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
+                               id="county"
+                               class="county"/>
+                </div> 
+                
+  
 
                 <?php if ($addressHelper->isVatAttributeVisible()): ?>
                     <?php $_vatidValidationClass = $addressHelper->getAttributeValidationClass('vat_id'); ?>
@@ -283,8 +299,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 <button type="button"
                         class="action next primary"
                         id="next"
-                        title="<?= $block->escapeHtmlAttr(__('Next')) ?>"
-                        onclick="nextPage()">
+                        title="<?= $block->escapeHtmlAttr(__('Next')) ?>">
                     <span><?= $block->escapeHtml(__('Next')) ?></span>
                 </button>
             </div>
@@ -334,7 +349,9 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                 <?= $block->escapeHtml(__('Please select business type.')) ?>
                             </option>
                             <?php foreach ($block->getBusinessType() as $key => $value): ?>
-                                <option value="<?= $value['value']?>"><?= $value['label']?></option>
+                                <option value="<?= /* @noEscape */ $value['value']?>">
+                                    <?= /* @noEscape */ $value['label']?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -352,7 +369,9 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                 <?= $block->escapeHtml(__('Please select your annual turn over.')) ?>
                             </option>
                             <?php foreach ($block->getAnnualTurnOver() as $kAto => $valAto): ?>
-                                <option value="<?= $valAto['value']?>"><?= $valAto['label']?></option>
+                                <option value="<?= /* @noEscape */ $valAto['value']?>">
+                                    <?= /* @noEscape */ $valAto['label']?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -370,18 +389,20 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                 <?= $block->escapeHtml(__('Please select number of employees')) ?>
                             </option>
                             <?php foreach ($block->getNumberOfEmp() as $knoe => $valnoe): ?>
-                                <option value="<?= $valnoe['value']?>"><?= $valnoe['label']?></option>
+                                <option value="<?= /* @noEscape */ $valnoe['value']?>">
+                                    <?= /* @noEscape */ $valnoe['label']?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
                 <div class="field vat-tax-id">
-                    <?php $salesTaxID = __('Sales Tax ID'); ?>
+                    <?php $salesTaxID = __('State Sales Tax ID'); ?>
                     <label class="label" for="vat_tax_id">
                         <span class="tax_tooltip">
                         <span><?= /* @noEscape */ $block->escapeHtml($salesTaxID) ?></span>
                         <?php $tooltipSalesTaxEnable = $block->getConfig('hookahshisha/business_details/enable_business'); ?>
-                        <?php if($tooltipSalesTaxEnable): ?>
+                        <?php if ($tooltipSalesTaxEnable): ?>
                             <?php $tooltipSalesTaxId = $block->getConfig('hookahshisha/business_details/tooltip_sales_tax_id'); ?>
                             <span class="sales-tax-tooltip">
                                 <a href="javascript::void(0);" class="tooltip-toggle">?</a>
@@ -395,7 +416,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                value=""
                                placeholder="<?= /* @noEscape */ $block->escapeHtmlAttr($salesTaxID) ?>"
                                title="<?= /* @noEscape */ $block->escapeHtmlAttr($salesTaxID) ?>"
-                               class="input-text">
+                               class="input-text validate-alphanum-with-spaces">
                     </div>
                 </div>
                 <div class="field tin-number">
@@ -408,7 +429,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                value=""
                                placeholder="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
                                title="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
-                               class="input-text">
+                               class="input-text validate-alphanum-with-spaces">
                     </div>
                 </div>
                 <div class="field tobacco-permit-number">
@@ -421,7 +442,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                value=""
                                placeholder="<?= /* @noEscape */ $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
                                title="<?= /* @noEscape */ $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
-                               class="input-text">
+                               class="input-text validate-alphanum-with-spaces">
                     </div>
                 </div>
                 <div class="field hear-about-us required">
@@ -437,7 +458,9 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                 <?= $block->escapeHtml(__('Please select you hear about us')) ?>
                             </option>
                             <?php foreach ($block->getHearAboutUs() as $khau => $valhau): ?>
-                                <option value="<?= $valhau['value']?>"><?= $valhau['label']?></option>
+                                <option value="<?= /* @noEscape */ $valhau['value']?>">
+                                    <?= /* @noEscape */ $valhau['label']?>
+                                </option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -508,45 +531,56 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     <?php /* Extensions placeholder */ ?>
                     <?= $block->getChildHtml('customer.form.register.newsletter') ?>
                 <?php endif ?>
-                <?php /*
-                <div class="field choice email-cst-info">
-                    <input type="checkbox"
-                           name="email_cst_info"
-                           title="<?= $block->escapeHtmlAttr(__('Email Customer Information')) ?>"
-                           value="1"
-                           id="email_cst_info"
-                           class="checkbox"/>
-                    <label for="email_cst_info" class="label">
-                        <span><?= $block->escapeHtml(__('Email Customer Information')) ?></span>
-                    </label>
-                </div>
-                */ ?>
             </fieldset>
             <div class="actions-toolbar justify_btn">
                 <div class="primary prev">
                     <button type="button"
                             class="action previou primary"
                             id="previous"
-                            title="<?= $block->escapeHtmlAttr(__('PREVIOUS')) ?>"
-                            onclick="prevPage()">
+                            title="<?= $block->escapeHtmlAttr(__('PREVIOUS')) ?>">
                         <span><?= $block->escapeHtml(__('PREVIOUS')) ?></span>
                     </button>
                 </div>
 
                 <div class="primary regis">
                     <button type="submit"
-                            class="action register submit primary"
-                            title="<?= $block->escapeHtmlAttr(__('REGISTER')) ?>">
-                        <span><?= $block->escapeHtml(__('REGISTER')) ?></span>
+                            class="action register submit primary width-auto"
+                            title="<?= $block->escapeHtmlAttr(__('Register and Continue')) ?>">
+                        <span><?= $block->escapeHtml(__('Register and Continue')) ?></span>
                     </button>
                 </div>
             </div>
             <div class="action_back">
-              <span>Do you have an account? <a href="<?php echo $this->getUrl("customer/account/login");?>"><?= $block->escapeHtml(__('Log In')) ?> </a></span> 
+              <span>Do you have an account?
+                <a href="<?= /* @noEscape */ $block->getUrl("customer/account/login");?>">
+                    <?= $block->escapeHtml(__('Log In')) ?>
+                </a>
+            </span> 
             </div>
         </fieldset>
     </div>
 </form>
+<div id="document_upload" style="display: none;" class="document_upload_tab">
+    <?= $block->getChildHtml('register_doc'); ?>
+</div>
+<div id="register-success-popup" style="display:none">
+    <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/success_union.svg')); ?>"
+        alt="success_union"
+        width="60"
+        height="60"
+        loading="lazy" />
+    <h1 class="success_msg"><?= $block->escapeHtml(__('Registration Successful')); ?></h1>
+    <h5><?= $block->escapeHtml(__('Thanks for Registering with us, one of our customer service team will be in-touch with you for document verification.')); ?></h5>
+</div>
+<div id="popup-modal-non-usa" style="display:none">
+    <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/success_union.svg')); ?>"
+    alt="success_union" width="60" height="60" loading="lazy" />
+    <h1 class="success_msg"><?= $block->escapeHtml(__('Documents are uploaded successfully')); ?></h1>
+    <h5><?= $block->escapeHtml(__('Once it is approved by Admin, Product price would be visible to you.')); ?></h5>
+    <button type="button" id="signinredirect" class="action submit primary">
+        <span><?= $block->escapeHtml(__('Continue')); ?></span>
+    </button>
+</div>
 <?php if ($block->getShowAddressFields()): ?>
     <?php
     $displayAllRegions = $block->getConfig("general/region/display_all") ? "true" : "false";
@@ -591,6 +625,14 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                         "passwordSelector": "#password,#password-confirmation"
                     }
                 }
+            },
+            "HookahShisha_Customerb2b/js/register": {
+                "regionStateLabel": "<?= $block->escapeHtml($regionStateLabel); ?>",
+                "regionProvinceLabel": "<?= $block->escapeHtml($regionProvinceLabel); ?>",
+                "createPostUrl": "<?= $block->escapeUrl($block->getUrl('customerb2b/account/createPost')); ?>",
+                "signInUrl": "<?= $block->escapeUrl($block->getUrl('mydocument/customer/index/')); ?>",
+                "homeUrl": "<?= $block->escapeUrl($block->getUrl('')); ?>"
+
             }
         },
         ".field.password": {
@@ -599,80 +641,4 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
             }
         }
     }
-</script>
-<script type="text/javascript">
-function onCountryChange() {
-    require(['jquery'], function($){
-        var countryval = $('#country option:selected').val();
-        if(countryval=='US'){
-            $('#region_id_label').children('span').html("<?= $regionStateLabel ?>");
-            $('#region_id').attr('placeholder',"<?= $regionStateLabel ?>");
-            $('.vat-tax-id').show();
-            $('.tin-number').show();
-            $('.tobacco-permit-number').show();
-        }else{
-            $('#region_id_label').children('span').html("<?= $regionProvinceLabel ?>");
-            $('#region').attr('placeholder',"<?= $regionProvinceLabel ?>");
-            $('.vat-tax-id').hide();
-            $('#vat_tax_id').val('');
-            $('.tin-number').hide();
-            $('#tin_number').val('');
-            $('.tobacco-permit-number').hide();
-            $('#tobacco_permit_number').val('');
-        }
-    });
-}
-require(['jquery', 'jquery/ui','mage/mage'], function($){
-    $("#country").change(function () {
-        onCountryChange();
-    });
-    $( "#form-validate" ).submit(function( event ) {
-        var dataForm = $('#form-validate');
-        dataForm.mage('validation', {});
-        var status = dataForm.validation('isValid');
-        
-        if(status){
-            $("body").trigger('processStart');
-        }else{
-            $("body").trigger('processStop');
-            event.preventDefault();
-        }
-    });
-});
-function nextPage() {
-    require(['jquery', 'jquery/ui','mage/mage'], function($){
-        var dataForm = $('#form-validate');
-        dataForm.mage('validation', {});
-        var status = dataForm.validation('isValid');
-        
-        if(status){
-            $('input[name="company[company_email]"]').val($('input[name="email"]').val());
-            if($("#basic_details").hasClass("show")){
-                $("#basic_details").hide();
-                $("#basic_details").removeClass("show");
-                $(".basic_details").removeClass("active");
-
-                $("#business_details").show();
-                $("#business_details").addClass("show");
-                $(".business_details").addClass("active");
-            }
-            onCountryChange();
-            window.scrollTo(0,200);
-        }
-    });
-}
-function prevPage() {
-    require(['jquery', 'jquery/ui'], function($){
-        if($("#business_details").hasClass("show")){
-            $("#business_details").hide();
-            $("#business_details").removeClass("show");
-            $(".business_details").removeClass("active");
-
-            $("#basic_details").show();
-            $("#basic_details").addClass("show");
-            $(".basic_details").addClass("active");
-             window.scrollTo(0,200);
-        }
-    });
-}
 </script>
