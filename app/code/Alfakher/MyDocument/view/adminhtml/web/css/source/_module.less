@@ -14,6 +14,33 @@
 	.form.doc-form {
 	    margin-top: 3rem;
 	}
+    .del{
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+        .delete-icon{
+        padding: 8px 20px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: @color-black;
+        .lib-font-size(12);
+        text-align: center;
+        background: @color-white;
+        border: 1px solid @color-black;
+        border-radius: 30px;
+        display: inline-block;
+        text-decoration: none;
+        &:hover {
+            color: @color-white;
+            background: linear-gradient(275deg, #9B2269 5%, #D378FF 100%);
+            border-color: transparent;
+            border-left-color: #D378FF;
+            border-right-color: #9B2269;
+        }
+    }
+    }
 	.doc-box {
       	border: 1px solid #CDCACA;
       	width: ~'calc(50% - 76px)';
