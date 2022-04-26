@@ -281,8 +281,17 @@ define([
 	                processData: false,
 	                success: function(data) {
 	                    if (data.success == 1) {
-	                    	location.reload(true);
-	                   		$('html, body').animate({scrollTop:70});
+	                    	if(data.tab !== undefined && data.tab != ''){
+
+                                var Url = window.location.href+"active_tab/3/";
+                                var Url = String( Url ).replace( "#", "" );
+                                window.location.href = Url;
+
+                            }else{
+                                window.location.reload(true);
+                            }
+	                    	// location.reload(true);
+	                   		// $('html, body').animate({scrollTop:70});
 	                        //$('#' + resetId).trigger("reset");
 	                        //$("#popup-modal-non-usa").show();
                             //$("#usaform").hide();

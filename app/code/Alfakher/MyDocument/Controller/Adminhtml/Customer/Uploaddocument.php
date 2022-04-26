@@ -174,6 +174,7 @@ class Uploaddocument extends \Magento\Backend\App\Action
         }
         return $resultJson->setData([
             'html' => $htmlContent,
+            'tab' => '3',
             'success' => $success]);
     }
 
