@@ -7,6 +7,7 @@
 
 namespace HookahShisha\QuoteGraphQl\Model\Resolver;
 
+use Magento\CatalogInventory\Api\StockStatusRepositoryInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Config\Element\Field;
@@ -42,16 +43,23 @@ class CartItems extends SourceCartItems
     private Json $serializer;
 
     /**
+     * @var StockStatusRepositoryInterface
+     */
+    private StockStatusRepositoryInterface $stockStatusRepository;
+
+    /**
      * @param Json $serializer
      * @param GetCartProducts $getCartProducts
      * @param Uid $uidEncoder
      * @param ProductRepositoryInterface $productRepository
+     * @param StockStatusRepositoryInterface $stockStatusRepository
      */
     public function __construct(
         Json $serializer,
         GetCartProducts $getCartProducts,
         Uid $uidEncoder,
-        ProductRepositoryInterface $productRepository
+        ProductRepositoryInterface $productRepository,
+        StockStatusRepositoryInterface $stockStatusRepository
     ) {
         parent::__construct($getCartProducts, $uidEncoder);
 
@@ -59,6 +67,7 @@ class CartItems extends SourceCartItems
         $this->uidEncoder = $uidEncoder;
         $this->productRepository = $productRepository;
         $this->serializer = $serializer;
+        $this->stockStatusRepository = $stockStatusRepository;
     }
 
     /**
@@ -90,20 +99,33 @@ class CartItems extends SourceCartItems
             $shishaSku = '';
             $charcoalSku = '';
             $superPack = '';
-            if ($alfaBundle) {
-                $alfaBundle = $this->serializer->unserialize($alfaBundle);
-                $shishaSku = $alfaBundle['shisha_sku'] ?? null;
-                $charcoalSku = $alfaBundle['charcoal_sku'] ?? null;
-                $superPack = $alfaBundle['super_pack_flavours'] ?? null;
-            }
             if (!isset($cartProductsData[$productId])) {
                 $itemsData[] = new GraphQlNoSuchEntityException(
                     __("The product that was requested doesn't exist. Verify the product and try again.")
                 );
                 continue;
             }
-
             $productData = $cartProductsData[$productId];
+
+            if ($alfaBundle) {
+                $alfaBundle = $this->serializer->unserialize($alfaBundle);
+                $shishaSku = $alfaBundle['shisha_sku'] ?? null;
+                $charcoalSku = $alfaBundle['charcoal_sku'] ?? null;
+                $superPack = $alfaBundle['super_pack_flavours'] ?? null;
+
+                if ($shishaSku && !$this->getStockStatusBySku($shishaSku)) {
+                    $productData['model']['super_pack_status'] = true;
+                }
+
+                if ($charcoalSku && !$this->getStockStatusBySku($charcoalSku)) {
+                    $productData['model']['super_pack_status'] = true;
+                }
+                // checking if the superpack child is in stock and passing it to StockStatusProvider
+                if ($superPack && $this->getIsSuperPackOutofStock($alfaBundle['super_pack'] ?? [])) {
+                    $productData['model']['super_pack_status'] = true;
+                }
+            }
+
             $flavour = $shishaSku ? $this->getBundleProductAttribute($shishaSku): '';
             $charcoalDescription = $charcoalSku
                 ? $this->getBundleProductAttribute($charcoalSku, true): '';
@@ -123,6 +145,45 @@ class CartItems extends SourceCartItems
         }
 
         return $itemsData;
+    }
+
+    /**
+     * Get stock status by sku
+     *
+     * @param string $sku
+     * @return boolean
+     */
+    private function getStockStatusBySku(string $sku)
+    {
+        try {
+            $product = $this->productRepository->get($sku);
+        } catch (NoSuchEntityException $e) {
+            return false;
+        }
+        $stockStatus = $this->stockStatusRepository->get($product->getId());
+        return $stockStatus->getStockStatus();
+    }
+
+    /**
+     * Get stock status for superpack
+     *
+     * @param array $superPackArray
+     * @return boolean
+     */
+    private function getIsSuperPackOutofStock(array $superPackArray)
+    {
+        $stockStatus = false;
+
+        if (!$this->getStockStatusBySku($superPackArray[0]['sku'] ?? '')) {
+            return true;
+        }
+
+        foreach ($superPackArray as $superPackItem) {
+            if (!$this->getStockStatusBySku($superPackItem['variant_sku'] ?? '')) {
+                return true;
+            }
+        }
+        return $stockStatus;
     }
 
     /**
