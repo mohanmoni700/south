@@ -9,7 +9,6 @@ $customerData= $block->getCustomercollection($customerid);
 $data= $customerData->getData();
 $customeradd=$block->getCustomeraddress($customerid);
 $country=$customeradd->getData('country_id');
-// die();
 $documentData= $block->getDocumentCollection();
 $docdata = $documentData->getData();
 $mediaUrl = $block->getMediaUrl();
