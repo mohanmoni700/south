@@ -9,6 +9,7 @@ $customerData= $block->getCustomercollection($customerid);
 $data= $customerData->getData();
 $customeradd=$block->getCustomeraddress($customerid);
 $country=$customeradd->getData('country_id');
+// die();
 $documentData= $block->getDocumentCollection();
 $docdata = $documentData->getData();
 $mediaUrl = $block->getMediaUrl();
@@ -135,6 +136,7 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                     class="doc_id"
                     name="mydocument_id[]"
                     value="<?= $block->escapeHtml($document->getMydocumentId()) ?>">
+                    
                         <div class="input-file pdf"
                         id="input-updatefile-<?= $block->escapeHtml($document['mydocument_id']); ?>">
                             <?php
@@ -164,6 +166,11 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                                 </div>
                             </div>
                         </div>
+                        <div class="doc-name" id="doc-name-<?= $block->escapeHtml($document['mydocument_id'])?>">
+                            <span><?= $block->escapeHtml($document['filename']); ?></span>
+                            <a href="<?= $block->escapeUrl($fileName); ?>" target="_blank" download="" class="download-doc"></a>
+                        </div>
+                        
                     <?php } else { ?>
                         <div class="input-file jpg"
                         id="input-updatefile-<?= $block->escapeHtml($document['mydocument_id']);?>">
@@ -207,7 +214,6 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                         </div> --> 
 
                     <?php } ?>
-                    <br>
 
                 <?php $docName=$document->getDocumentName(); ?>
 
@@ -217,8 +223,7 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                         $readonly = "";
                     }
                     ?>
-
-
+                    
                     <div class="mydoc_name" for="document name">
                             <label><?= $block->escapeHtml(__('Document Name')); ?></label>
                             <input type="text" id="name-<?= $block->escapeHtml($document['mydocument_id']);?>"

@@ -41,6 +41,32 @@
         }
     }
     }
+    .doc-name {
+        font-size: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 14px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .download-doc::after {
+            content: "";
+            width: 16px;
+            height: 15px;
+            background: url('Alfakher_MyDocument::images/download.svg');
+            background-size: 100%;
+            background-repeat: no-repeat;
+            display: block;
+            margin-left: 15px;
+        }
+    }
 	.doc-box {
       	border: 1px solid #CDCACA;
       	width: ~'calc(50% - 76px)';
