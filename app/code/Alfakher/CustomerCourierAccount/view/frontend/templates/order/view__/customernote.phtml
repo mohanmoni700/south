@@ -1,0 +1,20 @@
+<?php
+$order = $block->getOrder();
+?>
+
+
+<?php if ($block->isCustomerNote($order)) : ?>
+<div class="block block-order-details-view">
+    <div class="block-title">
+        <strong><?= __('Customer Shipping Comment') ?></strong>
+    </div>
+    <div class="block-content">    
+        <div class="box box-order-shipping-method">
+            <div class="box-content">
+        		<strong>Comment :</strong><p><?= __($order->getCustomerShippingNote()) ?></p>
+        		<strong>Shipping Cost :</strong><p><?= $block->getCurrencySymbol($order) ?><?= __($order->getCustomerShippingPrice()) ?></p>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>

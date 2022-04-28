@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <customercourieraccount>
+                <active>0</active>
+                <title>Customer's courier account</title>
+                <name>Use my personal courier account</name>
+                <shipping_cost>0</shipping_cost>
+                <sallowspecific>0</sallowspecific>
+                <sort_order>15</sort_order>
+                <model>Alfakher\CustomerCourierAccount\Model\Carrier\CustomerCourierShipping</model>
+            </customercourieraccount>
+        </carriers>
+    </default>
+</config>
