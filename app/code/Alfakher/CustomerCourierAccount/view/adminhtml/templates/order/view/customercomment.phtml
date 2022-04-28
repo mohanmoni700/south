@@ -13,13 +13,13 @@ $order = $block->getOrder();
 			<div class="admin__page-section-item-content">
 			    <table class="admin__table-secondary order-account-information-table">
 			        <tr>
-			            <th><strong><?= $block->escapeHtml(__('Comment :')) ?></strong></th>
+			            <th><strong><?= $block->escapeHtml(__('Courier Name :')) ?></strong></th>
 			        </tr>
 			        <tr>
 			        	<td style="word-break: break-all; text-align: left;"><?= $order->getCustomerCourierName() ?></td>
 			        </tr>
 			        <tr>
-			            <th><strong><?= $block->escapeHtml(__('Shipping Cost :')) ?></strong></th>
+			            <th><strong><?= $block->escapeHtml(__('Account Number :')) ?></strong></th>
 			        </tr>
 			        <tr>
 			        	<td style="word-break: break-all; text-align: left;"><?= $order->getCustomerCourierAccount() ?></td>
