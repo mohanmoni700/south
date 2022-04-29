@@ -350,6 +350,16 @@ input::-webkit-contacts-auto-fill-button {
             margin-top: 0 !important;
         }
     }
+    .fieldset .additional {
+        .action.remove.delete {
+            top: 48px;
+            float: right;
+            right: auto;
+            margin-left: 0;
+            left: 54%;
+            z-index: 1;
+        }
+    }
 }
 .magento_rma-returns-view,
 .magento_rma-returns-create{
@@ -378,7 +388,6 @@ input::-webkit-contacts-auto-fill-button {
     }
     .fieldset > .field:not(.choice) > .label{
         padding-left: 0;
-        margin-bottom: 0;
     }
 }
 .block.block-return-details{
@@ -401,7 +410,10 @@ input::-webkit-contacts-auto-fill-button {
             border-radius: 10px;
             background: #FBFBFB;
             &.box-returns-requested{
-                margin-right: 50px;
+                margin-right: 40px;
+                @media only screen and (max-width: 991px) {
+                    margin-right: 0;
+                }
             }
         }
         .box-content{
@@ -2624,6 +2636,10 @@ input::-webkit-contacts-auto-fill-button {
                 }
             }
         }
+        a.action.return {
+            margin-top: 20px;
+            display: inline-block;
+        }
     }
 
     .customer-account-login .page-main, 
@@ -2876,6 +2892,16 @@ input::-webkit-contacts-auto-fill-button {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    .form-create-return{
+        .fieldset .additional {
+            .action.remove.delete {
+                top: -5px;
+                left: auto;
+                right: 0;
             }
         }
     }
