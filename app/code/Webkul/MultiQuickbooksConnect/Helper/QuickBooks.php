@@ -120,7 +120,7 @@ class QuickBooks extends \Magento\Framework\App\Helper\AbstractHelper
             }
         } catch (\Exception $e) {
             $this->logger->addError('QuickBooks helper -'.$e->getMessage());
-            throw new LocalizedException($e->getMessage().'hello');
+            throw new LocalizedException(__($e->getMessage()));
         }
     }
 
@@ -367,14 +367,14 @@ class QuickBooks extends \Magento\Framework\App\Helper\AbstractHelper
             $rateIds = [];
             $appliedTaxRates = [];
             foreach ($taxPercentageList as $taxPercent) {
-                $condition = "Where RateValue = '".$taxPercent['tax_percent']."'";
+                $condition = "Where Name Like '".'mage%'."' And RateValue = '".$taxPercent['tax_percent']."'";
                 $allTaxRate = $this->dataService->Query("Select * From TaxRate ".$condition, 0, 1);
                 if ($allTaxRate[0]) {
                     array_push($rateIds, $allTaxRate[0]->Id);
                     $appliedTaxRates[$allTaxRate[0]->Id] = $allTaxRate[0]->RateValue;
                 }
             }
-            $allTaxCodes = $this->dataService->Query("Select * From TaxCode", 0, 50);
+            $allTaxCodes = $this->dataService->Query("Select * From TaxCode", 0, 100);
             if ($allTaxCodes && !empty($rateIds)) {
                 $qbTaxCode = $this->arrangedTaxCode($allTaxCodes, $rateIds, $appliedTaxRates);
             } else {
@@ -426,6 +426,7 @@ class QuickBooks extends \Magento\Framework\App\Helper\AbstractHelper
     public function getAccounts($accountId, $conditions = '')
     {
         try {
+            $allAccounts = [];
             $this->setDataServiceObject($accountId);
 
             $allAccounts = [];
@@ -464,14 +465,14 @@ class QuickBooks extends \Magento\Framework\App\Helper\AbstractHelper
         if (!empty($taxDetails)) {
             $taxCodeRef = $this->getTaxCode($taxDetails);
             foreach ($taxDetails as $key => $taxDetail) {
-                $taxRateIndex = array_keys($taxCodeRef['tax_rate_list'], $taxDetail['tax_percent']);
+                /**$taxRateIndex = array_keys($taxCodeRef['tax_rate_list'], $taxDetail['tax_percent']);
                 if (isset($taxRateIndex[0]) && isset($splitedTax[$taxRateIndex[0]])) {
                     $splitedTax[$taxRateIndex[0]]['tax_amt'] += $taxDetail['real_amount'];
                     $splitedTax[$taxRateIndex[0]]['taxabl_amt'] += $orderItem['AmountTotal'];
                 } elseif (!empty($taxRateIndex)) {
                     $splitedTax[$taxRateIndex[0]]['tax_amt'] = $taxDetail['real_amount'];
                     $splitedTax[$taxRateIndex[0]]['taxabl_amt'] = $orderItem['AmountTotal'];
-                }
+                }*/
                 $taxAmt += $taxDetail['real_amount'];
             }
         }
