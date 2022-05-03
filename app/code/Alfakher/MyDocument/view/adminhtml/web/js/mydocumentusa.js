@@ -32,7 +32,6 @@ define([
 	     */
 	    function toggleChangeById(id) {
 	    	$(document).on("change", '#toggle' + id, function(e){
-	        //$('#toggle' + id).on('change', function() {
 	            this.value = this.checked ? 1 : 0;
 	            if ($(this).val() == "1") {
 	                $(".expiry_dates" + id).show();
@@ -89,9 +88,11 @@ define([
 	                $("#download-doc-preview-" + fileId).attr("download", nameArr[2]);
 	                $(expiry_date).show();
 	                $(usabtnsave).show();
+	                /*remove required field message*/
+	                var num=fileId.match(/\d+/g);
+	                $("#filename"+num+"-error").remove();
 	                
 	                $(document).on("click", "#deletedocument-" + fileId, function(e){
-	                //$("#deletedocument-" + fileId).click(function() {
 	                	
 	                	/*remove expiry date-start[BS]*/
 	                	var splitid = fileId.match(/\d+/g);
@@ -157,7 +158,6 @@ define([
                         '<div class="expiry_dates expiry_dates' + showId + '" for="document expiry data" style="display:none">' +
                         '<label>Set Expiry Date</label>' +
                         '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date' + showId + '" class="required-entry required" readonly>' +
-                        '<input type="hidden" id="is_add_more_form'+ showId +'" name="is_add_more_form[]" value="1">'+
                         '</div></div>').insertAfter("#input-file-" + showId);
 
                     $("#image-error-message" + showId).html("");
@@ -188,14 +188,16 @@ define([
 	                        var imgClass = "";
 	                    }
 
+	                    $("#filename"+showId+"-error").remove();
                         $('<img class="previewimage-filename-' + showId + ' ' + imgClass + '" height="170" width="170" src="' + filePreview + '" title="' + filename + '"/>' +
                             '<div class="doc-actions" id="doc-actions-filename-' + showId + '">' +
                             '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + filesrc + '" target="_blank"></a>' +
                             '<a class="deletedocument-preview deletedocument" id="deletedocument-filename' + showId + '"></a>' +
                             '</div>').insertAfter("#" + fileId + showId);
+                        /*remove rew\quired message on upload*/
+                        $("#filename-"+showId+"-error").remove();
 
                         $(document).on("click", "#deletedocument-filename" + showId, function(e){
-                        //$("#deletedocument-filename" + showId).click(function() {
                         	
                             $("#doc-actions-filename-" + showId).remove();
                             //remove multi div append[BS]
@@ -235,7 +237,6 @@ define([
 	        $(".set_expiry" + id).hide();
 
 	        $(document).on("change", '#filename' + id, function(e){
-	        //$('#filename' + id).change(function(e) {
 	            var val = $(this).val();
 	            if (val) {
 	                var extension = val.substring(val.lastIndexOf('.') + 1).toLowerCase();
@@ -267,7 +268,6 @@ define([
 	     */
 	    function formSubmitById(id, resetId, postUrl) {
 	    	$(document).on("submit", "form#"+id, function(e){
-	        //$("form#"+id).submit(function(e) {
 	            e.preventDefault();
 	            var formData = new FormData(this);
 	            $.ajax({
@@ -290,14 +290,7 @@ define([
                             }else{
                                 window.location.reload(true);
                             }
-	                    	// location.reload(true);
-	                   		// $('html, body').animate({scrollTop:70});
-	                        //$('#' + resetId).trigger("reset");
-	                        //$("#popup-modal-non-usa").show();
-                            //$("#usaform").hide();
-                            //$('.page-title-wrapper').hide();
-                            //$('.form-create-account').hide();
-                            //$("#usa_customer_tab .document-title").hide();
+
 	                    } else {
 	                        $(".page.messages").html('<div role="alert" class="messages">' +
 	                            '<div class="alert danger alert-danger" data-ui-id="message-danger">' +
@@ -323,23 +316,30 @@ define([
 	        fileChangeById(4);
 
 	        $(document).on("click", '#add_more', function(e){
-	        //$("#add_more").click(function() {
 	        	var id = $('#usaform').find('input[type="file"]').length;
 	        	var showId = ++id;
 	            if (showId <= 25) {
 	                $('<input type="hidden" name="is_customerfrom_usa' + showId + '" value="1">'+
-                	'<div class="upload" for="document uploader"><div class="input-file" id="input-file-' + showId + '">' +
+	                '<input type="hidden" id="is_add_more_form'+ showId +'" name="is_add_more_form[]" value="1"/>'+
+                	'<div class="upload" id="delete-uploaded'+showId+'" for="document uploader"><div class="input-file" id="input-file-' + showId + '">' +
                     '<input type="file" id="filename-' + showId + '" class="required-entry required upload-filename-' + showId +'" name="filename' + showId + '">' +
                     '<span class="input-note">' + config.inputNote + '</span>'+
                     '<span id="image-error-message'+showId+'" style="color:red;"></span>'+
-                    '</div></div>').insertBefore('.upload-container .usa-add-more');
+                    '</div>' + '<div class="del" id="delete">' +
+                    '<a class="delete-icon" id="del-button' + showId + '" href="#">delete</a>' +
+                    '</div>'+ '</div>').insertBefore('.upload-container .usa-add-more');
 	            }
+	            $("#del-button" + showId).click(function() {
+                    $("#delete-uploaded"+showId).hide();
+                    $("#name-" + showId).val('');
+                    $("#is_add_more_form" + showId).val(1);
+                });
+
 	            if (showId == 25){
                     $(".add-more-cont").hide();
                     $("#add_more").hide();
                 }
                 $(document).on("change", '#filename-' + showId, function(e){
-	            //$('#filename-' + showId).change(function(e) {
 	                var val = $(this).val();
 	                fileUploading(showId, 'filename-', $(this), e);
 	            });
@@ -348,7 +348,6 @@ define([
 
 	        /**  Making hide/show add more container based on checkbox [AR] */
 	        $(document).on("change", '.add-more-field .checkbox', function(e){
-	        //$('.add-more-field .checkbox').on('change', function() {
 	            this.value = this.checked ? 1 : 0;
 	            if ($(this).val() == "1") {
 	                $(".add-more-container").show();
@@ -364,7 +363,6 @@ define([
 	        }).change();
 
 	        $(document).on("change", '#filename1,#filename2,#filename3,#filename4', function(e){
-	        //$('#filename1,#filename2,#filename3,#filename4').change(function() {
 	            if ($(this).val()) {
 	                $(this).closest('.upload').addClass('active');
 	                $("#usabtnsave").show();
@@ -377,7 +375,6 @@ define([
 	        });
 
 	        $(document).on("change", '#expiry_date1, #expiry_date2, #expiry_date3, #expiry_date4', function(e){
-	        //$('#expiry_date1, #expiry_date2, #expiry_date3, #expiry_date4').change(function() {
 	            if ($(this).val()) {
 	                var date_val = $(this).val();
 	                $(this).val('Expiry Date: ' + date_val);
@@ -388,10 +385,9 @@ define([
 	        
             
 	        $(document).on("click", 'button#usabtnsave', function(e){
-	        //$('button#usabtnsave').click( function(e) {
-                $(".pending-tooltip").hide();
+	            $(".pending-tooltip").hide();
                 var dataForm = $('#usaform');
-   				if($(dataForm).valid()){
+        		if($(dataForm).valid()){
    					formSubmitById('usaform', 'usaform', config.customResultUrl);
    				}
 		    });

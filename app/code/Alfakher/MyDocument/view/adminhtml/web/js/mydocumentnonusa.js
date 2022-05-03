@@ -42,6 +42,7 @@ define([
                         '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date-' + showId + '" class="required-entry required" readonly>' +
                         '</div></div>').insertAfter(currentElem.closest('.upload .input-file'));
                     $("#image-error-message-" + showId).html("");
+                    $("#filename-" + showId + "-error").remove();
 
                     $("#doc-actions-filename-" + showId).remove();
                     var reader = new FileReader();
@@ -122,7 +123,6 @@ define([
          */
         function expireOnChange(showId) {
             $(document).on("change", "#expiry_date-" + showId, function(e){
-            //$("#expiry_date-" + showId).on('change', function() {
                 if ($(this).val()) {
                     var date_val = $(this).val().indexOf('Expiry Date: ') == -1 ? $(this).val() : $(this).val().split('Expiry Date: ')[1];
                     $(this).val('Expiry Date: ' + date_val);
@@ -139,7 +139,6 @@ define([
          */
         function formSubmitById(id, resetId, postUrl) {
             $(document).on("submit", "form#"+id, function(e){
-            //$("form#" + id).submit(function(e) {
                 e.preventDefault();
                 var formData = new FormData(this);
                 $.ajax({
@@ -162,15 +161,7 @@ define([
                             }else{
                                 window.location.reload(true);
                             }
-
-                            // location.reload(true);
-                            //$('html, body').animate({scrollTop:70});
-                            //$('#' + resetId).trigger("reset");
-                            //$("#popup-modal-non-usa").show();
-                            //$("#myformdynamic").hide();
-                            //$("#non_usa_customer_tab .document-title").hide();
-                            //$('.page-title-wrapper').hide();
-                            //$('.form-create-account').hide();
+                            
                         } else {
                             $(".page.messages").html('<div role="alert" class="messages">' +
                                 '<div class="alert danger alert-danger" data-ui-id="message-danger">' +
@@ -186,7 +177,6 @@ define([
         $(document).ready(function() {
             expireOnChange(1);
             $(document).on("change", '#toggle', function(e){
-            //$('#toggle').on('change', function() {
                 this.value = this.checked ? 1 : 0;
                 if ($(this).val() == "1") {
                     $("#expiry_date").parent().show();
@@ -199,43 +189,46 @@ define([
             }).change();
 
             $(document).on("change", '#filename-1', function(e){
-            //$('#filename-1').change(function(e) {
-	            fileRender(1, 'filename-',$(this),e);
-	        });
+                fileRender(1, 'filename-',$(this),e);
+            });
 
             var id = 1;
             $(document).on("click", '#add_more_non_usa', function(e){
-            //$("#add_more_non_usa").click(function() {
-            	var id = jQuery('#myformdynamic').find('input[type="file"]').length;
+                var id = jQuery('#myformdynamic').find('input[type="file"]').length;
                 var showId = ++id;
                 if (showId <= 25) {
-                    $('<div class="upload" for="document uploader">' +
+                    $('<div class="upload" id="delete-uploaded'+showId+'" for="document uploader">' +
                         '<div class="input-file">' +
-                        '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" class="required-entry required">' +
+                        '<input type="file" id="filename-' + showId + '" class="required-entry required upload-filename" name="filename' + showId + '" class="required-entry required">' +
                         '<span id="image-error-message-'+ showId + '" style="color:red;"></span>'+
                         '<span class="input-note">' + config.inputNote + '</span>' +
                         '<input type="hidden" id="is_add_more_form' + showId + '" name="is_add_more_form[]" value="1">' +
-                        '</div></div>').insertBefore('.upload-container .add-more-cont');
+                        '</div>' + '<div class="del" id="delete">' +
+                        '<a class="delete-icon" id="del-button' + showId + '" href="#">delete</a>' +
+                        '</div>' + '</div>').insertBefore('.upload-container .add-more-cont');
                 }
+                $("#del-button" + showId).click(function() {
+                    $("#delete-uploaded"+showId).hide();
+                    $("#name" + showId).val('');
+                    
+                });
                 if (showId == 25){
                     $(".add-more-cont").hide();
                     $("#add_more_non_usa").hide();
                 }
                 $(document).on("change", '#filename-' + showId, function(e){
-            	//$('#filename-' + showId).change(function(e) {
-                	fileRender(showId, 'filename-',$(this),e);
+                //$('#filename-' + showId).change(function(e) {
+                    fileRender(showId, 'filename-',$(this),e);
                 });
             });
 
             
             $(document).on("click", 'button#nonusabtnsave', function(e){
-            //$('button#nonusabtnsave').click( function(e) {
                 var dataForm = $('#myformdynamic');
                 if($(dataForm).valid()) {
                     formSubmitById('myformdynamic', 'myformdynamic', config.customResultUrl);
                 }
-                //return false;
-		    });
+            });
         });
     };
 });

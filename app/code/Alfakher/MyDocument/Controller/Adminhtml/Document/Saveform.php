@@ -147,7 +147,6 @@ class Saveform extends \Magento\Backend\App\Action implements HttpPostActionInte
         $mail = $this->helper->sendMail($newArray, $customerid);
         $resultRedirect = $this->resultRedirectFactory->create();
         $resultRedirect->setPath('customer/index/edit', ['id' => $customerid, '_current' => false, 'active_tab' => 3]);
-        // $resultRedirect->setRefererUrl();
         return $resultRedirect;
     }
 }
