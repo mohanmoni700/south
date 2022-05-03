@@ -314,7 +314,33 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
         //echo "No Documents are uploaded!";
         echo $block->getChildHtml('add_documents');
 } ?>
-
+<style>
+.doc-name {
+     font-size: 10px;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     margin: 14px 0;
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+     width: 100%;
+}
+ .doc-name span {
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+}
+ .doc-name .download-doc::after {
+     content: "";
+     width: 16px;
+     height: 15px;
+     background: url('Alfakher_MyDocument::images/download.svg');
+     background-size: 100%;
+     background-repeat: no-repeat;
+     display: block;
+     margin-left: 15px;
+}</style>
 <script>
 
        require(['jquery', 'jquery/ui'], function($){
