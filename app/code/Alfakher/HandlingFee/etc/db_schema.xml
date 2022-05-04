@@ -11,6 +11,22 @@
 		<column xsi:type="decimal" name="handling_fee" nullable="false" scale="2" precision="10" comment="Handling Fee"/>
 		<column xsi:type="decimal" name="handling_fee_invoiced" nullable="false" scale="2" precision="10" comment="Handling Fee"/>
 		<column xsi:type="decimal" name="handling_fee_refunded" nullable="false" scale="2" precision="10" comment="Handling Fee"/>
+
+		<!-- af_bv_op; manage custom discount on order; Start -->
+		<column xsi:type="decimal" name="original_subtotal" nullable="false" scale="2" precision="10" comment="Original Subtotal"/>
+		<column xsi:type="decimal" name="original_shipping_fee" nullable="false" scale="2" precision="10" comment="Original Shipping Fee"/>
+
+		<column xsi:type="decimal" name="original_subtotal_incl_tax" nullable="false" scale="2" precision="10" comment="Original subtotal incl tax"/>
+		<column xsi:type="decimal" name="original_base_subtotal" nullable="false" scale="2" precision="10" comment="Original base subtotal"/>
+		<column xsi:type="decimal" name="original_base_subtotal_incl_tax" nullable="false" scale="2" precision="10" comment="Original base subtotal incl tax"/>
+
+		<column xsi:type="decimal" name="original_base_shipping_amount" nullable="false" scale="2" precision="10" comment="Original base shipping amount"/>
+		<column xsi:type="decimal" name="original_shipping_incl_tax" nullable="false" scale="2" precision="10" comment="Original shipping incl tax"/>
+		<column xsi:type="decimal" name="original_base_shipping_incl_tax" nullable="false" scale="2" precision="10" comment="Original base shipping incl tax"/>
+
+		<column xsi:type="decimal" name="total_subtotal_discount" nullable="false" scale="2" precision="10" comment="Total Subtotal Discount"/>
+		<column xsi:type="decimal" name="total_shipping_fee_discount" nullable="false" scale="2" precision="10" comment="Total Shipping Fee Discount"/>
+		<!-- af_bv_op; manage custom discount on order; End -->
 	</table>
 
 	<table name="sales_invoice">

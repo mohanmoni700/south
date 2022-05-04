@@ -90,6 +90,16 @@ $canShowShippingFeeEdit = $viewModel->isShippingFeeEditEnabled($websiteId);
                             <?php endif; ?>
                         </td>
 
+                        <?php /* bv_op; date : 2-5-22; displaying initial subtotal and initial shipping fee; Start */ ?>
+                        <?php if($_total->getCode() == 'subtotal' && $order->getTotalSubtotalDiscount() > 0): ?>
+                            <?php $_total->setData("value",$order->getOriginalSubtotal()); ?>
+                            <?php $_total->setData("base_value",$order->getOriginalSubtotal()); ?>
+                        <?php elseif($_total->getCode() == 'shipping' && $order->getTotalShippingFeeDiscount() > 0): ?>
+                            <?php $_total->setData("value",$order->getOriginalShippingFee()); ?>
+                            <?php $_total->setData("base_value",$order->getOriginalShippingFee()); ?>
+                        <?php endif; ?>
+                        <?php /* bv_op; date : 2-5-22; displaying initial subtotal and initial shipping fee; End */ ?>
+
                         <?php if ($_total->getStrong()): ?>
                             <td <?= /* @noEscape */ $block->getValueProperties() ?>>
                                 <strong><?= /* @noEscape */ $block->formatValue($_total) ?></strong>
@@ -221,8 +231,23 @@ $canShowShippingFeeEdit = $viewModel->isShippingFeeEditEnabled($websiteId);
                 <?php endif; ?>
                 <?php /* bv_op; date : 21-4-22; edit shipping; End */ ?>
 
-
             <?php endforeach; ?>
+
+            <?php /* bv_op; date : 2-5-22; displaying subtotal and shipping discount; Start */ ?>
+            <?php if($order->getTotalSubtotalDiscount() > 0): ?>
+                <tr class="col-2">
+                    <td class="label">Subtotal Discount</td>
+                    <td>-<?= $order->formatPrice($order->getTotalSubtotalDiscount())  ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if($order->getTotalShippingFeeDiscount() > 0): ?>
+                <tr class="col-2">
+                    <td class="label">Shipping Fee Discount</td>
+                    <td>-<?= $order->formatPrice($order->getTotalShippingFeeDiscount()) ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php /* bv_op; date : 2-5-22; displaying subtotal and shipping discount; End */ ?>
+
         </tbody>
     <?php endif; ?>
 </table>
