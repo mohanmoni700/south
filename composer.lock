@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "240ec242ab610242aa0bf3c87f0fe4d0",
+    "content-hash": "5913522957e0b17df44755593f05965e",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -25331,23 +25331,27 @@
         },
         {
             "name": "magento/quality-patches",
-            "version": "1.1.7",
+            "version": "1.1.12",
             "dist": {
                 "type": "zip",
-                "url": "https://repo.magento.com/archives/magento/quality-patches/magento-quality-patches-1.1.7.0.zip",
-                "shasum": "d2175b5b8f65ea9c7426786efa3c686f6f00b58f"
+                "url": "https://repo.magento.com/archives/magento/quality-patches/magento-quality-patches-1.1.12.0.zip",
+                "shasum": "3108930000f9d32597b3317635005ccf5bb3ea0e"
             },
             "require": {
                 "ext-json": "*",
                 "magento/magento-cloud-patches": "^1.0.11",
-                "php": "^7.0"
+                "php": "^7.2 || ^8.0"
             },
             "require-dev": {
-                "codeception/codeception": "^2.5.3",
+                "codeception/codeception": "^4.1",
+                "codeception/module-asserts": "^1.2",
+                "codeception/module-db": "^1.0",
+                "codeception/module-phpbrowser": "^1.0",
+                "codeception/module-rest": "^1.2",
                 "composer/semver": "@stable",
                 "consolidation/robo": "^1.2",
                 "phpmd/phpmd": "@stable",
-                "phpunit/phpunit": "^6.2",
+                "phpunit/phpunit": "^8.5 || ^9.5",
                 "squizlabs/php_codesniffer": "^3.0"
             },
             "type": "magento2-component",
@@ -32972,5 +32976,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
