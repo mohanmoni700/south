@@ -254,6 +254,7 @@
 
     .updated-container {
         align-items: start;
+        margin-right: -20px
     }
     .updatedocument {
         .field .value {
@@ -568,6 +569,7 @@
         margin-bottom: 20px;
         margin-top: 3rem;
         position: relative;
+        margin-right:20px;
     }
     .add-more-field input[type="checkbox"] {
         opacity: 0;
@@ -778,15 +780,15 @@
     form .updated-container{
         .upload,
         .document {
-            width: ~'calc((100% - 60px) / 4 )';
+            width: ~'calc((100% - 80px) / 4 )';
             margin-right: 20px;
             display: block;
             grid-row-gap: 10px;
             margin-bottom: 4rem;
 
-            &[for="document uploader"]:nth-of-type(4n) {
+            /*&[for="document uploader"]:nth-of-type(4n) {
                 margin-right: 0;
-            }
+            }*/
             &:nth-of-type(2n), &:nth-of-type(3n) {
                 margin-right: 20px;
             }
@@ -804,16 +806,16 @@
     .updated-container{
         .upload,
         .document {
-            width: ~'calc((100% - 40px) / 3 )';
+            width: ~'calc((100% - 60px) / 3 )';
             margin-right: 20px;
             display: grid;
             grid-row-gap: 10px;
             margin-bottom: 20px;
 
-            &:nth-of-type(3n) {
+            /*&:nth-of-type(3n) {
                 margin-right: 0;
                 
-            }
+            }*/
         }
     }
 }
