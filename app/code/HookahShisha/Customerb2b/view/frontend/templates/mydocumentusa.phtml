@@ -1,0 +1,146 @@
+<?php
+$uploaderType = [
+    'FEIN',
+    'Sales Tax/Resale License',
+    'State Tobacco License',
+    'Unified Resale Certificate'
+];
+$pdfImg = $block->getViewFileUrl('images/pdf.svg');
+$customResultUrl = $block->getUrl('mydocument/customer/hookahresult');
+$deleteDocumentUrl = $block->getUrl('mydocument/customer/deletedocument');
+$updateDocumentUrl = $block->getUrl('mydocument/customer/updatedocument');
+?>
+<div class="document-title">
+    <span class="title">
+        <?= $block->escapeHtml(__('Upload Your Document')); ?>
+    </span>
+    <span class="note">
+        <?= $block->escapeHtml(__('(File type supported are JPG, PNG and PDF)')); ?>
+    </span>
+</div>
+<div class="my_document">
+    <form name="usaform" id="usaform"
+        class="usaform" 
+        accept-charset="utf-8"
+        enctype="multipart/form-data"
+        autocomplete="off" data-mage-init='{"validation":{}}'>
+        <input type="hidden" name="cust_id_usa" id="cust_id_usa" />
+        <div class="upload-container">
+            <?php foreach ($uploaderType as $key => $value): ?>
+                <?php $counter = $key + 1;?>
+                <input type="hidden"
+                name="is_customerfrom_usa<?= $block->escapeHtml($counter); ?>"
+                value="1"/>
+                <div class="upload" for="document uploader">
+                    <label><?= $block->escapeHtml(__($value)); ?></label>
+                    <div class="input-file" id="input-filename<?= $block->escapeHtml($counter); ?>">
+                        <input type="file"
+                        data-id="<?= $block->escapeHtml($counter); ?>"
+                        id="filename<?= $block->escapeHtml($counter); ?>"
+                        class="upload-filename"
+                        name="filename<?= $block->escapeHtml($counter); ?>"
+                        data-validate="{required:true}"/>
+                        <span class="input-note">
+                            <?= $block->escapeHtml(__('(Only one document can be uploaded)')); ?>
+                        </span>
+                        <span id="image-error-message<?= $block->escapeHtml($counter); ?>" style="color:red;"></span>
+                        <!-- bv_vv; date:04-02-2022; File Preview Start; -->
+                        <img class="previewimage-filename<?= $block->escapeHtml($counter); ?>"
+                        height="170" width="170" src="" alt="" title="" style="display:none;"/>
+                        <div class="doc-actions" id="doc-actions-filename<?= $block->escapeHtml($counter); ?>"
+                            style="display:none;">
+                            <a class="view-doc-link" id="view-doc-link-filename<?= $block->escapeHtml($counter); ?>"
+                                href="" target="_blank"></a>
+                            <a class="deletedocument-preview deletedocument"
+                            id="deletedocument-filename<?= $block->escapeHtml($counter); ?>"></a>
+                        </div>
+                        <!-- bv_vv; date:04-02-2022; File Preview End; -->
+                    </div>
+                    <div class="doc_name" for="document name" style="display:none!important;">
+                        <label><?= $block->escapeHtml(__('Document Name')); ?></label>
+                        <input type="text"
+                        id="name-<?= $block->escapeHtml($counter); ?>"
+                        name="name<?= $block->escapeHtml($counter); ?>"
+                        data-validate="{required:true}"
+                        value="<?= $block->escapeHtml($value); ?>" readonly/>
+                    </div>
+                    <div class="set_expiry" for="document expiry data" style="display:none" >
+                        <label><?= $block->escapeHtml(__('Set a Specific Expiry date')); ?></label>
+                        <input type="checkbox" id="toggle<?= $block->escapeHtml($counter); ?>"
+                        name="set_expiry<?= $block->escapeHtml($counter); ?>"
+                        class="cmn-toggle cmn-toggle-round" />
+                        <span class="slider round"></span>
+                        <div class="expiry_dates expiry_dates<?= $block->escapeHtml($counter); ?>"
+                            for="document expiry data" style="display:none">
+                            <label><?= $block->escapeHtml(__('Set Expiry Date')); ?></label>
+                            <input type="text"
+                            placeholder="Expiry Date"
+                            name="expiry_date<?= $block->escapeHtml($counter); ?>"
+                            id="expiry_date<?= $block->escapeHtml($counter); ?>"
+                            data-validate="{required:true}" readonly/>
+                        </div>
+                    </div>
+                    <input type="hidden"
+                    id="is_add_more_form<?= $block->escapeHtml($counter); ?>"
+                    name="is_add_more_form<?= $block->escapeHtml($counter); ?>"
+                    value="0"/>
+                </div>
+            <?php endforeach; ?>
+            <div class="upload" for="document uploader">
+                <span class="image-error-message" style="color:red;"></span>
+                <div class="doc_name" for="document name"></div>
+                <div class="set_expiry" for="document expiry data"></div>
+                <div class="expiry_dates" for="document expiry data"></div>
+            </div>
+        </div>
+        <div class="document-title add-more-field">
+            <div class="field">
+                <input type="checkbox" class="checkbox">
+                <label class="label">
+                    <span>
+                        <?= $block->escapeHtml(__('Do you want to upload other document?')); ?>
+                    </span>
+                </label>
+            </div>
+            <span class="note" style="display: none;">
+                <?= $block->escapeHtml(__('(File type supported are JPG, PNG and PDF)')); ?>
+            </span>
+        </div>
+        <div class="upload-container add-more-container" style="display:none;">
+            <div class="add-more-cont usa-add-more">
+                <a id="add_more"><?= $block->escapeHtml(__('Add More Document')); ?></a>
+            </div>
+        </div>
+        <div class="actions-toolbar justify_btn">
+            <div class="primary prev">
+                <button type="button" class="action previou primary" id="usadocskip" title="Skip">
+                    <span><?= $block->escapeHtml(__('Skip')); ?></span>
+                </button>
+            </div>
+            <div class="primary regis">
+                <button type="submit" id="usabtnsave" class="action submit primary">
+                    <span><?= $block->escapeHtml(__('Submit')); ?></span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<div id="popup-modal-usa" style="display:none">
+    <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/success_union.svg')); ?>"
+    alt="success_union" width="60" height="60" loading="lazy" />
+    <h1 class="success_msg"><?= $block->escapeHtml(__('DOCUMENTS ARE UPLOADED SUCCESSFULLY')); ?></h1>
+    <h5><?= $block->escapeHtml(__('Once it is approved by Admin, Product price would be visible to you.')); ?></h5>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "HookahShisha_Customerb2b/js/mydocumentusa": {
+                "pdfImg": "<?= $block->escapeUrl($pdfImg); ?>",
+                "inputNote": "<?= $block->escapeHtml(__('(Only one document can be uploaded)')); ?>",
+                "customResultUrl": "<?= $block->escapeUrl($customResultUrl); ?>",
+                "deleteDocumentUrl": "<?= $block->escapeUrl($deleteDocumentUrl); ?>",
+                "updateDocumentUrl": "<?= $block->escapeUrl($updateDocumentUrl); ?>"   
+            }
+        }
+    }
+</script>

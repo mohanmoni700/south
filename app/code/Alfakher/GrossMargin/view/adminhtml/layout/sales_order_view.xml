@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="order_items">
+        	<action method="setTemplate">
+                <argument name="template" xsi:type="string">Alfakher_GrossMargin::grid/items.phtml</argument>
+            </action>
+
+            <arguments>
+		        <argument name="view_model" xsi:type="object">Alfakher\GrossMargin\ViewModel\GrossMargin</argument>
+		    </arguments>
+
+            <block class="Alfakher\GrossMargin\Block\Adminhtml\Items\Column\GrossMargin" name="column_grossmargin" template="Alfakher_GrossMargin::grossmargin.phtml" group="column">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Alfakher\GrossMargin\ViewModel\GrossMargin</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+
+        <referenceContainer name="order_additional_info">
+            <block class="Alfakher\GrossMargin\Block\Adminhtml\Order\View\PurchaseOrder" name="af_purchase_order" template="Alfakher_GrossMargin::order/view/purchaseOrder.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

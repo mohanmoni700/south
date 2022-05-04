@@ -1,0 +1,21 @@
+<?php /** @var $block \Alfakher\Productpageb2b\Block\Product\ViewDetailRenderer */ ?>
+<?php
+    $product = $block->getProduct();
+    $productImg = $block->getProductImageUrl();
+    $attribute = $product->getResource()->getAttribute('brand');
+    $brand = $attribute->getFrontend()->getValue($product); 
+ ?>
+
+<script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "Product",
+      "name": "<?= $product->getName()?>",
+      "sku": "<?= $product->getSku()?>",
+      "image": "<?= $productImg ?>",
+      "brand": {
+            "@type": "Brand",
+            "name": "<?= $brand ?>"
+        }
+    }
+</script>

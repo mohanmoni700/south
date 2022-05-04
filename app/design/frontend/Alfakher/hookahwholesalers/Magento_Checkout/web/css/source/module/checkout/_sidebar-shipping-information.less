@@ -59,9 +59,23 @@
         }
 
         .shipping-information-content {
+            word-break: break-word;
             .lib-css(line-height, @checkout-sidebar-shipping-information__line-height);
+            &::first-line {
+                font-weight: @font-weight__bold;
+            }
             .actions-toolbar {
                 margin-left: 0;
+            }
+            a {
+                color: @color_black;
+            }
+        }
+        .ship-via {
+            .shipping-information-content {
+                &::first-line {
+                    font-weight: @font-weight__regular;
+                }
             }
         }
 

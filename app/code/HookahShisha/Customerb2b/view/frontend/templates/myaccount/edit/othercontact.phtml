@@ -1,5 +1,6 @@
 <?php
 /** @var \HookahShisha\Customerb2b\Block\Myaccount\Basicdetail $block */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
 ?>
 <?php $contact = $block->getContactDetail(); ?>
 <?php
@@ -16,11 +17,12 @@ $formDisable = 1;
       method="post"
       id="other-contact-form-validate"
       enctype="multipart/form-data"
-      data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>">
+      data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>"
+      data-mage-init='{"validation":{}}'>
     <fieldset class="fieldset">
         <legend></legend>
         <?= $block->getBlockHtml('formkey') ?>
-        <input type="hidden" name="id" value="<?= $block->getCustomer()->getId(); ?>">
+        <input type="hidden" name="id" value="<?= /* @noEscape */ $block->getCustomer()->getId(); ?>">
         <div class="field contact_name">
             <?php $contactNameLabel = __('Contact Name'); ?>
             <label class="label" for="contact_name">
@@ -32,12 +34,13 @@ $formDisable = 1;
                        value="<?= /* @noEscape */ $block->escapeHtml($contact['contact_name']) ?>"
                        placeholder="<?= $escaper->escapeHtmlAttr($contactNameLabel) ?>"
                        title="<?= /* @noEscape */ $escaper->escapeHtmlAttr($contactNameLabel) ?>"
-                       class="input-text"
+                       class="input-text validate-alphanum-with-spaces minimum-length-1 maximum-length-255 validate-length"
                        id="contact_name">
             </div>
         </div>
+        <!-- changed label for contact number[BS] -->
         <div class="field contact_phone">
-            <?php $contactPhoneLabel = __('Contact Phone'); ?>
+            <?php $contactPhoneLabel = __('Contact Number'); ?>
             <label class="label" for="contact_phone">
                 <span><?= /* @noEscape */ $escaper->escapeHtmlAttr($contactPhoneLabel) ?></span>
             </label>
@@ -47,7 +50,7 @@ $formDisable = 1;
                        value="<?= /* @noEscape */ $block->escapeHtml($contact['contact_phone']) ?>"
                        placeholder="<?= $escaper->escapeHtmlAttr($contactPhoneLabel) ?>"
                        title="<?= /* @noEscape */ $escaper->escapeHtmlAttr($contactPhoneLabel) ?>"
-                       class="input-text"
+                       class="input-text validate-digits minimum-length-10 maximum-length-10 validate-length"
                        id="contact_phone">
             </div>
         </div>
@@ -63,7 +66,7 @@ $formDisable = 1;
                         title="<?= /* @noEscape */ $block->escapeHtml($contactEmaillabel) ?>" 
                         class="input-text"
                         data-validate="{'validate-email': true}"
-                        value="<?php echo $block->escapeHtml($contact['contact_email']) ?>"
+                        value="<?= $block->escapeHtml($contact['contact_email']) ?>"
                         />
 
             </div>
@@ -85,7 +88,7 @@ $formDisable = 1;
         </div>
     </div>
 </form>
-<?php if($formDisable == 1): ?>
+<?php if ($formDisable == 1): ?>
 <?php
     $scriptString = <<<script
         require(['jquery'], function($){
@@ -96,3 +99,19 @@ $formDisable = 1;
     script; ?>
 <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
 <?php endif; ?>
+
+<?php
+    $scriptStrings = <<<script
+    require(['jquery'], function($){
+        jQuery("#other-contact-form-validate .action.save.primary").click(function(e) {
+            if(jQuery('#contact_name').val().length == 0 
+                && jQuery('#contact_phone').val().length == 0 
+                && jQuery('#contact_email').val().length == 0
+            ) {
+                e.preventDefault();
+            }
+        });
+    });
+    script;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptStrings, false) ?>

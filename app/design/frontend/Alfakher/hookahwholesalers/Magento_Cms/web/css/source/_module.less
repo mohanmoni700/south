@@ -1,34 +1,544 @@
 @import 'module/_owl.carousel.less';
 @import 'module/_owl.theme.less';
 
-.owl-theme .owl-nav [class*='owl-']
-{
-	background: unset;
-	margin-top: -30px;
-	color: #000;
-}
-.fa
-{
-	font-size: 25px;
-}
-.carousel-wrap {
-  margin: 90px auto;
-  padding: 0 5%;
-  width: 80%;
-  position: relative;
+& when (@media-common = true) {
+  .owl-theme .owl-nav [class*='owl-']
+  {
+    background: unset;
+    margin-top: -30px;
+    color: #000;
+  }
+  .fa
+  {
+    font-size: 25px;
+  }
+  .carousel-wrap {
+    margin: 90px auto;
+    padding: 0 5%;
+    width: 80%;
+    position: relative;
+  }
+
+  .owl-nav > div {
+    margin-top: -26px;
+    position: absolute;
+    top: 50%;
+    color: #cdcbcd;
+  }
+
+  .owl-nav .owl-prev {
+    left: -30px;
+  }
+
+  .owl-nav .owl-next {
+    right: -30px;
+  }
+
+  //
+  // Homepage Main Banner [Section 1] (D)
+  //  ----------------------------
+  .cms-home {
+    .page-footer {
+      margin-top: 0;
+    }
+    .blog-widget-recent {
+      .post-list {
+        .post-description {
+          overflow: unset;
+          display: block;
+          -webkit-box-orient: unset;
+          -webkit-line-clamp: unset;
+        }
+      }
+    }
+  }
+  .homepage_slider_content {
+    .lib-css(margin-bottom, (@indent__l * 2));
+    .pagebuilder-poster-content {
+      color: @color-white;
+      h2 {
+        .lib-font-size(48);
+        .lib-css(line-height, 66px);
+        .lib-css(margin, 0 0 (@indent__l - 3));
+        .lib-css(font-family, 'DM Serif Display');
+        .lib-css(font-weight, @font-weight__semibold);
+      }
+      .sub-title {
+        .lib-font-size(20);
+        .lib-css(line-height, @indent__m - 1);
+        .lib-css(font-weight, @font-weight__regular);
+        .lib-css(font-family, @montserrat);
+        .lib-css(margin-bottom, @indent__l + 1);
+        display: inline-block;
+      }
+      .pagebuilder-button-primary {
+        .lib-css(background, @color-white);
+        .lib-css(color, @color-black);
+        .lib-css(text-transform, uppercase);
+        .lib-css(letter-spacing, @indent__xs);
+        width: 220px;
+        .lib-css(height, @indent__xl);
+        .lib-css(line-height, @indent__xl);
+        padding: 0;
+        .lib-css(border-radius, @indent__xl);
+        .lib-css(border-color, @color-white);
+        cursor: pointer !important;
+      }      
+    }
+    .slick-prev, 
+    .slick-next {
+      background: transparent;
+    }
+    .slick-prev::before{
+      content: '';
+      background: url('@{baseDir}images/banner_arrow.svg') no-repeat;
+      width: 17px;
+      height: 30px;
+      display: inline-block;
+    }
+    .slick-next::before{
+      content: '';
+      background: url('@{baseDir}images/banner_arrow.svg') no-repeat;
+      transform: rotate(180deg);
+      width: 17px;
+      height: 30px;
+      display: inline-block;
+    }  
+    .slick-dots {
+      position: absolute;
+      bottom: 18px;
+      li {
+        button {
+          background: @input-border_color;
+          width: 10px;
+          height: 10px;        
+        }
+        &.slick-active button{
+          width: 30px;
+          background: @color-white;
+        }
+      }
+    }
+  }
+
+  .cms-about-us-for-hookah-wholesalers {
+    [data-content-type='heading'] {
+      font-weight: @font-weight__bold;
+      margin-top: 0;
+    }
+  }
+  .sitemap-index-index {
+    .page-main {
+      padding-top: 36px;
+      max-width: @layout_container_xl;
+    }
+    .page-title {
+      margin-bottom: 20px;
+      font-size: 32px;
+      font-weight: @font-weight__regular;
+    }
+  }
+  .mp-sitemap-listing {
+    padding-left: 0;
+    li {
+      margin-bottom: 16px;
+      a {
+        color: @color_black;
+        text-decoration: underline;
+      }
+    }
+  }
+  #mageplaza-seo-html-sitemap {
+    h2 {
+      font-weight: @font-weight__regular;
+    }
+  }
+
+  //
+  //  Homepage Category Slider Sontent [Section 2] (D)
+  //  ------------------------------------------------------
+
+  .homepage_category_slider {
+    .lib-css(margin-bottom, (@indent__l * 3));
+    .slick-slide {
+      .pagebuilder-column {
+        padding: 0 !important;
+      }  
+    }
+    .pagebuilder-column {
+      cursor: pointer;
+      &:hover {
+        >div {
+          top: -20px;
+        }
+        .pagebuilder-button-link {
+          .lib-css(color, @hookah_theme_color);
+          .lib-css(font-weight, @font-weight__bold);
+        }
+      }
+      >div {
+        width: 100%;
+        text-align: center;
+        margin-top: 24px;
+        position: relative;
+      }
+      img {
+        border-right: 1px solid #D9D9D9;
+        position: relative;
+        padding: 0 10px;
+      }
+      .pagebuilder-button-link {
+        .lib-css(padding, 0);
+        .lib-css(margin, 0);
+        width: 138px;
+        .lib-css(color, @color-black);
+        .lib-css(font-weight, @font-weight__regular);
+        .lib-font-size(16);
+        .lib-css(line-height, (@indent__l - 3));
+        cursor: pointer;
+        text-decoration: none !important;
+        &:hover {
+          .lib-css(color, @hookah_theme_color);
+          .lib-css(font-weight, @font-weight__bold);
+        }
+      }
+    }
+    .pagebuilder-column-group:not(.slick-slider) {
+      .pagebuilder-column {
+        width: 16.66% !important;
+        &:nth-child(6) {
+          ~ .pagebuilder-column {
+            display: none !important;
+          }
+        }
+        &:nth-child(6) {
+          img {
+            border-right: none;
+          }
+        }
+      }
+    }
+  }
+
+  //
+  // Homepage Accessories Wholesale
+  //  ----------------------------
+  .accessories_wholesale {
+    padding: 55px 0 100px 0;
+    background-color: @hookah_primary_light
+  }
+  .accordion_comman {
+    .accordion_title {
+      .lib-font-size(22);
+      .lib-css(color, @color_black);
+      .lib-css(font-family, @DMSerifDisplay);
+      .lib-css(line-height, 1.3);
+      .lib-css(font-weight, @font-weight__regular);
+      .lib-css(margin, 0);
+      .lib-css(padding, 20px 0 22px 50px);
+      border-bottom: solid 1px @color_C4C4C4;
+      cursor: pointer;
+      position: relative;
+      &::before {
+        content: "";
+        width: 35px;
+        height: 35px;
+        border-radius: 100%;
+        background: @hookah_theme_color url('@{baseDir}images/plus.svg') no-repeat center center;
+        display: inline-block;
+        position: absolute;
+        left: 0;
+        top: 16px;
+      }      
+    }
+    [aria-expanded="true"] {
+      .accordion_title {
+        border-bottom: none;
+        padding-bottom: 0;
+        &::before {
+          background-image: url('@{baseDir}images/minus.svg');
+        }
+      }
+    }
+    .accordion_content {
+      .lib-font-size(16);
+      .lib-css(line-height, 1.4);
+      .lib-css(padding, 20px 0 35px 50px);
+      .lib-css(color, @color_black);
+      border-bottom: solid 1px @color_C4C4C4;
+    }
+    .read_more {
+      margin-top: 20px;
+      .action.primary {
+        font-size: 10px;
+        font-weight: @font-weight__bold;
+        border-radius: 30px;
+        text-transform: uppercase;
+        padding: 7px 16px;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 1199px) {
+    .homepage_category_slider {
+      .pagebuilder-column-group:not(.slick-slider) {
+        .pagebuilder-column {
+          width: 20% !important;
+          &:nth-child(5) {
+            ~ .pagebuilder-column {
+              display: none !important;
+            }
+          }
+          &:nth-child(5) {
+            img {
+              border-right: none;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 991px) {
+    .homepage_category_slider {
+      .pagebuilder-column-group:not(.slick-slider) {
+        .pagebuilder-column {
+          width: 25% !important;
+          &:nth-child(4) {
+            ~ .pagebuilder-column {
+              display: none !important;
+            }
+          }
+          &:nth-child(4) {
+            img {
+              border-right: none;
+            }
+          }
+        }
+      }
+    }
+  }
+  @media only screen and (max-width: 767px) {
+    .homepage_category_slider {
+      .pagebuilder-column-group:not(.slick-slider) {
+        padding-right: 140px;
+        .pagebuilder-column {
+          width: 100% !important;
+          max-width: 250px;
+          &:nth-child(1) {
+            ~ .pagebuilder-column {
+              display: none !important;
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
-.owl-nav > div {
-  margin-top: -26px;
-  position: absolute;
-  top: 50%;
-  color: #cdcbcd;
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {    
+    //
+    // Homepage Main Banner [Section 1] (M)
+    //  ----------------------------
+
+    .homepage_slider_content {
+      .lib-css(margin-bottom, (0));
+      .pagebuilder-poster-content {
+        h2 {
+          .lib-font-size(28);
+          .lib-css(line-height, (@indent__xl - 2));
+          .lib-css(margin, 0 0 (@indent__l - 18));
+        }
+        .sub-title {
+          .lib-font-size(12);
+          .lib-css(line-height, @indent__m - 10);
+          .lib-css(margin-bottom, 10px);
+        }
+        .pagebuilder-button-primary {
+          .lib-css(letter-spacing, 2px);
+          .lib-css(height, @indent__xl - 5);
+          .lib-css(line-height, @indent__xl - 5);
+          .lib-font-size(16);
+        }      
+      }
+      .slick-prev, 
+      .slick-next {
+        display: none !important;
+      }
+      .slick-dots { 
+        display: none !important;
+      }
+      .pagebuilder-slide-wrapper {
+          min-height: 400px !important;
+        .pagebuilder-overlay {
+            &.pagebuilder-poster-overlay {
+              min-height: 400px !important;
+          }
+        }
+      }
+    }
+    .homepage_category_slider {
+      .lib-css(margin-bottom, (@indent__l * 2));
+      .pagebuilder-column {       
+        img {
+          border-right: none;
+          left: 0;
+        }
+      }
+    }
+
+    //
+    // Homepage Accessories Wholesale
+    //  ----------------------------    
+    .accessories_wholesale {
+      padding: 50px 0 60px 0;
+      .h2_heading_builder {
+        .lib-font-size(20);       
+      }
+    }
+    .accordion_comman {
+      .accordion_title {
+        padding: 16px 0 20px 40px;
+        .lib-font-size(20);
+        &::before {
+          width: 30px;
+          height: 30px;
+          background-size: 14px auto;
+          top: 14px;
+        }
+      }
+      .accordion_content {
+        padding: 16px 0 20px 40px;
+        .lib-font-size(12);
+      }
+    }
+    .About-us-colums {
+        max-width: 330px !important;
+        height: auto;
+    }
+    .privacy-policy-head{
+        width: 60%;
+    }
+    #contactBox {
+      width: 100% !important;
+    }
+
+    .sitemap-index-index {
+      .page-main {
+        padding-top: 10px;
+      }
+      .page-title {
+        margin-bottom: 10px;
+        font-size: 26px;
+      }
+    }
+    #mageplaza-seo-html-sitemap {
+      h2 {
+        font-size: 22px;
+      }
+    }
 }
 
-.owl-nav .owl-prev {
-  left: -30px;
+
+@widgets-indent__bottom: @indent__base;
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    
+    .privacy-policy-head{
+        text-align: center;
+        border-bottom: 2px solid @button-primary__background;
+        border-top: 2px solid @button-primary__background;
+        width: 35%;
+        padding: 10px 0px;
+        font-weight: bolder;
+        margin: 34px 0px;
+    }
+    .About-us-head{
+        text-align: center;
+        border-bottom: 2px solid @button-primary__background;
+        border-top: 2px solid @button-primary__background;
+        width: 35%;
+        padding: 10px 0px;
+        font-weight: bolder;
+        margin: 34px 0px;
+    }
+    .pagebuilder-column-group{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .About-us-p{
+        padding: 0px 15px;
+    }
+    .About-us{
+        align-items: center;
+    }
+    .privacy-policy{
+        align-items: center;
+    }
+    .colums-head{
+        width: 100%;
+        background-color: @message-success__background;
+        color:@color-white;
+        text-align: center;
+        height: 35px;
+        padding: 12px 0px !important;
+        margin: 0;
+    }
+
+    .About-us-colums{
+        width: 380px !important;
+        height: 250px;
+        padding: 0 !important;
+    }
+    .About-us-content{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    .cms-contact-us-for-hookah-wholesalers, .cms-contact-us {
+      .column.main {
+        > [data-content-type='row'][data-appearance='contained'] {
+          max-width: @layout_container_xl;
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+    }
 }
 
-.owl-nav .owl-next {
-  right: -30px;
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s){
+    .About-us-colums {
+        max-width: 450px !important;
+        height: auto;
+    }
+    .privacy-policy-head{
+        width: 95%;
+    }
+}
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs){
+    .About-us-colums {
+        width: 250px !important;
+        height: auto;
+    }
+    .privacy-policy-head{
+        width: 100%;
+    }
+    .colums-head {
+        height: 45px !important;
+    }
+}
+& when (@media-target = 'desktop'), (@media-target = 'all') {
+  @media (max-width:1024px){
+      .About-us-colums {
+          padding: 0 !important;
+          width: 450px !important ;          
+      }
+  }    
 }

@@ -8,21 +8,22 @@
 namespace HookahShisha\Sales\Helper\Block;
 
 use Magento\Sales\Model\Order\Item;
+use Magento\Sales\Model\Order\Creditmemo\Item as CreditmemoItem;
 
 class AlfaBundle
 {
-    public const DEFAULT_SHISHA_TITLE = 'Included Premium Shisha Flavour';
+    public const DEFAULT_SHISHA_TITLE = 'Included Premium Shisha Flavor';
 
     public const DEFAULT_CHARCOAL_TITLE = 'Free Hookah Charcoal';
 
     /**
      * Returns alfa bundle product options
      *
-     * @param Item $item
+     * @param Item|CreditmemoItem $item
      * @param array $items
      * @return array
      */
-    public function addAlfaBundleOptions(Item $item, array $items): array
+    public function addAlfaBundleOptions($item, array $items): array
     {
         $alfaBundle = $this->getAlfaBundle($item);
         $alfaBundleOptions = [];
@@ -42,11 +43,11 @@ class AlfaBundle
             : '';
         if ($superPackFlavours) {
             $alfaBundleOptions[] = [
-                'label' => __('Flavours'),
+                'label' => __('Flavors'),
                 'value' => implode(', ', $superPackFlavours)
             ];
         }
-        
+
         if ($shishaValue) {
             $alfaBundleOptions[] = [
                 'label' => $item->getProduct()->getShishaTitle() ?? self::DEFAULT_SHISHA_TITLE,
@@ -61,18 +62,16 @@ class AlfaBundle
             ];
         }
 
-     
-
         return $alfaBundleOptions;
     }
 
     /**
      * Returns decoded alfa bundle
      *
-     * @param Item $item
+     * @param Item|CreditmemoItem $item
      * @return array
      */
-    public function getAlfaBundle(Item $item): array
+    public function getAlfaBundle($item): array
     {
         $alfaBundle = $item->getAlfaBundle();
         $alfaBundle = json_decode($alfaBundle, true);
@@ -104,5 +103,49 @@ class AlfaBundle
         }
 
         return null;
+    }
+
+    /**
+     * Returns Super Pack items
+     *
+     * @param Item|CreditmemoItem $item
+     * @return array
+     */
+    public function getSuperPackItems($item): array
+    {
+        $alfaBundle = $this->getAlfaBundle($item);
+
+        if (empty($alfaBundle)) {
+            return [];
+        }
+
+        return $alfaBundle['super_pack'] ?? [];
+    }
+
+    /**
+     * Returns Super Pack item price
+     *
+     * @param Item|CreditmemoItem $item
+     * @param array $items
+     * @return int
+     */
+    public function getSuperPackItemPrice($item, array $items): int
+    {
+        $price = 0;
+        $superPack = $this->getSuperPackItems($item);
+
+        if (empty($superPack)) {
+            return $price;
+        }
+
+        foreach ($superPack as $item) {
+            $superPackItem = $this->getBundleItemBySku($items, $item['variant_sku']);
+
+            if ($superPackItem) {
+                $price += $superPackItem->getPrice();
+            }
+        }
+
+        return $price;
     }
 }

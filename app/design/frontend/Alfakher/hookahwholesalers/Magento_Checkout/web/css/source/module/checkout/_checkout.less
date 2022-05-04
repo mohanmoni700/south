@@ -27,6 +27,9 @@
         .page-title-wrapper {
             &:extend(.abs-visually-hidden all);
         }
+        .page-main {
+            max-width: @layout_container_xl;
+        }
     }
 
     .checkout-container {
@@ -46,7 +49,9 @@
         }
 
         .step-content {
-            margin: 0 0 @indent__xl;
+            .button.continue.action {
+                margin-top: 50px;
+            }
         }
     }
 
@@ -54,10 +59,6 @@
         .nav-sections,
         .nav-toggle {
             display: none;
-        }
-
-        .logo {
-            margin-left: 0;
         }
     }
 
@@ -79,7 +80,16 @@
         .step-title {
             .lib-css(font-size, @checkout-step-title-mobile__font-size);
             padding-bottom: 20px;
-            margin-bottom: 20px;
+        }
+        .checkout-shipping-address {
+            .step-title {
+                border-bottom: none;
+            }
+        }
+    }
+    .checkout-index-index {
+        .checkout-container {
+            margin-bottom: 0;
         }
     }
 }
@@ -92,7 +102,7 @@
     .opc-wrapper {
         &:extend(.abs-add-box-sizing-desktop-m all);
         .lib-layout-column(2, 1, @checkout-wrapper__columns);
-        padding-right: @indent__l;
+        padding-right: @indent__l;        
     }
 
     .checkout-onepage-success {
@@ -101,5 +111,5 @@
             float: right;
             margin: 22px 0 0;
         }
-    }
+    }    
 }

@@ -119,7 +119,7 @@ class DataProvider extends SourceDataProvider
      *
      * @return array
      */
-    private function fetch(): array
+    private function fetch(): array // NOSONAR
     {
         if (empty($this->orderItemIds) || !empty($this->orderItemList)) {
             return $this->orderItemList;
@@ -149,17 +149,20 @@ class DataProvider extends SourceDataProvider
             $shishaSku = '';
             $charcoalSku = '';
             $superPack = '';
-            if ($alfaBundle) {
+            $superPackItems = [];
+            if ($alfaBundle && $alfaBundle !== '""') {
                 $alfaBundle = json_decode($alfaBundle, true);
-                $shishaSku = $alfaBundle['shisha_sku'];
-                $charcoalSku = $alfaBundle['charcoal_sku'];
+                $shishaSku = $alfaBundle['shisha_sku'] ?? null;
+                $charcoalSku = $alfaBundle['charcoal_sku'] ?? null;
                 $superPack = $alfaBundle['super_pack_flavours'] ?? null;
+                $superPackItems = $alfaBundle['super_pack'] ?? null;
             }
 
             $shishaItem = $this->getBundleItem($orderItems, $shishaSku);
             $charcoalItem = $this->getBundleItem($orderItems, $charcoalSku);
             $shishaPrice = $shishaItem ? $shishaItem->getPrice() : 0;
             $charcaolPrice = $charcoalItem ? $charcoalItem->getPrice() : 0;
+            $superPackPrice = $superPack ? $this->getSuperPackItemPrice($orderItems, $superPackItems) : 0;
 
             $this->orderItemList[$orderItem->getItemId()] = [
                 'id' => base64_encode($orderItem->getItemId()),
@@ -172,7 +175,7 @@ class DataProvider extends SourceDataProvider
                 'status' => $orderItem->getStatus(),
                 'discounts' => $this->getDiscountDetails($associatedOrder, $orderItem),
                 'product_sale_price' => [
-                    'value' => $orderItem->getPrice() + $shishaPrice + $charcaolPrice,
+                    'value' => $orderItem->getPrice() + $shishaPrice + $charcaolPrice + $superPackPrice,
                     'currency' => $associatedOrder->getOrderCurrencyCode()
                 ],
                 'selected_options' => $itemOptions['selected_options'],
@@ -279,10 +282,10 @@ class DataProvider extends SourceDataProvider
      * Returns product if its part of alfa bundle
      *
      * @param array $orderItems
-     * @param string $sku
+     * @param string|null $sku
      * @return false|mixed
      */
-    private function getBundleItem(array $orderItems, string $sku)
+    private function getBundleItem(array $orderItems, string $sku = null)
     {
         if (!$sku) {
             return false;
@@ -295,5 +298,31 @@ class DataProvider extends SourceDataProvider
         }
 
         return false;
+    }
+
+    /**
+     * Returns Super Pack item price
+     *
+     * @param array $orderItems
+     * @param array $superPack
+     * @return int
+     */
+    private function getSuperPackItemPrice(array $orderItems, array $superPack): int
+    {
+        $price = 0;
+
+        if (empty($superPack)) {
+            return $price;
+        }
+
+        foreach ($superPack as $item) {
+            $superPackItem = $this->getBundleItem($orderItems, $item['variant_sku']);
+
+            if ($superPackItem) {
+                $price += $superPackItem->getPrice();
+            }
+        }
+
+        return $price;
     }
 }

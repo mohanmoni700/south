@@ -1,0 +1,57 @@
+<?php
+$uploaderType = [
+    'FEIN',
+    'Sales Tax/Resale License',
+    'State Tobacco License',
+    'Unified Resale Certificate'
+];
+$pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
+$customResultUrl = $block->getUrl('mydoc/customer/uploaddocument');
+$deleteDocumentUrl = $block->getUrl('mydoc/customer/deletedocument');
+$updateDocumentUrl = $block->getUrl('mydoc/customer/updatedocument');
+$documentData = $block->getDocumentCollection();
+if ($documentData && !empty($documentData) && $documentData->getSize() > 0) { ?>
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "Alfakher_MyDocument/js/edit/mydocumentusa": {
+                "pdfImg": "<?= $block->escapeUrl($pdfImg); ?>",
+                "inputNote": "<?= $block->escapeHtml(__('(Only one document can be uploaded)')); ?>",
+                "customResultUrl": "<?= $block->escapeUrl($customResultUrl); ?>",
+                "deleteDocumentUrl": "<?= $block->escapeUrl($deleteDocumentUrl); ?>",
+                "updateDocumentUrl": "<?= $block->escapeUrl($updateDocumentUrl); ?>"   
+            }
+        }
+    }
+    </script>
+<?php } else {
+    if ($block->isCustomerFromUsa()) { ?>
+        <script type="text/x-magento-init">
+            {
+                "*": {
+                    "Alfakher_MyDocument/js/mydocumentusa": {
+                        "pdfImg": "<?= $block->escapeUrl($pdfImg); ?>",
+                        "inputNote": "<?= $block->escapeHtml(__('(Only one document can be uploaded)')); ?>",
+                        "customResultUrl": "<?= $block->escapeUrl($customResultUrl); ?>",
+                        "deleteDocumentUrl": "<?= $block->escapeUrl($deleteDocumentUrl); ?>",
+                        "updateDocumentUrl": "<?= $block->escapeUrl($updateDocumentUrl); ?>"   
+                    }
+                }
+            }
+        </script>
+        <?php } else { ?>
+        <script type="text/x-magento-init">
+            {
+                "*": {
+                    "Alfakher_MyDocument/js/mydocumentnonusa": {
+                        "pdfImg": "<?= $block->escapeUrl($pdfImg); ?>",
+                        "inputNote": "<?= $block->escapeHtml(__('(Only one document can be uploaded)')); ?>",
+                        "customResultUrl": "<?= $block->escapeUrl($customResultUrl); ?>",
+                        "deleteDocumentUrl": "<?= $block->escapeUrl($deleteDocumentUrl); ?>",
+                        "updateDocumentUrl": "<?= $block->escapeUrl($updateDocumentUrl); ?>"   
+                    }
+                }
+            }
+        </script>
+    <?php }
+} ?>

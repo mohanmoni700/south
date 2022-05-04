@@ -1,0 +1,86 @@
+<?php
+$pdfImg = $block->getViewFileUrl('images/pdf.svg');
+$customResultUrl = $block->getUrl('mydocument/customer/hookahresult');
+$deleteDocumentUrl = $block->getUrl('mydocument/customer/deletedocument');
+$updateDocumentUrl = $block->getUrl('mydocument/customer/updatedocument');
+?>
+<div class="document-title">
+    <span class="title">
+        <?= $block->escapeHtml(__('Upload Your Document')); ?>
+    </span>
+    <span class="note">
+        <?= $block->escapeHtml(__('(File type supported are JPG, PNG and PDF)')); ?>
+    </span>
+</div>
+<div class="my_document">
+    <form name="myformdynamic"
+    id="myformdynamic"
+    accept-charset="utf-8"
+    enctype="multipart/form-data"
+    autocomplete="off"
+    data-mage-init='{"validation":{}}'
+    method="post">
+        <input type="hidden" name="cust_id_non_usa" id="cust_id_non_usa" />
+        <div class="upload-container">
+            <div class="upload" for="document uploader">
+                <div class="input-file">
+                    <input type="file" id="filename-1" class="upload-filename" name="filename1"
+                    data-validate="{required:true}"/>
+                    <span id="image-error-message-1" style="color:red;"></span>
+                    <span class="input-note"><?= $block->escapeHtml(__('(Only one document can be uploaded)')) ?></span>
+                    <img class="previewimage-filename-1" height="170" width="170"
+                    alt="" src="" title="" style="display:none;"></img>
+                    <div class="doc-actions" id="doc-actions-filename-1" style="display:none;">
+                        <a class="view-doc-link" id="view-doc-link-filename-1" href="" target="_blank"></a>
+                        <a class="deletedocument-preview deletedocument" id="deletedocument-filename-1"></a>
+                    </div>
+                </div>
+                <div class="doc_name" for="document name">
+                    <label><?= $block->escapeHtml(__('Document Name')); ?></label>
+                    <input type="text" id="name" name="name1" data-validate="{required:true}" />
+                </div>
+                <div class="set_expiry" for="document expiry data" style="display:none" >
+                    <label><?= $block->escapeHtml(__('Set a Specific Expiry date')); ?></label>
+                    <input type="checkbox" id="toggle" name="set_expiry[]" class="cmn-toggle cmn-toggle-round" />
+                    <span class="slider round" />
+                    <div class="expiry_dates" for="document expiry data" style="display:none">
+                        <label><?= $block->escapeHtml(__('Set Expiry Date')); ?></label>
+                        <input type="text"
+                            placeholder="Expiry Date"
+                            name="expiry_date1"
+                            id="expiry_date-1" data-validate="{required:true}" readonly />
+                    </div>    
+                </div>
+            </div>
+            <input type="hidden" id="is_add_more_form1" name="is_add_more_form[]" value="0"/>
+            <div class="add-more-cont">
+                <a id="add_more_non_usa"><?= $block->escapeHtml(__('Add More Document')); ?></a>
+            </div>
+        </div>
+        <div class="actions-toolbar justify_btn">
+            <div class="primary prev">
+                <button type="button" class="action previou primary" id="nonusadocskip" title="Skip">
+                    <span><?= $block->escapeHtml('Skip'); ?></span>
+                </button>
+            </div>
+            <div class="primary regis">
+                <button type="submit" id="nonusabtnsave" class="action submit primary">
+                    <span><?= $block->escapeHtml(__('Submit')); ?></span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "HookahShisha_Customerb2b/js/mydocument": {
+                "pdfImg": "<?= $block->escapeUrl($pdfImg); ?>",
+                "inputNote": "<?= $block->escapeHtml(__('(Only one document can be uploaded)')); ?>",
+                "customResultUrl": "<?= $block->escapeUrl($customResultUrl); ?>",
+                "deleteDocumentUrl": "<?= $block->escapeUrl($deleteDocumentUrl); ?>",
+                "updateDocumentUrl": "<?= $block->escapeUrl($updateDocumentUrl); ?>"   
+            }
+        }
+    }
+</script>

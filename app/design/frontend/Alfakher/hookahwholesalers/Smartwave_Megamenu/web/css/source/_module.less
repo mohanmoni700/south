@@ -13,6 +13,12 @@
                     color: #333 !important;
                     text-decoration: underline !important;
                     text-transform: capitalize;
+                    &:hover {
+                        color: @hookah_theme_color !important;
+                    }
+                    &:empty {
+                        padding: 0;
+                    }
                 }
             }
         }
@@ -28,15 +34,22 @@
         .sw-megamenu.navigation li.level0.staticwidth.Accessories{
             position: relative !important;
         }
+        .sw-megamenu.navigation li.level0.staticwidth.Parts.Accessories .submenu {
+            right: 0 !important;
+            left: auto !important;
+        }
     }
 }
 
 //m - L
 & when (@media-target = 'desktop'), (@media-target = 'all') {
     @media only screen and (min-width: 1025px) {
-        .page-wrapper .navigation {
+        .page-wrapper nav.navigation.sw-megamenu {
             max-width: 100%;
-        box-shadow: 0px 4px 10px rgba(0, 0, 0, .1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, .1);
+            width: 100%;
+            display: block !important;
+            z-index: 112;
             ul {
                 max-width: 1280px;
                 margin: 0 auto;
@@ -175,7 +188,7 @@
                         padding: 0;
                         &.current{
                             .subchildmenu {
-                                display:block;
+                                display:block !important;
                         } 
                         }
                         /*&:hover{
@@ -202,7 +215,6 @@
                             width: 33.33%;
                             float: left;
                             margin-top: 5px;
-                            padding-bottom: 20px;
                             border-right: 1px solid #E0E0E0;
                             &:last-child{
                                 border-right: 0;
@@ -378,7 +390,15 @@
                 transition-delay: 0s;
                 transition: .2s opacity;
                 position: relative;
-                margin-right: 58px;
+                margin-right: 45px;
+                &:last-child {
+                    margin-right: 0;
+                }
+                &.parent {
+                    > .level-top {
+                        cursor: default;
+                    }
+                }
             >  a{
                     position: relative;
                 }
@@ -409,7 +429,7 @@
                     }
                 }
                 .submenu {
-                    display: block;
+                    display: none;
                     visibility: hidden;
                     opacity: 0;
                     transition: .2s opacity;
@@ -452,6 +472,7 @@
                         > .submenu {
                             visibility: visible;
                             opacity: 1;
+                            display: block;
                         }
                     }
                     .submenu {
@@ -713,11 +734,12 @@
                         bottom: @indent__base;
                         padding-left: (@indent__base - @indent__xs);
                         text-transform: capitalize;
+                        max-width: 260px;
                     }
                     > .parent .subcat-show-all {
                         right: @indent__l + @indent__xs;
                         padding: 0;
-                        bottom: @indent__l;
+                        bottom: @indent__l - 5px;
                         text-transform: capitalize;
                         a {
                             padding: 0;
@@ -729,32 +751,42 @@
     }
 }
 //m - L
-    @media only screen and (max-width: 1025px) {
+@media only screen and (max-width: 1025px) {
+    html.active-menu, body.active-menu {
+        overflow: hidden;
+        #hubspot-messages-iframe-container {
+            z-index: 111;
+        }
+    }
     .sw-megamenu.navigation {
         .lib-css(background, @color-white);
-        padding: 0 @indent__l;
+        padding: 15px @indent__l 0 @indent__l;
         width: 100%;
+        display: none;
         &.active {
             display: block !important;
-            position: absolute;
-            top: 213px;
-            z-index: 9;
+            position: fixed;
+            height: calc(~"100% - 188px");
+            overflow: auto;
+            top: 188px;
+            z-index: 998;
+            left: 0;
         }
         .submenu{
             .subchildmenu{
                
                 li.ui-menu-item.parent{
                     .open-children-toggle{
-                        display: none;
+                        display: block;
                     }
                 } 
             } 
         } 
         .level1.parent.current .subchildmenu {
-            display: block !important;
+            display: block;
         }
         .level1.parent {
-            &.current > a span:after {
+           > .ui-state-active.active span:after {
                 transform: rotate(0deg);
             }
             > a span{
@@ -807,6 +839,9 @@
         .level0.opened {
             .subchildmenu {
                 padding-left: @indent__l;
+                .subchildmenu {
+                    display: none;
+                }
             }
             .level1.parent .subchildmenu.active {
                 display: block !important;
@@ -854,11 +889,18 @@
                 display: block;
                 position: absolute;
                 width: 32px;
-                height: 42px;
-                right: -10px;
-                top: -3px;
+                height: 40px;                                
+                right: 0;
+                top: 0;
+                left: 0;
+                width: 100%;
                 z-index: 1;
                 cursor: pointer;
+            }
+        }
+        > ul > li.ui-menu-item.parent {
+            > .open-children-toggle {
+                height: 34px;
             }
         }
         span.cat-label {
@@ -918,6 +960,25 @@
                     margin: 15px;
                 }
             }
+        }
+    }
+}
+
+@media only screen and (max-width: 560px) {
+    .sw-megamenu.navigation {
+        padding-top: 20px;
+        &.active {            
+            height: calc(~"100% - 200px");
+            top: 200px;
+        }
+    }   
+}
+
+@media only screen and (max-width: 360px) {
+    .sw-megamenu.navigation {
+        &.active {            
+            height: calc(~"100% - 215px");
+            top: 215px;
         }
     }
 }

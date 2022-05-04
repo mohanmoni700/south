@@ -1,0 +1,70 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $_product = $block->getProduct(); ?>
+<?php $buttonTitle = __('Update Cart'); ?>
+<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
+<?php $is_mobile = $_helperB2b->isMobileDevice();?>
+<?php if ($_product->isSaleable()):?>
+    <div class="box-tocart update">
+        <fieldset class="fieldset">
+            <?php if ($block->shouldRenderQuantity()):?>
+            <div class="field qty">
+                <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
+                <div class="control">
+                    <?php
+                    if ($is_mobile): ?>
+                    <select 
+                        class="input-text qty" 
+                        name="qty" 
+                        id="qty" 
+                        data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>">
+                        <?php
+                        $qtyCounter=1;
+                        for ($qtyCounter; $qtyCounter<=100; $qtyCounter++): ?>
+                            <option value="<?= /* @noEscape */ $qtyCounter; ?>">
+                                <?= /* @noEscape */ $qtyCounter; ?>
+                            </option>
+                        <?php endfor; ?>
+                    </select> 
+                <?php else: ?>
+                     <input type="number"
+                           name="qty"
+                           id="qty"
+                           min="0"
+                           value=""
+                           title="<?= /* @noEscape */ $block->escapeHtmlAttr(__('Qty')) ?>"
+                           class="input-text qty"
+                           data-validate="<?= /* @noEscape */ $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"/>   
+                    <?php endif; ?>
+                </div>
+            </div>
+            <?php endif; ?>
+            <div class="actions">
+                <button type="submit"
+                        title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                        class="action primary tocart"
+                        id="product-updatecart-button">
+                    <span><?= /* @noEscape */ $block->escapeHtml($buttonTitle) ?></span>
+                </button>
+                <?= $block->getChildHtml('', true) ?>
+            </div>
+        </fieldset>
+    </div>
+    <script type="text/x-magento-init">
+        {
+            "#product_addtocart_form": {
+                "validation": {},
+                "addToCart": {
+                    "cartButtonId": "#product-updatecart-button",
+                    "cartForm": "#product_addtocart_form"
+                }
+            }
+        }
+    </script>
+<?php endif; ?>

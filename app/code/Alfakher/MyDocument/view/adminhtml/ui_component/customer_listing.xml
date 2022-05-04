@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+   <columns name="customer_columns" class="Magento\Customer\Ui\Component\Listing\Columns">
+        <column name="uploaded_doc" component="Magento_Ui/js/grid/columns/select" class="Alfakher\MyDocument\Ui\Component\Listing\Column\Documentcheck">
+           <settings>
+                <label translate="true">Document uploaded?</label>
+                <visible>true</visible>
+                <options class="HookahShisha\Customerb2b\Model\Status"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+            </settings>
+        </column>
+   </columns>
+</listing>

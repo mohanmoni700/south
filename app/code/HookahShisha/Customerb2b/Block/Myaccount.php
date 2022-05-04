@@ -5,6 +5,7 @@ namespace HookahShisha\Customerb2b\Block;
 use Magento\Company\Api\CompanyManagementInterface;
 use Magento\Customer\Helper\Session\CurrentCustomer;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Message\ManagerInterface;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Newsletter\Model\Config;
 
@@ -30,6 +31,11 @@ class Myaccount extends \Magento\Directory\Block\Data
     protected $_customerSession;
 
     /**
+     * @var ManagerInterface
+     */
+    private $messageManager;
+
+    /**
      * Constructor
      *
      * @param \Magento\Framework\View\Element\Template\Context $context
@@ -42,6 +48,7 @@ class Myaccount extends \Magento\Directory\Block\Data
      * @param \Magento\Customer\Helper\Session\CurrentCustomer $currentCustomer
      * @param \Magento\Framework\Api\DataObjectHelper $dataObjectHelper
      * @param CompanyManagementInterface $companyRepository
+     * @param ManagerInterface $messageManager
      * @param array $data = []
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -57,6 +64,7 @@ class Myaccount extends \Magento\Directory\Block\Data
         \Magento\Customer\Helper\Session\CurrentCustomer $currentCustomer,
         \Magento\Framework\Api\DataObjectHelper $dataObjectHelper,
         CompanyManagementInterface $companyRepository,
+        ManagerInterface $messageManager,
         array $data = []
     ) {
         $this->_customerSession = $customerSession;
@@ -64,6 +72,7 @@ class Myaccount extends \Magento\Directory\Block\Data
         $this->dataObjectHelper = $dataObjectHelper;
         $data['directoryHelper'] = $directoryHelper;
         $this->companyRepository = $companyRepository;
+        $this->messageManager = $messageManager;
         parent::__construct(
             $context,
             $directoryHelper,
@@ -116,5 +125,25 @@ class Myaccount extends \Magento\Directory\Block\Data
             'cstDetailsChanged' => 0,
             'isContactChanged' => 1,
         ];
+    }
+
+    /**
+     * Get form messages
+     *
+     * @return array
+     */
+    public function getFormMessages()
+    {
+        $messagesList = [];
+        $messagesCollection = $this->messageManager->getMessages(true);
+
+        if ($messagesCollection && $messagesCollection->getCount()) {
+            $messages = $messagesCollection->getItems();
+            foreach ($messages as $message) {
+                $messagesList[] = $message->getText();
+            }
+        }
+
+        return $messagesList;
     }
 }

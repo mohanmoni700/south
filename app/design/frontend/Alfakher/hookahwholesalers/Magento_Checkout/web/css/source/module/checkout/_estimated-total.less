@@ -20,7 +20,7 @@
         padding: 18px 15px;
 
         .estimated-block {
-            .lib-css(font-size, @checkout-step-title-mobile__font-size);
+            .lib-css(font-size, @checkout-step-title-mobile__font-size - 2px);
             .lib-css(font-weight, @font-weight__bold);
             float: left;
 
@@ -28,6 +28,9 @@
                 display: block;
                 margin: 0 0 @indent__xs;
                 font-weight: normal;
+            }
+            .estimated-price {
+                .lib-css(font-size, @checkout-step-title-mobile__font-size - 6px);
             }
         }
 
@@ -57,6 +60,7 @@
                         width: 18px;
                         left: inherit;
                         right: -10px;
+                        min-width: 26px;
                     }
                 }
             }
@@ -86,5 +90,6 @@
         background: #f5f5f5;
         margin-left: -15px;
         margin-right: -15px;
+        margin-bottom: 20px;
     }
 }

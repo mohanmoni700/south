@@ -200,7 +200,7 @@
         }
 
         .minicart-widgets {
-            margin-top: 15px;
+            margin-top: 10px;
         }
     }
 
@@ -290,6 +290,8 @@
         .product-item-name {
             font-weight: @font-weight__regular;
             margin: 0 0 @indent__s;
+            font-size: 16px;
+            min-height: 0;
 
             a {
                 .lib-css(color, @link__color);
@@ -350,11 +352,14 @@
             width: 45px;
         }
 
-        .update-cart-item {
+        button.update-cart-item {
             .lib-font-size(11);
             margin-left: 0;
             vertical-align: top;
             font-weight: normal;
+            line-height: 1 !important;
+            min-height: 18px;
+            top: 4px !important;
         }
 
         .subtitle {
@@ -381,6 +386,21 @@
                 );
             }
         }
+        .product-item-details {
+            text-align: left;
+            margin-top: 0;
+        }
+    }
+
+    @media only screen and (max-width: 1399px) and (min-width: 1025px) {
+        .minicart-wrapper {
+            div.block-minicart {
+                right: -90px !important;
+                &::before, &::after {
+                    right: 90px!important;
+                }
+            }
+        }
     }
 }
 
@@ -391,6 +411,10 @@
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
     .minicart-wrapper .block-minicart {
         width: 350px !important;
+        right: -60px !important;
+        &::before, &::after {
+            right: 62px !important;
+        }
     }
 }
 
@@ -433,7 +457,7 @@
             .counter.qty{
                 height: 18px;
                 padding: 1px 5px;
-                min-width: 23px;
+                min-width: 24px;
                 top: 10px;
                 left: 15px;
                 position: absolute;
@@ -445,6 +469,11 @@
                 border-radius: 10px;
                 font-family: @montserrat_bold;
                 text-align: center;
+                font-weight: @font-weight__semibold;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                max-width: 60px;
             }            
         }
         .block-minicart{
@@ -492,6 +521,8 @@
                                 padding: 6px 17px;
                                 border-radius: 0;
                                 font-weight: 700;
+                                letter-spacing: 1px;
+                                text-transform: uppercase;
                             }
                        }
                        
@@ -520,20 +551,33 @@
                         #mini-cart{
                             .product-item{
                                 padding: 10px 0 10px;
+                                cursor: auto;
                                 .product{
                                     .product-image-container{
                                         width: 60px!important;
-                                        img{
+                                        height: 60px;
+                                        .product-image-wrapper {
+                                            height: 60px;
+                                        }
+                                        .product-image-photo{
                                             margin-left: 0;
+                                            height: 60px !important;
+                                            object-fit: cover;
                                         }
                                     }
                                     .product-item-details{
                                         padding-left: 70px;
                                         .product-item-name{
                                             margin: 0;
+                                            font-size: 12px;
+                                            min-height: 0;
                                             a{
                                                 font-size: 12px;
                                                 color: @color_black;
+                                                &:hover {
+                                                    color: @hookah_theme_color;
+                                                    text-decoration: none;
+                                                }
                                             }
                                         }
                                         .minicart-price{
@@ -553,12 +597,21 @@
                                                 font-size: 11px;
                                                 font-family: @montserrat_bold;
                                                 width: 40px;
-                                                height: 17px;
+                                                height: 18px;
                                                 border-color: #E0E0E0;
                                                 font-weight: 600;
+                                                border-width: 1px;
+                                                border-radius: 0;
+                                                &:focus {
+                                                    box-shadow: 0px 0px 2px 1px #4A90E2;
+                                                }
                                             }
                                             button{
-                                                padding: 1px 4px;
+                                                padding: 0 4px;
+                                                position: relative;
+                                                line-height: 16px;
+                                                top: 2px;
+                                                float: none;
                                                 span{
                                                     font-size: 10px;
                                                     font-weight: @montserrat_regular;
@@ -571,7 +624,12 @@
                                         }
                                     }
                                 }
-                            }                            
+                            }
+                            .product.options {
+                                font-size: 12px;
+                                margin-top: 8px;
+                                margin-bottom: 14px;
+                            }
                         }
                         &::-webkit-scrollbar {
                             width: 5px;
@@ -603,7 +661,7 @@
                             a{
                                 font-size: 10px;
                                 color: @color_black;
-                                font-weight: 700;
+                                font-weight: @font-weight__bold;
                             }
                         }
                     }
@@ -619,5 +677,14 @@
         text-transform: uppercase;
         letter-spacing: 2px;
         margin-right: 10px;
+    }
+    @media only screen and (max-width: 360px) {
+        div.minicart-wrapper .block-minicart {
+            width: 300px !important;
+            right: -64px !important;
+            &::before, &::after {
+                right: 66px !important;
+            }
+        }
     }
 }

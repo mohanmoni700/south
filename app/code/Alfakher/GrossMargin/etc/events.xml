@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_cart_product_add_after">
+        <observer name="alfakher_checkout_cart_product_add_after" instance="Alfakher\GrossMargin\Observer\CheckoutCartProductAddAfterObserver" />
+    </event>
+
+    <event name="checkout_submit_all_after">
+        <observer name="add_gross_margin_to_order_observer" instance="Alfakher\GrossMargin\Observer\GrossMarginToOrder" />
+        <observer name="purchase_order_to_order_observer" instance="Alfakher\GrossMargin\Observer\PurchaseOrderToOrder" />
+        <observer name="total_order_weight" instance="Alfakher\GrossMargin\Observer\WeightOrderToOrder" />
+    </event>
+
+    <event name="sales_order_invoice_pay">
+        <observer name="purchase_order_invoice_collect" instance="Alfakher\GrossMargin\Observer\PurchaseOrderToInvoice" />
+    </event>
+
+</config>

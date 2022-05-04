@@ -6,5 +6,7 @@ var config = {
     deps: [
         "js/mobile_menu",
         "js/browser_detect",
+        "js/home_category_slider",
+        "js/home_accordion",
     ]    
 };

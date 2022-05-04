@@ -8,26 +8,51 @@
 <?php if($helper->customerLoggedIn()): ?>
     <?php $values = $helper->CustomerLogin(); ?>
     <?php $name = $helper->customerFirstName(); ?>
+    <?php $firstStringCharacter = substr($name, 0, 1); ?>
     <div class="sign-in">
         <span class="sign-up"><?php echo __('My Account')?></span>
-        <!-- <a class= "header_account_link" href="<?php //echo $this->getUrl("customer/account/logout");?>"><?php //echo __('My Account')?></a> -->
         <ul class="sign-up-ul customer_logged_in" style="display: none;">
-            <li class="guest-heading"><span class="guest-content-heading">Welcome, <?php echo $name; ?>  </span></li>
-            <li class="guest-content">
-                <span class="content-main my_account">
-                    <span class="content-item content-link"><a class= "create_an_account_link" href="<?php echo $this->getUrl("customer/account/");?>"><?php echo __('My Account')?></a></span>
-                    <span class="content-item content-link">
-                        <a class= "sign_in_link" href="<?php echo $this->getUrl("customer/account/logout");?>"><?php echo __('Logout')?></a>
-                    </span>                  
-                </span>
+            <li class="guest-heading" data-bind="scope: 'customer'">
+                <div class="left_circle">
+                    <!-- ko if: customer().firstname  -->
+                        <lable class="cust_short_name" data-bind="text: customer().firstname.charAt(0)"></lable>
+                    <!-- /ko -->
+                </div>
+                <div class="welcome_info">
+                    <lable class="welback"><?php echo __('Welcome back!') ?></lable>
+                    <!-- ko if: customer().firstname  -->
+                        <lable class="guest-content-heading" data-bind="text: new String('<?= $escaper->escapeHtml(__('%1', '%1')) ?>').replace('%1', customer().firstname)"></lable>
+                    <!-- /ko -->
+                </div>
             </li>
+            <script type="text/x-magento-init">
+            {
+                "*": {
+                    "Magento_Ui/js/core/app": {
+                        "components": {
+                            "customer": {
+                                "component": "Magento_Customer/js/view/customer"
+                            }
+                        }
+                    }
+                }
+            }
+            </script>
+            <li class="guest-content my_account">
+                <a class= "create_an_account_link" href="<?php echo $this->getUrl("customer/account/");?>"><?php echo __('My Account')?></a>
+            </li>
+            <li class="order_reorder"><a href="<?php echo $this->getUrl("sales/order/history");?>"><?php echo __('My Orders & Reorders') ?></a></li>
+            <li class="manage_address"><a href="<?php echo $this->getUrl("customer/address");?>"><?php echo __('Manage Addresses') ?></a></li>
+            <li class="my_payment"><a href="<?php echo $this->getUrl("customer/paymentinfo");?>"><?php echo __('My Payment Options') ?></a></li>
+            <li class="changepassword"><a href="<?php echo $this->getUrl("changepassword/index/index");?>"><?php echo __('Change Password') ?></a></li>
+            <li class="documents"><a href="<?php echo $this->getUrl("mydocument/customer/index");?>"><?php echo __('My Documents') ?></a></li>   
+            <li class="product_pricing"><a href="<?php echo $this->getUrl("customerb2b/account/myproductpricing");?>"><?php echo __('My Product Pricing') ?></a></li>          
+            <li class="logout"><a class= "sign_in_link" href="<?php echo $this->getUrl("customer/account/logout");?>"><?php echo __('Logout')?></a></li>
          </ul>
-         <div class="sign_in_overlay"></div>
    </div>
 <?php else: ?>
      <div class="sign-in">
-     <!--  <a class= "header_account_link" href="<?php //echo $this->getUrl("customer/account/login");?>"><?php //echo __('Sign in')?></a> -->
-     <span class="sign-up"><?php echo __('Sign in/Sign Up')?></span>
+     <span class="sign-up"><?php echo __('Sign In / Register')?></span>
         <ul class="sign-up-ul" style="display: none;">
             <li class="guest-heading"><span class="guest-content-heading">Welcome Guest!</span></li>
             <li class="guest-content">
@@ -36,7 +61,7 @@
                         <a class= "sign_in_link" href="<?php echo $this->getUrl("customer/account/login");?>"><?php echo __('Sign in')?></a>
                     </span>
                     <span class="content-item content-text">or</span>
-                    <span class="content-item content-link"><a class= "create_an_account_link" href="<?php echo $this->getUrl("customer/account/create");?>"><?php echo __('Create an account')?></a></span>
+                    <span class="content-item content-link"><a class= "create_an_account_link" href="<?php echo $this->getUrl("customer/account/create");?>"><?php echo __('Create an Account')?></a></span>
                 </span>
             </li>
         </ul>
@@ -46,14 +71,45 @@
 <script>
 require(['jquery'], function($){
     $(document).ready(function(){
-        $('.sign-in').click(function(e){
-             $('.sign-up-ul').toggle();
-             $('.sign_in_overlay').toggle();
+        $('.sign-in').click(function(event){
+            $('.sign-up-ul').toggle();
+            $('.sign_in_overlay').toggle();
+            
+            $('.page-header .header.content .minicart-wrapper').removeClass("active");
+            $('.minicart-wrapper .action.showcart').removeClass("active");
+            $('.page-header .header.content .minicart-wrapper .ui-dialog.ui-widget.mage-dropdown-dialog').hide();
+        });
+        $(".sign-in").on("click", function (event) {
+            event.stopPropagation();
         });
         $(document).on('click','.sign_in_overlay',function(){
-         $('.sign-up-ul').hide();
-         $(this).hide();
+            $('.sign-up-ul').hide();
+            $(this).hide();
+        });
+        $('.minicart-wrapper .action.showcart').click(function(event){
+            $(".sign-up-ul").hide();
         });
     });
+    $(document).on("click", function () {
+        $(".sign-up-ul").hide();
+    });    
 });
 </script>
+
+
+<style type="text/css">
+    [data-letters]:before {
+  content:attr(data-letters);
+  display:inline-block;
+  font-size:1em;
+  width:2.5em;
+  height:2.5em;
+  line-height:2.5em;
+  text-align:center;
+  border-radius:50%;
+  background:plum;
+  vertical-align:middle;
+  margin-right:1em;
+  color:white;
+  }
+</style>

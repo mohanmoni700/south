@@ -4,8 +4,10 @@ declare (strict_types = 1);
 
 namespace HookahShisha\Customerb2b\Controller\Account;
 
+use Laminas\Validator\EmailAddress;
 use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
 use Magento\Framework\Exception\InputException;
+use Magento\LoginAsCustomerAssistance\Model\ResourceModel\SaveLoginAsCustomerAssistanceAllowed;
 
 /**
  * Create company account action.
@@ -71,6 +73,16 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
     private $helperdata;
 
     /**
+     * @var \Magento\Framework\Controller\Result\JsonFactory
+     */
+    private $resultJsonFactory;
+
+    /**
+     * @var EmailAddress
+     */
+    private $emailValidator;
+
+    /**
      * @param \Magento\Framework\App\Action\Context $context
      * @param \Magento\Authorization\Model\UserContextInterface $userContext
      * @param \Psr\Log\LoggerInterface $logger
@@ -87,6 +99,9 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
      * @param \Magento\Customer\Api\Data\RegionInterfaceFactory $regionDataFactory
      * @param \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory
      * @param \HookahShisha\Customerb2b\Helper\Data $helperdata
+     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     * @param EmailAddress $emailValidator
+     * @param \Magento\LoginAsCustomerAssistance\Model\ResourceModel\SaveLoginAsCustomerAssistanceAllowed $saveLoginAsCustomerAssistanceAllowed
      * @param \Magento\Company\Model\CompanyUser|null $companyUser
      */
     public function __construct(
@@ -106,6 +121,9 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
         \Magento\Customer\Api\Data\RegionInterfaceFactory $regionDataFactory,
         \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory,
         \HookahShisha\Customerb2b\Helper\Data $helperdata,
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
+        EmailAddress $emailValidator,
+        SaveLoginAsCustomerAssistanceAllowed $saveLoginAsCustomerAssistanceAllowed,
         \Magento\Company\Model\CompanyUser $companyUser = null
     ) {
         parent::__construct($context);
@@ -126,6 +144,9 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
         $this->regionDataFactory = $regionDataFactory;
         $this->addressDataFactory = $addressDataFactory;
         $this->helperdata = $helperdata;
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->emailValidator = $emailValidator;
+        $this->saveLoginAsCustomerAssistanceAllowed = $saveLoginAsCustomerAssistanceAllowed;
     }
 
     /**
@@ -136,6 +157,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
         $request = $this->getRequest();
         $resultRedirect = $this->resultRedirectFactory->create()->setPath('customer/account/create');
         $data = $this->getRequest()->getParams();
+        $resultJson = $this->resultJsonFactory->create();
 
         if (!$this->validateRequest()) {
             return $resultRedirect;
@@ -150,6 +172,16 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
             if (!\Zend_Validate::is($data['email'], 'NotEmpty')) {
                 throw new InputException(
                     __("Please define all the required Basic Details.")
+                );
+            }
+            $isEmailAddress = $this->emailValidator->isValid($data['email']);
+
+            if (!$isEmailAddress) {
+                throw new InputException(
+                    __(
+                        'Please enter valid email id : "%value"',
+                        ['fieldName' => 'Email', 'value' => $data['email']]
+                    )
                 );
             }
 
@@ -172,7 +204,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
             $customer->setAddresses($addresses);
             $password = $this->getRequest()->getParam('password');
             $confirmation = $this->getRequest()->getParam('password_confirmation');
-            // $redirectUrl = $this->session->getBeforeAuthUrl();
+            //$redirectUrl = $this->session->getBeforeAuthUrl();
             $this->checkPasswordConfirmation($password, $confirmation);
 
             $extensionAttributes = $customer->getExtensionAttributes();
@@ -181,29 +213,52 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
 
             $customer = $this->customerAccountManagement
                 ->createAccount($customer, $password);
-
             $this->_eventManager->dispatch(
                 'customer_register_success',
                 ['account_controller' => $this, 'customer' => $customer]
             );
 
+            /*set Customer session for when user register success*/
+            $this->session->setCustomerDataAsLoggedIn($customer);
+            /*End*/
+
             /* end create customer accounts */
 
             $this->companyCreateSession->setCustomerId($customer->getId());
 
+            /*bv-hd customization for Allow remote shopping assistance */
+            $customerId = $customer->getId();
+            if ($customerId) {
+                $this->saveLoginAsCustomerAssistanceAllowed->execute((int) $customerId);
+            }
+            /*bv-hd customization for Allow remote shopping assistance */
+
             $this->helperdata->sendEmail($data);
 
-            $resultRedirect->setPath('customerb2b/account/index');
+            $resultJson->setData([
+                'status' => 'success',
+                'message' => 'Your accout has been created successfully.',
+                'country' => $data['country_id'],
+                'id' => $customer->getId(),
+            ]);
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
-            $this->messageManager->addErrorMessage($e->getMessage());
+            $resultJson->setData([
+                'status' => 'error',
+                'message' => $e->getMessage(),
+                'country' => null,
+                'id' => null,
+            ]);
         } catch (\Exception $e) {
-            $this->messageManager->addErrorMessage(
-                __('An error occurred on the server. Your changes have not been saved.')
-            );
+            $resultJson->setData([
+                'status' => 'error',
+                'message' => 'An error occurred on the server. Your changes have not been saved.',
+                'country' => null,
+                'id' => null,
+            ]);
             $this->logger->critical($e);
         }
 
-        return $resultRedirect;
+        return $resultJson;
     }
 
     /**
@@ -283,6 +338,10 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
                 default:
                     $addressData[$attributeCode] = $value;
             }
+        }
+        /* unset company name */
+        if (array_key_exists('company', $addressData)) {
+            unset($addressData['company']);
         }
         $addressData = $addressForm->compactData($addressData);
         unset($addressData['region_id'], $addressData['region']);

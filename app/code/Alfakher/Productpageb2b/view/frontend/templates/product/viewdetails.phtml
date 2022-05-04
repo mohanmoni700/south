@@ -1,0 +1,33 @@
+<?php
+/**
+ * @var \Magento\Review\Block\Product\ViewDetailRenderer $block
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+$urlForm = $block->getViewDetailsUrl() . '#description';
+?>
+<?php $_product = $block->getProduct() ?>
+<?php if ($_product->isAvailable()) : ?>
+    <?php $clickHereAlertString = __('Your changes would be lost are you sure you want to leave ?'); ?>
+<?php else : ?>
+    <?php $clickHereAlertString = __('Are you sure you want to leave ?'); ?>
+<?php endif; ?>
+<!-- show view details only when there is short description start 08/03/2022[BS] -->
+<?php if(!empty($_product->getDescription())) { ?>
+<div class="view-details-actions">
+    <a href="<?= $block->escapeUrl($urlForm) ?>" class="viewdetails action add" id="tab-viewdetails">
+        <?= $block->escapeHtml(__('View Details')) ?>
+    </a>
+</div>
+<?php } ?>
+<!-- show view details only when there is short description end[BS] -->
+
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Alfakher_Productpageb2b/js/process-viewdetail": {
+                "viewdetailsTabSelector": "#tab-viewdetails",
+                "clickHereAlertString": "<?= $block->escapeHtml($clickHereAlertString) ?>"
+            }
+        }
+    }
+</script>

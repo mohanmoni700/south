@@ -167,6 +167,10 @@
             }
         }
     }
+
+    .back-button {
+        display: none;
+    }
 }
 
 
@@ -178,10 +182,30 @@
     .opc-progress-bar {
         width: 100%;
         padding-right: 0;
+        margin-top: 2rem;
     }
     .opc-progress-bar-item  {
         > span {
             font-size: 14px;
+        }
+    }
+    .back-button {
+        display: block;
+        .go-back {
+            color: @color_black;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none !important;
+            &::before {
+                content: "";
+                background: url('@{baseDir}images/left_arrow_black.svg') no-repeat center left;
+                width: 10px;
+                height: 16px;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: 14px;
+            }
         }
     }
 }

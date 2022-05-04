@@ -14,7 +14,7 @@
 @checkout-payment-method-content__padding__xl: 22px;
 
 @checkout-billing-address-details__line-height: 27px;
-@checkout-billing-address-details__padding: 0 0 0 23px;
+@checkout-billing-address-details__padding: 0 0 0 20px;
 @checkout-billing-address-form__max-width: @checkout-shipping-address__max-width;
 
 //
@@ -44,10 +44,35 @@
         }
 
         .payment-method-content {
-            > .actions-toolbar {
-                > .primary {
-                    .action {
-                        &.primary {
+            .fieldset {
+                > .field {
+                    &.cvv {
+                        ~ .field {
+                            .checkbox {
+                                display: none;
+                                + label {
+                                    display: inline-block;
+                                    cursor: pointer;
+                                }
+                            }
+                            input[type="hidden"] {
+                                + label {
+                                    cursor: not-allowed;
+                                    &:before {
+                                        background-color: @input-border_color;
+                                        border-color: @input-border_color;
+                                    }
+                                    &::after {
+                                        content: '';
+                                        position: absolute;
+                                        left: 5px;
+                                        top: 6px;
+                                        width: 10px;
+                                        height: 7px;
+                                        background: url('@{baseDir}images/true_arrow.svg');
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -57,7 +82,55 @@
         .payment-method-title {
             .lib-css(padding, @checkout-payment-method-title__padding 0);
             margin: 0;
-
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            input[type="radio"] {
+                margin: 0;
+                opacity: 0;
+                position: absolute;
+                &:checked {
+                    + label {
+                        &:before {
+                            border-color: @hookah_theme_color;
+                        }
+                        &:after {
+                            content: "";
+                            width: 10px;
+                            height: 10px;
+                            background: @hookah_theme_color;
+                            display: block;
+                            border-radius: 50%;
+                            position: absolute;
+                            top: 4px;
+                            left: 2px;
+                        }
+                    }
+                }
+                &::after, &::before {
+                    display: none;
+                }
+                + label {
+                    min-height: 18px;
+                    min-width: 18px;
+                    display: inline-block;
+                    vertical-align: middle;
+                    padding-left: 26px;
+                    &:before {
+                        content: "";
+                        width: 16px;
+                        height: 16px;
+                        border: 1px solid #000;
+                        display: block;
+                        border-radius: 50%;
+                        background: #fff;
+                        margin-left: -2px;
+                        left: 0;
+                        top: 0;
+                        position: absolute;
+                    }
+                }          
+            }
             .payment-icon {
                 display: inline-block;
                 margin-right: @indent__xs;
@@ -72,14 +145,21 @@
 
         .payment-method-content {
             display: none;
-            .lib-css(padding, 0 0 @indent__base @checkout-payment-method-content__padding__xl);
+            .lib-css(padding, 0 0 @indent__base 0);
             .fieldset {
                 &:not(:last-child) {
                     margin: 0 0 @indent__base;
                 }
                 .field.field-select-billing {
                     width: 100%;
-                    margin: 3rem 0;
+                    margin: 0.5rem 0 3rem 0;
+                }
+                &.payment.ccard {
+                    .label {
+                        margin-bottom: 10px;
+                        display: block;
+                        font-weight: @font-weight__bold;
+                    }
                 }
             }
         }
@@ -95,10 +175,75 @@
         .field-select-billing,
         .billing-address-form {
             .lib-css(max-width, @checkout-billing-address-form__max-width);
+
+            .fieldset {
+                > .field:not(.choice) {
+                    > .label {
+                        padding: 0 15px 0 0;
+                    }
+                }
+                > .field.street {
+                    > .label {
+                        display: none;
+                    }
+                }
+                .field.additional {
+                    margin-top: 30px;
+                }
+            }
         }
 
         .billing-address-same-as-shipping-block {
-            margin: 0 0 @indent__s;
+            margin: 6px 0 22px;
+            padding-left: 20px;
+            input[type="checkbox"] {
+                position: absolute;
+                opacity: 0;
+                display: none;
+                &:focus{
+                    outline: none;
+                }
+                & + label{
+                    padding-left: 30px;
+                    padding-top: 0;
+                    position: relative;
+                    cursor: pointer;
+                    display: inline-block;
+                }
+                & + label:before {
+                    content: '';
+                    margin-right: 10px;
+                    display: inline-block;
+                    vertical-align: text-top;
+                    width: 18px;
+                    height: 18px;
+                    background: #ffffff;
+                    position: absolute;
+                    left: 0;
+                    top: 0px;
+                    border: 1px solid #333333;
+                    border-radius: 0px;
+                }
+            
+                &:focus + label:before {
+                    box-shadow: none;
+                }
+                &:checked + label:before {
+                    background: #333333;
+                    border: 1px solid #333333;
+                    border-radius: 0px;
+                }
+            
+                &:checked + label:after {
+                    content: '';
+                    position: absolute;
+                    left: 5px;
+                    top: 6px;
+                    width: 10px;
+                    height: 7px;
+                    background: #333333 url('@{baseDir}images/true_arrow.svg');    
+                }
+            }
         }
 
         .checkout-billing-address {
@@ -107,12 +252,12 @@
             .primary {
                 .action-update {
                     margin-right: 0;
-                    min-width: 200px;
+                    min-width: 160px;
                 }
-                .action-cancel, .action-cancel:hover {
+                .action-cancel {
                     display: inline-block;
                     margin: 0 0 0 20px;
-                    min-width: 200px;
+                    min-width: 160px;
                 }
             }
             .fieldset .actions-toolbar {
@@ -128,8 +273,31 @@
             .billing-address-details {
                 .lib-css(line-height, @checkout-billing-address-details__line-height);
                 .lib-css(padding, @checkout-billing-address-details__padding);
+                word-break: break-word;
+                &::first-line {
+                    font-weight: @font-weight__bold;
+                }
+                a {
+                    color: @font-gray;
+                }
             }
-
+            .action-edit-address {
+                margin-top: 10px;
+                .lib-button-primary();
+                border-radius: 20px;
+                margin-bottom: 10px;
+                &:hover {
+                    border-color: transparent;
+                    background: @hookah_theme_gradient;
+                    border-left-color: @border_left_gradient;
+                    border-right-color: @border_right_gradient;
+                }
+            }
+            .field-tooltip {
+                .field-tooltip-action {
+                    display: none;
+                }
+            }
         }
 
         .payment-method-note {
@@ -168,6 +336,82 @@
                 background: @hookah_theme_color;
                 border-color: @hookah_theme_color;
                 line-height: 24px;
+                &:hover{
+                    background: @hookah_theme_gradient;
+                    border-color: transparent;
+                    border-left-color: @border_left_gradient;
+                    border-right-color: @border_right_gradient;
+                }
+            }
+        }
+    }
+
+    //
+    //  Order Success
+    //  _____________________________________________
+    .checkout-onepage-success {
+        .page-main {
+            text-align: center;
+            padding: 160px 20px 60px 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.10);
+            border-radius: 10px;
+            margin: 40px auto 80px;            
+            background: @color_white url('@{baseDir}images/order-success.svg') no-repeat center 60px;
+            max-width: @layout_container_xl;
+        }
+        .actions-toolbar {
+            .primary {
+                float: none;
+            }
+        }
+        .column.main {
+            min-height: 0;
+            padding: 0;
+        }
+        .action.print {
+            display: none;
+        }
+        .page-title {
+            .lib-font-size(32);
+            font-weight: @font-weight__bold;
+            margin-bottom: 30px;
+        }
+        .actions-toolbar {
+            margin-top: 30px;
+        }
+        .action.primary.continue {
+            margin: 0;
+            min-width: 375px;
+            padding: 12px 17px;
+            font-size: 16px;
+            background: @hookah_theme_color;
+            border-color: @hookah_theme_color;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            text-transform: uppercase;
+            &:hover {
+                background: @hookah_theme_gradient;
+                border-color: transparent;
+                border-left-color: @border_left_gradient;
+                border-right-color: @border_right_gradient;
+            }
+        }
+    }
+
+    //
+    //  Responsive
+    //  _____________________________________________
+    @media only screen and (max-width: 1399px) {
+        .checkout-onepage-success {
+            .page-main {
+                width: 96%;
+            }
+        }
+    }
+    @media only screen and (max-width: 1199px) {
+        .checkout-onepage-success {
+            .page-main {
+                margin: 30px auto 60px;
             }
         }
     }
@@ -179,23 +423,6 @@
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .checkout-payment-method {
-        .payment-methods {
-            .lib-css(margin, 0 -(@checkout-payment-method-title-mobile__padding));
-        }
-
-        .step-title {
-            .lib-css(padding-left, @checkout-payment-method-title-mobile__padding);
-            .lib-css(padding-right, @checkout-payment-method-title-mobile__padding)
-        }
-
-        .payment-method-title {
-            .lib-css(padding, @checkout-payment-method-title-mobile__padding)
-        }
-
-        .payment-method-content {
-            .lib-css(padding, 0 @checkout-payment-method-title-mobile__padding @indent__base);
-        }
-
         .checkout-billing-address {
             .fieldset .actions-toolbar {
                 width: 100%;
@@ -206,6 +433,48 @@
             .primary .action-cancel {
                 margin: @indent__s 0 0 ;
             }
+        }
+        .actions-toolbar {
+            .primary.checkout {
+                width: 260px;
+            }
+        }
+        .field-select-billing,
+        .billing-address-form {
+            .fieldset {
+                .field.additional {
+                    margin-top: 20px;
+                }
+            }
+        }
+        .payment-method-content {
+            .fieldset {
+                .field.field-select-billing {
+                    margin-bottom: 20px;
+                }
+            }
+        }
+    }        
+    
+    //
+    //  Order Success
+    //  _____________________________________________
+    .checkout-onepage-success {
+        .action.primary.continue {
+            min-width: 100%;
+        }
+        .page-main {
+            width: 90%;
+            margin: 20px auto;
+            padding: 140px 16px 40px 16px;
+            background-position: center 30px;
+        }
+        .page-title {
+            .lib-font-size(26);
+            margin-bottom: 24px;
+        }
+        .actions-toolbar {
+            margin-top: 25px;
         }
     }
 }
@@ -235,24 +504,34 @@
         .payment-method-content {
             .fieldset {
                 > .field {
-                    margin: 0 0 @indent__base;
+                    margin: 0 0 @indent__base + 10px;
                     
                     &.choice {
                         &:before {
                             padding: 0;
                             width: 0;
                         }
+                        .checkbox {
+                            display: none;                            
+                        }
+                        .label {
+                            .lib-font-size(14);
+                        }
                     }
 
                     &.type {
-                        .control {
-                            margin-left: 25.8%;
-                        }
-
+                        width: 100%;
                         &.no-detection {
                             .control {
                                 margin-left: 0;
                             }
+                        }
+                    }
+                    &.cvv {
+                        width: 100%;
+                        ~ .field {
+                            width: 100%;
+                            padding-left: 20px;
                         }
                     }
                 }
