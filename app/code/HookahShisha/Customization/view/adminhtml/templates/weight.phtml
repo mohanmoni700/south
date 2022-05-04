@@ -1,0 +1,4 @@
+<?php if ($_item = $block->getItem()): ?>
+  <?= /* @noEscape */ $_item->getQtyOrdered() * $_item->getProduct()->getWeight(); ?>
+<?php endif; ?>
+
