@@ -148,12 +148,12 @@ return [
                     'type' => 'server_side_compilation'
                 ],
                 'template' => [
-                    'allow_symlink' => NULL,
+                    'allow_symlink' => null,
                     'minify_html' => '0'
                 ],
                 'js' => [
                     'merge_files' => '1',
-                    'enable_js_bundling' => NULL,
+                    'enable_js_bundling' => null,
                     'minify_files' => '0',
                     'move_script_to_bottom' => '0',
                     'translate_strategy' => 'dictionary',
@@ -177,63 +177,63 @@ return [
             'admin' => [
                 'design' => [
                     'package' => [
-                        'name' => 'default',
+                        'name' => 'default'
                     ],
                     'theme' => [
-                        'default' => 'default',
-                    ],
-                ],
+                        'default' => 'default'
+                    ]
+                ]
             ],
             'default' => [
                 'design' => [
                     'theme' => [
-                        'theme_id' => 'frontend/Corra/alfakher',
-                    ],
-                ],
-            ],
+                        'theme_id' => 'frontend/Corra/alfakher'
+                    ]
+                ]
+            ]
         ],
         'websites' => [
             'admin' => [
                 'web' => [
                     'routers' => [
                         'frontend' => [
-                            'disabled' => 'true',
-                        ],
+                            'disabled' => 'true'
+                        ]
                     ],
                     'default' => [
-                        'no_route' => 'admin/noroute/index',
-                    ],
-                ],
+                        'no_route' => 'admin/noroute/index'
+                    ]
+                ]
             ],
             'base' => [
                 'design' => [
                     'theme' => [
-                        'theme_id' => 'frontend/Corra/alfakher',
-                    ],
-                ],
+                        'theme_id' => 'frontend/Corra/alfakher'
+                    ]
+                ]
             ],
             'hookah' => [
                 'design' => [
                     'theme' => [
-                        'theme_id' => 'frontend/Corra/alfakher',
-                    ],
-                ],
+                        'theme_id' => 'frontend/Corra/alfakher'
+                    ]
+                ]
             ],
             'hookah_company' => [
                 'design' => [
                     'theme' => [
-                        'theme_id' => 'frontend/Corra/alfakher',
-                    ],
-                ],
+                        'theme_id' => 'frontend/Corra/alfakher'
+                    ]
+                ]
             ],
             'hookah_wholesalers' => [
                 'design' => [
                     'theme' => [
-                        'theme_id' => 'frontend/Alfakher/hookahwholesalers',
-                    ],
-                ],
-            ],
-        ],
+                        'theme_id' => 'frontend/Alfakher/hookahwholesalers'
+                    ]
+                ]
+            ]
+        ]
     ],
     'modules' => [
         'Magento_AdminAnalytics' => 1,
@@ -848,9 +848,9 @@ return [
     'admin_user' => [
         'locale' => [
             'code' => [
-                0 => 'en_US',
-            ],
-        ],
+                'en_US'
+            ]
+        ]
     ],
     'themes' => [
         'frontend/Magento/blank' => [
@@ -860,7 +860,7 @@ return [
             'is_featured' => '0',
             'area' => 'frontend',
             'type' => '0',
-            'code' => 'Magento/blank',
+            'code' => 'Magento/blank'
         ],
         'adminhtml/Magento/backend' => [
             'parent_id' => null,
@@ -869,7 +869,7 @@ return [
             'is_featured' => '0',
             'area' => 'adminhtml',
             'type' => '0',
-            'code' => 'Magento/backend',
+            'code' => 'Magento/backend'
         ],
         'frontend/Magento/luma' => [
             'parent_id' => 'Magento/blank',
@@ -878,7 +878,7 @@ return [
             'is_featured' => '0',
             'area' => 'frontend',
             'type' => '0',
-            'code' => 'Magento/luma',
+            'code' => 'Magento/luma'
         ],
         'frontend/Corra/alfakher' => [
             'parent_id' => 'Magento/luma',
@@ -887,7 +887,7 @@ return [
             'is_featured' => '0',
             'area' => 'frontend',
             'type' => '0',
-            'code' => 'Corra/alfakher',
+            'code' => 'Corra/alfakher'
         ],
         'frontend/Alfakher/hookahwholesalers' => [
             'parent_id' => 'Magento/blank',
@@ -896,10 +896,10 @@ return [
             'is_featured' => '0',
             'area' => 'frontend',
             'type' => '0',
-            'code' => 'Alfakher/hookahwholesalers',
-        ],
+            'code' => 'Alfakher/hookahwholesalers'
+        ]
     ],
     'i18n' => [
 
-    ],
+    ]
 ];
