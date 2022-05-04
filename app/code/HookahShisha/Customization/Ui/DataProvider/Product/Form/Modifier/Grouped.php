@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace HookahShisha\Customization\Ui\DataProvider\Product\Form\Modifier;
 
 use Magento\Catalog\Api\Data\ProductInterface;
@@ -145,17 +141,14 @@ class Grouped extends \Magento\GroupedProduct\Ui\DataProvider\Product\Form\Modif
         array $uiComponentsConfig = [],
         GroupedProducts $groupedProducts = null,
         \Magento\Catalog\Api\Data\ProductLinkInterfaceFactory $productLinkFactory = null
-
-
     ) {
-
         $this->locator = $locator;
         $this->urlBuilder = $urlBuilder;
         $this->productLinkRepository = $productLinkRepository;
         $this->productRepository = $productRepository;
         $this->imageHelper = $imageHelper;
-        $this->attributeSetRepository = $attributeSetRepository;
         $this->status = $status;
+        $this->attributeSetRepository = $attributeSetRepository;
         $this->localeCurrency = $localeCurrency;
         $this->stockState = $stockState;
         $this->uiComponentsConfig = array_replace_recursive($this->uiComponentsConfig, $uiComponentsConfig);
@@ -317,12 +310,11 @@ class Grouped extends \Magento\GroupedProduct\Ui\DataProvider\Product\Form\Modif
      */
     protected function getChildren()
     {
-        $children = [
+        return [
             $this->uiComponentsConfig['button_set'] => $this->getButtonSet(),
             $this->uiComponentsConfig['modal'] => $this->getModal(),
             self::LINK_TYPE => $this->getGrid(),
         ];
-        return $children;
     }
 
     /**
@@ -490,7 +482,7 @@ class Grouped extends \Magento\GroupedProduct\Ui\DataProvider\Product\Form\Modif
      */
     protected function getGrid()
     {
-        $grid = [
+        return [
             'arguments' => [
                 'data' => [
                     'config' => [
@@ -527,7 +519,6 @@ class Grouped extends \Magento\GroupedProduct\Ui\DataProvider\Product\Form\Modif
             ],
             'children' => $this->getRows(),
         ];
-        return $grid;
     }
 
     /**
@@ -666,7 +657,7 @@ class Grouped extends \Magento\GroupedProduct\Ui\DataProvider\Product\Form\Modif
      */
     protected function getTextColumn($dataScope, $fit, Phrase $label, $sortOrder)
     {
-        $column = [
+        return [
             'arguments' => [
                 'data' => [
                     'config' => [
@@ -683,6 +674,5 @@ class Grouped extends \Magento\GroupedProduct\Ui\DataProvider\Product\Form\Modif
                 ],
             ],
         ];
-        return $column;
     }
 }
