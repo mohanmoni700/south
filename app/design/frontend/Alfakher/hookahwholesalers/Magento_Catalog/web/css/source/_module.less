@@ -51,6 +51,57 @@
     .old.price {
         text-decoration: line-through;
     }
+    .viewingproducts{
+        position: absolute;
+        bottom: 60px;
+        right: 0;
+        left: 0;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .page-wrapper{
+        #amasty-shopby-product-list{
+            margin-bottom: 40px;
+            padding-bottom: 40px;
+            position: relative;
+            @media only screen and (max-width: 767px) {
+                padding-bottom: 65px;
+            }
+        }
+        .amscroll-load-button{
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin-bottom: 0;
+        }
+        .toolbar-amount{
+            display: none !important;
+        }
+        .field.limiter{
+            display: none;
+        }
+    }
+    button.load-more{
+    .lib-button-primary();
+        line-height: 34px;
+        font-size: 16px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        border-radius: 30px;
+        align-items: center;
+        justify-content: center;
+        min-width: 280px;
+        min-height: 50px;
+        display: table;
+        margin: 0 auto;
+        &:hover {
+            border-color: transparent;
+            background: @hookah_theme_gradient;
+            border-left-color: @border_left_gradient;
+            border-right-color: @border_right_gradient;
+        }
+    }
 
     .catalog-product-view{
         .page-main, .page-main-full-width {

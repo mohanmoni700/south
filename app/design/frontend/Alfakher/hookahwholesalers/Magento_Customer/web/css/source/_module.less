@@ -50,6 +50,31 @@ input::-webkit-contacts-auto-fill-button {
   position: absolute;
   right: 0;
 }
+.migrate-customer-header {
+    max-width: 340px;
+    margin: 0 auto;
+    padding: 12px;
+    border: 2px solid #000000;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    position: relative;
+    @media only screen and (max-width: 360px) {
+        max-width: 290px;
+    }
+    &:before{
+        content:'';
+        background: url('@{baseDir}images/alficon.png');
+        position: relative;
+        width: 25px;
+        height: 25px;
+        top: 3px;
+        left: 0;
+        right: 0;
+        background-size: contain;
+        display: inline-block;
+        margin-right: 7px;
+    }
+}
 .customer-address-index{
     button.action.primary.add{
         width: 100%;
@@ -59,11 +84,6 @@ input::-webkit-contacts-auto-fill-button {
             width: 100%;
             max-width: 300px;
         }
-    }
-}
-ul.nav.items{
-    li.myquotes.nav.item{
-        display: none;
     }
 }
 .modal-popup.popup-reorder-quote{
@@ -1963,7 +1983,7 @@ ul.nav.items{
                 }
             }
             .field {
-                display: flex !important;
+                display: flex;
                 flex-direction: column;
                 margin-bottom: @indent__m;
             }

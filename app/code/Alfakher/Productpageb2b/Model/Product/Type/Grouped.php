@@ -26,6 +26,11 @@ class Grouped extends \Magento\GroupedProduct\Model\Product\Type\Grouped
             );
 
             $collection->setOrder('name', 'ASC');
+            $collection->getSelect()->joinLeft(
+                ['_inventory_table' => 'cataloginventory_stock_item'],
+                "_inventory_table.product_id = e.entity_id", ['is_in_stock']
+            );
+            $collection->getSelect()->order(['is_in_stock desc']);
 
             foreach ($collection as $item) {
                 $associatedProducts[] = $item;

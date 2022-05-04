@@ -11,17 +11,33 @@
     <?php $firstStringCharacter = substr($name, 0, 1); ?>
     <div class="sign-in">
         <span class="sign-up"><?php echo __('My Account')?></span>
-        <!-- <a class= "header_account_link" href="<?php //echo $this->getUrl("customer/account/logout");?>"><?php //echo __('My Account')?></a> -->
         <ul class="sign-up-ul customer_logged_in" style="display: none;">
-            <li class="guest-heading">
+            <li class="guest-heading" data-bind="scope: 'customer'">
                 <div class="left_circle">
-                    <lable class="cust_short_name"><?= $firstStringCharacter?></lable>
+                    <!-- ko if: customer().firstname  -->
+                        <lable class="cust_short_name" data-bind="text: customer().firstname.charAt(0)"></lable>
+                    <!-- /ko -->
                 </div>
                 <div class="welcome_info">
                     <lable class="welback"><?php echo __('Welcome back!') ?></lable>
-                    <lable class="guest-content-heading"><?php echo $name; ?>  </lable>
+                    <!-- ko if: customer().firstname  -->
+                        <lable class="guest-content-heading" data-bind="text: new String('<?= $escaper->escapeHtml(__('%1', '%1')) ?>').replace('%1', customer().firstname)"></lable>
+                    <!-- /ko -->
                 </div>
             </li>
+            <script type="text/x-magento-init">
+            {
+                "*": {
+                    "Magento_Ui/js/core/app": {
+                        "components": {
+                            "customer": {
+                                "component": "Magento_Customer/js/view/customer"
+                            }
+                        }
+                    }
+                }
+            }
+            </script>
             <li class="guest-content my_account">
                 <a class= "create_an_account_link" href="<?php echo $this->getUrl("customer/account/");?>"><?php echo __('My Account')?></a>
             </li>
@@ -36,7 +52,6 @@
    </div>
 <?php else: ?>
      <div class="sign-in">
-     <!--  <a class= "header_account_link" href="<?php //echo $this->getUrl("customer/account/login");?>"><?php //echo __('Sign in')?></a> -->
      <span class="sign-up"><?php echo __('Sign In / Register')?></span>
         <ul class="sign-up-ul" style="display: none;">
             <li class="guest-heading"><span class="guest-content-heading">Welcome Guest!</span></li>
@@ -56,15 +71,6 @@
 <script>
 require(['jquery'], function($){
     $(document).ready(function(){
-        // $('.sign-in').click(function(e){
-        //      $('.sign-up-ul').toggle();
-        //      $('.sign_in_overlay').toggle();
-        // });
-        // $(document).on('click','.sign_in_overlay',function(){
-        //  $('.sign-up-ul').hide();
-        //  $(this).hide();
-        // });
-
         $('.sign-in').click(function(event){
             $('.sign-up-ul').toggle();
             $('.sign_in_overlay').toggle();

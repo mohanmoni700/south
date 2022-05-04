@@ -12,7 +12,7 @@ use Magento\Sales\Model\Order\Creditmemo\Item as CreditmemoItem;
 
 class AlfaBundle
 {
-    public const DEFAULT_SHISHA_TITLE = 'Included Premium Shisha Flavour';
+    public const DEFAULT_SHISHA_TITLE = 'Included Premium Shisha Flavor';
 
     public const DEFAULT_CHARCOAL_TITLE = 'Free Hookah Charcoal';
 
@@ -43,7 +43,7 @@ class AlfaBundle
             : '';
         if ($superPackFlavours) {
             $alfaBundleOptions[] = [
-                'label' => __('Flavours'),
+                'label' => __('Flavors'),
                 'value' => implode(', ', $superPackFlavours)
             ];
         }

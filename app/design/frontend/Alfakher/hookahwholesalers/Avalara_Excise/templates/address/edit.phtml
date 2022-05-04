@@ -65,13 +65,7 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
         <?php if ($_fax->isEnabled()): ?>
             <?= $_fax->setFax($block->getAddress()->getFax())->toHtml() ?>
         <?php endif ?>
-
-    </fieldset>
-    <fieldset class="fieldset">
-        <legend class="legend"><span><?= $block->escapeHtml(__('Address')) ?></span></legend><br>
-        <?php $_streetValidationClass = $this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('street'); ?>
-        <?php $_streetLabel = $block->getAttributeData() ? $block->getAttributeData()->getFrontendLabel('street') : $block->escapeHtml(__('Street Address')); ?>
-        <div class="field country required">
+          <div class="field country required">
             <?php
             $title = $block->getAttributeData() ? $block->getAttributeData()->getFrontendLabel('country_id') : $block->escapeHtml(__('Country'));
             ?>
@@ -80,6 +74,11 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
                 <?= $block->getCountryHtmlSelect() ?>
             </div>
         </div>
+    </fieldset>
+    <fieldset class="fieldset">
+        <legend class="legend"><span><?= $block->escapeHtml(__('Address')) ?></span></legend>
+        <?php $_streetValidationClass = $this->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('street'); ?>
+        <?php $_streetLabel = $block->getAttributeData() ? $block->getAttributeData()->getFrontendLabel('street') : $block->escapeHtml(__('Street Address')); ?>
 
         <div class="field street required">
             <label for="street_1" class="label" style="display:block">

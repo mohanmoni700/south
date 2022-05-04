@@ -66,7 +66,7 @@ class Fee extends \Magento\Framework\View\Element\Template
             [
                 'code' => 'handling_fee',
                 'value' => $this->getSource()->getHandlingFee(),
-                'label' => "Oversize shipping charges",
+                'label' => "Shipping Adjustment",
             ]
         );
 

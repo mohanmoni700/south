@@ -80,7 +80,7 @@ class Fee extends \Magento\Framework\View\Element\Template
             [
                 'code' => 'handling_fee',
                 'value' => $amount,
-                'label' => "Oversize shipping charges",
+                'label' => "Shipping Adjustment",
             ]
         );
 
