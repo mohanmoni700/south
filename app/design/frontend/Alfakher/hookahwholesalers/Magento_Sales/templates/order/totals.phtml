@@ -15,7 +15,7 @@
     <?php else :?>
 
     <?php /* bv_op; date : 3-5-22; start */ ?>
-    <?php if($_code == "grand_total" && $block->getOrder()->getTotalSubtotalDiscount() > 0): ?>
+    <?php if($block->getOrder() && $_code == "grand_total" && $block->getOrder()->getTotalSubtotalDiscount() > 0): ?>
         <tr class="subtotal-discount-af">
             <th colspan="4" class="mark" scope="row"><?= __("Subtotal Discount") ?></th>
             <td colspan="2" class="amount">
@@ -25,7 +25,7 @@
             </td>
         </tr>
     <?php endif; ?>
-    <?php if($_code == "grand_total" && $block->getOrder()->getTotalShippingFeeDiscount() > 0): ?>
+    <?php if($block->getOrder() && $_code == "grand_total" && $block->getOrder()->getTotalShippingFeeDiscount() > 0): ?>
         <tr class="subtotal-discount-af">
             <th colspan="4" class="mark" scope="row"><?= __("Shipping Fee Discount") ?></th>
             <td colspan="2" class="amount">
@@ -52,10 +52,10 @@
         <td <?= /* @noEscape */ $block->getValueProperties() ?> data-th="<?= $block->escapeHtmlAttr($_total->getLabel()) ?>">
             
             <?php /* bv_op; date : 2-5-22; displaying initial subtotal and initial shipping fee; Start */ ?>
-            <?php if($_code == 'subtotal' && $block->getOrder()->getTotalSubtotalDiscount() > 0): ?>
+            <?php if($block->getOrder() && $_code == 'subtotal' && $block->getOrder()->getTotalSubtotalDiscount() > 0): ?>
                 <?php $_total->setData("value",$block->getOrder()->getOriginalSubtotal()); ?>
                 <?php $_total->setData("base_value",$block->getOrder()->getOriginalSubtotal()); ?>
-            <?php elseif($_code == 'shipping' && $block->getOrder()->getTotalShippingFeeDiscount() > 0): ?>
+            <?php elseif($block->getOrder() && $_code == 'shipping' && $block->getOrder()->getTotalShippingFeeDiscount() > 0): ?>
                 <?php $_total->setData("value",$block->getOrder()->getOriginalShippingFee()); ?>
                 <?php $_total->setData("base_value",$block->getOrder()->getOriginalShippingFee()); ?>
             <?php endif; ?>
