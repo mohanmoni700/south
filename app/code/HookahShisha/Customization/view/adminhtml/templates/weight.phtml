@@ -1,4 +1,5 @@
-<?php if ($_item = $block->getItem()): ?>
+<?php if ($_item = $block->getItem()){ 
+  if($_item->getProduct()){ ?>
   <?= /* @noEscape */ $_item->getQtyOrdered() * $_item->getProduct()->getWeight(); ?>
-<?php endif; ?>
+<?php }} ?>
 
