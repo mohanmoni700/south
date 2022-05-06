@@ -37,6 +37,12 @@
                     <label>Shipping Discount</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+
+                <field id="zero_out_enable" translate="label" type="select" sortOrder="1" showInDefault="0" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Zero Out Order</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
             </group>
 
         </section>

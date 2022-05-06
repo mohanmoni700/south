@@ -16,6 +16,7 @@ $websiteId = $order->getStore()->getWebsiteId();
 $canShowFeeEdit = $viewModel->isModuleEnabled($websiteId);
 $canShowSubtotalEdit = $viewModel->isSubtotalEditEnabled($websiteId);
 $canShowShippingFeeEdit = $viewModel->isShippingFeeEditEnabled($websiteId);
+$zeroOutEnable = $viewModel->isZeroOutEnabled($websiteId);
 ?>
 <?php /* bv_op; date : 18-2-22; edit handling fee; End */ ?>
 
@@ -152,6 +153,8 @@ $canShowShippingFeeEdit = $viewModel->isShippingFeeEditEnabled($websiteId);
                 <?php /* bv_op; date : 20-4-22; edit subtotal; Start */ ?>
                 <?php if ($_total->getCode() == 'subtotal'
                     &&
+                    $_total->getValue() > 0
+                    &&
                     $canShowSubtotalEdit
                     &&
                     !$order->getInvoiceCollection()->count()): ?>
@@ -192,6 +195,8 @@ $canShowShippingFeeEdit = $viewModel->isShippingFeeEditEnabled($websiteId);
 
                 <?php /* bv_op; date : 21-4-22; edit shipping; Start */ ?>
                 <?php if ($_total->getCode() == 'shipping'
+                    &&
+                    $_total->getValue() > 0
                     &&
                     $canShowShippingFeeEdit
                     &&
@@ -247,6 +252,38 @@ $canShowShippingFeeEdit = $viewModel->isShippingFeeEditEnabled($websiteId);
                 </tr>
             <?php endif; ?>
             <?php /* bv_op; date : 2-5-22; displaying subtotal and shipping discount; End */ ?>
+
+            <?php /* bv_op; date : 4-5-22; zero out button; Start */ ?>
+            <?php if($zeroOutEnable && $order->getGrandTotal() > 0): ?>
+                <tr class="col-2">
+                    <td class="label">Zero Out Order</td>
+                    <td>
+                        <input
+                            type="hidden"
+                            name="zero_out_for_order"
+                            id="zero_out_for_order"
+                            value="<?= /* @noEscape */ $order->getId() ?>">
+                        <button class="primary" type="button" id="zero_out_btn">Zero Out</button>
+                    </td>
+                </tr>
+            <?php endif; ?>
+            <?php /* bv_op; date : 4-5-22; zero out button; End */ ?>
+
+            <?php /* bv_op; date : 5-5-22; revert the order zero out; Start */ ?>
+            <?php if($zeroOutEnable && $order->getGrandTotal() == 0 && $order->getOriginalSubtotal() > 0 && $order->getTotalSubtotalDiscount() == 0): ?>
+                <tr class="col-2">
+                    <td class="label">Revert Zero Out Order</td>
+                    <td>
+                        <input
+                            type="hidden"
+                            name="revert_zero_out_for_order"
+                            id="revert_zero_out_for_order"
+                            value="<?= /* @noEscape */ $order->getId() ?>">
+                        <button class="primary" type="button" id="revert_zero_out_btn">Revert Zero Out</button>
+                    </td>
+                </tr>
+            <?php endif; ?>
+            <?php /* bv_op; date : 5-5-22; revert the order zero out; End */ ?>
 
         </tbody>
     <?php endif; ?>
@@ -376,3 +413,57 @@ $canShowShippingFeeEdit = $viewModel->isShippingFeeEditEnabled($websiteId);
 
 <?php endif; ?>
 <?php /* bv_op; date : 21-4-22; edit Shipping; End */ ?>
+
+<?php /* bv_op; date : 4-5-22; zero out the order; Start */ ?>
+<?php if($zeroOutEnable): ?>
+<script type="text/javascript">
+    require(['jquery', 'Magento_Ui/js/modal/confirm'], function ($, confirmation) {
+        $(document).on('click', "#zero_out_btn", function () {
+            confirmation({
+                title: $.mage.__('Zero Out Order'),
+                content: $.mage.__('This action will zero out the order. Are you sure to perform this operation?'),
+                actions: {
+                    confirm: function(){
+                        var orderId = $("#zero_out_for_order").val();
+
+                        $.ajax({
+                            url: "<?= /* @noEscape */ $block->getUrl('handlingfee/Order/zeroout/') ?>",
+                            showLoader: true,
+                            type: 'POST',
+                            data: {order_id:orderId},
+                            success: function(response) {
+                                location.reload(true);
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
+        $(document).on('click', "#revert_zero_out_btn", function () {
+            confirmation({
+                title: $.mage.__('Revert Zero Out Order'),
+                content: $.mage.__('This action will revert order\'s zero out. Are you sure to perform this operation?'),
+                actions: {
+                    confirm: function(){
+                        var orderId = $("#revert_zero_out_for_order").val();
+
+                        $.ajax({
+                            url: "<?= /* @noEscape */ $block->getUrl('handlingfee/Order/revertzeroout/') ?>",
+                            showLoader: true,
+                            type: 'POST',
+                            data: {order_id:orderId},
+                            success: function(response) {
+                                location.reload(true);
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
+
+    });
+</script>
+<?php endif; ?>
+<?php /* bv_op; date : 4-5-22; zero out the order; End */ ?>

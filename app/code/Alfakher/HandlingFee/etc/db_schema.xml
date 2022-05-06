@@ -27,6 +27,15 @@
 		<column xsi:type="decimal" name="total_subtotal_discount" nullable="false" scale="2" precision="10" comment="Total Subtotal Discount"/>
 		<column xsi:type="decimal" name="total_shipping_fee_discount" nullable="false" scale="2" precision="10" comment="Total Shipping Fee Discount"/>
 		<!-- af_bv_op; manage custom discount on order; End -->
+
+		<!-- af_bv_op; manage zero out order; Start -->
+		<column xsi:type="decimal" name="original_tax_amount" nullable="false" scale="2" precision="10" comment="Original Tax Amount"/>
+		<column xsi:type="decimal" name="original_base_tax_amount" nullable="false" scale="2" precision="10" comment="Original Base Tax Amount"/>
+		<column xsi:type="decimal" name="original_sales_tax" nullable="false" scale="2" precision="10" comment="Original Sales Tax"/>
+		<column xsi:type="decimal" name="original_excise_tax" nullable="false" scale="2" precision="10" comment="Original Excise Tax"/>
+		<column xsi:type="decimal" name="original_discount_amount" nullable="false" scale="2" precision="10" comment="Original Discount Amount"/>
+		<column xsi:type="decimal" name="original_base_discount_amount" nullable="false" scale="2" precision="10" comment="Original Base Discount Amount"/>
+		<!-- af_bv_op; manage zero out order; End -->
 	</table>
 
 	<table name="sales_invoice">

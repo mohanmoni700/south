@@ -35,6 +35,13 @@ class Order extends \MageWorx\OrderEditor\Model\Order {
 			$this->setBaseShippingInclTax($this->getOriginalBaseShippingInclTax());
 			$this->setBaseGrandTotal($this->getBaseGrandTotal() + $this->getTotalShippingFeeDiscount());
 			$this->setGrandTotal($this->getGrandTotal() + $this->getTotalShippingFeeDiscount());
+		} elseif ($this->getOriginalShippingFee() > 0) {
+			$this->setShippingAmount($this->getOriginalShippingFee());
+			$this->setBaseShippingAmount($this->getOriginalBaseShippingAmount());
+			$this->setShippingInclTax($this->getOriginalShippingInclTax());
+			$this->setBaseShippingInclTax($this->getOriginalBaseShippingInclTax());
+			$this->setBaseGrandTotal($this->getBaseGrandTotal() + $this->getOriginalShippingFee());
+			$this->setGrandTotal($this->getGrandTotal() + $this->getOriginalShippingFee());
 		}
 
 		$this->setOriginalShippingFee(0);
