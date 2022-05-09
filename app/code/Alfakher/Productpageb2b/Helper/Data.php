@@ -43,6 +43,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @param CustomerFactory $customerFactory
      * @param \Magento\CatalogInventory\Api\StockStateInterface $stockInterface
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @param \Magento\Catalog\Api\ProductRepositoryInterface $proRepo
      *
      */
     public function __construct(
@@ -55,7 +56,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         \Magento\Framework\HTTP\Header $httpHeader,
         CustomerFactory $customerFactory,
         \Magento\CatalogInventory\Api\StockStateInterface $stockInterface,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        \Magento\Store\Model\StoreManagerInterface $storeManager,
+        \Magento\Catalog\Api\ProductRepositoryInterface $proRepo
     ) {
         $this->collection = $collection;
         $this->_customerSession = $session;
@@ -67,6 +69,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->customerFactory = $customerFactory;
         $this->_stockInterface = $stockInterface;
         $this->storeManager = $storeManager;
+        $this->proRepo = $proRepo;
     }
 
     /**
@@ -129,8 +132,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $migrateCustomerDocument = $customerData->getIsMigrationDocuments();
         return (int) $migrateCustomerDocument;
     }
-    
-       /*bv-hd getStockQty*/
+
+    /*bv-hd getStockQty*/
     /**
      * @inheritDoc
      */
@@ -138,5 +141,23 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     {
         $websiteId = $this->storeManager->getStore()->getWebsiteId();
         return $this->_stockInterface->getStockQty($productId, $websiteId);
+    }
+    /*bv-vy getAdminSession*/
+    /**
+     * @inheritDoc
+     */
+    public function getAdminCustomer()
+    {
+        $adminId = $this->_customerSession->getLoggedAsCustomerAdmindId();
+        return $adminId;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getGrossMargin($productId)
+    {
+        $cost = $this->proRepo->getById($productId)->getCost();
+        return $cost;
     }
 }
