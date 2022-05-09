@@ -210,8 +210,6 @@ class BasicPost extends \Magento\Customer\Controller\Address implements HttpPost
                 $address = $this->deleteAddressFileAttribute($address);
             }
             $this->_addressRepository->save($address);
-            $cst_account_verified = $this->getRequest()->getParam('cst_account_verified');
-            $cst_details_changed = $this->getRequest()->getParam('cst_details_changed');
             /* Start Change the Customer objct Name */
             $currentCustomerDataObject = $this->getCustomerDataObject($this->_customerSession->getCustomerId());
             $extensionAttributes = $currentCustomerDataObject->getExtensionAttributes();
@@ -219,8 +217,6 @@ class BasicPost extends \Magento\Customer\Controller\Address implements HttpPost
             $currentCustomerDataObject->setExtensionAttributes($extensionAttributes);
             $currentCustomerDataObject->setFirstname($this->getRequest()->getParam('firstname'));
             $currentCustomerDataObject->setLastname($this->getRequest()->getParam('lastname'));
-            $currentCustomerDataObject->setCustomAttribute('cst_account_verified', $cst_account_verified);
-            $currentCustomerDataObject->setCustomAttribute('cst_details_changed', $cst_details_changed);
             $this->customerRepository->save($currentCustomerDataObject);
             /* ENd Change the Customer objct Name */
 

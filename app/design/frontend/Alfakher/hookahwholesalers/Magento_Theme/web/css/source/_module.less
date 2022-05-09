@@ -67,6 +67,7 @@
 & when (@media-common = true) {
     body {
         .lib-css(background-color, @page__background-color);
+        margin: 0;
     }
     .sign_in_overlay {
         position: fixed;
@@ -242,6 +243,15 @@
                     }   
                 }
             }
+            &.my_quotes{
+                a{
+                    &:before{
+                        width: 19px;
+                        height: 16px;
+                        background: url('@{baseDir}images/myorder.svg') no-repeat;
+                    }
+                }
+            }
             &.product_pricing{
                 a{
                     &:before{
@@ -260,6 +270,20 @@
                 a{
                     &:before{
                       background: url('@{baseDir}images/manage_address.svg') no-repeat;  
+                    }   
+                }
+            }
+            &.store_credit{
+                a{
+                    &:before{
+                      background: url('@{baseDir}images/Store-credit-black.svg') no-repeat;  
+                    }   
+                }
+            }
+            &.my_returns{
+                a{
+                    &:before{
+                      background: url('@{baseDir}images/my-returns-black.svg') no-repeat;  
                     }   
                 }
             }
