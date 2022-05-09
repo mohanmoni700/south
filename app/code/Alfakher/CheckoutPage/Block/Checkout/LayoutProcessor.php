@@ -76,7 +76,6 @@ class LayoutProcessor
                     ['billing-step']['children']['payment']['children']
                     ['payments-list']['children'][$key]['children']
                     ['form-fields']['children']['country_id']['disabled'] = false;
-
                 }
 
                 if (isset($payment['children']['form-fields']['children']['city'])) {

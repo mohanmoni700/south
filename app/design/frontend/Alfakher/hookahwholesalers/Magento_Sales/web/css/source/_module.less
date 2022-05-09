@@ -7,7 +7,8 @@
 //  Common
 //  _____________________________________________
 @lib-action_clr:#404040;
-& when (@media-common = true) {
+& when (@media-common = true) {    margin-top: 20px;
+    display: inline-block;
     .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
         .order-references{
             border: 0;
@@ -164,9 +165,9 @@
             }
         }
     }
-    .table-wrapper.orders-history{
+    .table-wrapper.orders-history, .table-wrapper.returns{
         overflow-x: auto;
-        .table-order-items{
+        .table-order-items, .table-returns{
             table-layout: fixed;
             thead{
                 tr{
