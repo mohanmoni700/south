@@ -9,7 +9,7 @@ use Magento\Framework\Filesystem;
 use Magento\Framework\Image\AdapterFactory;
 use Magento\MediaStorage\Model\File\UploaderFactory;
 
-class Uploaddocument extends \Magento\Backend\App\Action
+class Uploaddoc extends \Magento\Backend\App\Action
 {
     /**
      * @var \Alfakher\MyDocument\Model\MyDocumentFactory
@@ -94,9 +94,7 @@ class Uploaddocument extends \Magento\Backend\App\Action
         if (count($filesData)) {
             $i = 0;
             foreach ($filesData as $key => $files) {
-
                 if (isset($files['tmp_name']) && strlen($files['tmp_name']) > 0) {
-
                     try {
                         $uploaderFactories = $this->uploaderFactory->create(['fileId' => $filesData[$key]]);
                         $uploaderFactories->setAllowedExtensions(['jpg', 'jpeg', 'gif', 'png', 'pdf']);
@@ -110,14 +108,12 @@ class Uploaddocument extends \Magento\Backend\App\Action
                         /*Allow folder creation*/
                         $uploaderFactories->setAllowCreateFolders(true);
                         $maxsize = 20;
-
                         /*number_format($_FILES['filename']['size'] / 1048576, 2) . ' MB';*/
                         if ((number_format($files['size'] / 1048576, 2) >= $maxsize)) {
                             throw new LocalizedException(
                                 __('File too large. File must be less than 20 megabytes.')
                             );
                         }
-
                         /*Rename file name if already exists*/
                         $uploaderFactories->setAllowRenameFiles(true);
                         $uploaderFactories->setFilesDispersion(false);
@@ -129,37 +125,31 @@ class Uploaddocument extends \Magento\Backend\App\Action
                                 __('File cannot be saved to path: $1', $destinationPath)
                             );
                         }
-
                         $imagePath = $result['file'];
                         $data['filename'] = $imagePath;
                     } catch (\Exception $e) {
                         $this->messageManager->addError(__($e->getMessage()));
                     }
                 }
-
-                if (isset($newArray[$i]['expiry_date'])) {
-                    $date = ltrim($newArray[$i]['expiry_date'], 'Expiry Date:');
-                    $expiryDate = date("Y-m-d", strtotime($date));
-                } else {
-                    $expiryDate = '';
-                }
-
                 $resultRedirect = $this->resultRedirect->create(ResultFactory::TYPE_REDIRECT);
                 $resultRedirect->setUrl('mydocument/customer/index');
                 $model = $this->_myDocument->create();
                 $model->setData($data);
-
-                $model->addData([
-                    "document_name" => $post['name' . ($i + 1)],
-                    "customer_id" => $post['customer_id'],
-                    "expiry_date" => $this->convertDate($post['expiry_date' . ($i + 1)]),
-                    "is_customerfrom_usa" => $is_usa,
-                    "status" => 0,
-                    "is_add_more_form" => $newArray[$i]['is_add_more_form'],
-                ]);
-                $model->setIsDelete(false);
-                $model->setStatus(0);
-                $saveData = $model->save();
+                if (array_key_exists("name" . ($i + 1), $post)) {
+                    if ($post['name' . ($i + 1)] != "") {
+                        $model->addData([
+                            "document_name" => $post['name' . ($i + 1)],
+                            "customer_id" => $post['customer_id'],
+                            "expiry_date" => $this->convertDate($post['expiry_date' . ($i + 1)]),
+                            "is_customerfrom_usa" => $is_usa,
+                            "status" => 0,
+                            "is_add_more_form" => $newArray[$i]['is_add_more_form'],
+                        ]);
+                        $model->setIsDelete(false);
+                        $model->setStatus(0);
+                        $saveData = $model->save();
+                    }
+                }
                 $i++;
             }
         }

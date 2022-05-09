@@ -56,8 +56,6 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
             <legend></legend>
             <input type="hidden" name="success_url" value="<?= $block->escapeUrl($block->getSuccessUrl()) ?>"/>
             <input type="hidden" name="error_url" value="<?= $block->escapeUrl($block->getErrorUrl()) ?>"/>
-            <input type="hidden" name="cst_account_verified" value="0"/>
-            <input type="hidden" name="cst_details_changed" value="1"/>
             <?= $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Name::class)
                 ->setObject($formData)
                 ->setForceUseCustomerAttributes(true)
