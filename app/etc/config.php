@@ -706,6 +706,7 @@ return [
         'Magento_WishlistGiftCard' => 1,
         'Magento_WishlistGiftCardGraphQl' => 1,
         'Magento_GiftCardRequisitionListGraphQl' => 0,
+        'Alfakher_FinanceVerified' => 1,
         'Alfakher_AddtocartPriceHide' => 1,
         'Alfakher_AdminReorder' => 1,
         'Alfakher_Blog' => 1,

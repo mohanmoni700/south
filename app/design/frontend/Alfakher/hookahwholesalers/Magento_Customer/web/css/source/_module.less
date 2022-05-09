@@ -50,6 +50,21 @@ input::-webkit-contacts-auto-fill-button {
   position: absolute;
   right: 0;
 }
+
+.table-wrapper.table-returns{
+    .table-returns{
+        td.col {
+            border-bottom: 1px solid #cdcaca !important;
+        }
+    }
+}
+.returns-details-items{
+    #rma_comment{
+        .fieldset{
+            margin-left: 0;
+        }
+    }
+}
 .migrate-customer-header {
     max-width: 340px;
     margin: 0 auto;
@@ -192,6 +207,12 @@ input::-webkit-contacts-auto-fill-button {
 .customer-addresses-toolbar.toolbar.bottom{
     display: none;
 }
+.magento_rma-returns-create{
+    .action.add{
+        .cart_btn(); 
+        padding: 16px 25px;
+    }
+}
 .account{
     .registerform{ 
         .field_flex{
@@ -325,12 +346,127 @@ input::-webkit-contacts-auto-fill-button {
 .additional-addresses {
     margin-bottom: 0;
 }
+.form-create-return{
+    .fieldset{
+        .action.add{
+            margin-top: 0 !important;
+        }
+    }
+    .fieldset .additional {
+        .action.remove.delete {
+            top: 48px;
+            float: right;
+            right: auto;
+            margin-left: 0;
+            left: 54%;
+            z-index: 1;
+        }
+    }
+}
+.magento_rma-returns-view,
+.magento_rma-returns-create{
+    .page-title-wrapper{
+        .page-title{
+            padding-bottom: 10px;
+            border-bottom: 1px solid #cdcaca;
+            margin-bottom: 10px;
+            .base{
+                font-weight: 700;
+                font-size: 1.8rem;
+                line-height: 28px;
+            }
+        }
+    }
+    span.return-status{
+        font-weight: 700;
+    }
+    .fieldset .legend{
+        margin-left: 0;
+        font-size: 16px;
+        font-weight: 700;
+    }
+    .fieldset > .field{
+        margin-bottom: 10px;
+    }
+    .fieldset > .field:not(.choice) > .label{
+        padding-left: 0;
+    }
+}
+.block.block-return-details{
+    .block-content{
+        .lib-vendor-prefix-display(flex);
+        flex-wrap: nowrap;
+         @media only screen and (max-width: 991px) {
+            flex-wrap: wrap;
+        }
+        .box-address-billing{
+            margin-right: 54px;
+            @media only screen and (max-width: 991px) {
+                margin-right: 0;
+            }
+        }
+        .box{
+            width: 100%;
+            padding: 20px;
+            border: 1px solid #000000;
+            border-radius: 10px;
+            background: #FBFBFB;
+            &.box-returns-requested{
+                margin-right: 40px;
+                @media only screen and (max-width: 991px) {
+                    margin-right: 0;
+                }
+            }
+        }
+        .box-content{
+            address{
+                line-height: 22px;
+                color: @account_color-font;
+                word-break: break-word;
+                &::first-line {
+                    font-weight: @font-weight__bold;
+                }
+                a{
+                    color: @account_color-font;
+                }
+            }
+        }        
+        .box-actions{
+            margin-top: 8px;
+            .edit{
+                color: @account_color-font;
+                text-decoration: underline; 
+                font-weight: @font-weight__semibold;
+                font-size: 12px;
+            }
+        }
+    }
+    .block-title{
+        padding-bottom: 10px;
+        border-bottom: 1px solid @border-color__base-table;
+        margin-bottom: 10px;
+        strong{
+            font-weight: @font-weight__bold;
+            .lib-font-size(18);
+            line-height: 28px;
+        }
+    }
+}
+.additional{
+    fieldset.fieldset{
+         @media only screen and (max-width: 991px) {
+            width: 100%;
+        }
+    }
+}
+
 .block.block-addresses-default{
     .block-content{
         .lib-vendor-prefix-display(flex);
         flex-wrap: nowrap;
+
         .box-address-billing{
-            margin-right: 54px;
+            margin-right: 54px;            
         }
         .address_box{
             width: 100%;
@@ -741,6 +877,31 @@ input::-webkit-contacts-auto-fill-button {
                     top: 17px;
                     width: 15px;
                     height: 17px;    
+                }
+            }
+             &.storecredit{
+                a,strong{
+                    &:before{
+                      background: url('@{baseDir}images/Store-credit-black.svg') no-repeat;  
+                    }   
+                }
+                strong{
+                    &:before{
+                        filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+                    }
+                }
+            }
+             &.myreturns{
+                a,strong{
+                    &:before{
+                      background: url('@{baseDir}images/my-returns-black.svg') no-repeat; 
+                      width:17px; 
+                    }   
+                }
+                strong{
+                    &:before{
+                        filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+                    }
                 }
             }
             &.myaccount{
@@ -2477,6 +2638,10 @@ input::-webkit-contacts-auto-fill-button {
                 }
             }
         }
+        a.action.return {
+            margin-top: 20px;
+            display: inline-block;
+        }
     }
 
     .customer-account-login .page-main, 
@@ -2729,6 +2894,16 @@ input::-webkit-contacts-auto-fill-button {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    .form-create-return{
+        .fieldset .additional {
+            .action.remove.delete {
+                top: -5px;
+                left: auto;
+                right: 0;
             }
         }
     }

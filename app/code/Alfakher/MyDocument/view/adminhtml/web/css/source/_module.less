@@ -14,6 +14,59 @@
 	.form.doc-form {
 	    margin-top: 3rem;
 	}
+    .del{
+        text-align: center;
+        display: block;
+        width: 100%;
+        margin-top: 10px;
+        .delete-icon{
+        padding: 8px 20px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: @color-black;
+        .lib-font-size(12);
+        text-align: center;
+        background: @color-white;
+        border: 1px solid @color-black;
+        border-radius: 30px;
+        display: inline-block;
+        text-decoration: none;
+        &:hover {
+            color: @color-white;
+            background: linear-gradient(275deg, #9B2269 5%, #D378FF 100%);
+            border-color: transparent;
+            border-left-color: #D378FF;
+            border-right-color: #9B2269;
+        }
+    }
+    }
+    .doc-name {
+        font-size: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 14px 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 100%;
+        span {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .download-doc::after {
+            content: "";
+            width: 16px;
+            height: 15px;
+            background: url('Alfakher_MyDocument::images/download.svg');
+            background-size: 100%;
+            background-repeat: no-repeat;
+            display: block;
+            margin-left: 15px;
+        }
+    }
 	.doc-box {
       	border: 1px solid #CDCACA;
       	width: ~'calc(50% - 76px)';
@@ -986,7 +1039,6 @@
     .upload-container,
     .updated-container{
         .add-more-cont {
-            margin-top: 204px;
             &:nth-of-type(3), &:nth-of-type(5), &:nth-of-type(7), &:nth-of-type(9), &:nth-of-type(11) {
                 margin-top: 0;
             }
@@ -999,21 +1051,13 @@
     form .updated-container{
         .upload,
         .document {
-            width: ~'calc((100% - 60px) / 4 )';
+            width: ~'calc((100% - 80px) / 4 )';
             margin-right: 20px;
             display: block;
             grid-row-gap: 10px;
             margin-bottom: 4rem;
-
-            &[for="document uploader"]:nth-of-type(4n) {
-                margin-right: 0;
-            }
-            &:nth-of-type(4n) {
-                margin-right: 0;
-            }
         }
         .add-more-cont {
-            margin-top: 204px;
             &:nth-of-type(5), &:nth-of-type(9), &:nth-of-type(13), &:nth-of-type(17) {
                 margin-top: 0;
             }
@@ -1037,7 +1081,6 @@
             }
         }
         .add-more-cont {
-            margin-top: 204px;
             &:nth-of-type(4), &:nth-of-type(7), &:nth-of-type(10), &:nth-of-type(13) {
                 margin-top: 0;
             }
