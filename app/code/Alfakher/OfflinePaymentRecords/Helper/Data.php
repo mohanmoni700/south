@@ -27,10 +27,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
 	}
 
 	public function sendMail($order) {
-
-		// echo "<pre>";
-		// print_r(get_class_methods($order));die;
-
 		try {
 
 			$model = $this->_paymentRecords->create()->getCollection()->addFieldToFilter("order_id", ['eq' => $order->getId()]);
