@@ -150,7 +150,7 @@
                                     </td>
                                     <td class="col actions">
                                         <button type="button"
-                                                class="action add"
+                                                class="action add primary"
                                                 id="btn-add-track-number"
                                                 title="<?= $block->escapeHtml(__('Add')); ?>">
                                             <span><?= $block->escapeHtml(__('Add')); ?></span>
@@ -312,7 +312,7 @@
                   class="form form-returns-comments"
                   data-mage-init='{"validation":{}}'>
                 <fieldset class="fieldset">
-                    <div class="field comment required">
+                    <div class="field comment">
                         <label class="label"><span><?= $block->escapeHtml(__('Leave Comment')); ?></span></label>
                         <div class="control">
                             <textarea id="rma_comment_text"
@@ -326,7 +326,7 @@
                 <div class="actions-toolbar">
                     <div class="primary">
                         <button type="submit" class="action submit primary" id="submit.save">
-                            <span><?= $block->escapeHtml(__('Submit')); ?></span>
+                            <span><?= $block->escapeHtml(__('Submit Comment')); ?></span>
                         </button>
                     </div>
                 </div>
