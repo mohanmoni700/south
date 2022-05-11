@@ -14,4 +14,9 @@
     <type name="Magento\Catalog\Block\Product\AbstractProduct">
         <plugin name="mpproductlabels_product" type="Mageplaza\ProductLabels\Plugin\Block\AbstractProduct" disabled="true"/>
     </type>
+
+    <!-- Add Company Name in order invoice pdf -->
+    <type name="Magetrend\PdfTemplates\Model\Pdf\Filter">
+       <plugin name="custom_magetrend_pdftemplates" type="HookahShisha\Customization\Model\Pdf\Filter" />
+    </type>
 </config>
