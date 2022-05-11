@@ -56,8 +56,8 @@
                 <?php $_total->setData("value",$block->getOrder()->getOriginalSubtotal()); ?>
                 <?php $_total->setData("base_value",$block->getOrder()->getOriginalSubtotal()); ?>
             <?php elseif($block->getOrder() && $_code == 'shipping' && $block->getOrder()->getTotalShippingFeeDiscount() > 0): ?>
-                <?php $_total->setData("value",$block->getOrder()->getOriginalShippingFee()); ?>
-                <?php $_total->setData("base_value",$block->getOrder()->getOriginalShippingFee()); ?>
+                <?php $_total->setData("value",$block->getOrder()->getOriginalShippingFee() + $block->getOrder()->getHandlingFee()); ?>
+                <?php $_total->setData("base_value",$block->getOrder()->getOriginalShippingFee() + $block->getOrder()->getHandlingFee()); ?>
             <?php endif; ?>
             <?php /* bv_op; date : 2-5-22; displaying initial subtotal and initial shipping fee; End */ ?>
 

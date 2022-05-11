@@ -45,6 +45,13 @@ class Updatesubtotal extends \Magento\Backend\App\Action {
 					$subtotal = $order->getSubtotal();
 					$discountAmount = $subtotal * ($post['amount'] / 100);
 
+					if ($discountAmount > $order->getSubtotal() && $discountAmount != 0) {
+						$this->messageManager->addErrorMessage(__("Max discount on subtoal can't be more then " . $order->formatPrice($order->getSubtotal())));
+						$result = $this->_resultJsonFactory->create();
+						$result->setData(['status' => false]);
+						return $result;
+					}
+
 					/*af_bv_op; Start*/
 					if ($order->getOriginalSubtotal() <= 0) {
 						$order->setOriginalSubtotal($order->getSubtotal());
@@ -65,6 +72,13 @@ class Updatesubtotal extends \Magento\Backend\App\Action {
 				} else {
 					$subtotal = $order->getSubtotal();
 					$discountAmount = $post['amount'];
+
+					if ($discountAmount > $order->getSubtotal() && $discountAmount != 0) {
+						$this->messageManager->addErrorMessage(__("Max discount on subtoal can't be more then " . $order->formatPrice($order->getSubtotal())));
+						$result = $this->_resultJsonFactory->create();
+						$result->setData(['status' => false]);
+						return $result;
+					}
 
 					if ($discountAmount > 0) {
 						/*af_bv_op; Start*/

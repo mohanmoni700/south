@@ -45,6 +45,13 @@ class Updateshippingfee extends \Magento\Backend\App\Action {
 					$shippingAmount = $order->getShippingAmount();
 					$discountAmount = $shippingAmount * ($post['amount'] / 100);
 
+					if ($discountAmount > $order->getShippingAmount() && $discountAmount != 0) {
+						$this->messageManager->addErrorMessage(__("Max discount on shipping fee can't be more then " . $order->formatPrice($order->getShippingAmount())));
+						$result = $this->_resultJsonFactory->create();
+						$result->setData(['status' => false]);
+						return $result;
+					}
+
 					/*af_bv_op; Start*/
 					if ($order->getOriginalShippingFee() <= 0) {
 						$order->setOriginalShippingFee($order->getShippingAmount());
@@ -65,6 +72,13 @@ class Updateshippingfee extends \Magento\Backend\App\Action {
 				} else {
 					$shippingAmount = $order->getShippingAmount();
 					$discountAmount = $post['amount'];
+
+					if ($discountAmount > $order->getShippingAmount() && $discountAmount != 0) {
+						$this->messageManager->addErrorMessage(__("Max discount on shipping fee can't be more then " . $order->formatPrice($order->getShippingAmount())));
+						$result = $this->_resultJsonFactory->create();
+						$result->setData(['status' => false]);
+						return $result;
+					}
 
 					if ($discountAmount > 0) {
 						if ($order->getOriginalShippingFee() <= 0) {
