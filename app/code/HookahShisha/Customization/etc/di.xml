@@ -4,4 +4,8 @@
     <preference for="Smartwave\Megamenu\Block\Topmenu" type="HookahShisha\Customization\Block\Topmenu" />
     
     <preference for="Magento\CheckoutStaging\Plugin\PaymentInformationManagementPlugin" type="HookahShisha\Customization\Plugin\PaymentInformationManagementPlugin" />
+
+    <type name="Magento\Catalog\Block\Product\AbstractProduct">
+        <plugin name="mpproductlabels_product" type="Mageplaza\ProductLabels\Plugin\Block\AbstractProduct" disabled="true"/>
+    </type>
 </config>
