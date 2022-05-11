@@ -1,0 +1,15 @@
+<!--@subject  {{trans "Payment Updates"}}  @-->
+
+<!--@vars {
+	"var orderid":"Order Id",
+	"var name":"Customer Name",
+	"var paymentarray":"Payment record"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<p>Hello {{var name}},</p>
+<p>Please find the payment updates for your order # {{var orderid}}</p>
+{{block class='Magento\\Framework\\View\\Element\\Template' area='frontend' template='Alfakher_OfflinePaymentRecords::paymentUpdate.phtml' paymentarray=$paymentarray}}
+
+{{template config_path="design/email/footer_template"}}
