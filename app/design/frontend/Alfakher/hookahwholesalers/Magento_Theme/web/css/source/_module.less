@@ -2360,6 +2360,9 @@
                 }
             .minicart-wrapper{
                 margin: 0 (@indent__m - 2); // 40px
+                @media (max-width: 767px){
+                    margin: 0 15px;
+                }
                 .action.showcart{
                     padding-top: @indent__xl - 1; //50px
                     position: relative;
@@ -2383,6 +2386,11 @@
                         padding-top: 40px;
                         .lib-css(font-weight, @font-weight__semibold);
                     }
+                }
+            }
+            .reorder-wrapper{
+                @media (max-width: 767px){
+                    margin-left: 13px;
                 }
             }
             .reorder-wrapper,
@@ -2748,7 +2756,6 @@
                     }
                 }
                 .sign-in {
-                    margin-right: 15px;
                     &::after{
                         position: unset;
                     }

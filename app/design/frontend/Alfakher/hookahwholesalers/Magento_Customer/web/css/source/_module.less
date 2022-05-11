@@ -212,6 +212,10 @@ input::-webkit-contacts-auto-fill-button {
         .cart_btn(); 
         padding: 16px 25px;
     }
+    .fieldset .legend {
+        display: inline-block;
+        width: 100%;
+    }
 }
 .account{
     .registerform{ 
@@ -2362,7 +2366,15 @@ input::-webkit-contacts-auto-fill-button {
             }
         }
     }
-
+    .table-returns {
+        a.action {
+            color: #404040;
+            text-decoration: underline;
+            &:hover {
+                color: @hookah_theme_color;
+            }
+        }
+    }
 }
 
 & when (@media-target = 'mobile'), (@media-target = 'all') {
@@ -2905,6 +2917,13 @@ input::-webkit-contacts-auto-fill-button {
                 left: auto;
                 right: 0;
             }
+        }
+    }
+    .form-tracking {
+        #track-info-table td {
+            display: block;
+            width: 100%;
+            border: none;
         }
     }
 }
