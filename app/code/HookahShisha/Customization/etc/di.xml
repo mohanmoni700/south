@@ -10,4 +10,8 @@
     <!-- Company field search adding on the customer grid -->
     <preference for="Magento\Customer\Model\ResourceModel\Grid\Collection"
     type="HookahShisha\Customization\Model\ResourceModel\Grid\Collection" />
+
+    <type name="Magento\Catalog\Block\Product\AbstractProduct">
+        <plugin name="mpproductlabels_product" type="Mageplaza\ProductLabels\Plugin\Block\AbstractProduct" disabled="true"/>
+    </type>
 </config>
