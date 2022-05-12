@@ -1,9 +1,4 @@
-    <?php
-    /**
-     * Copyright © Magento, Inc. All rights reserved.
-     * See COPYING.txt for license details.
-     */
-
+<?php
     /**
      * Grouped product data template
      *
@@ -11,15 +6,15 @@
      * @var $block \Magento\GroupedProduct\Block\Product\View\Type\Grouped
      */
     ?>
-    <?php $block->setPreconfiguredValue(); ?>
-    <?php $_product = $block->getProduct(); ?>
-    <?php $_associatedProducts = $block->getAssociatedProducts(); ?>
-    <?php $_hasAssociatedProducts = count($_associatedProducts) > 0; ?>
-    <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
-    <?php $is_document_upload = $_helperB2b->getDocuments();?>
-    <?php $is_mobile = $_helperB2b->isMobileDevice();?>
-    <?php $migrateDocument=$_helperB2b->getMigrateDocument();?>
-    <?php $adminsession = $_helperB2b->getAdminCustomer();?>
+<?php $block->setPreconfiguredValue(); ?>
+<?php $_product = $block->getProduct(); ?>
+<?php $_associatedProducts = $block->getAssociatedProducts(); ?>
+<?php $_hasAssociatedProducts = count($_associatedProducts) > 0; ?>
+<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
+<?php $is_document_upload = $_helperB2b->getDocuments();?>
+<?php $is_mobile = $_helperB2b->isMobileDevice();?>
+<?php $migrateDocument=$_helperB2b->getMigrateDocument();?>
+<?php $adminsession = $_helperB2b->getAdminCustomer();?>
 
     <div id="validation-message-box"></div>
     <div class="table-wrapper grouped">
@@ -200,13 +195,10 @@
             /*bv-hd for desktop checkqty*/
             $("[id^='qtytext_']").keyup(function(e){
                 var currentId= $(this).attr('id');
-                if(e.which != 8 && isNaN(String.fromCharCode(e.which))){
-                   $(this).val(0);
-                   $("#"+currentId).blur();
-                }
+                
                 var regex = new RegExp("^[0-9]+$");
-                var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-                if (regex.test(str)) {
+                
+                if (regex.test(this.value)) {
                     var requestQty = this.value;
                     if(requestQty < 0){
                         $(this).val(0);
@@ -224,8 +216,10 @@
                         $(this).val(parseInt(requestQty));
                         $("#qtymessage_"+productId).html("");
                     }
-                }
-                return false;
+                }else{
+                     $(this).val(0);
+                     $("#"+currentId).blur();
+                }  
             });
             /*bv-hd for mobile checkqty*/
             $("[id^='qtydrop_']").on('change',function(){
