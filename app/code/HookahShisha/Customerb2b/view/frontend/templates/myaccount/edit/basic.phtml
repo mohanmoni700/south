@@ -50,8 +50,6 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
         <input type="hidden" name="success_url" value="<?= $escaper->escapeUrl($block->getSuccessUrl()) ?>">
         <input type="hidden" name="error_url" value="<?= $escaper->escapeUrl($block->getErrorUrl()) ?>">
         <input type="hidden" name="id" value="<?= /* @noEscape */ $block->getCustomer()->getDefaultBilling(); ?>">
-        <input type="hidden" name="cst_account_verified" value="0"/>
-        <input type="hidden" name="cst_details_changed" value="1"/>
         <?= $block->getNameBlockHtml() ?>
 
         <?php if ($_company->isEnabled()): ?>
