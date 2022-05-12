@@ -311,8 +311,8 @@
                   action="<?= $block->escapeUrl($block->getSubmitUrl()); ?>"
                   class="form form-returns-comments"
                   data-mage-init='{"validation":{}}'>
-                <fieldset class="fieldset">
-                    <div class="field comment">
+                <fieldset class="fieldset required">
+                    <div class="field comment required">
                         <label class="label"><span><?= $block->escapeHtml(__('Leave Comment')); ?></span></label>
                         <div class="control">
                             <textarea id="rma_comment_text"
@@ -326,7 +326,7 @@
                 <div class="actions-toolbar">
                     <div class="primary">
                         <button type="submit" class="action submit primary" id="submit.save">
-                            <span><?= $block->escapeHtml(__('Submit Comment')); ?></span>
+                            <span><?= $block->escapeHtml(__('Submit')); ?></span>
                         </button>
                     </div>
                 </div>
