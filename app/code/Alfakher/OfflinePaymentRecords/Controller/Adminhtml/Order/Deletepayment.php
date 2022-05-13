@@ -13,7 +13,6 @@ class Deletepayment extends \Magento\Backend\App\Action {
 		\Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
 		\Alfakher\OfflinePaymentRecords\Model\OfflinePaymentRecordFactory $paymentRecords,
 		\Alfakher\OfflinePaymentRecords\Helper\Data $afHelper,
-		\Magento\Framework\App\ResourceConnection $resourceConnection,
 		\Magento\Backend\Model\Auth\Session $authSession
 	) {
 		$this->_orderRepository = $orderRepository;
@@ -21,7 +20,6 @@ class Deletepayment extends \Magento\Backend\App\Action {
 		$this->_paymentRecords = $paymentRecords;
 		$this->authSession = $authSession;
 		$this->_afHelper = $afHelper;
-		$this->resourceConnection = $resourceConnection;
 
 		parent::__construct($context);
 	}
@@ -39,14 +37,15 @@ class Deletepayment extends \Magento\Backend\App\Action {
 
 			$model->delete();
 
-			$connection = $this->resourceConnection->getConnection();
-			$table = $connection->getTableName('alfakher_offline_payment_records');
-			$query = "Select * FROM " . $table . " where order_id = " . $order->getId() . " order by entity_id limit 1";
-			$result = $connection->fetchAll($query);
+			$result = $this->_paymentRecords
+				->create()
+				->getCollection()
+				->addFieldToFilter("order_id", ['eq' => $order->getId()])
+				->setOrder('entity_id', 'DESC')->getFirstItem();
 
 			if (!empty($result)) {
-				$order->setOfflinePaymentType($result[0]['payment_type']);
-				$order->setOfflineTransactionDate($result[0]['transaction_date']);
+				$order->setOfflinePaymentType($result['payment_type']);
+				$order->setOfflineTransactionDate($result['transaction_date']);
 			} else {
 				$order->setOfflinePaymentType(null);
 				$order->setOfflineTransactionDate(null);
