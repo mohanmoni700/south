@@ -17,25 +17,8 @@ $taxHelper = $block->getData('taxHelper');
 endif; ?>
 
 <?php
-/* render tracking url  */
-function getTrackingUrl($carrier, $trackNumber):string {
-    switch ($carrier) {
-        case 'usps':
-            $trackingDetail = "https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=".$trackNumber;
-            break;
-        case 'ups':
-            $trackingDetail = "https://www.ups.com/track?loc=null&tracknum=".$trackNumber."&requester=WT/trackdetails";
-            break;
-        case 'dhl':
-            $trackingDetail = "https://www.dhl.com/us-en/home/tracking/tracking-express.html?submit=1&tracking-id=".$trackNumber;
-            break;
-        default:
-            return $trackNumber;
-    }
-    return <<<HTML
-    <a href="{$trackingDetail}" target="_blank">{$trackNumber}</a>
-HTML;
-}
+/** @var $trackingUrl /Alfakher/CustomerCourierAccount/ViewModel/TrackingUrl */
+$trackingUrl = $block->getTrackingUrl();
 ?>
 <div class="admin__page-section-item order-shipping-method">
     <div>
@@ -48,7 +31,7 @@ HTML;
                     <?php foreach ($order->getTracksCollection() as $trackingInfo): ?>
                         <tr>
                             <th><?= $trackingInfo->getTitle() ?></th>
-                            <td><?= getTrackingUrl($trackingInfo->getCarrierCode(),$trackingInfo->getTrackNumber()) ?></td>
+                            <td><?= $trackingUrl->getTrackingUrl($trackingInfo->getCarrierCode(),$trackingInfo->getTrackNumber()) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>
