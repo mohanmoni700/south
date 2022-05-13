@@ -113,7 +113,7 @@ class Grouped extends \Magento\GroupedProduct\Ui\DataProvider\Product\Form\Modif
      * @param CurrencyInterface $localeCurrency
      * @param array $uiComponentsConfig
      * @param GroupedProducts $groupedProducts
-     * @param \Magento\Catalog\Api\Data\ProductLinkInterfaceFactory $productLinkFactory
+     * @param ProductLinkInterfaceFactory $productLinkFactory
      * @param \Magento\CatalogInventory\Api\StockStateInterface $stockState
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -129,7 +129,7 @@ class Grouped extends \Magento\GroupedProduct\Ui\DataProvider\Product\Form\Modif
         array $uiComponentsConfig = [],
         GroupedProducts $groupedProducts,
         \Magento\CatalogInventory\Api\StockStateInterface $stockState,
-        \Magento\Catalog\Api\Data\ProductLinkInterfaceFactory $productLinkFactory
+        ProductLinkInterfaceFactory $productLinkFactory
     ) {
         $this->stockState = $stockState;
         parent::__construct($locator, $urlBuilder, $productLinkRepository, $productRepository, $imageHelper, $status, $attributeSetRepository, $localeCurrency, $uiComponentsConfig, $groupedProducts, $productLinkFactory);
