@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Alfakher_ExciseTax::report_excisetax_order"
+            title="Excise Order Report"
+            module="Alfakher_ExciseTax"
+            sortOrder="100"
+            parent="Magento_Reports::report_salesroot"
+            action="excisereport/report/index"
+            resource="Magento_Reports::salesroot" />
+    </menu>
+</config>
