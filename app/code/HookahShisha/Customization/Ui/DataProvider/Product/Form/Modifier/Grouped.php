@@ -113,7 +113,7 @@ class Grouped extends \Magento\GroupedProduct\Ui\DataProvider\Product\Form\Modif
      * @param CurrencyInterface $localeCurrency
      * @param array $uiComponentsConfig
      * @param GroupedProducts $groupedProducts
-     * @param \Magento\Catalog\Api\Data\ProductLinkInterfaceFactory|null $productLinkFactory
+     * @param \Magento\Catalog\Api\Data\ProductLinkInterfaceFactory $productLinkFactory
      * @param \Magento\CatalogInventory\Api\StockStateInterface $stockState
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -127,9 +127,9 @@ class Grouped extends \Magento\GroupedProduct\Ui\DataProvider\Product\Form\Modif
         AttributeSetRepositoryInterface $attributeSetRepository,
         CurrencyInterface $localeCurrency,
         array $uiComponentsConfig = [],
-        GroupedProducts $groupedProducts = null,
+        GroupedProducts $groupedProducts,
         \Magento\CatalogInventory\Api\StockStateInterface $stockState,
-        \Magento\Catalog\Api\Data\ProductLinkInterfaceFactory $productLinkFactory = null
+        \Magento\Catalog\Api\Data\ProductLinkInterfaceFactory $productLinkFactory
     ) {
         $this->locator = $locator;
         $this->urlBuilder = $urlBuilder;
