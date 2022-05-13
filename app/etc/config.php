@@ -715,7 +715,6 @@ return [
         'Alfakher_CompanyImport' => 1,
         'Alfakher_DocumentStatus' => 1,
         'Alfakher_ExciseReport' => 1,
-        'Alfakher_ExciseTax' => 1,
         'Alfakher_FinanceVerified' => 1,
         'MageWorx_OrdersBase' => 1,
         'Alfakher_HandlingFee' => 1,
