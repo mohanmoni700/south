@@ -131,14 +131,6 @@ class Grouped extends \Magento\GroupedProduct\Ui\DataProvider\Product\Form\Modif
         \Magento\CatalogInventory\Api\StockStateInterface $stockState,
         \Magento\Catalog\Api\Data\ProductLinkInterfaceFactory $productLinkFactory
     ) {
-        $this->locator = $locator;
-        $this->urlBuilder = $urlBuilder;
-        $this->productLinkRepository = $productLinkRepository;
-        $this->productRepository = $productRepository;
-        $this->imageHelper = $imageHelper;
-        $this->status = $status;
-        $this->attributeSetRepository = $attributeSetRepository;
-        $this->localeCurrency = $localeCurrency;
         $this->stockState = $stockState;
         parent::__construct($locator, $urlBuilder, $productLinkRepository, $productRepository, $imageHelper, $status, $attributeSetRepository, $localeCurrency, $uiComponentsConfig, $groupedProducts, $productLinkFactory);
     }
