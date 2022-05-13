@@ -15,4 +15,10 @@
 		</constraint>
 
 	</table>
+
+	<table name="sales_order">
+		<column xsi:type="varchar" name="offline_payment_type" nullable="true" length="255" comment="Offline Payment Type"/>
+		<column xsi:type="date" name="offline_transaction_date" nullable="true" comment="Offline Transaction Date"/>
+	</table>
+	
 </schema>

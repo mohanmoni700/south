@@ -42,6 +42,10 @@ class Addpayment extends \Magento\Backend\App\Action {
 			$model->save();
 
 			$adminUser = $this->getAdminDetail();
+
+			$order->setOfflinePaymentType($post['paymentType']);
+			$order->setOfflineTransactionDate($post['paymentDate']);
+
 			$order->addStatusHistoryComment("offline payment added by -> \"" . $adminUser->getUsername() . "\" : " . $post['paymentType'] . " => " . $post['amountPaid']);
 			$this->_orderRepository->save($order);
 
