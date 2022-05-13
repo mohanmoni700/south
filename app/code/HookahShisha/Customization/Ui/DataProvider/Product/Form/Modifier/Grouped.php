@@ -152,7 +152,7 @@ class Grouped extends \Magento\GroupedProduct\Ui\DataProvider\Product\Form\Modif
             'id' => $linkedProduct->getId(),
             'name' => $linkedProduct->getName(),
             'sku' => $linkedProduct->getSku(),
-            'sqty' => number_format($this->stockState->getStockQty($linkedProduct->getId(), $linkedProduct->getWebsiteIds()), 4, null, ''),
+            'stock_qty' => number_format($this->stockState->getStockQty($linkedProduct->getId(), $linkedProduct->getWebsiteIds()), 4, null, ''),
             'price' => $currency->toCurrency(sprintf("%f", $linkedProduct->getPrice())),
             'qty' => $linkedProduct->getQty(),
             'position' => $linkedProduct->getPosition(),
@@ -195,7 +195,7 @@ class Grouped extends \Magento\GroupedProduct\Ui\DataProvider\Product\Form\Modif
                             'id' => 'entity_id',
                             'name' => 'name',
                             'sku' => 'sku',
-                            'sqty' => 'qty',
+                            'stock_qty' => 'qty',
                             'price' => 'price',
                             'status' => 'status_text',
                             'attribute_set' => 'attribute_set_text',
@@ -245,7 +245,7 @@ class Grouped extends \Magento\GroupedProduct\Ui\DataProvider\Product\Form\Modif
             'attribute_set' => $this->getTextColumn('attribute_set', false, __('Attribute Set'), 40),
             'status' => $this->getTextColumn('status', true, __('Status'), 50),
             'sku' => $this->getTextColumn('sku', false, __('SKU'), 60),
-            'sqty' => $this->getTextColumn('sqty', false, __('Quantity'), 70),
+            'stock_qty' => $this->getTextColumn('stock_qty', false, __('Quantity'), 70),
             'price' => $this->getTextColumn('price', true, __('Price'), 80),
             'qty' => [
                 'arguments' => [
