@@ -107,6 +107,9 @@ class Zeroout extends \Magento\Backend\App\Action {
 				$order->setBaseGrandTotal(0);
 				$order->setGrandTotal(0);
 
+				# setting handling fee to zero
+				$order->setHandlingFee(0);
+
 				/*af_bv_op; add order comment; Start */
 				$adminUser = $this->getAdminDetail();
 				$order->addStatusHistoryComment("Order Zero Out by -> \"" . $adminUser->getUsername() . "\"");
