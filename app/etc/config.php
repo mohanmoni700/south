@@ -713,6 +713,7 @@ return [
         'Alfakher_CheckoutPage' => 1,
         'Alfakher_CmsCanonical' => 1,
         'Alfakher_CompanyImport' => 1,
+        'Alfakher_CustomerCourierAccount' => 1,
         'Alfakher_DocumentStatus' => 1,
         'Alfakher_ExciseReport' => 1,
         'Alfakher_FinanceVerified' => 1,
