@@ -1,0 +1,64 @@
+
+<tr class="row"
+    click="element.selectShippingMethod"
+    attr="'class': 'row tr_method_' + method.method_code + '_' + method.carrier_code">
+    <td class="col col-method">
+        <input type="radio"
+               class="radio"
+               ifnot="method.error_message"
+               ko-checked="element.isSelected"
+               ko-value="method.carrier_code + '_' + method.method_code"
+               attr="'aria-labelledby': 'label_method_' + method.method_code + '_' + method.carrier_code + ' ' + 'label_carrier_' + method.method_code + '_' + method.carrier_code,
+                    'checked': element.rates().length == 1 || element.isSelected" />
+        <label class="label"></label>
+    </td>
+    <!-- ko ifnot: (method.error_message) -->
+    <td class="col col-price">
+        <each args="element.getRegion('price')" render=""></each>
+    </td>
+    <!-- /ko -->
+    <td class="col col-method"
+        attr="'id': 'label_method_' + method.method_code + '_' + method.carrier_code"
+        text="method.method_title"></td>
+    <td class="col col-carrier"
+        attr="'id': 'label_carrier_' + method.method_code + '_' + method.carrier_code"
+        text="method.carrier_title"></td>
+</tr>
+
+
+
+
+<!-- bv_op extra element for custom elements -->
+<tr class="row tr_custom_courier_section" if="method.method_code == 'customercourieraccount'" data-bind="visible: element.selectedMethod() == 'customercourieraccount_customercourieraccount'">
+    <td colspan="4">
+        <div class="courier-section">
+            <div class="left-section">
+                <label>Courier Name*</label>
+                <input type="text" name="customer_courier_name" required="true" data-validate="{required:true}" />
+                <div style="display: none;" id="customer_courier_name_error_msg" class='field-error'><span>This is a required field.</span></div>
+            </div>
+            <div class="right-section">
+                <label>Account Number*</label>
+                <input type="text" name="customer_courier_account" required="true" data-validate="{required:true}" />
+                <div style="display: none;" id="customer_courier_account_error_msg" class='field-error'><span>This is a required field.</span></div>
+            </div>
+        </div>
+    </td>
+</tr>
+<!-- bv_op extra element for custom elements ends -->
+
+
+
+
+<tr class="row row-error"
+    if="method.error_message">
+    <td class="col col-error" colspan="4">
+        <div role="alert" class="message error">
+            <div text="method.error_message"></div>
+        </div>
+        <span class="no-display">
+            <input type="radio"
+                   attr="'value' : method.method_code, 'id': 's_method_' + method.method_code">
+        </span>
+    </td>
+</tr>
