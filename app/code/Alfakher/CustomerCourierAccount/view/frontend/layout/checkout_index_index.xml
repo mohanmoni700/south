@@ -1,0 +1,33 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="checkout.root">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="checkout" xsi:type="array">
+                                <item name="children" xsi:type="array">
+                                    <item name="steps" xsi:type="array">
+                                        <item name="children" xsi:type="array">
+                                            <!-- af_bv_op -->
+                                            <item name="shipping-step" xsi:type="array">
+                                                <item name="children" xsi:type="array">
+                                                    <item name="shippingAddress" xsi:type="array">
+                                                        <item name="config" xsi:type="array">
+                                                            <!-- override the shipping method items templates -->
+                                                            <item name="shippingMethodItemTemplate" xsi:type="string">Alfakher_CustomerCourierAccount/custom-method-item-template</item>
+                                                            <!-- override the shipping method items templates ends -->
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                            <!-- af_bv_op ends -->
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+        </referenceBlock>
+    </body>
+</page>
