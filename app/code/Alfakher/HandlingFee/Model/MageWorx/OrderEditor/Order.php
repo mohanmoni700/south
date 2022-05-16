@@ -49,6 +49,7 @@ class Order extends \MageWorx\OrderEditor\Model\Order {
 		$this->setOriginalShippingInclTax(0);
 		$this->setOriginalBaseShippingInclTax(0);
 		$this->setTotalShippingFeeDiscount(0);
+		$this->setHandlingFee(0);
 		/* bv_op; debug; End */
 
 		$this->orderRepository->save($this);
