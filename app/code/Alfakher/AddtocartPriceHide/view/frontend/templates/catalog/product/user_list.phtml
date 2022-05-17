@@ -27,6 +27,8 @@ $_helper = $block->getData('outputHelper');
        $is_document_upload = $_helperB2b->getDocuments();
        $doc_expired = $_helperB2b->getExpiryMsg();
        $migrateDocument=$_helperB2b->getMigrateDocument();
+       $IsFinanceVerified=$_helperB2b->getIsFinanceVerified();
+
 ?>
 <?php if (!$_productCollection->count()): ?>
     <div class="message info empty">
@@ -87,7 +89,7 @@ $_helper = $block->getData('outputHelper');
                             <?= /* @noEscape */ $block->getProductPrice($_product) ?>
                             <?= $block->getProductDetailsHtml($_product) ?>
                         <?php else: ?>
-                            <?php if ($docdata == 2 && $is_document_upload == 1): ?>
+                            <?php if ($docdata == 2 && $is_document_upload == 1 && $IsFinanceVerified == 1): ?>
                                 <?= $block->getReviewsSummaryHtml($_product, $templateType) ?>
                                 <?= /* @noEscape */ $block->getProductPrice($_product) ?>
                                 <?= $block->getProductDetailsHtml($_product) ?>
@@ -123,7 +125,7 @@ $_helper = $block->getData('outputHelper');
                                             <?= $block->getBlockHtml('formkey') ?>
                                         <?php if ($migrateDocument ==1): ?>
                                         <?php else: ?>
-                                            <?php if ($docdata == 2 && $is_document_upload == 1): ?>
+                                            <?php if ($docdata == 2 && $is_document_upload == 1 && $IsFinanceVerified == 1): ?>
                                             <?php else: ?>
                                                 <!-- start view details btn -->
                                                

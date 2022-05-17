@@ -160,4 +160,14 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $cost = $this->proRepo->getById($productId)->getCost();
         return $cost;
     }
+    /*bv-vy getIsFinanceVerified*/
+    /**
+     * @inheritDoc
+     */
+    public function getIsFinanceVerified()
+    {
+        $customerId = $this->httpContext->getValue('customer_id');
+        $customerData = $this->customerFactory->create()->load($customerId);
+        return $customerData->getIsfinanceVerified();
+    }
 }

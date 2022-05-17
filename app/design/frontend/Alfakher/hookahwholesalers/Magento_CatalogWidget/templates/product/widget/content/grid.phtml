@@ -19,6 +19,7 @@ use Magento\Framework\App\Action\Action;
     $docdata = $_helperB2b->getDocMessageData();
     $is_document_upload = $_helperB2b->getDocuments();
     $migrateDocument = $_helperB2b->getMigrateDocument();
+    $IsFinanceVerified=$_helperB2b->getIsFinanceVerified();
 
 ?>
 
@@ -65,7 +66,7 @@ use Magento\Framework\App\Action\Action;
                                     <?= $block->getReviewsSummaryHtml($_item, $templateType) ?>
                                 <?php endif; ?>
                                 
-                                <?php if (($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1)): ?>
+                                <?php if (($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1 && $IsFinanceVerified == 1)): ?>
                                     <?= $block->getProductPriceHtml($_item, $type) ?>
 
                                     <?= $block->getProductDetailsHtml($_item) ?>
@@ -82,7 +83,7 @@ use Magento\Framework\App\Action\Action;
                                                             <input type="hidden" name="product" value="<?= $block->escapeHtmlAttr($postParams['data']['product']) ?>">
                                                             <input type="hidden" name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
                                                             <?= $block->getBlockHtml('formkey') ?>
-                                                            <?php if (($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1)): ?> 
+                                                            <?php if (($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1 && $IsFinanceVerified == 1)): ?> 
                                                         <?php else: ?>
                                                          <!-- start view details btn -->
                                                             <div class="actions-primary">

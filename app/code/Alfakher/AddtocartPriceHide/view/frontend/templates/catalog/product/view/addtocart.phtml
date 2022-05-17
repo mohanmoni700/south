@@ -14,6 +14,7 @@
         $is_document_upload = $_helperB2b->getDocuments();
         $doc_expired = $_helperB2b->getExpiryMsg();
         $migrateDocument=$_helperB2b->getMigrateDocument();
+        $IsFinanceVerified=$_helperB2b->getIsFinanceVerified();
 ?>
 <?php if ($_product->isSaleable()):?>
 <div class="box-tocart">
@@ -47,7 +48,7 @@
                     </div>
                 </div>
         <?php else: ?>
-            <?php if ($docdata == 2 && $is_document_upload == 1): ?>
+            <?php if ($docdata == 2 && $is_document_upload == 1 && $IsFinanceVerified == 1): ?>
                 <div class="fieldset">
                     <?php if ($block->shouldRenderQuantity()):?>
                     <div class="field qty">

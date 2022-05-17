@@ -190,7 +190,7 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
         $this->httpContext = $httpContext;
         $this->documentcollection = $documentcollection;
         $this->helperData = $helperData;
-        return parent::__construct($context, $catalogSession, $catalogConfig, $toolbarModel, $urlEncoder, $productListHelper, $postDataHelper, $data, $toolbarMemorizer, $httpContext, $formKey); //phpcs:ignore
+     return parent::__construct($context, $catalogSession, $catalogConfig, $toolbarModel, $urlEncoder, $productListHelper, $postDataHelper, $data, $toolbarMemorizer, $httpContext, $formKey); //phpcs:ignore
     }
 
     /**
@@ -279,9 +279,10 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
         if ($this->getCustomerIsLoggedIn()) {
             $customerid = $this->getCustomerId();
             $MigrateDocument = $this->helperData->getMigrateDocument();
+            $IsFinanceVerified = $this->helperData->getIsFinanceVerified();
             if ($MigrateDocument == 1) {
                 return true;
-            } elseif ($this->getDocumentCollection($customerid)) {
+            } elseif ($this->getDocumentCollection($customerid) && $IsFinanceVerified == 1) {
                 return true;
             } else {
                 return false;

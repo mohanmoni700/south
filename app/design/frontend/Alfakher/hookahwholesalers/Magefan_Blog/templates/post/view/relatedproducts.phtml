@@ -39,6 +39,7 @@ if ($exist = $block->getItems()->getSize()) {
     $docdata = $_helperB2b->getDocMessageData();
     $is_document_upload = $_helperB2b->getDocuments();
     $migrateDocument = $_helperB2b->getMigrateDocument();
+    $IsFinanceVerified=$_helperB2b->getIsFinanceVerified();
 ?>
 <?php if ($exist):?>
 
@@ -95,7 +96,7 @@ if ($exist = $block->getItems()->getSize()) {
                             <?= $block->escapeHtml($_item->getName()) ?></a>
                         </strong>
 
-                        <?php if (($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1)): ?>
+                        <?php if (($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1 && $IsFinanceVerified == 1)): ?>
                             <?= /*@noEscape*/ $block->getProductPrice($_item); ?>
                         <?php endif; ?>
                             <?php if ($templateType): ?>
@@ -107,7 +108,7 @@ if ($exist = $block->getItems()->getSize()) {
                                     <?php if ($showCart): ?>
                                         <div class="actions-primary">
                                             <?php if ($_item->isSaleable()): ?>
-                                                <?php if (($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1)): ?>               
+                                                <?php if (($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1 && $IsFinanceVerified == 1)): ?>               
                                                         <?php else: ?>
                                                          <!-- start view details btn -->
                                                         <div class="actions-primary">

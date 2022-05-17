@@ -18,6 +18,8 @@ use Magento\Framework\App\ActionInterface;
  $doc_expired=$helper->getExpiryMsg();
  $login = $helper->isCustomerLoggedIn();
  $migrateDocument=$helper->getMigrateDocument();
+ $IsFinanceVerified=$helper->getIsFinanceVerified();
+
  $showCart = true;
 ?>
 
@@ -229,10 +231,10 @@ $_item = null;
                                     <?php if ($migrateDocument == 1): ?>
                                         <?= /* @noEscape */ $block->getProductPrice($_item) ?>
                                     <?php else: ?>
-                                        <?php if ($login && $doc_status == 2 && $doc_uploaded == 1) { ?>
+                                        <?php if ($login && $doc_status == 2 && $doc_uploaded == 1 && $IsFinanceVerified == 1) { ?>
                                             <?= /* @noEscape */ $block->getProductPrice($_item) ?>
                                         <?php } ?>
-                                        <?php if ($login && ($doc_status != 2 || $doc_uploaded != 1)) { ?>
+                                        <?php if ($login && ($doc_status != 2 || $doc_uploaded != 1 && $IsFinanceVerified == 0)) { ?>
                                             <div class="actions-primary">
                                                 <div class="logged-in-action">
                                                     <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"><?= $block->escapeHtml(__('View Details')) ?></a>
