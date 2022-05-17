@@ -54,6 +54,106 @@ endif; ?>
             <?php if($order->getShippingMethod() == "customercourieraccount_customercourieraccount"): ?>
             	<p><strong>Courier Name: </strong><?= $order->getCustomerCourierName() ?></p>
                 <p><strong>Account Number: </strong><?= $order->getCustomerCourierAccount() ?></p>
+                
+                <?php if(!$order->getInvoiceCollection()->count()): ?>
+                    <button type="button" id="update-courier-details">Update Details</button>
+                    <input
+                        type="hidden"
+                        name="customer_courier_order"
+                        id="customer_courier_order"
+                        value="<?= /* @noEscape */ $order->getId() ?>">
+                    
+                    <table id="update-courier-details-tbl" style="display: none;">
+                        <tbody>
+                            <tr>
+                                <td colspan="4">
+                                    <div class="courier-section">
+                                        <div class="left-section">
+                                            <label>Courier Name*</label>
+                                            <input type="text" name="customer_courier_name" id="customer_courier_name" required="true" data-validate="{required:true}" class="input-text admin__control-text required-entry" />
+                                            <label style="display: none;" class="mage-error" id="customer_courier_name-error">This is a required field.</label>
+                                        </div>
+                                        <div class="right-section">
+                                            <label>Account Number*</label>
+                                            <input type="text" name="customer_courier_account" id="customer_courier_account" required="true" data-validate="{required:true}" class="input-text admin__control-text required-entry" />
+                                            <label style="display: none;" class="mage-error" id="customer_courier_account-error">This is a required field.</label>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <div class="courier-section">
+                                        <div class="left-section">
+                                            <button type="button" id="cancel-courier-details">Cancel</button>
+                                        </div>
+                                        <div class="right-section">
+                                            <button type="button" class="primary" id="submit-courier-details">Submit</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                <?php endif; ?>
+
+                <script type="text/javascript">
+                    require(['jquery'], function ($) {
+                        $(document).on('click','#update-courier-details', function () {
+                            $("#update-courier-details-tbl").show();
+                            $(this).hide();
+                        });
+
+                        $(document).on('click','#cancel-courier-details', function () {
+                            $("#customer_courier_name").val("");
+                            $("#customer_courier_account").val("");
+                            $("#update-courier-details-tbl").hide();
+                            $("#update-courier-details").show();
+                        });
+
+                        $(document).on('click', '#submit-courier-details', function () {
+                            var orderId = $("#customer_courier_order").val();
+                            var courierName = $("#customer_courier_name").val();
+                            var courierAccount = $("#customer_courier_account").val();
+                            var error = false;
+                            
+                            if (courierName == '') {
+                                $("#customer_courier_name-error").show();
+                                error = true;
+                            }else{
+                                $("#customer_courier_name-error").hide();
+                            }
+
+                            if (courierAccount == '') {
+                                $("#customer_courier_account-error").show();
+                                error = true;
+                            }else{
+                                $("#customer_courier_account-error").hide();
+                            }
+
+                            
+                            if (error == false) {
+                                $.ajax({
+                                    url: "<?= /* @noEscape */ $block->getUrl('customercourieraccount/Order/updatedetail/') ?>",
+                                    showLoader: true,
+                                    type: 'POST',
+                                    data: {
+                                        order_id : orderId, 
+                                        courierName : courierName,
+                                        courierAccount : courierAccount
+                                    },
+                                    success: function(response) {
+                                        location.reload(true);
+                                    }
+                                });
+                            }
+                            
+                        });
+                    });
+                </script>
+
             <?php endif; ?>
 
 
