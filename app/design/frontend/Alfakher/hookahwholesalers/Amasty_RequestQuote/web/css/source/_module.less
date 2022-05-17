@@ -61,13 +61,6 @@
 	}
 
 	.amasty_quote-quote-success{
-        .page-title-wrapper{
-            margin-top: 100px;
-            text-align: center;
-            .page-title{
-                font-weight: 600;
-            }
-        }
         .checkout-success{
             text-align: center;
             .actions-toolbar{
@@ -119,26 +112,39 @@
     			}
     		}
     	}
+    	.cart-empty{
+            text-align: center;
+            background: url('@{baseDir}images/shopping-bag.svg') no-repeat center 0;
+            background-size: 140px auto;
+            padding-top: 150px;
+            color: #000;
+        }
     }
 
     .minicart-wrapper{
+    	&.amquote-cart-wrapper {
+		    text-align: center;
+		    .action.close:before {
+			    font-size: 25px;
+			    margin-bottom: 20px;
+			}
+		}
     	.amquote-showcart{
     		&:before{
     			content: "";
 			    display: inline-block;
 			    -webkit-font-smoothing: antialiased;
-			    height: 30px;
+			    height: 20px;
 			    line-height: 28px;
 			    speak: none;
 			    text-align: center;
 			    vertical-align: top;
-			    width: 23px;
+			    width: 20px;
 			    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNSAyNSI+PHBhdGggZmlsbD0iIzc1NzU3NSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMjQgMjFoLTFsLS4wMTItMTEuNTEyQS40ODguNDg4IDAgMCAwIDIyLjUgOUgyMFYxLjVhLjQ4OC40ODggMCAwIDAtLjQ4OC0uNDg4SDkuNDg4QS40ODguNDg4IDAgMCAwIDkgMS41VjIwaC0uMzM3QTMuNTE1IDMuNTE1IDAgMCAwIDcgMTguMzM3VjEuMzU5QzcgLjU1MSA2LjUgMCA1LjY2NCAwSDFTMCAwIDAgMXMxIDEgMSAxaDR2MTYuMDM1QTMuNSAzLjUgMCAxIDAgOC42NjMgMjNIMjRzMSAwIDEtMWMwLTEuMDAxLTEtMS0xLTF6bS0xMy4wMDEgMGwtLjAwMS0xMEgxNGwuMDAxIDQuMjM2YS40ODguNDg4IDAgMCAwIC43ODEuMzlsMS4xMzctMS4yNDUgMS4zMDEgMS4yNDZhLjQ4OC40ODggMCAwIDAgLjc4LS4zOTF2LTQuMjM1TDIxIDExdjkuOTk5TDEwLjk5OSAyMXptMS45OS0xNS4zNThhLjQ4OC40ODggMCAwIDAgLjc1OC40MDZsLjcwNi0uNzk3Ljc4OC43OTZBLjQ4Ny40ODcgMCAwIDAgMTYgNS42NFYzaDJ2NmgtN1YzaDEuOTg4djIuNjQyeiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PC9zdmc+) center center no-repeat;
 			    margin: 0px;
 			    overflow: hidden;
 			    transition: opacity 0.3s ease 0s;
     		}
-    		.text,
     		.counter-label{
     			clip: rect(0px, 0px, 0px, 0px);
 			    height: 1px;
@@ -152,12 +158,21 @@
 			    overflow: hidden;
 			    padding: 0px;
     		}
+    		.text {
+			    width: 100%;
+			    font-size: 12px;
+			    color: #000000;
+			    font-weight: 600;
+			    text-decoration: none;
+			    display: block;
+			    padding-top: 3px;
+			}
     		.counter.qty{
     			height: 18px;
 			    padding: 1px 5px;
 			    min-width: 24px;
 			    top: -4px;
-			    left: 13px;
+			    left: 50%;
 			    position: absolute;
 			    font-size: 11px;
 			    background-color: #961e70;
@@ -177,6 +192,27 @@
 
     	}
     }
+    .amasty_quote-account-view {
+    	.order-details-items.ordered {
+		    border-top: 1px solid #cdcaca;
+		}
+	}
+	.amasty_quote-account-index {
+		.page-title {
+		    padding-bottom: 10px;
+		    border-bottom: 1px solid #cdcaca;
+		    margin-bottom: 30px;
+		    font-weight: 700;
+		    font-size: 1.8rem;
+		    line-height: 28px;
+		    color: #333333;
+		}
+	}
+	.table-wrapper.quotes-history .table-quote-items {
+		.action.quote {
+		    padding-left: 10px;
+		}
+	}
 }
 
 
@@ -185,11 +221,6 @@
 //  _____________________________________________
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
-    .amasty_quote-quote-success{
-        .page-title-wrapper{
-            margin-top: 40px;
-        }
-    }
     .minicart-wrapper{
     	.amquote-showcart{
     		&:before{
@@ -198,6 +229,22 @@
     		}
     	}
     }
+    .amasty_quote-cart-index{
+    	.cart-empty {
+            background-size: 100px auto;
+            padding-top: 120px;
+        }
+    }
+    .amasty_quote-account-index {
+		.page-title {
+			text-align: center;
+		}
+	}
+    .table-wrapper.quotes-history .table-quote-items{
+    	tbody tr {
+            border-bottom: 1px solid #cdcaca;
+    	}
+	}
 }
 
 @media screen and (max-width: 479px){
