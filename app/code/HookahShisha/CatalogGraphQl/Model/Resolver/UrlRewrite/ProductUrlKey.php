@@ -10,6 +10,11 @@ use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 
+/**
+ * Get Parent Url key for Related products.
+ *
+ * Class ProductUrlKey
+ */
 class ProductUrlKey implements ResolverInterface
 {
     /**
