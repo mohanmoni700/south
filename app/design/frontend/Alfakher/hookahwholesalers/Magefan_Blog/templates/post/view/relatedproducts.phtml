@@ -95,8 +95,12 @@ if ($exist = $block->getItems()->getSize()) {
                                href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>">
                             <?= $block->escapeHtml($_item->getName()) ?></a>
                         </strong>
-
-                        <?php if (($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1 && $IsFinanceVerified == 1)): ?>
+                        <?php
+                        /* 
+                        Here we removed the condition of the Document verified( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+                        */
+                        ?>
+                        <?php if ($migrateDocument == 1 || $IsFinanceVerified == 1): ?>
                             <?= /*@noEscape*/ $block->getProductPrice($_item); ?>
                         <?php endif; ?>
                             <?php if ($templateType): ?>
@@ -108,7 +112,12 @@ if ($exist = $block->getItems()->getSize()) {
                                     <?php if ($showCart): ?>
                                         <div class="actions-primary">
                                             <?php if ($_item->isSaleable()): ?>
-                                                <?php if (($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1 && $IsFinanceVerified == 1)): ?>               
+                                                <?php
+                                                /* 
+                                                Here we removed the condition of the Document verified( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+                                                */
+                                                ?>
+                                                <?php if ($migrateDocument == 1 || $IsFinanceVerified == 1): ?>               
                                                         <?php else: ?>
                                                          <!-- start view details btn -->
                                                         <div class="actions-primary">

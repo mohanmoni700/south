@@ -280,9 +280,10 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
             $customerid = $this->getCustomerId();
             $MigrateDocument = $this->helperData->getMigrateDocument();
             $IsFinanceVerified = $this->helperData->getIsFinanceVerified();
-            if ($MigrateDocument == 1) {
-                return true;
-            } elseif ($this->getDocumentCollection($customerid) && $IsFinanceVerified == 1) {
+            /*
+                Here we removed the condition of the Document verified( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+            */
+            if ($MigrateDocument == 1 || $IsFinanceVerified == 1) {
                 return true;
             } else {
                 return false;

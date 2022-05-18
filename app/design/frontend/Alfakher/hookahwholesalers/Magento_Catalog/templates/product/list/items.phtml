@@ -228,22 +228,20 @@ $_item = null;
                                             <?= $block->escapeHtml($_item->getName()) ?></a>
                                     </strong>
                                     <!-- if documents approved then only show price start[BS] -->
-                                    <?php if ($migrateDocument == 1): ?>
+                                    <?php
+                                    /* 
+                                    Here we removed the condition of the Document verified( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+                                    */
+                                    ?>
+                                    <?php if ($migrateDocument == 1 || $IsFinanceVerified == 1): ?>
                                         <?= /* @noEscape */ $block->getProductPrice($_item) ?>
-                                    <?php else: ?>
-                                        <?php if ($login && $doc_status == 2 && $doc_uploaded == 1 && $IsFinanceVerified == 1) { ?>
-                                            <?= /* @noEscape */ $block->getProductPrice($_item) ?>
-                                        <?php } ?>
-                                        <?php if ($login && ($doc_status != 2 || $doc_uploaded != 1 && $IsFinanceVerified == 0)) { ?>
+                                    <?php elseif($login): ?>
                                             <div class="actions-primary">
                                                 <div class="logged-in-action">
                                                     <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"><?= $block->escapeHtml(__('View Details')) ?></a>
                                                 </div>
                                             </div>
-                                        <?php } ?>
-                                    <?php endif;?>
-                                    <?php if (!$login) { ?>
-
+                                    <?php else: ?>
                                         <div class="actions-primary">
                                             <div class="logged-in-action">
                                                 <a
@@ -251,7 +249,7 @@ $_item = null;
                                                 <?= $block->escapeHtml(__('Signin / Register')) ?></a>
                                             </div>
                                         </div> 
-                                    <?php } ?>
+                                    <?php endif; ?>
                                     <!-- if documents approved then only show price end[BS] -->
                                     <?php if ($templateType):?>
                                         <?= $block->getReviewsSummaryHtml($_item, $templateType) ?>

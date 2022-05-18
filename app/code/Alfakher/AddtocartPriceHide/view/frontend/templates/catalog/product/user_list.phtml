@@ -83,21 +83,20 @@ $_helper = $block->getData('outputHelper');
                                 <?=/* @noEscape */ $_helper->productAttribute($_product, $_product->getName(), 'name')?>
                             </a>
                         </strong>
-                       
-                        <?php if ($migrateDocument == 1): ?>
+                        <?php
+                        /* 
+                        Here we removed the condition of the Document verified( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+                        */
+                        ?>
+                        <?php if ($migrateDocument == 1 || $IsFinanceVerified == 1): ?>
                             <?= $block->getReviewsSummaryHtml($_product, $templateType) ?>
                             <?= /* @noEscape */ $block->getProductPrice($_product) ?>
                             <?= $block->getProductDetailsHtml($_product) ?>
-                        <?php else: ?>
-                            <?php if ($docdata == 2 && $is_document_upload == 1 && $IsFinanceVerified == 1): ?>
-                                <?= $block->getReviewsSummaryHtml($_product, $templateType) ?>
-                                <?= /* @noEscape */ $block->getProductPrice($_product) ?>
-                                <?= $block->getProductDetailsHtml($_product) ?>
-                            <?php else: ?>
-                                <div class="price-disp" style="display:none;">
-                                <?= /* @noEscape */ $block->getProductPrice($_product) ?>
-                                </div>
-                            <?php endif; ?>
+                        <?php else: ?> 
+                            <div class="price-disp" style="display:none;">          
+                                <?= /* @noEscape */ $block->getProductPrice($_product) ?> 
+                            </div>
+                            
                          <?php endif; ?>
                         <div class="product-item-inner">
                             <div class="product actions product-item-actions">
@@ -123,10 +122,13 @@ $_helper = $block->getData('outputHelper');
                                                    /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED]
                                                     ?>">
                                             <?= $block->getBlockHtml('formkey') ?>
-                                        <?php if ($migrateDocument ==1): ?>
+                                        <?php
+                                            /* 
+                                            Here we removed the condition of the Document verified( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+                                            */
+                                            ?>
+                                        <?php if ($migrateDocument == 1 || $IsFinanceVerified == 1): ?>
                                         <?php else: ?>
-                                            <?php if ($docdata == 2 && $is_document_upload == 1 && $IsFinanceVerified == 1): ?>
-                                            <?php else: ?>
                                                 <!-- start view details btn -->
                                                
                                                     <div class="actions-primary">
@@ -135,7 +137,6 @@ $_helper = $block->getData('outputHelper');
                                                             </div>
                                                     </div>
                                                 <!-- end -->
-                                            <?php endif; ?>
                                         <?php endif; ?>
                                         </form>
                                     <?php else:?>

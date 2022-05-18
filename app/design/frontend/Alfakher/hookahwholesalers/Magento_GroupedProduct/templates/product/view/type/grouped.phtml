@@ -40,11 +40,16 @@
                             <strong class="product-item-name"><?= $block->escapeHtml($_item->getName()) ?></strong>
                         <?php endif; ?>
                         </td>
-                        <!-- show price start -->
+                        <?php
+                        /* 
+                        Here we removed the condition of the Document verified( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+                        */
+                        ?>
                         <?php
                         $messageData=$_helperB2b->getDocMessageData();
                         $expiryMsg=$_helperB2b->getExpiryMsg();
-                        if (($migrateDocument == 1) || ($messageData == 2 && $is_document_upload == 1 && $IsFinanceVerified == 1)): ?>
+
+                        if ($migrateDocument == 1 || $IsFinanceVerified == 1): ?>
                             <td>
                                <?php if ($block->getCanShowProductPrice($_product)): ?>
                                     <?php if ($block->getCanShowProductPrice($_item)): ?>

@@ -28,7 +28,12 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
         <thead>
             <tr>
                 <th class="col name"><?= $block->escapeHtml(__('Item')) ?></th>
-                <?php if ( ($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1 && $IsFinanceVerified == 1)): ?>
+                <?php
+                /* 
+                Here we removed the condition of the Document verified( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+                */
+                ?>
+                <?php if ($migrateDocument == 1 || $IsFinanceVerified == 1): ?>
                 <th class="col sku"><?= $block->escapeHtml(__('Actual Price')) ?></th>
                 <th class="col price"><?= $block->escapeHtml(__('Special Price')) ?></th>
                 <th class="col qty"><?= $block->escapeHtml(__('Qty')) ?></th>
@@ -65,7 +70,12 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                                 </div>
                             </div>
                         </td>
-                        <?php if ( ($migrateDocument == 1) || ($docdata == 2 && $is_document_upload == 1 && $IsFinanceVerified == 1)): ?>
+                        <?php
+                        /* 
+                        Here we removed the condition of the Document verified( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+                        */
+                        ?>
+                        <?php if ($migrateDocument == 1 || $IsFinanceVerified == 1): ?>
                             <?php
                             $regularPrice = $_product->getPriceInfo()->getPrice('regular_price')->getAmount()->getValue();
                             $specialprice = $_product->getPriceInfo()->getPrice('final_price')->getAmount()->getValue();
