@@ -4,6 +4,8 @@
 	"var orderid":"Order Id",
 	"var name":"Customer Name",
 	"var paymentarray":"Payment record"
+	"var grandtotal":"Grand total"
+	"var paymentarray":"Total paid"
 } @-->
 
 {{template config_path="design/email/header_template"}}
@@ -11,5 +13,8 @@
 <p>Hello {{var name}},</p>
 <p>Please find the payment updates for your order # {{var orderid}}</p>
 {{block class='Magento\\Framework\\View\\Element\\Template' area='frontend' template='Alfakher_OfflinePaymentRecords::paymentUpdate.phtml' paymentarray=$paymentarray}}
+
+<p><strong>Grand Total: </strong>{{var grandtotal}}</p>
+<p><strong>Total Paid: </strong>{{var totalpaid}}</p>
 
 {{template config_path="design/email/footer_template"}}

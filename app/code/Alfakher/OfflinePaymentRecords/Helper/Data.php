@@ -16,6 +16,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
 		\Psr\Log\LoggerInterface $loggerInterface,
 		\Magento\Store\Model\StoreManagerInterface $storeManager,
 		\Alfakher\OfflinePaymentRecords\Model\OfflinePaymentRecordFactory $paymentRecords,
+		\Alfakher\OfflinePaymentRecords\ViewModel\Helper $viewHelper,
 		array $data = []
 	) {
 		$this->_inlineTranslation = $inlineTranslation;
@@ -24,6 +25,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
 		$this->_logLoggerInterface = $loggerInterface;
 		$this->storeManager = $storeManager;
 		$this->_paymentRecords = $paymentRecords;
+		$this->_viewHelper = $viewHelper;
 	}
 
 	public function sendMail($order) {
@@ -32,8 +34,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
 			$model = $this->_paymentRecords->create()->getCollection()->addFieldToFilter("order_id", ['eq' => $order->getId()]);
 
 			$this->_inlineTranslation->suspend();
-			$fromEmail = $this->_scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE);
-			$fromName = $this->_scopeConfig->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE);
+			$fromEmail = $this->_scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE, $order->getStoreId());
+			$fromName = $this->_scopeConfig->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE, $order->getStoreId());
 
 			$sender = [
 				'name' => $fromName,
@@ -52,6 +54,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper {
 					"orderid" => $order->getIncrementId(),
 					'name' => $order->getCustomerName(),
 					'paymentarray' => $model->getData(),
+					'grandtotal' => $order->getGrandtotal(),
+					'totalpaid' => $this->_viewHelper->getTotalPaidAmount($order->getId()),
 				])
 				->setFromByScope($sender)
 				->addTo([$order->getCustomerEmail()])

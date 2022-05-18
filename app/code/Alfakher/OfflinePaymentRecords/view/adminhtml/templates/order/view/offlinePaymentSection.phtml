@@ -104,7 +104,10 @@ if (!$order->getInvoiceCollection()->count()) {
 	    </div>
 		<?php endif; ?>
 
-		<?php if($recordCollection->count()): ?>
+		<?php /*
+		temp removed the condition 
+		$recordCollection->count()
+		*/ ?>
 	    <div id="order-items_grid">
 	        <div class="admin__table-wrapper">
 	            <table class="data-table admin__table-primary order-tables">
@@ -146,7 +149,6 @@ if (!$order->getInvoiceCollection()->count()) {
 	            </table>
 	        </div>
 	    </div>
-		<?php endif; ?>
     </div>
 </section>
 <?php endif; ?>
@@ -182,6 +184,11 @@ if (!$order->getInvoiceCollection()->count()) {
 	                $("#offline_amount_paid-error").text("please enter smaller or equal amount of total due amount");
 	                $("#offline_amount_paid-error").css("display",'block');
 	                error = true;
+				} else if (parseFloat(amountPaid) <= 0) {
+					$('input[name=offline_amount_paid]').addClass('mage-error');
+					$("#offline_amount_paid-error").text("please enter greater then zero amount");
+					$("#offline_amount_paid-error").css("display",'block');
+					error = true;
 	            } else {
 	            	$('input[name=offline_amount_paid]').removeClass('mage-error');
 	            	$("#offline_amount_paid-error").text("This is a required field.");

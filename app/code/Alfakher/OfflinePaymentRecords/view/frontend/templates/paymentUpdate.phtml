@@ -2,6 +2,7 @@
 $paymentarray=$block->getPaymentarray();
 ?>
 
+<?php if(!empty($paymentarray)): ?>
 <table border="1">
 	<thead>
 		<tr>
@@ -11,16 +12,15 @@ $paymentarray=$block->getPaymentarray();
 			<th>Date</th>
 		</tr>
 	</thead>
-	<?php if(!empty($paymentarray)): ?>
-		<tbody>
-		<?php foreach ($paymentarray as $key => $value): ?>
-			<tr>
-				<td><?= $value["payment_type"] ?></td>
-				<td><?= $value["transaction_number"] ?></td>
-				<td><?= $value["amount_paid"] ?></td>
-				<td><?= $value["transaction_date"] ?></td>
-			</tr>
-		<?php endforeach; ?>
-		</tbody>
-	<?php endif; ?>
+	<tbody>
+	<?php foreach ($paymentarray as $key => $value): ?>
+		<tr>
+			<td><?= $value["payment_type"] ?></td>
+			<td><?= $value["transaction_number"] ?></td>
+			<td><?= $value["amount_paid"] ?></td>
+			<td><?= $value["transaction_date"] ?></td>
+		</tr>
+	<?php endforeach; ?>
+	</tbody>
 </table>
+<?php endif; ?>
