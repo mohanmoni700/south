@@ -47,15 +47,15 @@ endif; ?>
 
             <?= /** @noEscape */ $_excl ?>
             <?php if ($taxHelper->displayShippingBothPrices() && $_incl != $_excl): ?>
-                (<?= $block->escapeHtml(__('Incl. Tax')) ?> <?= /** @noEscape */ $_incl ?>)
+                (<?= /* @noEscape */ $block->escapeHtml(__('Incl. Tax')) ?> <?= /** @noEscape */ $_incl ?>)
             <?php endif; ?>
 
 
-            <?php if($order->getShippingMethod() == "customercourieraccount_customercourieraccount"): ?>
-            	<p><strong>Courier Name: </strong><?= $order->getCustomerCourierName() ?></p>
-                <p><strong>Account Number: </strong><?= $order->getCustomerCourierAccount() ?></p>
+            <?php if ($order->getShippingMethod() == "customercourieraccount_customercourieraccount"): ?>
+                <p><strong>Courier Name: </strong><?= /* @noEscape */ $order->getCustomerCourierName() ?></p>
+                <p><strong>Account Number: </strong><?= /* @noEscape */ $order->getCustomerCourierAccount() ?></p>
                 
-                <?php if(!$order->getInvoiceCollection()->count()): ?>
+                <?php if (!$order->getInvoiceCollection()->count()): ?>
                     <button type="button" id="update-courier-details">Update Details</button>
                     <input
                         type="hidden"
@@ -99,7 +99,7 @@ endif; ?>
                     </table>
                 <?php endif; ?>
 
-                <script type="text/javascript">
+                <script>
                     require(['jquery'], function ($) {
                         $(document).on('click','#update-courier-details', function () {
                             $("#update-courier-details-tbl").show();
