@@ -6,42 +6,44 @@ namespace Alfakher\ExciseReport\Controller\Adminhtml\Report;
  * @OrderExciseReport
  */
 
-class Save extends \Magento\Backend\App\Action {
-	/**
-	 * Construct
-	 *
-	 * @param \Magento\Backend\App\Action\Context $context
-	 * @param \Magento\Framework\App\ResourceConnection $resourceConnection
-	 * @param \Magento\Framework\App\Response\Http\FileFactory $fileFactory
-	 * @param \Magento\Framework\File\Csv $csvProcessor
-	 * @param \Magento\Framework\App\Filesystem\DirectoryList $directoryList
-	 */
-	public function __construct(
-		\Magento\Backend\App\Action\Context $context,
-		\Magento\Framework\App\ResourceConnection $resourceConnection,
-		\Magento\Framework\App\Response\Http\FileFactory $fileFactory,
-		\Magento\Framework\File\Csv $csvProcessor,
-		\Magento\Framework\App\Filesystem\DirectoryList $directoryList
-	) {
-		parent::__construct($context);
-		$this->resourceConnection = $resourceConnection;
-		$this->fileFactory = $fileFactory;
-		$this->csvProcessor = $csvProcessor;
-		$this->directoryList = $directoryList;
-	}
+class Save extends \Magento\Backend\App\Action
+{
+    /**
+     * Construct
+     *
+     * @param \Magento\Backend\App\Action\Context $context
+     * @param \Magento\Framework\App\ResourceConnection $resourceConnection
+     * @param \Magento\Framework\App\Response\Http\FileFactory $fileFactory
+     * @param \Magento\Framework\File\Csv $csvProcessor
+     * @param \Magento\Framework\App\Filesystem\DirectoryList $directoryList
+     */
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\App\ResourceConnection $resourceConnection,
+        \Magento\Framework\App\Response\Http\FileFactory $fileFactory,
+        \Magento\Framework\File\Csv $csvProcessor,
+        \Magento\Framework\App\Filesystem\DirectoryList $directoryList
+    ) {
+        parent::__construct($context);
+        $this->resourceConnection = $resourceConnection;
+        $this->fileFactory = $fileFactory;
+        $this->csvProcessor = $csvProcessor;
+        $this->directoryList = $directoryList;
+    }
 
-	/**
-	 * Execute
-	 */
-	public function execute() {
+    /**
+     * Execute
+     */
+    public function execute()
+    {
 
-		$post = $this->getRequest()->getPostValue();
-		$startdate = $post['startdate'] . " 00:00:00";
-		$enddate = $post['enddate'] . " 23:59:59";
-		$websiteid = $post['website'];
-		$connection = $this->resourceConnection->getConnection();
+        $post = $this->getRequest()->getPostValue();
+        $startdate = $post['startdate'] . " 00:00:00";
+        $enddate = $post['enddate'] . " 23:59:59";
+        $websiteid = $post['website'];
+        $connection = $this->resourceConnection->getConnection();
 
-		$query = "SELECT
+        $query = "SELECT
         so.increment_id AS OrderId,
         so.created_at AS OrderDate,
         si.increment_id AS InvoiceId,
@@ -117,61 +119,61 @@ class Save extends \Magento\Backend\App\Action {
     ORDER BY
         NULL";
 
-		$values = $connection->fetchAll($query);
+        $values = $connection->fetchAll($query);
 
-		$header = [];
-		$header[] = [
-			'Order number' => 'Order number',
-			'Order date' => 'Order date',
-			'Invoice number' => 'Invoice number',
-			'Invoice date' => 'Invoice date',
-			'Company Name' => 'Company Name',
-			'Customer ID' => 'Customer ID',
-			'Customer FirstName' => 'Customer FirstName',
-			'Customer LastName' => 'Customer LastName',
-			'Shipping address Street' => 'Shipping address Street',
-			'Shipping address City' => 'Shipping address City',
-			'Shipping address State' => 'Shipping address State',
-			'Shipping address Zipcode' => 'Shipping address Zipcode',
-			'Shipping address Country' => 'Shipping address Country',
-			'Sub Total' => 'Sub Total',
-			'Shipping charge' => 'Shipping charge',
-			'Shipping tax' => 'Shipping tax',
-			'Tobacco tax charge' => 'Tobacco tax charge',
-			'Sales tax charge' => 'Sales tax charge',
-			'Discounts' => 'Discounts',
-			'Gross margin' => 'Gross margin',
-			'CCTransactionId' => 'CCTransactionId',
-			'LastTransactionId' => 'LastTransactionId',
-			'Grand Total' => 'Grand Total',
-			'Purchase Order' => 'Purchase Order',
+        $header = [];
+        $header[] = [
+            'Order number' => 'Order number',
+            'Order date' => 'Order date',
+            'Invoice number' => 'Invoice number',
+            'Invoice date' => 'Invoice date',
+            'Company Name' => 'Company Name',
+            'Customer ID' => 'Customer ID',
+            'Customer FirstName' => 'Customer FirstName',
+            'Customer LastName' => 'Customer LastName',
+            'Shipping address Street' => 'Shipping address Street',
+            'Shipping address City' => 'Shipping address City',
+            'Shipping address State' => 'Shipping address State',
+            'Shipping address Zipcode' => 'Shipping address Zipcode',
+            'Shipping address Country' => 'Shipping address Country',
+            'Sub Total' => 'Sub Total',
+            'Shipping charge' => 'Shipping charge',
+            'Shipping tax' => 'Shipping tax',
+            'Tobacco tax charge' => 'Tobacco tax charge',
+            'Sales tax charge' => 'Sales tax charge',
+            'Discounts' => 'Discounts',
+            'Gross margin' => 'Gross margin',
+            'CCTransactionId' => 'CCTransactionId',
+            'LastTransactionId' => 'LastTransactionId',
+            'Grand Total' => 'Grand Total',
+            'Purchase Order' => 'Purchase Order',
 
-		];
+        ];
 
-		$report = [];
-		$report = array_merge($header, $values);
+        $report = [];
+        $report = array_merge($header, $values);
 
-		$fileName = 'order_excise_report.csv';
-		$filePath = $this->directoryList->getPath(\Magento\Framework\App\Filesystem\DirectoryList::VAR_DIR)
-			. "/" . $fileName;
+        $fileName = 'order_excise_report.csv';
+        $filePath = $this->directoryList->getPath(\Magento\Framework\App\Filesystem\DirectoryList::VAR_DIR)
+            . "/" . $fileName;
 
-		$this->csvProcessor
-			->setDelimiter(';')
-			->setEnclosure('"')
-			->saveData(
-				$filePath,
-				$report
-			);
+        $this->csvProcessor
+            ->setDelimiter(';')
+            ->setEnclosure('"')
+            ->saveData(
+                $filePath,
+                $report
+            );
 
-		return $this->fileFactory->create(
-			$fileName,
-			[
-				'type' => "filename",
-				'value' => $fileName,
-				'rm' => true,
-			],
-			\Magento\Framework\App\Filesystem\DirectoryList::VAR_DIR,
-			'application/octet-stream'
-		);
-	}
+        return $this->fileFactory->create(
+            $fileName,
+            [
+                'type' => "filename",
+                'value' => $fileName,
+                'rm' => true,
+            ],
+            \Magento\Framework\App\Filesystem\DirectoryList::VAR_DIR,
+            'application/octet-stream'
+        );
+    }
 }

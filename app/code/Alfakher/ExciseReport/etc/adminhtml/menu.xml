@@ -8,5 +8,12 @@
             parent="Magento_Reports::report_salesroot"
             action="excisereport/report/index"
             resource="Magento_Reports::salesroot" />
+        <add id="Alfakher_ExciseReport::report_excisetax_item"
+            title="Excise Item Report"
+            module="Alfakher_ExciseReport"
+            sortOrder="100"
+            parent="Magento_Reports::report_salesroot"
+            action="excisereport/report/item"
+            resource="Magento_Reports::salesroot" />
     </menu>
 </config>
