@@ -1,0 +1,23 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="order_items">
+            <arguments>
+                <argument name="columns" xsi:type="array">
+                    <item name="grossmargin" xsi:type="string" translate="true">Gross Margin</item>
+                    <item name="weight" xsi:type="string" translate="true">Weight</item>
+                </argument>
+            </arguments>
+            <referenceBlock name="default_order_items_renderer">
+                <arguments>
+                    <argument name="columns" xsi:type="array">
+                        <item name="grossmargin" xsi:type="string" translate="true">col-grossmargin last</item>
+                        <item name="weight" xsi:type="string" translate="true">col-weight</item>
+                    </argument>
+                </arguments>
+            </referenceBlock>            
+            <block class="Magento\Sales\Block\Adminhtml\Items\Column\DefaultColumn"
+               name="column_weight"
+               template="HookahShisha_Customization::weight.phtml" group="column" />
+           </referenceBlock>
+       </body>
+</page>
