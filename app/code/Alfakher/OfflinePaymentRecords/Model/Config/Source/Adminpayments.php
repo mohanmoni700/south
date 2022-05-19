@@ -2,23 +2,37 @@
 
 namespace Alfakher\OfflinePaymentRecords\Model\Config\Source;
 
-/**
- *
- */
 use \Magento\Payment\Model\Config;
 
-class Adminpayments extends \Magento\Framework\DataObject implements \Magento\Framework\Data\OptionSourceInterface {
+class Adminpayments extends \Magento\Framework\DataObject implements \Magento\Framework\Data\OptionSourceInterface
+{
 
-	protected $_appConfigScopeConfigInterface;
-	protected $_paymentModelConfig;
+    /**
+     * @var $_appConfigScopeConfigInterface
+     */
+    protected $_appConfigScopeConfigInterface;
 
-	public function __construct(
-		\Magento\Payment\Model\Config\Source\Allmethods $allPaymentMethod
-	) {
-		$this->allPaymentMethod = $allPaymentMethod;
-	}
+    /**
+     * @var $_paymentModelConfig
+     */
+    protected $_paymentModelConfig;
 
-	public function toOptionArray() {
-		return $this->allPaymentMethod->toOptionArray();
-	}
+    /**
+     * Construct
+     *
+     * @param \Magento\Payment\Model\Config\Source\Allmethods $allPaymentMethod
+     */
+    public function __construct(
+        \Magento\Payment\Model\Config\Source\Allmethods $allPaymentMethod
+    ) {
+        $this->allPaymentMethod = $allPaymentMethod;
+    }
+
+    /**
+     * To option array
+     */
+    public function toOptionArray()
+    {
+        return $this->allPaymentMethod->toOptionArray();
+    }
 }
