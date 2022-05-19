@@ -6,6 +6,7 @@
 namespace Alfakher\AddtocartPriceHide\Block\Product\ProductList;
 
 use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory as DocumentCollectionFactory;
+use Alfakher\Productpageb2b\Helper\Data;
 use Magento\Catalog\Helper\Product\ProductList;
 use Magento\Catalog\Model\Product\ProductList\Toolbar as ToolbarModel;
 use Magento\Catalog\Model\Product\ProductList\ToolbarMemorizer;
@@ -143,6 +144,10 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
      * @var DocumentCollectionFactory
      */
     protected $documentcollection;
+    /**
+     * @var helperData
+     */
+    protected $helperData;
 
     /**
      * Extend toolbar file
@@ -156,6 +161,7 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
      * @param \Magento\Framework\Data\Helper\PostHelper $postDataHelper
      * @param \Magento\Customer\Model\Session $customerSession
      * @param \Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory $documentcollection
+     * @param Data $helperData
      * @param array $data
      * @param ToolbarMemorizer|null $toolbarMemorizer
      * @param \Magento\Framework\App\Http\Context|null $httpContext
@@ -172,6 +178,7 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
         \Magento\Framework\Data\Helper\PostHelper $postDataHelper,
         \Magento\Customer\Model\Session $customerSession,
         DocumentCollectionFactory $documentcollection,
+        Data $helperData,
         array $data = [],
         ToolbarMemorizer $toolbarMemorizer,
         \Magento\Framework\App\Http\Context $httpContext,
@@ -182,6 +189,7 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
         $this->customerSession = $customerSession;
         $this->httpContext = $httpContext;
         $this->documentcollection = $documentcollection;
+        $this->helperData = $helperData;
         return parent::__construct($context, $catalogSession, $catalogConfig, $toolbarModel, $urlEncoder, $productListHelper, $postDataHelper, $data, $toolbarMemorizer, $httpContext, $formKey); //phpcs:ignore
     }
 
@@ -270,12 +278,14 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
     {
         if ($this->getCustomerIsLoggedIn()) {
             $customerid = $this->getCustomerId();
-            if ($this->getDocumentCollection($customerid)) {
+            $MigrateDocument = $this->helperData->getMigrateDocument();
+            if ($MigrateDocument == 1) {
+                return true;
+            } elseif ($this->getDocumentCollection($customerid)) {
                 return true;
             } else {
                 return false;
             }
-
         } else {
             return false;
         }
@@ -291,9 +301,16 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
     public function getDocumentCollection($customerid)
     {
         $documentcollection = $this->documentcollection->create()
-            ->addFieldToFilter('customer_id', ['eq' => $customerid])->addFieldToFilter('status', ['eq' => 1]);
+            ->addFieldToFilter('customer_id', ['eq' => $customerid]);
         if ($documentcollection->getSize()) {
-            return true;
+            $notapprovetcollection = $this->documentcollection->create()
+                ->addFieldToFilter('customer_id', ['eq' => $customerid])
+                ->addFieldToFilter('status', ['eq' => 0]);
+            if ($notapprovetcollection->getSize()) {
+                return false;
+            } else {
+                return true;
+            }
         } else {
             return false;
         }
