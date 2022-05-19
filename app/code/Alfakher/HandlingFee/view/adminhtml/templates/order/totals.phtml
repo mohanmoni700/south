@@ -1,9 +1,4 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-
 /* @var \Magento\Sales\Block\Adminhtml\Order\Totals $block */
 ?>
 
@@ -92,12 +87,12 @@ $zeroOutEnable = $viewModel->isZeroOutEnabled($websiteId);
                         </td>
 
                         <?php /* bv_op; date : 2-5-22; displaying initial subtotal and initial shipping fee; Start */ ?>
-                        <?php if($_total->getCode() == 'subtotal' && $order->getTotalSubtotalDiscount() > 0): ?>
-                            <?php $_total->setData("value",$order->getOriginalSubtotal()); ?>
-                            <?php $_total->setData("base_value",$order->getOriginalSubtotal()); ?>
-                        <?php elseif($_total->getCode() == 'shipping' && $order->getTotalShippingFeeDiscount() > 0): ?>
-                            <?php $_total->setData("value",$order->getOriginalShippingFee()); ?>
-                            <?php $_total->setData("base_value",$order->getOriginalShippingFee()); ?>
+                        <?php if ($_total->getCode() == 'subtotal' && $order->getTotalSubtotalDiscount() > 0): ?>
+                            <?php $_total->setData("value", $order->getOriginalSubtotal()); ?>
+                            <?php $_total->setData("base_value", $order->getOriginalSubtotal()); ?>
+                        <?php elseif ($_total->getCode() == 'shipping' && $order->getTotalShippingFeeDiscount() > 0): ?>
+                            <?php $_total->setData("value", $order->getOriginalShippingFee()); ?>
+                            <?php $_total->setData("base_value", $order->getOriginalShippingFee()); ?>
                         <?php endif; ?>
                         <?php /* bv_op; date : 2-5-22; displaying initial subtotal and initial shipping fee; End */ ?>
 
@@ -239,22 +234,22 @@ $zeroOutEnable = $viewModel->isZeroOutEnabled($websiteId);
             <?php endforeach; ?>
 
             <?php /* bv_op; date : 2-5-22; displaying subtotal and shipping discount; Start */ ?>
-            <?php if($order->getTotalSubtotalDiscount() > 0): ?>
+            <?php if ($order->getTotalSubtotalDiscount() > 0): ?>
                 <tr class="col-2">
                     <td class="label">Subtotal Discount</td>
-                    <td>-<?= $order->formatPrice($order->getTotalSubtotalDiscount())  ?></td>
+                    <td>-<?= /* @noEscape */ $order->formatPrice($order->getTotalSubtotalDiscount())  ?></td>
                 </tr>
             <?php endif; ?>
-            <?php if($order->getTotalShippingFeeDiscount() > 0): ?>
+            <?php if ($order->getTotalShippingFeeDiscount() > 0): ?>
                 <tr class="col-2">
                     <td class="label">Shipping Fee Discount</td>
-                    <td>-<?= $order->formatPrice($order->getTotalShippingFeeDiscount()) ?></td>
+                    <td>-<?= /* @noEscape */ $order->formatPrice($order->getTotalShippingFeeDiscount()) ?></td>
                 </tr>
             <?php endif; ?>
             <?php /* bv_op; date : 2-5-22; displaying subtotal and shipping discount; End */ ?>
 
             <?php /* bv_op; date : 4-5-22; zero out button; Start */ ?>
-            <?php if($zeroOutEnable && $order->getGrandTotal() > 0): ?>
+            <?php if ($zeroOutEnable && $order->getGrandTotal() > 0): ?>
                 <tr class="col-2">
                     <td class="label">Zero Out Order</td>
                     <td>
@@ -270,7 +265,7 @@ $zeroOutEnable = $viewModel->isZeroOutEnabled($websiteId);
             <?php /* bv_op; date : 4-5-22; zero out button; End */ ?>
 
             <?php /* bv_op; date : 5-5-22; revert the order zero out; Start */ ?>
-            <?php if($zeroOutEnable && $order->getGrandTotal() == 0 && $order->getOriginalSubtotal() > 0 && $order->getTotalSubtotalDiscount() == 0): ?>
+            <?php if ($zeroOutEnable && $order->getGrandTotal() == 0 && $order->getOriginalSubtotal() > 0 && $order->getTotalSubtotalDiscount() == 0): ?>
                 <tr class="col-2">
                     <td class="label">Revert Zero Out Order</td>
                     <td>
@@ -296,7 +291,7 @@ $zeroOutEnable = $viewModel->isZeroOutEnabled($websiteId);
 <?php /* bv_op; date : 18-2-22; edit handling fee; Start */ ?>
 <?php if ($canShowFeeEdit && !$order->getInvoiceCollection()->count()): ?>
 
-<script type="text/javascript">
+<script>
     require(['jquery'], function ($) {
         $(document).on('click', "#edit_handling_fee_btn", function () {
             $("#edit_handling_fee_btn_tr").hide();
@@ -337,7 +332,7 @@ $zeroOutEnable = $viewModel->isZeroOutEnabled($websiteId);
 <?php /* bv_op; date : 20-4-22; edit subtotal; Start */ ?>
 <?php if ($canShowSubtotalEdit && !$order->getInvoiceCollection()->count()): ?>
 
-<script type="text/javascript">
+<script>
     require(['jquery'], function ($) {
         $(document).on('click', "#edit_subtotal_btn", function () {
             $("#edit_subtotal_btn_tr").hide();
@@ -377,7 +372,7 @@ $zeroOutEnable = $viewModel->isZeroOutEnabled($websiteId);
 <?php /* bv_op; date : 21-4-22; edit shipping; Start */ ?>
 <?php if ($canShowShippingFeeEdit && !$order->getInvoiceCollection()->count()): ?>
 
-<script type="text/javascript">
+<script>
     require(['jquery'], function ($) {
         $(document).on('click', "#edit_shipping_btn", function () {
             $("#edit_shipping_btn_tr").hide();
@@ -415,8 +410,8 @@ $zeroOutEnable = $viewModel->isZeroOutEnabled($websiteId);
 <?php /* bv_op; date : 21-4-22; edit Shipping; End */ ?>
 
 <?php /* bv_op; date : 4-5-22; zero out the order; Start */ ?>
-<?php if($zeroOutEnable): ?>
-<script type="text/javascript">
+<?php if ($zeroOutEnable): ?>
+<script>
     require(['jquery', 'Magento_Ui/js/modal/confirm'], function ($, confirmation) {
         $(document).on('click', "#zero_out_btn", function () {
             confirmation({
