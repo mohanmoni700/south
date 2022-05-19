@@ -191,7 +191,7 @@ $allowedAddressHtmlTags = ['b', 'br', 'em', 'i', 'li', 'ol', 'p', 'strong', 'sub
                         <th scope="row"><?= $block->escapeHtml(__('Email')) ?></th>
                         <td>
                             <?php /*Remove hyperlink from cusotmer email bv_vy */ ?>
-                            <?= $block->escapeHtmlAttr($order->getCustomerEmail()) ?>"
+                            <?= $block->escapeHtmlAttr($order->getCustomerEmail()) ?>
                         </td>
                     </tr>
                     <?php if ($groupName = $block->getCustomerGroupName()): ?>
