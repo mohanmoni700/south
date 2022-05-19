@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category  HookahShisha
+ * @package   HookahShisha_Catalog
+ * @author    Janis Verins <info@corra.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\CatalogGraphQl\Model\ProductLinkTypeResolverComposite">
+        <arguments>
+            <argument name="productLinksTypeNameResolvers" xsi:type="array">
+                <item name="charcol_and_shisha_product_link__type_resolver" xsi:type="object">\HookahShisha\Catalog\Model\ProductLinkTypeResolver</item>
+            </argument>
+        </arguments>
+    </type>
+</config>
