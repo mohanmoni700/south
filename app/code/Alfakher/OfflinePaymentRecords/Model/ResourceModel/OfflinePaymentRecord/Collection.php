@@ -11,8 +11,8 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
     protected function _construct()
     {
         $this->_init(
-            Alfakher\OfflinePaymentRecords\Model\OfflinePaymentRecord::class,
-            Alfakher\OfflinePaymentRecords\Model\ResourceModel\OfflinePaymentRecord::class
+            \Alfakher\OfflinePaymentRecords\Model\OfflinePaymentRecord::class,
+            \Alfakher\OfflinePaymentRecords\Model\ResourceModel\OfflinePaymentRecord::class
         );
     }
 }
