@@ -31,7 +31,39 @@
             max-width: @layout_container_xl;
         }
     }
-
+    .opc-wrapper{
+        .form .fieldset{
+            > .field[name*="country_id"]{
+                width: 100%;
+                .control{
+                    width: 95%;
+                }
+            }
+        } 
+    }
+    .modal-popup{
+        .form.form-shipping-address{
+            .fieldset{
+                > .field[name*="country_id"]{
+                    width: 100%;
+                    .control{
+                        width: 95%;
+                    }
+                }
+            } 
+        } 
+    } 
+    .del{
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        margin-top: 14px;
+        .delete-icon{
+            .cart_btn(); 
+            display: inline-block;
+            text-decoration: none;
+        }
+    }
     .checkout-container {
         &:extend(.abs-add-clearfix all);
         .lib-css(margin, 0 0 @checkout-wrapper__margin);
