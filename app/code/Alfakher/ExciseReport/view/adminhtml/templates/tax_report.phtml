@@ -1,4 +1,9 @@
-<form action="<?= $block->getUrl('excisereport/tax/save')?>"
+<?php
+/**
+ * @var $block Alfakher\ExciseReport\Block\Adminhtml\Report\ExciseTax
+ */
+?>
+<form action="<?= /* @noEscape */ $block->getUrl('excisereport/tax/save')?>"
             method="post"
             class="form doc-form"
             accept-charset="utf-8"
@@ -27,7 +32,8 @@
         <label>Website: 
             <select name="website" id="website" required>
                 <?php foreach ($block->getWebsiteCollection() as $website) { ?>
-                    <option name="<?=$website->getName()?>" value="<?=$website->getId()?>"><?=$website->getName()?></option>
+                    <option name="<?= /* @noEscape */ $website->getName()?>" value="<?= /* @noEscape */ $website->getId()?>">
+                        <?= /* @noEscape */ $website->getName()?></option>
                 <?php }?>
             </select>
         </label>
