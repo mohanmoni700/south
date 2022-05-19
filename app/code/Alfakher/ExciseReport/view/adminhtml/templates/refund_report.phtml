@@ -1,0 +1,42 @@
+<form action="<?= $block->getUrl('excisereport/refund/save')?>"
+            method="post"
+            class="form doc-form"
+            accept-charset="utf-8"
+            enctype="multipart/form-data">
+
+<input name="form_key" type="hidden" value="<?= $block->escapeHtml($block->getFormKey()) ?>">
+</input>
+<div>
+
+    <div class="start-date">
+        <label>Start Date: 
+            <input type="date" placeholder="Start Date" name="startdate" id="startdate" class="start-date" required></input>
+        </label>
+    </div>
+
+    <br>
+
+    <div class="end-date">
+        <label>End Date: <input type="date" placeholder="End Date" name="enddate" id="enddate" class="end-date" required></input>
+    </label>
+    </div>
+    
+    <br>
+
+    <div class="website">
+        <label>Website: 
+            <select name="website" id="website" required>
+                <?php foreach ($block->getWebsiteCollection() as $website) { ?>
+                    <option name="<?=$website->getName()?>" value="<?=$website->getId()?>"><?=$website->getName()?></option>
+                <?php }?>
+            </select>
+        </label>
+    </div>
+
+    <br>
+
+    <div class="primary regis">
+        <button type="submit" value="submit" id="export_btn" class="action submit primary">Export CSV</button>
+    </div>
+</div>
+</form>
