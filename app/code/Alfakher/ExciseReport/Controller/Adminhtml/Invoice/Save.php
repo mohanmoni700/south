@@ -71,6 +71,7 @@ class Save extends \Magento\Backend\App\Action
 
         $values = $connection->fetchAll($query);
 
+        $custom = [];
         foreach ($values as $key => $value) {
             if ($value['Status'] == '1') {
                 $value['Status'] = 'Pending';
