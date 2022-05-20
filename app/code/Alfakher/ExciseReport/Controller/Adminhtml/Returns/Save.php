@@ -47,14 +47,10 @@ class Save extends \Magento\Backend\App\Action
         mr.increment_id AS RmaNumber,
         mr.date_requested AS RmaDate,
         mr.order_increment_id AS OrderNumber,
-        so.created_at AS OrderDate,
+        mr.order_date AS OrderDate,
         mr.status AS Status
         FROM
-        magento_rma AS mr
-
-        LEFT JOIN
-        sales_order AS so
-        ON so.entity_id = mr.order_id
+        magento_rma_grid AS mr
 
         WHERE
         mr.date_requested >=  '" . $startdate . "'
