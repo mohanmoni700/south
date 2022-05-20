@@ -1,0 +1,43 @@
+Index: vendor/avalara/excise/Model/QueueTask.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vendor/avalara/excise/Model/QueueTask.php b/vendor/avalara/excise/Model/QueueTask.php
+--- a/vendor/avalara/excise/Model/QueueTask.php
++++ b/vendor/avalara/excise/Model/QueueTask.php	(date 1651357374035)
+@@ -100,7 +100,7 @@
+         }
+         $queueData = $collection
+             ->addFieldToFilter('queue_status', [self::STATUS_PENDING, self::STATUS_ERROR, self::STATUS_PROGRESS]);
+-
++
+         foreach ($queueData as $queue) {
+             $getObject =  $this->getQueueObject(
+                 $queue->getIncrementId(),
+@@ -174,6 +174,13 @@
+      */
+     public function getQueueObject($incrementId, $entityTypeCode, $entityId)
+     {
++        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/corra-avalara-debug.log');
++        $logger = new \Zend_Log();
++        $logger->addWriter($writer);
++        $logger->info("==========================================================================");
++        $logger->info("******** Exporting invoice ". $incrementId ." from excise_queue table *********");
++        $logger->info("Entity Type Code ".$entityTypeCode);
++        $logger->info("Entity ID ".$entityId);
+         $QueueObject = false;
+         switch ($entityTypeCode) {
+             case self::ENTITY_TYPE_CODE_INVOICE:
+@@ -183,6 +190,11 @@
+                 $QueueObject = $this->getCreditMemoOrderByIncrementId($entityId);
+                 break;
+         }
++        if ($QueueObject->getIncrementId() == $incrementId) {
++            $logger->info("Invoice ID ".$incrementId . " match found in sales_invoice");
++        } else {
++            $logger->info("Invoice ID ".$incrementId . " MATCH NOT FOUND - 404");
++        }
+         return $QueueObject;
+     }
+
