@@ -72,10 +72,6 @@ class LayoutProcessor
                     ['payments-list']['children'][$key]['children']
                     ['form-fields']['children']['country_id']['sortOrder'] = 70;
 
-                    $jsLayout['components']['checkout']['children']['steps']['children']
-                    ['billing-step']['children']['payment']['children']
-                    ['payments-list']['children'][$key]['children']
-                    ['form-fields']['children']['country_id']['disabled'] = false;
                 }
 
                 if (isset($payment['children']['form-fields']['children']['city'])) {
@@ -93,16 +89,6 @@ class LayoutProcessor
                     ['payments-list']['children'][$key]['children']
                     ['form-fields']['children']['region_id']['sortOrder'] = 81;
 
-                    $jsLayout['components']['checkout']['children']['steps']['children']
-                    ['billing-step']['children']['payment']['children']
-                    ['payments-list']['children'][$key]['children']
-                    ['form-fields']['children']['region_id']['disabled'] = false;
-
-                    $jsLayout['components']['checkout']['children']['steps']['children']
-                    ['billing-step']['children']['payment']['children']
-                    ['payments-list']['children'][$key]['children']
-                    ['form-fields']['children']['region_id']['value'] = '';
-
                 }
 
                 if (isset($payment['children']['form-fields']['children']['postcode'])) {
@@ -113,13 +99,6 @@ class LayoutProcessor
                     ['form-fields']['children']['postcode']['sortOrder'] = 93;
                 }
 
-                if (isset($payment['children']['form-fields']['children']['county'])) {
-
-                    $jsLayout['components']['checkout']['children']['steps']['children']
-                    ['billing-step']['children']['payment']['children']
-                    ['payments-list']['children'][$key]['children']
-                    ['form-fields']['children']['county']['validation'] = ['required-entry' => false];
-                }
             }
         }
 
