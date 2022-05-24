@@ -61,9 +61,7 @@ class Data extends Template
     public function getComments($id)
     {
 
-        foreach ($this->getRmaCollection($id) as $val) {
-            $collection = $this->_collectionFactory->create();
-        }
+        $collection = $this->_collectionFactory->create();
         return $collection->addFieldToFilter('rma_entity_id', $this->getRmaCollection($id));
     }
 

@@ -139,7 +139,7 @@ if (!empty($rmaid->getData())) {
                         <a href="<?=  /* @noEscape */ $block->getUrl('adminhtml/rma/edit', ['id' => $id['entity_id']])?>" target="blank"><?= /* @noEscape */ $id['increment_id']?></a>
 
 
-                        <b> <?= /* @noEscape */ $id['status']?> </b>
+                        <strong> <?= /* @noEscape */ $id['status']?> </strong>
                         <br>
                         <?php foreach ($datablock->getComments($id) as $_item): ?>
                             <?php if ($_item->getData('rma_entity_id')==$id['entity_id']) {?>
