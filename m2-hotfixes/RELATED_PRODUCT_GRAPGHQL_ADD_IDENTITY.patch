@@ -1,0 +1,12 @@
+diff --git a/vendor/magento/module-related-product-graph-ql/Model/Resolver/Batch/AbstractLikedProducts.php    b/vendor/magento/module-related-product-graph-ql/Model/Resolver/Batch/AbstractLikedProducts.php
+--- a/vendor/magento/module-related-product-graph-ql/Model/Resolver/Batch/AbstractLikedProducts.php	2022-05-18 10:48:51.000000000 +0530
++++ b/vendor/magento/module-related-product-graph-ql/Model/Resolver/Batch/AbstractLikedProducts.php	2022-05-18 10:46:25.000000000 +0530
+@@ -158,7 +158,7 @@
+                     function ($relatedProduct) {
+                         $data = $relatedProduct->getData();
+                         $data['model'] = $relatedProduct;
+-
++                        $data[$this->getNode()] = true;
+                         return $data;
+                     },
+                     $related[$product->getId()]
