@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Mageplaza\Webhook\Model\Config\Source\HookType">
+        <plugin name="Alfakher_Webhook_AddNewHookType" type="Alfakher\Webhook\Plugin\AddNewHookType" sortOrder="10" disabled="false"  />
+    </type>
+    <preference for="Mageplaza\Webhook\Helper\Data" type="Alfakher\Webhook\Helper\Data" />
+    <preference for="Mageplaza\Webhook\Block\Adminhtml\Hook\Edit\Tab\Renderer\Body" type="Alfakher\Webhook\Block\Adminhtml\Hook\Edit\Tab\Renderer\HookVariables" />
+</config>

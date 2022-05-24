@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="document_save_after">
+        <observer name="al_wh_save_document_after" instance="Alfakher\Webhook\Observer\AfterDocumentSave"/>
+    </event>
+    <event name="document_update_after">
+        <observer name="al_wh_update_document_after" instance="Alfakher\Webhook\Observer\AfterDocumentSave"/>
+    </event>
+    <event name="document_delete_after">
+        <observer name="al_wh_delete_document_after" instance="Alfakher\Webhook\Observer\AfterDocumentDelete"/>
+    </event>
+</config>

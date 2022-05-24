@@ -89,6 +89,7 @@ class Saveform extends \Magento\Backend\App\Action implements HttpPostActionInte
     {
         $post = (array) $this->getRequest()->getPost();
         $customerid = $this->getRequest()->getParam('customer_id');
+        $customerDocs = [];
         try {
 
             $newArray = [];
@@ -138,8 +139,14 @@ class Saveform extends \Magento\Backend\App\Action implements HttpPostActionInte
                         $entity->setIsDelete(0);
                     }
                     $entity->save();
+                    $customerDocs[] =  $entity->getData();
                 }
             }
+            $this->_eventManager->dispatch('document_update_after',
+                [
+                    'items' => $customerDocs
+                ]
+            );
             $this->messageManager->addSuccess(__('The data has been saved.'));
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage(__("Something went wrong."));
