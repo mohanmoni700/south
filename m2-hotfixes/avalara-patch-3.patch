@@ -1,0 +1,31 @@
+Index: vendor/avalara/excise/Framework/ApiClient.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vendor/avalara/excise/Framework/ApiClient.php b/vendor/avalara/excise/Framework/ApiClient.php
+--- a/vendor/avalara/excise/Framework/ApiClient.php	
++++ b/vendor/avalara/excise/Framework/ApiClient.php	(date 1648051506000)
+@@ -36,13 +36,21 @@
+      */
+     public function createTaxTransaction($companyId, $payload)
+     {
++        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/corra-avalara-debug.log');
++        $logger = new \Zend_Log();
++        $logger->addWriter($writer);
+         $path = Constants::API_V1_EXCISE_CREATE_TRANSACTION_ENDPOINT;
+         $company['x-company-id'] = $companyId;
+         $guzzleParams = [
+             'query' => [],
+-            'body' => json_encode($payload)
++            'body' => json_encode($payload, JSON_INVALID_UTF8_SUBSTITUTE)
+         ];
+ 
++        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/corra-avalara-debug.log');
++        $logger = new \Zend_Log();
++        $logger->addWriter($writer);
++        $logger->info("========================== API Details ============================");
++        $logger->info("Request Body ". json_encode($payload, JSON_INVALID_UTF8_SUBSTITUTE));
+         $this->addtionalHeaders($company);
+         return $this->restCall($path, 'POST', $guzzleParams, true);
+     }
