@@ -4,4 +4,8 @@
     <!-- add ststus column in customer tab order listin -->
     <preference for="Magento\Customer\Block\Adminhtml\Edit\Tab\Orders"
                 type="HookahShisha\Customization\Block\Adminhtml\Edit\Tab\Orders"/>
+
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="commentPlugin" type="HookahShisha\Customization\Plugin\Order\PlaceOrderAroundPlugin"/>
+    </type>
 </config>
