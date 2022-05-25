@@ -93,7 +93,7 @@ class Save extends \Magento\Backend\App\Action
             . "/" . $fileName;
 
         $this->csvProcessor
-            ->setDelimiter(';')
+            ->setDelimiter(',')
             ->setEnclosure('"')
             ->saveData(
                 $filePath,
