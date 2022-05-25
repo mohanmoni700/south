@@ -1,9 +1,9 @@
 <?php $message = $block->getMessageData(); ?>
 <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
-<?php if ($_helperB2b->getMigrateDocument() != 1):?>
-<?php if (!empty($message)): ?>
-    <?php foreach ($message['message'] as $key => $value):?>
-      <div class="<?= $block->escapeHtml(__($value[0])) ?>"><?= $block->escapeHtml(__($value[1])) ?></div>
-    <?php endforeach; ?>
-<?php endif; ?>
+<?php if ($_helperB2b->getMigrateDocument() == 0 && $_helperB2b->getIsFinanceVerified() == 0):?>
+    <?php if (!empty($message)): ?>
+        <?php foreach ($message['message'] as $key => $value):?>
+          <div class="<?= $block->escapeHtml(__($value[0])) ?>"><?= $block->escapeHtml(__($value[1])) ?></div>
+        <?php endforeach; ?>
+    <?php endif; ?>
 <?php endif; ?>

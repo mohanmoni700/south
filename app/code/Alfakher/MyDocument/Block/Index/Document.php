@@ -2,7 +2,6 @@
 namespace Alfakher\MyDocument\Block\Index;
 
 use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory;
-use Alfakher\Productpageb2b\Helper\Data;
 
 class Document extends \Magento\Framework\View\Element\Template
 {
@@ -41,14 +40,12 @@ class Document extends \Magento\Framework\View\Element\Template
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         CollectionFactory $collection,
         \HookahShisha\ChangePassword\Plugin\CustomerSessionContext $CustomerSessionContext,
-        Data $helperData,
         array $data = []
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->customerSession = $customerSession;
         $this->collection = $collection;
         $this->CustomerSessionContext = $CustomerSessionContext;
-        $this->helperData = $helperData;
         parent::__construct($context, $data);
     }
 
@@ -74,7 +71,6 @@ class Document extends \Magento\Framework\View\Element\Template
     public function getMessageData()
     {
         $customer_id = $this->customerSession->getCustomer()->getId();
-        $IsFinanceVerified = $this->helperData->getIsFinanceVerified();
         $doc_collection = $this->collection->create()->addFieldToFilter('customer_id', ['eq' => $customer_id]);
         $document = $doc_collection->getData();
         $dataSize = count($document);
@@ -124,9 +120,6 @@ class Document extends \Magento\Framework\View\Element\Template
             }
 
             if (in_array(0, $status) && empty($str_msg) && !(in_array('expired', $msg))) {
-                $verification = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_document_Verification_section', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-                $message[] = ["pending", $verification];
-            } elseif ($IsFinanceVerified == 0) {
                 $verification = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_document_Verification_section', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
                 $message[] = ["pending", $verification];
             } else {
