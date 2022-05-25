@@ -1,0 +1,11 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+	<table name="quote">
+		<column xsi:type="varchar" name="customer_courier_name" nullable="true" length="225" comment="Customer Courier Name"/>
+		<column xsi:type="varchar" name="customer_courier_account" nullable="true" length="225" comment="Customer Courier Account"/>
+	</table>
+
+	<table name="sales_order">
+		<column xsi:type="varchar" name="customer_courier_name" nullable="true" length="225" comment="Customer Courier Name"/>
+		<column xsi:type="varchar" name="customer_courier_account" nullable="true" length="225" comment="Customer Courier Account"/>
+	</table>
+</schema>
