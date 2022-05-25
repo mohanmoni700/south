@@ -1,0 +1,17 @@
+Index: vendor/yotpo/magento2-module-yotpo-reviews/Model/Schema.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vendor/yotpo/magento2-module-yotpo-reviews/Model/Schema.php b/vendor/yotpo/magento2-module-yotpo-reviews/Model/Schema.php
+--- a/vendor/yotpo/magento2-module-yotpo-reviews/Model/Schema.php	
++++ b/vendor/yotpo/magento2-module-yotpo-reviews/Model/Schema.php	(date 1651681215478)
+@@ -109,7 +109,7 @@
+                     } else {
+                         $productsData[$product->getId()] = [
+                                 'name'        => $product->getName(),
+-                                'url'         => $product->getProductUrl(),
++                                'url'         => $this->yotpoConfig->getStoreManager()->getStore()->getBaseUrl().'p/'. $product->getUrlKey(),
+                                 'image'       => $this->getProductMainImageUrl($product),
+                                 'description' => $this->escaper->escapeHtml(strip_tags($product->getDescription())),
+                                 'price'       => $orderItem->getData('row_total_incl_tax') - $orderItem->getData('amount_refunded'),
