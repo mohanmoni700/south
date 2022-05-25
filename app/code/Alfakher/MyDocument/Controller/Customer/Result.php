@@ -85,7 +85,7 @@ class Result extends Action
         $newArray = [];
         $data = [];
         $customerDocs = [];
-        
+
         if (isset($post['is_customerfrom_usa'])) {
             $is_usa = 1;
         } else {
@@ -160,19 +160,22 @@ class Result extends Action
                 $resultRedirect->setUrl('mydocument/customer/index');
                 $model = $this->_myDocument->create();
                 $model->setData($data);
-
-                $model->addData([
-                    "document_name" => $post['name' . ($i + 1)],
-                    "customer_id" => $this->customerSession->getCustomer()->getId(),
-                    "expiry_date" => $this->convertDate($post['expiry_date' . ($i + 1)]),
-                    "is_customerfrom_usa" => $is_usa,
-                    "status" => 0,
-                    "is_add_more_form" => $newArray[$i]['is_add_more_form'],
-                ]);
-                $model->setIsDelete(false);
-                $model->setStatus(0);
-                $saveData = $model->save();
-                $customerDocs[] =  $saveData->getData();
+                if (array_key_exists("name" . ($i + 1), $post)) {
+                    if ($post['name' . ($i + 1)] != "") {
+                        $model->addData([
+                            "document_name" => $post['name' . ($i + 1)],
+                            "customer_id" => $this->customerSession->getCustomer()->getId(),
+                            "expiry_date" => $this->convertDate($post['expiry_date' . ($i + 1)]),
+                            "is_customerfrom_usa" => $is_usa,
+                            "status" => 0,
+                            "is_add_more_form" => $newArray[$i]['is_add_more_form'],
+                        ]);
+                        $model->setIsDelete(false);
+                        $model->setStatus(0);
+                        $saveData = $model->save();
+                        $customerDocs[] =  $saveData->getData();
+                    }
+                }
                 $i++;
             }
         }
