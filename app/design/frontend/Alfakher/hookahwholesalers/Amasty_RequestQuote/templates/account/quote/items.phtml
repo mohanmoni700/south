@@ -6,7 +6,7 @@
             <thead>
             <?php if ($block->isPagerDisplayed()): ?>
                 <tr>
-                    <td colspan="5" data-block="order-items-pager-top" class="order-pager-wrapper order-pager-wrapper-top">
+                    <td colspan="8" data-block="order-items-pager-top" class="order-pager-wrapper order-pager-wrapper-top">
                         <?= $block->getPagerHtml() ?>
                     </td>
                 </tr>
@@ -33,7 +33,7 @@
                 <tbody class="quote-item-notes">
                 <?php if ($item->getNotes()): ?>
                     <tr>
-                        <td colspan="3" class="amquote-cell-container">
+                        <td colspan="4" class="amquote-cell-container">
                             <?php if ($item->getNotes()->getCustomerNote()): ?>
                                 <?= $escaper->escapeHtml(__('Customer Note:')) ?>
                             <div class="item-note amquote-note">
@@ -41,7 +41,7 @@
                             </div>
                             <?php endif;?>
                         </td>
-                        <td colspan="3" class="amquote-cell-container">
+                        <td colspan="4" class="amquote-cell-container">
                             <?php if ($item->getNotes()->getAdminNote()): ?>
                                 <?= $escaper->escapeHtml(__('Administrator Note:')) ?>
                                 <div class="item-note amquote-note">
@@ -56,7 +56,7 @@
             <tfoot>
             <?php if ($block->isPagerDisplayed()): ?>
                 <tr>
-                    <td colspan="5" data-block="order-items-pager-bottom" class="order-pager-wrapper order-pager-wrapper-bottom">
+                    <td colspan="8" data-block="order-items-pager-bottom" class="order-pager-wrapper order-pager-wrapper-bottom">
                         <?= $block->getPagerHtml() ?>
                     </td>
                 </tr>
