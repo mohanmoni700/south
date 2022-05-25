@@ -99,7 +99,7 @@ class Updatesubtotal extends \Magento\Backend\App\Action
                         /*af_bv_op; Start*/
                         $order->setTotalSubtotalDiscount($order->getTotalSubtotalDiscount() + $discountAmount);
                         /*af_bv_op; End*/
-                    } else {
+                    } elseif ($order->getOriginalSubtotal() > 0) {
 
                         $order->setSubtotal($order->getOriginalSubtotal());
                         $order->setSubtotalInclTax($order->getOriginalSubtotalInclTax());
@@ -113,6 +113,11 @@ class Updatesubtotal extends \Magento\Backend\App\Action
                         $order->setOriginalBaseSubtotal(0);
                         $order->setOriginalBaseSubtotalInclTax(0);
                         $order->setTotalSubtotalDiscount(0);
+                    } else {
+                        $this->messageManager->addErrorMessage(__("Please enter a valid amount greater than $0."));
+                        $result = $this->_resultJsonFactory->create();
+                        $result->setData(['status' => false]);
+                        return $result;
                     }
                 }
 

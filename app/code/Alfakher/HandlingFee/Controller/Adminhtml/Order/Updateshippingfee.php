@@ -95,7 +95,7 @@ class Updateshippingfee extends \Magento\Backend\App\Action
                         $order->setGrandTotal($order->getGrandTotal() - $discountAmount);
 
                         $order->setTotalShippingFeeDiscount($order->getTotalShippingFeeDiscount() + $discountAmount);
-                    } else {
+                    } elseif ($order->getOriginalShippingFee() > 0) {
                         $order->setShippingAmount($order->getOriginalShippingFee());
                         $order->setBaseShippingAmount($order->getOriginalBaseShippingAmount());
                         $order->setShippingInclTax($order->getOriginalShippingInclTax());
@@ -108,6 +108,11 @@ class Updateshippingfee extends \Magento\Backend\App\Action
                         $order->setOriginalShippingInclTax(0);
                         $order->setOriginalBaseShippingInclTax(0);
                         $order->setTotalShippingFeeDiscount(0);
+                    } else {
+                        $this->messageManager->addErrorMessage(__("Please enter a valid amount greater than $0."));
+                        $result = $this->_resultJsonFactory->create();
+                        $result->setData(['status' => false]);
+                        return $result;
                     }
                 }
 
