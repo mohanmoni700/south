@@ -4,8 +4,10 @@
 		<column name="offline_payment_type">
             <settings>
                 <label translate="true">Offline Payment</label>
-                <filter>text</filter>
                 <visible>true</visible>
+                <filter>select</filter>
+                <options class="Alfakher\OfflinePaymentRecords\Ui\Component\Listing\Column\OfflinePaymentType\Options"/>
+                <dataType>select</dataType>
             </settings>
         </column>
 
