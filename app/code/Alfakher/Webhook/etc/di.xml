@@ -3,6 +3,10 @@
     <type name="Mageplaza\Webhook\Model\Config\Source\HookType">
         <plugin name="Alfakher_Webhook_AddNewHookType" type="Alfakher\Webhook\Plugin\AddNewHookType" sortOrder="10" disabled="false"  />
     </type>
+
+    <!-- changes on send function for data object of document webhook -->
     <preference for="Mageplaza\Webhook\Helper\Data" type="Alfakher\Webhook\Helper\Data" />
+
+    <!-- Add new hook types on existing function for display variables -->
     <preference for="Mageplaza\Webhook\Block\Adminhtml\Hook\Edit\Tab\Renderer\Body" type="Alfakher\Webhook\Block\Adminhtml\Hook\Edit\Tab\Renderer\HookVariables" />
 </config>

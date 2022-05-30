@@ -83,11 +83,13 @@ class Data extends \Mageplaza\Webhook\Helper\Data
     /**
      * @inheritDoc
      */
-    public function sendDocument($item, $hookType)
+    public function send($item, $hookType)
     {
         if (!$this->isEnabled()) {
             return;
         }
+
+        /** @var Collection $hookCollection */
         $hookCollection = $this->hookFactory->create()->getCollection()
             ->addFieldToFilter('hook_type', $hookType)
             ->addFieldToFilter('status', 1)
@@ -107,28 +109,29 @@ class Data extends \Mageplaza\Webhook\Helper\Data
                 }
             }
             $history = $this->historyFactory->create();
-
             if ($hookType == "update_document" || $hookType == "new_document") {
                 $documentData = $this->AddFilePath($item, $hookType);
-                $documenItem = new DataObject($documentData);
+                $itemData = new DataObject($documentData);
             } elseif ($hookType == "delete_document") {
                 $documentData = $this->AddFilePath($item, $hookType);
-                $documenItem = new DataObject($documentData['items']);
+                $itemData = new DataObject($documentData['items']);
+            } else {
+                $itemData = $item;
             }
             
-            $body = $this->generateLiquidTemplate($documenItem, $hook->getBody());
+            $body = $this->generateLiquidTemplate($itemData, $hook->getBody());
             $data    = [
                 'hook_id'     => $hook->getId(),
                 'hook_name'   => $hook->getName(),
                 'store_ids'   => $hook->getStoreIds(),
                 'hook_type'   => $hook->getHookType(),
                 'priority'    => $hook->getPriority(),
-                'payload_url' => $this->generateLiquidTemplate($documenItem, $hook->getPayloadUrl()),
-                'body'        => $this->generateLiquidTemplate($documenItem, $hook->getBody())
+                'payload_url' => $this->generateLiquidTemplate($itemData, $hook->getPayloadUrl()),
+                'body'        => $this->generateLiquidTemplate($itemData, $hook->getBody())
             ];
             $history->addData($data);
             try {
-                $result = $this->sendHttpRequestFromHook($hook, $documenItem);
+                $result = $this->sendHttpRequestFromHook($hook, $itemData);
                 $history->setResponse(isset($result['response']) ? $result['response'] : '');
             } catch (Exception $e) {
                 $result = [

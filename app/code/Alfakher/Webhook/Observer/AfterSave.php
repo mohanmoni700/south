@@ -109,7 +109,7 @@ abstract class AfterSave implements ObserverInterface
                 }
             }
         } else {
-            $this->helper->sendDocument($item, $this->hookType);
+            $this->helper->send($item, $this->hookType);
         }
     }
 
@@ -146,7 +146,7 @@ abstract class AfterSave implements ObserverInterface
                 }
             }
         } else {
-            $this->helper->sendDocument($item, $this->hookTypeUpdate);
+            $this->helper->send($item, $this->hookTypeUpdate);
         }
     }
 }
