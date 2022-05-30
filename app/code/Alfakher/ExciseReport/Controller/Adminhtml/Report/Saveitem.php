@@ -99,7 +99,13 @@ class Saveitem extends \Magento\Backend\App\Action
 			    soi.qty_shipped AS Shipped_Quantity,
 			   	soi.excise_tax AS Excise_Tax,
 			    soi.sales_tax AS Sales_Tax,
-			    (SELECT value FROM catalog_product_entity_decimal WHERE store_id=0 AND row_id=cpe.entity_id AND attribute_id=(SELECT attribute_id  FROM eav_attribute WHERE attribute_code = 'cost')) AS cost,
+                    (SELECT value FROM catalog_product_entity_decimal
+                        WHERE store_id=0
+                        AND row_id=cpe.entity_id
+                        AND attribute_id=(SELECT attribute_id FROM eav_attribute
+                            WHERE attribute_code = 'cost'
+                            )
+                    ) AS cost,
 			    soi.base_price AS Price
 				FROM
 				    sales_order AS so

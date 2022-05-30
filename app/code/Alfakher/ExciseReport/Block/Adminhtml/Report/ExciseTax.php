@@ -57,7 +57,9 @@ class ExciseTax extends \Magento\Framework\View\Element\Template
      */
     public function getWebsiteCode($id)
     {
-        $collection = ($this->_websiteCollectionFactory->create()->addFieldToFilter('website_id', ['eq' => $id])->getData());
+        $collection = $this->_websiteCollectionFactory->create()
+            ->addFieldToFilter('website_id', ['eq' => $id])
+            ->getData();
         foreach ($collection as $value) {
             $store_code = $value['code'];
         }

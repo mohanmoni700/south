@@ -43,12 +43,13 @@ class Save extends \Magento\Backend\App\Action
         $websiteid = $post['website'];
         $connection = $this->resourceConnection->getConnection();
 
-        $query ="SELECT
+        $query = "SELECT
         so.increment_id AS OrderNumber,
         si.increment_id AS InvoiceNumber,
         so.tax_amount AS TotalTax,
         so.sales_tax AS SalesTax,
-        so.excise_tax AS ExciseTax
+        so.excise_tax AS ExciseTax,
+        so.shipping_tax_amount AS ShippingTax
         FROM
         sales_order AS so
 
@@ -67,11 +68,11 @@ class Save extends \Magento\Backend\App\Action
 
         $header = [];
         $header[] = [
-            'Order number'   => 'Order Number',
+            'Order number' => 'Order Number',
             'Invoice Number' => 'Invoice Number',
-            'Total Tax'         => 'Total Tax',
+            'Total Tax' => 'Total Tax',
             'Sales Tax' => 'Sales Tax',
-            'Excise Tax'     => 'Excise Tax',
+            'Excise Tax' => 'Excise Tax',
         ];
 
         $report = [];
