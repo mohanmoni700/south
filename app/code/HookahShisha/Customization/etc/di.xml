@@ -4,4 +4,20 @@
     <preference for="Smartwave\Megamenu\Block\Topmenu" type="HookahShisha\Customization\Block\Topmenu" />
     
     <preference for="Magento\CheckoutStaging\Plugin\PaymentInformationManagementPlugin" type="HookahShisha\Customization\Plugin\PaymentInformationManagementPlugin" />
+
+    <type name="Magento\Sales\Controller\Order\PrintAction">
+        <plugin name="magetrend-order-pdf-replace-print"
+                type="Magetrend\PdfTemplates\Plugin\Sales\Controller\Order\PrintAction"
+                sortOrder="10" disabled="true"/>
+    </type>
+    <type name="Magento\Sales\Controller\Order\PrintCreditmemo">
+        <plugin name="magetrend-creditmemo-pdf-replace-print"
+                type="Magetrend\PdfTemplates\Plugin\Sales\Controller\Order\PrintCreditmemo"
+                sortOrder="10" disabled="true"/>
+    </type>
+    <type name="Magento\Sales\Controller\Order\PrintShipment">
+        <plugin name="magetrend-shipment-pdf-replace-print"
+                type="Magetrend\PdfTemplates\Plugin\Sales\Controller\Order\PrintShipment"
+                sortOrder="10" disabled="true"/>
+    </type>
 </config>
