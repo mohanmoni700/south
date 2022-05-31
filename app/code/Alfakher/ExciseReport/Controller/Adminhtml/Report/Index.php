@@ -28,7 +28,7 @@ class Index extends \Magento\Backend\App\Action
     public function execute()
     {
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend((__('Order Excise Report')));
+        $resultPage->getConfig()->getTitle()->prepend((__('Excise Order Report')));
 
         return $resultPage;
     }

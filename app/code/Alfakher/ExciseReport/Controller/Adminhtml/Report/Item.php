@@ -28,7 +28,7 @@ class Item extends \Magento\Backend\App\Action
     public function execute()
     {
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend((__('Item Excise Report')));
+        $resultPage->getConfig()->getTitle()->prepend((__('Excise Item Report')));
 
         return $resultPage;
     }

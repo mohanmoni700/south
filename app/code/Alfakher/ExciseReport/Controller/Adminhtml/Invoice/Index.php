@@ -28,7 +28,7 @@ class Index extends \Magento\Backend\App\Action
     public function execute()
     {
         $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->prepend((__('Invoice Report')));
+        $resultPage->getConfig()->getTitle()->prepend((__('Invoiced Report')));
 
         return $resultPage;
     }
