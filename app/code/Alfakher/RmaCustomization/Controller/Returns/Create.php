@@ -11,6 +11,60 @@ use Magento\Framework\App\Action\HttpGetActionInterface;
 class Create extends \Magento\Rma\Controller\Returns implements HttpGetActionInterface
 {
     /**
+     *
+     * @var \Magento\Framework\App\Action\Context
+     */
+    protected $context;
+    /**
+     *
+     * @var \Magento\Framework\Registry
+     */
+    protected $_coreRegistry;
+    /**
+     *
+     * @var \Magento\Rma\Helper\Data
+     */
+    protected $rmadata;
+    /**
+     *
+     * @var \Magento\Framework\Controller\Result\RedirectFactory
+     */
+    protected $redirectFactory;
+    /**
+     *
+     * @var \Magento\Sales\Model\OrderFactory
+     */
+    protected $orderFactory;
+    /**
+     *
+     * @var \Magento\Framework\View\Result\PageFactory
+     */
+    protected $pageFactory;
+    /**
+     *
+     * @param \Magento\Framework\App\Action\Context $context
+     * @param \Magento\Framework\Registry $coreRegistry
+     * @param \Magento\Rma\Helper\Data $rmadata
+     * @param \Magento\Framework\Controller\Result\RedirectFactory $redirectFactory
+     * @param \Magento\Sales\Model\OrderFactory $orderFactory
+     * @param \Magento\Framework\View\Result\PageFactory $pageFactory
+     */
+    public function __construct(
+        \Magento\Framework\App\Action\Context $context,
+        \Magento\Framework\Registry $coreRegistry,
+        \Magento\Rma\Helper\Data $rmadata,
+        \Magento\Framework\Controller\Result\RedirectFactory $redirectFactory,
+        \Magento\Sales\Model\OrderFactory $orderFactory,
+        \Magento\Framework\View\Result\PageFactory $pageFactory
+    ) {
+        $this->_coreRegistry = $coreRegistry;
+        $this->rmadata = $rmadata;
+        $this->redirectFactory = $redirectFactory;
+        $this->orderFactory = $orderFactory;
+        $this->pageFactory = $pageFactory;
+        parent::__construct($context, $coreRegistry);
+    }
+    /**
      * Try to load valid collection of ordered items
      *
      * @param int $orderId
@@ -19,9 +73,9 @@ class Create extends \Magento\Rma\Controller\Returns implements HttpGetActionInt
     protected function _loadOrderItems($orderId)
     {
         /** @var $rmaHelper \Magento\Rma\Helper\Data */
-        $rmaHelper = $this->_objectManager->get(\Magento\Rma\Helper\Data::class);
+        $rmaHelper = $this->rmadata;
 
-        $resultRedirect = $this->_objectManager->create(\Magento\Framework\Controller\Result\Redirect::class);
+        $resultRedirect = $this->redirectFactory->create();
 
         if ($rmaHelper->canCreateRma($orderId)) {
             return true;
@@ -42,12 +96,13 @@ class Create extends \Magento\Rma\Controller\Returns implements HttpGetActionInt
     public function execute()
     {
         $orderId = (int) $this->getRequest()->getParam('order_id');
-        $resultRedirect = $this->_objectManager->create(\Magento\Framework\Controller\Result\Redirect::class);
+        $resultRedirect = $this->redirectFactory->create();
+
         if (empty($orderId)) {
             return $resultRedirect->setPath('sales/order/history');
         }
         /** @var $order \Magento\Sales\Model\Order */
-        $order = $this->_objectManager->create(\Magento\Sales\Model\Order::class)->load($orderId);
+        $order = $this->orderFactory->create()->load($orderId);
 
         if (!$this->_canViewOrder($order)) {
             return $resultRedirect->setPath('sales/order/history');
@@ -58,7 +113,7 @@ class Create extends \Magento\Rma\Controller\Returns implements HttpGetActionInt
         if (!$this->_loadOrderItems($orderId)) {
             return;
         }
-        $resultPage = $this->_objectManager->create(\Magento\Framework\View\Result\Page::class);
+        $resultPage = $this->pageFactory->create();
 
         $resultPage->initLayout();
         $resultPage->getLayout();
