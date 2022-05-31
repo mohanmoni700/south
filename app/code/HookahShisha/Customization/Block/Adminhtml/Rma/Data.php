@@ -4,6 +4,7 @@ namespace HookahShisha\Customization\Block\Adminhtml\Rma;
 
 use Magento\Backend\Block\Template;
 use Magento\Backend\Block\Template\Context;
+use Magento\Rma\Model\Rma\Source\StatusFactory;
 
 class Data extends Template
 {
@@ -18,6 +19,7 @@ class Data extends Template
      * @param \Magento\Rma\Model\ResourceModel\Rma\Status\History\CollectionFactory $collectionFactory
      * @param \Magento\Rma\Model\ResourceModel\Rma\Grid\CollectionFactory $rmaData
      * @param Context $context
+     * @param Magento\Rma\Model\Rma\Source\StatusFactory $status
      * @param array $data
      */
     public function __construct(
@@ -25,11 +27,14 @@ class Data extends Template
         \Magento\Rma\Model\ResourceModel\Rma\Status\History\CollectionFactory $collectionFactory,
         \Magento\Rma\Model\ResourceModel\Rma\Grid\CollectionFactory $rmaData,
         Context $context,
+        StatusFactory $status,
         array $data = []
     ) {
         $this->rmaFactory = $rmaFactory;
         $this->_collectionFactory = $collectionFactory;
         $this->rmaData = $rmaData;
+        $this->status = $status;
+
         parent::__construct($context, $data);
     }
     /**
@@ -75,5 +80,16 @@ class Data extends Template
     {
         $rmaModel = $this->rmaData->create();
         return $rmaModel->addFieldToFilter('order_id', $orderId);
+    }
+
+    /**
+     * Retrive Rma Status Label
+     *
+     * @param string $status
+     * @return status
+     */
+    public function getStausLabel($status)
+    {
+        return $this->status->create()->getItemLabel($status);
     }
 }

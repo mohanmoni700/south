@@ -1,9 +1,4 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-
 /** @var \Magento\Sales\Block\Adminhtml\Order\View\History $block */
 /** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
 ?>
@@ -120,7 +115,7 @@ script;
 $order = $orderid->getOrder();
 $id = $order->getId();
 $rmaid=$datablock->getReturnid($id);
-if (!empty($rmaid->getData())) {
+if (!empty($rmaid->getData())):
     $datablock->getRmaCollection($id);
     $datablock->getComments($id);
     $rmadata = $rmaid->getData();
@@ -131,46 +126,57 @@ if (!empty($rmaid->getData())) {
         <div id="history_form" class="rma-history-form edit-order-comments">
             <?php if ($datablock->getComments($id)): ?>
                 <ul class="note-list">
+                    <?php foreach ($rmadata as $id):?>
+                        <a href="<?=  /* @noEscape */
+                            $block->getUrl('adminhtml/rma/edit', ['id' => $id['entity_id']])?>"
+                        target="blank"><?= /* @noEscape */ $id['increment_id']?></a>
 
-                    <?php
-                    foreach ($rmadata as $id) {
-                        ?>
-
-                        <a href="<?=  /* @noEscape */ $block->getUrl('adminhtml/rma/edit', ['id' => $id['entity_id']])?>" target="blank"><?= /* @noEscape */ $id['increment_id']?></a>
-
-
-                        <strong> <?= /* @noEscape */ $id['status']?> </strong>
+                        <strong><?= /* @noEscape */ $datablock->getStausLabel($id['status']) ?></strong>
                         <br>
-                        <?php foreach ($datablock->getComments($id) as $_item): ?>
-                            <?php if ($_item->getData('rma_entity_id')==$id['entity_id']) {?>
-                        <li>
-                            <span class="note-list-date"><?= $block->escapeHtml($block->formatDate($_item->getCreatedAt(), \IntlDateFormatter::MEDIUM)) ?></span>
-                            <span class="note-list-time"><?= $block->escapeHtml($block->formatTime($_item->getCreatedAt(), \IntlDateFormatter::MEDIUM)) ?></span>
-                                <?php if ($_item->getIsAdmin()): ?>
-                                <span class="note-list-status"><?= $block->escapeHtml(__('Customer Service')) ?></span>
-                            <?php else: ?>
-                                <span class="note-list-status"><?= /* @noEscape */ $order->getCustomerName() ?></span>
-                            <?php endif; ?>
-                            <span class="note-list-customer">
-                                <?= $block->escapeHtml(__('Customer')) ?>
-                                <?php if ($_item->getIsCustomerNotified()): ?>
-                                    <span class="note-list-customer-notified"><?= $block->escapeHtml(__('Notified')) ?></span>
-                                <?php else: ?>
-                                    <span class="note-list-customer-not-notified"><?= $block->escapeHtml(__('Not Notified')) ?></span>
+                            <?php foreach ($datablock->getComments($id) as $_item):?>
+                                    <?php if ($_item->getData('rma_entity_id')==$id['entity_id']): ?>
+                                    <li>
+                                        <span class="note-list-date"><?= $block
+                                           ->escapeHtml($block
+                                           ->formatDate($_item->getCreatedAt(), \IntlDateFormatter::MEDIUM))?>
+                                        </span>
+                                        <span class="note-list-time"><?= $block
+                                           ->escapeHtml($block
+                                           ->formatTime($_item->getCreatedAt(), \IntlDateFormatter::MEDIUM))?>
+                                        </span>
+                                            <?php if ($_item->getIsAdmin()): ?>
+                                            <span class="note-list-status"><?=
+                                            $block->escapeHtml(__('Customer Service')) ?></span>
+                                        <?php else: ?>
+                                            <span class="note-list-status"><?=
+                                            /* @noEscape */ $order->getCustomerName() ?></span>
+                                        <?php endif; ?>
+                                        <span class="note-list-customer">
+                                            <?= $block->escapeHtml(__('Customer')) ?>
+                                            <?php if ($_item->getIsCustomerNotified()): ?>
+                                                <span class="note-list-customer-notified">
+                                                   <?= $block->escapeHtml(__('Notified')) ?>   
+                                                </span>
+                                            <?php else: ?>
+                                                <span class="note-list-customer-not-notified">
+                                                    <?= $block->escapeHtml(__('Not Notified')) ?>        
+                                                </span>
+                                            <?php endif; ?>
+                                        </span>
+                                            <?php if ($_item->getComment()): ?>
+                                            <div class="note-list-comment"><?= $block
+                                                ->escapeHtml($_item
+                                                ->getComment(), ['b', 'br', 'strong', 'i', 'u'])?>
+                                            </div>
+                                            <?php endif; ?>
+                                    </li>
                                 <?php endif; ?>
-                            </span>
-                                <?php if ($_item->getComment()): ?>
-                                <div class="note-list-comment"><?= $block->escapeHtml($_item->getComment(), ['b', 'br', 'strong', 'i', 'u']) ?></div>
-                            <?php endif; ?>
-                        </li>
-                    <?php }
-                endforeach;?>
+                            <?php endforeach; ?>
+                   <?php endforeach; ?>       
 
-             <?php } ?>       
-
-            </ul>
-        <?php endif ?>
+                </ul>
+            <?php endif; ?>
+        </div>
     </div>
 </div>
-</div>
-<?php }  ?>
+<?php endif; ?>
