@@ -73,6 +73,7 @@ class Save extends \Magento\Backend\App\Action
             'Total Tax' => 'Total Tax',
             'Sales Tax' => 'Sales Tax',
             'Excise Tax' => 'Excise Tax',
+            'Shipping Tax' => 'Shipping Tax',
         ];
 
         $report = [];
