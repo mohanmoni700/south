@@ -33,11 +33,10 @@ class PlaceOrderAroundPlugin
         $status = false
     ) {
         $adminUser = $this->authSession->getUser()->getUsername();
-        if ($comment) {
-            $comment = $comment . " Commented By " . $adminUser;
-        }
-
         $result = $proceed($comment, $status);
+        if ($comment) {
+            $result->setAdminName($adminUser);
+        }
         return $result;
     }
 }
