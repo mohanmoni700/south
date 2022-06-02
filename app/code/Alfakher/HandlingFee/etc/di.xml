@@ -10,4 +10,7 @@
 
 	<!-- overriding for the sales order creditmemo -->
 	<preference for="Magento\Sales\Block\Order\Creditmemo\Totals" type="Alfakher\HandlingFee\Block\Magento\Sales\Order\Creditmemo\Totals" />
+
+	<!-- reset custom discounts on order edit -->
+	<preference for="MageWorx\OrderEditor\Model\Order" type="Alfakher\HandlingFee\Model\MageWorx\OrderEditor\Order" />
 </config>

@@ -4,12 +4,11 @@ namespace Alfakher\HandlingFee\Block\Magento\Sales\Order\Creditmemo;
 
 use Magento\Sales\Model\Order\Creditmemo;
 
-/**
- * @author af_bv_op
- */
 class Totals extends \Alfakher\HandlingFee\Block\Magento\Sales\Order\Totals
 {
     /**
+     * Construct
+     *
      * @param \Magento\Framework\View\Element\Template\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param array $data
@@ -29,6 +28,8 @@ class Totals extends \Alfakher\HandlingFee\Block\Magento\Sales\Order\Totals
     protected $_creditmemo = null;
 
     /**
+     * Get creditmemo
+     *
      * @return Creditmemo|null
      */
     public function getCreditmemo()
@@ -46,6 +47,8 @@ class Totals extends \Alfakher\HandlingFee\Block\Magento\Sales\Order\Totals
     }
 
     /**
+     * Set creditmemo
+     *
      * @param Creditmemo $creditmemo
      * @return $this
      */

@@ -15,6 +15,11 @@
 /* start check cart is empty or not YV */
 $cartblock = $block->getLayout()->createBlock('Magento\Checkout\Block\Cart');
 $cartitem = $cartblock->getItems();
+
+/*start check quote session [vy]*/
+$quoteblock = $block->getLayout()->createBlock('Amasty\RequestQuote\Block\Cart');
+$quoteitem = $quoteblock->getQuote()->getItems();
+
 /* End */
 
 $cssClass = $block->getCssClass() ? ' ' . $block->getCssClass() : '';
@@ -33,6 +38,11 @@ if (trim($block->getPageHeading())) {
 <?php if($block->getPageHeading() == 'Shopping Cart' && empty($cartitem)) : ?>    
 <div class="empty-cart-class">    
 <?php endif; ?>
+
+<?php if($block->getPageHeading() == 'Quote Cart' && empty($quoteitem)) : ?>    
+<div class="empty-cart-class">    
+<?php endif; ?>
+
 <!-- End -->
 
 <div class="page-title-wrapper<?= $block->escapeHtmlAttr($cssClass) ?>">

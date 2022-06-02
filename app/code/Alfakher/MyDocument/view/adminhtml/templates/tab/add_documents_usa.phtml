@@ -21,6 +21,7 @@ $customer_id = $block->getCustomerId();
         accept-charset="utf-8"
         enctype="multipart/form-data"
         autocomplete="off">
+
         <input type="hidden" name="cust_id_usa" id="cust_id_usa" />
         <input type="hidden"
         name="customer_id"
@@ -37,10 +38,11 @@ $customer_id = $block->getCustomerId();
                 <div class="upload" for="document uploader">
                     <label><?= $block->escapeHtml(__($value)); ?></label>
                     <div class="input-file" id="input-filename<?= $block->escapeHtml($counter); ?>">
+
                         <input type="file"
                         data-id="<?= $block->escapeHtml($counter); ?>"
                         id="filename<?= $block->escapeHtml($counter); ?>"
-                        class="upload-filename required-entry required"
+                        class="upload-filename"
                         name="filename<?= $block->escapeHtml($counter); ?>"
                         />
                         <span class="input-note">
@@ -64,8 +66,7 @@ $customer_id = $block->getCustomerId();
                         <input type="text"
                         id="name-<?= $block->escapeHtml($counter); ?>"
                         name="name<?= $block->escapeHtml($counter); ?>" 
-                        class="required-entry required"
-                        value="<?= $block->escapeHtml($value); ?>" readonly/>
+                        value="<?= $block->escapeHtml($value); ?>"/>
                     </div>
                     <div class="set_expiry" for="document expiry data" style="display:none" >
                         <label><?= $block->escapeHtml(__('Set a Specific Expiry date')); ?></label>
@@ -129,3 +130,24 @@ $customer_id = $block->getCustomerId();
     <h1 class="success_msg"><?= $block->escapeHtml(__('DOCUMENTS ARE UPLOADED SUCCESSFULLY')); ?></h1>
     <h5><?= $block->escapeHtml(__('Once it is approved by Admin, Product price would be visible to you.')); ?></h5>
 </div>
+
+<script>
+           require(['jquery', 'jquery/ui'], function($){
+            $(document).on( 'click', '#usabtnsave', function () {
+
+            if($("#filename1").val()==""){
+                $("input[name=name1]").val('');
+            }
+            if($("#filename2").val()==""){
+                $("input[name=name2]").val('');
+            }
+            if($("#filename3").val()==""){
+                $("input[name=name3]").val('');
+            }
+            if($("#filename4").val()==""){
+                $("input[name=name4]").val('');
+            }
+  });
+ });
+
+</script>
