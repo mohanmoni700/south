@@ -2,6 +2,7 @@
 /** @var \Magento\Sales\Block\Adminhtml\Order\View\History $block */
 /** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
 ?>
+
 <div id="order_history_block" class="edit-order-comments">
     <?php if ($block->canAddComment()): ?>
         <div class="order-history-block" id="history_form">
@@ -120,7 +121,7 @@ if (!empty($rmaid->getData())):
     $datablock->getComments($id);
     $rmadata = $rmaid->getData();
     ?>
-<h2><?= $block->escapeHtml('Return Details:')?></h2>
+<h2><?= $block->escapeHtml(__('Return Details :')) ?></h2>
 <div class="rma_data">
 <div class="admin__page-section-item-content">
         <div id="history_form" class="rma-history-form edit-order-comments">
