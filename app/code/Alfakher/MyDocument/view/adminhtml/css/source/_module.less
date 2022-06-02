@@ -1,7 +1,138 @@
-
 @hookah_theme_gradient: linear-gradient(275deg, #9B2269 5%, #D378FF 100%);
 @border_left_gradient: #D378FF;
 @border_right_gradient: #9B2269;
+
+//
+//  Base Styles
+//  ____________________________________________
+
+//
+//  Common
+//  --------------------------------------------
+
+& when (@media-common = true) {
+	.form.doc-form {
+	    margin-top: 3rem;
+	}
+    .del{
+        text-align: center;
+        .delete-icon{
+            padding: 8px 20px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffffff;
+            font-size: 12px;
+            text-align: center;
+            background: #000000;
+            border: 1px solid #000000;
+            border-radius: 30px;
+            margin-top: 10px;
+            text-decoration: none;
+            display: inline-block;
+            &:hover {
+                color: #ffffff;
+                background: linear-gradient(275deg, #9B2269 5%, #D378FF 100%);;
+                border-color: transparent;
+                border-left-color: #D378FF;
+                border-right-color: #9B2269;
+            }
+        }
+    }
+	.doc-box {
+      	border: 1px solid #CDCACA;
+      	width: ~'calc(50% - 76px)';
+       	margin-bottom: 30px;
+       	display: inline-block;
+       	margin-right: 30px;
+       	padding: 20px;
+       	vertical-align: top;
+
+       	.admin__form_field {
+	       margin-bottom: 10px;
+	       word-break: break-word;
+	   	}
+	   	.switch {
+		   position: relative;
+		   display: inline-block;
+		   width: 30px;
+		   height: 17px;
+		   input { 
+			   opacity: 0;
+			   width: 0;
+			   height: 0;
+		   }
+   		}
+   		.slider {
+		   position: absolute;
+		   cursor: pointer;
+		   top: 0;
+		   left: 0;
+		   right: 0;
+		   bottom: 0;
+		   background-color: #ccc;
+		   -webkit-transition: .4s;
+		   transition: .4s;
+   		 	&:before {
+			   position: absolute;
+			   content: "";
+			   height: 13px;
+			   width: 13px;
+			   /*left: 2px;*/
+			   bottom: 2px;
+			   background-color: white;
+			   -webkit-transition: .4s;
+			   transition: .4s;
+   			}
+   		}
+   		.cmn-toggle:checked + .slider {
+   			background-color: #79a22e;
+   		}
+   		.cmn-toggle:focus + .slider {
+   			box-shadow: 0 0 1px #2196F3;
+   		}
+   		.cmn-toggle:checked + .slider:before {
+   			-webkit-transform: translateX(16px);
+		   -ms-transform: translateX(16px);
+		   transform: translateX(16px);
+  		}
+   /* Rounded sliders */
+   		.slider.round {
+   			border-radius: 34px;
+   		}
+   		.slider.round:before {
+   			border-radius: 50%;
+   		}  
+   } 
+   	form.form.doc-form {
+	   	button {
+	   		display: block;
+	   	}
+	}
+	#custom_btn{
+	    background-color: #eb5202;
+	    border-color: #eb5202;
+	    color: #ffffff;
+	    &:hover{
+	    	background-color: #ba4000;
+		    border-color: #b84002;
+		    box-shadow: 0 0 0 1px #007bdb;
+		    color: #ffffff;
+		    text-decoration: none;
+	    }
+	}
+
+	@media only screen and (max-width: 1399px) and (min-width: 1200px) {
+		.sales-order-view {
+			.abs-action-l, .ui-dialog .ui-button, .ui-dialog .action-primary, .attribute-popup-actions .page-actions-buttons > button.action-default.primary, .modal-popup .modal-footer .action-primary, .modal-popup .modal-footer .action-secondary, .action-advanced-reports, .page-actions button, .page-actions .page-actions-buttons > button, .page-actions .page-actions-buttons > .action, .page-actions > button.action-primary, .page-actions .page-actions-buttons > button.action-primary, .page-actions .page-actions-buttons > .action.action-primary, .page-actions > button.primary, .page-actions .page-actions-buttons > button.primary, .page-actions .page-actions-buttons > .action.primary, .page-actions > button.action-secondary, .page-actions .page-actions-buttons > button.action-secondary, .page-actions .page-actions-buttons > .action.action-secondary, .page-layout-admin-login .action-primary, .admin__field-complex-attributes [class^="action-"], .steps-wizard .select-attributes-actions .action-default, .order-totals-actions .action-default, .staging-preview-item-content-wrapper > .actions-toolbar .action-primary, .popup-window .magento_buttons .ok_button, .fade .actions .primary, .page-actions .page-actions-buttons > .amshopby-button, .page-actions .page-actions-buttons > .am-filter-go, .attribute-popup-actions .page-actions.floating-header > button.action-default.primary, .page-actions .page-actions.floating-header > button, .page-actions .page-actions.floating-header > .action, .page-actions .page-actions.floating-header > button.action-primary, .page-actions .page-actions.floating-header > .action.action-primary, .page-actions .page-actions.floating-header > button.primary, .page-actions .page-actions.floating-header > .action.primary, .page-actions .page-actions.floating-header > button.action-secondary, .page-actions .page-actions.floating-header > .action.action-secondary, .attribute-popup-actions .page-actions-buttons > .block-footer .action-add.action-default.primary, .page-actions .block-footer .action-add, .page-actions .page-actions-buttons > .block-footer .action-add, .page-actions > .block-footer .action-add.action-primary, .page-actions .page-actions-buttons > .block-footer .action-add.action-primary, .page-actions > .block-footer .action-add.primary, .page-actions .page-actions-buttons > .block-footer .action-add.primary, .page-actions > .block-footer .action-add.action-secondary, .page-actions .page-actions-buttons > .block-footer .action-add.action-secondary {
+				font-size: 1.33rem;
+			}
+			.page-actions > button, .page-actions .page-actions-buttons > button, .page-actions .page-actions-buttons > .action, .page-actions .page-actions.floating-header > button, .page-actions .page-actions.floating-header > .action, .page-actions > .block-footer .action-add, .page-actions .page-actions-buttons > .block-footer .action-add {
+				margin-left: 1rem;
+			}
+		}
+	}
+}
 
 //
 //  Common
@@ -54,7 +185,10 @@
                 padding: 20px;
                 img {
                     width: 100%;
-                    max-width: 170px;
+                    max-width: 100%;
+                    max-height: 100%;
+					height: auto;
+					width: auto;
                     max-height: 170px;
                 }
                 &:hover .doc-actions  {
@@ -85,22 +219,23 @@
                 display: block;
                 margin: 0 20px;
                 cursor: pointer;
+				font-size: 0;
             }
             .deletedocument {
                 border:  none;
             }
             .view-doc-link::before {
-                content: url('@{baseDir}images/doc_view.svg');
+                content: url('Alfakher_MyDocument::images/doc_view.svg');
                 margin-top: 10px;
                 display: block;
             }
             .deletedocument::before {
-                content: url('@{baseDir}images/delete-icon.svg');
+                content: url('Alfakher_MyDocument::images/delete-icon.svg');
                 margin-top: 10px;
                 display: block;
             }
             .download-doc-preview::before {
-                content: url('@{baseDir}images/download_white.svg');
+                content: url('Alfakher_MyDocument::images/download_white.svg');
                 margin-top: 10px;
                 display: block;
             }
@@ -150,14 +285,32 @@
     // Upload document form design [AR]
     // __________________________________________________________
 
-
+    .mydoc_name{
+        input{
+            font-size: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0px 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            border: 0;
+        }
+    }
     .my_document {
         form {
             label {
                 font-size: 12px;
                 font-weight: 700;
-                margin-bottom: 14px;
+                margin-bottom: 5px;
                 display: block;
+                &.error {
+                    margin-top: 7px;
+                    color: #e02b27;
+                    font-weight: 400;
+                }
             }
             button.submit {
                 margin: 20px auto 20px 50%;
@@ -174,12 +327,32 @@
             .slider {
                 top: 0;
             }
+			.cmn-toggle {
+				position: absolute;
+				right: 0;
+				top: 0;
+				min-height: 18px;
+			}
         }
         .doc_name {
             display: none;
             input[type='text'] {
                 height: 40px;
+				padding: 0 10px;
+				box-sizing: border-box;
+				border-radius: 10px;
+				border: 2px solid #000000;
+				width: 100%;
+                &:focus {
+                    box-shadow: none;
+                }
             }
+			input {
+				&[disabled], &[readonly] {
+					background-color: #f1f1f1;
+					cursor: not-allowed;
+				}
+			}
         }
         .upload.active {
             .set_expiry {
@@ -241,9 +414,20 @@
         }
         input {
             height: 40px;
-            background: url('@{baseDir}images/calender-icon.svg') no-repeat;
+            background: url('Alfakher_MyDocument::images/calender-icon.svg') no-repeat;
             background-size: 14px 14px;
             background-position: ~'calc(100% - 14px)' center;
+			width: 100%;
+			border: solid 2px #000;
+			border-radius: 10px;
+			padding: 0 10px;
+			&:disabled, &:readonly {
+				background-color: #f1f1f1;
+				cursor: not-allowed;
+			}
+            &:focus {
+                box-shadow: none;
+            }
         }
     }
 
@@ -254,10 +438,6 @@
 
     .updated-container {
         align-items: start;
-        margin-right: -20px;
-        @media only screen and (max-width: 480px) {
-            margin-right: 0;
-        }
     }
     .updatedocument {
         .field .value {
@@ -281,6 +461,11 @@
             font-weight: 700;
             margin-bottom: 14px;
             display: block;
+            &.error {
+                margin-top: 7px;
+                color: #e02b27;
+                font-weight: 400;
+            }
         }
         .value {
             margin-bottom: 10px;
@@ -291,7 +476,10 @@
                 border: 2px solid #000;
                 img {
                     width: 100%;
-                    max-width: 170px;
+                    max-width: 100%;
+                    max-height: 100%;
+					height: auto;
+					width: auto;
                     max-height: 170px;
                 }
 
@@ -336,7 +524,7 @@
                 content: "";
                 width: 16px;
                 height: 15px;
-                background: url('@{baseDir}images/download.svg');
+                background: url('Alfakher_MyDocument::images/download.svg');
                 background-size: 100%;
                 background-repeat: no-repeat;
                 display: block;
@@ -365,7 +553,7 @@
             content: "";
             width: 16px;
             height: 15px;
-            background: url('@{baseDir}images/download.svg');
+            background: url('Alfakher_MyDocument::images/download.svg');
             background-size: 100%;
             background-repeat: no-repeat;
             display: block;
@@ -373,8 +561,8 @@
             margin-top: -2px;
         }
     }
-    
-    .doc-tooltip {
+
+	.doc-tooltip {
         position: relative;
         margin-top: 10px;
         .lib-tooltip(bottom);
@@ -393,7 +581,7 @@
             font-weight: 700;
             &:after {
                 content: '';
-                background: url('@{baseDir}images/pending.svg') no-repeat;
+                background: url('Alfakher_MyDocument::images/pending.svg') no-repeat;
                 display: inline-block;
                 width: 25px;
                 height: 25px;
@@ -441,6 +629,13 @@
         &:focus + .slider {
             box-shadow: 0 0 1px #2196F3;
         }
+		&:disabled {
+			cursor: not-allowed;
+			+ .slider {
+				background-color: #f1f1f1;
+				cursor: not-allowed;
+			}
+		}
     }
     .slider {
         position: absolute;
@@ -547,6 +742,7 @@
 
     .add-more-cont {
         display: flex;
+        align-items: start;
         cursor: pointer;
         margin-bottom: 20px;
         &:before {
@@ -571,7 +767,52 @@
         margin-bottom: 20px;
         margin-top: 3rem;
         position: relative;
-        margin-right:20px;
+
+		.checkbox{
+			position: absolute; 
+			opacity: 0; 
+			&:focus{
+			  outline: none;
+			}
+			& + label{
+			  padding-left: 30px;
+			  padding-top: 1px;
+			  cursor: pointer;
+			}
+		  & + label:before {
+			content: '';
+			margin-right: 10px;
+			display: inline-block;
+			vertical-align: text-top;
+			width: 18px;
+			height: 18px;
+			background: #ffffff;
+			position: absolute;
+			left: 0;
+			top: 0px;
+			border: 1px solid #333333;
+			border-radius: 0px;
+		  }
+	  
+		  &:focus + label:before {
+			box-shadow: none;
+		  }
+		  &:checked + label:before {
+			background: #333333;
+			border: 1px solid #333333;
+			border-radius: 0px;
+		  }
+	  
+		  &:checked + label:after {
+			content: '';
+			position: absolute;
+			left: 4px;
+			top: 5px;
+			width: 10px;
+			height: 7px;
+			background: #333333 url('Alfakher_MyDocument::images/true_arrow.svg');    
+		  }
+	  }
     }
     .add-more-field input[type="checkbox"] {
         opacity: 0;
@@ -580,6 +821,7 @@
         z-index: 9;
         cursor: pointer;
         top: -2px;
+		position: absolute;
         &:disabled {
             + label{
                 &:before {
@@ -766,6 +1008,15 @@
     }    
 }
 @media only screen and (max-width: 919px) and (min-width: 480px) {
+    .upload-container,
+    .updated-container{
+        .add-more-cont {
+            margin-top: 204px;
+            &:nth-of-type(3), &:nth-of-type(5), &:nth-of-type(7), &:nth-of-type(9), &:nth-of-type(11) {
+                margin-top: 0;
+            }
+        }
+    }
 }
 
 @media only screen and (min-width: 1180px) {
@@ -773,38 +1024,48 @@
     form .updated-container{
         .upload,
         .document {
-            width: ~'calc((100% - 80px) / 4 )';
+            width: ~'calc((100% - 60px) / 4 )';
             margin-right: 20px;
             display: block;
             grid-row-gap: 10px;
             margin-bottom: 4rem;
 
-            /*&[for="document uploader"]:nth-of-type(4n) {
+            &[for="document uploader"]:nth-of-type(4n) {
                 margin-right: 0;
-            }*/
-            &:nth-of-type(2n), &:nth-of-type(3n) {
-                margin-right: 20px;
+            }
+            &:nth-of-type(4n) {
+                margin-right: 0;
+            }
+        }
+        .add-more-cont {
+            margin-top: 204px;
+            &:nth-of-type(5), &:nth-of-type(9), &:nth-of-type(13), &:nth-of-type(17) {
+                margin-top: 0;
             }
         }
     }
-} 
-@media only screen and (min-width: 920px) {
+}
+@media only screen and (max-width: 1179px) and (min-width: 920px) {
     .upload-container,
     .updated-container{
-        .upload,
+		.upload,
         .document {
-            width: ~'calc((100% - 60px) / 3 )';
+            width: ~'calc((100% - 40px) / 3 )';
             margin-right: 20px;
             display: grid;
             grid-row-gap: 10px;
             margin-bottom: 20px;
 
-            /*&:nth-of-type(3n) {
+            &:nth-of-type(3n) {
                 margin-right: 0;
                 
-            }*/
+            }
+        }
+        .add-more-cont {
+            margin-top: 204px;
+            &:nth-of-type(4), &:nth-of-type(7), &:nth-of-type(10), &:nth-of-type(13) {
+                margin-top: 0;
+            }
         }
     }
-}
-@media only screen and (max-width: 1179px) and (min-width: 920px) {
 }
