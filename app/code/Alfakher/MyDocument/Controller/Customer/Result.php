@@ -173,7 +173,7 @@ class Result extends Action
                         $model->setIsDelete(false);
                         $model->setStatus(0);
                         $saveData = $model->save();
-                        $customerDocs[] =  $saveData->getData();
+                        $customerDocs[] = $saveData->getData();
                     }
                 }
                 $i++;
@@ -184,7 +184,7 @@ class Result extends Action
         if ($saveData) {
             $this->_eventManager->dispatch('document_save_after',
                 [
-                    'items' => $customerDocs
+                    'items' => $customerDocs,
                 ]
             );
             $htmlContent = "Record Saved Successfully.";

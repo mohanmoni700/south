@@ -254,7 +254,10 @@
 
     .updated-container {
         align-items: start;
-        margin-right: -20px
+        margin-right: -20px;
+        @media only screen and (max-width: 480px) {
+            margin-right: 0;
+        }
     }
     .updatedocument {
         .field .value {
