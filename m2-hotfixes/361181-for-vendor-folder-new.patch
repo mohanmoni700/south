@@ -5,7 +5,7 @@ index be7bfd1ce721f81b9d6cd849693978e165d9a4dc..c9c78af4bc136407c9e6da7b3c329f38
 @@ -196,14 +196,10 @@ class AbstractItems extends \Magento\Backend\Block\Template
          );
      }
-
+ 
 -    /**
 -     * @param bool $strong
 -     * @param string $separator
@@ -35,6 +35,19 @@ index f263bf7e3807e99c6f23d474b7295c8baac160b4..d303acd9adde9d0f4574badc030ab2ed
                  break;
              case 'qty':
                  $html = $item->getQty() * 1;
+diff --git a/vendor/amasty/module-request-quote/Controller/Cart/UpdatePost.php b/vendor/amasty/module-request-quote/Controller/Cart/UpdatePost.php
+index d9e152bde8dc837567fca47d07a14b541d7fbbc2..d895a1052781c1a38f797a89f36be281a82c1889 100644
+--- a/vendor/amasty/module-request-quote/Controller/Cart/UpdatePost.php
++++ b/vendor/amasty/module-request-quote/Controller/Cart/UpdatePost.php
+@@ -57,7 +57,7 @@ class UpdatePost extends \Amasty\RequestQuote\Controller\Cart
+ 
+                     $price = isset($data['price'])
+                         ? $this->convertPriceToBase($this->getLocateFilter()->filter(trim($data['price'])))
+-                        : $quoteItem->getProduct()->getFinalPrice();
++                        : $quoteItem->getProduct()->getFinalPrice($data['qty'] ?? 1);
+                     if (!$this->getConfigHelper()->isAllowCustomizePrice()
+                         && $this->getHidePriceProvider()->isHidePrice($quoteItem->getProduct())
+                     ) {
 diff --git a/vendor/amasty/module-request-quote/Model/Quote/Backend/Edit/ProductManagement.php b/vendor/amasty/module-request-quote/Model/Quote/Backend/Edit/ProductManagement.php
 index bd0c401c57f218b7918d6f12fa74c1b04a669f60..b692b0d517985621b24a6ecaced6896b52432c31 100644
 --- a/vendor/amasty/module-request-quote/Model/Quote/Backend/Edit/ProductManagement.php
@@ -99,7 +112,7 @@ index 3b80a4476e8eb7eef423bdbaa675e5dd025a9553..f119a7325ef778a0bf54703d49770f98
 --- a/vendor/amasty/module-request-quote/view/adminhtml/web/quote/edit/scripts.js
 +++ b/vendor/amasty/module-request-quote/view/adminhtml/web/quote/edit/scripts.js
 @@ -1108,9 +1108,11 @@ define([
-
+ 
          toggleCustomPrice: function(checkbox, elemId) {
              if (checkbox.checked) {
 +                $(elemId).disabled = false;
