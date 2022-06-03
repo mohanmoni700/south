@@ -19,5 +19,17 @@
         <plugin name="magetrend-shipment-pdf-replace-print"
                 type="Magetrend\PdfTemplates\Plugin\Sales\Controller\Order\PrintShipment"
                 sortOrder="10" disabled="true"/>
+    
+    <!-- Company field search adding on the customer grid -->
+    <preference for="Magento\Customer\Model\ResourceModel\Grid\Collection"
+    type="HookahShisha\Customization\Model\ResourceModel\Grid\Collection" />
+
+    <type name="Magento\Catalog\Block\Product\AbstractProduct">
+        <plugin name="mpproductlabels_product" type="Mageplaza\ProductLabels\Plugin\Block\AbstractProduct" disabled="true"/>
+    </type>
+
+    <!-- Add Company Name in order invoice pdf -->
+    <type name="Magetrend\PdfTemplates\Model\Pdf\Filter">
+       <plugin name="custom_magetrend_pdftemplates" type="HookahShisha\Customization\Model\Pdf\Filter" />
     </type>
 </config>

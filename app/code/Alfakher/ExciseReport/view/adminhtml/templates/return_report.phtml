@@ -1,0 +1,57 @@
+<?php
+/**
+ * @var $block Alfakher\ExciseReport\Block\Adminhtml\Report\ExciseTax
+ */
+?>
+<form action="<?= /* @noEscape */ $block->getUrl('excisereport/returns/save')?>"
+            method="post"
+            class="form doc-form"
+            accept-charset="utf-8"
+            enctype="multipart/form-data">
+    <input name="form_key" type="hidden" value="<?= $block->escapeHtml($block->getFormKey()) ?>"></input>
+    <div>
+        <div class="start-date">
+            <label>
+                <?= $escaper->escapeHtml(__('Start Date :')) ?>
+                <input type="date" 
+                    placeholder="<?= $escaper->escapeHtml(__('Start Date')) ?>" 
+                    name="startdate" 
+                    id="startdate" 
+                    class="start-date" 
+                    required></input>
+            </label>
+        </div>
+        <br>
+        <div class="end-date">
+            <label>
+                <?= $escaper->escapeHtml(__('End Date :')) ?>
+                <input type="date" 
+                    placeholder="<?= $escaper->escapeHtml(__('End Date')) ?>" 
+                    name="enddate" 
+                    id="enddate" 
+                    class="end-date" 
+                    required></input>
+            </label>
+        </div>
+        <br>
+        <div class="website">
+            <label><?= $escaper->escapeHtml(__('Website :')) ?>
+                <select name="website" id="website" required>
+                    <?php foreach ($block->getWebsiteCollection() as $website): ?>
+                        <option 
+                            name="<?= /* @noEscape */ $website->getName()?>" 
+                            value="<?= /* @noEscape */ $website->getId()?>">
+                            <?= /* @noEscape */ $website->getName()?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </label>
+        </div>
+        <br>
+        <div class="primary regis">
+            <button type="submit" value="submit" id="export_btn" class="action submit primary">
+                <?= $escaper->escapeHtml(__('Export CSV')) ?>
+            </button>
+        </div>
+    </div>
+</form>

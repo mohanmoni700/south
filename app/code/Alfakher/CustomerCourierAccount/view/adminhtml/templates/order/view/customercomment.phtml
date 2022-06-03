@@ -3,30 +3,30 @@ $order = $block->getOrder();
 
 ?>
 
-<?php if ($block->isCustomerNote($order)) : ?>
+<?php if ($block->isCustomerNote($order)): ?>
 <section class="admin__page-section order-view-account-information">
-	<div class="admin__page-section-title">
+    <div class="admin__page-section-title">
         <span class="title"><?= $block->escapeHtml(__('Customer Shipping Comment')) ?></span>
     </div>
-	<div class="admin__page-section-content">
-		<div class="admin__page-section-item order-information">
-			<div class="admin__page-section-item-content">
-			    <table class="admin__table-secondary order-account-information-table">
-			        <tr>
-			            <th><strong><?= $block->escapeHtml(__('Courier Name :')) ?></strong></th>
-			        </tr>
-			        <tr>
-			        	<td style="word-break: break-all; text-align: left;"><?= $order->getCustomerCourierName() ?></td>
-			        </tr>
-			        <tr>
-			            <th><strong><?= $block->escapeHtml(__('Account Number :')) ?></strong></th>
-			        </tr>
-			        <tr>
-			        	<td style="word-break: break-all; text-align: left;"><?= $order->getCustomerCourierAccount() ?></td>
-			        </tr>
-			    </table>
-			</div>
-		</div>
-	</div>
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-information">
+            <div class="admin__page-section-item-content">
+                <table class="admin__table-secondary order-account-information-table">
+                    <tr>
+                        <th><strong><?= $block->escapeHtml(__('Courier Name :')) ?></strong></th>
+                    </tr>
+                    <tr>
+                        <td style="word-break: break-all; text-align: left;"><?= /* @noEscape */ $order->getCustomerCourierName() ?></td>
+                    </tr>
+                    <tr>
+                        <th><strong><?= $block->escapeHtml(__('Account Number :')) ?></strong></th>
+                    </tr>
+                    <tr>
+                        <td style="word-break: break-all; text-align: left;"><?= /* @noEscape */ $order->getCustomerCourierAccount() ?></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
 </section>
 <?php endif; ?>
