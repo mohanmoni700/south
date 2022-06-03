@@ -2,9 +2,6 @@
 
 namespace Alfakher\CustomerCourierAccount\Model\Carrier;
 
-/**
- *
- */
 use Magento\Quote\Model\Quote\Address\RateRequest;
 use Magento\Shipping\Model\Carrier\AbstractCarrier;
 use Magento\Shipping\Model\Carrier\CarrierInterface;
@@ -32,6 +29,8 @@ class CustomerCourierShipping extends AbstractCarrier implements CarrierInterfac
     private $rateMethodFactory;
 
     /**
+     * Construct
+     *
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory
      * @param \Psr\Log\LoggerInterface $logger
@@ -88,6 +87,8 @@ class CustomerCourierShipping extends AbstractCarrier implements CarrierInterfac
     }
 
     /**
+     * Get allowed methods
+     *
      * @return array
      */
     public function getAllowedMethods()

@@ -1,9 +1,4 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-
 /* @var \Magento\Sales\Block\Adminhtml\Order\Totals $block */
 ?>
 
@@ -14,6 +9,9 @@ $viewModel = $block->getData('view_model');
 $order = $block->getOrder();
 $websiteId = $order->getStore()->getWebsiteId();
 $canShowFeeEdit = $viewModel->isModuleEnabled($websiteId);
+$canShowSubtotalEdit = $viewModel->isSubtotalEditEnabled($websiteId);
+$canShowShippingFeeEdit = $viewModel->isShippingFeeEditEnabled($websiteId);
+$zeroOutEnable = $viewModel->isZeroOutEnabled($websiteId);
 ?>
 <?php /* bv_op; date : 18-2-22; edit handling fee; End */ ?>
 
@@ -88,6 +86,16 @@ $canShowFeeEdit = $viewModel->isModuleEnabled($websiteId);
                             <?php endif; ?>
                         </td>
 
+                        <?php /* bv_op; date : 2-5-22; displaying initial subtotal and initial shipping fee; Start */ ?>
+                        <?php if ($_total->getCode() == 'subtotal' && $order->getTotalSubtotalDiscount() > 0): ?>
+                            <?php $_total->setData("value", $order->getOriginalSubtotal()); ?>
+                            <?php $_total->setData("base_value", $order->getOriginalSubtotal()); ?>
+                        <?php elseif ($_total->getCode() == 'shipping' && $order->getTotalShippingFeeDiscount() > 0): ?>
+                            <?php $_total->setData("value", $order->getOriginalShippingFee()); ?>
+                            <?php $_total->setData("base_value", $order->getOriginalShippingFee()); ?>
+                        <?php endif; ?>
+                        <?php /* bv_op; date : 2-5-22; displaying initial subtotal and initial shipping fee; End */ ?>
+
                         <?php if ($_total->getStrong()): ?>
                             <td <?= /* @noEscape */ $block->getValueProperties() ?>>
                                 <strong><?= /* @noEscape */ $block->formatValue($_total) ?></strong>
@@ -137,8 +145,141 @@ $canShowFeeEdit = $viewModel->isModuleEnabled($websiteId);
                 <?php endif; ?>
                 <?php /* bv_op; date : 18-2-22; edit handling fee; End */ ?>
 
+                <?php /* bv_op; date : 20-4-22; edit subtotal; Start */ ?>
+                <?php if ($_total->getCode() == 'subtotal'
+                    &&
+                    (($_total->getValue() > 0 && $order->getGrandTotal() > 0) || $order->getTotalSubtotalDiscount() > 0)
+                    &&
+                    $canShowSubtotalEdit
+                    &&
+                    !$order->getInvoiceCollection()->count()): ?>
+                    <tr id="edit_subtotal_btn_tr">
+                        <td></td>
+                        <td id="edit_subtotal">
+                            <button class="primary" type="button" id="edit_subtotal_btn">Edit Subtotal</button>
+                        </td>
+                    </tr>
+                    <tr id="submit_subtotal_btn_tr" style="display: none;">
+                        <td id="submit_subtotal">
+                            <button type="button" id="cancle_subtotal_btn">Cancel</button>
+                            <button class="primary" type="button" id="submit_subtotal_btn">Submit</button>
+                        </td>
+                        <td>
+                            <input
+                            type="hidden"
+                            name="updated_subtotal_for_order"
+                            id="updated_subtotal_for_order"
+                            value="<?= /* @noEscape */ $order->getId() ?>">
+
+                            <select name="subtotal_discount_type" id="subtotal_discount_type" class="admin__control-select">
+                                <option value="fix">Amount Discount</option>
+                                <option value="percent">Percentage Discount</option>
+                            </select>
+
+                            <input
+                            type="text"
+                            name="updated_subtotal"
+                            id="updated_subtotal"
+                            placeholder="Discount Amount"
+                            class="admin__control-textarea"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                <?php /* bv_op; date : 20-4-22; edit subtotal; End */ ?>
+
+                <?php /* bv_op; date : 21-4-22; edit shipping; Start */ ?>
+                <?php if ($_total->getCode() == 'shipping'
+                    &&
+                    (($_total->getValue() > 0 && $order->getGrandTotal() > 0) || $order->getTotalShippingFeeDiscount() > 0)
+                    &&
+                    $canShowShippingFeeEdit
+                    &&
+                    !$order->getInvoiceCollection()->count()): ?>
+                    <tr id="edit_shipping_btn_tr">
+                        <td></td>
+                        <td id="edit_shipping">
+                            <button class="primary" type="button" id="edit_shipping_btn">Edit Shipping Fee</button>
+                        </td>
+                    </tr>
+                    <tr id="submit_shipping_btn_tr" style="display: none;">
+                        <td id="submit_shipping">
+                            <button type="button" id="cancle_shipping_btn">Cancel</button>
+                            <button class="primary" type="button" id="submit_shipping_btn">Submit</button>
+                        </td>
+                        <td>
+                            <input
+                            type="hidden"
+                            name="updated_shipping_for_order"
+                            id="updated_shipping_for_order"
+                            value="<?= /* @noEscape */ $order->getId() ?>">
+
+                            <select name="shipping_discount_type" id="shipping_discount_type" class="admin__control-select">
+                                <option value="fix">Amount Discount</option>
+                                <option value="percent">Percentage Discount</option>
+                            </select>
+
+                            <input
+                            type="text"
+                            name="updated_shipping"
+                            id="updated_shipping"
+                            placeholder="Discount Amount"
+                            class="admin__control-textarea"
+                            oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                <?php /* bv_op; date : 21-4-22; edit shipping; End */ ?>
 
             <?php endforeach; ?>
+
+            <?php /* bv_op; date : 2-5-22; displaying subtotal and shipping discount; Start */ ?>
+            <?php if ($order->getTotalSubtotalDiscount() > 0): ?>
+                <tr class="col-2">
+                    <td class="label">Subtotal Discount</td>
+                    <td>-<?= /* @noEscape */ $order->formatPrice($order->getTotalSubtotalDiscount())  ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($order->getTotalShippingFeeDiscount() > 0): ?>
+                <tr class="col-2">
+                    <td class="label">Shipping Fee Discount</td>
+                    <td>-<?= /* @noEscape */ $order->formatPrice($order->getTotalShippingFeeDiscount()) ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php /* bv_op; date : 2-5-22; displaying subtotal and shipping discount; End */ ?>
+
+            <?php /* bv_op; date : 4-5-22; zero out button; Start */ ?>
+            <?php if ($zeroOutEnable && $order->getGrandTotal() > 0): ?>
+                <tr class="col-2">
+                    <td class="label">Zero Out Order</td>
+                    <td>
+                        <input
+                            type="hidden"
+                            name="zero_out_for_order"
+                            id="zero_out_for_order"
+                            value="<?= /* @noEscape */ $order->getId() ?>">
+                        <button class="primary" type="button" id="zero_out_btn">Zero Out</button>
+                    </td>
+                </tr>
+            <?php endif; ?>
+            <?php /* bv_op; date : 4-5-22; zero out button; End */ ?>
+
+            <?php /* bv_op; date : 5-5-22; revert the order zero out; Start */ ?>
+            <?php if ($zeroOutEnable && $order->getGrandTotal() == 0 && $order->getOriginalSubtotal() > 0 && $order->getTotalSubtotalDiscount() == 0): ?>
+                <tr class="col-2">
+                    <td class="label">Revert Zero Out Order</td>
+                    <td>
+                        <input
+                            type="hidden"
+                            name="revert_zero_out_for_order"
+                            id="revert_zero_out_for_order"
+                            value="<?= /* @noEscape */ $order->getId() ?>">
+                        <button class="primary" type="button" id="revert_zero_out_btn">Revert Zero Out</button>
+                    </td>
+                </tr>
+            <?php endif; ?>
+            <?php /* bv_op; date : 5-5-22; revert the order zero out; End */ ?>
+
         </tbody>
     <?php endif; ?>
 </table>
@@ -150,7 +291,7 @@ $canShowFeeEdit = $viewModel->isModuleEnabled($websiteId);
 <?php /* bv_op; date : 18-2-22; edit handling fee; Start */ ?>
 <?php if ($canShowFeeEdit && !$order->getInvoiceCollection()->count()): ?>
 
-<script type="text/javascript">
+<script>
     require(['jquery'], function ($) {
         $(document).on('click', "#edit_handling_fee_btn", function () {
             $("#edit_handling_fee_btn_tr").hide();
@@ -187,3 +328,137 @@ $canShowFeeEdit = $viewModel->isModuleEnabled($websiteId);
 
 <?php endif; ?>
 <?php /* bv_op; date : 18-2-22; edit handling fee; End */ ?>
+
+<?php /* bv_op; date : 20-4-22; edit subtotal; Start */ ?>
+<?php if ($canShowSubtotalEdit && !$order->getInvoiceCollection()->count()): ?>
+
+<script>
+    require(['jquery'], function ($) {
+        $(document).on('click', "#edit_subtotal_btn", function () {
+            $("#edit_subtotal_btn_tr").hide();
+            $("#submit_subtotal_btn_tr").show();
+        });
+
+        $(document).on('click', "#cancle_subtotal_btn", function () {
+            $("#edit_subtotal_btn_tr").show();
+            $("#submit_subtotal_btn_tr").hide();
+            $("#updated_subtotal").val("");
+        });
+
+        $(document).on('click', "#submit_subtotal_btn", function () {
+            var discountType = $("#subtotal_discount_type").val();
+            var updatedSubtotal = $("#updated_subtotal").val();
+            var orderId = $("#updated_subtotal_for_order").val();
+            if (typeof updatedSubtotal === 'undefined' || updatedSubtotal == '') {
+                alert("please enter some value");
+                return;
+            }
+            $.ajax({
+                url: "<?= /* @noEscape */ $block->getUrl('handlingfee/Order/updatesubtotal/') ?>",
+                showLoader: true,
+                type: 'POST',
+                data: {order_id:orderId, amount : updatedSubtotal, type : discountType},
+                success: function(response) {
+                    location.reload(true);
+                }
+            });
+        });
+    });
+</script>
+
+<?php endif; ?>
+<?php /* bv_op; date : 20-4-22; edit Subtotal; End */ ?>
+
+<?php /* bv_op; date : 21-4-22; edit shipping; Start */ ?>
+<?php if ($canShowShippingFeeEdit && !$order->getInvoiceCollection()->count()): ?>
+
+<script>
+    require(['jquery'], function ($) {
+        $(document).on('click', "#edit_shipping_btn", function () {
+            $("#edit_shipping_btn_tr").hide();
+            $("#submit_shipping_btn_tr").show();
+        });
+
+        $(document).on('click', "#cancle_shipping_btn", function () {
+            $("#edit_shipping_btn_tr").show();
+            $("#submit_shipping_btn_tr").hide();
+            $("#updated_shipping").val("");
+        });
+
+        $(document).on('click', "#submit_shipping_btn", function () {
+            var discountType = $("#shipping_discount_type").val();
+            var updatedShipping = $("#updated_shipping").val();
+            var orderId = $("#updated_shipping_for_order").val();
+            if (typeof updatedShipping === 'undefined' || updatedShipping == '') {
+                alert("please enter some value");
+                return;
+            }
+            $.ajax({
+                url: "<?= /* @noEscape */ $block->getUrl('handlingfee/Order/updateshippingfee/') ?>",
+                showLoader: true,
+                type: 'POST',
+                data: {order_id:orderId, amount : updatedShipping, type : discountType},
+                success: function(response) {
+                    location.reload(true);
+                }
+            });
+        });
+    });
+</script>
+
+<?php endif; ?>
+<?php /* bv_op; date : 21-4-22; edit Shipping; End */ ?>
+
+<?php /* bv_op; date : 4-5-22; zero out the order; Start */ ?>
+<?php if ($zeroOutEnable): ?>
+<script>
+    require(['jquery', 'Magento_Ui/js/modal/confirm'], function ($, confirmation) {
+        $(document).on('click', "#zero_out_btn", function () {
+            confirmation({
+                title: $.mage.__('Zero Out Order'),
+                content: $.mage.__('This action will zero out the order. Are you sure to perform this operation?'),
+                actions: {
+                    confirm: function(){
+                        var orderId = $("#zero_out_for_order").val();
+
+                        $.ajax({
+                            url: "<?= /* @noEscape */ $block->getUrl('handlingfee/Order/zeroout/') ?>",
+                            showLoader: true,
+                            type: 'POST',
+                            data: {order_id:orderId},
+                            success: function(response) {
+                                location.reload(true);
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
+        $(document).on('click', "#revert_zero_out_btn", function () {
+            confirmation({
+                title: $.mage.__('Revert Zero Out Order'),
+                content: $.mage.__('This action will revert order\'s zero out. Are you sure to perform this operation?'),
+                actions: {
+                    confirm: function(){
+                        var orderId = $("#revert_zero_out_for_order").val();
+
+                        $.ajax({
+                            url: "<?= /* @noEscape */ $block->getUrl('handlingfee/Order/revertzeroout/') ?>",
+                            showLoader: true,
+                            type: 'POST',
+                            data: {order_id:orderId},
+                            success: function(response) {
+                                location.reload(true);
+                            }
+                        });
+                    }
+                }
+            });
+        });
+
+
+    });
+</script>
+<?php endif; ?>
+<?php /* bv_op; date : 4-5-22; zero out the order; End */ ?>
