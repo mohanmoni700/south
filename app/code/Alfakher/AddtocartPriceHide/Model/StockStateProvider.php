@@ -1,9 +1,4 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-
 namespace Alfakher\AddtocartPriceHide\Model;
 
 use Magento\CatalogInventory\Api\Data\StockItemInterface;
@@ -123,9 +118,13 @@ class StockStateProvider extends \Magento\CatalogInventory\Model\StockStateProvi
         }
 
         if (!$stockItem->getIsInStock()) {
+            $ProdutId = $stockItem->getProductId();
+            $ProductLoad = $this->productFactory->create()->load($ProdutId);
+            $ProdSku = $ProductLoad->getSku();
+
             $result->setHasError(true)
                 ->setErrorCode('out_stock')
-                ->setMessage(__('This product is out of stock.'))
+                ->setMessage(__('Product '.$ProdSku.' that you are trying to add is not available.'))
                 ->setQuoteMessage(__('Some of the products are out of stock.'))
                 ->setQuoteMessageIndex('stock');
             $result->setItemUseOldQty(true);
