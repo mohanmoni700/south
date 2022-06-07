@@ -98,13 +98,44 @@
             position: relative;
         }
     }
-    .actions-toolbar{
-        button#use-customer-balance{
-            .cart_btn(); 
+    .checkout-payment-method  {
+        .payment-option-content {
+            .form-discount {
+                .partial-amount:not(.active) {
+                    ~ .actions-toolbar {
+                        .primary {
+                            top: 0px;
+                            right: auto;
+                            left: 0;
+                            position: relative;
+                            float: left;
+                            button {
+                                border-radius: 30px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    button.action.primary.storecredit-btn {
+        .lib-font-size(14);
+        padding: 5px 20px;
+        line-height: 30px;
+        margin-right: 10px;
+        margin-bottom: 20px;
+        &.active {
+            border-color: transparent;
+            background: @hookah_theme_gradient;
+            border-left-color: @border_left_gradient;
+            border-right-color: @border_right_gradient;
         }
     }
     button#delete-customer-balance{
         .cart_btn();
+        background-color: transparent;
+        padding: 6px 16px;
     }
 
     .checkout-cart-index {
@@ -1030,6 +1061,11 @@
                 margin-bottom: 0;
             }
         }
+    }
+    button.action.primary.storecredit-btn {
+        .lib-font-size(13);
+        padding: 5px 14px;
+        margin-bottom: 16px;
     }
 }
 

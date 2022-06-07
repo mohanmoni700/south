@@ -9,7 +9,7 @@
 @lib-action_clr:#404040;
 & when (@media-common = true) {    margin-top: 20px;
     display: inline-block;
-    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
+    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo, .magento_rma-returns-returns {
         .order-references{
             border: 0;
         }
@@ -62,7 +62,7 @@
             margin-bottom: 30px;
         }   
     }
-    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
+    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo, .magento_rma-returns-returns {
         &.account{
             .page-title-wrapper{
                 .page-title{
@@ -172,7 +172,9 @@
     }
     .table-wrapper.orders-history .table-order-items,
     .table-wrapper.returns .table-returns,
-    .table-wrapper.quotes-history .table-quote-items{
+    .table-wrapper.quotes-history .table-quote-items,
+    .table-wrapper.returns .table-order-items.returns,
+    .table-wrapper.balance-history .table-balance-history {
         table-layout: fixed;
         thead{
             tr{
@@ -230,6 +232,20 @@
                         width: 1px;
                         background: @lib-action_clr;;
                         top: 3px;
+                    }
+                }
+            }
+        }
+    }
+
+    .table-wrapper.orders-history {
+        .table-order-items {
+            thead {
+                tr {
+                    th {
+                        &.actions {
+                            width: 232px;
+                        }
                     }
                 }
             }
@@ -854,7 +870,7 @@
             }
         }
     }
-    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
+    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-creditmemo, .sales-order-printcreditmemo, .magento_rma-returns-returns {
         &.account {
             .column.main {
                 .items.order-links {

@@ -73,6 +73,17 @@ input::-webkit-contacts-auto-fill-button {
         }
     }
 }
+.magento_rma-returns-history, .magento_customerbalance-info-index, .customer-paymentinfo-index {
+    .page-title-wrapper {
+        padding-bottom: 10px;
+        border-bottom: 1px solid @border-color__base-table;
+        margin-bottom: 30px;
+        .page-title {
+            .title-primary();
+            margin-right: 0 !important;
+        }
+    }
+}
 .migrate-customer-header {
     max-width: 340px;
     margin: 0 auto;
@@ -2608,7 +2619,7 @@ input::-webkit-contacts-auto-fill-button {
                 }
             }
         }
-        &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
+        &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo, &.magento_rma-returns-returns {
             .columns {
                 .sidebar-main {
                     border-bottom: solid 1px @color_black;
@@ -2942,6 +2953,12 @@ input::-webkit-contacts-auto-fill-button {
             border: none;
         }
     }
+
+    .magento_rma-returns-history, .magento_customerbalance-info-index, .customer-paymentinfo-index {
+        .page-title-wrapper {
+            text-align: center;
+        }
+    }
 }
 
 //
@@ -3146,7 +3163,7 @@ input::-webkit-contacts-auto-fill-button {
                     margin-bottom: 60px;
                 }
             }
-            &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
+            &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo, &.magento_rma-returns-returns {
                 .column.main {
                     .block:not(.widget) {
                         .block-content {
