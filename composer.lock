@@ -2017,6 +2017,45 @@
             "time": "2022-03-29T08:43:00+00:00"
         },
         {
+            "name": "corra/module-link-guest-order-graph-ql",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-link-guest-order-graph-ql/1.0.0.0/18442782c6ff6996f984d26dea8049f1cbc546b7.zip",
+                "reference": "18442782c6ff6996f984d26dea8049f1cbc546b7",
+                "mirrors": [
+                    {
+                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "magento/framework": "*",
+                "magento/module-customer-graph-ql": "*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Corra\\LinkGuestOrder\\": ""
+                }
+            },
+            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
+            "license": [
+                "Proprietary"
+            ],
+            "description": "Link Guest Order to Customer once Customer signs up",
+            "homepage": "https://bitbucket.org/corratech/linkguestorder",
+            "support": {
+                "source": "https://bitbucket.org/corratech/linkguestorder/src/18442782c6ff6996f984d26dea8049f1cbc546b7/?at=1.0.0",
+                "issues": "https://bitbucket.org/corratech/linkguestorder/issues"
+            },
+            "time": "2022-05-03T07:21:37+00:00"
+        },
+        {
             "name": "corra/module-page-builder-customisation",
             "version": "1.0.8",
             "dist": {
@@ -33924,5 +33963,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
