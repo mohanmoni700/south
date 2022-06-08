@@ -1,0 +1,68 @@
+<?php
+use Magento\CustomerBalance\Block\Adminhtml\Sales\Order\Create\Payment;
+
+if ($block->canUseCustomerBalance()): ?>
+    <div class="store_credit_main">
+        <label class="store_credit_label" for="p_method_use_customerbalance2">
+                <?= /* @noEscape */
+                __(
+                    'Use Store Credit (%1 available)',
+                    $block->formatPrice($block->getBalance(true))
+                );
+                ?>
+        </label>
+        <div class="admin__field admin__field-option">
+            <input id="p_method_use_customerbalance_all"
+                value="1"
+                class="admin__control-checkbox"
+                name="payment[use_customer_balance_all]"
+                type="checkbox"
+                title="<?= $block->escapeHtmlAttr(__('Store Credit all')); ?>"
+                <?php if ($block->getIsAllStoreCredit()): ?>checked<?php endif; ?>
+                data-mage-init='{
+                        "Alfakher_StoreCredit/js/payment": {}
+                }'
+            />
+            <label class="admin__field-label" for="p_method_use_customerbalance">
+                <?= /* @noEscape */
+                __(
+                    'Use all available Store Credit (%1 available)',
+                    $block->formatPrice($block->getBalance(true))
+                );
+                ?>
+            </label>
+        </div>
+        <div class="admin__field admin__field-option">
+            <input id="p_method_use_customerbalance_partial"
+                value="1"
+                class="admin__control-checkbox"
+                name="payment[use_customer_balance_partial]"
+                type="checkbox"
+                title="<?= $block->escapeHtmlAttr(__('Store Credit partial')); ?>"
+                <?php if ($block->getIsPartialStoreCredit()): ?>checked<?php endif; ?>
+                data-mage-init='{
+                        "Alfakher_StoreCredit/js/payment": {}
+                }'
+            />
+            <label class="admin__field-label" for="use_customer_balance_partial">
+                <?= /* @noEscape */ __('Use Store Credit partially'); ?>
+            </label>
+            <input type="text" 
+                    name="storecredit_amount" 
+                    id="storecredit_amount" 
+                    value="<?php if ($block->getPartialStoreCreditAmount() != ''):
+                        echo $block->escapeHtmlAttr(__($block->getPartialStoreCreditAmount()));
+    endif;
+                            ?>"/>
+        </div>
+    </div>
+    <label class="mage-error" id="store-credit-error" style="display: none;"></label>
+<?php endif; ?>
+
+<script>
+    require([
+        "prototype"
+    ], function () {
+        window.storeCreditBackUrl = '<?= /** @noEscape */ $block->getUrl('partialstorecredit/index/addamount')?>';
+    });
+</script>

@@ -727,6 +727,7 @@ return [
         'Alfakher_Productpageb2b' => 1,
         'Alfakher_SalesApprove' => 1,
         'Alfakher_SeoUrlPrefix' => 1,
+        'Alfakher_StoreCredit' => 1,
         'Amasty_BannersLite' => 1,
         'Amasty_Base' => 1,
         'Amasty_Conditions' => 1,
