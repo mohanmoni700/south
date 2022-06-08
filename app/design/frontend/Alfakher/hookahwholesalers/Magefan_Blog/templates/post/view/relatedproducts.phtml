@@ -1,11 +1,4 @@
-<?php
-/**
- * Copyright © Magefan (support@magefan.com). All rights reserved.
- * Please visit Magefan.com for license details (https://magefan.com/end-user-license-agreement).
- *
- * Glory to Ukraine! Glory to the heroes!
- */
-?>
+<?php //phpcs:disable ?>
 <?php
 /**
  * Blog related posts template
@@ -38,7 +31,6 @@ if ($exist = $block->getItems()->getSize()) {
     $showCart = $_helperB2b->isCustomerLoggedIn();
     $docdata = $_helperB2b->getDocMessageData();
     $is_document_upload = $_helperB2b->getDocuments();
-    $migrateDocument = $_helperB2b->getMigrateDocument();
     $IsFinanceVerified=$_helperB2b->getIsFinanceVerified();
 ?>
 <?php if ($exist):?>
@@ -96,11 +88,12 @@ if ($exist = $block->getItems()->getSize()) {
                             <?= $block->escapeHtml($_item->getName()) ?></a>
                         </strong>
                         <?php
-                        /* 
-                        Here we removed the condition of the Document verified( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+                        /*
+                        Here we removed the condition of the Document verified
+                        ( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
                         */
                         ?>
-                        <?php if ($migrateDocument == 1 || $IsFinanceVerified == 1): ?>
+                        <?php if ($IsFinanceVerified == 1): ?>
                             <?= /*@noEscape*/ $block->getProductPrice($_item); ?>
                         <?php endif; ?>
                             <?php if ($templateType): ?>
@@ -113,16 +106,20 @@ if ($exist = $block->getItems()->getSize()) {
                                         <div class="actions-primary">
                                             <?php if ($_item->isSaleable()): ?>
                                                 <?php
-                                                /* 
-                                                Here we removed the condition of the Document verified( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+                                                /*
+                                                Here we removed the condition of the Document verified
+                                                ( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
                                                 */
                                                 ?>
-                                                <?php if ($migrateDocument == 1 || $IsFinanceVerified == 1): ?>               
+                                                <?php if ($IsFinanceVerified == 1): ?>               
                                                         <?php else: ?>
                                                          <!-- start view details btn -->
                                                         <div class="actions-primary">
                                                             <div class="logged-in-action">
-                                                                <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"><?= $block->escapeHtml(__('View Details')) ?></a>
+                                                                <a href="<?= $block->escapeUrl($block
+                                                                ->getProductUrl($_item)) ?>">
+                                                                    <?= $block->escapeHtml(__('View Details')) ?> 
+                                                                </a>
                                                                 </div>
                                                             </div>
                                                 <?php endif; ?> 
@@ -138,19 +135,24 @@ if ($exist = $block->getItems()->getSize()) {
                                                 <?php endif; ?>
                                             <?php endif; ?>
                                         </div>
-                                    <?php else : ?>
+                                    <?php else: ?>
                                                 <div class="actions-primary">
                                                     <div class="logged-in-action">
-                                                        <a href="<?= $block->getUrl('customer/account/login') ?>"><?= $block->escapeHtml(__('Signin / Signup')) ?></a>
+                                                        <a href="<?=
+                                                        $block->escapeUrl($block->getUrl('customer/account/login'))?>">
+                                                            <?= $block->escapeHtml(__('Signin / Signup')) ?>
+                                                            </a>
                                                     </div>
                                                 </div>
                                     <?php endif; ?>
 
                                     <?php if ($showWishlist || $showCompare): ?>
                                         <div class="secondary-addto-links actions-secondary" data-role="add-to-links">
-                                            <?php if ($this->helper(Magento\Wishlist\Helper\Data::class)->isAllow() && $showWishlist): ?>
+                                            <?php if ($this->helper(Magento\Wishlist\Helper\Data::class)
+                                            ->isAllow() && $showWishlist): ?>
                                                 <a href="#"
-                                                   data-post='<?= $block->escapeHtml($block->getAddToWishlistParams($_item)); ?>'
+                                                   data-post='<?=
+                                                    $block->escapeHtml($block->getAddToWishlistParams($_item)); ?>'
                                                    class="action towishlist"
                                                    data-action="add-to-wishlist"
                                                    title="<?= $block->escapeHtml(__('Add to Wish List')) ?>">
@@ -159,10 +161,12 @@ if ($exist = $block->getItems()->getSize()) {
                                             <?php endif; ?>
                                             <?php if ($block->getAddToCompareUrl() && $showCompare): ?>
                                                 <?php
-                                                $compareHelper = $this->helper(Magento\Catalog\Helper\Product\Compare::class);
+                                                $compareHelper = $this
+                                                ->helper(Magento\Catalog\Helper\Product\Compare::class);
                                                 ?>
                                                 <a href="#" class="action tocompare"
-                                                   data-post='<?= $block->escapeHtml($compareHelper->getPostDataParams($_item));?>'
+                                                   data-post='
+                                                   <?= $block->escapeHtml($compareHelper->getPostDataParams($_item));?>'
                                                    data-role="add-to-links"
                                                    title="<?= $block->escapeHtml(__('Add to Compare')); ?>">
                                                     <span><?= $block->escapeHtml(__('Add to Compare')) ?></span>
@@ -171,10 +175,12 @@ if ($exist = $block->getItems()->getSize()) {
                                         </div>
                                     <?php endif; ?>
                                 </div>
-                            <?php elseif(!$showCart) : ?>
+                            <?php elseif (!$showCart): ?>
                                 <div class="actions-primary">
                                     <div class="logged-in-action">
-                                        <a href="<?= $block->getUrl('customer/account/login') ?>"><?= $block->escapeHtml(__('Signin / Register')) ?></a>
+                                        <a href="<?= $block->escapeUrl($block->getUrl('customer/account/login')) ?>">
+                                            <?= $block->escapeHtml(__('Signin / Register')) ?>
+                                        </a>
                                     </div>
                                 </div>
                             <?php endif; ?>
@@ -187,7 +193,7 @@ if ($exist = $block->getItems()->getSize()) {
     </div>
 </div>
 <?php endif;?>
-<script type="text/javascript">
+<script>
     require([
         "jquery",
         "Magento_PageBuilder/js/resource/slick/slick"

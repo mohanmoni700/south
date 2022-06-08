@@ -1,10 +1,5 @@
-<?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-
-/** @var $block \Magento\Catalog\Block\Product\View */
+<?php //phpcs:disable ?>
+<?php /** @var $block \Magento\Catalog\Block\Product\View */
 ?>
 <?php   $_product = $block->getProduct(); ?>
 <?php   $buttonTitle = __('Add to Cart'); ?>
@@ -13,7 +8,6 @@
         $docdata = $_helperB2b->getDocMessageData();
         $is_document_upload = $_helperB2b->getDocuments();
         $doc_expired = $_helperB2b->getExpiryMsg();
-        $migrateDocument=$_helperB2b->getMigrateDocument();
         $IsFinanceVerified=$_helperB2b->getIsFinanceVerified();
 ?>
 <?php if ($_product->isSaleable()):?>
@@ -21,10 +15,11 @@
     <?php if ($showCart): ?>
         <?php
         /*
-        Here we removed the condition of the Document verified( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)                
+        Here we removed the condition of the Document verified
+        ($is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
         */
         ?>
-        <?php if ($migrateDocument == 1 || $IsFinanceVerified == 1): ?>
+        <?php if ($IsFinanceVerified == 1): ?>
             <div class="fieldset">
                     <?php if ($block->shouldRenderQuantity()):?>
                         <div class="field qty">
@@ -37,7 +32,7 @@
                                    value="<?= $block->getProductDefaultQty() * 1 ?>"
                                    title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
                                    class="input-text qty"
-                                   data-validate="<?= $block->escapeHtml(json_encode($block->getQuantityValidators())) ?>"
+                                   data-validate="<?=$block->escapeHtml(json_encode($block->getQuantityValidators()))?>"
                                    />
                             </div>
                         </div>

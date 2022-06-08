@@ -18,8 +18,7 @@ $guest_user_documnet_msg = $_helperB2b->getConfigValue(
 ?>
 <?php /*We have Remove all the document releted msg as per suggested by arina [B2BHW-846]  */ ?>
 <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
-    <?php if ($_helperB2b->getMigrateDocument() == 1 || $IsFinanceVerified == 1):?>  
-    <?php elseif ($IsFinanceVerified != 1): ?>
+    <?php if ($IsFinanceVerified != 1):?>  
         <div class="pending-tooltip">
             <div class="tooltip-inner">
                 <?= $block->escapeHtml(__($documents_required_msg)) ?>

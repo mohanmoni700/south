@@ -6,8 +6,7 @@
 );?>
 
 <?php /*We have Remove all the document releted msg as per suggested by arina [B2BHW-846]  */ ?>
-<?php if ($_helperB2b->getMigrateDocument() == 1 || $_helperB2b->getIsFinanceVerified() == 1):?>
-<?php elseif ($_helperB2b->getIsFinanceVerified() != 1): ?>
+<?php if ($_helperB2b->getIsFinanceVerified() != 1):?>
     <div class="pending-tooltip">
         <div class="tooltip-inner">
             <?= $block->escapeHtml(__($documents_required_msg)) ?>

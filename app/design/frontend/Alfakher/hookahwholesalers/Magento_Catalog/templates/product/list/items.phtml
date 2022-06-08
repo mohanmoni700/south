@@ -1,9 +1,5 @@
+<?php //phpcs:disable ?>
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-
 use Magento\Catalog\ViewModel\Product\Listing\PreparePostData;
 use Magento\Framework\App\ActionInterface;
 
@@ -17,7 +13,6 @@ use Magento\Framework\App\ActionInterface;
  $doc_uploaded=$helper->getDocuments();
  $doc_expired=$helper->getExpiryMsg();
  $login = $helper->isCustomerLoggedIn();
- $migrateDocument=$helper->getMigrateDocument();
  $IsFinanceVerified=$helper->getIsFinanceVerified();
 
  $showCart = true;
@@ -229,16 +224,19 @@ $_item = null;
                                     </strong>
                                     <!-- if documents approved then only show price start[BS] -->
                                     <?php
-                                    /* 
-                                    Here we removed the condition of the Document verified( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+                                    /*
+                                    Here we removed the condition of the Document verified
+                                    ( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
                                     */
                                     ?>
-                                    <?php if ($migrateDocument == 1 || $IsFinanceVerified == 1): ?>
+                                    <?php if ($IsFinanceVerified == 1): ?>
                                         <?= /* @noEscape */ $block->getProductPrice($_item) ?>
-                                    <?php elseif($login): ?>
+                                    <?php elseif ($login): ?>
                                             <div class="actions-primary">
                                                 <div class="logged-in-action">
-                                                    <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"><?= $block->escapeHtml(__('View Details')) ?></a>
+                                                    <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>">
+                                                        <?= $block->escapeHtml(__('View Details')) ?> 
+                                                    </a>
                                                 </div>
                                             </div>
                                     <?php else: ?>
@@ -362,7 +360,7 @@ $_item = null;
 
 
 <?php if ($type == 'upsell'):?>
-<script type="text/javascript">
+<script>
     require([
         "jquery",
         "Magento_PageBuilder/js/resource/slick/slick",
