@@ -4,4 +4,17 @@
     <preference for="Smartwave\Megamenu\Block\Topmenu" type="HookahShisha\Customization\Block\Topmenu" />
     
     <preference for="Magento\CheckoutStaging\Plugin\PaymentInformationManagementPlugin" type="HookahShisha\Customization\Plugin\PaymentInformationManagementPlugin" />
+    
+    <!-- Company field search adding on the customer grid -->
+    <preference for="Magento\Customer\Model\ResourceModel\Grid\Collection"
+    type="HookahShisha\Customization\Model\ResourceModel\Grid\Collection" />
+
+    <type name="Magento\Catalog\Block\Product\AbstractProduct">
+        <plugin name="mpproductlabels_product" type="Mageplaza\ProductLabels\Plugin\Block\AbstractProduct" disabled="true"/>
+    </type>
+
+    <!-- Add Company Name in order invoice pdf -->
+    <type name="Magetrend\PdfTemplates\Model\Pdf\Filter">
+       <plugin name="custom_magetrend_pdftemplates" type="HookahShisha\Customization\Model\Pdf\Filter" />
+    </type>
 </config>

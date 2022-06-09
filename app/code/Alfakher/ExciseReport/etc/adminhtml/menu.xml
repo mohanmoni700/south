@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Alfakher_ExciseReport::report_excisetax_order"
+            title="Excise Order Report"
+            module="Alfakher_ExciseReport"
+            sortOrder="100"
+            parent="Magento_Reports::report_salesroot"
+            action="excisereport/report/index"
+            resource="Magento_Reports::salesroot" />
+        <add id="Alfakher_ExciseReport::report_excisetax_item"
+            title="Excise Item Report"
+            module="Alfakher_ExciseReport"
+            sortOrder="200"
+            parent="Magento_Reports::report_salesroot"
+            action="excisereport/report/item"
+            resource="Magento_Reports::salesroot" />
+        <add id="Alfakher_ExciseReport::report_refund"
+            title="Refund Report"
+            module="Alfakher_ExciseReport"
+            sortOrder="300"
+            parent="Magento_Reports::report_salesroot"
+            action="excisereport/refund/index"
+            resource="Magento_Reports::salesroot" />
+        <add id="Alfakher_ExciseReport::report_invoice"
+            title="Invoiced Report"
+            module="Alfakher_ExciseReport"
+            sortOrder="400"
+            parent="Magento_Reports::report_salesroot"
+            action="excisereport/invoice/index"
+            resource="Magento_Reports::salesroot" />
+        <add id="Alfakher_ExciseReport::report_shipment"
+            title="Shipments Report"
+            module="Alfakher_ExciseReport"
+            sortOrder="500"
+            parent="Magento_Reports::report_salesroot"
+            action="excisereport/shipment/index"
+            resource="Magento_Reports::salesroot" />
+        <add id="Alfakher_ExciseReport::report_tax"
+            title="Tax Report"
+            module="Alfakher_ExciseReport"
+            sortOrder="600"
+            parent="Magento_Reports::report_salesroot"
+            action="excisereport/tax/index"
+            resource="Magento_Reports::salesroot" />
+        <add id="Alfakher_ExciseReport::report_return"
+            title="Return Report"
+            module="Alfakher_ExciseReport"
+            sortOrder="700"
+            parent="Magento_Reports::report_salesroot"
+            action="excisereport/returns/index"
+            resource="Magento_Reports::salesroot" />
+    </menu>
+</config>
