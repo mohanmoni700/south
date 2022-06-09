@@ -1,27 +1,37 @@
 <?php
+//phpcs:disable
 /**
  *
  * @var $block \Magento\Framework\View\Element\Template
  */
 ?>
-<?php $helper = $this->helper('HookahShisha\ChangePassword\Helper\Data'); ?>
-<?php if($helper->customerLoggedIn()): ?>
+<?php $helper = $this->helper(HookahShisha\ChangePassword\Helper\Data::class); ?>
+<?php if ($helper->customerLoggedIn()):?>
     <?php $values = $helper->CustomerLogin(); ?>
     <?php $name = $helper->customerFirstName(); ?>
     <?php $firstStringCharacter = substr($name, 0, 1); ?>
     <div class="sign-in">
-        <span class="sign-up"><?php echo __('My Account')?></span>
+        <span class="sign-up"><?= $block->escapeHtml(__("My Account"))?></span>
         <ul class="sign-up-ul customer_logged_in" style="display: none;">
             <li class="guest-heading" data-bind="scope: 'customer'">
                 <div class="left_circle">
-                    <!-- ko if: customer().firstname  -->
+                     <!-- ko if: customer().firstname  -->
                         <lable class="cust_short_name" data-bind="text: customer().firstname.charAt(0)"></lable>
+                    <!-- /ko -->
+                    <!-- ko ifnot: customer().firstname -->
+                        <lable class="cust_short_name"><?= $block->escapeHtml(__($firstStringCharacter))?></lable>
                     <!-- /ko -->
                 </div>
                 <div class="welcome_info">
-                    <lable class="welback"><?php echo __('Welcome back!') ?></lable>
-                    <!-- ko if: customer().firstname  -->
-                        <lable class="guest-content-heading" data-bind="text: new String('<?= $escaper->escapeHtml(__('%1', '%1')) ?>').replace('%1', customer().firstname)"></lable>
+                    <lable class="welback"><?= $block->escapeHtml(__('Welcome back!')) ?></lable>
+                     <!-- ko if: customer().firstname  -->
+                        <lable class="guest-content-heading" 
+                        data-bind="text: new String('<?= $escaper
+                        ->escapeHtml(__('%1', '%1')) ?>').replace('%1', customer().firstname)">
+                        </lable>
+                    <!-- /ko -->
+                    <!-- ko ifnot: customer().firstname -->
+                        <lable class="cust_short_name"><?= $block->escapeHtml(__($name))?></lable>
                     <!-- /ko -->
                 </div>
             </li>
@@ -39,32 +49,61 @@
             }
             </script>
             <li class="guest-content my_account">
-                <a class= "create_an_account_link" href="<?php echo $this->getUrl("customer/account/");?>"><?php echo __('My Account')?></a>
+                <a class= "create_an_account_link" href="<?= $block->escapeUrl($this->getUrl("customer/account/"));?>">
+                    <?= $block->escapeHtml(__('My Account'))?>        
+                </a>
             </li>
-            <li class="order_reorder"><a href="<?php echo $this->getUrl("sales/order/history");?>"><?php echo __('My Orders & Reorders') ?></a></li>
-            <li class="my_quotes"><a href="<?php echo $this->getUrl("amasty_quote/account/index/");?>"><?php echo __('My Quotes') ?></a></li>
-            <li class="manage_address"><a href="<?php echo $this->getUrl("customer/address");?>"><?php echo __('Manage Addresses') ?></a></li>
-            <li class="store_credit"><a href="<?php echo $this->getUrl("storecredit/info/");?>"><?php echo __('Store Credit') ?></a></li>
-            <li class="my_payment"><a href="<?php echo $this->getUrl("customer/paymentinfo");?>"><?php echo __('My Payment Options') ?></a></li>
-            <li class="changepassword"><a href="<?php echo $this->getUrl("changepassword/index/index");?>"><?php echo __('Change Password') ?></a></li>
-            <li class="documents"><a href="<?php echo $this->getUrl("mydocument/customer/index");?>"><?php echo __('My Documents') ?></a></li>
-            <li class="my_returns"><a href="<?php echo $this->getUrl("rma/returns/history/");?>"><?php echo __('My Returns') ?></a></li>
-            <li class="product_pricing"><a href="<?php echo $this->getUrl("customerb2b/account/myproductpricing");?>"><?php echo __('My Product Pricing') ?></a></li>          
-            <li class="logout"><a class= "sign_in_link" href="<?php echo $this->getUrl("customer/account/logout");?>"><?php echo __('Logout')?></a></li>
+            <li class="order_reorder"><a href="<?= $block->escapeUrl($this->getUrl("sales/order/history"));?>">
+                <?= $block->escapeHtml(__('My Orders & Reorders')) ?>
+                </a>
+            </li>
+            <li class="manage_address"><a href="<?= $block->escapeUrl($this->getUrl("customer/address"));?>">
+                <?= $block->escapeHtml(__('Manage Addresses')) ?>
+                </a>
+            </li>
+            <li class="my_payment"><a href="<?= $block->escapeUrl($this->getUrl("customer/paymentinfo"));?>">
+                <?= $block->escapeHtml(__('My Payment Options')) ?>
+                </a>
+            </li>
+            <li class="changepassword"><a href="<?= $block->escapeUrl($this->getUrl("changepassword/index/index"));?>">
+                <?= $block->escapeHtml(__('Change Password')) ?>
+                </a>
+            </li>
+            <li class="documents"><a href="<?= $block->escapeUrl($this->getUrl("mydocument/customer/index"));?>">
+                <?= $block->escapeHtml(__('My Documents')) ?>
+                </a>
+            </li>   
+            <li class="product_pricing"><a href="<?= $block
+            ->escapeUrl($this->getUrl("customerb2b/account/myproductpricing"));?>">
+                <?= $block->escapeHtml(__('My Product Pricing')) ?>
+                </a>
+            </li>          
+            <li class="logout"><a class= "sign_in_link" href="<?= $block
+            ->escapeUrl($this->getUrl("customer/account/logout"));?>">
+                <?= $block->escapeHtml(__('Logout')) ?>
+                </a>
+            </li>
          </ul>
    </div>
 <?php else: ?>
      <div class="sign-in">
-     <span class="sign-up"><?php echo __('Sign In / Register')?></span>
+     <span class="sign-up"><?= $block->escapeHtml(__('Sign In / Register')) ?></span>
         <ul class="sign-up-ul" style="display: none;">
             <li class="guest-heading"><span class="guest-content-heading">Welcome Guest!</span></li>
             <li class="guest-content">
                 <span class="content-main">
                     <span class="content-item content-link">
-                        <a class= "sign_in_link" href="<?php echo $this->getUrl("customer/account/login");?>"><?php echo __('Sign in')?></a>
+                        <a class= "sign_in_link" href="<?= $block
+                        ->escapeUrl($this->getUrl("customer/account/login"));?>">
+                            <?= $block->escapeHtml(__('Sign in'))?>
+                        </a>
                     </span>
                     <span class="content-item content-text">or</span>
-                    <span class="content-item content-link"><a class= "create_an_account_link" href="<?php echo $this->getUrl("customer/account/create");?>"><?php echo __('Create an Account')?></a></span>
+                <span class="content-item content-link"><a class= "create_an_account_link" href="<?= $block
+                    ->escapeUrl($this->getUrl("customer/account/create"));?>">
+                    <?= $block->escapeHtml(__('Create an Account'))?>
+                    </a>
+                </span>
                 </span>
             </li>
         </ul>
