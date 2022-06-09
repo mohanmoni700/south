@@ -42,6 +42,7 @@ define([
                         '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date-' + showId + '" data-validate="{required:true}" readonly/>' +
                         '</div></div>').insertAfter(currentElem.closest('.upload .input-file'));
                     $("#image-error-message-" + showId).html("");
+                    $("#filename-" + showId + "-error").remove();
 
                     $("#doc-actions-filename-" + showId).remove();
                     var reader = new FileReader();
@@ -187,14 +188,22 @@ define([
             $("#add_more").click(function() {
                 var showId = ++id;
                 if (showId <= 25) {
-                    $('<div class="upload" for="document uploader">' +
+                    $('<div class="upload" id="delete-uploaded'+showId+'" for="document uploader">' +
                         '<div class="input-file">' +
-                        '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" />' +
+                        '<input type="file" id="filename-' + showId + '" class="required-entry required upload-filename" name="filename' + showId + '" />' +
                         '<span id="image-error-message-'+ showId + '" style="color:red;"></span>'+
                         '<span class="input-note">' + config.inputNote + '</span>' +
                         '<input type="hidden" id="is_add_more_form' + showId + ' ?>" name="is_add_more_form[]" value="0"/>' +
-                        '</div></div>').insertBefore('.upload-container .add-more-cont');
+                        '</div>'+ '<div class="del" id="delete">' +
+                        '<a class="delete-icon" id="del-button' + showId + '" href="#">delete</a>' +
+                        '</div>'+'</div>').insertBefore('.upload-container .add-more-cont');
                 }
+                $("#del-button" + showId).click(function() {
+                    $("#delete-uploaded"+showId).hide();
+                    $("#name" + showId).val('');
+                    
+                });
+
                 if (showId == 25){
                     $(".add-more-cont").hide();
                     $("#add_more").hide();

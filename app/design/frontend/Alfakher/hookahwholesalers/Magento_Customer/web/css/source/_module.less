@@ -50,7 +50,15 @@ input::-webkit-contacts-auto-fill-button {
   position: absolute;
   right: 0;
 }
-
+.form-tracking{
+.table-wrapper{
+    .table:not(.totals):not(.table-comparison){
+        tfoot td{
+            text-align: left;
+        }
+    } 
+} 
+}
 .table-wrapper.table-returns{
     .table-returns{
         td.col {
@@ -207,10 +215,14 @@ input::-webkit-contacts-auto-fill-button {
 .customer-addresses-toolbar.toolbar.bottom{
     display: none;
 }
-.magento_rma-returns-create{
+.magento_rma-returns-create, .returnall-returns-create {
     .action.add{
         .cart_btn(); 
         padding: 16px 25px;
+    }
+    .fieldset .legend {
+        display: inline-block;
+        width: 100%;
     }
 }
 .account{
@@ -277,6 +289,9 @@ input::-webkit-contacts-auto-fill-button {
                 &.choice.set.billing{
                     margin-bottom: 10px;
                     margin-top: 20px;
+                }
+                &.country, &.telephone {
+                    margin-bottom: 30px;
                 }
             }
         } 
@@ -364,7 +379,7 @@ input::-webkit-contacts-auto-fill-button {
     }
 }
 .magento_rma-returns-view,
-.magento_rma-returns-create{
+.magento_rma-returns-create, .returnall-returns-create {
     .page-title-wrapper{
         .page-title{
             padding-bottom: 10px;
@@ -2362,7 +2377,15 @@ input::-webkit-contacts-auto-fill-button {
             }
         }
     }
-
+    .table-returns {
+        a.action {
+            color: #404040;
+            text-decoration: underline;
+            &:hover {
+                color: @hookah_theme_color;
+            }
+        }
+    }
 }
 
 & when (@media-target = 'mobile'), (@media-target = 'all') {
@@ -2539,6 +2562,11 @@ input::-webkit-contacts-auto-fill-button {
                     width: 100%;
                     &.telephone{
                         margin-bottom: 30px;
+                    }
+                }
+                .field{
+                    &.country, &.telephone {
+                        margin-bottom: 20px;
                     }
                 }
             } 
@@ -2905,6 +2933,13 @@ input::-webkit-contacts-auto-fill-button {
                 left: auto;
                 right: 0;
             }
+        }
+    }
+    .form-tracking {
+        #track-info-table td {
+            display: block;
+            width: 100%;
+            border: none;
         }
     }
 }
