@@ -9,7 +9,7 @@
 @lib-action_clr:#404040;
 & when (@media-common = true) {    margin-top: 20px;
     display: inline-block;
-    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo, .magento_rma-returns-returns {
+    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo, .magento_rma-returns-returns, .amasty_quote-account-view {
         .order-references{
             border: 0;
         }
@@ -62,7 +62,7 @@
             margin-bottom: 30px;
         }   
     }
-    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo, .magento_rma-returns-returns {
+    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo, .magento_rma-returns-returns, .amasty_quote-account-view {
         &.account{
             .page-title-wrapper{
                 .page-title{
@@ -710,6 +710,14 @@
             }
         }
     }
+
+    .account-quote-buttons {
+        margin-bottom: 15px;
+        a {
+            text-decoration: underline;
+            color: @color_black;
+        }
+    }
     
 
     @media only screen and (max-width: 991px) and (min-width: 768px) {
@@ -902,7 +910,7 @@
             }
         }
     }
-    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-creditmemo, .sales-order-printcreditmemo, .magento_rma-returns-returns {
+    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-creditmemo, .sales-order-printcreditmemo, .magento_rma-returns-returns, .amasty_quote-account-view {
         &.account {
             .column.main {
                 .items.order-links {
