@@ -326,14 +326,3 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
     script;
 ?>
 <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
-<!-- <script>
-    jQuery("#telephone").keyup(function(){
-        alert(this.value);
-        var number = this.value;
-                // var currentId= $(this).attr('id');
-                var num = /[^\d+ ]|_/g
-                    if((number.match(num))){
-                    jQuery(this).val('');
-                }
-            });
-</script> -->
