@@ -274,19 +274,16 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
     {
         if ($this->getCustomerIsLoggedIn()) {
             $customerid = $this->getCustomerId();
-            $IsFinanceVerified = $this->helperData->getIsFinanceVerified();
+            $isFinanceVerified = $this->helperData->getIsFinanceVerified();
             /*
             Here we removed the condition of the Document verified
-            ($is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+            ($is_document_upload $doc_expired) and uploaded($isFinanceVerified)
              */
-            if ($IsFinanceVerified == 1) {
+            if ($isFinanceVerified == 1) {
                 return true;
-            } else {
-                return false;
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
