@@ -140,7 +140,7 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
     }
 
     /**
-     * getQuickbooksAccountConfig
+     * GetQuickbooksAccountConfig
      *
      * @param string $accountId
      * @return array
@@ -181,7 +181,8 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
     }
 
     /**
-     * getArrangedItemDataForQuickbooks
+     * GetArrangedItemDataForQuickbooks
+     *
      * @param Magento/Sales/Model/Order/Item $orderItem
      * @param Array $taxPercentDetail
      * @param int $qty
@@ -266,7 +267,8 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
     }
 
     /**
-     * getProductData
+     * Get Product Data
+     *
      * @param Magento/Sales/Model/Order/Item $orderItem
      * @param float $ratePrice
      * @param array $bundleQty

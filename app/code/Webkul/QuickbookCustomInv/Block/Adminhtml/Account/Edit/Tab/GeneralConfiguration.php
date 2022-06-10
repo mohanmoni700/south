@@ -114,6 +114,5 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
         $form->setValues($model->getData());
         $this->setForm($form);
         return $this;
-        //parent::_prepareForm();
     }
 }
