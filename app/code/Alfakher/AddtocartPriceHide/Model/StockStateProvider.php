@@ -119,10 +119,16 @@ class StockStateProvider extends \Magento\CatalogInventory\Model\StockStateProvi
 
         if (!$stockItem->getIsInStock()) {
             $ProdutId = $stockItem->getProductId();
+            $productLoad = $this->productFactory->create()->load($ProdutId);
 
             $result->setHasError(true)
                 ->setErrorCode('out_stock')
-                ->setMessage(__('Product ' . $stockItem->getProductName() . ' that you are trying to add is not available.'))
+                ->setMessage(
+                    __(
+                        'Product %1 that you are trying to add is not available.',
+                        $productLoad->getSku()
+                    )
+                )
                 ->setQuoteMessage(__('Some of the products are out of stock.'))
                 ->setQuoteMessageIndex('stock');
             $result->setItemUseOldQty(true);
@@ -189,7 +195,10 @@ class StockStateProvider extends \Magento\CatalogInventory\Model\StockStateProvi
                         }
                     } elseif ($stockItem->getShowDefaultNotificationMessage()) {
                         $result->setMessage(
-                            __('The requested qty is not available for ' . $stockItem->getProductName())
+                            __(
+                                'The requested qty is not available for "%1"',
+                                $stockItem->getProductName()
+                            )
                         );
                     }
                 }
