@@ -14,12 +14,9 @@ class Payment extends \Magento\CustomerBalance\Block\Adminhtml\Sales\Order\Creat
         if ($this->getUseCustomerBalance()) {
             if ($this->_orderCreate->getQuote()->getStorecreditType() == 'partial') {
                 return true;
-            } else {
-                return false;
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -32,12 +29,9 @@ class Payment extends \Magento\CustomerBalance\Block\Adminhtml\Sales\Order\Creat
         if ($this->getUseCustomerBalance()) {
             if ($this->_orderCreate->getQuote()->getStorecreditType() == 'all') {
                 return true;
-            } else {
-                return false;
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**
@@ -52,11 +46,8 @@ class Payment extends \Magento\CustomerBalance\Block\Adminhtml\Sales\Order\Creat
                 if ($this->_orderCreate->getQuote()->getStorecreditPartialAmount()) {
                     return $this->_orderCreate->getQuote()->getStorecreditPartialAmount();
                 }
-            } else {
-                return '';
             }
-        } else {
-            return '';
         }
+        return '';
     }
 }
