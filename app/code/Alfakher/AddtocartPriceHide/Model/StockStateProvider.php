@@ -118,8 +118,8 @@ class StockStateProvider extends \Magento\CatalogInventory\Model\StockStateProvi
         }
 
         if (!$stockItem->getIsInStock()) {
-            $ProdutId = $stockItem->getProductId();
-            $productLoad = $this->productFactory->create()->load($ProdutId);
+            $produtId = $stockItem->getProductId();
+            $productLoad = $this->productFactory->create()->load($produtId);
 
             $result->setHasError(true)
                 ->setErrorCode('out_stock')
