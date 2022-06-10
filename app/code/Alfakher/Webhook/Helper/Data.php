@@ -2,33 +2,23 @@
 
 namespace Alfakher\Webhook\Helper;
 
-use Magento\Framework\DataObject;
 use Exception;
-use Liquid\Template;
 use Magento\Backend\Model\UrlInterface;
-use Magento\Catalog\Model\Product;
 use Magento\Customer\Api\CustomerRepositoryInterface;
-use Magento\Framework\App\Area;
 use Magento\Framework\App\Helper\Context;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\MailException;
-use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\App\State;
+use Magento\Framework\DataObject;
 use Magento\Framework\HTTP\Adapter\CurlFactory;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
-use Mageplaza\Core\Helper\AbstractData as CoreHelper;
 use Mageplaza\Webhook\Block\Adminhtml\LiquidFilters;
-use Mageplaza\Webhook\Model\Config\Source\Authentication;
 use Mageplaza\Webhook\Model\Config\Source\HookType;
-use Mageplaza\Webhook\Model\Config\Source\Schedule;
 use Mageplaza\Webhook\Model\Config\Source\Status;
 use Mageplaza\Webhook\Model\HistoryFactory;
 use Mageplaza\Webhook\Model\HookFactory;
 use Mageplaza\Webhook\Model\ResourceModel\Hook\Collection;
-use Zend_Http_Response;
-use Magento\Framework\App\State;
 
 class Data extends \Mageplaza\Webhook\Helper\Data
 {
@@ -40,17 +30,17 @@ class Data extends \Mageplaza\Webhook\Helper\Data
     /**
      * Data constructor
      *
-     * @param \Magento\Framework\App\Helper\Context $context
-     * @param \Magento\Framework\ObjectManagerInterface $objectManager
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Backend\Model\UrlInterface $backendUrl
-     * @param \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder
-     * @param \Magento\Framework\HTTP\Adapter\CurlFactory $curlFactory
-     * @param \Mageplaza\Webhook\Block\Adminhtml\LiquidFilters $liquidFilters
-     * @param \Mageplaza\Webhook\Model\HookFactory $hookFactory
-     * @param \Mageplaza\Webhook\Model\HistoryFactory $historyFactory
-     * @param \Magento\Customer\Api\CustomerRepositoryInterface $customer
-     * @param \Magento\Framework\App\State $state
+     * @param Context $context
+     * @param ObjectManagerInterface $objectManager
+     * @param StoreManagerInterface $storeManager
+     * @param UrlInterface $backendUrl
+     * @param TransportBuilder $transportBuilder
+     * @param CurlFactory $curlFactory
+     * @param LiquidFilters $liquidFilters
+     * @param HookFactory $hookFactory
+     * @param HistoryFactory $historyFactory
+     * @param CustomerRepositoryInterface $customer
+     * @param State $state
      */
     public function __construct(
         Context $context,
@@ -95,14 +85,14 @@ class Data extends \Mageplaza\Webhook\Helper\Data
             ->addFieldToFilter('status', 1)
             ->addFieldToFilter('store_ids', [
                 ['finset' => Store::DEFAULT_STORE_ID],
-                ['finset' => $this->getItemStore($item)]
+                ['finset' => $this->getItemStore($item)],
             ])
             ->setOrder('priority', 'ASC');
-        $isSendMail     = $this->getConfigGeneral('alert_enabled');
-        $sendTo         = explode(',', $this->getConfigGeneral('send_to'));
+        $isSendMail = $this->getConfigGeneral('alert_enabled');
+        $sendTo = explode(',', $this->getConfigGeneral('send_to'));
         foreach ($hookCollection as $hook) {
             if ($hook->getHookType() === HookType::ORDER) {
-                $statusItem  = $item->getStatus();
+                $statusItem = $item->getStatus();
                 $orderStatus = explode(',', $hook->getOrderStatus());
                 if (!in_array($statusItem, $orderStatus, true)) {
                     continue;
@@ -115,19 +105,21 @@ class Data extends \Mageplaza\Webhook\Helper\Data
             } elseif ($hookType == "delete_document") {
                 $documentData = $this->AddFilePath($item, $hookType);
                 $itemData = new DataObject($documentData['items']);
+            } elseif ($hookType == "update_order") {
+                $itemData = $item['item'];
             } else {
                 $itemData = $item;
             }
-            
+
             $body = $this->generateLiquidTemplate($itemData, $hook->getBody());
-            $data    = [
-                'hook_id'     => $hook->getId(),
-                'hook_name'   => $hook->getName(),
-                'store_ids'   => $hook->getStoreIds(),
-                'hook_type'   => $hook->getHookType(),
-                'priority'    => $hook->getPriority(),
+            $data = [
+                'hook_id' => $hook->getId(),
+                'hook_name' => $hook->getName(),
+                'store_ids' => $hook->getStoreIds(),
+                'hook_type' => $hook->getHookType(),
+                'priority' => $hook->getPriority(),
                 'payload_url' => $this->generateLiquidTemplate($itemData, $hook->getPayloadUrl()),
-                'body'        => $this->generateLiquidTemplate($itemData, $hook->getBody())
+                'body' => $this->generateLiquidTemplate($itemData, $hook->getBody()),
             ];
             $history->addData($data);
             try {
@@ -136,7 +128,7 @@ class Data extends \Mageplaza\Webhook\Helper\Data
             } catch (Exception $e) {
                 $result = [
                     'success' => false,
-                    'message' => $e->getMessage()
+                    'message' => $e->getMessage(),
                 ];
             }
             if ($result['success'] === true) {
@@ -169,15 +161,15 @@ class Data extends \Mageplaza\Webhook\Helper\Data
     {
         if ($hookType == "delete_document") {
             $items['items']['filename'] =
-                $this->storeManager->getStore()->getBaseUrl(
-                    \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-                )."myDocument/".$items['items']['filename'];
+            $this->storeManager->getStore()->getBaseUrl(
+                \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
+            ) . "myDocument/" . $items['items']['filename'];
         } else {
             foreach ($items['items'] as $key => $value) {
                 $items['items'][$key]['filename'] =
-                    $this->storeManager->getStore()->getBaseUrl(
-                        \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
-                    )."myDocument/".$value['filename'];
+                $this->storeManager->getStore()->getBaseUrl(
+                    \Magento\Framework\UrlInterface::URL_TYPE_MEDIA
+                ) . "myDocument/" . $value['filename'];
             }
         }
         return $items;

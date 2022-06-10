@@ -81,8 +81,6 @@ abstract class AfterSave implements ObserverInterface
     public function execute(Observer $observer)
     {
         $item = $observer->getEvent()->getData();
-        /*echo "<pre>";
-        print_r($item);*/
         $schedule = $this->helper->getCronSchedule();
         if ($schedule !== Schedule::DISABLE && $schedule !== null) {
             $hookCollection = $this->hookFactory->create()->getCollection()
@@ -90,7 +88,7 @@ abstract class AfterSave implements ObserverInterface
                 ->addFieldToFilter('status', 1)
                 ->addFieldToFilter('store_ids', [
                     ['finset' => Store::DEFAULT_STORE_ID],
-                    ['finset' => $this->helper->getItemStore($item)]
+                    ['finset' => $this->helper->getItemStore($item)],
                 ])
                 ->setOrder('priority', 'ASC');
             if ($hookCollection->getSize() > 0) {
@@ -98,7 +96,7 @@ abstract class AfterSave implements ObserverInterface
                 $data = [
                     'hook_type' => $this->hookType,
                     'event_id' => $item->getId(),
-                    'status' => '0'
+                    'status' => '0',
                 ];
 
                 try {
@@ -128,7 +126,7 @@ abstract class AfterSave implements ObserverInterface
                 ->addFieldToFilter('status', 1)
                 ->addFieldToFilter('store_ids', [
                     ['finset' => Store::DEFAULT_STORE_ID],
-                    ['finset' => $this->helper->getItemStore($item)]
+                    ['finset' => $this->helper->getItemStore($item)],
                 ])
                 ->setOrder('priority', 'ASC');
             if ($hookCollection->getSize() > 0) {
@@ -136,7 +134,7 @@ abstract class AfterSave implements ObserverInterface
                 $data = [
                     'hook_type' => $this->hookTypeUpdate,
                     'event_id' => $item->getId(),
-                    'status' => '0'
+                    'status' => '0',
                 ];
                 try {
                     $schedule->addData($data);

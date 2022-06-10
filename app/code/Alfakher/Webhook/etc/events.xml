@@ -9,4 +9,7 @@
     <event name="document_delete_after">
         <observer name="al_wh_delete_document_after" instance="Alfakher\Webhook\Observer\AfterDocumentDelete"/>
     </event>
+    <event name="blueedit_save_after">
+        <observer name="al_wh_blueedit_save_after" instance="Alfakher\Webhook\Observer\AfterBlueeditOrder"/>
+    </event>
 </config>

@@ -9,4 +9,22 @@
 
     <!-- Add new hook types on existing function for display variables -->
     <preference for="Mageplaza\Webhook\Block\Adminhtml\Hook\Edit\Tab\Renderer\Body" type="Alfakher\Webhook\Block\Adminhtml\Hook\Edit\Tab\Renderer\HookVariables" />
+
+    <!-- override for dispatch new event --> 
+    <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Items" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Items" />
+
+    <!-- override for dispatch new event -->
+    <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Account" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Account" />
+
+    <!-- override for dispatch new event -->
+    <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Info" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Info" />
+
+    <!-- override for dispatch new event -->
+    <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Address" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Address" />
+
+    <!-- override for dispatch new event -->
+    <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Payment" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Payment" />
+
+    <!-- override for dispatch new event -->
+    <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Shipping" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Shipping" />
 </config>
