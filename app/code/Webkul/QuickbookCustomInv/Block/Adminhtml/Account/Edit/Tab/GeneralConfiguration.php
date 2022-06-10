@@ -10,10 +10,6 @@
  */
 namespace Webkul\QuickbookCustomInv\Block\Adminhtml\Account\Edit\Tab;
 
-use Magento\Backend\Block\Widget\Form\Generic;
-use Magento\Backend\Block\Widget\Tab\TabInterface;
-use Webkul\MultiQuickbooksConnect\Model\Config\Source;
-
 class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtml\Account\Edit\Tab\GeneralConfiguration
 {
     /**
@@ -41,7 +37,7 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
                 'title' => __('Sales Receipt Create On Quickbook'),
                 'required' => true,
                 'options' => $this->salesReceiptCreateOn->toArray(),
-                'note' => __('Select the event for exporting orders automatically.')
+                'note' => __('Select the event for exporting orders automatically.'),
             ]
         );
         $fieldset->addField(
@@ -53,7 +49,7 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
                 'title' => __('Creditmemo Auto Sync to Quickbooks'),
                 'required' => true,
                 'options' => $this->getStatusOptions(),
-                'note' => __('Select to enable or disable the auto exporting.')
+                'note' => __('Select to enable or disable the auto exporting.'),
             ]
         );
         $fieldset->addField(
@@ -65,7 +61,7 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
                 'title' => __('QuickBooks US Store'),
                 'required' => true,
                 'options' => $this->getStatusOptions(),
-                'note' => __('Identify that your Quickbooks account is USA or Non-USA.')
+                'note' => __('Identify that your Quickbooks account is USA or Non-USA.'),
             ]
         );
         $fieldset->addField(
@@ -77,7 +73,7 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
                 'title' => __('Inventory Other Asset Account'),
                 'required' => true,
                 'options' => $this->assetAccount->toArray($model->getId()),
-                'note' => __('Choose any Inventory asset account.')
+                'note' => __('Choose any Inventory asset account.'),
             ]
         );
         $fieldset->addField(
@@ -89,7 +85,7 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
                 'title' => __('Income Account'),
                 'required' => true,
                 'options' => $this->incomeAccount->toArray($model->getId()),
-                'note' => __('Choose any Income account.')
+                'note' => __('Choose any Income account.'),
             ]
         );
         $fieldset->addField(
@@ -101,7 +97,7 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
                 'title' => __('Expense Account'),
                 'required' => true,
                 'options' => $this->expenseAccount->toArray($model->getId()),
-                'note' => __('Choose any Expense account.')
+                'note' => __('Choose any Expense account.'),
             ]
         );
         $fieldset->addField(
@@ -112,7 +108,7 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
                 'label' => __('Default Tax Class'),
                 'title' => __('Default Tax Class'),
                 'required' => true,
-                'note' => __('Fill tax class wich set on exported orders.')
+                'note' => __('Fill tax class wich set on exported orders.'),
             ]
         );
         $form->setValues($model->getData());
