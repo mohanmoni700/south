@@ -2,10 +2,6 @@
 
 namespace HookahShisha\Customization\Model\Pdf;
 
-use Magento\Framework\Filesystem;
-use Magento\Framework\Filesystem\Io\File;
-use Magento\Framework\App\Filesystem\DirectoryList;
-
 /**
  * Draw invoice pdf
  */
@@ -28,7 +24,7 @@ class Invoice extends \Magetrend\PdfTemplates\Model\Pdf\Invoice
         $this->drawAdditionalElements();
     }
     /**
-     * Draw count 
+     * Draw count
      */
     public function drawAdditionalElements()
     {
@@ -41,11 +37,10 @@ class Invoice extends \Magetrend\PdfTemplates\Model\Pdf\Invoice
         if (!empty($subtemp)) {
 
             $new = count($this->pdf->pages);
-            $count = $new+1;
+            $count = $new + 1;
             $this->coreRegistry->register('pdf_page_count', $count);
 
-            $itemsElement = false;
-            foreach ($elementsData['other'] as $key => $element) {
+            foreach ($elementsData['other'] as $element) {
                 if (in_array($element['type'], ['element_items', 'element_total', 'element_track'])) {
                     continue;
                 }
@@ -61,8 +56,7 @@ class Invoice extends \Magetrend\PdfTemplates\Model\Pdf\Invoice
         } else {
 
             $check = $this->coreRegistry->registry('pdf_page_count');
-            $itemsElement = false;
-            foreach ($elementsData['other'] as $key => $element) {
+            foreach ($elementsData['other'] as $element) {
                 if (in_array($element['type'], ['element_items', 'element_total', 'element_track'])) {
                     continue;
                 }
