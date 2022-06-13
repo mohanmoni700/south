@@ -118,15 +118,13 @@ class StockStateProvider extends \Magento\CatalogInventory\Model\StockStateProvi
         }
 
         if (!$stockItem->getIsInStock()) {
-            $produtId = $stockItem->getProductId();
-            $productLoad = $this->productFactory->create()->load($produtId);
 
             $result->setHasError(true)
                 ->setErrorCode('out_stock')
                 ->setMessage(
                     __(
-                        'Product %1 that you are trying to add is not available.',
-                        $productLoad->getSku()
+                        'Product "%1" that you are trying to add is not available.',
+                        $stockItem->getProductName()
                     )
                 )
                 ->setQuoteMessage(__('Some of the products are out of stock.'))
