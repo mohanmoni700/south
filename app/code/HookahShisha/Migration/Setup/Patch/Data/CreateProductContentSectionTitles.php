@@ -19,7 +19,7 @@ use Magento\Framework\Setup\SchemaSetupInterface;
 use Magento\Framework\Setup\UninstallInterface;
 
 /**
- * Create Title Attributes For Content Sections
+ * Create Title Attributes for Content Sections
  *
  * Class CreateProductContentSections
  */
