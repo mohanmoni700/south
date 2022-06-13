@@ -50,7 +50,7 @@ $formDisable = 1;
                        value="<?= /* @noEscape */ $block->escapeHtml($contact['contact_phone']) ?>"
                        placeholder="<?= $escaper->escapeHtmlAttr($contactPhoneLabel) ?>"
                        title="<?= /* @noEscape */ $escaper->escapeHtmlAttr($contactPhoneLabel) ?>"
-                       class="input-text validate-digits minimum-length-10 maximum-length-10 validate-length"
+                       class="input-text country-code-validate-num"
                        id="contact_phone">
             </div>
         </div>

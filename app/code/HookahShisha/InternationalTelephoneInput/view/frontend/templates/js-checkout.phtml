@@ -1,0 +1,17 @@
+<?php
+/**
+ * @var $block HookahShisha\InternationalTelephoneInput\Block\PhoneNumber
+ */
+?>
+
+<script type="application/javascript">
+    require([
+        'jquery',
+        'intlTelInput'
+    ], function ($) {
+        alfaTelephoneRenderComplete = function() {
+
+            $("input[name='telephone']").intlTelInput(<?= /* @noEscape */ $block->phoneConfig(); ?>)
+        }
+    });
+</script>
