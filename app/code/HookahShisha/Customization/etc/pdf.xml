@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Sales:etc/pdf_file.xsd">
+    <totals>
+        <total name="total_subtotal_discount">
+            <title translate="true">Subtotal Discount</title>
+            <source_field>total_subtotal_discount</source_field>
+            <display_zero>true</display_zero>
+            <model>HookahShisha\Customization\Model\Sales\Pdf\Customdiscount</model>
+            <font_size>7</font_size>
+            <sort_order>300</sort_order>
+        </total>
+        <total name="total_shipping_fee_discount">
+            <title translate="true">Shipping Fee Discount</title>
+            <source_field>total_shipping_fee_discount</source_field>
+            <display_zero>true</display_zero>
+            <model>HookahShisha\Customization\Model\Sales\Pdf\Customdiscount</model>
+            <font_size>7</font_size>
+            <sort_order>400</sort_order>
+        </total>
+    </totals>
+</config>
