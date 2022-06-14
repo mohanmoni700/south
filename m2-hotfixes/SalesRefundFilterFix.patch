@@ -1,0 +1,15 @@
+diff --git a/vendor/avalara/excise/Plugin/SalesInvoiceTaxColumns.php b/vendor/avalara/excise/Plugin/SalesInvoiceTaxColumns.php
+index 2a8fbb57..c3e36b0f 100755
+--- a/vendor/avalara/excise/Plugin/SalesInvoiceTaxColumns.php
++++ b/vendor/avalara/excise/Plugin/SalesInvoiceTaxColumns.php
+@@ -45,6 +45,10 @@ class SalesInvoiceTaxColumns
+                 'main_table.entity_id = salesCreditMemo.entity_id',
+                 ['sales_tax', 'excise_tax', 'base_shipping_tax_amount']
+             );
++            $result->addFilterToMap('created_at', 'main_table.created_at');
++            $result->addFilterToMap('base_grand_total', 'main_table.base_grand_total');
++            $result->addFilterToMap('increment_id', 'salesCreditMemo.increment_id');
++            $result->addFilterToMap('state', 'main_table.state');
+         }
+         return $result;
+     }
