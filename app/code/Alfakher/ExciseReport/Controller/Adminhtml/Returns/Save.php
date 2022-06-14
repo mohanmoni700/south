@@ -43,7 +43,7 @@ class Save extends \Magento\Backend\App\Action
         $websiteid = $post['website'];
         $connection = $this->resourceConnection->getConnection();
 
-        $query ="SELECT
+        $query = "SELECT
         mr.increment_id AS RmaNumber,
         mr.date_requested AS RmaDate,
         mr.order_increment_id AS OrderNumber,
@@ -56,17 +56,18 @@ class Save extends \Magento\Backend\App\Action
         mr.date_requested >=  '" . $startdate . "'
         AND mr.date_requested <= '" . $enddate . "'
         AND mr.store_id = '" . $websiteid . "'
-        ";
+        ORDER BY
+        mr.date_requested";
 
         $values = $connection->fetchAll($query);
 
         $header = [];
         $header[] = [
             'Rma Number' => 'Rma Number',
-            'Rma Date'   => 'Rma Date',
+            'Rma Date' => 'Rma Date',
             'Order Number' => 'Order Number',
             'Order Date' => 'Order Date',
-            'Status'     => 'Status',
+            'Status' => 'Status',
         ];
 
         $report = [];
