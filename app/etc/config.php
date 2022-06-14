@@ -778,6 +778,7 @@ return [
         'HookahShisha_Customization' => 1,
         'HookahShisha_GraphQl' => 1,
         'HookahShisha_Import' => 1,
+        'HookahShisha_InternationalTelephoneInput' => 1,
         'HookahShisha_InvoiceCapture' => 1,
         'HookahShisha_LoginAsCustomer' => 1,
         'Magefan_Community' => 1,
