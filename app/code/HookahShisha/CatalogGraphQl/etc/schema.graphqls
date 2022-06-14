@@ -7,3 +7,7 @@
 interface CategoryInterface {
     alfa_description: String @doc(description: "An optional description of the category.") @resolver(class: "\\Magento\\CatalogGraphQl\\Model\\Resolver\\Category\\CategoryHtmlAttribute")
 }
+
+interface ProductInterface {
+    url_key: String @doc(description: "The part of the URL that identifies the product") @resolver(class: "\\HookahShisha\\CatalogGraphQl\\Model\\Resolver\\UrlRewrite\\ProductUrlKey")
+}

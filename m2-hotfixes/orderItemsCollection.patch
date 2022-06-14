@@ -1,0 +1,19 @@
+diff --git a/vendor/magento/module-sales/Block/Order/Items.php b/vendor/magento/module-sales/Block/Order/Items.php
+index be3f9ce1..044285cc 100644
+--- a/vendor/magento/module-sales/Block/Order/Items.php
++++ b/vendor/magento/module-sales/Block/Order/Items.php
+@@ -148,11 +148,11 @@ class Items extends AbstractItems
+      */
+     private function preparePager(AbstractBlock $pagerBlock): void
+     {
+-        $collectionToPager = $this->createItemsCollection();
++        $collectionToPager = $this->itemCollection;
+         $collectionToPager->addFieldToFilter('parent_item_id', ['null' => true]);
+-        $pagerBlock->setCollection($collectionToPager);
+-
+         $pagerBlock->setLimit($this->itemsPerPage);
++
++        $pagerBlock->setCollection($collectionToPager);
+         $pagerBlock->setAvailableLimit([$this->itemsPerPage]);
+         $pagerBlock->setShowAmounts($this->isPagerDisplayed());
+     }

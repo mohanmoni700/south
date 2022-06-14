@@ -96,9 +96,7 @@ class RelatedDataProvider extends MagentoRelatedDataProvider
             'type_id',
             ['eq'=> 'simple']
         );
-
-        // Show only product with visibility VISIBILITY_IN_SEARCH, VISIBILITY_IN_CATALOG, VISIBILITY_BOTH
-        $collection->setVisibility($this->productVisibility->getVisibleInSiteIds());
+        
         return $collection;
     }
 }
