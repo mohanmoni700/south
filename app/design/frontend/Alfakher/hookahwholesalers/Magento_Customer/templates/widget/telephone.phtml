@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 
 /** @var \Magento\Customer\Block\Widget\Telephone $block */
 ?>
@@ -13,6 +9,7 @@
             <?= $block->escapeHtml(__('Phone Number')) ?>
         </span>
     </label>
+    <?php /* Adding the Country code customization*/  ?>
     <div class="control">
         <input type="text"
                name="telephone"
