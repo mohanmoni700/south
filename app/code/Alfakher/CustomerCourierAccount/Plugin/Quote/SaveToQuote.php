@@ -2,22 +2,33 @@
 
 namespace Alfakher\CustomerCourierAccount\Plugin\Quote;
 
-/**
- *
- */
 use Magento\Quote\Model\QuoteRepository;
 
 class SaveToQuote
 {
-
+    /**
+     * @var $quoteRepository
+     */
     protected $quoteRepository;
 
+    /**
+     * Construct
+     *
+     * @param QuoteRepository $quoteRepository
+     */
     public function __construct(
         QuoteRepository $quoteRepository
     ) {
         $this->quoteRepository = $quoteRepository;
     }
 
+    /**
+     * Before save address information
+     *
+     * @param \Magento\Checkout\Model\ShippingInformationManagement $subject
+     * @param int $cartId
+     * @param \Magento\Checkout\Api\Data\ShippingInformationInterface $addressInformation
+     */
     public function beforeSaveAddressInformation(
         \Magento\Checkout\Model\ShippingInformationManagement $subject,
         $cartId,
