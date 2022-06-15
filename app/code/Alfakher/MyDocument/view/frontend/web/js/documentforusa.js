@@ -151,11 +151,12 @@ define([
                         '<div class="expiry_dates expiry_dates' + showId + '" for="document expiry data" style="display:none">' +
                         '<label>Set Expiry Date</label>' +
                         '<input type="text" placeholder="Expiry Date" name="expiry_date'+ showId +'" id="expiry_date' + showId + '" data-validate="{required:true}" readonly/>' +
-                        '<input type="hidden" id="is_add_more_form'+ showId +'" name="is_add_more_form[]" value="1"/>'+
-                        '</div></div>').insertAfter("#input-file-" + showId);
+                        // '<input type="hidden" id="is_add_more_form'+ showId +'" name="is_add_more_form[]" value="1"/>'+
+                        + '</div></div>').insertAfter("#input-file-" + showId);
                     
                     /*required field remove*/
                     $("#updatefile_" + showId +"-error").remove();
+                    $("#filename-"+showId+"-error").remove();
                     /*required field remove*/
                     $("#image-error-message" + showId).html("");
                     currentElem.parent().find('.input-note').hide();
@@ -189,6 +190,8 @@ define([
                             '<a class="view-doc-link" id="view-doc-link-filename-' + showId + '" href="' + filesrc + '" target="_blank"></a>' +
                             '<a class="deletedocument-preview deletedocument" id="deletedocument-filename' + showId + '"></a>' +
                             '</div>').insertAfter("#" + fileId + showId);
+	                	$("#btnsave").show();
+
 
                         $("#deletedocument-filename" + showId).click(function() {
                             $("#doc-actions-filename-" + showId).remove();
@@ -315,12 +318,20 @@ define([
 	        	var id = jQuery('#usaform').find('input[type="file"]').length;
 	        	var showId = ++id;
 	            if (showId <= 25) {
-	                $('<div class="upload" for="document uploader"><div class="input-file" id="input-file-' + showId + '">' +
-	                    '<input type="file" id="filename-' + showId + '" class="upload-filename" name="filename' + showId + '" />' +
-	                    '<span class="input-note">' + config.inputNote + '</span>'+
+	                $('<div class="upload" id="delete-uploaded'+showId+'" for="document uploader"><div class="input-file" id="input-file-' + showId + '">' +
+	                    '<input type="file" id="filename-' + showId + '" class="required-entry required upload-filename" name="filename' + showId + '" />'
+	                    +'<input type="hidden" id="is_add_more_form'+ showId +'" name="is_add_more_form[]" value="1"/>'+'<span class="input-note">' + config.inputNote + '</span>'+
 	                    '<span id="image-error-message'+showId+'" style="color:red;"></span>'+
-	                    '</div></div>').insertBefore('.upload-container .add-more-cont');
+	                    '</div>' + '<div class="del" id="delete">' +
+                        '<a class="delete-icon" id="del-button' + showId + '" href="#">delete</a>' +
+                        '</div>'+ '</div>').insertBefore('.upload-container .add-more-cont');
 	            }
+	             $("#del-button" + showId).click(function() {
+                    $("#delete-uploaded"+showId).hide();
+                    $("#name-" + showId).val('');
+                    $("#is_add_more_form" + showId).val(1);
+                });
+
 	            if (showId == 25){
                     $(".add-more-cont").hide();
                     $("#add_more").hide();

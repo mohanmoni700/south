@@ -25,6 +25,26 @@
                     </depends>
                 </field>
             </group>
+
+            <group id="af_discount_group" translate="label" type="text" sortOrder="100" showInDefault="0" showInWebsite="1" showInStore="0">
+                <label>Totals Discount</label>
+                <field id="subtotal_enable" translate="label" type="select" sortOrder="1" showInDefault="0" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Subtotal Discount</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="shipping_enable" translate="label" type="select" sortOrder="1" showInDefault="0" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Shipping Discount</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="zero_out_enable" translate="label" type="select" sortOrder="1" showInDefault="0" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Zero Out Order</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+            </group>
+
         </section>
 	</system>
 </config>
