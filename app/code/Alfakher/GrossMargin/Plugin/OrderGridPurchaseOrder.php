@@ -76,6 +76,8 @@ class OrderGridPurchaseOrder
             $result->addFilterToMap('sales_tax', 'purchaseOrderTable.sales_tax');
             $result->addFilterToMap('excise_tax', 'purchaseOrderTable.excise_tax');
             $result->addFilterToMap('base_shipping_tax_amount', 'purchaseOrderTable.base_shipping_tax_amount');
+            $result->addFilterToMap('store_id', 'main_table.store_id');
+            $result->addFilterToMap('subtotal', 'main_table.subtotal');
 
             return $result;
         }
