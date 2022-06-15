@@ -84,6 +84,45 @@
             z-index: inherit;
         }
     } 
+    .minicart-wrapper{
+        .amquote-showcart{
+            &:before{
+                @media only screen and (max-width: 767px) {
+                    top: 3px;
+                    position: relative;
+                }
+            }
+        }
+    } 
+    .amasty_quote-cart-index{
+        .page-wrapper{
+            .empty-cart-class{
+                margin-top: 60px;
+                .page-title-wrapper{
+                    width: 100%;
+                    padding-right: 0;
+                    .page-title{
+                        width: 100%;
+                        .lib-font-size(32);
+                        line-height: 1.2;
+                        font-weight: @font-weight__bold;
+                        margin-bottom: 0;
+                        text-align: center;
+                        margin-bottom: 30px;
+                        @media only screen and (max-width: 767px) {
+                            .lib-font-size(22);
+                        }
+                    }
+                }
+                ~ .page.messages {
+                    .message {
+                        margin: 0 auto 20px;
+                        display: table;
+                    }
+                }
+            }
+        }
+    }
     .page-wrapper {
         .lib-vendor-prefix-display(flex);
         .lib-vendor-prefix-flex-direction(column);
@@ -2311,9 +2350,13 @@
                 }
                 .right_section {
                     display: flex;
-                    align-items: center;
+                    align-items: end;
                     justify-content: flex-end;
                     flex-basis: 25%;
+                    align-items: flex-end;
+                    span.counter.qty.empty{
+                        display: none;
+                    }
                 }
                 .logo{
                     width: 262px;
@@ -2360,6 +2403,9 @@
                 }
             .minicart-wrapper{
                 margin: 0 (@indent__m - 2); // 40px
+                @media (max-width: 767px){
+                    margin: 0 15px;
+                }
                 .action.showcart{
                     padding-top: @indent__xl - 1; //50px
                     position: relative;
@@ -2383,6 +2429,11 @@
                         padding-top: 40px;
                         .lib-css(font-weight, @font-weight__semibold);
                     }
+                }
+            }
+            .reorder-wrapper{
+                @media (max-width: 767px){
+                    margin-left: 13px;
                 }
             }
             .reorder-wrapper,
@@ -2748,7 +2799,6 @@
                     }
                 }
                 .sign-in {
-                    margin-right: 15px;
                     &::after{
                         position: unset;
                     }

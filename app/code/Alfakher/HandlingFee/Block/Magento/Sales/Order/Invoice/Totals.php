@@ -3,9 +3,6 @@ namespace Alfakher\HandlingFee\Block\Magento\Sales\Order\Invoice;
 
 use Magento\Sales\Model\Order;
 
-/**
- * @author af_bv_op
- */
 class Totals extends \Alfakher\HandlingFee\Block\Magento\Sales\Order\Totals
 {
 
@@ -29,6 +26,8 @@ class Totals extends \Alfakher\HandlingFee\Block\Magento\Sales\Order\Totals
     protected $_invoice = null;
 
     /**
+     * Get invoice
+     *
      * @return Order
      */
     public function getInvoice()
@@ -46,6 +45,8 @@ class Totals extends \Alfakher\HandlingFee\Block\Magento\Sales\Order\Totals
     }
 
     /**
+     * Set invoice
+     *
      * @param Order $invoice
      * @return $this
      */

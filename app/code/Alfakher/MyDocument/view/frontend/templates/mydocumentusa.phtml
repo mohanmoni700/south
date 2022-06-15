@@ -191,8 +191,6 @@ $today = date("Y-m-d");
 
                 </span>
            <?php endif;?>
-    
-               
 
                 <?php if ($val['is_add_more_form'] == 1):?>
                     <?php if ($val['is_delete'] == 0): ?>
@@ -363,7 +361,7 @@ foreach ($data as $val) {
                     id="filename<?= $block->escapeHtml($counter); ?>"
                     class="upload-filename"
                     name="filename<?= $block->escapeHtml($counter); ?>"
-                    data-validate="{required:true}"/>
+                    />
                     <span class="input-note">
                         <?= $block->escapeHtml(__('(Only one document can be uploaded)')); ?>
                     </span>
@@ -472,4 +470,24 @@ foreach ($data as $val) {
             }
         }
     }
+</script>
+<script>
+           require(['jquery', 'jquery/ui'], function($){
+            $(document).on( 'click', '#btnsave', function () {
+
+            if($("#filename1").val()==""){
+                $("input[name=name1]").val('');
+            }
+            if($("#filename2").val()==""){
+                $("input[name=name2]").val('');
+            }
+            if($("#filename3").val()==""){
+                $("input[name=name3]").val('');
+            }
+            if($("#filename4").val()==""){
+                $("input[name=name4]").val('');
+            }
+  });
+ });
+
 </script>
