@@ -95,10 +95,18 @@ class LayoutProcessor
                 }
 
                 if (isset($payment['children']['form-fields']['children']['telephone'])) {
+                    $customScope = $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
+                        ['payment']['children']['payments-list']['children'][$key]
+                        ['children']['form-fields']['children']['telephone']['config']['customScope'];
+
                     $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
                     ['payment']['children']['payments-list']['children'][$key]
                     ['children']['form-fields']['children']['telephone']['config'] =
                     $this->helper->telephoneFieldConfigBilling("billingAddress");
+
+                    $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
+                    ['payment']['children']['payments-list']['children'][$key]
+                    ['children']['form-fields']['children']['telephone']['config']['customScope'] = $customScope;
 
                     $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
                     ['payment']['children']['payments-list']['children'][$key]['children']['form-fields']['children']
