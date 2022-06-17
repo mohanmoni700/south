@@ -2,7 +2,7 @@ define([
     'jquery',
     'uiComponent',
     'mage/translate'
-], function ($, Class, messageList, $t) {
+], function ($, Class, $t) {
     'use strict';
 
     return Class.extend({
@@ -30,8 +30,9 @@ define([
                 if (event.currentTarget.checked) {
                     var amount = jQuery('#storecredit_amount').val();
                     var storeCreditType = 'partial';
+                    var message = $t('please enter amount');
                     if (amount == '') {
-                        jQuery("#store-credit-error").append("please enter amount");
+                        jQuery("#store-credit-error").text(message);
                         jQuery("#store-credit-error").show();
                         jQuery("#p_method_use_customerbalance_partial").removeAttr("checked");
                         return false;
@@ -60,7 +61,8 @@ define([
                             window.order.loadArea(['totals', 'billing_method'], true, data);
                             jQuery("#store-credit-error").hide();
                         } else {
-                            jQuery("#store-credit-error").append("Enter amount is incorrect");
+                            var messageForIncorrect = $t('Enter amount is incorrect');
+                            jQuery("#store-credit-error").text(messageForIncorrect);
                             jQuery("#store-credit-error").show();
                         }
                     }
