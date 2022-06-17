@@ -85,11 +85,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         if (!isset($customer_data['email']) || $customer_data['email'] == "") {
             $logger->info(print_r($customer_data, true));
         } else {
-            $multipass = $this->generateKey("2115eee9605b73c8905d059074dd55e4");
+            $this->generateKey("2115eee9605b73c8905d059074dd55e4");
             $token = $this->generateToken($customer_data);
             $shopify_domain = "hookahshisha-express";
             $url = "https://" . $shopify_domain . ".myshopify.com/account/login/multipass/" . $token;
-            //header('Location: '.$url);
 
             $curl = curl_init();
 
