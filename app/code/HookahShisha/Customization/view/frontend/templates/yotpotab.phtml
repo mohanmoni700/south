@@ -1,13 +1,14 @@
 <?php
-$helper = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
-$ids = $helper->getConfigValue('yotpo_loyalty/advanced/myaccount_yotpo');
+$viewModel = $block->getData('view_model');
+$ids = $viewModel->getConfigValue('yotpo_loyalty/advanced/myaccount_yotpo');
+$guid = $viewModel->getConfigValue('yotpo_loyalty/general_settings/swell_guid');
 $instance_id= explode(',', $ids);
 ?>
 <div class="block-title page-title">
     <h1>Yotpo Referrals and Rewards</h1>
 </div>
 
-<script src="https://cdn-widgetsrepository.yotpo.com/v1/loader/X0b76T7jsZDhogJTbjcpSQ" async></script>
+<script src="https://cdn-widgetsrepository.yotpo.com/v1/loader/<?= $block->escapeHtml(__($guid)) ?>" async></script>
 
 <?php foreach ($instance_id as $val) { ?>
     <div class="yotpo-widget-instance" data-yotpo-instance-id=<?= $block->escapeHtml(__($val)) ?>>
