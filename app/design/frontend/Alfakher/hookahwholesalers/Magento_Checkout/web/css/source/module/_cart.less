@@ -255,10 +255,13 @@
                     text-align: center;
                 }
             }
-            ~ .page.messages {
+            ~ .page.messages, ~ .ui-effects-wrapper {
+                width: 100% !important;
+                height: auto !important;
                 .message {
                     margin: 0 auto 20px;
                     display: table;
+                    float: none;
                 }
             }
         }
