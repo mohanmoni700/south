@@ -6,6 +6,8 @@
     <body>
         <referenceContainer name="columns.top">
             <block class="Alfakher\MyDocument\Block\Index\Document" name="document.messages" template="Alfakher_AddtocartPriceHide::documentMessage.phtml" before="-"/>
+
+            <block class="Alfakher\AddtocartPriceHide\Block\Index\CategoryBrand" name="category.banner" template="Alfakher_AddtocartPriceHide::category_banner.phtml" after="document.messages"/>
             
             <block class="Alfakher\AddtocartPriceHide\Block\Index\CategoryBrand" name="childcategory" template="Alfakher_AddtocartPriceHide::categories.phtml" />
         </referenceContainer>
