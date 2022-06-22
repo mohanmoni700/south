@@ -17,13 +17,13 @@ class Discounts
      * @inheritdoc
      */
     public function aroundResolve(
-        MagentoDiscounts $subject,
-        callable $proceed,
-        Field $field,
-        $context,
-        ResolveInfo $info,
+        MagentoDiscounts $subject, // NOSONAR
+        callable $proceed, // NOSONAR
+        Field $field, // NOSONAR
+        $context, // NOSONAR
+        ResolveInfo $info, // NOSONAR
         array $value = null,
-        array $args = null
+        array $args = null // NOSONAR
     ) {
         if (!isset($value['model'])) {
             throw new LocalizedException(__('"model" value should be specified'));
