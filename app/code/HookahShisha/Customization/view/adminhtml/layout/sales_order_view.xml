@@ -18,6 +18,11 @@
             <block class="Magento\Sales\Block\Adminhtml\Items\Column\DefaultColumn"
                name="column_weight"
                template="HookahShisha_Customization::weight.phtml" group="column" />
-           </referenceBlock>
+        </referenceBlock>
+           <referenceBlock name="order_history">
+                <action method='setTemplate'>
+                    <argument name='template' xsi:type='string'>HookahShisha_Customization::order/view/rma.phtml</argument>
+                </action>
+            </referenceBlock>
        </body>
 </page>
