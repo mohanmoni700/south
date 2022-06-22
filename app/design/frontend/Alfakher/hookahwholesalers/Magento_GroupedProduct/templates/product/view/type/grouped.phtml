@@ -1,3 +1,4 @@
+<?php //phpcs:disable ?>
 <?php
     /**
      * Grouped product data template
@@ -5,7 +6,7 @@
      * @var $block \Magento\Catalog\Block\Product\View\BaseImage
      * @var $block \Magento\GroupedProduct\Block\Product\View\Type\Grouped
      */
-    ?>
+?>
 <?php $block->setPreconfiguredValue(); ?>
 <?php $_product = $block->getProduct(); ?>
 <?php $_associatedProducts = $block->getAssociatedProducts(); ?>
@@ -13,8 +14,8 @@
 <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php $is_document_upload = $_helperB2b->getDocuments();?>
 <?php $is_mobile = $_helperB2b->isMobileDevice();?>
-<?php $migrateDocument=$_helperB2b->getMigrateDocument();?>
 <?php $adminsession = $_helperB2b->getAdminCustomer();?>
+<?php $IsFinanceVerified = $_helperB2b->getIsFinanceVerified();?>
 
     <div id="validation-message-box"></div>
     <div class="table-wrapper grouped">
@@ -34,16 +35,25 @@
                     ?>
                       <td data-th="<?= $block->escapeHtml(__('Product Name')) ?>" class="col item">
                         <?php if ($adminsession): ?>     
-                            <strong class="product-item-name" title="<?= $block->escapeHtml(' Qty : ' . $productAvailableQty . ' ,  GrossMargin : ' . $finalGrossMargin . '%') ?>"><?= $block->escapeHtml($_item->getName()) ?></strong>
+                            <strong class="product-item-name" title="<?= $block
+                            ->escapeHtml('Qty : '.$productAvailableQty.' , GrossMargin : ' . $finalGrossMargin.'%') ?>">
+                            <?= $block->escapeHtml($_item->getName()) ?>
+                            </strong>
                         <?php else: ?>
                             <strong class="product-item-name"><?= $block->escapeHtml($_item->getName()) ?></strong>
                         <?php endif; ?>
                         </td>
-                        <!-- show price start -->
+                        <?php
+                        /*
+                        Here we removed the condition of the Document verified
+                        ( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+                        */
+                        ?>
                         <?php
                         $messageData=$_helperB2b->getDocMessageData();
                         $expiryMsg=$_helperB2b->getExpiryMsg();
-                        if (($migrateDocument == 1) || ($messageData == 2 && $is_document_upload == 1)): ?>
+
+                        if ($IsFinanceVerified == 1): ?>
                             <td>
                                <?php if ($block->getCanShowProductPrice($_product)): ?>
                                     <?php if ($block->getCanShowProductPrice($_item)): ?>
@@ -94,7 +104,8 @@
                                             <?php else: ?>
                                                <input type="text"
                                                name="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
-                                               data-selector="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
+                                               data-selector="super_group[<?= $block->
+                                                escapeHtmlAttr($_item->getId()) ?>]"
                                                value="<?=  $block->escapeHtmlAttr($_item->getQty() * 1) ?>"
                                                title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
                                                id="qtytext_<?= $block->escapeHtmlAttr($_item->getId()) ?>"

@@ -10,6 +10,7 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Image\AdapterFactory;
 use Magento\MediaStorage\Model\File\UploaderFactory;
+use Magento\Framework\DataObject;
 
 class Updatedocument extends Action
 {
@@ -86,6 +87,7 @@ class Updatedocument extends Action
         $filesData = $this->getRequest()->getFiles()->toArray();
         $newArray = [];
         $data = [];
+        $customerDocs = [];
         foreach ($post['documentid'] as $key => $value) {
             $newArray[$key]['documentid'] = $value;
         }
@@ -151,7 +153,6 @@ class Updatedocument extends Action
                 $resultRedirect->setUrl('mydocument/customer/index');
                 $model = $this->_myDocument->create()->load($newArray[$i]['documentid']);
                 if ($data['updatefile'] != null) {
-
                     $model->setFileName($data['updatefile']);
                     $model->setDocumentName($post['name' . ($post['documentid'][$i])]);
                     $model->setExpiryDate($expiryDate);
@@ -159,11 +160,18 @@ class Updatedocument extends Action
                     $model->setStatus(0);
                     $model->setMessage('');
                     $saveData = $model->save();
+                    $customerDocs[] =  $saveData->getData();
                 }
                 $i++;
             }
         }
+        
         if ($saveData) {
+            $this->_eventManager->dispatch('document_update_after',
+                [
+                    'items' => $customerDocs
+                ]
+            );
             $success = true;
         } else {
             $success = false;
