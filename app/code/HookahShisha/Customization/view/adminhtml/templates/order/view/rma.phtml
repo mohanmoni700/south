@@ -94,7 +94,8 @@
 
             <?php if ($_item->getComment()): ?>
                 <div class="note-list-comment">
-                  <?= $block->escapeHtml($_item->getComment(), ['b', 'br', 'strong', 'i', 'u', 'a']) ?>
+                  <?php $adminuser = $_item->getAdminName() ? " Commented By ".$_item->getAdminName() : '' ; ?>  
+                  <?= $block->escapeHtml($_item->getComment().$adminuser, ['b', 'br', 'strong', 'i', 'u', 'a']) ?>
                 </div>
             <?php endif; ?>
         </li>
@@ -120,7 +121,7 @@ if (!empty($rmaid->getData())):
     $datablock->getComments($id);
     $rmadata = $rmaid->getData();
     ?>
-<h2>Return Details:</h2>
+<h2><?= $block->escapeHtml(__('Return Details :')) ?></h2>
 <div class="rma_data">
 <div class="admin__page-section-item-content">
         <div id="history_form" class="rma-history-form edit-order-comments">
