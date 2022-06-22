@@ -108,23 +108,28 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
 
 <!-- Form start BS 24-1-22 -->
     <div class="my_document">
-        <form action="<?= $block->escapeHtml($block->getUrl('mydoc/document/saveform', ['_query' => $customer_id])) ?>"
+        <form action="<?= $block->escapeHtml($block->getUrl('mydoc/document/save', ['_query' => $customer_id])) ?>"
             method="post"
             class="form doc-form"
             accept-charset="utf-8"
-            enctype="multipart/form-data">
+            enctype="multipart/form-data"
+            data-mage-init='{"validation": {}}'>
 
             <input name="form_key" type="hidden" value="<?= $block->escapeHtml($block->getFormKey()) ?>" />
-            <div class="updated-container">        
-            <?php foreach ($items as $document) { ?>
 
-        
+            <input name="customer_id" type="hidden" value="<?= $block->escapeHtml(__($customerid)) ?>" />            
+            <!-- <input name="new_doc" type="hidden" value=""> -->
+            <div class="updated-container upload-container">        
+     
+               <?php foreach ($items as $document) { ?>
+            
                 <div class="upload <?php if (!$document->getIsDelete()) { echo 'active'; } ?>" >
                   <!--   <input type="hidden"
                     class="doc_id"
                     name="mydocument_id[]"
                     value="<?= $block->escapeHtml($document->getMydocumentId()) ?>"> -->
-                    <!-- <label class="admin__form_value"><?= $block->escapeHtml($document->getDocumentName()) ?></label>    -->             
+                    <!-- <label class="admin__form_value">
+                        <?= $block->escapeHtml($document->getDocumentName()) ?></label>    -->             
                     <?php
                         $filename=$document->getFilename();
                         $queryParams = ['filename' => $filename,];
@@ -138,6 +143,10 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                     
                         <div class="input-file pdf"
                         id="input-updatefile-<?= $block->escapeHtml($document['mydocument_id']); ?>">
+                        <!-- <input type="hidden" id="test"
+                            name="filename[]"
+                            value="<?= $block->escapeUrl($fileName); ?>"/> -->
+
                             <?php
                             //$fileName = $block->getUrl('mydoc/document/download', ['_query' => $queryParams])
                             $fileName = $mediaUrl.$filename;
@@ -146,7 +155,8 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                             ?>
                             <div>
                                 <?php if ($extension == "pdf"): ?>
-                                    <img src="<?= $block->escapeUrl($pdfImg); ?>" class="pdf-image" alt="pdf documents" />
+                                    <img src="
+                                    <?= $block->escapeUrl($pdfImg); ?>" class="pdf-image" alt="pdf documents" />
                                 <?php else: ?>
                                     <img src="<?= $block->escapeUrl($fileName); ?>" height="170" width="170" />
                                 <?php endif; ?>
@@ -167,7 +177,8 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                         </div>
                         <div class="doc-name" id="doc-name-<?= $block->escapeHtml($document['mydocument_id'])?>">
                             <span><?= $block->escapeHtml($document['filename']); ?></span>
-                            <a href="<?= $block->escapeUrl($fileName); ?>" target="_blank" download="" class="download-doc"></a>
+                            <a href="<?=
+                            $block->escapeUrl($fileName); ?>" target="_blank" download="" class="download-doc"></a>
                         </div>
                         
                     <?php } else { ?>
@@ -214,10 +225,13 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
 
                     <?php } ?>
 
-                <?php $docName=$document->getDocumentName(); ?>
+                    <?php $docName=$document->getDocumentName(); ?>
 
-                    <?php if ($docName == "FEIN" || $docName=="Sales Tax/Resale License" || $docName=="State Tobacco License" || $docName=="Unified Resale Certificate") {
-                         $readonly="readonly";
+                    <?php if ($docName == "FEIN" ||
+                        $docName=="Sales Tax/Resale License" ||
+                        $docName=="State Tobacco License" ||
+                        $docName=="Unified Resale Certificate") {
+                        $readonly="readonly";
                     } else {
                         $readonly = "";
                     }
@@ -228,7 +242,8 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                             <input type="text" id="name-<?= $block->escapeHtml($document['mydocument_id']);?>"
                             name="document_name[]"
                             data-validate="{required:true}"
-                            value="<?= $block->escapeHtml($document['document_name']); ?>" <?= $readonly ?>/>
+                            value="<?=$block
+                            ->escapeHtml($document['document_name']); ?>" <?= $block->escapeHtml(__($readonly)) ?>/>
                     </div>
 
                     <div class="expiry_dates" style="margin: 14px 0;">
@@ -251,7 +266,8 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                          <input type="checkbox"
                             id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
                             class='cmn-toggle cmn-toggle-round'
-                            value="<?=$document->getStatus()?>"
+                            value="<?=$block
+                            ->escapeHtml($document->getStatus())?>"
                             name='status[]' <?= $document->getStatus()== '1' ? 'checked' : ''; ?>
                             />
 
@@ -270,7 +286,7 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                             class='cmn-toggle cmn-toggle-round'
                             value="0"
                             name='status[]'
-                            <?= $document->getStatus()== '1' ? 'checked' : ''; ?> disabled />
+                                 <?= $document->getStatus()== '1' ? 'checked' : ''; ?> disabled />
                         <?php } else { ?>
                             <input type="checkbox"
                             id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
@@ -295,9 +311,12 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                         value="<?= $block->escapeHtml($document->getMessage()) ?>" />
                     </div>
 
-                <?php $i++; ?>
+                    <?php $i++; ?>
             </div>  
-        <?php } ?>                
+        <?php } ?> 
+        <!-- for admin to upload documents after submit -->
+        <?=$block->getChildHtml('add_more_doc');?>
+        <!-- for admin to upload documents after submit -->
             </div>
             <div class="actions-toolbar justify_btn">
                 <div class="primary regis">
@@ -358,3 +377,25 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
 
     });
 </script>
+
+<!-- to remove document name for empty files[BS] -->
+<script>
+   require(['jquery', 'jquery/ui'], function($){
+    $(document).on( 'click', '#custom_btn', function () {
+
+        if($("#filename1").val()==""){
+            $("#name-1").val('');
+        }
+        if($("#filename2").val()==""){
+            $("#name-2").val('');
+        }
+        if($("#filename3").val()==""){
+            $("#name-3").val('');
+        }
+        if($("#filename4").val()==""){
+            $("#name-4").val('');
+        }
+  });
+ });
+</script>
+<!-- to remove document name for empty files[BS] -->
