@@ -120,7 +120,7 @@ return [
                 'group_id' => '12',
                 'website_id' => '12',
                 'name' => 'Ooka USA Store',
-                'root_category_id' => '1130',
+                'root_category_id' => '1132',
                 'default_store_id' => '12',
                 'code' => 'ooka_usa_store'
             ],
@@ -128,7 +128,7 @@ return [
                 'group_id' => '13',
                 'website_id' => '13',
                 'name' => 'Ooka DE Store',
-                'root_category_id' => '1131',
+                'root_category_id' => '1135',
                 'default_store_id' => '13',
                 'code' => 'ooka_de_store'
             ]
@@ -867,6 +867,7 @@ return [
         'Avalara_Excise' => 1,
         'Corra_AmastyPromoGraphQl' => 1,
         'Corra_AttributesGraphQl' => 1,
+        'Corra_LinkGuestOrder' => 1,
         'Corra_Log' => 1,
         'Corra_LogCloudSupport' => 1,
         'Corra_NewRelicReportingGraphql' => 1,
@@ -956,6 +957,9 @@ return [
         'RedChamps_EmailTemplatesLegacy' => 1,
         'RedChamps_UnpaidInvoices' => 1,
         'SetuBridge_ChangeCustomerpwbyadmin' => 1,
+        'ShipperHQ_Common' => 1,
+        'ShipperHQ_Logger' => 1,
+        'ShipperHQ_Shipper' => 1,
         'Corra_SignifydGraphQl' => 1,
         'Smartwave_Megamenu' => 1,
         'Temando_ShippingRemover' => 1,
