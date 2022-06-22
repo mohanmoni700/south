@@ -1,8 +1,8 @@
 <?php
 
-namespace HookahShisha\Customization\Observer;
+namespace Alfakher\Shopify\Observer;
 
-use HookahShisha\Customization\Helper\Data;
+use Alfakher\Shopify\Helper\Data;
 use Magento\Framework\Event\ObserverInterface;
 
 class GetCustomerData implements ObserverInterface

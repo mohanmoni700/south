@@ -1,5 +1,5 @@
 <?php
-namespace HookahShisha\Customization\Helper;
+namespace Alfakher\Shopify\Helper;
 
 class Data extends \Magento\Framework\App\Helper\AbstractHelper
 {
@@ -15,6 +15,24 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @var SignatureKey
      */
     private $signature_key;
+    /**
+     * @var \Magento\Framework\HTTP\Client\Curl
+     */
+    protected $curl;
+
+    /**
+     * Constructor
+     * @param \Alfakher\Shopify\Logger\Logger $logger
+     * @param \Magento\Framework\HTTP\Client\Curl $curl
+     */
+    public function __construct(
+        \Alfakher\Shopify\Logger\Logger $logger,
+        \Magento\Framework\HTTP\Client\Curl $curl
+    ) {
+        $this->logger = $logger;
+        $this->curl = $curl;
+    }
+
     /**
      * Generate Key
      *
@@ -78,34 +96,26 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function customerData($customer_data)
     {
 
-        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/check.log');
-        $logger = new \Zend_Log();
-        $logger->addWriter($writer);
         // if there is no email, just go to the shop
         if (!isset($customer_data['email']) || $customer_data['email'] == "") {
-            $logger->info(print_r($customer_data, true));
+            $this->logger->info(print_r($customer_data, true));
         } else {
             $this->generateKey("2115eee9605b73c8905d059074dd55e4");
             $token = $this->generateToken($customer_data);
             $shopify_domain = "hookahshisha-express";
             $url = "https://" . $shopify_domain . ".myshopify.com/account/login/multipass/" . $token;
 
-            $curl = curl_init();
-
-            curl_setopt_array($curl, [
-                CURLOPT_URL => $url,
-                CURLOPT_RETURNTRANSFER => true,
+            $curl = [
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
                 CURLOPT_TIMEOUT => 0,
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
-            ]);
-
-            $response = curl_exec($curl);
-            curl_close($curl);
-            $logger->info(print_r($response, true));
+            ];
+            $this->curl->setOptions($curl);
+            $this->curl->get($url);
+            $response = $this->curl->getBody();
+            $this->logger->info(print_r($response, true));
         }
     }
 }
