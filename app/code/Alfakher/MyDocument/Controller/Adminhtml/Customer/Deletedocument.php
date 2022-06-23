@@ -85,12 +85,13 @@ class Deletedocument extends \Magento\Backend\App\Action
         $resultJson = $this->resultJsonFactory->create();
         $documentId = $this->getRequest()->getPost("id");
         $model = $this->_myDocument->create()->load($documentId);
+        $itemData = $model->getData();
         if ($model) {
             $model->delete();
             $success = true;
             $this->_eventManager->dispatch('document_delete_after',
                 [
-                    'items' => $model->getData(),
+                    'items' => $itemData,
                 ]
             );
         } else {

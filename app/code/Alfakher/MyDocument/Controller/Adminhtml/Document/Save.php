@@ -86,6 +86,7 @@ class Save extends \Magento\Backend\App\Action
         $newArray = [];
         $data = [];
         $customerDocs = [];
+        $emailData = [];
 
         if (isset($post['is_customerfrom_usa'])) {
             $is_usa = 1;
@@ -188,6 +189,7 @@ class Save extends \Magento\Backend\App\Action
                     }
                     if (($post['document_name'][$i]) != '') {
                         $saveData = $model->save();
+                        $customerDocs[] = $saveData->getData();
                     }
 
                 }
@@ -195,6 +197,21 @@ class Save extends \Magento\Backend\App\Action
             }
         }
 
+        if (count($emailData) > 0) {
+            $this->_eventManager->dispatch('document_update_after',
+                [
+                    'items' => $emailData,
+                ]
+            );
+        }
+
+        if (count($customerDocs) > 0) {
+            $this->_eventManager->dispatch('document_save_after',
+                [
+                    'items' => $customerDocs,
+                ]
+            );
+        }
         $mail = $this->helper->sendMail($emailData, $post['customer_id']);
         $resultRedirect = $this->resultRedirectFactory->create();
         $resultRedirect->setPath('customer/index/edit', ['id' =>
