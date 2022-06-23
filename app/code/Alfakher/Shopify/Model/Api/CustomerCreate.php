@@ -8,7 +8,6 @@ use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Model\ResourceModel\Customer;
 use Magento\Customer\Model\CustomerFactory;
 use Magento\Customer\Api\Data\CustomerInterface;
-use Magento\Framework\Serialize\Serializer\Json as JsonSerialize;
 
 class CustomerCreate implements CustomerRepositoryInterface
 {
@@ -29,10 +28,6 @@ class CustomerCreate implements CustomerRepositoryInterface
      * @var CustomerFactory
      */
     protected $customerFactory;
-    /**
-     * @var JsonSerialize
-     */
-    private $jsonSerialize;
 
     /**
      * Initialize service
@@ -41,20 +36,17 @@ class CustomerCreate implements CustomerRepositoryInterface
      * @param AccountManagementInterface $accountManagement
      * @param \Magento\Customer\Model\ResourceModel\Customer $customerResource
      * @param CustomerFactory $customerFactory
-     * @param JsonSerialize $jsonSerialize
      */
     public function __construct(
         StoreManagerInterface $storeManager,
         AccountManagementInterface $accountManagement,
         Customer $customerResource,
-        CustomerFactory $customerFactory,
-        JsonSerialize $jsonSerialize
+        CustomerFactory $customerFactory
     ) {
         $this->_storeManager = $storeManager;
         $this->accountManagement = $accountManagement;
         $this->customerResource = $customerResource;
         $this->customerFactory = $customerFactory;
-        $this->jsonSerialize = $jsonSerialize;
     }
 
    /**
@@ -72,7 +64,6 @@ class CustomerCreate implements CustomerRepositoryInterface
         ->setLastname($last_name)
         ->setEmail($email);
         $this->customerResource->save($customer);
-        $Result = ["status" => "true", "id" => $customer->getId()];
-        $this->jsonSerialize->serialize($Result);
+        return $customer->getId();
     }
 }

@@ -19,18 +19,28 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @var \Magento\Framework\HTTP\Client\Curl
      */
     protected $curl;
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    public const SHOPIFY_TOKEN = 'shopify/general/shopify_token';
+    public const SHOPIFY_DOMAIN = 'shopify/general/shopify_domain';
 
     /**
      * Constructor
      * @param \Alfakher\Shopify\Logger\Logger $logger
      * @param \Magento\Framework\HTTP\Client\Curl $curl
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         \Alfakher\Shopify\Logger\Logger $logger,
-        \Magento\Framework\HTTP\Client\Curl $curl
+        \Magento\Framework\HTTP\Client\Curl $curl,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     ) {
         $this->logger = $logger;
         $this->curl = $curl;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -100,9 +110,13 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         if (!isset($customer_data['email']) || $customer_data['email'] == "") {
             $this->logger->info(print_r($customer_data, true));
         } else {
-            $this->generateKey("2115eee9605b73c8905d059074dd55e4");
+            
+            $generateKey = $this->scopeConfig->getValue(self::SHOPIFY_TOKEN, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+            $this->generateKey($generateKey);
+
             $token = $this->generateToken($customer_data);
-            $shopify_domain = "hookahshisha-express";
+            
+            $shopify_domain = $this->scopeConfig->getValue(self::SHOPIFY_DOMAIN, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
             $url = "https://" . $shopify_domain . ".myshopify.com/account/login/multipass/" . $token;
 
             $curl = [
