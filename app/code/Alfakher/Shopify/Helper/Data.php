@@ -24,6 +24,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     protected $scopeConfig;
 
+    public const SHOPIFY_ENABLE = 'shopify/general/enable';
     public const SHOPIFY_TOKEN = 'shopify/general/shopify_token';
     public const SHOPIFY_DOMAIN = 'shopify/general/shopify_domain';
 
@@ -105,31 +106,34 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      */
     public function customerData($customer_data)
     {
+        $shopify_enable = $this->scopeConfig->getValue(self::SHOPIFY_ENABLE, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
 
+        if ($shopify_enable == 1) {
         // if there is no email, just go to the shop
-        if (!isset($customer_data['email']) || $customer_data['email'] == "") {
-            $this->logger->info(print_r($customer_data, true));
-        } else {
-            
-            $generateKey = $this->scopeConfig->getValue(self::SHOPIFY_TOKEN, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-            $this->generateKey($generateKey);
+            if (!isset($customer_data['email']) || $customer_data['email'] == "") {
+                $this->logger->info(print_r($customer_data, true));
+            } else {
+                
+                $generateKey = $this->scopeConfig->getValue(self::SHOPIFY_TOKEN, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+                $this->generateKey($generateKey);
 
-            $token = $this->generateToken($customer_data);
-            
-            $shopify_domain = $this->scopeConfig->getValue(self::SHOPIFY_DOMAIN, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
-            $url = "https://" . $shopify_domain . ".myshopify.com/account/login/multipass/" . $token;
+                $token = $this->generateToken($customer_data);
+                
+                $shopify_domain = $this->scopeConfig->getValue(self::SHOPIFY_DOMAIN, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+                $url = "https://" . $shopify_domain . ".myshopify.com/account/login/multipass/" . $token;
 
-            $curl = [
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            ];
-            $this->curl->setOptions($curl);
-            $this->curl->get($url);
-            $response = $this->curl->getBody();
-            $this->logger->info(print_r($response, true));
+                $curl = [
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                ];
+                $this->curl->setOptions($curl);
+                $this->curl->get($url);
+                $response = $this->curl->getBody();
+                $this->logger->info(print_r($response, true));
+            }
         }
     }
 }
