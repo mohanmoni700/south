@@ -2,14 +2,27 @@
 
 namespace Alfakher\KlaviyoCustomCatalog\Controller\Index;
 
-/**
- *
- */
 class Index extends \Magento\Framework\App\Action\Action
 {
-
+    /**
+     * Result page factory variable
+     *
+     * @var $_pageFactory
+     */
     protected $_pageFactory;
 
+    /**
+     * Constructor
+     *
+     * @param \Magento\Framework\App\Action\Context $context
+     * @param \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param \Magento\Framework\Api\FilterBuilder $filterBuilder
+     * @param \Magento\Catalog\Api\ProductRepositoryInterface $productsInterface
+     * @param \Magento\Catalog\Helper\Product $imageHelper
+     * @param \Magento\GroupedProduct\Model\Product\Type\Grouped $groupedProduct
+     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     * @param \Magento\Framework\View\Result\PageFactory $pageFactory
+     */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
@@ -32,6 +45,9 @@ class Index extends \Magento\Framework\App\Action\Action
         return parent::__construct($context);
     }
 
+    /**
+     * Execute method
+     */
     public function execute()
     {
         $filter = [
@@ -60,7 +76,10 @@ class Index extends \Magento\Framework\App\Action\Action
                         $productUrl = $groupProductNext->getUrlKey();
                     }
 
-                } catch (\Exception $e) {}
+                } catch (\Exception $e) {
+                    /* exception handling code */
+                    continue;
+                }
             }
 
             $proArr[] = [
@@ -70,10 +89,6 @@ class Index extends \Magento\Framework\App\Action\Action
                 "description" => $pro->getShortDescription() ? $pro->getShortDescription() : "unavailable",
                 "image_link" => $this->_imageHelper->getThumbnailUrl($pro) ? $this->_imageHelper->getThumbnailUrl($pro) : "unavailable",
                 "b2b_url_key" => $productUrl,
-                /*"==" => "==============================",
-            "type" => $pro->getTypeId(),
-            "visibility" => $pro->getVisibility(),
-            "group_parent" => $this->_groupedProduct->getParentIdsByChild($pro->getId()),*/
             ];
 
         }
