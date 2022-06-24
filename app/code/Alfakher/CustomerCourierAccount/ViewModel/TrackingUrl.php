@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Alfakher\CustomerCourierAccount\ViewModel;
 
 use Magento\Framework\View\Element\Block\ArgumentInterface;
+use \Magento\Sales\Model\Order\Shipment\Track as TrackInfo;
 
 /**
  * Get html links for url
@@ -15,12 +16,16 @@ class TrackingUrl implements ArgumentInterface
    /**
     * Get tracking url
     *
-    * @param string $carrier
-    * @param string $trackNumber
+    * @param TrackInfo $trackingInfo
     * @return string
     **/
-    public function getTrackingUrl(string $carrier, string $trackNumber):string
+    public function getTrackingUrl(TrackInfo $trackingInfo):string
     {
+        $carrier = $trackingInfo->getCarrierCode();
+        $trackNumber = $trackingInfo->getTrackNumber();
+        if ($carrier === 'custom') {
+            $carrier = strtolower($trackingInfo->getTitle());
+        }
         switch ($carrier) {
             case 'usps':
                 $trackingDetail = "https://tools.usps.com/go/TrackConfirmAction?qtc_tLabels1=".$trackNumber;
