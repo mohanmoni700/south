@@ -13,5 +13,7 @@
     <event name="sales_order_invoice_pay">
         <observer name="purchase_order_invoice_collect" instance="Alfakher\GrossMargin\Observer\PurchaseOrderToInvoice" />
     </event>
-
+    <event name="mageworx_order_edit_after">
+        <observer name="order_edit_tax_calculation" instance="Alfakher\GrossMargin\Observer\OrderEditTaxCalculation" />
+    </event>
 </config>
