@@ -117,7 +117,7 @@ if ($document['is_customerfrom_usa']==1) {
                         showId + '" for="document expiry data" style="display:none" >' +
                         '<label>Set Expiry Date</label>' +
                         '<input type="text" placeholder="Expiry Date" name="expiry_date[]" id="expiry_date-' 
-                        + showId + '" class="required-entry required" readonly>' +
+                        + showId + '" class="required-entry required" readonly required>' +
                         '</div></div>').insertAfter(currentElem.closest('.upload .input-file'));
                     $("#image-error-message-" + showId).html("");
                     $("#filename-" + showId + "-error").remove();
@@ -177,10 +177,8 @@ if ($document['is_customerfrom_usa']==1) {
                     }
                 });
                 expireOnChange(showId);
-                $("#nonusabtnsave").show();
             } else {
                 currentElem.closest('.upload').removeClass('active');
-                $("#nonusabtnsave").hide();
             }
         }
 
@@ -226,13 +224,14 @@ if ($document['is_customerfrom_usa']==1) {
                 fileRender(1, 'filename-',$(this),e);
             });
 
-            var id = 1;
+            var id = 5;
             $(document).on("click", '#add_more', function(e){
                 var showId = ++id;
                 if (showId <= 25) {
                     $('<div class="upload" id="delete-uploaded'
                         +showId+'" for="document uploader">' +
-                        '<div class="input-file">' +
+                        '<label class="empty-label"></label>'+
+                        '<div class="input-file">' + 
                         '<input type="file" id="filename-'
                         + showId + '" class="required upload-filename" name="filename' 
                         + showId + '" class="required-entry required" required>' +
@@ -288,7 +287,7 @@ if ($document['is_customerfrom_usa']==1) {
         }
 
 
-        function handleFile(e, fileId, expiry_date, usabtnsave, currentElem) {
+        function handleFile(e, fileId, expiry_date, currentElem) {
 
             var reader = new FileReader();
             reader.onload = function(event) {
@@ -327,7 +326,6 @@ if ($document['is_customerfrom_usa']==1) {
                     $("#download-doc-preview-" + fileId).attr("href", event.target.result);
                     $("#download-doc-preview-" + fileId).attr("download", nameArr[2]);
                     $(expiry_date).show();
-                    $(usabtnsave).show();
                     /*remove required field message*/
                     var num=fileId.match(/\d+/g);
                     $("#filename"+num+"-error").remove();
@@ -374,10 +372,9 @@ if ($document['is_customerfrom_usa']==1) {
                     var extensionArr = ['pdf', 'jpg', 'png'];
                     if (extensionArr.indexOf(extension) >= 0) {
                         $("#image-error-message" + id).html("");
-                        handleFile(e, "filename" + id, ".set_expiry" + id, "#usabtnsave", $(this));
+                        handleFile(e, "filename" + id, ".set_expiry" + id, $(this));
                         $(".doc_name" + id).show();
                         $(".set_expiry" + id).show();
-                        $("#usabtnsave").show();
                     } else {
                         $(this).val('');
                         $("#image-error-message" + id).html("File type supported are JPG,PNG and PDF Only");
@@ -386,7 +383,6 @@ if ($document['is_customerfrom_usa']==1) {
                 } else {
                     $(".doc_name" + id).hide();
                     $(".set_expiry" + id).hide();
-                    $("#usabtnsave").hide();
                 }
             });
         }

@@ -140,7 +140,7 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                     class="doc_id"
                     name="mydocument_id[]"
                     value="<?= $block->escapeHtml($document->getMydocumentId()) ?>">
-                    
+                        <label class="empty-label"></label>
                         <div class="input-file pdf"
                         id="input-updatefile-<?= $block->escapeHtml($document['mydocument_id']); ?>">
                         <!-- <input type="hidden" id="test"
