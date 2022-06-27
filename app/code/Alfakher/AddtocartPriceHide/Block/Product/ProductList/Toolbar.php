@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace Alfakher\AddtocartPriceHide\Block\Product\ProductList;
 
 use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory as DocumentCollectionFactory;
@@ -162,10 +158,10 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
      * @param \Magento\Customer\Model\Session $customerSession
      * @param \Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory $documentcollection
      * @param Data $helperData
-     * @param array $data
      * @param ToolbarMemorizer|null $toolbarMemorizer
      * @param \Magento\Framework\App\Http\Context|null $httpContext
      * @param \Magento\Framework\Data\Form\FormKey|null $formKey
+     * @param array $data
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -179,10 +175,10 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
         \Magento\Customer\Model\Session $customerSession,
         DocumentCollectionFactory $documentcollection,
         Data $helperData,
-        array $data = [],
         ToolbarMemorizer $toolbarMemorizer,
         \Magento\Framework\App\Http\Context $httpContext,
-        \Magento\Framework\Data\Form\FormKey $formKey
+        \Magento\Framework\Data\Form\FormKey $formKey,
+        array $data = []
     ) {
 
         $this->toolbarMemorizer = $toolbarMemorizer;
@@ -278,17 +274,16 @@ class Toolbar extends \Magento\Catalog\Block\Product\ProductList\Toolbar
     {
         if ($this->getCustomerIsLoggedIn()) {
             $customerid = $this->getCustomerId();
-            $MigrateDocument = $this->helperData->getMigrateDocument();
-            if ($MigrateDocument == 1) {
+            $isFinanceVerified = $this->helperData->getIsFinanceVerified();
+            /*
+            Here we removed the condition of the Document verified
+            ($is_document_upload $doc_expired) and uploaded($isFinanceVerified)
+             */
+            if ($isFinanceVerified == 1) {
                 return true;
-            } elseif ($this->getDocumentCollection($customerid)) {
-                return true;
-            } else {
-                return false;
             }
-        } else {
-            return false;
         }
+        return false;
     }
 
     /**

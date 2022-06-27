@@ -47,9 +47,6 @@
 
 	.fieldset.amquote-summary-details{
 		.field.textarea{
-			.label{
-				margin: 0;
-			}
 			.control{
 				width: 100%;
 				textarea{
@@ -124,12 +121,14 @@
     .minicart-wrapper{
     	&.amquote-cart-wrapper {
 		    text-align: center;
+			align-self: flex-end;
 		    .action.close:before {
 			    font-size: 25px;
 			    margin-bottom: 20px;
 			}
 		}
     	.amquote-showcart{
+			text-decoration: none;
     		&:before{
     			content: "";
 			    display: inline-block;
@@ -141,7 +140,7 @@
 			    vertical-align: top;
 			    width: 20px;
 			    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNSAyNSI+PHBhdGggZmlsbD0iIzc1NzU3NSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMjQgMjFoLTFsLS4wMTItMTEuNTEyQS40ODguNDg4IDAgMCAwIDIyLjUgOUgyMFYxLjVhLjQ4OC40ODggMCAwIDAtLjQ4OC0uNDg4SDkuNDg4QS40ODguNDg4IDAgMCAwIDkgMS41VjIwaC0uMzM3QTMuNTE1IDMuNTE1IDAgMCAwIDcgMTguMzM3VjEuMzU5QzcgLjU1MSA2LjUgMCA1LjY2NCAwSDFTMCAwIDAgMXMxIDEgMSAxaDR2MTYuMDM1QTMuNSAzLjUgMCAxIDAgOC42NjMgMjNIMjRzMSAwIDEtMWMwLTEuMDAxLTEtMS0xLTF6bS0xMy4wMDEgMGwtLjAwMS0xMEgxNGwuMDAxIDQuMjM2YS40ODguNDg4IDAgMCAwIC43ODEuMzlsMS4xMzctMS4yNDUgMS4zMDEgMS4yNDZhLjQ4OC40ODggMCAwIDAgLjc4LS4zOTF2LTQuMjM1TDIxIDExdjkuOTk5TDEwLjk5OSAyMXptMS45OS0xNS4zNThhLjQ4OC40ODggMCAwIDAgLjc1OC40MDZsLjcwNi0uNzk3Ljc4OC43OTZBLjQ4Ny40ODcgMCAwIDAgMTYgNS42NFYzaDJ2NmgtN1YzaDEuOTg4djIuNjQyeiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PC9zdmc+) center center no-repeat;
-			    margin: 0px;
+			    margin: 0 0 3px 0;
 			    overflow: hidden;
 			    transition: opacity 0.3s ease 0s;
     		}
@@ -171,8 +170,8 @@
     			height: 18px;
 			    padding: 1px 5px;
 			    min-width: 24px;
-			    top: -4px;
-			    left: 50%;
+			    top: -7px;
+			    left: 60%;
 			    position: absolute;
 			    font-size: 11px;
 			    background-color: #961e70;

@@ -1,0 +1,13 @@
+<?php
+/**
+ * Category banner template
+ *
+ * @var $block Alfakher\AddtocartPriceHide\Block\Index\CategoryBrand
+ */
+?>
+
+<?php if ($banner = $block->getCurrentCategory()->getCategoryBanner()):?>
+<div class="category-banner">
+    <?= /* @noEscape */ $block->getContentFromStaticBlock($block->getCurrentCategory()->getCategoryBanner()); ?>
+</div>
+<?php endif; ?>
