@@ -88,8 +88,7 @@
         .amquote-showcart{
             &:before{
                 @media only screen and (max-width: 767px) {
-                    top: 3px;
-                    position: relative;
+                    margin: 0;
                 }
             }
         }
@@ -923,6 +922,14 @@
                 bottom: -4px;
             }
         }
+        &.reward-font-montserrat {
+            font-family: @font-family__base;
+            font-weight: @font-weight__bold;
+        }
+    }
+    .reward-font-montserrat .accordion_title {
+        font-family: @font-family__base;
+        font-weight: @font-weight__bold;
     }
 
     //
@@ -1516,6 +1523,11 @@
                     top: 0;
                 }
             }
+        }
+    }
+    .intl-tel-input {
+        .selected-flag {
+            max-height: 48px;
         }
     }
 }
@@ -2353,7 +2365,7 @@
                     align-items: end;
                     justify-content: flex-end;
                     flex-basis: 25%;
-                    align-items: flex-end;
+                    align-items: center;
                     span.counter.qty.empty{
                         display: none;
                     }
@@ -2433,7 +2445,7 @@
             }
             .reorder-wrapper{
                 @media (max-width: 767px){
-                    margin-left: 13px;
+                    margin-left: 4px;
                 }
             }
             .reorder-wrapper,

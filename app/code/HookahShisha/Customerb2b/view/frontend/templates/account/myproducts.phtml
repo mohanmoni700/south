@@ -16,7 +16,6 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                $docdata = $_helperB2b->getDocMessageData();
                $is_document_upload = $_helperB2b->getDocuments();
                $doc_expired = $_helperB2b->getExpiryMsg();
-               $migrateDocument=$_helperB2b->getMigrateDocument();
                $IsFinanceVerified=$_helperB2b->getIsFinanceVerified();
         ?>
 <div class="block-title page-title">
@@ -36,7 +35,7 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                 and uploaded($IsFinanceVerified)
                 */
                 ?>
-                <?php if ($migrateDocument == 1 || $IsFinanceVerified == 1): ?>
+                <?php if ($IsFinanceVerified == 1): ?>
                 <th class="col sku"><?= $block->escapeHtml(__('Actual Price')) ?></th>
                 <th class="col price"><?= $block->escapeHtml(__('Special Price')) ?></th>
                 <th class="col qty"><?= $block->escapeHtml(__('Qty')) ?></th>
@@ -81,7 +80,7 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                         and uploaded($IsFinanceVerified)
                         */
                         ?>
-                        <?php if ($migrateDocument == 1 || $IsFinanceVerified == 1): ?>
+                        <?php if ($IsFinanceVerified == 1): ?>
                             <?php
                             $regularPrice = $_product->getPriceInfo()
                             ->getPrice('regular_price')->getAmount()
