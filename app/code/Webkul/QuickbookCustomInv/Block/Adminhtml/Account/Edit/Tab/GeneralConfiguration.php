@@ -10,8 +10,66 @@
  */
 namespace Webkul\QuickbookCustomInv\Block\Adminhtml\Account\Edit\Tab;
 
+use Webkul\MultiQuickbooksConnect\Model\Config\Source;
+
 class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtml\Account\Edit\Tab\GeneralConfiguration
 {
+    /**
+     * @var Source\SalesReceiptCreateOn
+     */
+    private $salesReceiptCreateOn;
+
+    /**
+     * @var Source\Accounts\Asset
+     */
+    private $assetAccount;
+
+    /**
+     * @var Source\Accounts\Income
+     */
+    private $incomeAccount;
+
+    /**
+     * @var Source\Accounts\Expense
+     */
+    private $expenseAccount;
+
+    /**
+     * @param \Magento\Backend\Block\Template\Context $context
+     * @param \Magento\Framework\Registry $registry
+     * @param \Magento\Framework\Data\FormFactory $formFactory
+     * @param Source\SalesReceiptCreateOn $salesReceiptCreateOn
+     * @param Source\Accounts\Asset $assetAccount
+     * @param Source\Accounts\Income $incomeAccount
+     * @param Source\Accounts\Expense $expenseAccount
+     * @param array $data
+     */
+    public function __construct(
+        \Magento\Backend\Block\Template\Context $context,
+        \Magento\Framework\Registry $registry,
+        \Magento\Framework\Data\FormFactory $formFactory,
+        Source\SalesReceiptCreateOn $salesReceiptCreateOn,
+        Source\Accounts\Asset $assetAccount,
+        Source\Accounts\Income $incomeAccount,
+        Source\Accounts\Expense $expenseAccount,
+        array $data = []
+    ) {
+        $this->salesReceiptCreateOn = $salesReceiptCreateOn;
+        $this->assetAccount = $assetAccount;
+        $this->incomeAccount = $incomeAccount;
+        $this->expenseAccount = $expenseAccount;
+        parent::__construct(
+            $context,
+            $registry,
+            $formFactory,
+            $salesReceiptCreateOn,
+            $assetAccount,
+            $incomeAccount,
+            $expenseAccount,
+            $data
+        );
+    }
+
     /**
      * Prepare form
      *
@@ -114,5 +172,6 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
         $form->setValues($model->getData());
         $this->setForm($form);
         return $this;
+        //parent::_prepareForm();
     }
 }
