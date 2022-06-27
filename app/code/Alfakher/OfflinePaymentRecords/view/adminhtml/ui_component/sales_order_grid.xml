@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<columns name="sales_order_columns">
+		<column name="offline_payment_type">
+            <settings>
+                <label translate="true">Offline Payment</label>
+                <visible>true</visible>
+                <filter>select</filter>
+                <options class="Alfakher\OfflinePaymentRecords\Ui\Component\Listing\Column\OfflinePaymentType\Options"/>
+                <dataType>select</dataType>
+            </settings>
+        </column>
+
+        <column name="offline_transaction_date">
+            <settings>
+                <label translate="true">Offline Payment Received Date</label>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <visible>true</visible>
+            </settings>
+        </column>
+
+	</columns>
+</listing>

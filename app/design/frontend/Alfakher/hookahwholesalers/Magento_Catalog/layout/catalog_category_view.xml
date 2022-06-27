@@ -9,15 +9,12 @@
     <body>
         <container name="category.banner.container" htmlTag="div" htmlClass="category_view" before="-" />
         <container name="category.banner.description" htmlTag="div" htmlClass="category_description_container" before="-" />
-        
         <move element="category.banner.container" destination="columns.top" before="-" />
         <move element="category.banner.description" destination="category.banner.container" after="category.image" />
         <move element="category.image" destination="category.banner.container" before="-" />
-        <move element="category.description" destination="category.banner.description" after="page.main.title" />
         <move element="page.main.title" destination="category.banner.description" after="category.description" />
-        
         <move element="breadcrumbs" destination="columns.top.wrapper" before="-"/>
-
+        <referenceBlock name="category.description" remove="true"/>
         <referenceBlock name="sidebar.additional" remove="true"/>
         <referenceBlock name="category.product.addto.compare" remove="true"/>
 

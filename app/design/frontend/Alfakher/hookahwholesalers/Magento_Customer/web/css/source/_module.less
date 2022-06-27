@@ -59,17 +59,21 @@ input::-webkit-contacts-auto-fill-button {
     } 
 } 
 }
-.table-wrapper.table-returns{
-    .table-returns{
-        td.col {
-            border-bottom: 1px solid #cdcaca !important;
-        }
-    }
-}
 .returns-details-items{
     #rma_comment{
         .fieldset{
             margin-left: 0;
+        }
+    }
+}
+.magento_rma-returns-history, .magento_customerbalance-info-index, .customer-paymentinfo-index {
+    .page-title-wrapper {
+        padding-bottom: 10px;
+        border-bottom: 1px solid @border-color__base-table;
+        margin-bottom: 30px;
+        .page-title {
+            .title-primary();
+            margin-right: 0 !important;
         }
     }
 }
@@ -2386,6 +2390,12 @@ input::-webkit-contacts-auto-fill-button {
             }
         }
     }
+
+    .form-create-return {
+        div.field.comment {
+            margin-top: 0;
+        }
+    }
 }
 
 & when (@media-target = 'mobile'), (@media-target = 'all') {
@@ -2608,7 +2618,7 @@ input::-webkit-contacts-auto-fill-button {
                 }
             }
         }
-        &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
+        &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo, &.magento_rma-returns-returns {
             .columns {
                 .sidebar-main {
                     border-bottom: solid 1px @color_black;
@@ -2942,6 +2952,58 @@ input::-webkit-contacts-auto-fill-button {
             border: none;
         }
     }
+
+    .magento_rma-returns-history, .magento_customerbalance-info-index, .customer-paymentinfo-index {
+        .page-title-wrapper {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .table-returns, .table-balance-history {
+            tr{
+                border-bottom: 1px solid @border-color__base-table;
+            }
+        }
+    }
+    .magento_rma-returns-returns {
+        .table-order-items.returns {
+            tr{
+                border-bottom: 1px solid @border-color__base-table;
+            }
+        }
+    }
+    #track-info-table {
+        .table-order-items.returns {
+            tr{
+                border-bottom: 1px solid @border-color__base-table;
+            }
+        }
+    }
+    .table-wrapper.returns {
+        .table.table-returns {
+            tr{
+                border-bottom: 1px solid @border-color__base-table;
+            }
+        }
+    }
+    #track-info-table, #my-returns-items-table {
+        tr{
+            border-bottom: 1px solid @border-color__base-table;
+        }
+    }
+    #rma_create_form {
+        > .fieldset {
+            margin-bottom: 0;
+            &:last-of-type {
+                margin-bottom: 20px;
+            }
+        }
+    }
+    .block.block-returns-tracking {
+        margin-bottom: 0;
+    }
+    .block.block-return-details {
+        margin-bottom: 20px;
+    }
 }
 
 //
@@ -3146,7 +3208,7 @@ input::-webkit-contacts-auto-fill-button {
                     margin-bottom: 60px;
                 }
             }
-            &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
+            &.sales-order-view, &.sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo, &.magento_rma-returns-returns {
                 .column.main {
                     .block:not(.widget) {
                         .block-content {
