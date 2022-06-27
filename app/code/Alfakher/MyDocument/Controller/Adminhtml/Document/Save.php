@@ -44,12 +44,15 @@ class Save extends \Magento\Backend\App\Action
     /**
      * @param \Magento\Backend\App\Action\Context $context
      * @param \Alfakher\MyDocument\Model\MyDocumentFactory $myDocument
+     * @param MyDocument $documentModel
+     * @param Data $helper
      * @param \Magento\Framework\Controller\ResultFactory $result
      * @param UploaderFactory $uploaderFactory
      * @param AdapterFactory $adapterFactory
      * @param Filesystem $filesystem
-     * @param Data $helper
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface
+     * @param \Magento\Customer\Model\CustomerFactory $customerFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -60,7 +63,9 @@ class Save extends \Magento\Backend\App\Action
         UploaderFactory $uploaderFactory,
         AdapterFactory $adapterFactory,
         Filesystem $filesystem,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface,
+        \Magento\Customer\Model\CustomerFactory $customerFactory
     ) {
         parent::__construct($context);
         $this->_myDocument = $myDocument;
@@ -70,8 +75,9 @@ class Save extends \Magento\Backend\App\Action
         $this->adapterFactory = $adapterFactory;
         $this->filesystem = $filesystem;
         $this->helper = $helper;
-
         $this->resultJsonFactory = $resultJsonFactory;
+        $this->_customerRepositoryInterface = $customerRepositoryInterface;
+        $this->_customerFactory = $customerFactory;
     }
 
     /**
@@ -99,7 +105,6 @@ class Save extends \Magento\Backend\App\Action
         if (count($filesData)) {
             $i = 0;
             foreach ($filesData as $key => $files) {
-                // print_r($files);
                 if (isset($files['tmp_name']) && strlen($files['tmp_name']) > 0) {
                     try {
                         $uploaderFactories = $this->uploaderFactory->create(['fileId' => $filesData[$key]]);
@@ -196,21 +201,21 @@ class Save extends \Magento\Backend\App\Action
 
             }
         }
-
+        $customer = $this->_customerFactory->create()->load($post['customer_id'])->getDataModel();
         if (count($emailData) > 0) {
-            $this->_eventManager->dispatch('document_update_after',
-                [
-                    'items' => $emailData,
-                ]
-            );
+            $customer->setCustomAttribute('uploaded_doc', 1);
+            $this->_customerRepositoryInterface->save($customer);
+            $this->_eventManager->dispatch('document_update_after', [
+                'items' => $emailData,
+            ]);
         }
 
         if (count($customerDocs) > 0) {
-            $this->_eventManager->dispatch('document_save_after',
-                [
-                    'items' => $customerDocs,
-                ]
-            );
+            $customer->setCustomAttribute('uploaded_doc', 1);
+            $this->_customerRepositoryInterface->save($customer);
+            $this->_eventManager->dispatch('document_save_after', [
+                'items' => $customerDocs,
+            ]);
         }
         $mail = $this->helper->sendMail($emailData, $post['customer_id']);
         $resultRedirect = $this->resultRedirectFactory->create();

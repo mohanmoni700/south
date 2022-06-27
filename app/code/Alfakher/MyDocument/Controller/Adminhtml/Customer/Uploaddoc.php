@@ -44,6 +44,8 @@ class Uploaddoc extends \Magento\Backend\App\Action
      * @param AdapterFactory $adapterFactory
      * @param Filesystem $filesystem
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface
+     * @param \Magento\Customer\Model\CustomerFactory $customerFactory
      */
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
@@ -52,7 +54,9 @@ class Uploaddoc extends \Magento\Backend\App\Action
         UploaderFactory $uploaderFactory,
         AdapterFactory $adapterFactory,
         Filesystem $filesystem,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface,
+        \Magento\Customer\Model\CustomerFactory $customerFactory
     ) {
         parent::__construct($context);
         $this->_myDocument = $myDocument;
@@ -61,6 +65,8 @@ class Uploaddoc extends \Magento\Backend\App\Action
         $this->adapterFactory = $adapterFactory;
         $this->filesystem = $filesystem;
         $this->resultJsonFactory = $resultJsonFactory;
+        $this->_customerRepositoryInterface = $customerRepositoryInterface;
+        $this->_customerFactory = $customerFactory;
     }
 
     /**
@@ -149,7 +155,7 @@ class Uploaddoc extends \Magento\Backend\App\Action
                         $model->setIsDelete(false);
                         $model->setStatus(0);
                         $saveData = $model->save();
-                        $customerDocs[] =  $saveData->getData();
+                        $customerDocs[] = $saveData->getData();
                     }
                 }
                 $i++;
@@ -158,11 +164,12 @@ class Uploaddoc extends \Magento\Backend\App\Action
 
         $resultJson = $this->resultJsonFactory->create();
         if ($saveData) {
-            $this->_eventManager->dispatch('document_save_after',
-                [
-                    'items' => $customerDocs
-                ]
-            );
+            $customer = $this->_customerFactory->create()->load($post['customer_id'])->getDataModel();
+            $customer->setCustomAttribute('uploaded_doc', 1);
+            $this->_customerRepositoryInterface->save($customer);
+            $this->_eventManager->dispatch('document_save_after', [
+                'items' => $customerDocs,
+            ]);
             $htmlContent = "Record Saved Successfully.";
             $success = true;
         } else {

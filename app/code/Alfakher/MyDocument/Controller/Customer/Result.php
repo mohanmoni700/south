@@ -53,6 +53,8 @@ class Result extends Action
      * @param AdapterFactory $adapterFactory
      * @param Filesystem $filesystem
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface
+     * @param \Magento\Customer\Model\CustomerFactory $customerFactory
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -62,7 +64,9 @@ class Result extends Action
         UploaderFactory $uploaderFactory,
         AdapterFactory $adapterFactory,
         Filesystem $filesystem,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface,
+        \Magento\Customer\Model\CustomerFactory $customerFactory
     ) {
         parent::__construct($context);
         $this->_myDocument = $myDocument;
@@ -72,6 +76,8 @@ class Result extends Action
         $this->filesystem = $filesystem;
         $this->customerSession = $customerSession;
         $this->resultJsonFactory = $resultJsonFactory;
+        $this->_customerRepositoryInterface = $customerRepositoryInterface;
+        $this->_customerFactory = $customerFactory;
     }
 
     /**
@@ -182,11 +188,13 @@ class Result extends Action
 
         $resultJson = $this->resultJsonFactory->create();
         if ($saveData) {
-            $this->_eventManager->dispatch('document_save_after',
-                [
-                    'items' => $customerDocs,
-                ]
-            );
+            $customer = $this->_customerFactory->create()
+                ->load($this->customerSession->getCustomer()->getId())->getDataModel();
+            $customer->setCustomAttribute('uploaded_doc', 1);
+            $this->_customerRepositoryInterface->save($customer);
+            $this->_eventManager->dispatch('document_save_after', [
+                'items' => $customerDocs,
+            ]);
             $htmlContent = "Record Saved Successfully.";
             $success = true;
         } else {
