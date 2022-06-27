@@ -118,13 +118,13 @@
                             <tr>
                                 <th scope="col" class="col carrier"><?= $block->escapeHtml(__('Carrier')); ?></th>
                                 <th scope="col" class="col id"><?= $block->escapeHtml(__('Number')); ?></th>
-                                <th scope="col" class="col actions"><?= $block->escapeHtml(__('Action')); ?></th>
+                                <?php /* <th scope="col" class="col actions"><?= $block->escapeHtml(__('Action')); ?></th> */ ?>
                             </tr>
                             </thead>
                             <tbody id="track-info-tbody">
                             <?= /* @noEscape */ $block->getTrackingInfo('tracking') ?>
                             </tbody>
-                            <?php if ($block->isPrintShippingLabelAllowed()): ?>
+                            <?php /* if ($block->isPrintShippingLabelAllowed()): ?>
                                 <tfoot>
                                 <tr>
                                     <td class="col carrier">
@@ -158,7 +158,7 @@
                                     </td>
                                 </tr>
                                 </tfoot>
-                            <?php endif ?>
+                            <?php endif */ ?>
                         </table>
                     </div>
                 </form>
