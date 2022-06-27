@@ -43,13 +43,13 @@ class Save extends \Magento\Backend\App\Action
         $websiteid = $post['website'];
         $connection = $this->resourceConnection->getConnection();
 
-        $query ="SELECT
+        $query = "SELECT
         ss.increment_id AS ShipNumber,
         ss.created_at AS ShipDate,
         so.increment_id AS OrderNumber,
         so.created_at AS OrderDate,
         ss.total_qty AS ShipQty
-        
+
         FROM
         sales_shipment AS ss
 
@@ -61,17 +61,18 @@ class Save extends \Magento\Backend\App\Action
         ss.created_at >=  '" . $startdate . "'
         AND ss.created_at <= '" . $enddate . "'
         AND ss.store_id = '" . $websiteid . "'
-        ";
+        ORDER BY
+        ss.created_at";
 
         $values = $connection->fetchAll($query);
 
         $header = [];
         $header[] = [
             'Ship number' => 'Ship number',
-            'Ship date'   => 'Ship Date',
-            'Order Number'=> 'Order Number',
-            'Order Date'  => 'Order Date',
-            'Ship Qty'    => 'Ship Qty',
+            'Ship date' => 'Ship Date',
+            'Order Number' => 'Order Number',
+            'Order Date' => 'Order Date',
+            'Ship Qty' => 'Ship Qty',
 
         ];
 

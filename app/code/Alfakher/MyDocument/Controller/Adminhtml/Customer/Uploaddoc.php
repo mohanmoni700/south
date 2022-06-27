@@ -73,6 +73,7 @@ class Uploaddoc extends \Magento\Backend\App\Action
         $post = $this->getRequest()->getPostValue();
         $newArray = [];
         $data = [];
+        $customerDocs = [];
 
         if (isset($post['is_customerfrom_usa'])) {
             $is_usa = 1;
@@ -148,6 +149,7 @@ class Uploaddoc extends \Magento\Backend\App\Action
                         $model->setIsDelete(false);
                         $model->setStatus(0);
                         $saveData = $model->save();
+                        $customerDocs[] =  $saveData->getData();
                     }
                 }
                 $i++;
@@ -156,6 +158,11 @@ class Uploaddoc extends \Magento\Backend\App\Action
 
         $resultJson = $this->resultJsonFactory->create();
         if ($saveData) {
+            $this->_eventManager->dispatch('document_save_after',
+                [
+                    'items' => $customerDocs
+                ]
+            );
             $htmlContent = "Record Saved Successfully.";
             $success = true;
         } else {
