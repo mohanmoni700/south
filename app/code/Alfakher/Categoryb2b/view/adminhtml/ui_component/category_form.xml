@@ -1,7 +1,33 @@
 <?xml version="1.0" ?>
 <form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
     <fieldset name="content">
-		<field name="category_desc">
+        <field name="category_banner" template="ui/form/field" sortOrder="10" formElement="wysiwyg">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="wysiwygConfigData" xsi:type="array">
+                        <item name="height" xsi:type="string">100px</item>
+                        <item name="add_variables" xsi:type="boolean">false</item>
+                        <item name="add_widgets" xsi:type="boolean">false</item>
+                        <item name="add_images" xsi:type="boolean">true</item>
+                        <item name="add_directives" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="source" xsi:type="string">category</item>
+                </item>
+            </argument>
+            <settings>
+                <label translate="true">Category Banner</label>
+                <dataScope>category_banner</dataScope>
+            </settings>
+            <formElements>
+                <wysiwyg class="Magento\Catalog\Ui\Component\Category\Form\Element\Wysiwyg">
+                    <settings>
+                        <rows>8</rows>
+                        <wysiwyg>true</wysiwyg>
+                    </settings>
+                </wysiwyg>
+            </formElements>
+        </field>
+        <field name="category_desc">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="required" xsi:type="boolean">false</item>
@@ -18,20 +44,20 @@
             </argument>
         </field>
     </fieldset>
-     <fieldset name="search_engine_optimization">
+    <fieldset name="search_engine_optimization">
         <field name="tag_label">
             <argument name="data" xsi:type="array">
-                 <item name="config" xsi:type="array">
-                    <item name="required" xsi:type="boolean">false</item>
-                    <item name="validation" xsi:type="array">
-                        <item name="required-entry" xsi:type="boolean">false</item>
-                    </item>
-                    <item name="sortOrder" xsi:type="number">333</item>
-                    <item name="dataType" xsi:type="string">text</item>
-                    <item name="formElement" xsi:type="string">input</item>
-                    <item name="label" translate="true" xsi:type="string">H1 Tag</item>
+             <item name="config" xsi:type="array">
+                <item name="required" xsi:type="boolean">false</item>
+                <item name="validation" xsi:type="array">
+                    <item name="required-entry" xsi:type="boolean">false</item>
                 </item>
-            </argument>
-        </field>
-    </fieldset>
+                <item name="sortOrder" xsi:type="number">333</item>
+                <item name="dataType" xsi:type="string">text</item>
+                <item name="formElement" xsi:type="string">input</item>
+                <item name="label" translate="true" xsi:type="string">H1 Tag</item>
+            </item>
+        </argument>
+    </field>
+</fieldset>
 </form>
