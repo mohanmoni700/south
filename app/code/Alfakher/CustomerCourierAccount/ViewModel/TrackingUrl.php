@@ -21,7 +21,7 @@ class TrackingUrl implements ArgumentInterface
     **/
     public function getTrackingUrl(TrackInfo $trackingInfo):string
     {
-        $carrier = $trackingInfo->getCarrierCode();
+        $carrier = strtolower($trackingInfo->getCarrierCode());
         $trackNumber = $trackingInfo->getTrackNumber();
         if ($carrier === 'custom') {
             $carrier = strtolower($trackingInfo->getTitle());
