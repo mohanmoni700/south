@@ -1,9 +1,15 @@
+<?php //phpcs:disable ?>
 <?php $message = $block->getMessageData(); ?>
 <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
-<?php if ($_helperB2b->getMigrateDocument() != 1):?>
-<?php if (!empty($message)): ?>
-    <?php foreach ($message['message'] as $key => $value):?>
-      <div class="<?= $block->escapeHtml(__($value[0])) ?>"><?= $block->escapeHtml(__($value[1])) ?></div>
-    <?php endforeach; ?>
-<?php endif; ?>
+<?php $documents_required_msg = $_helperB2b->getConfigValue(
+    'hookahshisha/productpage/productpageb2b_documents_verification_required'
+);?>
+
+<?php /*We have Remove all the document releted msg as per suggested by arina [B2BHW-846]  */ ?>
+<?php if ($_helperB2b->getIsFinanceVerified() != 1):?>
+    <div class="pending-tooltip">
+        <div class="tooltip-inner">
+            <?= $block->escapeHtml(__($documents_required_msg)) ?>
+        </div>
+    </div>
 <?php endif; ?>

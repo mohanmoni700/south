@@ -43,7 +43,7 @@ class Save extends \Magento\Backend\App\Action
         $websiteid = $post['website'];
         $connection = $this->resourceConnection->getConnection();
 
-        $query ="SELECT
+        $query = "SELECT
         si.increment_id AS InvoiceNumber,
         si.created_at AS InvoiceDate,
         si.state AS Status,
@@ -67,7 +67,8 @@ class Save extends \Magento\Backend\App\Action
         si.created_at >=  '" . $startdate . "'
         AND si.created_at <= '" . $enddate . "'
         AND si.store_id = '" . $websiteid . "'
-        ";
+        ORDER BY
+        si.created_at";
 
         $values = $connection->fetchAll($query);
 
@@ -86,16 +87,16 @@ class Save extends \Magento\Backend\App\Action
         $header = [];
         $header[] = [
             'Invoice number' => 'Invoice number',
-            'Invoice Date'   => 'Invoice Date',
-            'Status'         => 'Status',
+            'Invoice Date' => 'Invoice Date',
+            'Status' => 'Status',
             'Transaction Id' => 'Transaction Id',
-            'Order Number'   => 'Order Number',
-            'Order Date'     => 'Order Date',
-            'Sub Total'      => 'Sub Total',
-            'Grand Total'    => 'Grand Total',
-            'Sales Tax'      => 'Sales Tax',
-            'Excise Tax'     => 'Excise Tax',
-            'Shipping Tax'   => 'Shipping Tax',
+            'Order Number' => 'Order Number',
+            'Order Date' => 'Order Date',
+            'Sub Total' => 'Sub Total',
+            'Grand Total' => 'Grand Total',
+            'Sales Tax' => 'Sales Tax',
+            'Excise Tax' => 'Excise Tax',
+            'Shipping Tax' => 'Shipping Tax',
         ];
 
         $report = [];
