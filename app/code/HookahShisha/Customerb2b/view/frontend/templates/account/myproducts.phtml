@@ -1,5 +1,4 @@
 <?php
-//phpcs:disable
 /**
  * @var \HookahShisha\Customerb2b\Block\Account\MyProducts $block
  */
@@ -33,6 +32,8 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                 Here we removed the condition of the
                 Document verified( $is_document_upload $doc_expired)
                 and uploaded($IsFinanceVerified)
+                Here we removed the condition of the Document
+                verified( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
                 */
                 ?>
                 <?php if ($IsFinanceVerified == 1): ?>
@@ -47,7 +48,8 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
             $sharedCatalog = $block->getSharedCatalogCollection();
         ?>
         <?php if (count($sharedCatalog)): ?>
-            <?php foreach ($sharedCatalog as $_product): ?>
+            <?php foreach ($sharedCatalog as $_product):?>
+                
                 <tbody>
                     <tr id="order-item-row-<?= (int) $_product->getId() ?>">
                         <td class="col name" data-th="<?= $block->escapeHtml(__('Product Name')) ?>">
@@ -77,6 +79,9 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                         /*
                         Here we removed the condition of the
                         Document verified( $is_document_upload $doc_expired)
+                        and uploaded($IsFinanceVerified)
+                        Here we removed the condition of the Document
+                        verified( $is_document_upload $doc_expired)
                         and uploaded($IsFinanceVerified)
                         */
                         ?>
@@ -119,28 +124,23 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                         </td>
                         <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
 
-
                                 <?php $postParams = $block->getAddToCartPostParams($_product); ?>
-                
+
+                                            <?php if ($_product->isSaleable()) {?>
                     <form data-role="tocart-form"
                           data-product-sku="<?= $escaper->escapeHtml($_product->getSku()) ?>"
                           action="<?= $escaper->escapeUrl($postParams['action']) ?>"
                           method="post"
                           id="my-product-price"
-                          data-mage-init='{"validation":{}}'>
-                            <?php if ($_product->isSaleable()):?>
+                          >
 
                         <input type="number" name="qty-clone" id="qty-clone"
-                        min="1" value="0" title="Qty" class="input-text qty"
-                        data-id = "<?= $escaper->escapeHtml($_product->getId())?>" onclick="this.select();" required>
+                        value="0" title="Qty" class="input-text qty"
+                        data-id ="<?= $escaper->escapeHtml($_product->getId())?>" onclick="this.select();">
                         <span id="err-msg-<?= $escaper->escapeHtml($_product->getId())?>" style="color: red;"></span>
-                        
-                        <?php else:?>
-                        <div class="stock unavailable">
-                            <span><?= $escaper->escapeHtml(__('Out of stock')) ?></span></div>
-                        <?php endif; ?>
 
                         </td>
+
                         <td class="col action" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
 
                             <div class="actions-primary">
@@ -158,8 +158,7 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                                 title="Qty"
                                 class="input-text qty qty-<?= $escaper->escapeHtml($_product->getId())?>" value=""/>
                                 
-                                <?= $block->getBlockHtml('formkey') ?>
-                                <?php if ($_product->isSaleable()):?>
+                                                <?= $block->getBlockHtml('formkey') ?>
                                 
                                 <button style="background: transparent;
                                 margin-top: 0;letter-spacing: 0;
@@ -170,32 +169,37 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                                         disabled>
                                     <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
                                 </button>
+
                             </form>
-                                <?php else:?>
-                                    <?php if ($_product->isAvailable()):?>
-                                        <div class="stock available">
-                                            <span><?= $escaper->escapeHtml(__('In stock')) ?></span></div>
-                                    <?php else:?>
-                                        <div class="stock unavailable">
+                        <?php } else { ?>
+
+                            <div class="stock unavailable">
                                             <span><?= $escaper->escapeHtml(__('Out of stock')) ?></span></div>
-                                    <?php endif; ?>
-                                <?php endif; ?>
+
+                                            <td class="col action" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
+                                                <div class="stock unavailable">
+                                            <span><?= $escaper->escapeHtml(__('Out of stock')) ?></span></div>
+                            <div class="actions-primary">
+                            </div>
+                        </td>
+                        <?php } ?>
+                                
                             </div>
                         </td>
                          <?php endif; ?> 
                     </tr>
                 </tbody>
-               
             <?php endforeach; ?>
-             <script type="text/x-magento-init">
+            <script type="text/x-magento-init">
                     {
                         "[data-role=tocart-form], .form.map.checkout": {
                             "catalogAddToCart": {
-                                "product_sku": "<?= $escaper->escapeJs($_product->getSku()) ?>"
+                                
                             }
                         }
                     }
-                </script>
+            </script>
+
         <?php else: ?>
             <div class="alert"><?= $block->escapeHtml(__('No Data Found')) ?></div>
         <?php endif; ?>
@@ -235,12 +239,11 @@ require([
     'mage/mage'
 ], function($){
 
-   jQuery("[id^='cart-']").on('click', function(){        
+   jQuery("[id^='cart-']").on('click', function(){
+        
         var id = $(this).attr('id');
         var splitid = id.split("-");
         var qty = jQuery("#qty-"+splitid[1]).val();
-        
-
         if(qty == 0 || qty == ''){
         jQuery("#err-msg-"+splitid[1]).html("Please add 1 or more products");
             return false;
