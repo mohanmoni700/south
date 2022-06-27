@@ -89,6 +89,11 @@ class Deletedocument extends \Magento\Backend\App\Action
             $model->setIsDelete(true);
             $model->save();
             $success = true;
+            $this->_eventManager->dispatch('document_delete_after',
+                [
+                    'items' => $model->getData()
+                ]
+            );
         } else {
             $success = false;
         }

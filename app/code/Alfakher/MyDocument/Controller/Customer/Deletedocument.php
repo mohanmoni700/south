@@ -87,10 +87,16 @@ class Deletedocument extends Action
         $resultJson = $this->resultJsonFactory->create();
         $documentId = $this->getRequest()->getPost("id");
         $model = $this->_myDocument->create()->load($documentId);
+        
         if ($model) {
             $model->setIsDelete(true);
             $model->save();
             $success = true;
+            $this->_eventManager->dispatch('document_delete_after',
+                [
+                    'items' => $model->getData()
+                ]
+            );
         } else {
             $success = false;
         }
