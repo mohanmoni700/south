@@ -1,0 +1,94 @@
+Index: vendor/magento/module-bundle/Model/Product/Type.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vendor/magento/module-bundle/Model/Product/Type.php b/vendor/magento/module-bundle/Model/Product/Type.php
+--- a/vendor/magento/module-bundle/Model/Product/Type.php
++++ b/vendor/magento/module-bundle/Model/Product/Type.php
+@@ -665,7 +665,11 @@
+             $skipSaleableCheck = $this->_catalogProduct->getSkipSaleableCheck();
+             $_appendAllSelections = (bool)$product->getSkipCheckRequiredOption() || $skipSaleableCheck;
+ 
+-            $options = $buyRequest->getBundleOption();
++            if ($buyRequest->getBundleOptionsData()) {
++                $options = $this->getPreparedOptions($buyRequest->getBundleOptionsData());
++            } else {
++                $options = $buyRequest->getBundleOption();
++            }
+             if (is_array($options)) {
+                 $options = $this->recursiveIntval($options);
+                 $optionIds = array_keys($options);
+@@ -732,7 +736,11 @@
+             if ((is_array($selections) && count($selections) > 0) || !$isStrictProcessMode) {
+                 $uniqueKey = [$product->getId()];
+                 $selectionIds = [];
+-                $qtys = $buyRequest->getBundleOptionQty();
++                if ($buyRequest->getBundleOptionsData()) {
++                    $qtys = $buyRequest->getBundleOptionsData();
++                } else {
++                    $qtys = $buyRequest->getBundleOptionQty();
++                }
+ 
+                 // Shuffle selection array by option position
+                 usort($selections, [$this, 'shakeSelections']);
+@@ -1231,7 +1239,12 @@
+     protected function getQty($selection, $qtys, $selectionOptionId)
+     {
+         if ($selection->getSelectionCanChangeQty() && isset($qtys[$selectionOptionId])) {
+-            $qty = (float)$qtys[$selectionOptionId] > 0 ? $qtys[$selectionOptionId] : 1;
++            if (is_array($qtys[$selectionOptionId]) && isset($qtys[$selectionOptionId][$selection->getSelectionId()])) {
++                $selectionQty = $qtys[$selectionOptionId][$selection->getSelectionId()];
++                $qty = (float)$selectionQty > 0 ? $selectionQty : 1;
++            } else {
++                $qty = (float)$qtys[$selectionOptionId] > 0 ? $qtys[$selectionOptionId] : 1;
++            }
+         } else {
+             $qty = (float)$selection->getSelectionQty() ? $selection->getSelectionQty() : 1;
+         }
+@@ -1404,4 +1417,21 @@
+ 
+         return array_merge([], ...$selections);
+     }
++
++    /**
++     * Get prepared options with selection ids
++     *
++     * @param array $options
++     * @return array
++     */
++    private function getPreparedOptions(array $options): array
++    {
++        foreach ($options as $optionId => $option) {
++            foreach ($option as $selectionId => $optionQty) {
++                $options[$optionId][$selectionId] = $selectionId;
++            }
++        }
++
++        return $options;
++    }
+ }
+Index: vendor/magento/module-quote-bundle-options/Model/Cart/BuyRequest/BundleDataProvider.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vendor/magento/module-quote-bundle-options/Model/Cart/BuyRequest/BundleDataProvider.php b/vendor/magento/module-quote-bundle-options/Model/Cart/BuyRequest/BundleDataProvider.php
+--- a/vendor/magento/module-quote-bundle-options/Model/Cart/BuyRequest/BundleDataProvider.php
++++ b/vendor/magento/module-quote-bundle-options/Model/Cart/BuyRequest/BundleDataProvider.php
+@@ -40,6 +40,7 @@ class BundleDataProvider implements BuyRequestDataProviderInterface
+             if ($optionType == self::OPTION_TYPE) {
+                 $bundleOptionsData['bundle_option'][$optionId] = $optionValueId;
+                 $bundleOptionsData['bundle_option_qty'][$optionId] = $optionQuantity;
++                $bundleOptionsData['bundle_options_data'][$optionId][$optionValueId] = $optionQuantity;
+             }
+         }
+         //for bundle options with custom quantity
+@@ -57,6 +58,7 @@ class BundleDataProvider implements BuyRequestDataProviderInterface
+                 $optionQuantity = $option->getValue();
+                 $bundleOptionsData['bundle_option'][$optionId] = $optionValueId;
+                 $bundleOptionsData['bundle_option_qty'][$optionId] = $optionQuantity;
++                $bundleOptionsData['bundle_options_data'][$optionId][$optionValueId] = $optionQuantity;
+             }
+         }
+ 
