@@ -88,6 +88,8 @@ class OokaLandingPageValidator implements HttpRequestValidatorInterface
             }
 
             $matches = [];
+            // Remove line breaks from query string
+            $query = trim(preg_replace('/\s+/', '', $query));
             $allowedQueriesRegFormat = join('|', self::ALLOWED_QUERIES);
             preg_match('/\{('.$allowedQueriesRegFormat.'?)[({]/s', $query, $matches);
 
