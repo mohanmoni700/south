@@ -31,9 +31,11 @@ class BundlePrice implements ResolverInterface
         }
         /** @var Product $product */
         $product = $value['model'];
+        $discount = $product->getSpecialPrice() ?? 0;
         return [
             "price" =>  $product->getPrice(),
-            "final_price" => $product->getFinalPrice()
+            "final_price" => $product->getFinalPrice(),
+            "discount" => $discount
         ];
     }
 }
