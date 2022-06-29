@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e8c541bc2ec062a5baf08c1a17600670",
+    "content-hash": "221cbf8f043a1a6ef92f7a43580716b1",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -28476,16 +28476,16 @@
         },
         {
             "name": "quickbooks/v3-php-sdk",
-            "version": "6.0.3",
+            "version": "v5.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/intuit/QuickBooks-V3-PHP-SDK.git",
-                "reference": "63419280bccebd4803fac1fd5077633c76c15fda"
+                "reference": "6c9d70348cfdea87048990533efab09a05603a81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/intuit/QuickBooks-V3-PHP-SDK/zipball/63419280bccebd4803fac1fd5077633c76c15fda",
-                "reference": "63419280bccebd4803fac1fd5077633c76c15fda",
+                "url": "https://api.github.com/repos/intuit/QuickBooks-V3-PHP-SDK/zipball/6c9d70348cfdea87048990533efab09a05603a81",
+                "reference": "6c9d70348cfdea87048990533efab09a05603a81",
                 "shasum": ""
             },
             "require": {
@@ -28494,7 +28494,7 @@
                 "php": ">=5.6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "^5.0 || ^6.0 || ^7.0"
+                "phpunit/phpunit": "^5.7"
             },
             "suggest": {
                 "ext-curl": "Uses Curl to make HTTP Requests",
@@ -28512,8 +28512,8 @@
             ],
             "authors": [
                 {
-                    "name": "abisalehalliprasan",
-                    "email": "anil_kumar3@intuit.com"
+                    "name": "hlu2",
+                    "email": "Hao_Lu@intuit.com"
                 }
             ],
             "description": "The Official PHP SDK for QuickBooks Online Accounting API",
@@ -28527,9 +28527,9 @@
             ],
             "support": {
                 "issues": "https://github.com/intuit/QuickBooks-V3-PHP-SDK/issues",
-                "source": "https://github.com/intuit/QuickBooks-V3-PHP-SDK/tree/6.0.3"
+                "source": "https://github.com/intuit/QuickBooks-V3-PHP-SDK/tree/v5.0.5"
             },
-            "time": "2022-02-04T00:41:34+00:00"
+            "time": "2019-07-18T22:23:21+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -33402,6 +33402,34 @@
                 }
             ],
             "time": "2021-04-19T16:34:45+00:00"
+        },
+        {
+            "name": "webkul/multi-quickbooks-online-connect",
+            "version": "5.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://repo.webkul.com/store/magento2_multi_quickbooks_account_online_connect.git",
+                "reference": "dec8ac855619ea8b870c7d8e1ef8a0dc0a06b741"
+            },
+            "require": {
+                "magento/framework": "103.0.*",
+                "magento/module-backend": "102.0.*",
+                "quickbooks/v3-php-sdk": "5.0.5"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "src/app/code/Webkul/MultiQuickbooksConnect/registration.php"
+                ],
+                "psr-4": {
+                    "Webkul\\MultiQuickbooksConnect\\": "src/app/code/Webkul/MultiQuickbooksConnect"
+                }
+            },
+            "license": [
+                "proprietary"
+            ],
+            "description": "Webkul Magento2 Multi Quickbooks Connect Module",
+            "time": "2022-05-25T16:01:41+00:00"
         },
         {
             "name": "webmozart/assert",
