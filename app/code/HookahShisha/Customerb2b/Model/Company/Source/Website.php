@@ -2,7 +2,7 @@
 
 declare (strict_types = 1);
 
-namespace Alfakher\CompanyWebsite\Model\Company\Source;
+namespace HookahShisha\Customerb2b\Model\Company\Source;
 
 use Magento\Company\Model\Company\Source\Provider\CustomerAttributeOptions;
 use Magento\Framework\Data\OptionSourceInterface;
@@ -30,7 +30,17 @@ class Website implements OptionSourceInterface
      */
     public function toOptionArray()
     {
-        $websites = array_reverse($this->provider->loadOptions('website_id'));
+        $tempArray = [];
+        $websites = $this->provider->loadOptions('website_id');
+        foreach ($websites as $key => $website) {
+            if ($website['label'] == 'Hookah Wholesalers (B2B)') {
+                $tempArray = $website;
+                unset($websites[$key]);
+                break;
+            }
+        }
+        array_unshift($websites, $tempArray);
+
         return $websites;
     }
 }
