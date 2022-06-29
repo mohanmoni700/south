@@ -972,6 +972,7 @@ return [
         'Vertex_AddressValidation' => 1,
         'Vertex_TaxStaging' => 1,
         'Webkul_MultiQuickbooksConnect' => 1,
+        'Webkul_QuickbookCustomInv' => 1,
         'Wyomind_Framework' => 1,
         'Wyomind_MassStockUpdate' => 1,
         'Wyomind_MassProductImport' => 1,
