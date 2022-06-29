@@ -1,0 +1,36 @@
+<?php
+
+declare (strict_types = 1);
+
+namespace Alfakher\CompanyWebsite\Model\Company\Source;
+
+use Magento\Company\Model\Company\Source\Provider\CustomerAttributeOptions;
+use Magento\Framework\Data\OptionSourceInterface;
+
+/**
+ * Websites where to look for customers.
+ */
+class Website implements OptionSourceInterface
+{
+    /**
+     * @var CustomerAttributeOptions
+     */
+    private $provider;
+
+    /**
+     * @param CustomerAttributeOptions $provider
+     */
+    public function __construct(CustomerAttributeOptions $provider)
+    {
+        $this->provider = $provider;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function toOptionArray()
+    {
+        $websites = array_reverse($this->provider->loadOptions('website_id'));
+        return $websites;
+    }
+}

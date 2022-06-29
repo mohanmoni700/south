@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<fieldset name="company_admin">
+		<field name="website_id" formElement="select" sortOrder="10" component="Magento_Company/js/edit/add-user-website">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">website_id</item>
+                    <item name="value" xsi:type="string">0</item>
+                    <item name="addUserUrl" xsi:type="url" path="company/index/addUser"/>
+                    <item name="modalProvider" xsi:type="string">ns = company_form, index = replace_company_admin_modal2</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Website</label>
+            </settings>
+            <formElements>
+                <select>
+                    <settings>
+                        <options class="Alfakher\CompanyWebsite\Model\Company\Source\Website"/>
+                    </settings>
+                </select>
+            </formElements>
+        </field>
+	</fieldset>
+</form>
