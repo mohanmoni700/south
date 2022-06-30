@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="shopify" translate="label" sortOrder="130" showInDefault="0" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Shopify Magento Integration</label>
+            <tab>hookahshisha</tab>
+            <resource>Alfakher_Shopify::shopify_config</resource>
+            <group id="general" translate="label" type="text" sortOrder="6" showInDefault="0" showInWebsite="1" showInStore="1">
+                <label>Shopify Details</label>
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="0" showInWebsite="1" showInStore="1">
+                    <label>Magento to Shopify Enable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="shopify_token" translate="label" type="text" sortOrder="20" showInDefault="0" showInWebsite="1" showInStore="1">
+                    <label>Shopify Tokan Key</label>
+                    <depends><field id="shopify/general/enable">1</field></depends>
+                    <comment>Enter Shopify Token.</comment>
+                </field>
+                <field id="shopify_domain" translate="label" type="text" sortOrder="30" showInDefault="0" showInWebsite="1" showInStore="1">
+                    <label>Shopify Domain</label>
+                    <depends><field id="shopify/general/enable">1</field></depends>
+                    <comment>Enter Shopify Domain.</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
