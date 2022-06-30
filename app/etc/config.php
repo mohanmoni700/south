@@ -796,7 +796,7 @@ return [
         'Magento_BannerPageBuilder' => 1,
         'Magento_ThemeGraphQl' => 1,
         'Magento_Translation' => 1,
-        'Magento_TwoFactorAuth' => 1,
+        'Magento_TwoFactorAuth' => 0,
         'Magento_GiftCardSharedCatalog' => 0,
         'Magento_Ups' => 1,
         'Magento_CatalogUrlRewriteStaging' => 1,
