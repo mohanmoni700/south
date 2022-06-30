@@ -17,22 +17,22 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
     /**
      * @var Source\SalesReceiptCreateOn
      */
-    private $salesReceiptCreateOn;
+    protected $salesReceiptCreateOn;
 
     /**
      * @var Source\Accounts\Asset
      */
-    private $assetAccount;
+    protected $assetAccount;
 
     /**
      * @var Source\Accounts\Income
      */
-    private $incomeAccount;
+    protected $incomeAccount;
 
     /**
      * @var Source\Accounts\Expense
      */
-    private $expenseAccount;
+    protected $expenseAccount;
 
     /**
      * @param \Magento\Backend\Block\Template\Context $context
