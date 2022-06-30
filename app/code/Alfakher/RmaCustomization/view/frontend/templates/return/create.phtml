@@ -1,0 +1,184 @@
+<?php
+/** @var $block \Magento\Rma\Block\Returns\Create */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+?>
+<?php $_order =  $block->getOrder(); ?>
+<?php $_data = $block->getFormData(); ?>
+<?php $_items = $block->getItems(); ?>
+<?php $totalAvlQty = 0; ?>
+<?php $viewModel = $block->getData('view_model');?>
+ 
+<script id="template-registrant" type="text/x-magento-template">
+     
+    <fieldset class="fieldset">
+        <div class="field item required">
+            <div class="control">
+                <?php $bundleID = 0; ?>
+                <?php $firstItemId = $i = $productType = $availableQty = $shipmentType = 0; ?>
+                <?php $html = []; ?>
+            </div>
+        </div>
+        <?php foreach ($block->getAttributes() as $attribute): ?>
+            <?php $attributeContent = $block->getAttributeHtml($attribute);?>
+            <?php if ($attributeContent): ?>
+                <?= /* @noEscape */ $attributeContent ?>
+            <?php endif;?>
+        <?php endforeach;?>
+    </fieldset>
+</script>
+
+<form id="rma_create_form" method="post" 
+      action="<?= $block->escapeUrl($viewModel->getReturnSubmitUrl($block->getOrder())) ?>" 
+      enctype="multipart/form-data" class="form form-create-return">
+    <fieldset class="fieldset">
+        <legend class="legend">
+            <span ><?= $block->escapeHtml(__('New Return for Order %1', $_order->getIncrementId())) ?></span>
+        </legend>
+        <br>
+        <div class="field id">
+            <span class="label"><span><?= $block->escapeHtml(__('Order ID')) ?></span></span>
+            <div class="control"><span><?= $block->escapeHtml($_order->getIncrementId()) ?></span></div>
+        </div>
+        <div class="field name">
+            <span class="label"><span><?= $block->escapeHtml(__('Customer Name')) ?></span></span>
+            <div class="control"><span><?= $block->escapeHtml($_order->getCustomerName()) ?></span></div>
+        </div>
+        <div class="field email">
+            <span class="label"><span><?= $block->escapeHtml(__('Email')) ?></span></span>
+            <div class="control"><span><?= $block->escapeHtml($_order->getCustomerEmail()) ?></span></div>
+        </div>
+        <div class="field contact email">
+            <label class="label" for="email">
+                <span>
+                    <?= $block->escapeHtml($block->getData('rmaHelper')->getContactEmailLabel()) ?>
+                </span>
+            </label>
+            <div class="control">
+                <input type="text"
+                       name="customer_custom_email"
+                       id="email"
+                       title="Contact Email Address"
+                       class="input-text"
+                       data-validate="{'validate-email':true}"
+                       value="<?= $block->escapeHtml($block->getContactEmail()) ?>">     
+            </div>
+        </div>
+         <div class="field address shipping">
+            <span class="label"><span><?= $block->escapeHtml(__('Order Shipping Address')) ?></span></span>
+            <address class="control">
+                <?= /* @noEscape */ $block->format($_order->getShippingAddress(), 'html') ?>
+            </address>
+        </div>  
+    </fieldset>
+    <div class="table-wrapper returns">
+        <table class="data table table-returns" id="my-returns-table">
+            <caption class="table-caption"><?= $block->escapeHtml(__('My Order Items')) ?></caption>
+            <thead>
+                <tr>
+                    <th scope="col" class="col item_id"><?= $block->escapeHtml(__('Item Id')) ?></th>
+                    <th scope="col" class="col item_name"><?= $block->escapeHtml(__('Item Name')) ?></th>
+                    <th scope="col" class="col qty_ordered"><?= $block->escapeHtml(__('Qty Ordered')) ?></th>
+                    <th scope="col" class="col Remaining Qty"><?= $block->escapeHtml(__('Remaining Qty')) ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $qty = 0; ?>        
+                <?php foreach ($_items as $_item): ?>
+                    <?php if ($_item->getAvailableQty() > 0): ?>
+                          <?php $qty++; ?>
+                    <input type="hidden" name="rmaitems[rma_item_id][]" 
+                           value="<?= $block->escapeHtml($_item->getItemId());?>">
+                    <input type="hidden" name="rmaitems[rma_qty][]" 
+                           value="<?= $block->escapeHtml($_item->getAvailableQty());?>"> 
+                <?php endif; ?>
+                <tr>
+                    <td data-th="<?= $block->escapeHtml(__('Item Id #')) ?>" 
+                        class="col id"><?= $block->escapeHtml($_item->getItemId()) ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Item Name')) ?>" 
+                        class="col item_name"><?= $block->escapeHtml($_item->getName()) ?>
+                    </td>
+                    <td data-th="<?= $block->escapeHtml(__('Qty Ordered')) ?>" 
+                        class="col qty_ordered"><?= $block->escapeHtml($_item->getQtyOrdered()) ?></td>
+                    <td data-th="<?= $block->escapeHtml(__('Remaining Qty')) ?>" 
+                        class="col Remaining Qty">
+                        <?= $block->escapeHtml(number_format($_item->getAvailableQty(), 4, null, '')) ?>        
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+       
+    <script type="text/x-magento-init">
+        {
+            "#rma_create_form": {
+                "fileElement": {},
+                "rmaCreate": {
+                    <?php $i = 0; ?>
+                    <?php if ($_data): ?>
+                        <?php $formDataPost = $_data->getItems(); ?>
+                        <?php if (is_array($formDataPost)): ?>
+                        "formDataPost": <?= /* @noEscape */ json_encode($formDataPost) ?>,
+                        <?php endif; ?>
+                    <?php endif; ?>
+                    "templateRegistrant": "#template-registrant",
+                    "registrantOptions": "#registrant-options",
+                    "addItemToReturn": "add-item-to-return",
+                    "btnRemove": "delete",
+                    "row": "#row",
+                    "addRow": "additional row",
+                    "qtyReqBlock": "#qty_requested_block",
+                    "remQtyBlock": "#remaining_quantity_block",
+                    "remQty": "#remaining_quantity",
+                    "reasonOtherRow": "#reason_other",
+                    "reasonOtherInput": "#items:reason_other",
+                    "radioItem": "#radio:item",
+                    "orderItemId": "#item:order_item_id",
+                    "itemsItem": "items:item",
+                    "itemsReason": "items:reason",
+                    "totalAvlQty": "<?= ($totalAvlQty) ? (int) $totalAvlQty : 0 ?>",
+                    "firstItemId": "<?= (int) $firstItemId ?>",
+                    "productType": "<?= $block->escapeJs($productType) ?>",
+                    "shipmentType": "<?= $block->escapeJs($shipmentType) ?>",
+                    "availableQuantity": "<?= ($availableQty) ? (int) $availableQty : 0 ?>",
+                    "prodTypeBundle": "<?= /* @noEscape */ \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE ?>"
+                },
+                "validation": {
+                     "ignore": ":hidden:not(input[id$='_value'])"
+                }
+            }
+        }
+    </script>
+<?php if ($qty > 0): ?>     
+    <fieldset class="fieldset">
+        <legend class="legend"><span><?= $block->escapeHtml(__('Return Items Information')) ?></span></legend>
+        <br>
+        <div id="registrant-options"></div> <?php /* fields of the form are inserted here */ ?>
+        <div class="field comment">
+            <label for="rma_comment" class="label"><span><?= $block->escapeHtml(__('Comments')) ?></span></label>
+            <div class="control"> 
+                <textarea id="rma_comment" cols="5" rows="3" name="rma_comment" class="input-text"><?php if ($_data): ?><?= $block->escapeHtml($_data->getRmaComment()) ?><?php endif; ?></textarea>
+            </div> 
+        </div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit"
+                    class="action submit primary"
+                    id="submit.save"
+                    title="<?= $block->escapeHtmlAttr(__('Save')) ?>">
+                <span><?= $block->escapeHtml(__('Submit')) ?></span>
+            </button>
+        </div>
+        <div class="secondary">
+            <a href="<?= $block->escapeUrl($block->getBackUrl()) ?>" class="action back">
+                <span><?= $block->escapeHtml(__('Back')) ?></span>
+            </a>
+        </div>
+    </div>
+<?php else: ?>
+    <fieldset class="fieldset">
+        <legend class="legend"><span><?= $block->escapeHtml(__('No Items are Available For Return')) ?></span></legend>
+    </fieldset>    
+<?php endif; ?>    
+</form>
