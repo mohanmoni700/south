@@ -98,16 +98,47 @@
             position: relative;
         }
     }
-    .actions-toolbar{
-        button#use-customer-balance{
-            .cart_btn(); 
+    .checkout-payment-method  {
+        .payment-option-content {
+            .form-discount {
+                .partial-amount:not(.active) {
+                    ~ .actions-toolbar {
+                        .primary {
+                            top: 0px;
+                            right: auto;
+                            left: 0;
+                            position: relative;
+                            float: left;
+                            button {
+                                border-radius: 30px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    button.action.primary.storecredit-btn {
+        .lib-font-size(14);
+        padding: 5px 20px;
+        line-height: 30px;
+        margin-right: 10px;
+        margin-bottom: 20px;
+        &.active {
+            border-color: transparent;
+            background: @hookah_theme_gradient;
+            border-left-color: @border_left_gradient;
+            border-right-color: @border_right_gradient;
         }
     }
     button#delete-customer-balance{
         .cart_btn();
+        background-color: transparent;
+        padding: 6px 16px;
     }
 
-    .checkout-cart-index {
+    .checkout-cart-index, .amasty_quote-cart-index {
         .page-main {
             max-width: @layout_container_xl;
         }
@@ -224,10 +255,13 @@
                     text-align: center;
                 }
             }
-            ~ .page.messages {
+            ~ .page.messages, ~ .ui-effects-wrapper {
+                width: 100% !important;
+                height: auto !important;
                 .message {
                     margin: 0 auto 20px;
                     display: table;
+                    float: none;
                 }
             }
         }
@@ -237,6 +271,15 @@
             background-size: 140px auto;
             padding-top: 150px;
             color: @color_black;
+        }
+        #update-quote-cart {
+            display: none;
+        }
+        .add-note-quote {
+            display: block !important;
+            color: @color_black;
+            text-decoration: none;
+            margin-bottom: 6px;
         }
     }
     .item-actions {
@@ -797,7 +840,7 @@
                 width: 100%;
             }
         }
-        .checkout-cart-index{
+        .checkout-cart-index, .amasty_quote-cart-index{
             .page-wrapper{
                 .page-title-wrapper{
                     margin-top: 20px;
@@ -813,7 +856,7 @@
         }
      } 
      @media only screen and (max-width: 1024px) {
-         .checkout-cart-index{
+         .checkout-cart-index, .amasty_quote-cart-index{
             .message.error,
             .message.success{
                 max-width: 100%;
@@ -821,7 +864,7 @@
          } 
     }
     @media only screen and (min-width: 768px) and (max-width: 1023px) {
-        .checkout-cart-index{
+        .checkout-cart-index, .amasty_quote-cart-index{
             .cart-container {
                 padding: 0 15px;
             }
@@ -837,7 +880,7 @@
         } 
     }
     @media only screen and (max-width: 992px) {
-         .checkout-cart-index{
+         .checkout-cart-index, .amasty_quote-cart-index{
             .message.error,
              .message.success{
                 width: ~"calc(100% - 40px)";
@@ -846,7 +889,7 @@
          } 
     }
     @media only screen and (max-width: 360px) {
-        .checkout-cart-index{
+        .checkout-cart-index, .amasty_quote-cart-index{
             .cart-container{
                 .form-cart{
                     .actions{
@@ -876,7 +919,7 @@
             display: none;
         }
     } 
-    .checkout-cart-index{
+    .checkout-cart-index, .amasty_quote-cart-index{
         .page-title-wrapper{
             h1.page-title{
                 .lib-font-size(30);
@@ -917,7 +960,9 @@
             }
             button.action.update{
                 padding: 8px 10px;
-                float: right;
+            }
+            .action.clear-quote {
+                margin-bottom: 10px;
             }
         } 
         .product-image-wrapper{
@@ -1030,6 +1075,11 @@
                 margin-bottom: 0;
             }
         }
+    }
+    button.action.primary.storecredit-btn {
+        .lib-font-size(13);
+        padding: 5px 14px;
+        margin-bottom: 16px;
     }
 }
 

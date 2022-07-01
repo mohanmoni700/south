@@ -43,7 +43,7 @@ class Save extends \Magento\Backend\App\Action
         $websiteid = $post['website'];
         $connection = $this->resourceConnection->getConnection();
 
-        $query ="SELECT
+        $query = "SELECT
         sc.increment_id AS RefundNumber,
         sc.created_at AS RefundDate,
         sp.last_trans_id AS TransactionId,
@@ -68,7 +68,8 @@ class Save extends \Magento\Backend\App\Action
         sc.created_at >=  '" . $startdate . "'
         AND sc.created_at <= '" . $enddate . "'
         AND sc.store_id = '" . $websiteid . "'
-        ";
+        ORDER BY
+        sc.created_at";
 
         $values = $connection->fetchAll($query);
 
