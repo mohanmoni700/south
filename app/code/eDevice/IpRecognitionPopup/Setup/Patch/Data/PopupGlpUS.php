@@ -6,30 +6,41 @@ namespace eDevice\IpRecognitionPopup\Setup\Patch\Data;
 use Magento\Cms\Model\BlockFactory;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 /**
- * Category Desc text Attribute
+ * Store switching popup on GLP for US users
  */
 class PopupGlpUS implements DataPatchInterface
 {
-
     /**
-     *
      * @var ModuleDataSetupInterface
      */
     private $moduleDataSetup;
 
+    /**
+     * @var BlockFactory
+     */
     private $blockFactory;
+
+    /**
+     * @var StoreManagerInterface
+     */
+    private $storeManager;
+
     /**
      * @param ModuleDataSetupInterface $moduleDataSetup
-     * @param EavSetupFactory          $eavSetupFactory
+     * @param BlockFactory $blockFactory
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
         ModuleDataSetupInterface $moduleDataSetup,
-        BlockFactory $blockFactory
+        BlockFactory $blockFactory,
+        StoreManagerInterface $storeManager
     ) {
         $this->moduleDataSetup = $moduleDataSetup;
         $this->blockFactory = $blockFactory;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -37,9 +48,17 @@ class PopupGlpUS implements DataPatchInterface
      */
     public function apply()
     {
+        $stores = $this->storeManager->getStores();
+        $storeCode = 'ooka_store_view';
+        $storeId = 0;
+
+        if(isset($stores[$storeCode])) {
+            $storeId = $stores[$storeCode]->getId();
+        }
+
         $cmsBlockData = [
-            'title' => 'Ip recognition popup ',
-            'identifier' => 'ip-recognition-popup-glp-us',
+            'title' => 'Store switching popup on GLP for US users',
+            'identifier' => 'store-switching-popup-ooka_store_view-US',
             'content' => '
                 <div style="text-align: center;">
                     <svg class="location-icon" style="margin-left: 50%;" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,12 +66,12 @@ class PopupGlpUS implements DataPatchInterface
                     <ellipse cx="20" cy="37" rx="12" ry="2" fill="#080807"/>
                     </svg>
                     <p>We noticed you are from United States. Would you like to switch to the local site?</p>
-                    <a href="#">Visit United States site</a>
+                    <a href="https://usa.ooka.com/en/">Visit United States site</a>
                     <button id="ip-recognition-popup-close">No, thanks</button>
                 </div>
             ',
             'is_active' => 1,
-            'stores' => [0],
+            'stores' => [$storeId],
             'sort_order' => 0
         ];
 
