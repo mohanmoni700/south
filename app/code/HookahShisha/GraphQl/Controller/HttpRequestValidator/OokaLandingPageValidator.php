@@ -93,9 +93,12 @@ class OokaLandingPageValidator implements HttpRequestValidatorInterface
             $allowedQueriesRegFormat = join('|', self::ALLOWED_QUERIES);
             preg_match('/\{('.$allowedQueriesRegFormat.'?)[({]/s', $query, $matches);
 
-            if (!$matches[1]) {
+            if (!isset($matches[1])) {
                 throw new GraphQlInputException(
-                    __('This request is restricted for "%store" store header', ['store' => $headerValue])
+                    __(
+                        'This request is restricted for "%store" store header. Please check allowed queries: "%q"',
+                        ['store' => $headerValue, 'q' => $allowedQueriesRegFormat]
+                    )
                 );
             }
         }
