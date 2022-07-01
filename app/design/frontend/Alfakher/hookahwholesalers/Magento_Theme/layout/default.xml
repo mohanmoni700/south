@@ -35,6 +35,7 @@
 
         <referenceContainer name="header-wrapper">
               <block class='Magento\Framework\View\Element\Template' name="reorder_link"  after="top.search" template="Magento_Theme::reorder_link.phtml"/>
+              <block class='Magento\Framework\View\Element\Template' name="my_rewards"  after="reorder_link" template="Magento_Theme::my_rewards.phtml"/>
               <block class='Magento\Framework\View\Element\Template' name="register_link"  after="minicart" template="Magento_Theme::register.phtml"/>
               <container name="left_section" label="Page Header Left Section" as="left-section" htmlTag="div" htmlClass="left_section" />
               <container name="right_section" label="Page Header Right Section" as="right-section" htmlTag="div" htmlClass="right_section" />
@@ -51,6 +52,7 @@
        <move element="reorder_link" destination="right_section" before="minicart"/>
        <move element="minicart" destination="right_section" after="reorder_link"/>
        <move element="register_link" destination="right_section" after="minicart"/>
+       <move element="my_rewards" destination="right_section" before="reorder_link"/>
        <move element="logo" destination="left_section" after="top.search"/>
        <move element="mobile_toggle_icon" destination="left_section" before="logo"/>
 
@@ -59,6 +61,12 @@
             <block class="Magento\Theme\Block\Html\Title" name="page.main.title" template="Magento_Theme::html/title.phtml"/>
        </referenceContainer> 
        <!-- End  -->
+
+       <!-- af_bv_op; fixing the error message issue; Start -->
+       <referenceContainer name="before.body.end">
+            <block name="message_issue_fix" template="Magento_Theme::messageIssueFix.phtml" />
+        </referenceContainer>
+       <!-- af_bv_op; fixing the error message issue; End -->
 
     </body>
 </page>
