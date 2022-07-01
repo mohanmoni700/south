@@ -67,7 +67,7 @@ class PopupGlpUS implements DataPatchInterface
                     </svg>
                     <p>We noticed you are from United States. Would you like to switch to the local site?</p>
                     <a href="https://usa.ooka.com/en/">Visit United States site</a>
-                    <button id="ip-recognition-popup-close">No, thanks</button>
+                    <button id="store-switcher-popup-close">No, thanks</button>
                 </div>
             ',
             'is_active' => 1,
