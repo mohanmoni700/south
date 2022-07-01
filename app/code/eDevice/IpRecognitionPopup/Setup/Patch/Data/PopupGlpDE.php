@@ -10,7 +10,7 @@ use Magento\Framework\Setup\Patch\DataPatchInterface;
 /**
  * Category Desc text Attribute
  */
-class PopupDE implements DataPatchInterface
+class PopupGlpDE implements DataPatchInterface
 {
 
     /**
@@ -39,7 +39,7 @@ class PopupDE implements DataPatchInterface
     {
         $cmsBlockData = [
             'title' => 'Ip recognition popup ',
-            'identifier' => 'ip-recognition-popup-de',
+            'identifier' => 'ip-recognition-popup-glp-de',
             'content' => '
                 <div style="text-align: center;">
                     <svg class="location-icon" style="margin-left: 50%;" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
