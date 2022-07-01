@@ -19,20 +19,27 @@ class CategoryBrand extends Template
     private $categoryRepository;
 
     /**
+     * @var \Magento\Cms\Model\Template\FilterProvider
+     */
+    protected $_filterProvider;
+
+    /**
      * CategoryList constructor.
      *
-     * @param \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository
-     * @param Context $context
      * @param Registry $registry
-
+     * @param \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository
+     * @param \Magento\Cms\Model\Template\FilterProvider $filterProvider
+     * @param Context $context
      */
     public function __construct(
+        Registry $registry,
         \Magento\Catalog\Api\CategoryRepositoryInterface $categoryRepository,
-        Context $context,
-        Registry $registry
+        \Magento\Cms\Model\Template\FilterProvider $filterProvider,
+        Context $context
     ) {
         $this->registry = $registry;
         $this->categoryRepository = $categoryRepository;
+        $this->_filterProvider = $filterProvider;
 
         parent::__construct($context);
     }
@@ -59,5 +66,13 @@ class CategoryBrand extends Template
         $categoryInstance = $this->categoryRepository->get($id, $storeId);
 
         return $categoryInstance;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getContentFromStaticBlock($content)
+    {
+        return $this->_filterProvider->getBlockFilter()->filter($content);
     }
 }

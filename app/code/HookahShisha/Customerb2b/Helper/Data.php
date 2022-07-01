@@ -19,7 +19,7 @@ use Magento\Store\Model\StoreManagerInterface;
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class Data extends AbstractHelper
+class Data extends \Magento\Shipping\Helper\Data
 {
     /**
      * @var TransportBuilder
@@ -100,7 +100,7 @@ class Data extends AbstractHelper
         $this->numberffemp = $numberffemp;
         $this->regionFactory = $regionFactory;
         $this->urlHelper = $urlHelper;
-        parent::__construct($context);
+        parent::__construct($context,$storeManager);
     }
 
     /**
@@ -253,5 +253,18 @@ class Data extends AbstractHelper
         if (in_array($emp, $numberof_emp)) {
             return $numberof_emp[$emp];
         }
+    }
+
+    protected function _getTrackingUrl($key, $model, $method = 'getId')
+    {
+       $urlPart = "{$key}:{$model->{$method}()}:{$model->getProtectCode()}";
+       $params = [
+            '_scope' => $model->getStoreId(),
+            '_nosid' => true,
+            '_direct' => 'shipping/tracking/popup',
+            '_query' => ['hash' => $this->urlEncoder->encode($urlPart)]
+        ];
+
+        return $this->_storeManager->getStore($model->getStoreId())->getUrl('', $params);
     }
 }

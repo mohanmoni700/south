@@ -3,7 +3,11 @@
 
     <!-- add ststus column in customer tab order listin -->
     <preference for="Magento\Customer\Block\Adminhtml\Edit\Tab\Orders"
-        type="HookahShisha\Customization\Block\Adminhtml\Edit\Tab\Orders"/>
+                type="HookahShisha\Customization\Block\Adminhtml\Edit\Tab\Orders"/>
+
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="commentPlugin" type="HookahShisha\Customization\Plugin\Order\PlaceOrderAroundPlugin"/>
+    </type>
 
     <preference for="Magento\GroupedProduct\Ui\DataProvider\Product\Form\Modifier\Grouped" type="HookahShisha\Customization\Ui\DataProvider\Product\Form\Modifier\Grouped" />
     
@@ -17,4 +21,5 @@
             </argument>
         </arguments>
     </virtualType>
+
 </config>

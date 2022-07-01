@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="order_additional_info">
+            <block class="Alfakher\OfflinePaymentRecords\Block\Adminhtml\Order\View\OfflinePaymentRecordSection" name="offline_payment_record_section" template="Alfakher_OfflinePaymentRecords::order/view/offlinePaymentSection.phtml">
+            	<arguments>
+			        <argument name="view_model" xsi:type="object">Alfakher\OfflinePaymentRecords\ViewModel\Helper</argument>
+			    </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>
