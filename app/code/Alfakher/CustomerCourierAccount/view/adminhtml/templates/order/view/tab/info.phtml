@@ -16,25 +16,33 @@ $taxHelper = $block->getData('taxHelper');
     return '';
 endif; ?>
 
-<?php /* Shipping Method */ ?>
+<?php
+/** @var $trackingUrl /Alfakher/CustomerCourierAccount/ViewModel/TrackingUrl */
+$trackingUrl = $block->getTrackingUrl();
+?>
 <div class="admin__page-section-item order-shipping-method">
+    <div>
+        <?php  if ($order->getTracksCollection()->count()): ?>
+            <div class="admin__page-section-item-title">
+                <span class="title"><?= $block->escapeHtml(__('Tracking information:')) ?></span>
+            </div>
+            <div class="admin__page-section-item-content">
+                <table class="admin__table-secondary order-account-information-table">
+                    <?php foreach ($order->getTracksCollection() as $trackingInfo): ?>
+                        <tr>
+                            <th><?= $trackingInfo->getTitle() ?></th>
+                            <td><?= $trackingUrl->getTrackingUrl($trackingInfo->getCarrierCode(),$trackingInfo->getTrackNumber()) ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            </div>
+        <?php endif; ?>
+        <br/>
+    </div>
     <div class="admin__page-section-item-title">
         <span class="title"><?= $block->escapeHtml(__('Shipping &amp; Handling Information')) ?></span>
     </div>
     <div class="admin__page-section-item-content">
-        <?php  if ($order->getTracksCollection()->count()): ?>
-            <p>
-                <a href="#" id="linkId" title="<?= $block->escapeHtmlAttr(__('Track Order')) ?>">
-                    <?= $block->escapeHtml(__('Track Order')) ?>
-                </a>
-            </p>
-            <?= /* @noEscape */ $secureRenderer->renderEventListenerAsTag(
-                'onclick',
-                "popWin('" . $block->escapeJs($shippingHelper->getTrackingPopupUrlBySalesModel($order)) .
-                "','trackorder','width=800,height=600,resizable=yes,scrollbars=yes')",
-                'a#linkId'
-            ) ?>
-        <?php endif; ?>
         <?php if ($order->getShippingDescription()): ?>
             <strong><?= $block->escapeHtml($order->getShippingDescription()) ?></strong>
 
