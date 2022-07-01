@@ -121,18 +121,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     {
         return $this->httpContext->getValue('is_mobiledevice');
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function getMigrateDocument()
-    {
-        $customerId = $this->httpContext->getValue('customer_id');
-        $customerData = $this->customerFactory->create()->load($customerId);
-        $migrateCustomerDocument = $customerData->getIsMigrationDocuments();
-        return (int) $migrateCustomerDocument;
-    }
-
     /*bv-hd getStockQty*/
     /**
      * @inheritDoc
@@ -159,5 +147,15 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     {
         $cost = $this->proRepo->getById($productId)->getCost();
         return $cost;
+    }
+    /*bv-vy getIsFinanceVerified*/
+    /**
+     * @inheritDoc
+     */
+    public function getIsFinanceVerified()
+    {
+        $customerId = $this->httpContext->getValue('customer_id');
+        $customerData = $this->customerFactory->create()->load($customerId);
+        return $customerData->getIsfinanceVerified();
     }
 }

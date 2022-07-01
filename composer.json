@@ -6,7 +6,13 @@
     "license": "OSL-3.0",
     "config": {
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "laminas/laminas-dependency-plugin": true,
+            "magento/magento-composer-installer": true,
+            "magento/inventory-composer-installer": true,
+            "magento/composer-root-update-plugin": true
+        }
     },
     "repositories": {
         "magetrend": {
@@ -57,7 +63,7 @@
         "amasty/promo": "^2.11",
         "amasty/shopby": "^2.18",
         "auctane/api": "^2.2",
-        "avalara/excise": "^1.2",
+        "avalara/excise": "^1.3",
         "corra/custom-attributes-graph-ql": "^1.0",
         "corra/log": "^1.3",
         "corra/log-cloud-support": "^2.0",
@@ -95,6 +101,7 @@
         "plugincompany/cmsrevisions": "^100.2",
         "quickbooks/v3-php-sdk": "^6.0",
         "redchamps/module-unpaid-invoices": "^1.0",
+        "shipperhq/module-shipper": "^20.48",
         "signifyd/module-connect": "^4.4",
         "veratad/ageverification": "^3.3",
         "wyomind/massproductimport": "^8.6",
