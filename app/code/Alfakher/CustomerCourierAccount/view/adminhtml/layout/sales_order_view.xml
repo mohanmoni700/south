@@ -5,6 +5,9 @@
             <action method="setTemplate">
                 <argument name="template" xsi:type="string">Alfakher_CustomerCourierAccount::order/view/tab/info.phtml</argument>
             </action>
+            <arguments>
+                <argument name="tracking_url" xsi:type="object">Alfakher\CustomerCourierAccount\ViewModel\TrackingUrl</argument>
+            </arguments>
     	</referenceBlock>
     </body>
 </page>
