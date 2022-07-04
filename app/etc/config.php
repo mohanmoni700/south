@@ -719,6 +719,7 @@ return [
         'Alfakher_FinanceVerified' => 1,
         'MageWorx_OrdersBase' => 1,
         'MageWorx_OrderEditor' => 1,
+        'Alfakher_KlaviyoCustomCatalog' => 1,
         'Alfakher_MyDocument' => 1,
         'Alfakher_NotPaidInvoice' => 1,
         'Alfakher_OrderPdf' => 1,
