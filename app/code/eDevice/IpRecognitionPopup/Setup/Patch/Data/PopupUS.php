@@ -1,4 +1,9 @@
 <?php
+/**
+ * @category  eDevice
+ * @package   eDevice_IpRecognitionPopup
+ * @author    CORRA
+ */
 declare (strict_types = 1);
 
 namespace eDevice\IpRecognitionPopup\Setup\Patch\Data;
