@@ -721,6 +721,7 @@ return [
         'MageWorx_OrderEditor' => 1,
         'Alfakher_MyDocument' => 1,
         'Alfakher_NotPaidInvoice' => 1,
+        'Alfakher_OfflinePaymentRecords' => 1,
         'Alfakher_OrderPdf' => 1,
         'Alfakher_OutOfStockProduct' => 1,
         'Alfakher_Productpageb2b' => 1,
@@ -819,7 +820,7 @@ return [
         'Magefan_YouTubeWidget' => 1,
         'Mageplaza_Webhook' => 1,
         'Mageplaza_DeleteOrders' => 0,
-        'Mageplaza_ProductLabels' => 1,
+        'Mageplaza_ProductLabels' => 0,
         'Mageplaza_ProductLabelsGraphQl' => 1,
         'Mageplaza_Seo' => 1,
         'Mageplaza_Sitemap' => 1,
@@ -858,7 +859,8 @@ return [
         'Xtento_XtCore' => 1,
         'Xtento_OrderImport' => 1,
         'Corra_YotpoLoyaltyExtended' => 1,
-        'Yotpo_Yotpo' => 1
+        'Yotpo_Yotpo' => 1,
+        'eDevice_IpRecognitionPopup' => 1
     ],
     'admin_user' => [
         'locale' => [
