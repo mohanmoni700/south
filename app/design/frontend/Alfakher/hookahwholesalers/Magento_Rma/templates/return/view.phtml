@@ -56,7 +56,8 @@
     ); ?>
 
     <?php $trackingNumbers = $block->getTrackingNumbers() ?>
-    <?php if ($block->isPrintShippingLabelAllowed() || $trackingNumbers->count()): ?>
+    <?php if ($trackingNumbers->count()):
+        if ($block->isPrintShippingLabelAllowed() || $trackingNumbers->count()): ?>
         <div class="block block-returns-tracking">
             <div class="block-title">
                 <strong><?= $block->escapeHtml(__('Shipping and Tracking Information')); ?></strong>
@@ -165,6 +166,8 @@
             </div>
         </div>
     <?php endif ?>
+    <?php endif ?>
+
 
     <div class="block block-returns-items">
         <div class="block-title">
