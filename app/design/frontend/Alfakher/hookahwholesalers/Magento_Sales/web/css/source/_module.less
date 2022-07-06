@@ -9,7 +9,7 @@
 @lib-action_clr:#404040;
 & when (@media-common = true) {    margin-top: 20px;
     display: inline-block;
-    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
+    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo, .magento_rma-returns-returns, .amasty_quote-account-view {
         .order-references{
             border: 0;
         }
@@ -62,7 +62,7 @@
             margin-bottom: 30px;
         }   
     }
-    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
+    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo, .magento_rma-returns-returns, .amasty_quote-account-view {
         &.account{
             .page-title-wrapper{
                 .page-title{
@@ -172,7 +172,9 @@
     }
     .table-wrapper.orders-history .table-order-items,
     .table-wrapper.returns .table-returns,
-    .table-wrapper.quotes-history .table-quote-items{
+    .table-wrapper.quotes-history .table-quote-items,
+    .table-wrapper.returns .table-order-items.returns,
+    .table-wrapper.balance-history .table-balance-history {
         table-layout: fixed;
         thead{
             tr{
@@ -230,6 +232,53 @@
                         width: 1px;
                         background: @lib-action_clr;;
                         top: 3px;
+                    }
+                }
+            }
+        }
+    }
+
+    #track-info-table, 
+    .table-wrapper.table-returns  .table-returns {
+        thead{
+            tr{
+                th{
+                    .lib-font-size(16);
+                    font-weight: @font-weight__bold;
+                    color: @font-gray;
+                    padding: 0 0 10px 0;
+                    border-bottom: 2px solid @border-color__base-table;
+                    width: 140px;
+                    &.date{
+                        width: 80px;
+                    }
+                    &.actions{
+                        width: 90px;
+                    }
+                }
+            }
+        }
+        tbody{
+            tr{
+                td{
+                    .lib-font-size(14);
+                    font-weight: @font-weight__regular;
+                    color: @font-gray;
+                    padding: 11px 0;
+                    border-bottom: 1px solid @border-color__base-table;
+                }
+            }   
+        }
+    }
+
+    .table-wrapper.orders-history {
+        .table-order-items {
+            thead {
+                tr {
+                    th {
+                        &.actions {
+                            width: 232px;
+                        }
                     }
                 }
             }
@@ -661,6 +710,14 @@
             }
         }
     }
+
+    .account-quote-buttons {
+        margin-bottom: 15px;
+        a {
+            text-decoration: underline;
+            color: @color_black;
+        }
+    }
     
 
     @media only screen and (max-width: 991px) and (min-width: 768px) {
@@ -823,7 +880,6 @@
         border-bottom: 1px solid #000;
         .table-order-items{
             .col.action{
-                margin-top: -33px;
                 width: auto;
                 &:before{
                     content: "" !important;
@@ -854,7 +910,7 @@
             }
         }
     }
-    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-creditmemo, .sales-order-printcreditmemo {
+    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-creditmemo, .sales-order-printcreditmemo, .magento_rma-returns-returns, .amasty_quote-account-view {
         &.account {
             .column.main {
                 .items.order-links {

@@ -1,0 +1,17 @@
+Index: vendor/mageworx/module-ordereditorbase/Model/Order.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vendor/mageworx/module-ordereditorbase/Model/Order.php b/vendor/mageworx/module-ordereditorbase/Model/Order.php
+--- a/vendor/mageworx/module-ordereditorbase/Model/Order.php
++++ b/vendor/mageworx/module-ordereditorbase/Model/Order.php
+@@ -815,7 +815,7 @@
+                 'product_type'                          => $orderItem->getProductType(),
+                 'base_tax_before_discount'              => $orderItem->getBaseTaxBeforeDiscount(),
+                 'tax_before_discount'                   => $orderItem->getTaxBeforeDiscount(),
+-                'original_custom_price'                 => $orderItem->getOriginalPrice(),
++                'original_custom_price'                 => $orderItem->getPrice(),
+                 'base_cost'                             => $orderItem->getBaseCost(),
+                 'price_incl_tax'                        => $orderItem->getPriceInclTax(),
+                 'base_price_incl_tax'                   => $orderItem->getBasePriceInclTax(),

@@ -125,13 +125,13 @@ class Document extends \Magento\Framework\View\Element\Template
             } else {
                 $verification = "";
             }
-
             if (in_array('expired', $msg) && in_array(0, $status) && empty($str_msg)) {
                 $expunderveri = $this->scopeConfig->getValue('hookahshisha/productpage/productpageb2b_documents_underverification_and_expired', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
                 $message[] = ["pending", $expunderveri];
             } else {
                 $expunderveri = "";
             }
+
             return [
                 'message' => $message,
                 'pending' => $verification,
