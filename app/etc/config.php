@@ -43,27 +43,27 @@ return [
                 'is_default' => '0'
             ],
             'ooka' => [
-                'website_id' => '44',
+                'website_id' => '22',
                 'code' => 'ooka',
                 'name' => 'Ooka.com',
                 'sort_order' => '0',
-                'default_group_id' => '44',
+                'default_group_id' => '22',
                 'is_default' => '0'
             ],
             'ooka_usa' => [
-                'website_id' => '45',
+                'website_id' => '25',
                 'code' => 'ooka_usa',
                 'name' => 'Ooka USA',
                 'sort_order' => '0',
-                'default_group_id' => '45',
+                'default_group_id' => '25',
                 'is_default' => '0'
             ],
             'ooka_de' => [
-                'website_id' => '46',
+                'website_id' => '28',
                 'code' => 'ooka_de',
                 'name' => 'Ooka DE',
                 'sort_order' => '0',
-                'default_group_id' => '46',
+                'default_group_id' => '28',
                 'is_default' => '0'
             ]
         ],
@@ -108,28 +108,28 @@ return [
                 'default_store_id' => '8',
                 'code' => 'hookah_wholesalers_store'
             ],
-            44 => [
-                'group_id' => '44',
-                'website_id' => '44',
+            22 => [
+                'group_id' => '22',
+                'website_id' => '22',
                 'name' => 'Ooka.com Store',
                 'root_category_id' => '1129',
-                'default_store_id' => '57',
+                'default_store_id' => '25',
                 'code' => 'ooka_store'
             ],
-            45 => [
-                'group_id' => '45',
-                'website_id' => '45',
+            25 => [
+                'group_id' => '25',
+                'website_id' => '25',
                 'name' => 'Ooka USA Store',
                 'root_category_id' => '1132',
-                'default_store_id' => '58',
+                'default_store_id' => '28',
                 'code' => 'ooka_usa_store'
             ],
-            46 => [
-                'group_id' => '46',
-                'website_id' => '46',
+            28 => [
+                'group_id' => '28',
+                'website_id' => '28',
                 'name' => 'Ooka DE Store',
                 'root_category_id' => '1135',
-                'default_store_id' => '59',
+                'default_store_id' => '31',
                 'code' => 'ooka_de_store'
             ]
         ],
@@ -180,37 +180,37 @@ return [
                 'is_active' => '1'
             ],
             'ooka_store_view' => [
-                'store_id' => '57',
+                'store_id' => '25',
                 'code' => 'ooka_store_view',
-                'website_id' => '44',
-                'group_id' => '44',
+                'website_id' => '22',
+                'group_id' => '22',
                 'name' => 'Ooka.com Store View',
                 'sort_order' => '0',
                 'is_active' => '1'
             ],
-            'ooka_usa_store_en' => [
-                'store_id' => '58',
-                'code' => 'ooka_usa_store_en',
-                'website_id' => '45',
-                'group_id' => '45',
+            'ooka_usa_en_store_view' => [
+                'store_id' => '28',
+                'code' => 'ooka_usa_en_store_view',
+                'website_id' => '25',
+                'group_id' => '25',
                 'name' => 'Ooka USA (EN) Store View',
                 'sort_order' => '0',
                 'is_active' => '1'
             ],
-            'ooka_de_store_de' => [
-                'store_id' => '59',
-                'code' => 'ooka_de_store_de',
-                'website_id' => '46',
-                'group_id' => '46',
+            'ooka_de_de_store_view' => [
+                'store_id' => '31',
+                'code' => 'ooka_de_de_store_view',
+                'website_id' => '28',
+                'group_id' => '28',
                 'name' => 'Ooka DE (DE) Store View',
                 'sort_order' => '0',
                 'is_active' => '1'
             ],
-            'ooka_de_store_en' => [
-                'store_id' => '60',
-                'code' => 'ooka_de_store_en',
-                'website_id' => '46',
-                'group_id' => '46',
+            'ooka_de_en_store_view' => [
+                'store_id' => '34',
+                'code' => 'ooka_de_en_store_view',
+                'website_id' => '28',
+                'group_id' => '28',
                 'name' => 'Ooka DE (EN) Store View',
                 'sort_order' => '0',
                 'is_active' => '1'
@@ -1032,23 +1032,23 @@ return [
             'type' => '0',
             'code' => 'Alfakher/hookahwholesalers'
         ],
-        'frontend/Corra/ooka-de' => [
-            'parent_id' => 'Magento/luma',
-            'theme_path' => 'Corra/ooka-de',
-            'theme_title' => 'Ooka DE',
-            'is_featured' => '0',
-            'area' => 'frontend',
-            'type' => '0',
-            'code' => 'Corra/ooka-de'
-        ],
         'frontend/Corra/ooka' => [
             'parent_id' => 'Magento/luma',
             'theme_path' => 'Corra/ooka',
             'theme_title' => 'Ooka',
             'is_featured' => '0',
             'area' => 'frontend',
-            'type' => '0',
+            'type' => '1',
             'code' => 'Corra/ooka'
+        ],
+        'frontend/Corra/ooka-de' => [
+            'parent_id' => 'Magento/luma',
+            'theme_path' => 'Corra/ooka-de',
+            'theme_title' => 'Ooka DE',
+            'is_featured' => '0',
+            'area' => 'frontend',
+            'type' => '1',
+            'code' => 'Corra/ooka-de'
         ]
     ],
     'i18n' => [
