@@ -4,6 +4,22 @@
     <preference for="Smartwave\Megamenu\Block\Topmenu" type="HookahShisha\Customization\Block\Topmenu" />
     
     <preference for="Magento\CheckoutStaging\Plugin\PaymentInformationManagementPlugin" type="HookahShisha\Customization\Plugin\PaymentInformationManagementPlugin" />
+
+    <type name="Magento\Sales\Controller\Order\PrintAction">
+        <plugin name="magetrend-order-pdf-replace-print"
+                type="Magetrend\PdfTemplates\Plugin\Sales\Controller\Order\PrintAction"
+                sortOrder="10" disabled="true"/>
+    </type>
+    <type name="Magento\Sales\Controller\Order\PrintCreditmemo">
+        <plugin name="magetrend-creditmemo-pdf-replace-print"
+                type="Magetrend\PdfTemplates\Plugin\Sales\Controller\Order\PrintCreditmemo"
+                sortOrder="10" disabled="true"/>
+    </type>
+    <type name="Magento\Sales\Controller\Order\PrintShipment">
+        <plugin name="magetrend-shipment-pdf-replace-print"
+                type="Magetrend\PdfTemplates\Plugin\Sales\Controller\Order\PrintShipment"
+                sortOrder="10" disabled="true"/>
+    </type>
     
     <!-- Company field search adding on the customer grid -->
     <preference for="Magento\Customer\Model\ResourceModel\Grid\Collection"
@@ -17,7 +33,12 @@
     <type name="Magetrend\PdfTemplates\Model\Pdf\Filter">
        <plugin name="custom_magetrend_pdftemplates" type="HookahShisha\Customization\Model\Pdf\Filter" />
     </type>
+
     <type name="Magento\ImportExport\Controller\Adminhtml\Import\Index">
         <plugin name="warning_meassage_import" type="HookahShisha\Customization\Controller\Adminhtml\Import\Index" />
     </type>
+    
+    <preference for="Magetrend\PdfTemplates\Model\Pdf\Invoice"
+    type="HookahShisha\Customization\Model\Pdf\Invoice" />
+
 </config>
