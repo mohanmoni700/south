@@ -1,0 +1,27 @@
+<?php
+
+/** @var $block \Magento\Rma\Block\Order\Button */
+?>
+<?php $viewModel = $block->getData('view_model');
+$blockObj= $block->getLayout()->createBlock(Magento\Rma\Block\Returns\Create::class);
+?>
+<?php if ($this->helper(Magento\Rma\Helper\Data::class)->canCreateRma($block->getOrder())):
+
+    $_items = $blockObj->getItems();
+    $qty = 0;
+    foreach ($_items as $item):
+        if ($item->getAvailableQty()>0):
+            $qty++;
+        endif;
+    endforeach;?>
+
+    <?php if ($qty>0):?>
+
+    <a href="<?= $block->escapeUrl($this->helper(Magento\Rma\Helper\Data::class)
+        ->getReturnCreateUrl($block->getOrder())) ?>" 
+        class="action return"><span><?= $block->escapeHtml(__('Return Particular Items')) ?></span></a>
+    <a href="<?= $block->escapeUrl($this->helper(Alfakher\RmaCustomization\Helper\Data::class)
+        ->getReturnCreateUrl($block->getOrder())) ?>" 
+        class="action return"><span><?= $block->escapeHtml(__('Return All Items')) ?></span></a>
+<?php endif;?>
+<?php endif;?>

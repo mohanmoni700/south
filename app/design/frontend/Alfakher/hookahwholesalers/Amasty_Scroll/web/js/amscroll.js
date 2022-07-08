@@ -230,7 +230,7 @@
             return $.ajax({
                 url: requestUrl,
                 dataType: 'json',
-                cache: true,
+                cache: false,
                 success: this.preprocessRawAjaxResponse.bind(this, successCallback),
                 error: this._stop.bind(this)
             });
