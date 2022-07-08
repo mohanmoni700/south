@@ -1,17 +1,17 @@
 <?php
 
-namespace Alfakher\MyDocument\Controller\Customer;
+namespace Alfakher\MyDocument\Controller\Adminhtml\Document;
 
+use Alfakher\MyDocument\Helper\Data;
+use Alfakher\MyDocument\Model\MyDocument;
 use Alfakher\MyDocument\Model\MyDocumentFactory;
-use Magento\Framework\App\Action\Action;
-use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Image\AdapterFactory;
 use Magento\MediaStorage\Model\File\UploaderFactory;
 
-class Result extends Action
+class Save extends \Magento\Backend\App\Action
 {
     /**
      * @var \Alfakher\MyDocument\Model\MyDocumentFactory
@@ -32,23 +32,21 @@ class Result extends Action
      * @var AdapterFactory
      */
     protected $adapterFactory;
-
     /**
-     * @var \Magento\Customer\Model\Session
+     * @var Data
      */
-    protected $customerSession;
-
+    protected $helper;
     /**
      * @var Filesystem
      */
     protected $filesystem;
 
     /**
-     *
-     * @param \Magento\Framework\App\Action\Context $context
+     * @param \Magento\Backend\App\Action\Context $context
      * @param \Alfakher\MyDocument\Model\MyDocumentFactory $myDocument
+     * @param MyDocument $documentModel
+     * @param Data $helper
      * @param \Magento\Framework\Controller\ResultFactory $result
-     * @param \Magento\Customer\Model\Session $customerSession
      * @param UploaderFactory $uploaderFactory
      * @param AdapterFactory $adapterFactory
      * @param Filesystem $filesystem
@@ -57,10 +55,11 @@ class Result extends Action
      * @param \Magento\Customer\Model\CustomerFactory $customerFactory
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
+        \Magento\Backend\App\Action\Context $context,
         \Alfakher\MyDocument\Model\MyDocumentFactory $myDocument,
+        MyDocument $documentModel,
+        Data $helper,
         \Magento\Framework\Controller\ResultFactory $result,
-        \Magento\Customer\Model\Session $customerSession,
         UploaderFactory $uploaderFactory,
         AdapterFactory $adapterFactory,
         Filesystem $filesystem,
@@ -70,11 +69,12 @@ class Result extends Action
     ) {
         parent::__construct($context);
         $this->_myDocument = $myDocument;
+        $this->documentModel = $documentModel;
         $this->resultRedirect = $result;
         $this->uploaderFactory = $uploaderFactory;
         $this->adapterFactory = $adapterFactory;
         $this->filesystem = $filesystem;
-        $this->customerSession = $customerSession;
+        $this->helper = $helper;
         $this->resultJsonFactory = $resultJsonFactory;
         $this->_customerRepositoryInterface = $customerRepositoryInterface;
         $this->_customerFactory = $customerFactory;
@@ -88,9 +88,11 @@ class Result extends Action
     public function execute()
     {
         $post = $this->getRequest()->getPostValue();
+        $count = count($post['document_name']);
         $newArray = [];
         $data = [];
         $customerDocs = [];
+        $emailData = [];
 
         if (isset($post['is_customerfrom_usa'])) {
             $is_usa = 1;
@@ -98,23 +100,12 @@ class Result extends Action
             $is_usa = 0;
         }
 
-        if (isset($post['is_add_more_form'])) {
-            foreach ($post['is_add_more_form'] as $key => $value) {
-                if ($value != '') {
-                    $newArray[$key]['is_add_more_form'] = $value;
-                } else {
-                    $newArray[$key]['is_add_more_form'] = '';
-                }
-            }
-        }
-
         $filesData = $this->getRequest()->getFiles()->toArray();
+
         if (count($filesData)) {
             $i = 0;
             foreach ($filesData as $key => $files) {
-
                 if (isset($files['tmp_name']) && strlen($files['tmp_name']) > 0) {
-
                     try {
                         $uploaderFactories = $this->uploaderFactory->create(['fileId' => $filesData[$key]]);
                         $uploaderFactories->setAllowedExtensions(['jpg', 'jpeg', 'gif', 'png', 'pdf']);
@@ -128,14 +119,12 @@ class Result extends Action
                         /*Allow folder creation*/
                         $uploaderFactories->setAllowCreateFolders(true);
                         $maxsize = 20;
-
                         /*number_format($_FILES['filename']['size'] / 1048576, 2) . ' MB';*/
                         if ((number_format($files['size'] / 1048576, 2) >= $maxsize)) {
                             throw new LocalizedException(
                                 __('File too large. File must be less than 20 megabytes.')
                             );
                         }
-
                         /*Rename file name if already exists*/
                         $uploaderFactories->setAllowRenameFiles(true);
                         $uploaderFactories->setFilesDispersion(false);
@@ -147,63 +136,92 @@ class Result extends Action
                                 __('File cannot be saved to path: $1', $destinationPath)
                             );
                         }
-
                         $imagePath = $result['file'];
                         $data['filename'] = $imagePath;
+                        $newArray[] = $imagePath;
+
                     } catch (\Exception $e) {
                         $this->messageManager->addError(__($e->getMessage()));
                     }
                 }
-
-                if (isset($newArray[$i]['expiry_date'])) {
-                    $date = ltrim($newArray[$i]['expiry_date'], 'Expiry Date:');
-                    $expiryDate = date("Y-m-d", strtotime($date));
-                } else {
-                    $expiryDate = '';
-                }
-
-                $resultRedirect = $this->resultRedirect->create(ResultFactory::TYPE_REDIRECT);
-                $resultRedirect->setUrl('mydocument/customer/index');
-                $model = $this->_myDocument->create();
-                $model->setData($data);
-                if (array_key_exists("name" . ($i + 1), $post)) {
-                    if ($post['name' . ($i + 1)] != "") {
-                        $model->addData([
-                            "document_name" => $post['name' . ($i + 1)],
-                            "customer_id" => $this->customerSession->getCustomer()->getId(),
-                            "expiry_date" => $this->convertDate($post['expiry_date' . ($i + 1)]),
-                            "is_customerfrom_usa" => $is_usa,
-                            "status" => 0,
-                            "is_add_more_form" => $newArray[$i]['is_add_more_form'],
-                        ]);
-                        $model->setIsDelete(false);
-                        $model->setStatus(0);
-                        $saveData = $model->save();
-                        $customerDocs[] = $saveData->getData();
-                    }
-                }
-                $i++;
             }
         }
 
-        $resultJson = $this->resultJsonFactory->create();
-        if ($saveData) {
-            $customer = $this->_customerFactory->create()
-                ->load($this->customerSession->getCustomer()->getId())->getDataModel();
+        $model = $this->_myDocument->create();
+        $j = 0;
+
+        for ($i = 0; $i < $count; $i++) {
+            if (array_key_exists("document_name", $post)) {
+                if (isset($post['mydocument_id'][$i])) {
+                    $entity = $this->documentModel->load($post['mydocument_id'][$i]);
+                    if ($entity) {
+                        $entity->setMessage($post['message'][$i]);
+                        $entity->setStatus(empty($post['message'][$i]) ? 1 : 0);
+                        $entity->setDocumentName($post['document_name'][$i]);
+                        $entity->setExpiryDate($this->convertDate($post['expiry_date'][$i]));
+                    }
+
+                    $emailData[] = ($entity->getData());
+                    $entity->save();
+
+                } else {
+                    $model = $this->_myDocument->create();
+                    if ($post['document_name'][$i] != '') {
+                        $docName = $post['document_name'][$i];
+                        if ($docName == "FEIN" ||
+                            $docName == "Sales Tax/Resale License" ||
+                            $docName == "State Tobacco License" ||
+                            $docName == "Unified Resale Certificate") {
+                            $is_add_more_form = 0;
+                        } else {
+                            $is_add_more_form = 1;
+                        }
+
+                        $model->addData([
+                            "document_name" => $post['document_name'][$i],
+                            "customer_id" => $post['customer_id'],
+                            "expiry_date" => $this->convertDate($post['expiry_date'][$i]),
+                            "status" => isset($post['message'][$i]) ? 1 : 0,
+                            "message" => !empty($post['message'][$i]) ? $post['message'][$i] : '',
+                            "is_customerfrom_usa" => $is_usa,
+                            "is_add_more_form" => $is_add_more_form,
+                            "filename" => $newArray[$j],
+                        ]);
+                        $model->setIsDelete(false);
+                        $model->setStatus(0);
+                        $j++;
+
+                    }
+                    if (($post['document_name'][$i]) != '') {
+                        $saveData = $model->save();
+                        $customerDocs[] = $saveData->getData();
+                    }
+
+                }
+
+            }
+        }
+        $customer = $this->_customerFactory->create()->load($post['customer_id'])->getDataModel();
+        if (count($emailData) > 0) {
+            $customer->setCustomAttribute('uploaded_doc', 1);
+            $this->_customerRepositoryInterface->save($customer);
+            $this->_eventManager->dispatch('document_update_after', [
+                'items' => $emailData,
+            ]);
+        }
+
+        if (count($customerDocs) > 0) {
             $customer->setCustomAttribute('uploaded_doc', 1);
             $this->_customerRepositoryInterface->save($customer);
             $this->_eventManager->dispatch('document_save_after', [
                 'items' => $customerDocs,
             ]);
-            $htmlContent = "Record Saved Successfully.";
-            $success = true;
-        } else {
-            $htmlContent = '';
-            $success = false;
         }
-        return $resultJson->setData([
-            'html' => $htmlContent,
-            'success' => $success]);
+        $mail = $this->helper->sendMail($emailData, $post['customer_id']);
+        $resultRedirect = $this->resultRedirectFactory->create();
+        $resultRedirect->setPath('customer/index/edit', ['id' =>
+            $post['customer_id'], '_current' => false, 'active_tab' => 3]);
+        return $resultRedirect;
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace Alfakher\MyDocument\Controller\Adminhtml\Customer;
 
 use Alfakher\MyDocument\Model\MyDocumentFactory;
+use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Image\AdapterFactory;
@@ -54,7 +55,10 @@ class Deletedocument extends \Magento\Backend\App\Action
      * @param UploaderFactory $uploaderFactory
      * @param AdapterFactory $adapterFactory
      * @param Filesystem $filesystem
+     * @param CollectionFactory $collection
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface
+     * @param \Magento\Customer\Model\CustomerFactory $customerFactory
      */
 
     public function __construct(
@@ -65,7 +69,10 @@ class Deletedocument extends \Magento\Backend\App\Action
         UploaderFactory $uploaderFactory,
         AdapterFactory $adapterFactory,
         Filesystem $filesystem,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+        CollectionFactory $collection,
+        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
+        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface,
+        \Magento\Customer\Model\CustomerFactory $customerFactory
     ) {
         parent::__construct($context);
         $this->_myDocument = $myDocument;
@@ -73,8 +80,11 @@ class Deletedocument extends \Magento\Backend\App\Action
         $this->uploaderFactory = $uploaderFactory;
         $this->adapterFactory = $adapterFactory;
         $this->filesystem = $filesystem;
+        $this->collection = $collection;
         $this->customerSession = $customerSession;
         $this->resultJsonFactory = $resultJsonFactory;
+        $this->_customerRepositoryInterface = $customerRepositoryInterface;
+        $this->_customerFactory = $customerFactory;
     }
 
     /**
@@ -82,18 +92,31 @@ class Deletedocument extends \Magento\Backend\App\Action
      */
     public function execute()
     {
+
         $resultJson = $this->resultJsonFactory->create();
         $documentId = $this->getRequest()->getPost("id");
         $model = $this->_myDocument->create()->load($documentId);
+        $itemData = $model->getData();
+        $customerId = $model->getData('customer_id');
+
+        $documentCollection = $this->collection->create()->addFieldToFilter('customer_id', ['eq' => $customerId]);
+
+        $customer = $this->_customerFactory->create()->load($customerId)->getDataModel();
         if ($model) {
-            $model->setIsDelete(true);
-            $model->save();
+            $model->delete();
             $success = true;
-            $this->_eventManager->dispatch('document_delete_after',
-                [
-                    'items' => $model->getData()
-                ]
-            );
+            $this->_eventManager->dispatch('document_delete_after', [
+                'items' => $itemData,
+            ]);
+
+            if (!empty($documentCollection->getData())) {
+                $customer->setCustomAttribute('uploaded_doc', 1);
+                $this->_customerRepositoryInterface->save($customer);
+            } else {
+                $customer->setCustomAttribute('uploaded_doc', 0);
+                $this->_customerRepositoryInterface->save($customer);
+            }
+
         } else {
             $success = false;
         }

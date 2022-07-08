@@ -101,14 +101,9 @@ class Data extends AbstractHelper
         $customer = $this->customer->create()->load($customerid);
         $customerEmail = $customer->getEmail();
         $customerName = $customer->getFirstname();
-
-        $collection = $this->collection->create()
-            ->addFieldToFilter('customer_id', ['eq' => $customerid]);
-        $docdata = $collection->getData();
-
         $rejected_doc = [];
 
-        foreach ($docdata as $val) {
+        foreach ($post as $val) {
             $docname = $val['document_name'];
             $docmsg = $val['message'];
             $rejected_doc[] = ['docmsg' => $docmsg, 'docname' => $docname];
@@ -127,8 +122,10 @@ class Data extends AbstractHelper
         /** Get current storeId end[BS]*/
 
         $this->_inlineTranslation->suspend();
-        $fromEmail = $this->_scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE, $storeId);
-        $fromName = $this->_scopeConfig->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE, $storeId);
+        $fromEmail = $this->_scopeConfig
+            ->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE, $storeId);
+        $fromName = $this->_scopeConfig
+            ->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE, $storeId);
 
         $sender = [
             'name' => $fromName,
