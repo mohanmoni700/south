@@ -27,4 +27,6 @@
 
     <!-- override for dispatch new event -->
     <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Shipping" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Shipping" />
+
+    <preference for="Mageplaza\Webhook\Observer\AfterOrder" type="Alfakher\Webhook\Observer\AfterOrderObserver" />
 </config>
