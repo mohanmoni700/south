@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Override for set partial amount to total collector -->
+    <preference for="Magento\CustomerBalance\Model\Total\Quote\Customerbalance" type="Alfakher\StoreCredit\Model\Total\Quote\Customerbalance" />
+    <!-- Override for Add custom functions and use the existing functions -->
+    <preference for="Magento\CustomerBalance\Block\Adminhtml\Sales\Order\Create\Payment" type="Alfakher\StoreCredit\Block\Adminhtml\Sales\Order\Create\Payment" />
+    <!-- Override for make payment methods visible when partial store credit selected -->
+    <preference for="Magento\CustomerBalance\Observer\TogglePaymentMethodsObserver" type="Alfakher\StoreCredit\Observer\TogglePaymentMethodsObserver" />
+</config>
