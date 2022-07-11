@@ -31,7 +31,7 @@ $trackingUrl = $block->getTrackingUrl();
                     <?php foreach ($order->getTracksCollection() as $trackingInfo): ?>
                         <tr>
                             <th><?= $trackingInfo->getTitle() ?></th>
-                            <td><?= $trackingUrl->getTrackingUrl($trackingInfo->getCarrierCode(),$trackingInfo->getTrackNumber()) ?></td>
+                            <td><?= $trackingUrl->getTrackingUrl($trackingInfo) ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </table>

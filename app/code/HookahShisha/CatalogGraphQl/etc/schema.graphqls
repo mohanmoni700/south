@@ -11,3 +11,13 @@ interface CategoryInterface {
 interface ProductInterface {
     url_key: String @doc(description: "The part of the URL that identifies the product") @resolver(class: "\\HookahShisha\\CatalogGraphQl\\Model\\Resolver\\UrlRewrite\\ProductUrlKey")
 }
+
+type BundleProduct {
+    bundle_main_price: BundleMainPrices @resolver(class: "\\HookahShisha\\CatalogGraphQl\\Model\\Resolver\\BundlePrice")
+}
+
+type BundleMainPrices {
+    price: Float
+    final_price: Float
+    discount: Float
+}
