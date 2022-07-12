@@ -16,7 +16,7 @@ use Magento\Store\Model\StoreManagerInterface;
 /**
  * Store switching popup on GLP store for DE users
  */
-class PopupDeDe implements DataPatchInterface
+class PopupGlpDE1 implements DataPatchInterface
 {
     /**
      * @var ModuleDataSetupInterface
@@ -54,7 +54,7 @@ class PopupDeDe implements DataPatchInterface
     public function apply()
     {
         $stores = $this->storeManager->getStores();
-        $storeCode = 'admin';
+        $storeCode = 'ooka_store_view';
         $storeId = 0;
 
         if(isset($stores[$storeCode])) {
@@ -62,8 +62,8 @@ class PopupDeDe implements DataPatchInterface
         }
 
         $cmsBlockData = [
-            'title' => 'Store switching logic on DE (DE language) store for US users',
-            'identifier' => 'store-switching-popup-ooka_de_de_store_view',
+            'title' => 'Store switching popup on GLP store for DE users',
+            'identifier' => 'store-switching-popup-ooka_store_view_DE',
             'content' => '
                 <div style="text-align: center;">
                     <svg class="location-icon" style="margin-left: 50%;" width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
