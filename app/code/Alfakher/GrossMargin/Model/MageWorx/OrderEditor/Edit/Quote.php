@@ -6,6 +6,9 @@ namespace Alfakher\GrossMargin\Model\MageWorx\OrderEditor\Edit;
  * @author af_bv_op
  */
 use MageWorx\OrderEditor\Model\Order as OrderEditorOrderModel;
+use Magento\Sales\Model\Order\Item as OriginalOrderItem;
+use MageWorx\OrderEditor\Model\Quote\Item as OrderEditorQuoteItem;
+use Magento\Framework\Exception\LocalizedException;
 
 class Quote extends \MageWorx\OrderEditor\Model\Edit\Quote
 {
@@ -16,7 +19,7 @@ class Quote extends \MageWorx\OrderEditor\Model\Edit\Quote
      * @param OrderEditorOrderModel $order
      * @return array
      */
-    protected function prepareNewQuoteItems(
+    protected function prepareNewQuoteItems( // NOSONAR
         array $params,
         OrderEditorOrderModel $order
     ): array {
@@ -138,5 +141,43 @@ class Quote extends \MageWorx\OrderEditor\Model\Edit\Quote
         }
 
         return $orderItems;
+    }
+
+    /**
+     * @param OriginalOrderItem $orderItem
+     * @param string[] $params
+     * @return OrderEditorQuoteItem
+     * @throws LocalizedException
+     */
+    public function convertOrderItemToQuoteItem(
+        OriginalOrderItem $orderItem,
+        array $params,
+        bool $skipItemErrors = false
+    ): OrderEditorQuoteItem {
+
+        $quoteItemId = $orderItem->getQuoteItemId();
+
+        $quoteItem = $this->oeQuoteItemRepository->getById($quoteItemId);
+        $quote     = $this->getQuoteByQuoteItem($quoteItem);
+        $quote->setSkipItemErrors($skipItemErrors);
+
+        $quoteItem->setQuote($quote);
+
+        $dataObjectParams = $this->dataObjectFactory->create(['data' => $params]);
+        $quoteItem        = $quote->updateItemAdvanced($quoteItem, $dataObjectParams);
+        $quoteItem->isDeleted(false);
+        if ($quoteItem->getChildren()) {
+            foreach ($quoteItem->getChildren() as $childItem) {
+                $childItem->isDeleted(false);
+            }
+        }
+
+        $quote->collectTotals();
+        $ExciseTaxResponseOrder = $quote->getExciseTaxResponseOrder();
+
+        $quote = $this->quoteRepository->getById($quote->getId());
+        $quote->setExciseTaxResponseOrder($ExciseTaxResponseOrder);
+        $this->quoteRepository->save($quote);
+        return $quoteItem;
     }
 }
