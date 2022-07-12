@@ -54,7 +54,7 @@ class PopupDeEn1 implements DataPatchInterface
     public function apply()
     {
         $stores = $this->storeManager->getStores();
-        $storeCode = 'ooka_de_en_store_view';
+        $storeCode = 'admin';
         $storeId = 0;
 
         if(isset($stores[$storeCode])) {
