@@ -20,5 +20,8 @@ class Povariable implements \Magento\Framework\Event\ObserverInterface
         }
         $Purchase = $order->getPurchaseOrder();
         $observer->getVariableList()->setData('purchase_order', $Purchase);
+
+        $excise_tax = !empty($order->getExciseTax()) ? "All State Tobacco Product taxes are included in the total amount of this invoice" : "Purchaser Responsible for excise tax";
+        $observer->getVariableList()->setData('excise_tax', $excise_tax);
     }
 }
