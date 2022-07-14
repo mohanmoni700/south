@@ -2,6 +2,8 @@
 namespace HookahShisha\Customization\Model;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
 
 class ConfigProvider implements ConfigProviderInterface
 {
@@ -14,38 +16,38 @@ class ConfigProvider implements ConfigProviderInterface
 
     /**
      *
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param ScopeConfigInterface $scopeConfig
      */
 
     public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->scopeConfig = $scopeConfig;
     }
 
     /**
-     * setup on checkout configuratin value
+     * Setup on checkout configuratin value
      *
      * @return mixed
      */
     public function getConfig()
     {
-        $additionalVariables['defaultShippingSelectionConf'] = [
-            'enable' => $this->getConfigValue('hookahshisha/default_shipping_selection_conf/enable'),
-            'defaultSelectedShippingName' => $this->getConfigValue('hookahshisha/default_shipping_selection_conf/selected_shipping_name'),
-            'timeout' => $this->getConfigValue('hookahshisha/default_shipping_selection_conf/timeout'),
+        return $additionalVariables['defaultShippingSelectionConf'] = [
+            'enable' => $this->getConfigValue('enable'),
+            'defaultSelectedShippingName' => $this->getConfigValue('selected_shipping_name'),
+            'timeout' => $this->getConfigValue('timeout'),
         ];
-        return $additionalVariables;
     }
 
     /**
      * Sore configuration values
      *
-     * @param string $section
+     * @param string $field
      * @return string
      */
-    public function getConfigValue($section)
+    public function getConfigValue($field)
     {
-        return $this->scopeConfig->getValue($section, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        $sectionName = "hookahshisha/default_shipping_selection_conf/" . $field;
+        return $this->scopeConfig->getValue($sectionName, ScopeInterface::SCOPE_STORE);
     }
 }
