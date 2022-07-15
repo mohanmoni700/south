@@ -1,0 +1,16 @@
+Index: vendor/avalara/excise/Model/ProcessTaxQuote.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vendor/avalara/excise/Model/ProcessTaxQuote.php b/vendor/avalara/excise/Model/ProcessTaxQuote.php
+--- a/vendor/avalara/excise/Model/ProcessTaxQuote.php
++++ b/vendor/avalara/excise/Model/ProcessTaxQuote.php
+@@ -556,7 +556,6 @@
+                 $this->response = $response;
+ 
+                 $quote->setExciseTaxResponseOrder(json_encode($this->response));
+-                $quote->save();
+ 
+                 if ($this->response['Status'] == "Success") {
+                     // store request in session
