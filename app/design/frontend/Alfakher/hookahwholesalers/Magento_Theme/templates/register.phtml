@@ -1,15 +1,13 @@
 <?php
-//phpcs:disable
 /**
  *
  * @var $block \Magento\Framework\View\Element\Template
  */
 ?>
 <?php $helper = $this->helper(HookahShisha\ChangePassword\Helper\Data::class); ?>
-<?php
- $helperb2b = $this->helper(\Alfakher\Productpageb2b\Helper\Data::class);
-    $yotpotab = $helperb2b->getConfigValue('yotpo_loyalty/advanced/enable_yotpo_tab');?>
-<?php if ($helper->customerLoggedIn()):?>
+<?php $helperb2b = $this->helper(\Alfakher\Productpageb2b\Helper\Data::class); ?>
+<?php $yotpotab = $helperb2b->getConfigValue('yotpo_loyalty/advanced/enable_yotpo_tab');?>
+<?php if ($helper->customerLoggedIn()): ?>
     <?php $values = $helper->CustomerLogin(); ?>
     <?php $name = $helper->customerFirstName(); ?>
     <?php $firstStringCharacter = substr($name, 0, 1); ?>
@@ -52,45 +50,45 @@
             }
             </script>
             <li class="guest-content my_account">
-                <a class= "create_an_account_link" href="<?= $block->escapeUrl($this->getUrl("customer/account/"));?>">
+                <a class= "create_an_account_link" href="<?= $block->escapeUrl($block->getUrl("customer/account/"));?>">
                     <?= $block->escapeHtml(__('My Account'))?>        
                 </a>
             </li>
-            <li class="order_reorder"><a href="<?= $block->escapeUrl($this->getUrl("sales/order/history"));?>">
+            <li class="order_reorder"><a href="<?= $block->escapeUrl($block->getUrl("sales/order/history"));?>">
                 <?= $block->escapeHtml(__('My Orders & Reorders')) ?>
                 </a>
             </li>
-            <li class="manage_address"><a href="<?= $block->escapeUrl($this->getUrl("customer/address"));?>">
+            <li class="manage_address"><a href="<?= $block->escapeUrl($block->getUrl("customer/address"));?>">
                 <?= $block->escapeHtml(__('Manage Addresses')) ?>
                 </a>
             </li>
-            <li class="my_payment"><a href="<?= $block->escapeUrl($this->getUrl("customer/paymentinfo"));?>">
+            <li class="my_payment"><a href="<?= $block->escapeUrl($block->getUrl("customer/paymentinfo"));?>">
                 <?= $block->escapeHtml(__('My Payment Options')) ?>
                 </a>
             </li>
-            <li class="changepassword"><a href="<?= $block->escapeUrl($this->getUrl("changepassword/index/index"));?>">
+            <li class="changepassword"><a href="<?= $block->escapeUrl($block->getUrl("changepassword/index/index"));?>">
                 <?= $block->escapeHtml(__('Change Password')) ?>
                 </a>
             </li>
-            <li class="documents"><a href="<?= $block->escapeUrl($this->getUrl("mydocument/customer/index"));?>">
+            <li class="documents"><a href="<?= $block->escapeUrl($block->getUrl("mydocument/customer/index"));?>">
                 <?= $block->escapeHtml(__('My Documents')) ?>
                 </a>
             </li>   
-            <li class="product_pricing"><a href="<?= $block
-            ->escapeUrl($this->getUrl("customerb2b/account/myproductpricing"));?>">
-                <?= $block->escapeHtml(__('My Product Pricing')) ?>
+            <li class="product_pricing">
+                <a href="<?= $block->escapeUrl($block->getUrl("customerb2b/account/myproductpricing"));?>">
+                    <?= $block->escapeHtml(__('My Product Pricing')) ?>
                 </a>
             </li>       
-            <?php if($yotpotab==1): ?>
-            <li class="product_rewards"><a href="<?= $block
-            ->escapeUrl($this->getUrl("custom/customer/yotpo/"));?>">
-                <?= $block->escapeHtml(__('My Rewards')) ?>
+            <?php if ($yotpotab == 1): ?>
+            <li class="product_rewards">
+                <a href="<?= $block->escapeUrl($block->getUrl("custom/customer/yotpo/"));?>">
+                    <?= $block->escapeHtml(__('My Rewards')) ?>
                 </a>
             </li>
             <?php endif; ?>
-            <li class="logout"><a class= "sign_in_link" href="<?= $block
-            ->escapeUrl($this->getUrl("customer/account/logout"));?>">
-                <?= $block->escapeHtml(__('Logout')) ?>
+            <li class="logout">
+                <a class= "sign_in_link" href="<?= $block->escapeUrl($block->getUrl("customer/account/logout"));?>">
+                    <?= $block->escapeHtml(__('Logout')) ?>
                 </a>
             </li>
          </ul>
@@ -103,15 +101,16 @@
             <li class="guest-content">
                 <span class="content-main">
                     <span class="content-item content-link">
-                        <a class= "sign_in_link" href="<?= $block
-                        ->escapeUrl($this->getUrl("customer/account/login"));?>">
+                        <a class= "sign_in_link" 
+                            href="<?= $block->escapeUrl($block->getUrl("customer/account/login")); ?>">
                             <?= $block->escapeHtml(__('Sign in'))?>
                         </a>
                     </span>
                     <span class="content-item content-text">or</span>
-                <span class="content-item content-link"><a class= "create_an_account_link" href="<?= $block
-                    ->escapeUrl($this->getUrl("customer/account/create"));?>">
-                    <?= $block->escapeHtml(__('Create an Account'))?>
+                <span class="content-item content-link">
+                    <a class= "create_an_account_link" 
+                        href="<?= $block->escapeUrl($block->getUrl("customer/account/create"));?>">
+                        <?= $block->escapeHtml(__('Create an Account'))?>
                     </a>
                 </span>
                 </span>
