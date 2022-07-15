@@ -1,4 +1,9 @@
 <?php
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
+/** @var $block \Magento\Framework\View\Element\Template */
+?>
+<?php
 $helper = $this->helper(\HookahShisha\ChangePassword\Helper\Data::class);
 $helperb2b = $this->helper(\Alfakher\Productpageb2b\Helper\Data::class);
 $yotpotab = $helperb2b->getConfigValue('yotpo_loyalty/advanced/enable_yotpo_tab');
