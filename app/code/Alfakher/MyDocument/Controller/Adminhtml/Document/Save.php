@@ -89,15 +89,15 @@ class Save extends \Magento\Backend\App\Action
     {
         $post = $this->getRequest()->getPostValue();
         $count = count($post['document_name']);
-        $newArray = [];
+        $fileUploadedArray = [];
         $data = [];
         $customerDocs = [];
         $emailData = [];
 
         if (isset($post['is_customerfrom_usa'])) {
-            $is_usa = 1;
+            $isUsa = 1;
         } else {
-            $is_usa = 0;
+            $isUsa = 0;
         }
 
         $filesData = $this->getRequest()->getFiles()->toArray();
@@ -119,8 +119,8 @@ class Save extends \Magento\Backend\App\Action
                         /*Allow folder creation*/
                         $uploaderFactories->setAllowCreateFolders(true);
                         $maxsize = 20;
-                        /*number_format($_FILES['filename']['size'] / 1048576, 2) . ' MB';*/
-                        if ((number_format($files['size'] / 1048576, 2) >= $maxsize)) {
+
+                        if ((round($files['size'] / 1048576, 2) >= $maxsize)) {
                             throw new LocalizedException(
                                 __('File too large. File must be less than 20 megabytes.')
                             );
@@ -138,7 +138,7 @@ class Save extends \Magento\Backend\App\Action
                         }
                         $imagePath = $result['file'];
                         $data['filename'] = $imagePath;
-                        $newArray[] = $imagePath;
+                        $fileUploadedArray[] = $imagePath;
 
                     } catch (\Exception $e) {
                         $this->messageManager->addError(__($e->getMessage()));
@@ -172,9 +172,9 @@ class Save extends \Magento\Backend\App\Action
                             $docName == "Sales Tax/Resale License" ||
                             $docName == "State Tobacco License" ||
                             $docName == "Unified Resale Certificate") {
-                            $is_add_more_form = 0;
+                            $isAddMoreForm = 0;
                         } else {
-                            $is_add_more_form = 1;
+                            $isAddMoreForm = 1;
                         }
 
                         $model->addData([
@@ -183,9 +183,9 @@ class Save extends \Magento\Backend\App\Action
                             "expiry_date" => $this->convertDate($post['expiry_date'][$i]),
                             "status" => isset($post['message'][$i]) ? 1 : 0,
                             "message" => !empty($post['message'][$i]) ? $post['message'][$i] : '',
-                            "is_customerfrom_usa" => $is_usa,
-                            "is_add_more_form" => $is_add_more_form,
-                            "filename" => $newArray[$j],
+                            "is_customerfrom_usa" => $isUsa,
+                            "is_add_more_form" => $isAddMoreForm,
+                            "filename" => $fileUploadedArray[$j],
                         ]);
                         $model->setIsDelete(false);
                         $model->setStatus(0);
