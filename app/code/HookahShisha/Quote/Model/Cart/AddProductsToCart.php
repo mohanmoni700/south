@@ -129,7 +129,8 @@ class AddProductsToCart extends SourceAddProductsToCart
             $cart->getItemsCollection()->clear();
         } else {
             // Save cart only when all items are added to cart and no errors occurred
-            $this->cartRepository->save($cart);
+            // restrict to calculate total using flag to avoide avalara tax request for add to cart
+            $this->cartRepository->save($cart->setTotalsCollectedFlag(true));
         }
 
         return $this->prepareErrorOutput($cart);
