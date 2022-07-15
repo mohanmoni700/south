@@ -102,7 +102,8 @@ class UpdateCartItems extends SourceUpdateCartItems
 
         try {
             $this->updateCartItems->processCartItems($cart, $cartItems);
-            $this->cartRepository->save($cart);
+            // restrict to calculate total using flag to avoide avalara tax request for update item
+            $this->cartRepository->save($cart->setTotalsCollectedFlag(true));
         } catch (NoSuchEntityException $e) {
             throw new GraphQlNoSuchEntityException(__($e->getMessage()), $e);
         } catch (LocalizedException $e) {
