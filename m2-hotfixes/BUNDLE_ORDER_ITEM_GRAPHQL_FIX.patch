@@ -1,0 +1,12 @@
+diff --git a/vendor/magento/module-bundle-graph-ql/Model/Resolver/Order/Item/BundleOptions.php b/vendor/magento/module-bundle-graph-ql/Model/Resolver/Order/Item/BundleOptions.php
+--- a/vendor/magento/module-bundle-graph-ql/Model/Resolver/Order/Item/BundleOptions.php	2022-06-29 20:41:20.000000000 +0530
++++ b/vendor/magento/module-bundle-graph-ql/Model/Resolver/Order/Item/BundleOptions.php	2022-06-29 19:39:48.000000000 +0530
+@@ -148,7 +148,7 @@
+                 $optionDetails = [
+                     self::OPTION_TYPE,
+                     $bundleChildAttributes['option_id'],
+-                    implode(',', $options),
++                    is_array($options) ? implode(',', $options) : $options,
+                     (int) $childOrderItemOptions['info_buyRequest']['qty']
+                 ];
+
