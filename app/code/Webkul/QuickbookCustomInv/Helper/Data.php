@@ -18,26 +18,6 @@ use Magento\Downloadable\Api\LinkRepositoryInterface;
 class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
 {
     /**
-     * @var \Magento\Framework\App\Cache\TypeListInterface
-     */
-    private $cacheTypeList;
-
-    /**
-     * @var \Magento\Framework\App\Cache\Frontend\Pool
-     */
-    private $cacheFrontendPool;
-
-    /**
-     * @var \Magento\Directory\Model\CountryFactory
-     */
-    private $countryFactory;
-
-    /**
-     * @var \Magento\Framework\App\Config\Storage\WriterInterface
-     */
-    private $configWriter;
-
-    /**
      * @var \Magento\Framework\Stdlib\DateTime\TimezoneInterface
      */
     private $dateTime;
@@ -48,29 +28,9 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
     private $encryptor;
 
     /**
-     * @var \Magento\Framework\Json\Helper\Data
-     */
-    private $jsonHelperData;
-
-    /**
      * @var \Magento\Catalog\Api\ProductRepositoryInterface
      */
     private $productRepository;
-
-    /**
-     * @var \Magento\Downloadable\Api\LinkRepositoryInterface
-     */
-    private $linkFactory;
-
-    /**
-     * @var \Magento\Framework\Filter\FilterManager
-     */
-    private $filterManager;
-
-    /**
-     * @var \Magento\Sales\Model\ResourceModel\Order\Tax\Item
-     */
-    private $itemTax;
 
     /**
      * @var \Webkul\MultiQuickbooksConnect\Logger\Logger
@@ -99,7 +59,7 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
      * @param \Webkul\MultiQuickbooksConnect\Logger\Logger $logger
      * @param \Webkul\MultiQuickbooksConnect\Api\AccountRepositoryInterface $accountRepository
      */
-    public function __construct(
+    public function __construct( //NOSONAR
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
         \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool,
@@ -133,6 +93,7 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
             $logger,
             $accountRepository
         );
+        $this->productRepository = $productRepository;
         $this->dateTime = $dateTime;
         $this->logger = $logger;
         $this->encryptor = $encryptor;
@@ -149,7 +110,7 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
     {
         $configData = $this->getQuickbooksConnectConfig();
         if ($configData) {
-            $encryptor = $this->encryptor;
+            $encryptorObj = $this->encryptor;
             $accountData = $this->accountRepository->getById($accountId)->getData();
             $accountConfig = [
                 'enable' => $configData['enable'],
@@ -159,9 +120,9 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
                 'realm_id' => $accountData['realm_id'],
                 'client_id' => $configData['client_id'],
                 'client_secret' => $configData['client_secret'],
-                'oauth2_access_token' => $encryptor->decrypt($accountData['oauth2_access_token']),
+                'oauth2_access_token' => $encryptorObj->decrypt($accountData['oauth2_access_token']),
                 'oauth2_access_token_expire_on' => $accountData['oauth2_access_token_expire_on'],
-                'oauth2_refresh_token' => $encryptor->decrypt($accountData['oauth2_refresh_token']),
+                'oauth2_refresh_token' => $encryptorObj->decrypt($accountData['oauth2_refresh_token']),
                 'oauth2_refresh_token_expire_on' => $accountData['oauth2_refresh_token_expire_on'],
                 'app_integrates_with' => $configData['app_integrates_with'],
                 'account_type' => $configData['account_type'],
@@ -174,7 +135,6 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
                 'expense_account' => $accountData['expense_account'],
                 'default_tax_class' => $accountData['default_tax_class'],
             ];
-            //$accountConfig = array_merge($accountConfig, $accountData);
             return $accountConfig;
         }
         return $configData;
@@ -188,7 +148,7 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
      * @param int $qty
      * @return array
      */
-    public function getArrangedItemDataForQuickbooks($orderItem, $taxPercentDetail, $qty = 0)
+    public function getArrangedItemDataForQuickbooks($orderItem, $taxPercentDetail, $qty = 0) //NOSONAR
     {
         try {
             $product = $orderItem->getProduct();
