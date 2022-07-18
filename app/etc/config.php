@@ -274,6 +274,13 @@ return [
                         'theme_id' => 'frontend/Corra/alfakher'
                     ]
                 ]
+            ],
+            'ooka_de_store_de' => [
+                'general' => [
+                    'locale' => [
+                        'code' => 'de_DE'
+                    ]
+                ]
             ]
         ],
         'websites' => [
@@ -314,6 +321,34 @@ return [
                 'design' => [
                     'theme' => [
                         'theme_id' => 'frontend/Alfakher/hookahwholesalers'
+                    ]
+                ]
+            ],
+            'ooka' => [
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Corra/ooka'
+                    ]
+                ]
+            ],
+            'ooka_usa' => [
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Corra/ooka'
+                    ]
+                ]
+            ],
+            'ooka_de' => [
+                'currency' => [
+                    'options' => [
+                        'base' => 'EUR',
+                        'default' => 'EUR',
+                        'allow' => 'EUR'
+                    ]
+                ],
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Corra/ooka-de'
                     ]
                 ]
             ]
@@ -999,6 +1034,24 @@ return [
             'area' => 'frontend',
             'type' => '0',
             'code' => 'Alfakher/hookahwholesalers'
+        ],
+        'frontend/Corra/ooka' => [
+            'parent_id' => 'Magento/luma',
+            'theme_path' => 'Corra/ooka',
+            'theme_title' => 'Ooka',
+            'is_featured' => '0',
+            'area' => 'frontend',
+            'type' => '1',
+            'code' => 'Corra/ooka'
+        ],
+        'frontend/Corra/ooka-de' => [
+            'parent_id' => 'Magento/luma',
+            'theme_path' => 'Corra/ooka-de',
+            'theme_title' => 'Ooka DE',
+            'is_featured' => '0',
+            'area' => 'frontend',
+            'type' => '1',
+            'code' => 'Corra/ooka-de'
         ]
     ],
     'i18n' => [
