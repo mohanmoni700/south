@@ -9,6 +9,22 @@
                 </field>
             </group>
         </section>
+        <section id="yotpo_loyalty">
+            <group id="advanced">
+                <field id="enable_yotpo_tab" translate="label" type="select" showInDefault="0" showInWebsite="1" sortOrder="90">
+                    <label>Show Yotpo Tab</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="myaccount_yotpo" translate="label" sortOrder="100" showInDefault="0" showInWebsite="1" showInStore="1">
+                    <label>My account variable instance id</label>
+                    <comment>Use comma seperated values</comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="*/*/enable_yotpo_tab">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
         <section id="hookahshisha" translate="label" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
             <group id="default_shipping_selection_conf" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
                 <label>Default Selected Shiping Configuration</label>
