@@ -23,6 +23,8 @@ class TrackingUrl implements ArgumentInterface
     {
         $carrier = strtolower($trackingInfo->getCarrierCode());
         $trackNumber = $trackingInfo->getTrackNumber();
+        $trackLable = __("Track order");
+        $trackId =  __(" , Tracking id - %1", $trackNumber);
         if ($carrier === 'custom') {
             $carrier = strtolower($trackingInfo->getTitle());
         }
@@ -42,7 +44,7 @@ class TrackingUrl implements ArgumentInterface
                 return $trackNumber;
         }
         return <<<HTML
-    <a href="{$trackingDetail}" target="_blank">{$trackNumber}</a>
+    <a href="{$trackingDetail}" target="_blank">{$trackLable}</a>{$trackId}
 HTML;
     }
 }
