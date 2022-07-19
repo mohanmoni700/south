@@ -92,16 +92,17 @@ class Deletedocument extends \Magento\Backend\App\Action
      */
     public function execute()
     {
-
         $resultJson = $this->resultJsonFactory->create();
         $documentId = $this->getRequest()->getPost("id");
         $model = $this->_myDocument->create()->load($documentId);
         $itemData = $model->getData();
-        $customerId = $model->getData('customer_id');
+        $customerId = $itemData['customer_id'];
 
         $documentCollection = $this->collection->create()->addFieldToFilter('customer_id', ['eq' => $customerId]);
 
         $customer = $this->_customerFactory->create()->load($customerId)->getDataModel();
+        $success = false;
+
         if ($model) {
             $model->delete();
             $success = true;
@@ -117,8 +118,6 @@ class Deletedocument extends \Magento\Backend\App\Action
                 $this->_customerRepositoryInterface->save($customer);
             }
 
-        } else {
-            $success = false;
         }
         return $resultJson->setData([
             'success' => $success]);

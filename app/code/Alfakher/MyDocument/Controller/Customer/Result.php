@@ -3,10 +3,14 @@
 namespace Alfakher\MyDocument\Controller\Customer;
 
 use Alfakher\MyDocument\Model\MyDocumentFactory;
+use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Customer\Model\CustomerFactory;
+use Magento\Customer\Model\Session;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Image\AdapterFactory;
 use Magento\MediaStorage\Model\File\UploaderFactory;
@@ -45,39 +49,39 @@ class Result extends Action
 
     /**
      *
-     * @param \Magento\Framework\App\Action\Context $context
-     * @param \Alfakher\MyDocument\Model\MyDocumentFactory $myDocument
-     * @param \Magento\Framework\Controller\ResultFactory $result
-     * @param \Magento\Customer\Model\Session $customerSession
-     * @param UploaderFactory $uploaderFactory
-     * @param AdapterFactory $adapterFactory
+     * @param MyDocumentFactory $myDocument
+     * @param CustomerRepositoryInterface $customerRepositoryInterface
+     * @param CustomerFactory $customerFactory
+     * @param Session $customerSession
+     * @param Context $context
+     * @param ResultFactory $result
+     * @param JsonFactory $resultJsonFactory
      * @param Filesystem $filesystem
-     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface
-     * @param \Magento\Customer\Model\CustomerFactory $customerFactory
+     * @param AdapterFactory $adapterFactory
+     * @param UploaderFactory $uploaderFactory
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Alfakher\MyDocument\Model\MyDocumentFactory $myDocument,
-        \Magento\Framework\Controller\ResultFactory $result,
-        \Magento\Customer\Model\Session $customerSession,
-        UploaderFactory $uploaderFactory,
-        AdapterFactory $adapterFactory,
+        MyDocumentFactory $myDocument,
+        CustomerRepositoryInterface $customerRepositoryInterface,
+        CustomerFactory $customerFactory,
+        Session $customerSession,
+        Context $context,
+        ResultFactory $result,
+        JsonFactory $resultJsonFactory,
         Filesystem $filesystem,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface,
-        \Magento\Customer\Model\CustomerFactory $customerFactory
+        AdapterFactory $adapterFactory,
+        UploaderFactory $uploaderFactory
     ) {
         parent::__construct($context);
         $this->_myDocument = $myDocument;
-        $this->resultRedirect = $result;
-        $this->uploaderFactory = $uploaderFactory;
-        $this->adapterFactory = $adapterFactory;
-        $this->filesystem = $filesystem;
-        $this->customerSession = $customerSession;
-        $this->resultJsonFactory = $resultJsonFactory;
         $this->_customerRepositoryInterface = $customerRepositoryInterface;
         $this->_customerFactory = $customerFactory;
+        $this->customerSession = $customerSession;
+        $this->resultRedirect = $result;
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->filesystem = $filesystem;
+        $this->adapterFactory = $adapterFactory;
+        $this->uploaderFactory = $uploaderFactory;
     }
 
     /**
@@ -88,28 +92,25 @@ class Result extends Action
     public function execute()
     {
         $post = $this->getRequest()->getPostValue();
-        $newArray = [];
+        $docArray = [];
         $data = [];
         $customerDocs = [];
+        $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png', 'pdf'];
 
-        if (isset($post['is_customerfrom_usa'])) {
-            $is_usa = 1;
-        } else {
-            $is_usa = 0;
-        }
+        $is_usa = (isset($post['is_customerfrom_usa'])) ? 1 : 0;
 
         if (isset($post['is_add_more_form'])) {
             foreach ($post['is_add_more_form'] as $key => $value) {
                 if ($value != '') {
-                    $newArray[$key]['is_add_more_form'] = $value;
+                    $docArray[$key]['is_add_more_form'] = $value;
                 } else {
-                    $newArray[$key]['is_add_more_form'] = '';
+                    $docArray[$key]['is_add_more_form'] = '';
                 }
             }
         }
 
         $filesData = $this->getRequest()->getFiles()->toArray();
-        if (count($filesData)) {
+        if (count($filesData) > 0) {
             $i = 0;
             foreach ($filesData as $key => $files) {
 
@@ -117,7 +118,7 @@ class Result extends Action
 
                     try {
                         $uploaderFactories = $this->uploaderFactory->create(['fileId' => $filesData[$key]]);
-                        $uploaderFactories->setAllowedExtensions(['jpg', 'jpeg', 'gif', 'png', 'pdf']);
+                        $uploaderFactories->setAllowedExtensions($allowedExtensions);
                         $imageAdapter = $this->adapterFactory->create();
                         $uploaderFactories->addValidateCallback(
                             'custom_image_upload',
@@ -129,8 +130,7 @@ class Result extends Action
                         $uploaderFactories->setAllowCreateFolders(true);
                         $maxsize = 20;
 
-                        /*number_format($_FILES['filename']['size'] / 1048576, 2) . ' MB';*/
-                        if ((number_format($files['size'] / 1048576, 2) >= $maxsize)) {
+                        if ((round($files['size'] / 1048576, 2) >= $maxsize)) {
                             throw new LocalizedException(
                                 __('File too large. File must be less than 20 megabytes.')
                             );
@@ -155,8 +155,8 @@ class Result extends Action
                     }
                 }
 
-                if (isset($newArray[$i]['expiry_date'])) {
-                    $date = ltrim($newArray[$i]['expiry_date'], 'Expiry Date:');
+                if (isset($docArray[$i]['expiry_date'])) {
+                    $date = ltrim($docArray[$i]['expiry_date'], 'Expiry Date:');
                     $expiryDate = date("Y-m-d", strtotime($date));
                 } else {
                     $expiryDate = '';
@@ -174,7 +174,7 @@ class Result extends Action
                             "expiry_date" => $this->convertDate($post['expiry_date' . ($i + 1)]),
                             "is_customerfrom_usa" => $is_usa,
                             "status" => 0,
-                            "is_add_more_form" => $newArray[$i]['is_add_more_form'],
+                            "is_add_more_form" => $docArray[$i]['is_add_more_form'],
                         ]);
                         $model->setIsDelete(false);
                         $model->setStatus(0);
@@ -187,6 +187,9 @@ class Result extends Action
         }
 
         $resultJson = $this->resultJsonFactory->create();
+        $htmlContent = '';
+        $success = false;
+
         if ($saveData) {
             $customer = $this->_customerFactory->create()
                 ->load($this->customerSession->getCustomer()->getId())->getDataModel();
@@ -197,9 +200,6 @@ class Result extends Action
             ]);
             $htmlContent = "Record Saved Successfully.";
             $success = true;
-        } else {
-            $htmlContent = '';
-            $success = false;
         }
         return $resultJson->setData([
             'html' => $htmlContent,

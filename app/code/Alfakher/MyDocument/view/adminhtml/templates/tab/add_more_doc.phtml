@@ -9,12 +9,12 @@ $uploaderType = [
 'State Tobacco License',
 'Unified Resale Certificate'
 ];
-
+$existFile=[];
 foreach ($items as $document) {
     $existFile[] = $document['document_name'];
 }
 
-    $uploader=array_diff($uploaderType, $existFile);
+$uploader = array_diff($uploaderType, $existFile);
 
 if ($document['is_customerfrom_usa']==1) {
 
