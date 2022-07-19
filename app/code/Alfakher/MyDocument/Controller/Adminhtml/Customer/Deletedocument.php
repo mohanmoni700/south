@@ -4,7 +4,12 @@ namespace Alfakher\MyDocument\Controller\Adminhtml\Customer;
 
 use Alfakher\MyDocument\Model\MyDocumentFactory;
 use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory;
+use Magento\Backend\App\Action\Context;
+use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Customer\Model\CustomerFactory;
+use Magento\Customer\Model\Session;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Image\AdapterFactory;
 use Magento\MediaStorage\Model\File\UploaderFactory;
@@ -48,43 +53,43 @@ class Deletedocument extends \Magento\Backend\App\Action
     protected $filesystem;
 
     /**
-     * @param \Magento\Framework\App\Action\Context $context
-     * @param \Alfakher\MyDocument\Model\MyDocumentFactory $myDocument
-     * @param \Magento\Framework\Controller\ResultFactory $result
-     * @param \Magento\Customer\Model\Session $customerSession
-     * @param UploaderFactory $uploaderFactory
-     * @param AdapterFactory $adapterFactory
-     * @param Filesystem $filesystem
+     * @param MyDocumentFactory $myDocument
      * @param CollectionFactory $collection
-     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface
-     * @param \Magento\Customer\Model\CustomerFactory $customerFactory
+     * @param Context $context
+     * @param CustomerRepositoryInterface $customerRepositoryInterface
+     * @param CustomerFactory $customerFactory
+     * @param Session $customerSession
+     * @param ResultFactory $result
+     * @param JsonFactory $resultJsonFactory
+     * @param Filesystem $filesystem
+     * @param AdapterFactory $adapterFactory
+     * @param UploaderFactory $uploaderFactory
      */
 
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Alfakher\MyDocument\Model\MyDocumentFactory $myDocument,
-        \Magento\Framework\Controller\ResultFactory $result,
-        \Magento\Customer\Model\Session $customerSession,
-        UploaderFactory $uploaderFactory,
-        AdapterFactory $adapterFactory,
-        Filesystem $filesystem,
+        MyDocumentFactory $myDocument,
         CollectionFactory $collection,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface,
-        \Magento\Customer\Model\CustomerFactory $customerFactory
+        Context $context,
+        CustomerRepositoryInterface $customerRepositoryInterface,
+        CustomerFactory $customerFactory,
+        Session $customerSession,
+        ResultFactory $result,
+        JsonFactory $resultJsonFactory,
+        Filesystem $filesystem,
+        AdapterFactory $adapterFactory,
+        UploaderFactory $uploaderFactory,
     ) {
         parent::__construct($context);
         $this->_myDocument = $myDocument;
-        $this->resultRedirect = $result;
-        $this->uploaderFactory = $uploaderFactory;
-        $this->adapterFactory = $adapterFactory;
-        $this->filesystem = $filesystem;
         $this->collection = $collection;
-        $this->customerSession = $customerSession;
-        $this->resultJsonFactory = $resultJsonFactory;
         $this->_customerRepositoryInterface = $customerRepositoryInterface;
         $this->_customerFactory = $customerFactory;
+        $this->customerSession = $customerSession;
+        $this->resultRedirect = $result;
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->filesystem = $filesystem;
+        $this->adapterFactory = $adapterFactory;
+        $this->uploaderFactory = $uploaderFactory;
     }
 
     /**
