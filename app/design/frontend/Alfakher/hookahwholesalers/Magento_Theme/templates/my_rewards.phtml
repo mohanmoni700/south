@@ -1,0 +1,23 @@
+<?php
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
+/** @var $block \Magento\Framework\View\Element\Template */
+?>
+<?php
+$helper = $this->helper(\HookahShisha\ChangePassword\Helper\Data::class);
+$helperb2b = $this->helper(\Alfakher\Productpageb2b\Helper\Data::class);
+$yotpotab = $helperb2b->getConfigValue('yotpo_loyalty/advanced/enable_yotpo_tab');
+?>
+<?php if ($yotpotab == 1): ?>
+<div class="my_rewards">
+    <?php if ($helper->customerLoggedIn()): ?>
+        <a class= "header_account_link" href="<?= $block->escapeUrl($block->getUrl("custom/customer/yotpo")); ?>">
+            <?= $block->escapeHtml(__('My Rewards')) ?>
+        </a>
+    <?php else: ?>
+        <a class= "header_account_link" href="<?= $block->escapeUrl($block->getUrl("customer/account/login")); ?>">
+            <?= $block->escapeHtml(__('My Rewards')) ?>
+        </a>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
