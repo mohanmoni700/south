@@ -34,16 +34,15 @@ $today = date("Y-m-d");
 <?php if (!empty($data)):
 
     /*for sorting the array in proper order start[BS]*/
-    $static=[];
-    $add_more=[];
+    $static = [];
+    $add_more = [];
     foreach ($data as $val) {
         if (in_array($val['document_name'], $uploaderType)) {
-            $static[]=$val;
+            $static[] = $val;
         }
-        if ($val['is_add_more_form']==1) {
+        if ($val['is_add_more_form'] == 1) {
             $add_more[] = $val;
         }
-
     }
 
     $array=[];

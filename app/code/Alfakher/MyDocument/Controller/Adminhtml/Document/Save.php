@@ -5,8 +5,12 @@ namespace Alfakher\MyDocument\Controller\Adminhtml\Document;
 use Alfakher\MyDocument\Helper\Data;
 use Alfakher\MyDocument\Model\MyDocument;
 use Alfakher\MyDocument\Model\MyDocumentFactory;
+use Magento\Backend\App\Action\Context;
+use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Customer\Model\CustomerFactory;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Image\AdapterFactory;
 use Magento\MediaStorage\Model\File\UploaderFactory;
@@ -42,42 +46,42 @@ class Save extends \Magento\Backend\App\Action
     protected $filesystem;
 
     /**
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Alfakher\MyDocument\Model\MyDocumentFactory $myDocument
-     * @param MyDocument $documentModel
      * @param Data $helper
-     * @param \Magento\Framework\Controller\ResultFactory $result
-     * @param UploaderFactory $uploaderFactory
-     * @param AdapterFactory $adapterFactory
+     * @param MyDocument $documentModel
+     * @param MyDocumentFactory $myDocument
+     * @param Context $context
+     * @param CustomerRepositoryInterface $customerRepositoryInterface
+     * @param CustomerFactory $customerFactory
+     * @param ResultFactory $result
+     * @param JsonFactory $resultJsonFactory
      * @param Filesystem $filesystem
-     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface
-     * @param \Magento\Customer\Model\CustomerFactory $customerFactory
+     * @param AdapterFactory $adapterFactory
+     * @param UploaderFactory $uploaderFactory
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Alfakher\MyDocument\Model\MyDocumentFactory $myDocument,
-        MyDocument $documentModel,
         Data $helper,
-        \Magento\Framework\Controller\ResultFactory $result,
-        UploaderFactory $uploaderFactory,
-        AdapterFactory $adapterFactory,
+        MyDocument $documentModel,
+        MyDocumentFactory $myDocument,
+        Context $context,
+        CustomerRepositoryInterface $customerRepositoryInterface,
+        CustomerFactory $customerFactory,
+        ResultFactory $result,
+        JsonFactory $resultJsonFactory,
         Filesystem $filesystem,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepositoryInterface,
-        \Magento\Customer\Model\CustomerFactory $customerFactory
+        AdapterFactory $adapterFactory,
+        UploaderFactory $uploaderFactory
     ) {
         parent::__construct($context);
-        $this->_myDocument = $myDocument;
-        $this->documentModel = $documentModel;
-        $this->resultRedirect = $result;
-        $this->uploaderFactory = $uploaderFactory;
-        $this->adapterFactory = $adapterFactory;
-        $this->filesystem = $filesystem;
         $this->helper = $helper;
-        $this->resultJsonFactory = $resultJsonFactory;
+        $this->documentModel = $documentModel;
+        $this->_myDocument = $myDocument;
         $this->_customerRepositoryInterface = $customerRepositoryInterface;
         $this->_customerFactory = $customerFactory;
+        $this->resultRedirect = $result;
+        $this->resultJsonFactory = $resultJsonFactory;
+        $this->filesystem = $filesystem;
+        $this->adapterFactory = $adapterFactory;
+        $this->uploaderFactory = $uploaderFactory;
     }
 
     /**
@@ -89,26 +93,23 @@ class Save extends \Magento\Backend\App\Action
     {
         $post = $this->getRequest()->getPostValue();
         $count = count($post['document_name']);
-        $newArray = [];
+        $fileUploadedArray = [];
         $data = [];
         $customerDocs = [];
         $emailData = [];
+        $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png', 'pdf'];
 
-        if (isset($post['is_customerfrom_usa'])) {
-            $is_usa = 1;
-        } else {
-            $is_usa = 0;
-        }
+        $is_usa = (isset($post['is_customerfrom_usa'])) ? 1 : 0;
 
         $filesData = $this->getRequest()->getFiles()->toArray();
 
-        if (count($filesData)) {
+        if (count($filesData) > 0) {
             $i = 0;
             foreach ($filesData as $key => $files) {
                 if (isset($files['tmp_name']) && strlen($files['tmp_name']) > 0) {
                     try {
                         $uploaderFactories = $this->uploaderFactory->create(['fileId' => $filesData[$key]]);
-                        $uploaderFactories->setAllowedExtensions(['jpg', 'jpeg', 'gif', 'png', 'pdf']);
+                        $uploaderFactories->setAllowedExtensions($allowedExtensions);
                         $imageAdapter = $this->adapterFactory->create();
                         $uploaderFactories->addValidateCallback(
                             'custom_image_upload',
@@ -119,8 +120,8 @@ class Save extends \Magento\Backend\App\Action
                         /*Allow folder creation*/
                         $uploaderFactories->setAllowCreateFolders(true);
                         $maxsize = 20;
-                        /*number_format($_FILES['filename']['size'] / 1048576, 2) . ' MB';*/
-                        if ((number_format($files['size'] / 1048576, 2) >= $maxsize)) {
+
+                        if ((round($files['size'] / 1048576, 2) >= $maxsize)) {
                             throw new LocalizedException(
                                 __('File too large. File must be less than 20 megabytes.')
                             );
@@ -138,7 +139,7 @@ class Save extends \Magento\Backend\App\Action
                         }
                         $imagePath = $result['file'];
                         $data['filename'] = $imagePath;
-                        $newArray[] = $imagePath;
+                        $fileUploadedArray[] = $imagePath;
 
                     } catch (\Exception $e) {
                         $this->messageManager->addError(__($e->getMessage()));
@@ -172,9 +173,9 @@ class Save extends \Magento\Backend\App\Action
                             $docName == "Sales Tax/Resale License" ||
                             $docName == "State Tobacco License" ||
                             $docName == "Unified Resale Certificate") {
-                            $is_add_more_form = 0;
+                            $isAddMoreForm = 0;
                         } else {
-                            $is_add_more_form = 1;
+                            $isAddMoreForm = 1;
                         }
 
                         $model->addData([
@@ -184,8 +185,8 @@ class Save extends \Magento\Backend\App\Action
                             "status" => isset($post['message'][$i]) ? 1 : 0,
                             "message" => !empty($post['message'][$i]) ? $post['message'][$i] : '',
                             "is_customerfrom_usa" => $is_usa,
-                            "is_add_more_form" => $is_add_more_form,
-                            "filename" => $newArray[$j],
+                            "is_add_more_form" => $isAddMoreForm,
+                            "filename" => $fileUploadedArray[$j],
                         ]);
                         $model->setIsDelete(false);
                         $model->setStatus(0);
