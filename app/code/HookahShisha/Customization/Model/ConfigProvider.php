@@ -32,11 +32,13 @@ class ConfigProvider implements ConfigProviderInterface
      */
     public function getConfig()
     {
-        return $additionalVariables['defaultShippingSelectionConf'] = [
+        $additionalVariables = [];
+        $additionalVariables['defaultShippingSelectionConf'] = [
             'enable' => $this->getConfigValue('enable'),
             'defaultSelectedShippingName' => $this->getConfigValue('selected_shipping_name'),
             'timeout' => $this->getConfigValue('timeout'),
         ];
+        return $additionalVariables;
     }
 
     /**
