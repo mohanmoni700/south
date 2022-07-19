@@ -77,7 +77,7 @@ class Deletedocument extends \Magento\Backend\App\Action
         JsonFactory $resultJsonFactory,
         Filesystem $filesystem,
         AdapterFactory $adapterFactory,
-        UploaderFactory $uploaderFactory,
+        UploaderFactory $uploaderFactory
     ) {
         parent::__construct($context);
         $this->_myDocument = $myDocument;

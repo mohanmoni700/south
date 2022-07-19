@@ -109,9 +109,6 @@ class Data extends AbstractHelper
             $rejectedDoc[] = ['docmsg' => $docmsg, 'docname' => $docname];
         }
 
-        // print_r($rejectedDoc);
-        // die();
-
         /** Get current storeId start[BS]*/
         $storeManagerDataList = $this->storeManager->getStores();
         $options = [];

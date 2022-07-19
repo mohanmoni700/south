@@ -96,6 +96,7 @@ class Result extends Action
         $data = [];
         $customerDocs = [];
         $allowedExtensions = ['jpg', 'jpeg', 'gif', 'png', 'pdf'];
+        $saveData = false;
 
         $is_usa = (isset($post['is_customerfrom_usa'])) ? 1 : 0;
 
