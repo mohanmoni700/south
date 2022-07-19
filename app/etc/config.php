@@ -41,6 +41,30 @@ return [
                 'sort_order' => '10',
                 'default_group_id' => '8',
                 'is_default' => '0'
+            ],
+            'ooka_de' => [
+                'website_id' => '11',
+                'code' => 'ooka_de',
+                'name' => 'Ooka DE',
+                'sort_order' => '0',
+                'default_group_id' => '14',
+                'is_default' => '0'
+            ],
+            'ooka_usa' => [
+                'website_id' => '14',
+                'code' => 'ooka_usa',
+                'name' => 'Ooka USA',
+                'sort_order' => '0',
+                'default_group_id' => '11',
+                'is_default' => '0'
+            ],
+            'ooka' => [
+                'website_id' => '17',
+                'code' => 'ooka',
+                'name' => 'Ooka.com',
+                'sort_order' => '0',
+                'default_group_id' => '17',
+                'is_default' => '0'
             ]
         ],
         'groups' => [
@@ -83,6 +107,30 @@ return [
                 'root_category_id' => '705',
                 'default_store_id' => '8',
                 'code' => 'hookah_wholesalers_store'
+            ],
+            11 => [
+                'group_id' => '11',
+                'website_id' => '14',
+                'name' => 'Ooka USA Store',
+                'root_category_id' => '1133',
+                'default_store_id' => '17',
+                'code' => 'ooka_usa_store'
+            ],
+            14 => [
+                'group_id' => '14',
+                'website_id' => '11',
+                'name' => 'Ooka DE Store',
+                'root_category_id' => '1136',
+                'default_store_id' => '11',
+                'code' => 'ooka_de_store'
+            ],
+            17 => [
+                'group_id' => '17',
+                'website_id' => '17',
+                'name' => 'Ooka Store',
+                'root_category_id' => '1130',
+                'default_store_id' => '20',
+                'code' => 'ooka_store'
             ]
         ],
         'stores' => [
@@ -128,6 +176,42 @@ return [
                 'website_id' => '8',
                 'group_id' => '8',
                 'name' => 'Hookah Wholesalers (B2B) Store View',
+                'sort_order' => '0',
+                'is_active' => '1'
+            ],
+            'ooka_de_store_de' => [
+                'store_id' => '11',
+                'code' => 'ooka_de_store_de',
+                'website_id' => '11',
+                'group_id' => '14',
+                'name' => 'Ooka DE (DE) Store View',
+                'sort_order' => '0',
+                'is_active' => '1'
+            ],
+            'ooka_de_store_en' => [
+                'store_id' => '14',
+                'code' => 'ooka_de_store_en',
+                'website_id' => '11',
+                'group_id' => '14',
+                'name' => 'Ooka DE (EN) Store View',
+                'sort_order' => '0',
+                'is_active' => '1'
+            ],
+            'ooka_usa_store_en' => [
+                'store_id' => '17',
+                'code' => 'ooka_usa_store_en',
+                'website_id' => '14',
+                'group_id' => '11',
+                'name' => 'Ooka USA (EN) Store View',
+                'sort_order' => '0',
+                'is_active' => '1'
+            ],
+            'ooka_store_view' => [
+                'store_id' => '20',
+                'code' => 'ooka_store_view',
+                'website_id' => '17',
+                'group_id' => '17',
+                'name' => 'Ooka.com Store View',
                 'sort_order' => '0',
                 'is_active' => '1'
             ]
@@ -190,6 +274,13 @@ return [
                         'theme_id' => 'frontend/Corra/alfakher'
                     ]
                 ]
+            ],
+            'ooka_de_store_de' => [
+                'general' => [
+                    'locale' => [
+                        'code' => 'de_DE'
+                    ]
+                ]
             ]
         ],
         'websites' => [
@@ -230,6 +321,34 @@ return [
                 'design' => [
                     'theme' => [
                         'theme_id' => 'frontend/Alfakher/hookahwholesalers'
+                    ]
+                ]
+            ],
+            'ooka' => [
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Corra/ooka'
+                    ]
+                ]
+            ],
+            'ooka_usa' => [
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Corra/ooka'
+                    ]
+                ]
+            ],
+            'ooka_de' => [
+                'currency' => [
+                    'options' => [
+                        'base' => 'EUR',
+                        'default' => 'EUR',
+                        'allow' => 'EUR'
+                    ]
+                ],
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Corra/ooka-de'
                     ]
                 ]
             ]
@@ -713,7 +832,7 @@ return [
         'Alfakher_CheckoutPage' => 1,
         'Alfakher_CmsCanonical' => 1,
         'Alfakher_CompanyImport' => 1,
-        'Alfakher_CustomerCourierAccount' => 1,
+        'ShipperHQ_Shipper' => 1,
         'Alfakher_DocumentStatus' => 1,
         'Alfakher_ExciseReport' => 1,
         'Alfakher_FinanceVerified' => 1,
@@ -721,9 +840,11 @@ return [
         'MageWorx_OrderEditor' => 1,
         'Alfakher_MyDocument' => 1,
         'Alfakher_NotPaidInvoice' => 1,
+        'Alfakher_OfflinePaymentRecords' => 1,
         'Alfakher_OrderPdf' => 1,
         'Alfakher_OutOfStockProduct' => 1,
         'Alfakher_Productpageb2b' => 1,
+        'Alfakher_RmaCustomization' => 1,
         'Alfakher_SalesApprove' => 1,
         'Alfakher_SeoUrlPrefix' => 1,
         'Alfakher_StoreCredit' => 1,
@@ -776,7 +897,7 @@ return [
         'HookahShisha_ChangePassword' => 1,
         'HookahShisha_CustomerGraphQl' => 1,
         'HookahShisha_Customerb2b' => 1,
-        'HookahShisha_Customization' => 1,
+        'Magetrend_PdfTemplates' => 1,
         'HookahShisha_GraphQl' => 1,
         'HookahShisha_Import' => 1,
         'HookahShisha_InvoiceCapture' => 1,
@@ -825,7 +946,7 @@ return [
         'Mageplaza_Seo' => 1,
         'Mageplaza_Sitemap' => 1,
         'Alfakher_Webhook' => 1,
-        'Magetrend_PdfTemplates' => 1,
+        'HookahShisha_Customization' => 1,
         'OlegKoval_RegenerateUrlRewrites' => 1,
         'PCAPredict_Tag' => 1,
         'ParadoxLabs_TokenBase' => 1,
@@ -836,12 +957,11 @@ return [
         'PluginCompany_CmsRevisions' => 1,
         'RedChamps_Core' => 1,
         'RedChamps_EmailAttachmentHelper' => 1,
-        'RedChamps_EmailTemplatesLegacy' => 1,
         'RedChamps_UnpaidInvoices' => 1,
         'SetuBridge_ChangeCustomerpwbyadmin' => 1,
         'ShipperHQ_Common' => 1,
         'ShipperHQ_Logger' => 1,
-        'ShipperHQ_Shipper' => 1,
+        'Alfakher_CustomerCourierAccount' => 1,
         'Corra_SignifydGraphQl' => 1,
         'Smartwave_Megamenu' => 1,
         'Temando_ShippingRemover' => 1,
@@ -860,7 +980,8 @@ return [
         'Xtento_XtCore' => 1,
         'Xtento_OrderImport' => 1,
         'Corra_YotpoLoyaltyExtended' => 1,
-        'Yotpo_Yotpo' => 1
+        'Yotpo_Yotpo' => 1,
+        'eDevice_IpRecognitionPopup' => 1
     ],
     'admin_user' => [
         'locale' => [
@@ -914,6 +1035,24 @@ return [
             'area' => 'frontend',
             'type' => '0',
             'code' => 'Alfakher/hookahwholesalers'
+        ],
+        'frontend/Corra/ooka' => [
+            'parent_id' => 'Magento/luma',
+            'theme_path' => 'Corra/ooka',
+            'theme_title' => 'Ooka',
+            'is_featured' => '0',
+            'area' => 'frontend',
+            'type' => '1',
+            'code' => 'Corra/ooka'
+        ],
+        'frontend/Corra/ooka-de' => [
+            'parent_id' => 'Magento/luma',
+            'theme_path' => 'Corra/ooka-de',
+            'theme_title' => 'Ooka DE',
+            'is_featured' => '0',
+            'area' => 'frontend',
+            'type' => '1',
+            'code' => 'Corra/ooka-de'
         ]
     ],
     'i18n' => [

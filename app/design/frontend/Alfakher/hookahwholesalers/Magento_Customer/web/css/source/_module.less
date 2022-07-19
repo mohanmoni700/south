@@ -848,7 +848,7 @@ input::-webkit-contacts-auto-fill-button {
             color:#ffffff;
             background: #961E70;
             border-left: 0;
-            padding: 15px 15px 15px 56px;
+            padding: 15px 10px 15px 56px;
         }
         a{
             &:before{
@@ -1006,6 +1006,20 @@ input::-webkit-contacts-auto-fill-button {
                 a,strong{
                     &:before{
                       background: url('@{baseDir}images/product_price.svg') no-repeat;  
+                    }   
+                }
+                strong{
+                    &:before{
+                        filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+                    }
+                }
+            }
+            &.myrewards{
+                a,strong{
+                    &:before{
+                      background: url('@{baseDir}images/rewards.svg') no-repeat;
+                      background-size: 16px auto;
+                      background-position: center center;
                     }   
                 }
                 strong{
