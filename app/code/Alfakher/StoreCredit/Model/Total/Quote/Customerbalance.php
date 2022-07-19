@@ -2,10 +2,14 @@
 
 namespace Alfakher\StoreCredit\Model\Total\Quote;
 
+use Magento\Checkout\Model\Session;
+use Magento\CustomerBalance\Helper\Data;
+use Magento\CustomerBalance\Model\BalanceFactory;
 use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Magento\Quote\Api\Data\ShippingAssignmentInterface;
-use Magento\Quote\Model\Quote\Address\Total;
 use Magento\Quote\Model\Quote\Address;
+use Magento\Quote\Model\Quote\Address\Total;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Customerbalance extends \Magento\CustomerBalance\Model\Total\Quote\Customerbalance
 {
@@ -18,28 +22,28 @@ class Customerbalance extends \Magento\CustomerBalance\Model\Total\Quote\Custome
     /**
      * Customerbalance constructor
      *
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\CustomerBalance\Model\BalanceFactory $balanceFactory
-     * @param \Magento\CustomerBalance\Helper\Data $customerBalanceData
+     * @param Session $checkoutSession
+     * @param Data $customerBalanceData
+     * @param BalanceFactory $balanceFactory
      * @param PriceCurrencyInterface $priceCurrency
-     * @param \Magento\Checkout\Model\Session $checkoutSession
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\CustomerBalance\Model\BalanceFactory $balanceFactory,
-        \Magento\CustomerBalance\Helper\Data $customerBalanceData,
+        Session $checkoutSession,
+        Data $customerBalanceData,
+        BalanceFactory $balanceFactory,
         PriceCurrencyInterface $priceCurrency,
-        \Magento\Checkout\Model\Session $checkoutSession
+        StoreManagerInterface $storeManager
     ) {
         $this->checkoutSession = $checkoutSession;
         parent::__construct(
             $storeManager,
             $balanceFactory,
             $customerBalanceData,
-            $priceCurrency
+            $priceCurrency,
         );
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -58,12 +62,9 @@ class Customerbalance extends \Magento\CustomerBalance\Model\Total\Quote\Custome
             return $this;
         }
 
-        $baseTotalUsed = $totalUsed = $baseUsed = $used = 0;
+        $baseTotalUsed = $totalUsed = $baseUsed = $used =
+        $baseStoreCreditAmount = $storeCreditAmount = $baseBalance = $balance = 0;
 
-        $baseBalance = $balance = 0;
-
-        $baseStoreCreditAmount = $storeCreditAmount = 0;
-        
         $baseStoreCreditAmount = $quote->getStorecreditPartialAmount();
         $baseStoreCreditType = $quote->getStorecreditType();
         $storeCreditAmount = $this->priceCurrency->convert($baseStoreCreditAmount, $quote->getStore());
