@@ -21,6 +21,7 @@ use Magento\Quote\Model\Quote;
 use Magento\QuoteGraphQl\Model\Cart\GetCartForUser;
 use Magento\QuoteGraphQl\Model\CartItem\DataProvider\UpdateCartItems as UpdateCartItemsProvider;
 use Magento\QuoteGraphQl\Model\Resolver\UpdateCartItems as SourceUpdateCartItems;
+use Avalara\Excise\Helper\Config;
 
 /**
  * Resolver for updateCartItems mutation
@@ -53,18 +54,25 @@ class UpdateCartItems extends SourceUpdateCartItems
     private Json $serializer;
 
     /**
+     * @var Config
+     */
+    private Config $avalaraConfig;
+
+    /**
      * @param GetCartForUser $getCartForUser
      * @param CartRepositoryInterface $cartRepository
      * @param UpdateCartItemsProvider $updateCartItems
      * @param Json $serializer
      * @param ArgumentsProcessorInterface $argsSelection
+     * @param Config $avalaraConfig
      */
     public function __construct(
         GetCartForUser $getCartForUser,
         CartRepositoryInterface $cartRepository,
         UpdateCartItemsProvider $updateCartItems,
         Json $serializer,
-        ArgumentsProcessorInterface $argsSelection
+        ArgumentsProcessorInterface $argsSelection,
+        Config $avalaraConfig
     ) {
         parent::__construct($getCartForUser, $cartRepository, $updateCartItems, $argsSelection);
 
@@ -73,6 +81,7 @@ class UpdateCartItems extends SourceUpdateCartItems
         $this->updateCartItems = $updateCartItems;
         $this->argsSelection = $argsSelection;
         $this->serializer = $serializer;
+        $this->avalaraConfig = $avalaraConfig;
     }
 
     /**
@@ -102,8 +111,9 @@ class UpdateCartItems extends SourceUpdateCartItems
 
         try {
             $this->updateCartItems->processCartItems($cart, $cartItems);
-            // restrict to calculate total using flag to avoide avalara tax request for update item
-            $this->cartRepository->save($cart->setTotalsCollectedFlag(true));
+            // restrict avalara tax request using flag for update item
+            $this->avalaraConfig->setAddressTaxable(false);
+            $this->cartRepository->save($cart);
         } catch (NoSuchEntityException $e) {
             throw new GraphQlNoSuchEntityException(__($e->getMessage()), $e);
         } catch (LocalizedException $e) {

@@ -12,6 +12,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Api\Data\CartItemInterfaceFactory;
 use Magento\Quote\Model\Quote\Item\CartItemOptionsProcessor;
+use Avalara\Excise\Helper\Config;
 
 /**
  * Repository for quote item.
@@ -38,6 +39,11 @@ class Repository extends \Magento\Quote\Model\Quote\Item\Repository
     protected $itemDataFactory;
 
     /**
+     * @var Config
+     */
+    protected $avalaraConfig;
+
+    /**
      * @var CartItemProcessorInterface[]
      */
     protected $cartItemProcessors;
@@ -47,6 +53,7 @@ class Repository extends \Magento\Quote\Model\Quote\Item\Repository
      * @param ProductRepositoryInterface $productRepository
      * @param CartItemInterfaceFactory $itemDataFactory
      * @param CartItemOptionsProcessor $cartItemOptionsProcessor
+     * @param Config $avalaraConfig
      * @param CartItemProcessorInterface[] $cartItemProcessors
      */
     public function __construct(
@@ -54,6 +61,7 @@ class Repository extends \Magento\Quote\Model\Quote\Item\Repository
         ProductRepositoryInterface $productRepository,
         CartItemInterfaceFactory $itemDataFactory,
         CartItemOptionsProcessor $cartItemOptionsProcessor,
+        Config $avalaraConfig,
         array $cartItemProcessors = []
     ) {
         parent::__construct(
@@ -65,6 +73,7 @@ class Repository extends \Magento\Quote\Model\Quote\Item\Repository
         );
 
         $this->quoteRepository = $quoteRepository;
+        $this->avalaraConfig = $avalaraConfig;
     }
 
     /**
@@ -83,8 +92,9 @@ class Repository extends \Magento\Quote\Model\Quote\Item\Repository
         
         try {
             $quote->removeItem($itemId);
-            // restrict to calculate total using flag to avoide avalara tax request for remove item
-            $this->quoteRepository->save($quote->setTotalsCollectedFlag(true));
+            // restrict avalara tax request using flag for remove item
+            $this->avalaraConfig->setAddressTaxable(false);
+            $this->quoteRepository->save($quote);
         } catch (\Exception $e) {
             throw new CouldNotSaveException(__("The item couldn't be removed from the quote."));
         }
