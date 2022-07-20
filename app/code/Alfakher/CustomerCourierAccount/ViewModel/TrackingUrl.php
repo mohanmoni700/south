@@ -30,7 +30,7 @@ class TrackingUrl implements ArgumentInterface
         $trackLable = __("Track order");
         $trackId =  __(" , Tracking id - %1", $trackNumber);
         if ($carrier === 'custom') {
-            $carrier = strtolower($trackingInfo->getTitle());
+            $carrier = strtolower((string) $trackingInfo->getTitle());
         }
         switch ($carrier) {
             case 'usps':
