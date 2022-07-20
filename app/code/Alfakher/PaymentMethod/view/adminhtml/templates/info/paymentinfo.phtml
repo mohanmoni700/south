@@ -1,4 +1,7 @@
 <?php
+/**
+ * @var \Magento\Sales\Block\Adminhtml\Order\View $block
+ */
 $payment = $block->getOrder()->getPayment();
 $method = $payment->getMethodInstance()->getCode();
 ?>
