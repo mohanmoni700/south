@@ -1,7 +1,6 @@
 <?php
 /**
  * @var \Magento\Payment\Block\Info $block
- * @see \Magento\Payment\Block\Info
  */
 $specificInfo = $block->getSpecificInformation();
 $title = $block->escapeHtml($block->getMethod()->getTitle());
@@ -10,7 +9,7 @@ $method = $block->getMethod()->getCode();
 ?>
 <dl class="payment-method">
     <dt class="title"><?= /* @noEscape */ $title ?></dt>
-<?php if ($method == 'paypal'):?>
+<?php if ($method == 'offline_paypal'):?>
     <div class="admin__page-section-item-content">
         <strong><?= $block->escapeHtml(__('PayPal Email:')) ?></strong>
         <span class="info">

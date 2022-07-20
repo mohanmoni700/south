@@ -5,7 +5,7 @@
 $payment = $block->getOrder()->getPayment();
 $method = $payment->getMethodInstance()->getCode();
 ?>
-<?php if ($method == 'paypal'):?>
+<?php if ($method == 'offline_paypal'):?>
 <div class="admin__page-section-item-content">
     <strong><?= $block->escapeHtml(__('PayPal Email:')) ?></strong>
     <span class="info"><?= $block->escapeHtmlAttr($payment->getData('paypal_email')); ?></span>                        

@@ -47,7 +47,7 @@ class OrderPaymentSaveBefore implements \Magento\Framework\Event\ObserverInterfa
                     $quote = $this->quoteRepository->get($order->getQuoteId());
                     $paymentQuote = $quote->getPayment();
                     $method = $paymentQuote->getMethodInstance()->getCode();
-                    if ($method == 'paypal') {
+                    if ($method == 'offline_paypal') {
                         if (isset($paymentData['paypalemail'])) {
                             $paymentQuote->setData('paypal_email', $paymentData['paypalemail']);
                             $paymentOrder->setData('paypal_email', $paymentData['paypalemail']);

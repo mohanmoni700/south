@@ -11,5 +11,5 @@ class PaymentMethod extends \Magento\Payment\Model\Method\AbstractMethod
      *
      * @var string
      */
-    protected $_code = 'paypal';
+    protected $_code = 'offline_paypal';
 }
