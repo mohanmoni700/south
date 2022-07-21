@@ -1,7 +1,5 @@
 <?php
-
 namespace HookahShisha\OrderGraphQl\Plugin\Model\Resolver;
-
 
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
@@ -46,7 +44,7 @@ class VaratedPlaceOrder
         $this->veratadProcessOrder = $veratadProcessOrder;
     }
 
-    const DISABLED_AGEVERIFICATION_STORES = [
+    private const DISABLED_AGEVERIFICATION_STORES = [
         'ooka_de_store_en',
         'ooka_de_store_de'
     ];
@@ -65,7 +63,7 @@ class VaratedPlaceOrder
     public function beforeResolve(
         MagentoPlaceOrder $subject, // NOSONAR
         Field $field, // NOSONAR
-                          $context, // NOSONAR
+        $context, // NOSONAR
         ResolveInfo $info, // NOSONAR
         array $value = null, // NOSONAR
         array $args = null // NOSONAR
@@ -97,15 +95,15 @@ class VaratedPlaceOrder
      */
     public function afterResolve(
         MagentoPlaceOrder $subject, // NOSONAR
-                          $return,
+        $return,
         Field $field, // NOSONAR
-                          $context, // NOSONAR
+        $context, // NOSONAR
         ResolveInfo $info, // NOSONAR
         array $value = null, // NOSONAR
         array $args = null // NOSONAR
     ) {
         $store = $context->getExtensionAttributes()->getStore();
-        if(in_array($store->getCode(), self::DISABLED_AGEVERIFICATION_STORES)) {
+        if (in_array($store->getCode(), self::DISABLED_AGEVERIFICATION_STORES)) {
             return $return;
         }
         $orderModel = $this->orderFactory->create();
