@@ -9,7 +9,7 @@ $method = $block->getMethod()->getCode();
 ?>
 <dl class="payment-method">
     <dt class="title"><?= /* @noEscape */ $title ?></dt>
-<?php if ($method == 'offline_paypal'):?>
+<?php if ($method == 'offline_paypal' && $payment->getData('paypal_email')):?>
     <div class="admin__page-section-item-content">
         <strong><?= $block->escapeHtml(__('PayPal Email:')) ?></strong>
         <span class="info">
@@ -17,7 +17,7 @@ $method = $block->getMethod()->getCode();
         </span>                        
     </div>
 <?php endif; ?>
-<?php if ($method == 'ach_us_payment'):?>
+<?php if ($method == 'ach_us_payment' && $payment->getData('account_number')):?>
     <div class="admin__page-section-item-content">
         <span class="info">
             <strong><?= $block->escapeHtml(__('Account Number :')) ?></strong>                 
