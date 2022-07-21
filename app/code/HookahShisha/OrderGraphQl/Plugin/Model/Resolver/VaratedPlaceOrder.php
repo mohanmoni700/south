@@ -11,7 +11,7 @@ use Magento\Sales\Api\OrderRepositoryInterfaceFactory as OrderRepositoryInterfac
 use Corra\Veratad\Model\VeratadProcessOrder;
 
 /**
- * This plugin validates and saves the order attribute
+ * This plugin validates and saves the order attribute and disable ageverification for specific stores.
  */
 class VaratedPlaceOrder
 {
