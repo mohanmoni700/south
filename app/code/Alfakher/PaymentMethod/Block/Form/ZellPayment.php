@@ -4,7 +4,7 @@ namespace Alfakher\PaymentMethod\Block\Form;
 /**
  * Block for Zelle payment method form
  */
-class ZellePayment extends \Magento\OfflinePayments\Block\Form\AbstractInstruction
+class ZellPayment extends \Magento\OfflinePayments\Block\Form\AbstractInstruction
 {
     /**
      * Zelle template

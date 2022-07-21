@@ -1,12 +1,10 @@
 <?php
-
 namespace Alfakher\PaymentMethod\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 
 class OrderPaymentSaveBefore implements \Magento\Framework\Event\ObserverInterface
 {
-
     /**
      * Construct
      *
@@ -37,8 +35,8 @@ class OrderPaymentSaveBefore implements \Magento\Framework\Event\ObserverInterfa
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $order = $observer->getOrder();
-        $inputParams = $this->inputParamsResolver->resolve();
         if ($this->_state->getAreaCode() != \Magento\Framework\App\Area::AREA_ADMINHTML) {
+            $inputParams = $this->inputParamsResolver->resolve();
             foreach ($inputParams as $inputParam) {
                 if ($inputParam instanceof \Magento\Quote\Model\Quote\Payment) {
                     $paymentData = $inputParam->getData('additional_data');
