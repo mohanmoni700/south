@@ -2,10 +2,29 @@
 
 namespace HookahShisha\Customization\Observer;
 
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Event\Observer;
+use Magento\Store\Model\ScopeInterface;
 
 class Povariable implements \Magento\Framework\Event\ObserverInterface
 {
+
+    /**
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+
+    protected $scopeConfig;
+
+    /**
+     *
+     * @param ScopeConfigInterface $scopeConfig
+     */
+
+    public function __construct(
+        ScopeConfigInterface $scopeConfig
+    ) {
+        $this->scopeConfig = $scopeConfig;
+    }
 
     /**
      * Execute
@@ -21,11 +40,18 @@ class Povariable implements \Magento\Framework\Event\ObserverInterface
         $Purchase = $order->getPurchaseOrder();
         $observer->getVariableList()->setData('purchase_order', $Purchase);
 
+        $storeId = $order->getStoreId();
+
+        $observer->getVariableList()->setData('excise_tax_excl', '');
+        $observer->getVariableList()->setData('excise_tax_incl', '');
+
         if ($order->getExciseTax() > 0) {
-            $excise_tax = "All State Tobacco Product taxes are included in the total amount of this invoice";
+            $incl = $this->scopeConfig->getValue('hookahshisha/excise_tax_note/incl_excise_tax_note', ScopeInterface::SCOPE_STORE, $storeId);
+            $observer->getVariableList()->setData('excise_tax_incl', $incl);
+
         } else {
-            $excise_tax = "Purchaser Responsible for excise tax";
+            $excl = $this->scopeConfig->getValue('hookahshisha/excise_tax_note/excl_excise_tax_note', ScopeInterface::SCOPE_STORE, $storeId);
+            $observer->getVariableList()->setData('excise_tax_excl', $excl);
         }
-        $observer->getVariableList()->setData('excise_tax', $excise_tax);
     }
 }
