@@ -19,27 +19,21 @@ use MageWorx\OrderEditor\Model\MsiStatusManager;
 use MageWorx\OrderEditor\Model\Order;
 use MageWorx\OrderEditor\Model\Quote;
 
-/**
- * Class Load
- */
 class Load extends Action
 {
     /**
-     * Page factory
      *
      * @var \Magento\Framework\View\Result\PageFactory
      */
     protected $pageFactory;
 
     /**
-     * Raw factory
      *
      * @var \Magento\Framework\Controller\Result\RawFactory
      */
     protected $rawFactory;
 
     /**
-     * Core registry
      *
      * @var \Magento\Framework\Registry
      */
@@ -134,6 +128,7 @@ class Load extends Action
      * @param SerializerJson $serializer
      * @param RestoreQuoteInterface $backupQuote
      * @param QuoteDataBackupRepositoryInterface $quoteBackupRepository
+     * @param Emulation $emulation
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -217,6 +212,8 @@ class Load extends Action
     }
 
     /**
+     * Html for edit block
+     *
      * @return string
      */
     protected function getResultHtml(): string
@@ -268,11 +265,9 @@ class Load extends Action
                 $this->helperData->setQuote($this->quote);
 
                 /* custom code */
-                $this->_eventManager->dispatch('edit_shipperhq_before',
-                    [
-                        'order' => $this->order,
-                    ]
-                );
+                $this->_eventManager->dispatch('edit_shipperhq_before', [
+                    'order' => $this->order,
+                ]);
             } catch (NoSuchEntityException $exception) {
                 $this->messageManager->addErrorMessage(__('Required quote with id %1 does not exist.', $quoteId));
                 try {
@@ -296,6 +291,8 @@ class Load extends Action
     }
 
     /**
+     * Creating a quote backup
+     *
      * @throws LocalizedException
      */
     private function createQuoteBackup(): void
