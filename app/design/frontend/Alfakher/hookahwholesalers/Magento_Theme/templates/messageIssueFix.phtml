@@ -1,0 +1,12 @@
+<script>
+require(['jquery', 'jquery/jquery-storageapi', 'domReady!'], function($) {
+
+	setTimeout(function () {
+		$('#theDiv').html('More replacement text goes here');
+		if ($.cookieStorage.isSet('mage-messages')) {
+			$.cookieStorage.set('mage-messages', '');
+		}
+	}, 2000);
+
+});
+</script>
