@@ -6,7 +6,7 @@
 /**
  * @api
  */
-define([
+ define([
     'underscore',
     'mageUtils',
     'uiLayout',
@@ -466,34 +466,37 @@ define([
          */
         userChanges: function () {
 
-            /* af_bv_op; Start */
+            /* af_bv_op Start */
+            var cost,price,grossMargin,grossMarginElem;
+            cost = price = grossMargin = grossMarginElem = 0;
             if (arguments[0].code == 'cost') {
 
-                var cost = arguments[1].currentTarget.value;
-                var price = registry.get("inputName = product[price]").value();
-                var grossMargin = 0;
+                cost = arguments[1].currentTarget.value;
+                price = registry.get("inputName = product[price]").value();
                 grossMargin = (price - cost) / price * 100;
                 if (grossMargin == -Infinity || isNaN(grossMargin)) {
                     grossMargin = 0.00;
                 }
 
-                var grossMarginElem = registry.get("index=gross_margin");
+                grossMarginElem = registry.get("index=gross_margin");
                 grossMarginElem.value(grossMargin.toFixed(2) + "%");
             }
 
             if (arguments[0].code == 'price') {
-                var price = arguments[1].currentTarget.value;
-                var cost = registry.get("index=cost").value();
-                var grossMargin = 0;
+                price = arguments[1].currentTarget.value;
+
+                if (registry.get("index=cost")) {
+                    cost = registry.get("index=cost").value();
+                }
                 grossMargin = (price - cost) / price * 100;
                 if (grossMargin == -Infinity || isNaN(grossMargin)) {
                     grossMargin = 0.00;
                 }
 
-                var grossMarginElem = registry.get("index=gross_margin");
+                grossMarginElem = registry.get("index=gross_margin");
                 grossMarginElem.value(grossMargin.toFixed(2) + "%");
             }
-            /* af_bv_op; End */
+            /* af_bv_op End */
 
             this.valueChangedByUser = true;
         },

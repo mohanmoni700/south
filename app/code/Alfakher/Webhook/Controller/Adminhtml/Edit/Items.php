@@ -17,6 +17,7 @@ use MageWorx\OrderEditor\Model\InventoryDetectionStatusManager;
 use MageWorx\OrderEditor\Model\MsiStatusManager;
 use MageWorx\OrderEditor\Model\Payment as PaymentModel;
 use MageWorx\OrderEditor\Model\Shipping as ShippingModel;
+use Magento\Quote\Api\CartRepositoryInterface;
 
 class Items extends \MageWorx\OrderEditor\Controller\Adminhtml\Edit\Items
 {
@@ -25,6 +26,11 @@ class Items extends \MageWorx\OrderEditor\Controller\Adminhtml\Edit\Items
      */
     private $backupRepository;
 
+    /**
+     * @var CartRepositoryInterface
+     */
+    private $cartRepository;
+    
     /**
      * Body constructor.
      *
@@ -41,8 +47,9 @@ class Items extends \MageWorx\OrderEditor\Controller\Adminhtml\Edit\Items
      * @param InventoryDetectionStatusManager $inventoryDetectionStatusManager
      * @param SerializerJson $serializer
      * @param QuoteDataBackupRepositoryInterface $backupRepository
+     * @param CartRepositoryInterface $cartRepository
      */
-    public function __construct(
+    public function __construct( //NOSONAR
         Context $context,
         PageFactory $resultPageFactory,
         RawFactory $resultRawFactory,
@@ -55,7 +62,8 @@ class Items extends \MageWorx\OrderEditor\Controller\Adminhtml\Edit\Items
         MsiStatusManager $msiStatusManager,
         InventoryDetectionStatusManager $inventoryDetectionStatusManager,
         SerializerJson $serializer,
-        QuoteDataBackupRepositoryInterface $backupRepository
+        QuoteDataBackupRepositoryInterface $backupRepository,
+        CartRepositoryInterface $cartRepository
     ) {
         parent::__construct(
             $context,
@@ -73,6 +81,7 @@ class Items extends \MageWorx\OrderEditor\Controller\Adminhtml\Edit\Items
             $backupRepository
         );
         $this->backupRepository = $backupRepository;
+        $this->cartRepository = $cartRepository;
     }
 
     /**
@@ -82,17 +91,29 @@ class Items extends \MageWorx\OrderEditor\Controller\Adminhtml\Edit\Items
     {
         $this->updateOrderItems();
         try {
-            $quoteBackup = $this->backupRepository->getByQuoteId($this->getOrder()->getQuoteId());
-            $this->backupRepository->delete($quoteBackup);
             $order = $this->getOrder();
+            $quote = $this->cartRepository->get($order->getQuoteId());
+            $quote->collectTotals()->save();
+            $quoteBackup = $this->backupRepository->getByQuoteId($order->getQuoteId());
+            $this->backupRepository->delete($quoteBackup);
+            
             /* Start - New event added*/
             $this->_eventManager->dispatch(
                 'blueedit_save_after',
                 [
-                    'item' => $this->getOrder()
+                    'item' => $order
                 ]
             );
             /* end - New event added*/
+            /* Start - New event added for tax calculation*/
+            $this->_eventManager->dispatch(
+                'mageworx_order_edit_after',
+                [
+                    'order' => $order,
+                    'quote' => $quote,
+                ]
+            );
+            /* end - New event added for tax calculation*/
         } catch (NoSuchEntityException $e) {
             return;
         } catch (LocalizedException $e) {
