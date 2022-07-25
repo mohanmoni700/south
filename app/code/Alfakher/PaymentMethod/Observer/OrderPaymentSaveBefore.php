@@ -13,19 +13,22 @@ class OrderPaymentSaveBefore implements \Magento\Framework\Event\ObserverInterfa
      * @param \Magento\Framework\Serialize\Serializer\Serialize $serialize
      * @param \Magento\Webapi\Controller\Rest\InputParamsResolver $inputParamsResolver
      * @param \Magento\Framework\App\State $state
+     * @param \Magento\Framework\App\RequestInterface $request
      */
     public function __construct(
         \Magento\Sales\Api\Data\OrderInterface $order,
         \Magento\Quote\Api\CartRepositoryInterface $quoteRepository,
         \Magento\Framework\Serialize\Serializer\Serialize $serialize,
         \Magento\Webapi\Controller\Rest\InputParamsResolver $inputParamsResolver,
-        \Magento\Framework\App\State $state
+        \Magento\Framework\App\State $state,
+        \Magento\Framework\App\RequestInterface $request
     ) {
         $this->order = $order;
         $this->quoteRepository = $quoteRepository;
         $this->_serialize = $serialize;
         $this->inputParamsResolver = $inputParamsResolver;
         $this->_state = $state;
+        $this->request = $request;
     }
     /**
      * Save custom payment method data
@@ -35,16 +38,17 @@ class OrderPaymentSaveBefore implements \Magento\Framework\Event\ObserverInterfa
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         $order = $observer->getOrder();
+        $paymentOrder = $order->getPayment();
+        $order = $paymentOrder->getOrder();
+        $quote = $this->quoteRepository->get($order->getQuoteId());
+        $paymentQuote = $quote->getPayment();
+        $method = $paymentQuote->getMethodInstance()->getCode();
+
         if ($this->_state->getAreaCode() != \Magento\Framework\App\Area::AREA_ADMINHTML) {
             $inputParams = $this->inputParamsResolver->resolve();
             foreach ($inputParams as $inputParam) {
                 if ($inputParam instanceof \Magento\Quote\Model\Quote\Payment) {
                     $paymentData = $inputParam->getData('additional_data');
-                    $paymentOrder = $order->getPayment();
-                    $order = $paymentOrder->getOrder();
-                    $quote = $this->quoteRepository->get($order->getQuoteId());
-                    $paymentQuote = $quote->getPayment();
-                    $method = $paymentQuote->getMethodInstance()->getCode();
                     if ($method == 'offline_paypal') {
                         if (isset($paymentData['paypalemail'])) {
                             $paymentQuote->setData('paypal_email', $paymentData['paypalemail']);
@@ -64,6 +68,27 @@ class OrderPaymentSaveBefore implements \Magento\Framework\Event\ObserverInterfa
                             $paymentOrder->setData('address', $paymentData['address']);
                         }
                     }
+                }
+            }
+        }
+        if ($this->_state->getAreaCode() == \Magento\Framework\App\Area::AREA_ADMINHTML) {
+            $param = $this->request->getParam('payment');
+            if ($method == 'offline_paypal') {
+                if (isset($param['paypal_email'])) {
+                    $paymentQuote->setData('paypal_email', $param['paypal_email']);
+                    $paymentOrder->setData('paypal_email', $param['paypal_email']);
+                }
+            } elseif ($method == 'ach_us_payment') {
+                if (isset($param['account_number'])) {
+                    $paymentQuote->setData('account_number', $param['account_number']);
+                    $paymentQuote->setData('bank_name', $param['bank_name']);
+                    $paymentQuote->setData('routing_number', $param['routing_number']);
+                    $paymentQuote->setData('address', $param['address']);
+
+                    $paymentOrder->setData('account_number', $param['account_number']);
+                    $paymentOrder->setData('bank_name', $param['bank_name']);
+                    $paymentOrder->setData('routing_number', $param['routing_number']);
+                    $paymentOrder->setData('address', $param['address']);
                 }
             }
         }

@@ -10,7 +10,7 @@
             <span><?= $block->escapeHtml(__('PayPal Email')) ?></span>
         </label>
         <div class="admin__field-control">
-            <input type="text" id="paypal_email" name="payment[paypal_email]"
+            <input type="email" id="paypal_email" name="payment[paypal_email]"
                    title="<?= $block->escapeHtml(__("Purchase Order Number")) ?>"
                    class="required-entry admin__control-text"
                    value="<?= /* @noEscape */ $block->getInfoData('paypal_email') ?>"/>
