@@ -10,13 +10,36 @@
  */
 namespace Webkul\QuickbookCustomInv\Helper;
 
+use QuickBooksOnline\API\Core\OAuth\OAuth2\OAuth2LoginHelper;
 use Magento\Downloadable\Api\LinkRepositoryInterface;
+use Magento\Framework\Exception\LocalizedException;
+use QuickBooksOnline\API\Data\IPPPhysicalAddress;
 
 /**
  * MultiQuickbooksConnect data helper
  */
 class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
 {
+    /**
+     * @var \Magento\Framework\App\Cache\TypeListInterface
+     */
+    private $cacheTypeList;
+
+    /**
+     * @var \Magento\Framework\App\Cache\Frontend\Pool
+     */
+    private $cacheFrontendPool;
+
+    /**
+     * @var \Magento\Directory\Model\CountryFactory
+     */
+    private $countryFactory;
+
+    /**
+     * @var \Magento\Framework\App\Config\Storage\WriterInterface
+     */
+    private $configWriter;
+
     /**
      * @var \Magento\Framework\Stdlib\DateTime\TimezoneInterface
      */
@@ -28,9 +51,29 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
     private $encryptor;
 
     /**
+     * @var \Magento\Framework\Json\Helper\Data
+     */
+    private $jsonHelperData;
+
+    /**
      * @var \Magento\Catalog\Api\ProductRepositoryInterface
      */
     private $productRepository;
+
+    /**
+     * @var \Magento\Downloadable\Api\LinkRepositoryInterface
+     */
+    private $linkFactory;
+
+    /**
+     * @var \Magento\Framework\Filter\FilterManager
+     */
+    private $filterManager;
+
+    /**
+     * @var \Magento\Sales\Model\ResourceModel\Order\Tax\Item
+     */
+    private $itemTax;
 
     /**
      * @var \Webkul\MultiQuickbooksConnect\Logger\Logger
@@ -59,7 +102,7 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
      * @param \Webkul\MultiQuickbooksConnect\Logger\Logger $logger
      * @param \Webkul\MultiQuickbooksConnect\Api\AccountRepositoryInterface $accountRepository
      */
-    public function __construct( //NOSONAR
+    public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Framework\App\Cache\TypeListInterface $cacheTypeList,
         \Magento\Framework\App\Cache\Frontend\Pool $cacheFrontendPool,
@@ -93,15 +136,27 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
             $logger,
             $accountRepository
         );
-        $this->productRepository = $productRepository;
+        /*$this->cacheTypeList = $cacheTypeList;
+        $this->cacheFrontendPool = $cacheFrontendPool;
+        $this->countryFactory = $countryFactory;
+        $this->curl = $curl;
+        $this->configWriter = $configWriter;*/
         $this->dateTime = $dateTime;
         $this->logger = $logger;
         $this->encryptor = $encryptor;
         $this->accountRepository = $accountRepository;
+        /*
+        $this->jsonHelperData = $jsonHelperData;
+        $this->productRepository = $productRepository;
+        $this->linkFactory = $linkFactory;
+        $this->filterManager = $filterManager;
+        $this->itemTax = $itemTax;
+        $this->logger = $logger;
+        */
     }
 
     /**
-     * GetQuickbooksAccountConfig
+     * getQuickbooksAccountConfig
      *
      * @param string $accountId
      * @return array
@@ -110,7 +165,7 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
     {
         $configData = $this->getQuickbooksConnectConfig();
         if ($configData) {
-            $encryptorObj = $this->encryptor;
+            $encryptor = $this->encryptor;
             $accountData = $this->accountRepository->getById($accountId)->getData();
             $accountConfig = [
                 'enable' => $configData['enable'],
@@ -120,9 +175,9 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
                 'realm_id' => $accountData['realm_id'],
                 'client_id' => $configData['client_id'],
                 'client_secret' => $configData['client_secret'],
-                'oauth2_access_token' => $encryptorObj->decrypt($accountData['oauth2_access_token']),
+                'oauth2_access_token' => $encryptor->decrypt($accountData['oauth2_access_token']),
                 'oauth2_access_token_expire_on' => $accountData['oauth2_access_token_expire_on'],
-                'oauth2_refresh_token' => $encryptorObj->decrypt($accountData['oauth2_refresh_token']),
+                'oauth2_refresh_token' => $encryptor->decrypt($accountData['oauth2_refresh_token']),
                 'oauth2_refresh_token_expire_on' => $accountData['oauth2_refresh_token_expire_on'],
                 'app_integrates_with' => $configData['app_integrates_with'],
                 'account_type' => $configData['account_type'],
@@ -133,22 +188,22 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
                 'asset_account' => $accountData['asset_account'],
                 'income_account' => $accountData['income_account'],
                 'expense_account' => $accountData['expense_account'],
-                'default_tax_class' => $accountData['default_tax_class'],
+                'default_tax_class' => $accountData['default_tax_class']
             ];
+            //$accountConfig = array_merge($accountConfig, $accountData);
             return $accountConfig;
         }
         return $configData;
     }
 
     /**
-     * GetArrangedItemDataForQuickbooks
-     *
+     * getArrangedItemDataForQuickbooks
      * @param Magento/Sales/Model/Order/Item $orderItem
      * @param Array $taxPercentDetail
      * @param int $qty
      * @return array
      */
-    public function getArrangedItemDataForQuickbooks($orderItem, $taxPercentDetail, $qty = 0) //NOSONAR
+    public function getArrangedItemDataForQuickbooks($orderItem, $taxPercentDetail, $qty = 0)
     {
         try {
             $product = $orderItem->getProduct();
@@ -157,7 +212,7 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
                 'simple' => 'Inventory',
                 'downloadable' => 'NonInventory',
                 'virtual' => 'Service',
-                'etickets' => 'Inventory',
+                'etickets' => 'Inventory'
             ];
             $typeId = $product ? $product->getTypeId() : 'simple';
             $ratePrice = 0;
@@ -174,12 +229,12 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
                         foreach ($options['bundle_options'] as $optionsData) {
                             $bundleQty[$optionsData['value'][0]['title']] = $optionsData['value'][0]['qty'];
                         }
-                        $ratePrice = $orderItem->getParentItem()->getBasePrice() / count($options['bundle_options']);
+                        $ratePrice = $orderItem->getParentItem()->getBasePrice()/count($options['bundle_options']);
                     }
                 }
             }
             $itemId = isset($itemId) ? $itemId : $orderItem->getItemId();
-            $productData = $this->getProductData($orderItem, $ratePrice, $bundleQty);
+            $productData  = $this->getProductData($orderItem, $ratePrice, $bundleQty);
             $price = $productData['price'];
             $description = $productData['description'];
             $productName = $productData['productName'];
@@ -190,12 +245,12 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
             if (isset($options['options']) || isset($options['attributes_info'])) {
                 $options = isset($options['options']) ? $options['options'] : $options['attributes_info'];
                 $optionsLabel = $this->getCustomOptionsWithValue($options);
-                $optionsLabel = ' (Options Applied : ' . $optionsLabel . ')';
+                $optionsLabel = ' (Options Applied : '.$optionsLabel. ')';
             }
             $linksLabel = '';
             if (isset($options['links'])) {
                 $linksLabel = $this->getDownloadableProLinkLables($orderItem->getProduct(), $options['links']);
-                $linksLabel = ' (Downloadable Links : ' . $linksLabel . ')';
+                $linksLabel = ' (Downloadable Links : '.$linksLabel. ')';
             }
 
             $totalQty = isset($quantityAndStockStatus['qty']) ? $quantityAndStockStatus['qty'] : 0;
@@ -207,35 +262,35 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
                 'MainPrice' => $price,
                 'isTaxablePro' => $orderItem->getBaseTaxAmount() ? 1 : 0,
                 'Taxable' => isset($taxPercentDetail[$itemId][0]) ? 1 : 0,
-                'taxAmt' => $orderItem->getTaxAmount(), //$orderItem->getExciseTax() + $orderItem->getSalesTax(),
+                'taxAmt' => $orderItem->getTaxAmount(),//$orderItem->getExciseTax() + $orderItem->getSalesTax(),
                 'Sku' => $orderItem->getSku(),
                 'Description' => $this->validateStringLimit('Description', $description),
-                'OptionsDetail' => $optionsLabel . $linksLabel,
+                'OptionsDetail' => $optionsLabel.$linksLabel,
                 'Qty' => $qty,
                 'discountAmt' => $orderItem->getBaseDiscountAmount(),
                 'AmountTotal' => $proUnitPrice * $qty,
                 'Type' => $productTypeArray[$typeId],
-                'TrackQtyOnHand' => in_array($typeId, ['simple', 'etickets']) ? 'true' : 'false',
-                'QtyOnHand' => $quantityAndStockStatus['qty'] + $orderItem->getQtyOrdered(),
+                'TrackQtyOnHand' => in_array($typeId, ['simple','etickets']) ? 'true' : 'false',
+                'QtyOnHand' => $quantityAndStockStatus['qty']+$orderItem->getQtyOrdered(),
                 'InvStartDate' => $this->dateTime->date()->format('Y-m-d'),
-                'ItemId' => $itemId,
+                'ItemId' => $itemId
             ];
             return $itemData;
         } catch (\Exception $e) {
-            $this->logger->addError('getArrangedItemDataForQuickbooks -' . $e->getMessage());
+            $this->logger->addError('getArrangedItemDataForQuickbooks -'.$e->getMessage());
+            throw new \Exception($e->getMessage(), 1);
         }
     }
 
     /**
-     * Get Product Data
-     *
+     * getProductData
      * @param Magento/Sales/Model/Order/Item $orderItem
      * @param float $ratePrice
      * @param array $bundleQty
      */
     private function getProductData($orderItem, $ratePrice, $bundleQty)
     {
-        $price = $orderItem->getBasePrice();
+        $price =  $orderItem->getBasePrice();
         $product = $orderItem->getProduct();
         if ($product) {
             $productName = $product->getResource()->getAttributeRawValue($product->getEntityId(), 'name', 0);
@@ -251,15 +306,15 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
                     $bundleItemQty = $value;
                 }
             }
-            $price = $ratePrice / $bundleItemQty;
+            $price = $ratePrice/$bundleItemQty;
             $proUnitPrice = $this->productRepository->getById($orderItem->getProductId())->getPrice();
         }
         $productName = preg_replace('/[^a-zA-Z0-9_ -]/s', '', $productName);
-        $productData = [
+        $productData =  [
             'productName' => $productName,
             'proUnitPrice' => $price,
             'price' => $proUnitPrice,
-            'description' => $description,
+            'description' => $description
         ];
         return $productData;
     }
