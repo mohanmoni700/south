@@ -50,7 +50,6 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
         ?>
         <?php if (count($sharedCatalog)): ?>
             <?php foreach ($sharedCatalog as $_product):?>
-                
                 <tbody>
                     <tr id="order-item-row-<?= (int) $_product->getId() ?>">
                         <td class="col name" data-th="<?= $block->escapeHtml(__('Product Name')) ?>">
@@ -123,43 +122,38 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                                 </span>
                             </span>
                         </td>
-                        <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
+                            <?php $postParams = $block->getAddToCartPostParams($_product); ?>
+                            <?php if ($_product->isSaleable()) { ?>
+                        <form data-role="tocart-form"
+                                  data-product-sku="<?= $escaper->escapeHtml($_product->getSku()) ?>"
+                                  action="<?= $escaper->escapeUrl($postParams['action']) ?>"
+                                  method="post"
+                                  id="my-product-price"
+                                  >
+                            <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
+                                <input type="number" name="qty-clone" id="qty-clone"
+                                value="0" title="Qty" class="input-text qty"
+                                data-id ="<?= $escaper->escapeHtml($_product->getId())?>" onclick="this.select();">
+                                <span id="err-msg-<?= $escaper->escapeHtml($_product->getId())?>"
+                                    style="color: red;">
+                                </span>
+                            </td>
 
-                                <?php $postParams = $block->getAddToCartPostParams($_product); ?>
-
-                                            <?php if ($_product->isSaleable()) {?>
-                    <form data-role="tocart-form"
-                          data-product-sku="<?= $escaper->escapeHtml($_product->getSku()) ?>"
-                          action="<?= $escaper->escapeUrl($postParams['action']) ?>"
-                          method="post"
-                          id="my-product-price"
-                          >
-
-                        <input type="number" name="qty-clone" id="qty-clone"
-                        value="0" title="Qty" class="input-text qty"
-                        data-id ="<?= $escaper->escapeHtml($_product->getId())?>" onclick="this.select();">
-                        <span id="err-msg-<?= $escaper->escapeHtml($_product->getId())?>" style="color: red;"></span>
-
-                        </td>
-
-                        <td class="col action" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
-
-                            <div class="actions-primary">
-                                
+                            <td class="col action" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
+                                <div class="actions-primary">
+                                        
                                 <input type="hidden"
                                        name="product"
                                        value="<?= /* @noEscape */ $postParams['data']['product'] ?>">
                                 <input type="hidden"
-                                       name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
-                                       value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED]
-                                        ?>">
+                                name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
+                                value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
 
                                 <input type="hidden" name="qty" 
-                                id="qty-<?= $escaper->escapeHtml($_product->getId()) ?>"
-                                title="Qty"
-                                class="input-text qty qty-<?= $escaper->escapeHtml($_product->getId())?>" value=""/>
-                                
-                                                <?= $block->getBlockHtml('formkey') ?>
+                                        id="qty-<?= $escaper->escapeHtml($_product->getId()) ?>"
+                                        title="Qty"
+                                        class="input-text qty qty-<?= $escaper->escapeHtml($_product->getId())?>"
+                                        value=""/><?= $block->getBlockHtml('formkey') ?>
                                 
                                 <button style="background: transparent;
                                 margin-top: 0;letter-spacing: 0;
@@ -170,37 +164,30 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                                         disabled>
                                     <span><?= $escaper->escapeHtml(__('Add to Cart')) ?></span>
                                 </button>
-
-                            </form>
+                            </td>   
+                        </form>
                         <?php } else { ?>
-
-                            <div class="stock unavailable">
-                                            <span><?= $escaper->escapeHtml(__('Out of stock')) ?></span></div>
-
-                                            <td class="col action" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
-                                                <div class="stock unavailable">
-                                            <span><?= $escaper->escapeHtml(__('Out of stock')) ?></span></div>
-                            <div class="actions-primary">
-                            </div>
-                        </td>
+                            <td class="col action" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
+                                <div class="stock unavailable">
+                                    <span><?= $escaper->escapeHtml(__('Out of stock')) ?></span>
+                                </div>
+                            </td>
                         <?php } ?>
-                                
-                            </div>
-                        </td>
-                         <?php endif; ?> 
+                        <?php endif; ?> 
                     </tr>
                 </tbody>
             <?php endforeach; ?>
+            <?php // phpcs:disable ?>
             <script type="text/x-magento-init">
-                    {
-                        "[data-role=tocart-form], .form.map.checkout": {
-                            "catalogAddToCart": {
-                                
-                            }
+                {
+                    "[data-role=tocart-form], .form.map.checkout": {
+                        "catalogAddToCart": {
+                            "product_sku": "<?= $escaper->escapeJs($_product->getSku()) ?>"
                         }
                     }
+                }
             </script>
-
+            <?php // phpcs:enable ?>
         <?php else: ?>
             <div class="alert"><?= $block->escapeHtml(__('No Data Found')) ?></div>
         <?php endif; ?>
