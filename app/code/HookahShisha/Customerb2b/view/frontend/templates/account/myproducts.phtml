@@ -167,6 +167,7 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                             </td>   
                         </form>
                         <?php } else { ?>
+                            <td class="col qty"></td>
                             <td class="col action" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
                                 <div class="stock unavailable">
                                     <span><?= $escaper->escapeHtml(__('Out of stock')) ?></span>
