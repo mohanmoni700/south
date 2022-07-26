@@ -36,6 +36,8 @@ class ConfigProvider implements ConfigProviderInterface
         $additionalVariables['defaultShippingSelectionConf'] = [
             'enable' => $this->getConfigValue('enable'),
             'defaultSelectedShippingName' => $this->getConfigValue('selected_shipping_name'),
+            'enablePosition' => $this->getConfigValue('enable_position'),
+            'defaultSelectedShippingPosition' => $this->getConfigValue('selected_shipping_position'),
             'timeout' => $this->getConfigValue('timeout'),
         ];
         return $additionalVariables;

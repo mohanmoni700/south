@@ -155,6 +155,8 @@ define([
             //Unset selected shipping method if not available
             var defaultSelectedShippinEnable = parseInt(window.checkoutConfig.defaultShippingSelectionConf.enable);
             var defaultSelectedShippinName = window.checkoutConfig.defaultShippingSelectionConf.defaultSelectedShippingName;
+            var defaultSelectedShippinEnablePosition = parseInt(window.checkoutConfig.defaultShippingSelectionConf.enablePosition);
+            var defaultSelectedShippinPosition = parseInt(window.checkoutConfig.defaultShippingSelectionConf.defaultSelectedShippingPosition);
             var defaultSelectedShippinTimeout = parseInt(window.checkoutConfig.defaultShippingSelectionConf.timeout);
             if (!availableRate) {
                 if(defaultSelectedShippinEnable){
@@ -164,7 +166,11 @@ define([
                     setTimeout(function(){
                         selectShippingMethodAction(defaultSelected);
                     }, defaultSelectedShippinTimeout);
-                }else{
+                }else if(defaultSelectedShippinEnablePosition){
+                    setTimeout(function(){
+                        selectShippingMethodAction(ratesData[defaultSelectedShippinPosition]);
+                    }, defaultSelectedShippinTimeout);
+                }else {
                     setTimeout(function(){
                         selectShippingMethodAction(null);
                     }, defaultSelectedShippinTimeout);
