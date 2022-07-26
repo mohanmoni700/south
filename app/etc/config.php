@@ -870,6 +870,7 @@ return [
         'Avalara_Excise' => 1,
         'Corra_AmastyPromoGraphQl' => 1,
         'Corra_AttributesGraphQl' => 1,
+        'Corra_CmsSitemapGraphQl' => 1,
         'Corra_LinkGuestOrder' => 1,
         'Corra_Log' => 1,
         'Corra_LogCloudSupport' => 1,
