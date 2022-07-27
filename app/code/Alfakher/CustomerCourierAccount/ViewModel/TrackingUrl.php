@@ -17,14 +17,20 @@ class TrackingUrl implements ArgumentInterface
     * Get tracking url
     *
     * @param TrackInfo $trackingInfo
-    * @return string
+    * @return string|null
     **/
-    public function getTrackingUrl(TrackInfo $trackingInfo):string
+    public function getTrackingUrl(TrackInfo $trackingInfo):?string
     {
         $carrier = strtolower($trackingInfo->getCarrierCode());
         $trackNumber = $trackingInfo->getTrackNumber();
+        if (!$trackNumber) {
+            return null;
+        }
+
+        $trackLable = __("Track order");
+        $trackId =  __(" , Tracking id - %1", $trackNumber);
         if ($carrier === 'custom') {
-            $carrier = strtolower($trackingInfo->getTitle());
+            $carrier = strtolower((string) $trackingInfo->getTitle());
         }
         switch ($carrier) {
             case 'usps':
@@ -42,7 +48,7 @@ class TrackingUrl implements ArgumentInterface
                 return $trackNumber;
         }
         return <<<HTML
-    <a href="{$trackingDetail}" target="_blank">{$trackNumber}</a>
+    <a href="{$trackingDetail}" target="_blank">{$trackLable}</a>{$trackId}
 HTML;
     }
 }
