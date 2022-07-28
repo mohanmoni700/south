@@ -1,11 +1,12 @@
 <?php
 declare (strict_types = 1);
 
-namespace Alfakher\RmaCustomization\Controller\Returns;
+namespace Alfakher\Webhook\Controller\Returns;
 
 use Magento\Framework\App\Action\HttpPostActionInterface;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Rma\Api\Data\RmaInterface;
+use Magento\Rma\Controller\Returns\Returns;
 use Magento\Rma\Helper\Data;
 use Magento\Rma\Model\Rma;
 use Magento\Rma\Model\RmaFactory;
@@ -21,7 +22,7 @@ use Psr\Log\LoggerInterface;
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class Submit extends \Magento\Rma\Controller\Returns implements HttpPostActionInterface
+class Submit extends Returns implements HttpPostActionInterface
 {
     /**
      * @var RmaFactory
@@ -92,41 +93,28 @@ class Submit extends \Magento\Rma\Controller\Returns implements HttpPostActionIn
         $orderId = (int) $this->getRequest()->getParam('order_id');
         $post = $this->getRequest()->getPostValue();
 
-        $resultRedirect = $this->resultRedirectFactory->create();
-
         if (!$this->rmaHelper->canCreateRma($orderId)) {
-            return $resultRedirect->setPath('*/*/create', ['order_id' => $orderId]);
+            return $this->resultRedirectFactory->create()->setPath('*/*/create', ['order_id' => $orderId]);
         }
 
         if ($post && !empty($post['items'])) {
             try {
-
-                $custom_items = [];
-                $custom_items['customer_custom_email'] = $post['customer_custom_email'];
-                $i = 0;
-                foreach ($post['rmaitems']['rma_item_id'] as $value) {
-                    $custom_items['items'][$i] = ['order_item_id' => $post['rmaitems']['rma_item_id'][$i],
-                        'qty_requested' => $post['rmaitems']['rma_qty'][$i],
-                        'resolution' => $post['items'][0]['resolution'],
-                        'condition' => $post['items'][0]['condition'],
-                        'reason' => $post['items'][0]['reason']];
-                    $i++;
-                }
-                $custom_items['rma_comment'] = $post['rma_comment'];
-                $custom_items['form_key'] = $post['form_key'];
                 /** @var \Magento\Sales\Model\Order $order */
                 $order = $this->orderRepository->get($orderId);
 
                 if (!$this->_canViewOrder($order)) {
-                    return $resultRedirect->setPath('sales/order/history');
+                    $this->_redirect('sales/order/history');
+                    return;
                 }
-                /** @var Rma $rmaObject */
-                $rmaObject = $this->buildRma($order, $custom_items);
-                if (!$rmaObject->saveRma($custom_items)) {
-                    $url = $this->_url->getUrl('*/*/create', ['order_id' => $orderId]);
-                    return $resultRedirect->setPath($url);
 
+                /** @var Rma $rmaObject */
+                $rmaObject = $this->buildRma($order, $post);
+                if (!$rmaObject->saveRma($post)) {
+                    $url = $this->_url->getUrl('*/*/create', ['order_id' => $orderId]);
+                    $this->getResponse()->setRedirect($this->_redirect->error($url));
+                    return;
                 }
+
                 $statusHistory = $this->statusHistoryFactory->create();
                 $statusHistory->setRmaEntityId($rmaObject->getEntityId());
                 $statusHistory->sendNewRmaEmail();
@@ -145,7 +133,6 @@ class Submit extends \Magento\Rma\Controller\Returns implements HttpPostActionIn
                         $rmaObject->getIncrementId()
                     )
                 );
-
                 /* Start - New event added*/
                 $this->_eventManager->dispatch(
                     'rma_create_after',
@@ -154,17 +141,28 @@ class Submit extends \Magento\Rma\Controller\Returns implements HttpPostActionIn
                     ]
                 );
                 /* end - New event added*/
+                $this->getResponse()->setRedirect(
+                    $this->_redirect->success(
+                        $this->_url->getUrl('*/*/history')
+                    )
+                );
 
-                return $resultRedirect->setPath('rma/*/history');
+                return;
             } catch (\Throwable $e) {
                 $this->messageManager->addErrorMessage(
                     __('We can\'t create a return right now. Please try again later.')
                 );
+
                 $this->logger->critical($e->getMessage());
-                return $resultRedirect->setPath('rma/*/history');
+                $this->getResponse()->setRedirect(
+                    $this->_redirect->error(
+                        $this->_url->getUrl('*/*/history')
+                    )
+                );
             }
         } else {
-            return $resultRedirect->setPath('sales/order/history');
+            $this->_redirect('sales/order/history');
+            return;
         }
     }
 
@@ -193,6 +191,7 @@ class Submit extends \Magento\Rma\Controller\Returns implements HttpPostActionIn
                 'customer_custom_email' => $post['customer_custom_email'],
             ]
         );
+
         return $rmaModel;
     }
 }

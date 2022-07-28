@@ -28,5 +28,9 @@
     <!-- override for dispatch new event -->
     <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Shipping" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Shipping" />
 
-    <preference for="Mageplaza\Webhook\Observer\AfterOrder" type="Alfakher\Webhook\Observer\AfterOrderObserver" />
+    <!-- override for dispatch new event -->
+    <preference for="Magento\Rma\Controller\Adminhtml\Rma\Save" type="Alfakher\Webhook\Controller\Adminhtml\Rma\Save" />
+
+    <!-- override for dispatch new event -->
+    <preference for="Magento\Rma\Controller\Returns\Submit" type="Alfakher\Webhook\Controller\Returns\Submit" />
 </config>
