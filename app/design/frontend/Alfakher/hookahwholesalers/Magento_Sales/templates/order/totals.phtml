@@ -13,9 +13,11 @@
 <?php 
 $viewModel = $block->getData('view_model');
 $order = $block->getOrder();
-$websiteId = $order->getStore()->getWebsiteId();
-$subtotalInclTax = $viewModel == null ? 0 : $viewModel->isSubtotalInclTax($websiteId);
-$shippingInclTax = $viewModel == null ? 0 : $viewModel->isShippingInclTax($websiteId);
+if ($order) {
+    $websiteId = $order->getStore()->getWebsiteId();
+    $subtotalInclTax = $viewModel == null ? 0 : $viewModel->isSubtotalInclTax($websiteId);
+    $shippingInclTax = $viewModel == null ? 0 : $viewModel->isShippingInclTax($websiteId);
+}
 ?>
 
 
