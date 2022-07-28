@@ -35,12 +35,11 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
 ?>
 <?php $messageData = $block->getMessagedata(); ?>
 <?php if ($messageData['cstAccountVerified'] == 0 && $messageData['cstDetailsChanged'] == 0): ?>
-    <?php $actionURL = $this->getUrl('customerb2b/account/basicPost'); ?>
     <?php $formDisable = 0; ?>
 <?php endif; ?>
 
 <form class="form-address-edit"
-      action="<?= $block->escapeUrl($this->getUrl('customerb2b/account/basicPost')) ?>"
+      action="<?= $block->escapeUrl($block->getUrl('customerb2b/account/basicPost')) ?>"
       method="post"
       id="form-validate"
       enctype="multipart/form-data"
@@ -243,6 +242,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
         </div>
     </div>
 </form>
+<?php // phpcs:disable ?>
 <script type="text/x-magento-init">
     {
         "#form-validate": {

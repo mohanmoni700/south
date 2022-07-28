@@ -6,6 +6,8 @@
 <?php $_company = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Company::class) ?>
 <?php $_telephone = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Telephone::class) ?>
 <?php $_fax = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Fax::class) ?>
+<?php $addressHelper = $this->helper(\Magento\Customer\Helper\Address::class); ?>
+<?php $directoryHelper = $this->helper(\Magento\Directory\Helper\Data::class); ?>
 <?php
 /* Start Change the region_id Label if the Country is US for State and Other for the State */
 $regionStateLabel = $block->escapeHtml(__('State'));
@@ -75,8 +77,7 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
     </fieldset>
     <fieldset class="fieldset">
         <legend class="legend"><span><?= $block->escapeHtml(__('Address')) ?></span></legend>
-        <?php $_streetValidationClass = $this->helper(\Magento\Customer\Helper\Address::class)
-        ->getAttributeValidationClass('street'); ?>
+        <?php $_streetValidationClass = $addressHelper->getAttributeValidationClass('street'); ?>
         <?php $_streetLabel = $block->getAttributeData() ? $block
         ->getAttributeData()->getFrontendLabel('street') : $block
         ->escapeHtml(__('Street Address')); ?>
@@ -100,10 +101,8 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
                         class="input-text <?= $block->escapeHtmlAttr($_streetValidationClass) ?>" />
                 <div class="nested">
                     <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
-                    <?php for ($_i = 1, $_n = $this
-                        ->helper(\Magento\Customer\Helper\Address::class)
-                        ->getStreetLines(); $_i < $_n; $_i++): ?>
-                    <?php $lineI=$_i+1 ?>
+                    <?php for ($_i = 1, $_n = $addressHelper->getStreetLines(); $_i < $_n; $_i++): ?>
+                        <?php $lineI=$_i+1 ?>
                         <div class="field additional">
                             <label class="label" for="street_<?= /* @noEscape */ $_i + 1 ?>">
 
@@ -137,9 +136,9 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
                         placeholder="<?= /* @noEscape */ $title ?>"
                         value="<?= $block->escapeHtmlAttr($block->getAddress()->getCity()) ?>"
                         title="<?= $block->escapeHtmlAttr($title) ?>"
-                        class="input-text <?= $block
-                        ->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)
-                        ->getAttributeValidationClass('city')) ?>"
+                        class="input-text <?= $block->escapeHtmlAttr(
+                            $addressHelper->getAttributeValidationClass('city')
+                        ) ?>"
                         id="city">
             </div>
         </div>
@@ -165,9 +164,9 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
                 <input type="text" id="region" name="region"
                 value="<?= $block->escapeHtmlAttr($block->getRegion()) ?>"
                 title="<?= /* @noEscape */ $title ?>"
-                class="input-text validate-not-number-first <?= $block
-                ->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)
-                ->getAttributeValidationClass('region')) ?>"
+                class="input-text validate-not-number-first <?= $block->escapeHtmlAttr(
+                    $addressHelper->getAttributeValidationClass('region')
+                ) ?>"
                 <?= !$block->getConfig('general/region/display_all') ? ' disabled="disabled"' : '' ?> />
             </div>
         </div>
@@ -189,8 +188,7 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
                         placeholder="<?= /* @noEscape */ $title ?>" 
                         id="zip" 
                         class="input-text validate-zip-international wholesalers-validate-text 
-                        <?= $block->escapeHtmlAttr($this->helper(\Magento\Customer\Helper\Address::class)
-                        ->getAttributeValidationClass('postcode')) ?>">
+                        <?= $block->escapeHtmlAttr($addressHelper->getAttributeValidationClass('postcode')) ?>">
                 <div role="alert" class="message warning" style="display:none">
                     <span></span>
                 </div>
@@ -214,7 +212,7 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
                 title="<?= /* @noEscape */ $title ?>" class="input-text"  />
             </div>
         </div>
-        <?php if ($this->helper(\Magento\Customer\Helper\Address::class)->isVatAttributeVisible()): ?>
+        <?php if ($addressHelper->isVatAttributeVisible()): ?>
             <div class="field taxvat">
                 <?php
                 $title = $block->getAttributeData() ? $block
@@ -224,13 +222,12 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
                 <label class="label" for="vat_id">
                     <span><?= /* @noEscape */ $title ?></span>
                 </label>
+                <?php $vatId = $addressHelper->getAttributeValidationClass('vat_id'); ?>
                 <div class="control">
                     <input type="text" name="vat_id" value="<?=
                     $block->escapeHtmlAttr($block->getAddress()->getVatId()) ?>"
                     title="<?= /* @noEscape */ $title ?>"
-                    class="input-text <?= $block
-                    ->escapeHtmlAttr($this
-                    ->helper(\Magento\Customer\Helper\Address::class)->getAttributeValidationClass('vat_id')) ?>"
+                    class="input-text <?= $block->escapeHtmlAttr($vatId)?>"
                     id="vat_id">
                 </div>
             </div>
@@ -288,13 +285,9 @@ $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvi
                 "regionInputId": "#region",
                 "postcodeId": "#zip",
                 "form": "#form-validate",
-                "regionJson": <?= /* @noEscape */ $this
-                ->helper(\Magento\Directory\Helper\Data::class)
-                ->getRegionJson() ?>,
+                "regionJson": <?= /* @noEscape */ $directoryHelper->getRegionJson() ?>,
                 "defaultRegion": "<?= (int) $block->getRegionId() ?>",
-                "countriesWithOptionalZip": <?= /* @noEscape */ $this
-                ->helper(\Magento\Directory\Helper\Data::class)
-                ->getCountriesWithOptionalZip(true) ?>
+                "countriesWithOptionalZip": <?= /* @noEscape */ $directoryHelper->getCountriesWithOptionalZip(true) ?>
             }
         }
     }
