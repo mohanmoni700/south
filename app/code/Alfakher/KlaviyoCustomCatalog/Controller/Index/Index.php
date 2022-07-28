@@ -87,7 +87,7 @@ class Index extends \Magento\Framework\App\Action\Action
                 "title" => $pro->getName(),
                 "link" => $pro->getProductUrl(),
                 "description" => $pro->getShortDescription() ? $pro->getShortDescription() : "unavailable",
-                "image_link" => $this->_imageHelper->getThumbnailUrl($pro) ? $this->_imageHelper->getThumbnailUrl($pro) : "unavailable",
+                "image_link" => $this->_imageHelper->getThumbnailUrl($pro) ?: "unavailable",
                 "b2b_url_key" => $productUrl,
             ];
 
