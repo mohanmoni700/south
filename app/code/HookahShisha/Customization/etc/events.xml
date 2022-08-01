@@ -4,4 +4,8 @@
         <observer name="additional_vars"
                   instance="HookahShisha\Customization\Observer\Povariable"/>
     </event>
+    <event name="payment_method_is_active">
+        <observer name="disable_checkmo"
+                  instance="HookahShisha\Customization\Observer\DisableCheckmo"/>
+    </event>
 </config>
