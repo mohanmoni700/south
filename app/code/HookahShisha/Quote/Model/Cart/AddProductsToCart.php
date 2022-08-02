@@ -377,6 +377,6 @@ class AddProductsToCart extends SourceAddProductsToCart
             }
         }
 
-        return $type[array_search($sku, $alfaBundle)];
+        return $type[array_search($sku, $alfaBundle)] ?? "shisha/charcoal";
     }
 }
