@@ -149,10 +149,6 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
                 - abs($order->getBaseCustomerBalanceAmount());
         }
 
-        /* bv_op; date : 1-8-22; resolving issue of incorrect subtotal on price change; Start */
-        $order->setSubtotalInclTax($order->getSubtotal() + $order->getExciseTax() + $order->getSalesTax());
-        /* bv_op; date : 1-8-22; resolving issue of incorrect subtotal on price change; End */
-
         $order->setGrandTotal($grandTotal)
              ->setBaseGrandTotal($baseGrandTotal)->save();
     }

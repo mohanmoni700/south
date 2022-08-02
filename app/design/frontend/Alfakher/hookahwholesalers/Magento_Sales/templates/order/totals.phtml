@@ -9,18 +9,6 @@
  * @see \Magento\Sales\Block\Order\Totals
  */
 ?>
-
-<?php 
-$viewModel = $block->getData('view_model');
-$order = $block->getOrder();
-if ($order) {
-    $websiteId = $order->getStore()->getWebsiteId();
-    $subtotalInclTax = $viewModel == null ? 0 : $viewModel->isSubtotalInclTax($websiteId);
-    $shippingInclTax = $viewModel == null ? 0 : $viewModel->isShippingInclTax($websiteId);
-}
-?>
-
-
 <?php foreach ($block->getTotals() as $_code => $_total) : ?>
     <?php if ($_total->getBlockName()) : ?>
         <?= $block->getChildHtml($_total->getBlockName(), false) ?>
@@ -29,7 +17,7 @@ if ($order) {
     <?php /* bv_op; date : 3-5-22; start */ ?>
     <?php if($block->getOrder() && $_code == "grand_total" && $block->getOrder()->getTotalSubtotalDiscount() > 0): ?>
         <tr class="subtotal-discount-af">
-            <th <?= /* @noEscape */ $block->getLabelProperties() ?> class="mark" scope="row"><?= __("Subtotal Discount") ?></th>
+            <th colspan="4" class="mark" scope="row"><?= __("Subtotal Discount") ?></th>
             <td colspan="2" class="amount">
                 <span class="price">
                     -<?= __($block->getOrder()->formatPrice($block->getOrder()->getTotalSubtotalDiscount())) ?>
@@ -39,7 +27,7 @@ if ($order) {
     <?php endif; ?>
     <?php if($block->getOrder() && $_code == "grand_total" && $block->getOrder()->getTotalShippingFeeDiscount() > 0): ?>
         <tr class="subtotal-discount-af">
-            <th <?= /* @noEscape */ $block->getLabelProperties() ?> class="mark" scope="row"><?= __("Shipping Fee Discount") ?></th>
+            <th colspan="4" class="mark" scope="row"><?= __("Shipping Fee Discount") ?></th>
             <td colspan="2" class="amount">
                 <span class="price">
                     -<?= __($block->getOrder()->formatPrice($block->getOrder()->getTotalShippingFeeDiscount())) ?>
@@ -65,25 +53,11 @@ if ($order) {
             
             <?php /* bv_op; date : 2-5-22; displaying initial subtotal and initial shipping fee; Start */ ?>
             <?php if($block->getOrder() && $_code == 'subtotal' && $block->getOrder()->getTotalSubtotalDiscount() > 0): ?>
-                <?php /* $_total->setData("value",$block->getOrder()->getOriginalSubtotal()); ?>
-                <?php $_total->setData("base_value",$block->getOrder()->getOriginalSubtotal()); */ ?>
-                <?php if($subtotalInclTax == 2): ?>
-                    <?php  $_total->setData("value", $order->getOriginalSubtotalInclTax()); ?>
-                    <?php $_total->setData("base_value", $order->getOriginalBaseSubtotalInclTax());  ?>
-                <?php else: ?>
-                    <?php $_total->setData("value", $order->getOriginalSubtotal()); ?>
-                    <?php $_total->setData("base_value", $order->getOriginalBaseSubtotal()); ?>
-                <?php endif; ?>
+                <?php $_total->setData("value",$block->getOrder()->getOriginalSubtotal()); ?>
+                <?php $_total->setData("base_value",$block->getOrder()->getOriginalSubtotal()); ?>
             <?php elseif($block->getOrder() && $_code == 'shipping' && $block->getOrder()->getTotalShippingFeeDiscount() > 0): ?>
-                <?php /* $_total->setData("value",$block->getOrder()->getOriginalShippingFee() + $block->getOrder()->getHandlingFee()); ?>
-                <?php $_total->setData("base_value",$block->getOrder()->getOriginalShippingFee() + $block->getOrder()->getHandlingFee()); */ ?>
-                <?php if ($shippingInclTax == 2): ?>
-                    <?php $_total->setData("value", $order->getOriginalShippingInclTax() + $block->getOrder()->getHandlingFee()); ?>
-                    <?php $_total->setData("base_value", $order->getOriginalBaseShippingInclTax() + $block->getOrder()->getHandlingFee()); ?>
-                <?php else: ?>
-                    <?php $_total->setData("value", $order->getOriginalShippingFee() + $block->getOrder()->getHandlingFee()); ?>
-                    <?php $_total->setData("base_value", $order->getOriginalBaseShippingAmount() + $block->getOrder()->getHandlingFee()); ?>
-                <?php endif; ?>
+                <?php $_total->setData("value",$block->getOrder()->getOriginalShippingFee() + $block->getOrder()->getHandlingFee()); ?>
+                <?php $_total->setData("base_value",$block->getOrder()->getOriginalShippingFee() + $block->getOrder()->getHandlingFee()); ?>
             <?php endif; ?>
             <?php /* bv_op; date : 2-5-22; displaying initial subtotal and initial shipping fee; End */ ?>
 
