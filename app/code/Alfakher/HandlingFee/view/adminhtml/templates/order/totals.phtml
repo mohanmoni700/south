@@ -12,8 +12,6 @@ $canShowFeeEdit = $viewModel->isModuleEnabled($websiteId);
 $canShowSubtotalEdit = $viewModel->isSubtotalEditEnabled($websiteId);
 $canShowShippingFeeEdit = $viewModel->isShippingFeeEditEnabled($websiteId);
 $zeroOutEnable = $viewModel->isZeroOutEnabled($websiteId);
-$subtotalInclTax = $viewModel->isSubtotalInclTax($websiteId);
-$shippingInclTax = $viewModel->isShippingInclTax($websiteId);
 ?>
 <?php /* bv_op; date : 18-2-22; edit handling fee; End */ ?>
 
@@ -90,21 +88,11 @@ $shippingInclTax = $viewModel->isShippingInclTax($websiteId);
 
                         <?php /* bv_op; date : 2-5-22; displaying initial subtotal and initial shipping fee; Start */ ?>
                         <?php if ($_total->getCode() == 'subtotal' && $order->getTotalSubtotalDiscount() > 0): ?>
-                            <?php if($subtotalInclTax == 2): ?>
-                                <?php  $_total->setData("value", $order->getOriginalSubtotalInclTax()); ?>
-                                <?php $_total->setData("base_value", $order->getOriginalBaseSubtotalInclTax());  ?>
-                            <?php else: ?>
-                                <?php $_total->setData("value", $order->getOriginalSubtotal()); ?>
-                                <?php $_total->setData("base_value", $order->getOriginalBaseSubtotal()); ?>
-                            <?php endif; ?>
+                            <?php $_total->setData("value", $order->getOriginalSubtotal()); ?>
+                            <?php $_total->setData("base_value", $order->getOriginalSubtotal()); ?>
                         <?php elseif ($_total->getCode() == 'shipping' && $order->getTotalShippingFeeDiscount() > 0): ?>
-                            <?php if ($shippingInclTax == 2): ?>
-                                <?php $_total->setData("value", $order->getOriginalShippingInclTax()); ?>
-                                <?php $_total->setData("base_value", $order->getOriginalBaseShippingInclTax()); ?>
-                            <?php else: ?>
-                                <?php $_total->setData("value", $order->getOriginalShippingFee()); ?>
-                                <?php $_total->setData("base_value", $order->getOriginalBaseShippingAmount()); ?>
-                            <?php endif; ?>
+                            <?php $_total->setData("value", $order->getOriginalShippingFee()); ?>
+                            <?php $_total->setData("base_value", $order->getOriginalShippingFee()); ?>
                         <?php endif; ?>
                         <?php /* bv_op; date : 2-5-22; displaying initial subtotal and initial shipping fee; End */ ?>
 
