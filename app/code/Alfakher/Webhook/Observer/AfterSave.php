@@ -80,7 +80,11 @@ abstract class AfterSave implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        $item = $observer->getEvent()->getData();
+        if ($this->hookType == 'order') {
+            $item = $observer->getEvent()->getOrder();
+        } else {
+            $item = $observer->getEvent()->getData();
+        }
         $schedule = $this->helper->getCronSchedule();
         if ($schedule !== Schedule::DISABLE && $schedule !== null) {
             $hookCollection = $this->hookFactory->create()->getCollection()

@@ -62,11 +62,12 @@ class AfterOrderObserver extends \Mageplaza\Webhook\Observer\AfterSave
      */
     public function execute(Observer $observer)
     {
-        if ($this->hookType == "order") {
-            $registeryObserverCheck = $this->registry->registry('registeryObserverCheck');
-            if (!$registeryObserverCheck) {
-                $this->registry->register('registeryObserverCheck', true);
-                $item = $observer->getDataObject();
+        $registeryObserverCheck = $this->registry->registry('registeryObserverCheck');
+        if (!$registeryObserverCheck) {
+            $this->registry->register('registeryObserverCheck', true);
+            $item = $observer->getDataObject();
+            if ($item->getStatus() != 'canceled') {
+
                 $schedule = $this->helper->getCronSchedule();
                 if ($schedule !== Schedule::DISABLE && $schedule !== null) {
                     $hookCollection = $this->hookFactory->create()->getCollection()
