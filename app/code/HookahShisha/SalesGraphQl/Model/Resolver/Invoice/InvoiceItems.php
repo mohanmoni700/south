@@ -27,9 +27,10 @@ class InvoiceItems extends SourceInvoiceItems
      * @param OrderItemProvider $orderItemProvider
      */
     public function __construct(
-        ValueFactory $valueFactory,
+        ValueFactory      $valueFactory,
         OrderItemProvider $orderItemProvider
-    ) {
+    )
+    {
         parent::__construct($valueFactory, $orderItemProvider);
 
         $this->orderItemProvider = $orderItemProvider;
@@ -37,7 +38,6 @@ class InvoiceItems extends SourceInvoiceItems
 
     /**
      * Get invoice items data as promise
-     *
      * @param OrderInterface $order
      * @param array $invoiceItems
      * @return Closure
@@ -53,7 +53,7 @@ class InvoiceItems extends SourceInvoiceItems
             foreach ($invoiceItems as $invoiceItem) {
                 $orderItem = $this->orderItemProvider->getOrderItemById((int)$invoiceItem->getOrderItemId());
                 /** @var OrderItemInterface $orderItemModel */
-                $orderItemModel = $orderItem['model'];
+                $orderItemModel = $orderItem['model'] ?? $orderItem;
 
                 // Return only order items which are not part of Alfa Bundle
                 if (!$orderItemModel->getParentItem() && !$orderItemModel->getParentAlfaBundle()) {
@@ -70,7 +70,6 @@ class InvoiceItems extends SourceInvoiceItems
 
     /**
      * Get formatted invoice item data
-     *
      * @param OrderInterface $order
      * @param InvoiceItemInterface $invoiceItem
      * @return array
@@ -97,12 +96,11 @@ class InvoiceItems extends SourceInvoiceItems
 
     /**
      * Returns formatted information about an applied discount
-     *
      * @param OrderInterface $associatedOrder
      * @param InvoiceItemInterface $invoiceItem
      * @return array
      */
-    private function formatDiscountDetails(OrderInterface $associatedOrder, InvoiceItemInterface $invoiceItem) : array
+    private function formatDiscountDetails(OrderInterface $associatedOrder, InvoiceItemInterface $invoiceItem): array
     {
         if ($associatedOrder->getDiscountDescription() === null
             && $invoiceItem->getDiscountAmount() == 0
