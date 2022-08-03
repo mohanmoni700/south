@@ -4,6 +4,8 @@ namespace Alfakher\KlaviyoCustomCatalog\Controller\Index;
 
 class Index extends \Magento\Framework\App\Action\Action
 {
+    public const ADMIN_PRODUCT = 'WS-BTO-AdminOnly';
+
     /**
      * Result page factory variable
      *
@@ -60,7 +62,7 @@ class Index extends \Magento\Framework\App\Action\Action
         $searchCriteria = $this->_searchCriteriaBuilder->addFilters($filter)->create();
         $list = $this->_productsInterface->getList($searchCriteria)->getItems();
 
-        $proArr = [];
+        $productArray = [];
         foreach ($list as $key => $pro) {
 
             $productUrl = $pro->getUrlKey();
@@ -71,7 +73,7 @@ class Index extends \Magento\Framework\App\Action\Action
                     $groupProduct = $this->_productsInterface->getById($parentProducts[0]);
                     $productUrl = $groupProduct->getUrlKey();
 
-                    if ($groupProduct->getSku() == 'WS-BTO-AdminOnly' && isset($parentProducts[1])) {
+                    if ($groupProduct->getSku() == self::ADMIN_PRODUCT && isset($parentProducts[1])) {
                         $groupProductNext = $this->_productsInterface->getById($parentProducts[0]);
                         $productUrl = $groupProductNext->getUrlKey();
                     }
@@ -82,7 +84,7 @@ class Index extends \Magento\Framework\App\Action\Action
                 }
             }
 
-            $proArr[] = [
+            $productArray[] = [
                 "id" => $pro->getId(),
                 "title" => $pro->getName(),
                 "link" => $pro->getProductUrl(),
@@ -94,6 +96,6 @@ class Index extends \Magento\Framework\App\Action\Action
         }
 
         $resultJson = $this->_resultJsonFactory->create();
-        return $resultJson->setData($proArr);
+        return $resultJson->setData($productArray);
     }
 }
