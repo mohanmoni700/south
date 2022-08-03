@@ -283,7 +283,8 @@ class AddProductsToCart extends SourceAddProductsToCart
                 ? $this->getAlfaBundleProductType($cartItem->getSku(), $cartItems)
                 : '';
             // We use custom message for products in alfa bundle if requested qty is not available
-            $useCustomMessage = $e->getMessage() == 'The requested qty is not available';
+            $useCustomMessage = ($e->getMessage() == 'The requested qty is not available') ||
+                ($e->getMessage() == "This product is out of stock.");
             $customMessage = __('The requested %1 qty is not available', $alfaBundleProductType);
 
             $this->addError(
