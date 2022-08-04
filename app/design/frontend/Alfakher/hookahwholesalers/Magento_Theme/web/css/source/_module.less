@@ -297,6 +297,14 @@
                     }   
                 }
             }
+            &.product_rewards{
+                a{
+                    &:before{
+                      background: url('@{baseDir}images/rewards.svg') no-repeat;
+                      background-size: 16px auto;
+                    }
+                }
+            }
             &.changepassword{
                 a{
                     &:before{
@@ -2357,14 +2365,14 @@
                 .left_section {
                     display: flex;
                     align-items: center;
-                    flex-basis: 75%;
+                    flex-basis: 68%;
                     justify-content: space-between;
                 }
                 .right_section {
                     display: flex;
                     align-items: end;
                     justify-content: flex-end;
-                    flex-basis: 25%;
+                    flex-basis: 32%;
                     align-items: center;
                     span.counter.qty.empty{
                         display: none;
@@ -2414,9 +2422,9 @@
                     }
                 }
             .minicart-wrapper{
-                margin: 0 (@indent__m - 2); // 40px
+                margin: 0 (@indent__m - 5); // 40px
                 @media (max-width: 767px){
-                    margin: 0 15px;
+                    margin: 0 10px;
                 }
                 .action.showcart{
                     padding-top: @indent__xl - 1; //50px
@@ -2442,14 +2450,18 @@
                         .lib-css(font-weight, @font-weight__semibold);
                     }
                 }
+                &.amquote-cart-wrapper {
+                    margin-left: 0;
+                }
             }
-            .reorder-wrapper{
+            .reorder-wrapper, .my_rewards{
                 @media (max-width: 767px){
                     margin-left: 4px;
                 }
             }
             .reorder-wrapper,
-            .sign-in{
+            .sign-in,
+            .my_rewards{
                     position: relative;
                     display: flex;
                     flex-direction: column;
@@ -2483,6 +2495,36 @@
                             -webkit-transform: translate(-50%,0);
                         }
                     }                
+            }
+            .my_rewards{
+                margin: 0 20px 0 0;
+                @media (max-width: 767px){
+                    margin: 0 3px 0 0;
+                }
+                a.header_account_link{
+                    padding-top: @indent__xl; //50px
+                    font-size: 12px;
+                    .lib-css(color, @color_black);
+                    .lib-css(font-weight, @font-weight__semibold);
+                    position: relative;
+                    .lib-css(text-decoration, none);
+                    display: block;
+                    &::after{
+                        content: '';
+                        background-size: contain;
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        width: 22px;
+                        height: 18px;
+                        position: absolute;
+                        background-image: url('@{baseDir}images/rewards.svg');
+                        order: 2;
+                        top: 30%;
+                        left: 50%;
+                        transform: translate(-50%,0);
+                        -webkit-transform: translate(-50%,0);
+                    }
+                }                
             }
             .sign-in{
                 position: relative;
@@ -2666,6 +2708,13 @@
         }
         
     }
+    @media only screen and (min-width: (@screen__l + 1 )) and (max-width:  1280px) {
+        #html-body .page-header {
+            .header.content {
+                padding: 15px;
+            }
+        }
+    }
     @media only screen and (min-width: @screen__m) and (max-width: 1280px) {
         #html-body .page-header {
             .header-links-wrapper {
@@ -2675,9 +2724,6 @@
                         padding-right: 0;
                     }
                 }
-            }
-            .header.content {
-                padding: 15px 15px 63px 15px;
             }
         }        
     }
@@ -2798,7 +2844,8 @@
                         transform: unset;
                     }
                 }
-                .reorder-wrapper {
+                .reorder-wrapper,
+                .my_rewards {
                     a.header_account_link {
                         font-size: 0;
                         width: 22px;
@@ -2930,10 +2977,14 @@
                 .counter.qty{
                     top: -@indent__s;
                     max-width: 36px;
+                    min-width: 20px;
+                    padding: 0;
+                    font-size: 10px;
+                    line-height: 18px;
                 }
             }
             .block-minicart {
-                right: -50px !important;
+                right: -44px !important;
                 &::before, 
                 &::after {
                     right: 52px !important;
@@ -2950,7 +3001,7 @@
         }
         
         .bar1, .bar2, .bar3 {
-            width: 24px;
+            width: 18px;
             height: 2px;
             background-color: #333;
             margin: 4px 0;
@@ -3139,9 +3190,9 @@
             .page-header{
                 .header.content{
                     .left_section .logo{
-                        width: 130px;
+                        width: 120px;
                         img{
-                            max-width: 85%;
+                            max-width: 100%;
                         }
                     }
                 } 
