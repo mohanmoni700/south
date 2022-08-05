@@ -1,0 +1,50 @@
+Index: vendor/avalara/excise/Helper/Config.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetE
+<+>UTF-8
+===================================================================
+diff --git a/vendor/avalara/excise/Helper/Config.php b/vendor/avalara/excise/Helper/Config.php
+--- a/vendor/avalara/excise/Helper/Config.php
++++ b/vendor/avalara/excise/Helper/Config.php
+@@ -117,6 +117,13 @@
+     protected $timeZone;
+ 
+     /**
++     * flag for addressTaxable
++     *
++     * @var bool
++     */
++    protected $isTaxable = true;
++    
++    /**
+      * Class constructor
+      *
+      * @param Context $context
+@@ -621,14 +628,24 @@
+      */
+     public function isAddressTaxable(\Magento\Framework\DataObject $address, $storeId)
+     {
+-        $isTaxable = true;
+         $countryFilters = explode(',', $this->getCountriesEnabledForAddressValidation($storeId));
+         $countryId = $address->getCountryId();
+         if (!in_array($countryId, $countryFilters)) {
+-            $isTaxable = false;
++            $this->isTaxable = false;
+         }
+ 
+-        return $isTaxable;
++        return $this->isTaxable;
++    }
++
++    /**
++     * Address Taxable flag for avoide avalara tax request
++     *
++     * @param bool $isTaxable
++     * @return void
++     */
++    public function setAddressTaxable($isTaxable)
++    {
++        $this->isTaxable = $isTaxable;
+     }
+ 
+     /**

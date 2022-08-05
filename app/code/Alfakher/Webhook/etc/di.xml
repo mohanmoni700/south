@@ -1,0 +1,32 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Mageplaza\Webhook\Model\Config\Source\HookType">
+        <plugin name="Alfakher_Webhook_AddNewHookType" type="Alfakher\Webhook\Plugin\AddNewHookType" sortOrder="10" disabled="false"  />
+    </type>
+
+    <!-- changes on send function for data object of document webhook -->
+    <preference for="Mageplaza\Webhook\Helper\Data" type="Alfakher\Webhook\Helper\Data" />
+
+    <!-- Add new hook types on existing function for display variables -->
+    <preference for="Mageplaza\Webhook\Block\Adminhtml\Hook\Edit\Tab\Renderer\Body" type="Alfakher\Webhook\Block\Adminhtml\Hook\Edit\Tab\Renderer\HookVariables" />
+
+    <!-- override for dispatch new event --> 
+    <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Items" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Items" />
+
+    <!-- override for dispatch new event -->
+    <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Account" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Account" />
+
+    <!-- override for dispatch new event -->
+    <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Info" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Info" />
+
+    <!-- override for dispatch new event -->
+    <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Address" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Address" />
+
+    <!-- override for dispatch new event -->
+    <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Payment" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Payment" />
+
+    <!-- override for dispatch new event -->
+    <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Shipping" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Shipping" />
+
+    <preference for="Mageplaza\Webhook\Observer\AfterOrder" type="Alfakher\Webhook\Observer\AfterOrderObserver" />
+</config>

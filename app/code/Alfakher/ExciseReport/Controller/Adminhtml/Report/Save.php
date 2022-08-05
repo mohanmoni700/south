@@ -117,7 +117,7 @@ class Save extends \Magento\Backend\App\Action
         com.super_user_id,
         com.company_name
     ORDER BY
-        NULL";
+        so.created_at";
 
         $values = $connection->fetchAll($query);
 

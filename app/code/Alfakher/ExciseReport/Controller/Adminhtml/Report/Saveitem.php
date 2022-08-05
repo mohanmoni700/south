@@ -79,7 +79,7 @@ class Saveitem extends \Magento\Backend\App\Action
 			  AND so.store_id = '" . $storeid . "'
 			  AND si.increment_id IS NOT Null
 			ORDER BY
-	 		 so.entity_id";
+	 		 so.created_at";
 
             $fileName = 'b2b_item_excise_report.csv';
 
@@ -123,7 +123,7 @@ class Saveitem extends \Magento\Backend\App\Action
 				    AND si.increment_id IS NOT NULL
 				    AND soi.qty_shipped != 0
 				ORDER BY
-				    so.entity_id";
+				    so.created_at";
 
             $fileName = "b2c_item_excise_report.csv";
 
