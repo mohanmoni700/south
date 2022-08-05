@@ -848,6 +848,7 @@ return [
         'Alfakher_RmaCustomization' => 1,
         'Alfakher_SalesApprove' => 1,
         'Alfakher_SeoUrlPrefix' => 1,
+        'Alfakher_WarehouseShipping' => 1,
         'Alfakher_ShippingEdit' => 1,
         'Alfakher_StoreCredit' => 1,
         'Mageplaza_Core' => 1,
