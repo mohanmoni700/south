@@ -46,12 +46,23 @@ class Povariable implements \Magento\Framework\Event\ObserverInterface
         $observer->getVariableList()->setData('excise_tax_incl', '');
 
         if ($order->getExciseTax() > 0) {
-            $incl = $this->scopeConfig->getValue('hookahshisha/excise_tax_note/incl_excise_tax_note', ScopeInterface::SCOPE_STORE, $storeId);
+            $incl = $this->getConfigdata('hookahshisha/excise_tax_note/incl_excise_tax_note', $storeId);
             $observer->getVariableList()->setData('excise_tax_incl', $incl);
 
         } else {
-            $excl = $this->scopeConfig->getValue('hookahshisha/excise_tax_note/excl_excise_tax_note', ScopeInterface::SCOPE_STORE, $storeId);
+            $excl = $this->getConfigdata('hookahshisha/excise_tax_note/excl_excise_tax_note', $storeId);
             $observer->getVariableList()->setData('excise_tax_excl', $excl);
         }
+    }
+
+    /**
+     * Configuration field
+     *
+     * @param mixed $fieldName
+     * @param int $storeId
+     */
+    public function getConfigdata($fieldName, $storeId)
+    {
+        return $this->scopeConfig->getValue($fieldName, ScopeInterface::SCOPE_STORE, $storeId);
     }
 }
