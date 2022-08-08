@@ -122,15 +122,23 @@ class View extends Template implements \Magento\Ui\Component\Layout\Tabs\TabInte
         if ($this->documentHelperData->isCustomerFromUsa($this->getCustomer())) {
             $this->addChild(
                 'add_documents',
-                'Alfakher\MyDocument\Block\Adminhtml\CustomerEdit\Tab\AddDocuments',
+                \Alfakher\MyDocument\Block\Adminhtml\CustomerEdit\Tab\AddDocuments::class,
                 ['template' => 'Alfakher_MyDocument::tab/add_documents_usa.phtml']
             );
         } else {
             $this->addChild(
                 'add_documents',
-                'Alfakher\MyDocument\Block\Adminhtml\CustomerEdit\Tab\AddDocuments',
+                \Alfakher\MyDocument\Block\Adminhtml\CustomerEdit\Tab\AddDocuments::class,
                 ['template' => 'Alfakher_MyDocument::tab/add_documents_nonusa.phtml']
             );
+        }
+        if (!empty($this->getDocumentCollection())) {
+            $this->addChild(
+                'add_more_doc',
+                \Alfakher\MyDocument\Block\Adminhtml\CustomerEdit\Tab\AddDocuments::class,
+                ['template' => 'Alfakher_MyDocument::tab/add_more_doc.phtml']
+            );
+
         }
     }
 
