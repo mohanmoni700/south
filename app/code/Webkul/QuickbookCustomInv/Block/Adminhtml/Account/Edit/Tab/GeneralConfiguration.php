@@ -10,6 +10,8 @@
  */
 namespace Webkul\QuickbookCustomInv\Block\Adminhtml\Account\Edit\Tab;
 
+use Magento\Backend\Block\Widget\Form\Generic;
+use Magento\Backend\Block\Widget\Tab\TabInterface;
 use Webkul\MultiQuickbooksConnect\Model\Config\Source;
 
 class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtml\Account\Edit\Tab\GeneralConfiguration
@@ -48,12 +50,14 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Data\FormFactory $formFactory,
+        \Webkul\QuickbookCustomInv\Model\Config\Source\TaxClass $taxClass,
         Source\SalesReceiptCreateOn $salesReceiptCreateOn,
         Source\Accounts\Asset $assetAccount,
         Source\Accounts\Income $incomeAccount,
         Source\Accounts\Expense $expenseAccount,
         array $data = []
     ) {
+        $this->taxClass = $taxClass;
         $this->salesReceiptCreateOn = $salesReceiptCreateOn;
         $this->assetAccount = $assetAccount;
         $this->incomeAccount = $incomeAccount;
@@ -95,7 +99,7 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
                 'title' => __('Sales Receipt Create On Quickbook'),
                 'required' => true,
                 'options' => $this->salesReceiptCreateOn->toArray(),
-                'note' => __('Select the event for exporting orders automatically.'),
+                'note' => __('Select the event for exporting orders automatically.')
             ]
         );
         $fieldset->addField(
@@ -107,7 +111,7 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
                 'title' => __('Creditmemo Auto Sync to Quickbooks'),
                 'required' => true,
                 'options' => $this->getStatusOptions(),
-                'note' => __('Select to enable or disable the auto exporting.'),
+                'note' => __('Select to enable or disable the auto exporting.')
             ]
         );
         $fieldset->addField(
@@ -119,7 +123,7 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
                 'title' => __('QuickBooks US Store'),
                 'required' => true,
                 'options' => $this->getStatusOptions(),
-                'note' => __('Identify that your Quickbooks account is USA or Non-USA.'),
+                'note' => __('Identify that your Quickbooks account is USA or Non-USA.')
             ]
         );
         $fieldset->addField(
@@ -131,7 +135,7 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
                 'title' => __('Inventory Other Asset Account'),
                 'required' => true,
                 'options' => $this->assetAccount->toArray($model->getId()),
-                'note' => __('Choose any Inventory asset account.'),
+                'note' => __('Choose any Inventory asset account.')
             ]
         );
         $fieldset->addField(
@@ -143,7 +147,7 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
                 'title' => __('Income Account'),
                 'required' => true,
                 'options' => $this->incomeAccount->toArray($model->getId()),
-                'note' => __('Choose any Income account.'),
+                'note' => __('Choose any Income account.')
             ]
         );
         $fieldset->addField(
@@ -155,18 +159,19 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
                 'title' => __('Expense Account'),
                 'required' => true,
                 'options' => $this->expenseAccount->toArray($model->getId()),
-                'note' => __('Choose any Expense account.'),
+                'note' => __('Choose any Expense account.')
             ]
         );
         $fieldset->addField(
             'default_tax_class',
-            'text',
+            'select',
             [
                 'name' => 'default_tax_class',
                 'label' => __('Default Tax Class'),
                 'title' => __('Default Tax Class'),
                 'required' => true,
-                'note' => __('Fill tax class wich set on exported orders.'),
+                'options' => $this->taxClass->toArray($model->getId()),
+                'note' => __('Fill tax class wich set on exported orders.')
             ]
         );
         $form->setValues($model->getData());

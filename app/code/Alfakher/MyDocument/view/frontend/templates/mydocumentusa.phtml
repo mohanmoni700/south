@@ -31,7 +31,31 @@ $today = date("Y-m-d");
         <?= $block->escapeHtml(__('(File type supported are JPG, PNG and PDF)')); ?>
     </span>
 </div>
-<?php if (!empty($data)): ?>
+<?php if (!empty($data)):
+
+    /*for sorting the array in proper order start[BS]*/
+    $static = [];
+    $add_more = [];
+    foreach ($data as $val) {
+        if (in_array($val['document_name'], $uploaderType)) {
+            $static[] = $val;
+        }
+        if ($val['is_add_more_form'] == 1) {
+            $add_more[] = $val;
+        }
+    }
+
+    $array=[];
+    if (!empty($static)) {
+        foreach ($static as $key => $row) {
+            $array[$key] = $row['document_name'];
+        
+        }
+        array_multisort($array, SORT_ASC, $static);
+    }
+    $newData = array_merge($static, $add_more);
+    /*for sorting the array in proper order end[BS]*/?>
+    
 <div class="my_document">
     <form id="updatedocument"
         class="updatedocument"
@@ -42,7 +66,7 @@ $today = date("Y-m-d");
 
     <div class="updated-container">
 
-        <?php foreach ($data as $val): ?>
+        <?php foreach ($newData as $val): ?>
             <?php if ($val['is_add_more_form'] == 0): ?>
 
                 <?php if ($val['is_delete'] == 0): ?>

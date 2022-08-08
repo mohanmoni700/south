@@ -7,9 +7,9 @@ if (!empty($rejection)) { ?>
     <?php foreach ($rejection as $item): ?>
         <tr>
             <td><?= /* @noEscape */ $item['docname'] ?></td>
-            <td><?= /* @noEscape */ isset($item['docmsg']) ? "Rejected" : "Approved" ?></td>
-            <td><?= /* @noEscape */ isset($item['docmsg']) ? $item['docmsg'] : "-" ?></td>
-        </tr>
-    <?php endforeach; ?>
+            <td><?= /* @noEscape */ !empty($item['docmsg']) ? "Rejected" : "Approved" ?></td>
+            <td><?= /* @noEscape */ !empty($item['docmsg']) ? $item['docmsg'] : "-" ?></td>
+        </tr> 
+    <?php endforeach;?>
 </table>
 <?php } ?>
