@@ -1,0 +1,91 @@
+<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible()"></input>
+        
+        <label data-bind="attr: {'for': getCode()}" class="label">
+            <span data-bind="text: getTitle()"></span>
+        </label>
+    </div>
+
+    <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <form id="accountinfo_form" class="form form-accountinfo" data-role="accountinfo_form">
+            <fieldset class="fieldset payment method" data-bind='attr: {id: "payment_form_" + getCode()}'>
+                <div class="field field-number required">
+                    <label for="accountnumber" class="label">
+                    <span><!-- ko i18n: 'Account Number'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <div class="name-info">
+                            <input type="text" id="account_number" name="payment[accountnumber]" 
+                            placeholder="Enter An Account Number" data-validate="{required:true}"        data-bind='attr: {title: $t("Enter An Account Number")}' class="input-text "></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="field field-number required">
+                    <label for="bankname" class="label">
+                    <span><!-- ko i18n: 'Name of Bank'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <div class="name-info">
+                            <input type="text" id="bank_name" name="payment[bankname]" 
+                            placeholder="Enter Bank Name" data-validate="{required:true}"        data-bind='attr: {title: $t("Enter Bank Name")}' class="input-text"></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="field field-number required">
+                    <label for="routingnumber" class="label">
+                    <span><!-- ko i18n: 'Routing Number'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <div class="name-info">
+                            <input type="text" id="routing_number" name="payment[routingnumber]" 
+                            placeholder="Enter Routing Number" data-validate="{required:true}"        data-bind='attr: {title: $t("Enter Routing Number")}' class="input-text"></input>
+                        </div>
+                    </div>
+                </div>
+                <div class="field field-number required">
+                    <label for="address" class="label">
+                    <span><!-- ko i18n: 'Address'--><!-- /ko --></span>
+                    </label>
+                    <div class="control">
+                        <div class="name-info">
+                            <input type="text" id="address" name="payment[address]" 
+                            placeholder="Enter An Address" data-validate="{required:true}"        data-bind='attr: {title: $t("Enter An Address")}' class="input-text"></input>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+         <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="actions-toolbar" id="review-buttons-container">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="
+                        click: placeOrder,
+                        attr: {title: $t('Place Order')},
+                        enable: (getCode() == isChecked()),
+                        css: {disabled: !isPlaceOrderActionAllowed()}
+                        "
+                        data-role="review-save">
+                    <span data-bind="i18n: 'Place Order'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
