@@ -20,6 +20,7 @@ use Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface;
 use Magento\Quote\Model\Quote;
 use Magento\Quote\Model\Cart\Data\Error;
 use Magento\Quote\Model\Cart\Data\CartItem;
+use Avalara\Excise\Helper\Config;
 
 class AddProductsToCart extends SourceAddProductsToCart
 {
@@ -71,18 +72,25 @@ class AddProductsToCart extends SourceAddProductsToCart
     private Json $serializer;
 
     /**
+     * @var Config
+     */
+    private Config $avalaraConfig;
+
+    /**
      * @param ProductRepositoryInterface $productRepository
      * @param CartRepositoryInterface $cartRepository
      * @param MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId
      * @param Json $serializer
      * @param BuyRequestBuilder $requestBuilder
+     * @param Config $avalaraConfig
      */
     public function __construct(
         ProductRepositoryInterface $productRepository,
         CartRepositoryInterface $cartRepository,
         MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId,
         Json $serializer,
-        BuyRequestBuilder $requestBuilder
+        BuyRequestBuilder $requestBuilder,
+        Config $avalaraConfig
     ) {
         parent::__construct(
             $productRepository,
@@ -96,6 +104,7 @@ class AddProductsToCart extends SourceAddProductsToCart
         $this->maskedQuoteIdToQuoteId = $maskedQuoteIdToQuoteId;
         $this->requestBuilder = $requestBuilder;
         $this->serializer = $serializer;
+        $this->avalaraConfig = $avalaraConfig;
     }
 
     /**
@@ -129,6 +138,8 @@ class AddProductsToCart extends SourceAddProductsToCart
             $cart->getItemsCollection()->clear();
         } else {
             // Save cart only when all items are added to cart and no errors occurred
+            // restrict avalara tax request using flag for add to cart
+            $this->avalaraConfig->setAddressTaxable(false);
             $this->cartRepository->save($cart);
         }
 
@@ -283,7 +294,8 @@ class AddProductsToCart extends SourceAddProductsToCart
                 ? $this->getAlfaBundleProductType($cartItem->getSku(), $cartItems)
                 : '';
             // We use custom message for products in alfa bundle if requested qty is not available
-            $useCustomMessage = $e->getMessage() == 'The requested qty is not available';
+            $useCustomMessage = ($e->getMessage() == 'The requested qty is not available') ||
+                ($e->getMessage() == "This product is out of stock.");
             $customMessage = __('The requested %1 qty is not available', $alfaBundleProductType);
 
             $this->addError(
@@ -377,6 +389,6 @@ class AddProductsToCart extends SourceAddProductsToCart
             }
         }
 
-        return $type[array_search($sku, $alfaBundle)];
+        return $type[array_search($sku, $alfaBundle)] ?? "shisha/charcoal";
     }
 }

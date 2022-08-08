@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+   <table name="quote" resource="default" engine="innodb">
+      <column xsi:type="text" name="storecredit_type" nullable="true" comment="Storecredit Type" />
+      <column xsi:type="text" name="storecredit_partial_amount" nullable="true" comment="Storecredit partial amount" />
+   </table>
+</schema>
