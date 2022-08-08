@@ -4,5 +4,6 @@
     <type name="Magento\QuoteGraphQl\Model\Resolver\PlaceOrder">
         <plugin name="alfakher_check_update_order_attributes"
                 type="HookahShisha\OrderGraphQl\Plugin\Model\Resolver\PlaceOrder" sortOrder="10" />
+        <plugin name="verated_palceorder_info" type="HookahShisha\OrderGraphQl\Plugin\Model\Resolver\VaratedPlaceOrder" sortOrder="20" />
     </type>
 </config>
