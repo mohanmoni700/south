@@ -305,9 +305,9 @@ class DataProvider extends SourceDataProvider
      *
      * @param array $orderItems
      * @param array $superPack
-     * @return int
+     * @return float
      */
-    private function getSuperPackItemPrice(array $orderItems, array $superPack): int
+    private function getSuperPackItemPrice(array $orderItems, array $superPack): float
     {
         $price = 0;
 
@@ -323,6 +323,6 @@ class DataProvider extends SourceDataProvider
             }
         }
 
-        return $price;
+        return (float) $price;
     }
 }

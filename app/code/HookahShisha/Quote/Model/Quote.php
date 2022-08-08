@@ -89,7 +89,7 @@ class Quote extends SourceQuote
 
         if (!$product->isSalable()) {
             throw new LocalizedException(
-                __('Product that you are trying to add is not available.')
+                __(sprintf('Product %s that you are trying to add is not available.', $product->getSku()))
             );
         }
 

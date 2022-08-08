@@ -38,7 +38,8 @@ class OokaLandingPageValidator implements HttpRequestValidatorInterface
         'categories',
         'products',
         'blog.*',
-        'cms.*'
+        'cms.*',
+        'CmsSitemapData'
     ];
 
     /**
