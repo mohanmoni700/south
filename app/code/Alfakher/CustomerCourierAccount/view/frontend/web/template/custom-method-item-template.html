@@ -4,12 +4,12 @@
     attr="'class': 'row tr_method_' + method.method_code + '_' + method.carrier_code">
     <td class="col col-method">
         <input type="radio"
-               class="radio"
+               class="radio shipping-method"
                ifnot="method.error_message"
                ko-checked="element.isSelected"
                ko-value="method.carrier_code + '_' + method.method_code"
                attr="'aria-labelledby': 'label_method_' + method.method_code + '_' + method.carrier_code + ' ' + 'label_carrier_' + method.method_code + '_' + method.carrier_code,
-                    'checked': element.rates().length == 1 || element.isSelected" />
+                    'checked': element.rates().length == 1 || element.isSelected,'id': method.carrier_code + '_' + method.method_code" />
         <label class="label"></label>
     </td>
     <!-- ko ifnot: (method.error_message) -->
