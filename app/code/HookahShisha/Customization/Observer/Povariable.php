@@ -45,7 +45,6 @@ class Povariable implements \Magento\Framework\Event\ObserverInterface
         if ($order->getExciseTax() > 0) {
             $incl = $this->getConfigdata('hookahshisha/excise_tax_note/incl_excise_tax_note', $storeId);
             $observer->getVariableList()->setData('excise_tax', $incl);
-
         } else {
             $excl = $this->getConfigdata('hookahshisha/excise_tax_note/excl_excise_tax_note', $storeId);
             $observer->getVariableList()->setData('excise_tax', $excl);
