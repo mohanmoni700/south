@@ -68,7 +68,7 @@ class Index extends \Magento\Framework\App\Action\Action
             $productUrl = $pro->getUrlKey();
             $parentProducts = $this->_groupedProduct->getParentIdsByChild($pro->getId());
 
-            if ($pro->getVisibility() == 1 && count($parentProducts)) {
+            if ($pro->getVisibility() === 1 && count($parentProducts)) {
                 try {
                     $groupProduct = $this->_productsInterface->getById($parentProducts[0]);
                     $productUrl = $groupProduct->getUrlKey();
