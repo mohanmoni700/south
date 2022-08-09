@@ -16,12 +16,10 @@ use Magento\Framework\GraphQl\Query\Resolver\ArgumentsProcessorInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Quote\Api\CartRepositoryInterface;
-use Magento\Quote\Model\Cart\Data\CartItem;
 use Magento\Quote\Model\Quote;
 use Magento\QuoteGraphQl\Model\Cart\GetCartForUser;
 use Magento\QuoteGraphQl\Model\CartItem\DataProvider\UpdateCartItems as UpdateCartItemsProvider;
 use Magento\QuoteGraphQl\Model\Resolver\UpdateCartItems as SourceUpdateCartItems;
-use Avalara\Excise\Helper\Config;
 
 /**
  * Resolver for updateCartItems mutation
@@ -54,25 +52,18 @@ class UpdateCartItems extends SourceUpdateCartItems
     private Json $serializer;
 
     /**
-     * @var Config
-     */
-    private Config $avalaraConfig;
-
-    /**
      * @param GetCartForUser $getCartForUser
      * @param CartRepositoryInterface $cartRepository
      * @param UpdateCartItemsProvider $updateCartItems
      * @param Json $serializer
      * @param ArgumentsProcessorInterface $argsSelection
-     * @param Config $avalaraConfig
      */
     public function __construct(
         GetCartForUser $getCartForUser,
         CartRepositoryInterface $cartRepository,
         UpdateCartItemsProvider $updateCartItems,
         Json $serializer,
-        ArgumentsProcessorInterface $argsSelection,
-        Config $avalaraConfig
+        ArgumentsProcessorInterface $argsSelection
     ) {
         parent::__construct($getCartForUser, $cartRepository, $updateCartItems, $argsSelection);
 
@@ -81,7 +72,6 @@ class UpdateCartItems extends SourceUpdateCartItems
         $this->updateCartItems = $updateCartItems;
         $this->argsSelection = $argsSelection;
         $this->serializer = $serializer;
-        $this->avalaraConfig = $avalaraConfig;
     }
 
     /**
@@ -111,9 +101,6 @@ class UpdateCartItems extends SourceUpdateCartItems
 
         try {
             $this->updateCartItems->processCartItems($cart, $cartItems);
-            // restrict avalara tax request using flag for update item
-            $this->avalaraConfig->setAddressTaxable(false);
-            $this->cartRepository->save($cart);
         } catch (NoSuchEntityException $e) {
             throw new GraphQlNoSuchEntityException(__($e->getMessage()), $e);
         } catch (LocalizedException $e) {
