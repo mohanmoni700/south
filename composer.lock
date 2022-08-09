@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "221cbf8f043a1a6ef92f7a43580716b1",
+    "content-hash": "5edcd71fb10c0e30141373b8b9b006a4",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -2015,6 +2015,51 @@
                 "issues": "https://bitbucket.org/corratech/amastypromographql/issues"
             },
             "time": "2022-03-29T08:43:00+00:00"
+        },
+        {
+            "name": "corra/module-cms-sitemap-graph-ql",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-cms-sitemap-graph-ql/1.0.0.0/71bb2167038ce766ef0571afc806aad35e3f94f7.zip",
+                "reference": "71bb2167038ce766ef0571afc806aad35e3f94f7",
+                "mirrors": [
+                    {
+                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "magento/module-cms": "*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Corra\\CmsSitemapGraphQl\\": ""
+                }
+            },
+            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "CORRA"
+                }
+            ],
+            "description": "GraphQl to fetch the CMS page data for sitemap in pylot projects",
+            "homepage": "https://bitbucket.org/corratech/cmssitemapgraphql",
+            "support": {
+                "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/3789848577/CmsSitemapGraphQl",
+                "source": "https://bitbucket.org/corratech/cmssitemapgraphql/src/71bb2167038ce766ef0571afc806aad35e3f94f7/?at=1.0.0",
+                "issues": "https://bitbucket.org/corratech/cmssitemapgraphql/issues"
+            },
+            "time": "2022-05-05T07:27:23+00:00"
         },
         {
             "name": "corra/module-link-guest-order-graph-ql",
