@@ -44,7 +44,7 @@ class OrderPaymentSaveBefore implements \Magento\Framework\Event\ObserverInterfa
         $paymentQuote = $quote->getPayment();
         $method = $paymentQuote->getMethodInstance()->getCode();
 
-        if ($this->_state->getAreaCode() != \Magento\Framework\App\Area::AREA_ADMINHTML) {
+        if ($this->_state->getAreaCode() !== \Magento\Framework\App\Area::AREA_ADMINHTML) {
             $inputParams = $this->inputParamsResolver->resolve();
             foreach ($inputParams as $inputParam) {
                 if ($inputParam instanceof \Magento\Quote\Model\Quote\Payment) {
@@ -70,8 +70,7 @@ class OrderPaymentSaveBefore implements \Magento\Framework\Event\ObserverInterfa
                     }
                 }
             }
-        }
-        if ($this->_state->getAreaCode() == \Magento\Framework\App\Area::AREA_ADMINHTML) {
+        } else {
             $param = $this->request->getParam('payment');
             if ($method == 'offline_paypal') {
                 if (isset($param['paypal_email'])) {
