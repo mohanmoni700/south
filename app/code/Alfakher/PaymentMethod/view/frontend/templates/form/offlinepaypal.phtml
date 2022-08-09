@@ -1,0 +1,23 @@
+<?php
+/**
+ * @var $block \Magento\OfflinePayments\Block\Form\OfflinePaypal
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+$methodCode = $block->escapeHtml($block->getMethodCode());
+?>
+<fieldset class="fieldset items <?= /* @noEscape */ $methodCode ?>"
+          id="payment_form_<?= /* @noEscape */ $methodCode ?>">
+    <div class="field number required">
+        <label for="paypal_email" class="label"><span><?= $block->escapeHtml(__('PayPal Email')) ?></span></label>
+        <div class="control">
+            <input type="text" id="paypal_email" name="payment[paypal_email]"
+                   title="<?= $block->escapeHtml(__('PayPal Email')) ?>"
+                   class="input-text required-entry"
+                   value="<?= $block->escapeHtml($block->getInfoData('paypal_email')) ?>" />
+        </div>
+    </div>
+</fieldset>
+<?= /* @noEscape */ $secureRenderer->renderStyleAsTag(
+    "display:none",
+    'fieldset#payment_form_' . /* @noEscape */ $methodCode
+) ?>
