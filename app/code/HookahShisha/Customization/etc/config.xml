@@ -1,6 +1,15 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
+        <hookahshisha>
+            <default_shipping_selection_conf>
+                <enable>0</enable>
+                <selected_shipping_name>tablerate_bestway</selected_shipping_name>
+                <enable_position>0</enable_position>
+                <selected_shipping_position>0</selected_shipping_position>
+                <timeout>100</timeout>
+            </default_shipping_selection_conf>
+        </hookahshisha>
         <graphql_payment>
             <payment_details>
                 <disable_payment_garphql>1</disable_payment_garphql>
