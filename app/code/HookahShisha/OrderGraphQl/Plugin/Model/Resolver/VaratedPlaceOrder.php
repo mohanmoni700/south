@@ -73,7 +73,7 @@ class VaratedPlaceOrder
         if ((
             empty($args['input']['veratad_dob']) ||
             !$args['input']['veratad_dob']) &&
-            in_array($store->getCode(), self::DISABLED_AGEVERIFICATION_STORES)
+            !in_array($store->getCode(), self::DISABLED_AGEVERIFICATION_STORES)
         ) {
             throw new GraphQlInputException(
                 __('Required parameter "veratad_dob" is missing')
