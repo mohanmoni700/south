@@ -1,0 +1,25 @@
+Index: vendor/magento/module-catalog-graph-ql/Model/Resolver/Products/DataProvider/Product/CollectionProcessor/VisibilityStatusProcessor.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vendor/magento/module-catalog-graph-ql/Model/Resolver/Products/DataProvider/Product/CollectionProcessor/VisibilityStatusProcessor.php b/vendor/magento/module-catalog-graph-ql/Model/Resolver/Products/DataProvider/Product/CollectionProcessor/VisibilityStatusProcessor.php
+--- a/vendor/magento/module-catalog-graph-ql/Model/Resolver/Products/DataProvider/Product/CollectionProcessor/VisibilityStatusProcessor.php
++++ b/vendor/magento/module-catalog-graph-ql/Model/Resolver/Products/DataProvider/Product/CollectionProcessor/VisibilityStatusProcessor.php
+@@ -7,6 +7,7 @@
+ 
+ namespace Magento\CatalogGraphQl\Model\Resolver\Products\DataProvider\Product\CollectionProcessor;
+ 
++use Magento\Catalog\Model\Product\Attribute\Source\Status;
+ use Magento\Catalog\Model\ResourceModel\Product\Collection;
+ use Magento\CatalogGraphQl\Model\Resolver\Products\DataProvider\Product\CollectionProcessorInterface;
+ use Magento\Framework\Api\SearchCriteriaInterface;
+@@ -35,7 +36,7 @@
+         array $attributeNames,
+         ContextInterface $context = null
+     ): Collection {
+-        $collection->joinAttribute('status', 'catalog_product/status', 'entity_id', null, 'inner');
++        $collection->addAttributeToFilter('status', ['eq' => Status::STATUS_ENABLED]);
+         $collection->joinAttribute('visibility', 'catalog_product/visibility', 'entity_id', null, 'inner');
+ 
+         return $collection;
