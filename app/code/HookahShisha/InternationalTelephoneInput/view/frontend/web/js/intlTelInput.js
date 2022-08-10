@@ -116,6 +116,24 @@
             this._initListeners();
             // utils script, and auto country
             this._initRequests();
+            /* here adding the changes for the display country code customization */
+            if (this.options.separateDialCode) {
+                $(document).ready(function(){
+                    $("#form-validate,#other-contact-form-validate").submit(function(event) {
+                        var validForm = jQuery(this);
+                        var dial = validForm.find('.selected-dial-code').html();
+                        if(validForm.attr('id') == "other-contact-form-validate"){
+                            var phonenumber = validForm.find('#contact_phone').val();
+                            var dialPhoneNumber = dial+" "+phonenumber.replace(dial+" ","");
+                            validForm.find('#contact_phone').val(dialPhoneNumber);
+                        }else{
+                            var phonenumber = validForm.find('#telephone').val();
+                            var dialPhoneNumber = dial+" "+phonenumber.replace(dial+" ","");
+                            validForm.find('#telephone').val(dialPhoneNumber);
+                        }
+                    });
+                });
+            }
             // return the deferreds
             return [ this.autoCountryDeferred, this.utilsScriptDeferred ];
         },

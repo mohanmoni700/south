@@ -8,7 +8,7 @@ use \Magento\Framework\Serialize\Serializer\Json;
 use \Magento\Framework\View\Element\Template;
 use \Magento\Framework\View\Element\Template\Context;
 
-class PhoneNumber extends Template
+class PhoneNumberCheckout extends Template
 {
 
     /**
@@ -27,7 +27,7 @@ class PhoneNumber extends Template
     protected $countryInformation;
 
     /**
-     * PhoneNumber constructor.
+     * PhoneNumberCheckout constructor.
      * @param Context $context
      * @param Json $jsonHelper
      * @param CountryInformationAcquirerInterface $countryInformation
@@ -54,7 +54,6 @@ class PhoneNumber extends Template
     {
         $config = [
             "nationalMode" => false,
-            "separateDialCode" => true,
             "utilsScript" => $this->getViewFileUrl('HookahShisha_InternationalTelephoneInput::js/utils.js'),
             "preferredCountries" => [$this->helper->preferedCountry()],
         ];
