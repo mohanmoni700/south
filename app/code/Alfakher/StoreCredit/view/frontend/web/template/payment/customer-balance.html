@@ -1,0 +1,47 @@
+<!-- ko if: isAvailable && isActive() -->
+<div class="payment-option opc-payment-additional customerbalance _collapsible" id="customerbalance-placer" data-bind="mageInit: {'collapsible':{'openedState': '_active'}}">
+    <div class="payment-option-title" data-role="title">
+        <span class="action action-toggle">
+            <!-- ko i18n: 'Store Credit' --><!-- /ko -->
+        </span>
+    </div>
+    <div class="payment-option-content field choice" data-role="content">
+        <div class="payment-option-inner">
+            <span id="customerbalance-available-amount" data-bind="text: formatBalance()"></span>
+            <!-- ko i18n: 'Store credit available' --><!-- /ko -->
+        </div>
+        <div class="storecredit-actions">
+            <div class="primary">
+                <button id="use-all-storecredit"
+                        class="action primary storecredit-btn"
+                        name="use-all-storecredit"
+                        data-bind="click: selectStoreCredit('use-all-storecredit')">
+                        <span><!-- ko i18n: 'Use all store credit' --><!-- /ko --></span>
+                </button>
+                <button id="use-partial-storecredit"
+                        class="action primary storecredit-btn"
+                        name="use-partial-storecredit"
+                        data-bind="click: selectStoreCredit('use-partial-storecredit')">
+                        <span><!-- ko i18n: 'Use Store Credit partially' --><!-- /ko --></span>
+                </button>
+                <input type="hidden" name="storecredit-type" id="storecredit-type">
+            </div>
+        </div>
+        <div class="form-discount">
+            <div class="partial-amount" id="partial-amount" style="display:none">
+                <input type="text" name="partial_storecredit" placeholder="Enter Store Credit" id="partial_storecredit">
+            </div>
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button id="use-customer-balance"
+                            class="action action-use"]
+                            name="payment[use_customer_balance]"
+                            data-bind="click: sendRequest">
+                            <span><!-- ko i18n: 'Apply' --><!-- /ko --></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /ko -->

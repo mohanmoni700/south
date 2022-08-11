@@ -1,0 +1,419 @@
+<?php
+$customer_id = $block->getCustomerId();
+$pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
+$pdf=$block->escapeUrl($pdfImg);
+$items= $block->getDocumentCollection();
+$uploaderType = [
+'FEIN',
+'Sales Tax/Resale License',
+'State Tobacco License',
+'Unified Resale Certificate'
+];
+$existFile=[];
+foreach ($items as $document) {
+    $existFile[] = $document['document_name'];
+}
+
+$uploader = array_diff($uploaderType, $existFile);
+
+if ($document['is_customerfrom_usa']==1) {
+
+    foreach ($uploader as $key => $value) {
+        $counter = $key + 1;?>
+                <input type="hidden"
+                name="is_customerfrom_usa[]"
+                value="1"/>
+                <div class="upload" for="document uploader">
+                    <label><?= $block->escapeHtml(__($value)); ?></label>
+                    <div class="input-file" id="input-filename<?= $block->escapeHtml($counter); ?>">
+
+                        <input type="file"
+                        data-id="<?= $block->escapeHtml($counter); ?>"
+                        id="filename<?= $block->escapeHtml($counter); ?>"
+                        class="upload-filename"
+                        name="filename<?= $block->escapeHtml($counter); ?>"
+                        />
+                        <span class="input-note">
+                            <?= $block->escapeHtml(__('(Only one document can be uploaded)')); ?>
+                        </span>
+                        <span id="image-error-message<?= $block->escapeHtml($counter); ?>" style="color:red;"></span>
+                        <!-- bv_vv; date:04-02-2022; File Preview Start; -->
+                        <img class="previewimage-filename<?= $block->escapeHtml($counter); ?>"
+                        height="170" width="170" src="" alt="" title="" style="display:none;"/>
+                        <div class="doc-actions" id="doc-actions-filename<?= $block->escapeHtml($counter); ?>"
+                            style="display:none;">
+                            <a class="view-doc-link" id="view-doc-link-filename<?= $block->escapeHtml($counter); ?>"
+                                href="" target="_blank"></a>
+                            <a class="deletedocument-preview deletedocument"
+                            id="deletedocument-filename<?= $block->escapeHtml($counter); ?>"></a>
+                        </div>
+                        <!-- bv_vv; date:04-02-2022; File Preview End; -->
+                    </div>
+                    <div class="doc_name" for="document name" style="display:none!important;">
+                        <label><?= $block->escapeHtml(__('Document Name')); ?></label>
+                        <input type="text"
+                        id="name-<?= $block->escapeHtml($counter); ?>"
+                        name="document_name[]" 
+                        value="<?= $block->escapeHtml($value); ?>"/>
+                    </div>
+                    <div class="set_expiry" for="document expiry data" style="display:none" >
+                        <label><?= $block->escapeHtml(__('Set a Specific Expiry date')); ?></label>
+                        <input type="checkbox" id="toggle<?= $block->escapeHtml($counter); ?>"
+                        name="set_expiry<?= $block->escapeHtml($counter); ?>"
+                        class="cmn-toggle cmn-toggle-round" />
+                        <span class="slider round"></span>
+                        <div class="expiry_dates expiry_dates<?= $block->escapeHtml($counter); ?>"
+                            for="document expiry data" style="display:none">
+                            <label><?= $block->escapeHtml(__('Set Expiry Date')); ?></label>
+                            <input type="text"
+                            placeholder="Expiry Date"
+                            name="expiry_date[]"
+                            id="expiry_date<?= $block->escapeHtml($counter); ?>"
+                            class="required-entry required" readonly/>
+                        </div>
+                    </div>
+                </div>
+            <?php }
+
+}
+?>
+
+    <div class="add-more-cont">
+        <a id="add_more"><?= $block->escapeHtml(__('Add More Document')); ?></a>
+    </div>
+
+<!-- js for non-usa start-->
+<script>
+    require(['jquery', 'jquery/ui'], function($){
+    jQuery(document).ready( function() {
+
+        function fileRender(showId, docActionInsertAfter,currentElem,e) {
+            var val = currentElem.val();
+            if (val) {
+                var extension = val.substring(val.lastIndexOf('.') + 1).toLowerCase();
+                var extensionArr = ['pdf', 'jpg', 'png'];
+                if (extensionArr.indexOf(extension) >= 0) {
+                    currentElem.closest('.upload').find('.doc_name').remove();
+                    currentElem.closest('.upload').find('.set_expiry').remove();
+                    var filesrc = URL.createObjectURL(e.target.files[0]);
+                    var filename = jQuery('#'+ docActionInsertAfter + showId).val();
+                    var nameArr = filename.split('\\');
+                    var name = nameArr[2];
+                    $('<div class="comman-doc-name document'+ showId + '">' +
+                        '<span>'+name+'</span>'+
+                        '<a class="comman-download-doc" id="downloaddocument-filename'+showId+
+                        '"href="' + filesrc + '" target="_blank" download></a>' +
+                        '</div>'+
+                        '<div class="doc_name" for="document name">' +
+                        '<label>Document Name</label>' +
+                        '<input type="text" id="name' + showId + 
+                        '" name="document_name[]" class="required-entry required" required>' +
+                        '</div><div class="set_expiry" data-id=' + showId + ' for="document expiry data">' +
+                        '<label>Set a Specific Expiry date</label>' +
+                        '<input type="checkbox" name="set_expiry-' + 
+                        showId + '" id="toggle-' + showId + '" value="0" class="cmn-toggle cmn-toggle-round">' +
+                        '<span class="slider round"></span>' +
+                        '<div class="expiry_dates expiry_date-' + 
+                        showId + '" for="document expiry data" style="display:none" >' +
+                        '<label>Set Expiry Date</label>' +
+                        '<input type="text" placeholder="Expiry Date" name="expiry_date[]" id="expiry_date-' 
+                        + showId + '" class="required-entry required" readonly required>' +
+                        '</div></div>').insertAfter(currentElem.closest('.upload .input-file'));
+                    $("#image-error-message-" + showId).html("");
+                    $("#filename-" + showId + "-error").remove();
+
+                    $("#doc-actions-filename-" + showId).remove();
+                    var reader = new FileReader();
+                    reader.onload = function(event) {
+                        if (event.target.result) {
+                            var filename = $('#'+ docActionInsertAfter + showId).val();
+                            var extension = filename.replace(/^.*\./, '');
+                            var nameArr = filename.split('\\');
+                            if (extension == 'pdf') {
+                                var filePreview = '<?=$block->escapeHtml(__($pdf))?>';
+                                var filesrc = URL.createObjectURL(e.target.files[0]);
+                                var imgClass = "pdf-image";
+                            } else {
+                                var filePreview = URL.createObjectURL(e.target.files[0]);
+                                var filesrc = URL.createObjectURL(e.target.files[0]);
+                                var imgClass = "";
+                            }
+
+                            $('<img class="previewimage-filename-' +
+                                showId + ' ' + imgClass + 
+                                '" height="170" width="170" src="' + filePreview + '" title="' + filename + '"/>' +
+                                '<div class="doc-actions" id="doc-actions-filename-' + showId + '">' +
+                                '<a class="view-doc-link" id="view-doc-link-filename-' + 
+                                showId + '" href="' + filesrc + '" target="_blank"></a>' +
+                                '<a class="deletedocument-preview deletedocument" id="deletedocument-filename-' 
+                                + showId + '"></a>' +
+                                '</div>').insertAfter($('#' + docActionInsertAfter + showId));
+
+                            $("#deletedocument-filename-" + showId).click(function() {
+                                $('.previewimage-filename-' + showId).remove();
+                                $("#doc-actions-filename-" + showId).remove();
+                                $('.document'+ showId).remove();
+                                $('#' + docActionInsertAfter + showId).val('');
+                                currentElem.closest('.upload').removeClass('active');
+                            });
+                        }
+                    }
+                    reader.readAsDataURL(e.target.files[0]);
+                    currentElem.closest('.upload').addClass('active');
+                } else {
+                    currentElem.val('');
+                    currentElem.closest('.upload').removeClass('active');
+                    $("#image-error-message-" + showId).html("File type supported are JPG,PNG and PDF Only");
+                    return false;
+                }
+
+                $(document).on('change', "#toggle-" + showId, function() {
+                    this.value = this.checked ? 1 : 0;
+                    if ($(this).val() == "1") {
+                        $(".expiry_date-" + showId).show();
+                        fnDatePicker(showId);
+                    } else {
+                        $(".expiry_date-" + showId).hide();
+                    }
+                });
+                expireOnChange(showId);
+            } else {
+                currentElem.closest('.upload').removeClass('active');
+            }
+        }
+
+        function fnDatePicker(showId) {
+            $("#expiry_date-" + showId).datepicker({
+                minDate: 1,
+                showMonthAfterYear: false,
+                dateFormat: 'mm/dd/yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '2020:2030',
+            });
+        }
+
+        /** Expiry Date On Change
+         *
+         * @param {String} showId
+         */
+        function expireOnChange(showId) {
+            $(document).on("change", "#expiry_date-" + showId, function(e){
+                if ($(this).val()) {
+                    var date_val = $(this).val().indexOf('Expiry Date: ') == -1 ? 
+                    $(this).val() : $(this).val().split('Expiry Date: ')[1];
+                    $(this).val('Expiry Date: ' + date_val);
+                    $(this).addClass('active-date');
+                }
+            });
+        }
+
+            expireOnChange(1);
+            $(document).on("change", '#toggle', function(e){
+                this.value = this.checked ? 1 : 0;
+                if ($(this).val() == "1") {
+                    $("#expiry_date").parent().show();
+                    $("#expiry_date").addClass("required-entry required");
+                } else {
+                    $("#expiry_date").parent().hide();
+                }
+                fnDatePicker(1);
+            }).change();
+
+            $(document).on("change", '#filename-1', function(e){
+                fileRender(1, 'filename-',$(this),e);
+            });
+
+            var id = 5;
+            $(document).on("click", '#add_more', function(e){
+                var showId = ++id;
+                if (showId <= 25) {
+                    $('<div class="upload" id="delete-uploaded'
+                        +showId+'" for="document uploader">' +
+                        '<label class="empty-label"></label>'+
+                        '<div class="input-file">' + 
+                        '<input type="file" id="filename-'
+                        + showId + '" class="required upload-filename" name="filename' 
+                        + showId + '" class="required-entry required" required>' +
+                        '<span id="image-error-message-'+ showId + '" style="color:red;"></span>'+
+                        '<span class="input-note">' + "Only one document can be uploaded" + '</span>' +
+                        '<input type="hidden" id="is_add_more_form' 
+                        + showId + '" name="is_add_more_form[]" value="1">' +
+                        '</div>' + '<div class="del" id="delete">' +
+                        '<a class="delete-icon" id="del-button' + showId + '" href="#">delete</a>' +
+                        '</div>' + '</div>').insertBefore('.upload-container .add-more-cont');
+                }
+                $("#del-button" + showId).click(function() {
+                    $("#delete-uploaded"+showId).remove();
+                    $("#name" + showId).val('');
+                    
+                });
+                $(document).on("change", '#filename-' + showId, function(e){
+                    fileRender(showId, 'filename-',$(this),e);
+                });
+            });
+        });
+
+    });
+</script>
+<!-- js for non-usa end-->
+
+
+<!-- js for usa start-->
+<script>
+    require(['jquery', 'jquery/ui'], function($){
+    jQuery(document).ready( function() {
+    function fnDatePicker(showId) {
+            $("#expiry_date" + showId).datepicker({
+                minDate: 1,
+                showMonthAfterYear: false,
+                dateFormat: 'mm/dd/yy',
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '2020:2030',
+            });
+        }
+
+        function toggleChangeById(id) {
+            $(document).on("change", '#toggle' + id, function(e){
+                this.value = this.checked ? 1 : 0;
+                if ($(this).val() == "1") {
+                    $(".expiry_dates" + id).show();
+                } else {
+                    $(".expiry_dates" + id).hide();
+                }
+                fnDatePicker(id);
+            }).change();
+        }
+
+
+        function handleFile(e, fileId, expiry_date, currentElem) {
+
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                if (event.target.result) {
+                    var filename = $("#" + fileId).val();
+                    var extension = filename.replace(/^.*\./, '');
+                    var nameArr = filename.split('\\');
+                    if (extension == 'pdf') {
+                        var filePreview = '<?=$block->escapeHtml(__($pdf))?>';
+                        var filesrc = URL.createObjectURL(e.target.files[0])
+                        var imgClass = "pdf-image";
+                    } else {
+                        var filePreview = URL.createObjectURL(e.target.files[0]);
+                        var filesrc = URL.createObjectURL(e.target.files[0]);
+                        var imgClass = "";
+                    }
+                    
+                    $('<div class="comman-doc-name document'+fileId+'">' +
+                      '<span>'+nameArr[2]+'</span>'+
+                      '<a class="comman-download-doc" id="downloaddocument-filename'
+                      +fileId+'" href="' + filesrc + 
+                      '" target="_blank" download></a>' +
+                      '</div>').insertAfter('#input-'+fileId);
+
+                    $(".previewimage-" + fileId).show();
+                    $(".previewimage-" + fileId).attr("src", filePreview);
+                    $(".previewimage-" + fileId).attr("title", filename);
+                    $(".previewimage-" + fileId).addClass(imgClass);
+
+                    currentElem.closest('.upload').addClass('active');
+                    $("#view-doc-link-" + fileId).show();
+                    $("#doc-actions-" + fileId).show();
+                    $("#view-doc-link-" + fileId).attr("href", filesrc);
+                    $("#downloaddocument-" + fileId).show();
+                    $("#downloaddocument-" + fileId).attr("href", event.target.result);
+                    $("#download-doc-preview-" + fileId).attr("href", event.target.result);
+                    $("#download-doc-preview-" + fileId).attr("download", nameArr[2]);
+                    $(expiry_date).show();
+                    /*remove required field message*/
+                    var num=fileId.match(/\d+/g);
+                    $("#filename"+num+"-error").remove();
+                    
+                    $(document).on("click", "#deletedocument-" + fileId, function(e){
+                        
+                        /*remove expiry date-start[BS]*/
+                        var splitid = fileId.match(/\d+/g);
+                        $("#toggle" + splitid[0]).val("0");
+                        this.value = this.checked ? 1 : 0;
+                        if ($(this).val() == "1") {
+                            $(".expiry_dates" + splitid[0]).show();
+                        } else {
+                            $("#toggle" + splitid[0]).attr('checked',false);
+                            $(".expiry_dates" + splitid[0]).hide();
+                        }
+                        $("#expiry_date" + splitid[0]).val("");
+                        $("#expiry_date" + splitid[0]).attr('class',"");
+                        /*remove expiry date-end*/
+
+                        /*pdf-class remove-start[BS]*/
+                        $(".previewimage-" + fileId).removeClass(imgClass);
+                        /*pdf class remove-end*/
+                        $("#doc-actions-" + fileId).hide();
+                        $(".previewimage-" + fileId).hide();
+                        $(".document" + fileId).hide();
+                        $("#view-doc-link-" + fileId).hide();
+                        $("#" + fileId).val('');
+                        $(this).closest('.upload').removeClass('active');
+                    });
+                }
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        }
+
+            function fileChangeById(id) {
+            $(".doc_name" + id).hide();
+            $(".set_expiry" + id).hide();
+
+            $(document).on("change", '#filename' + id, function(e){
+                var val = $(this).val();
+                if (val) {
+                    var extension = val.substring(val.lastIndexOf('.') + 1).toLowerCase();
+                    var extensionArr = ['pdf', 'jpg', 'png'];
+                    if (extensionArr.indexOf(extension) >= 0) {
+                        $("#image-error-message" + id).html("");
+                        handleFile(e, "filename" + id, ".set_expiry" + id, $(this));
+                        $(".doc_name" + id).show();
+                        $(".set_expiry" + id).show();
+                    } else {
+                        $(this).val('');
+                        $("#image-error-message" + id).html("File type supported are JPG,PNG and PDF Only");
+                        return false;
+                    }
+                } else {
+                    $(".doc_name" + id).hide();
+                    $(".set_expiry" + id).hide();
+                }
+            });
+        }
+        toggleChangeById(1);
+        toggleChangeById(2);
+        toggleChangeById(3);
+        toggleChangeById(4);
+
+        fileChangeById(1);
+        fileChangeById(2);
+        fileChangeById(3);
+        fileChangeById(4);
+
+        $(document).on("change", '#filename1,#filename2,#filename3,#filename4', function(e){
+                if ($(this).val()) {
+                    $(this).closest('.upload').addClass('active');
+                    $(this).parent().find('img').show();
+                } else {
+                    $(this).closest('.upload').removeClass('active');
+                    $(this).parent().find('img').hide();
+                }
+            });
+
+            $(document).on("change", '#expiry_date1, #expiry_date2, #expiry_date3, #expiry_date4', function(e){
+                if ($(this).val()) {
+                    var date_val = $(this).val();
+                    $(this).val('Expiry Date: ' + date_val);
+                    $(this).addClass('active-date');
+                }
+            });
+        });
+    });
+</script>
+<!-- js for usa end-->

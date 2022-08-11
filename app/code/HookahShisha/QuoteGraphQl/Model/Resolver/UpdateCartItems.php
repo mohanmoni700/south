@@ -16,7 +16,6 @@ use Magento\Framework\GraphQl\Query\Resolver\ArgumentsProcessorInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Quote\Api\CartRepositoryInterface;
-use Magento\Quote\Model\Cart\Data\CartItem;
 use Magento\Quote\Model\Quote;
 use Magento\QuoteGraphQl\Model\Cart\GetCartForUser;
 use Magento\QuoteGraphQl\Model\CartItem\DataProvider\UpdateCartItems as UpdateCartItemsProvider;
@@ -102,7 +101,6 @@ class UpdateCartItems extends SourceUpdateCartItems
 
         try {
             $this->updateCartItems->processCartItems($cart, $cartItems);
-            $this->cartRepository->save($cart);
         } catch (NoSuchEntityException $e) {
             throw new GraphQlNoSuchEntityException(__($e->getMessage()), $e);
         } catch (LocalizedException $e) {
