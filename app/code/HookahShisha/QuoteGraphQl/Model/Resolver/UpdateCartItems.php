@@ -101,6 +101,7 @@ class UpdateCartItems extends SourceUpdateCartItems
 
         try {
             $this->updateCartItems->processCartItems($cart, $cartItems);
+            $this->cartRepository->save($cart);
         } catch (NoSuchEntityException $e) {
             throw new GraphQlNoSuchEntityException(__($e->getMessage()), $e);
         } catch (LocalizedException $e) {
