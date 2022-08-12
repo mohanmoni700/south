@@ -1,5 +1,9 @@
 require(['jquery', 'owlcarousel'], function($) {
     $(document).ready(function() {
+		// $(".hookahshop").click(function(){
+		// 	var url = $(this).attr('data-shopnow'); 
+		// 	window.open(url, '_self');
+		// });
         $('.owl-carousel').owlCarousel({
 	        dots:false,
 	        loop: true,
