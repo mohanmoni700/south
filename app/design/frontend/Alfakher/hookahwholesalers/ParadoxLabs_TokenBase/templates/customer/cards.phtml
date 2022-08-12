@@ -3,9 +3,11 @@
 // @codingStandardsIgnoreFile
 ?>
 <div class="block block-cards-list">
+    <?php if(!empty($block->getCards()->getData())): ?>
     <div class="block-title">
         <h2><?= $block->escapeHtml($block->getPaymentMethodTitle()); ?></h2>
     </div>
+    <?php endif;?>
     <div class="block-content items checkout-payment-method">
         <?php $cards = $block->getCards(); ?>
         <?php if (!empty($cards)): ?>
