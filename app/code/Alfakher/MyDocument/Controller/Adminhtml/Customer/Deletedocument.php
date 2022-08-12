@@ -3,7 +3,13 @@
 namespace Alfakher\MyDocument\Controller\Adminhtml\Customer;
 
 use Alfakher\MyDocument\Model\MyDocumentFactory;
+use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory;
+use Magento\Backend\App\Action\Context;
+use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Customer\Model\CustomerFactory;
+use Magento\Customer\Model\Session;
 use Magento\Framework\Controller\ResultFactory;
+use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Filesystem;
 use Magento\Framework\Image\AdapterFactory;
 use Magento\MediaStorage\Model\File\UploaderFactory;
@@ -47,34 +53,43 @@ class Deletedocument extends \Magento\Backend\App\Action
     protected $filesystem;
 
     /**
-     * @param \Magento\Framework\App\Action\Context $context
-     * @param \Alfakher\MyDocument\Model\MyDocumentFactory $myDocument
-     * @param \Magento\Framework\Controller\ResultFactory $result
-     * @param \Magento\Customer\Model\Session $customerSession
-     * @param UploaderFactory $uploaderFactory
-     * @param AdapterFactory $adapterFactory
+     * @param MyDocumentFactory $myDocument
+     * @param CollectionFactory $collection
+     * @param Context $context
+     * @param CustomerRepositoryInterface $customerRepositoryInterface
+     * @param CustomerFactory $customerFactory
+     * @param Session $customerSession
+     * @param ResultFactory $result
+     * @param JsonFactory $resultJsonFactory
      * @param Filesystem $filesystem
-     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     * @param AdapterFactory $adapterFactory
+     * @param UploaderFactory $uploaderFactory
      */
 
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Alfakher\MyDocument\Model\MyDocumentFactory $myDocument,
-        \Magento\Framework\Controller\ResultFactory $result,
-        \Magento\Customer\Model\Session $customerSession,
-        UploaderFactory $uploaderFactory,
-        AdapterFactory $adapterFactory,
+        MyDocumentFactory $myDocument,
+        CollectionFactory $collection,
+        Context $context,
+        CustomerRepositoryInterface $customerRepositoryInterface,
+        CustomerFactory $customerFactory,
+        Session $customerSession,
+        ResultFactory $result,
+        JsonFactory $resultJsonFactory,
         Filesystem $filesystem,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+        AdapterFactory $adapterFactory,
+        UploaderFactory $uploaderFactory
     ) {
         parent::__construct($context);
         $this->_myDocument = $myDocument;
-        $this->resultRedirect = $result;
-        $this->uploaderFactory = $uploaderFactory;
-        $this->adapterFactory = $adapterFactory;
-        $this->filesystem = $filesystem;
+        $this->collection = $collection;
+        $this->_customerRepositoryInterface = $customerRepositoryInterface;
+        $this->_customerFactory = $customerFactory;
         $this->customerSession = $customerSession;
+        $this->resultRedirect = $result;
         $this->resultJsonFactory = $resultJsonFactory;
+        $this->filesystem = $filesystem;
+        $this->adapterFactory = $adapterFactory;
+        $this->uploaderFactory = $uploaderFactory;
     }
 
     /**
@@ -85,17 +100,29 @@ class Deletedocument extends \Magento\Backend\App\Action
         $resultJson = $this->resultJsonFactory->create();
         $documentId = $this->getRequest()->getPost("id");
         $model = $this->_myDocument->create()->load($documentId);
+        $itemData = $model->getData();
+        $customerId = $itemData['customer_id'];
+
+        $documentCollection = $this->collection->create()->addFieldToFilter('customer_id', ['eq' => $customerId]);
+
+        $customer = $this->_customerFactory->create()->load($customerId)->getDataModel();
+        $success = false;
+
         if ($model) {
-            $model->setIsDelete(true);
-            $model->save();
+            $model->delete();
             $success = true;
-            $this->_eventManager->dispatch('document_delete_after',
-                [
-                    'items' => $model->getData()
-                ]
-            );
-        } else {
-            $success = false;
+            $this->_eventManager->dispatch('document_delete_after', [
+                'items' => $itemData,
+            ]);
+
+            if (!empty($documentCollection->getData())) {
+                $customer->setCustomAttribute('uploaded_doc', 1);
+                $this->_customerRepositoryInterface->save($customer);
+            } else {
+                $customer->setCustomAttribute('uploaded_doc', 0);
+                $this->_customerRepositoryInterface->save($customer);
+            }
+
         }
         return $resultJson->setData([
             'success' => $success]);
