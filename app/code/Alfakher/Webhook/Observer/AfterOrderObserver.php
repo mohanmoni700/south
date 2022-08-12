@@ -62,40 +62,46 @@ class AfterOrderObserver extends \Mageplaza\Webhook\Observer\AfterSave
      */
     public function execute(Observer $observer)
     {
-        $registeryObserverCheck = $this->registry->registry('registeryObserverCheck');
-        if (!$registeryObserverCheck) {
-            $this->registry->register('registeryObserverCheck', true);
-            $item = $observer->getDataObject();
-            if ($item->getStatus() != 'canceled') {
+        $item = $observer->getDataObject();
+        $orderStatus = [];
+        $orderStatus = $this->registry->registry('orderStatus');
+        if ($orderStatus == null) {
+            $orderStatus[] = 'status options';
+        }
+        if (!in_array($item->getStatus(), $orderStatus)) {
+            $orderStatus[] = $item->getStatus();
+            if ($this->registry->registry('orderStatus')) {
+                $this->registry->unregister('orderStatus');
+            }
+            $this->registry->register('orderStatus', $orderStatus);
 
-                $schedule = $this->helper->getCronSchedule();
-                if ($schedule !== Schedule::DISABLE && $schedule !== null) {
-                    $hookCollection = $this->hookFactory->create()->getCollection()
-                        ->addFieldToFilter('hook_type', $this->hookType)
-                        ->addFieldToFilter('status', 1)
-                        ->addFieldToFilter('store_ids', [
-                            ['finset' => Store::DEFAULT_STORE_ID],
-                            ['finset' => $this->helper->getItemStore($item)],
-                        ])
-                        ->setOrder('priority', 'ASC');
-                    if ($hookCollection->getSize() > 0) {
-                        $schedule = $this->scheduleFactory->create();
-                        $data = [
-                            'hook_type' => $this->hookType,
-                            'event_id' => $item->getId(),
-                            'status' => '0',
-                        ];
+            $schedule = $this->helper->getCronSchedule();
+            if ($schedule !== Schedule::DISABLE && $schedule !== null) {
+                $hookCollection = $this->hookFactory->create()->getCollection()
+                    ->addFieldToFilter('hook_type', $this->hookType)
+                    ->addFieldToFilter('status', 1)
+                    ->addFieldToFilter('store_ids', [
+                        ['finset' => Store::DEFAULT_STORE_ID],
+                        ['finset' => $this->helper->getItemStore($item)],
+                    ])
+                    ->setOrder('priority', 'ASC');
+                if ($hookCollection->getSize() > 0) {
+                    $schedule = $this->scheduleFactory->create();
+                    $data = [
+                        'hook_type' => $this->hookType,
+                        'event_id' => $item->getId(),
+                        'status' => '0',
+                    ];
 
-                        try {
-                            $schedule->addData($data);
-                            $schedule->save();
-                        } catch (Exception $exception) {
-                            $this->messageManager->addError($exception->getMessage());
-                        }
+                    try {
+                        $schedule->addData($data);
+                        $schedule->save();
+                    } catch (Exception $exception) {
+                        $this->messageManager->addError($exception->getMessage());
                     }
-                } else {
-                    $this->helper->send($item, $this->hookType);
                 }
+            } else {
+                $this->helper->send($item, $this->hookType);
             }
         }
     }
