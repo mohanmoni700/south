@@ -260,55 +260,56 @@ define([
         setShippingInformation: function () {
 
             /*af_bv_op; start*/
-            var carrierCode = quote.shippingMethod().carrier_code;
-            if(carrierCode == 'customercourieraccount')
-            {
-                var error = false;
-
-                var customerCourierName = $("input[name=customer_courier_name]").val();
-                var csutomerCourierAccounct = $("input[name=customer_courier_account]").val();
-
-                if (customerCourierName == '' && csutomerCourierAccounct == '')
+            if (this.validateShippingInformation()) {
+                var carrierCode = quote.shippingMethod().carrier_code;
+                if(carrierCode == 'customercourieraccount')
                 {
-                    $('input[name=customer_courier_name]').addClass('mage-error');
-                    $('input[name=customer_courier_account]').addClass('mage-error');
-                    $("#customer_courier_name_error_msg").css("display",'block');
-                    $("#customer_courier_account_error_msg").css("display",'block');
-                    error = true;
-                }
+                    var error = false;
 
-                if (customerCourierName == '' && csutomerCourierAccounct != '')
-                {
-                    $('input[name=customer_courier_name]').addClass('mage-error');
-                    $('input[name=customer_courier_account]').removeClass('mage-error');
-                    $("#customer_courier_name_error_msg").css("display",'block');
-                    $("#customer_courier_account_error_msg").css("display",'none');
-                    error = true;
-                }
+                    var customerCourierName = $("input[name=customer_courier_name]").val();
+                    var csutomerCourierAccounct = $("input[name=customer_courier_account]").val();
 
-                if (customerCourierName != '' && csutomerCourierAccounct == '')
-                {
-                    $('input[name=customer_courier_name]').removeClass('mage-error');
-                    $('input[name=customer_courier_account]').addClass('mage-error');
-                    $("#customer_courier_name_error_msg").css("display",'none');
-                    $("#customer_courier_account_error_msg").css("display",'block');
-                    error = true;
-                }
+                    if (customerCourierName == '' && csutomerCourierAccounct == '')
+                    {
+                        $('input[name=customer_courier_name]').addClass('mage-error');
+                        $('input[name=customer_courier_account]').addClass('mage-error');
+                        $("#customer_courier_name_error_msg").css("display",'block');
+                        $("#customer_courier_account_error_msg").css("display",'block');
+                        error = true;
+                    }
 
-                if (customerCourierName != '' && csutomerCourierAccounct != '')
-                {
-                    $('input[name=customer_courier_name]').removeClass('mage-error');
-                    $('input[name=customer_courier_account]').removeClass('mage-error');
-                    $("#customer_courier_name_error_msg").css("display",'none');
-                    $("#customer_courier_account_error_msg").css("display",'none');
-                    error = false;
-                }
+                    if (customerCourierName == '' && csutomerCourierAccounct != '')
+                    {
+                        $('input[name=customer_courier_name]').addClass('mage-error');
+                        $('input[name=customer_courier_account]').removeClass('mage-error');
+                        $("#customer_courier_name_error_msg").css("display",'block');
+                        $("#customer_courier_account_error_msg").css("display",'none');
+                        error = true;
+                    }
 
-                if (error == true)
-                {
-                    return false;
-                }
+                    if (customerCourierName != '' && csutomerCourierAccounct == '')
+                    {
+                        $('input[name=customer_courier_name]').removeClass('mage-error');
+                        $('input[name=customer_courier_account]').addClass('mage-error');
+                        $("#customer_courier_name_error_msg").css("display",'none');
+                        $("#customer_courier_account_error_msg").css("display",'block');
+                        error = true;
+                    }
 
+                    if (customerCourierName != '' && csutomerCourierAccounct != '')
+                    {
+                        $('input[name=customer_courier_name]').removeClass('mage-error');
+                        $('input[name=customer_courier_account]').removeClass('mage-error');
+                        $("#customer_courier_name_error_msg").css("display",'none');
+                        $("#customer_courier_account_error_msg").css("display",'none');
+                        error = false;
+                    }
+
+                    if (error == true)
+                    {
+                        return false;
+                    }
+                }
             }
             /*af_bv_op; end*/
 
