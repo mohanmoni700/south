@@ -13,6 +13,11 @@ use Magento\Framework\Data\OptionSourceInterface;
 class Website implements OptionSourceInterface
 {
     /**
+     * Website label string
+     */
+    public const WEBSITE_LABEL = 'Hookah Wholesalers (B2B)';
+
+    /**
      * @var CustomerAttributeOptions
      */
     private $provider;
@@ -33,7 +38,7 @@ class Website implements OptionSourceInterface
         $tempArray = [];
         $websites = $this->provider->loadOptions('website_id');
         foreach ($websites as $key => $website) {
-            if ($website['label'] == 'Hookah Wholesalers (B2B)') {
+            if ($website['label'] === self::WEBSITE_LABEL) {
                 $tempArray = $website;
                 unset($websites[$key]);
                 break;
