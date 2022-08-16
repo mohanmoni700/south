@@ -43,20 +43,16 @@ class OrderPaymentSaveBefore implements \Magento\Framework\Event\ObserverInterfa
         $quote = $this->quoteRepository->get($order->getQuoteId());
         $paymentQuote = $quote->getPayment();
         $method = $paymentQuote->getMethodInstance()->getCode();
-
         if ($this->_state->getAreaCode() !== \Magento\Framework\App\Area::AREA_ADMINHTML) {
-            $inputParams = $this->inputParamsResolver->resolve();
-            foreach ($inputParams as $inputParam) {
-                if ($inputParam instanceof \Magento\Quote\Model\Quote\Payment) {
-                    $paymentData = $inputParam->getData('additional_data');
-                    if ($method == 'offline_paypal') {
+            if ($method == 'offline_paypal' || $method == 'ach_us_payment') {
+                $inputParams = $this->inputParamsResolver->resolve();
+                foreach ($inputParams as $inputParam) {
+                    if ($inputParam instanceof \Magento\Quote\Model\Quote\Payment) {
+                        $paymentData = $inputParam->getData('additional_data');
                         if (isset($paymentData['paypalemail'])) {
                             $paymentQuote->setData('paypal_email', $paymentData['paypalemail']);
                             $paymentOrder->setData('paypal_email', $paymentData['paypalemail']);
-                        }
-
-                    } elseif ($method == 'ach_us_payment') {
-                        if (isset($paymentData['accountnumber'])) {
+                        } elseif (isset($paymentData['accountnumber'])) {
                             $paymentQuote->setData('account_number', $paymentData['accountnumber']);
                             $paymentQuote->setData('bank_name', $paymentData['bankname']);
                             $paymentQuote->setData('routing_number', $paymentData['routingnumber']);
