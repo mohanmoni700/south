@@ -10,7 +10,7 @@ $grossEnable = $viewModel->isModuleEnabled('hookahshisha/gross_margin_group/gros
     $columns = $block->getColumns();
     unset($columns['carriergroup']);
     unset($columns['carriergroup_shipping']);
-    if ($grossEnable==0) {
+    if ($grossEnable === 0) {
         unset($columns['grossmargin']);
     }
     $lastItemNumber = count($columns) ?>
