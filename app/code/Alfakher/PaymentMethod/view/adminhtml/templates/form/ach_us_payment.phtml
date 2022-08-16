@@ -1,0 +1,56 @@
+<?php
+/**
+ * @var $block \Magento\OfflinePayments\Block\Form\AchUsPayment
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+?>
+<fieldset class="admin__fieldset payment-method" id="payment_form_<?=$block->escapeHtml($block->getMethodCode())?>">
+    <div class="admin__field _required">
+        <label for="account_number" class="admin__field-label">
+            <span><?=$block->escapeHtml(__('Account Number'))?></span>
+        </label>
+        <div class="admin__field-control">
+            <input type="text" id="account_number" name="payment[account_number]"
+                   title="<?=$block->escapeHtml(__("Account Number"))?>"
+                   class="required-entry admin__control-text"
+                   value="<?=/* @noEscape */$block->getInfoData('account_number')?>"/>
+        </div>
+    </div>
+    <div class="admin__field _required">
+        <label for="bank_name" class="admin__field-label">
+            <span><?=$block->escapeHtml(__('Bank Name'))?></span>
+        </label>
+        <div class="admin__field-control">
+            <input type="text" id="bank_name" name="payment[bank_name]"
+                   title="<?=$block->escapeHtml(__("bank Name"))?>"
+                   class="required-entry admin__control-text"
+                   value="<?=/* @noEscape */$block->getInfoData('bank_name')?>"/>
+        </div>
+    </div>
+    <div class="admin__field _required">
+        <label for="routing_number" class="admin__field-label">
+            <span><?=$block->escapeHtml(__('Routing Number'))?></span>
+        </label>
+        <div class="admin__field-control">
+            <input type="text" id="routing_number" name="payment[routing_number]"
+                   title="<?=$block->escapeHtml(__("Routing Number"))?>"
+                   class="required-entry admin__control-text"
+                   value="<?=/* @noEscape */$block->getInfoData('routing_number')?>"/>
+        </div>
+    </div>
+    <div class="admin__field _required">
+        <label for="address" class="admin__field-label">
+            <span><?=$block->escapeHtml(__('Address'))?></span>
+        </label>
+        <div class="admin__field-control">
+            <input type="text" id="address" name="payment[address]"
+                   title="<?=$block->escapeHtml(__("Address"))?>"
+                   class="required-entry admin__control-text"
+                   value="<?=/* @noEscape */$block->getInfoData('address')?>"/>
+        </div>
+    </div>
+</fieldset>
+<?=/* @noEscape */$secureRenderer->renderStyleAsTag(
+    "display:none",
+    'fieldset#payment_form_' . $block->escapeJs($block->getMethodCode())
+)?>
