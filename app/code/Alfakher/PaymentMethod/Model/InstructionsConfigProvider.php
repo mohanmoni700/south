@@ -3,6 +3,8 @@ namespace Alfakher\PaymentMethod\Model;
 
 use Magento\Checkout\Model\ConfigProviderInterface;
 use Magento\Framework\Escaper;
+use Magento\OfflinePayments\Model\Banktransfer;
+use Magento\OfflinePayments\Model\Cashondelivery;
 use Magento\Payment\Helper\Data as PaymentHelper;
 
 class InstructionsConfigProvider implements ConfigProviderInterface
@@ -11,7 +13,9 @@ class InstructionsConfigProvider implements ConfigProviderInterface
      * @var string[]
      */
     protected $methodCodes = [
-        'zelle',
+        Banktransfer::PAYMENT_METHOD_BANKTRANSFER_CODE,
+        Cashondelivery::PAYMENT_METHOD_CASHONDELIVERY_CODE,
+        ZellePaymentMethod::PAYMENT_METHOD_ZELLE_CODE,
     ];
 
     /**
