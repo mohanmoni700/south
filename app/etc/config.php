@@ -844,6 +844,7 @@ return [
         'Alfakher_OfflinePaymentRecords' => 1,
         'Alfakher_OrderPdf' => 1,
         'Alfakher_OutOfStockProduct' => 1,
+        'Alfakher_PaymentMethod' => 1,
         'Alfakher_Productpageb2b' => 1,
         'Alfakher_RmaCustomization' => 1,
         'Alfakher_SalesApprove' => 1,
