@@ -44,7 +44,6 @@ class Saveitem extends \Magento\Backend\App\Action
     {
         $post = $this->getRequest()->getPostValue();
         $fileName = "item_excise_report.csv";
-
         $check_value = isset($post['check']) ? 1 : 0;
         $startdate = $post['startdate'] . " 00:00:00";
         $enddate = $post['enddate'] . " 23:59:59";
@@ -54,7 +53,7 @@ class Saveitem extends \Magento\Backend\App\Action
         $header = [];
         $values = [];
 
-        if (($store_code == 'hookah_wholesalers' || $store_code=='base') &&
+        if (($store_code == 'hookah_wholesalers' || $store_code == 'base') &&
             $check_value == 1) {
             /*query for b2b and b2c without costreport*/
             $query = $this->withoutCost($startdate, $enddate, $storeid);
@@ -95,6 +94,11 @@ class Saveitem extends \Magento\Backend\App\Action
 
         if ($check_value == 1) {
             unset($header[0]['SKU Cost']);
+            /*to remove superpack column from withoutCost() csv*/
+            foreach ($values as $key => $val) {
+                array_pop($values[$key]);
+            }
+            /*to remove superpack column END*/
         }
 
         $item_report = array_merge($header, $values);
@@ -144,17 +148,29 @@ class Saveitem extends \Magento\Backend\App\Action
                 soi.qty_shipped as Shipped_Quantity,
                 soi.excise_tax as Excise_Tax,
                 soi.sales_tax as Sales_Tax,
-                soi.base_price as Price
+                soi.base_price as Price,
+                (SELECT value FROM catalog_product_entity_int
+                    WHERE store_id=0
+                    AND row_id=cpe.entity_id
+                    AND attribute_id=(SELECT attribute_id FROM eav_attribute
+                        WHERE attribute_code = 'is_superpack'
+                    )
+                ) AS superpack
                 FROM
                 sales_order as so
                 left join sales_invoice as si on si.order_id = so.entity_id
                 left join sales_order_item as soi on soi.order_id = so.entity_id
+                LEFT JOIN catalog_product_entity AS cpe ON soi.sku = cpe.sku
                 WHERE
-                so.state = 'complete'
+                 so.state = 'complete'
                 AND so.created_at >= '" . $startdate . "'
                 AND so.created_at <= '" . $enddate . "'
                 AND so.store_id = '" . $storeid . "'
                 AND si.increment_id IS NOT Null
+                AND soi.product_type != 'configurable'
+                HAVING
+                superpack is null
+                or superpack = 0
                 ORDER BY
                 so.created_at";
     }
@@ -241,7 +257,7 @@ class Saveitem extends \Magento\Backend\App\Action
                     AND so.created_at <= '" . $enddate . "'
                     AND so.store_id = '" . $storeid . "'
                     AND si.increment_id IS NOT NULL
-                    AND soi.qty_shipped != 0
+                    AND soi.product_type != 'configurable'
                 ORDER BY
                     so.created_at";
     }
