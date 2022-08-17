@@ -52,7 +52,7 @@ class PlaceOrder
         array $args = null
     ) {
         try {
-            $proceed($field, $context, $info, $value, $args);
+            $result = $proceed($field, $context, $info, $value, $args);
         } catch (LocalizedException $e) {
             $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
 
@@ -68,5 +68,7 @@ class PlaceOrder
                 throw new GraphQlInputException(__('%message', ['message' => $e->getMessage()]), $e);
             }
         }
+
+        return $result;
     }
 }
