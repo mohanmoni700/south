@@ -1,8 +1,3 @@
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-
 define([
     'jquery',
     'mage/smart-keyboard-handler',
@@ -11,10 +6,6 @@ define([
     'domReady!'
 ], function ($, keyboardHandler) {
     'use strict';
-
-    // $('.cart-summary').mage('sticky', {
-    //     container: '#maincontent'
-    // });
 
     $(window).on('load',function() {
         $('img').each(function(){
