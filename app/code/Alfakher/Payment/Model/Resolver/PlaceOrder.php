@@ -61,7 +61,7 @@ class PlaceOrder
 
             if (
                 $storeCode == self::DEFAULT_STORE_CODE &&
-                $e->getMessage() == 'Unable to place order: The payment method you requested is not available.'
+                $e->getMessage() == 'Unable to place order: Transaction has been declined. Please try again later.'
             ) {
                 throw new GraphQlInputException(__('Your credit card has been redacted. Please re-enter your credit card details, click “Add a new card”.'));
             } else {
