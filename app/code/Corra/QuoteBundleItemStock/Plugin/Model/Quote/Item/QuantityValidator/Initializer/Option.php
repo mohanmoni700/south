@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Corra\ValidateQuoteItemQty\Plugin\Model\Quote\Item\QuantityValidator\Initializer;
+namespace Corra\QuoteBundleItemStock\Plugin\Model\Quote\Item\QuantityValidator\Initializer;
 
 use Magento\Bundle\Model\Product\Type;
 use Magento\CatalogInventory\Model\Quote\Item\QuantityValidator\Initializer\Option as CatalogInventoryOption;

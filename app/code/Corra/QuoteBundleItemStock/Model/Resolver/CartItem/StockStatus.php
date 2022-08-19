@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Corra\ValidateQuoteItemQty\Model\Resolver\CartItem;
+namespace Corra\QuoteBundleItemStock\Model\Resolver\CartItem;
 
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
