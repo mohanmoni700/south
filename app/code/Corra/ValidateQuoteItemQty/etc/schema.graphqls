@@ -1,0 +1,4 @@
+interface CartItemInterface @typeResolver(class: "Magento\\QuoteGraphQl\\Model\\Resolver\\CartItemTypeResolver") @doc(description: "The CartItemInterface contains all the cart items data.") {
+    is_out_stock: Int @doc(description: "Cart item stock status") @resolver(class: "Corra\\ValidateQuoteItemQty\\Model\\Resolver\\CartItem\\StockStatus")
+    oos_message: String @doc(description: "Bundle product Oos Message") @resolver(class: "Corra\\ValidateQuoteItemQty\\Model\\Resolver\\CartItem\\OosMessageText")
+}
