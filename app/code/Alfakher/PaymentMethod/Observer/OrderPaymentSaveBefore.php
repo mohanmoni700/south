@@ -71,12 +71,12 @@ class OrderPaymentSaveBefore implements \Magento\Framework\Event\ObserverInterfa
             }
         } else {
             $param = $this->request->getParam('payment');
-            if ($method == PaymentMethod::PAYMENT_METHOD_OFFLINEPAYPAL_CODE) {
+            if ($method === PaymentMethod::PAYMENT_METHOD_OFFLINEPAYPAL_CODE) {
                 if (isset($param['paypal_email'])) {
                     $paymentQuote->setData('paypal_email', $param['paypal_email']);
                     $paymentOrder->setData('paypal_email', $param['paypal_email']);
                 }
-            } elseif ($method == AchPaymentMethod::PAYMENT_METHOD_ACHUSPAYMENT_CODE) {
+            } elseif ($method === AchPaymentMethod::PAYMENT_METHOD_ACHUSPAYMENT_CODE) {
                 if (isset($param['account_number'])) {
                     $paymentQuote->setData('account_number', $param['account_number']);
                     $paymentQuote->setData('bank_name', $param['bank_name']);
