@@ -112,7 +112,11 @@ class UpdateCartItems extends SourceUpdateCartItems
         try {
             $this->updateCartItems->processCartItems($cart, $cartItems);
             // restrict avalara tax request using flag for update item
-            $this->avalaraConfig->setAddressTaxable(false);
+            if (isset($processedArgs['input']['is_checkout']) &&
+                $processedArgs['input']['is_checkout'] === false
+            ) {
+                $this->avalaraConfig->setAddressTaxable(false);
+            }
             $this->cartRepository->save($cart);
         } catch (NoSuchEntityException $e) {
             throw new GraphQlNoSuchEntityException(__($e->getMessage()), $e);
