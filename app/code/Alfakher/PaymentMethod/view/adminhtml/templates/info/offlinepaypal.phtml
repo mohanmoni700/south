@@ -1,0 +1,13 @@
+<?php
+/**
+ * @var $block \Magento\OfflinePayments\Block\Info\OfflinePaypal
+ */
+$paymentTitle = $block->getMethod()->getConfigData('title', $block->getInfo()->getOrder()->getStoreId());
+?>
+<div class="order-payment-method-name"><?= $block->escapeHtml($paymentTitle) ?></div>
+<table class="data-table admin__table-secondary">
+    <tr>
+        <th><?= $block->escapeHtml(__('PayPal Email')) ?>:</th>
+        <td><?= $block->escapeHtml($block->getInfo()->getPaypalEmail()) ?></td>
+    </tr>
+</table>

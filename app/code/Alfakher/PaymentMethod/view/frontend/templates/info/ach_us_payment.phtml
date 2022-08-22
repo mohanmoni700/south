@@ -1,0 +1,24 @@
+<?php
+/**
+ * @var $block \Magento\OfflinePayments\Block\Info\AchUsPayment
+ */
+?>
+<dl class="payment-method purchase order">
+    <dt class="title"><?= $block->escapeHtml($block->getMethod()->getTitle()) ?></dt>
+    <dd class="content">
+        <strong><?= $block->escapeHtml(__('Account Number')) ?></strong>
+        <span class="number"><?= $block->escapeHtml($block->getInfo()->getAccountNumber()) ?></span>
+    </dd>
+    <dd class="content">
+        <strong><?= $block->escapeHtml(__('Bank Name')) ?></strong>
+        <span class="number"><?= $block->escapeHtml($block->getInfo()->getBankName()) ?></span>
+    </dd>
+    <dd class="content">
+        <strong><?= $block->escapeHtml(__('Routing Number')) ?></strong>
+        <span class="number"><?= $block->escapeHtml($block->getInfo()->getRoutingNumber()) ?></span>
+    </dd>
+    <dd class="content">
+        <strong><?= $block->escapeHtml(__('Address')) ?></strong>
+        <span class="number"><?= $block->escapeHtml($block->getInfo()->getAddress()) ?></span>
+    </dd>
+</dl>
