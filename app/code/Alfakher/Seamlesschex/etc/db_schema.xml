@@ -1,0 +1,12 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="quote_payment" resource="checkout">
+        <column xsi:type="text" name="ach_account_number" nullable="true" comment="ACH - Bank Account Number"/>
+        <column xsi:type="text" name="ach_routing_number" nullable="true" comment="ACH - Routing Number"/>
+        <column xsi:type="text" name="ach_check_number" nullable="true" comment="ACH - Check Number"/>
+    </table>
+    <table name="sales_order_payment" resource="sales">
+        <column xsi:type="text" name="ach_account_number" nullable="true" comment="ACH - Bank Account Number"/>
+        <column xsi:type="text" name="ach_routing_number" nullable="true" comment="ACH - Routing Number"/>
+        <column xsi:type="text" name="ach_check_number" nullable="true" comment="ACH - Check Number"/>
+    </table>
+</schema>

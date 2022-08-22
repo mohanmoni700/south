@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:DataObject/etc/fieldset.xsd">
+    <scope id="global">
+        <fieldset id="quote_convert_payment">
+            <field name="ach_account_number">
+                <aspect name="to_order_payment" />
+            </field>
+            <field name="ach_routing_number">
+                <aspect name="to_order_payment" />
+            </field>
+            <field name="ach_check_number">
+                <aspect name="to_order_payment" />
+            </field>
+        </fieldset>
+        <fieldset id="sales_convert_quote_payment">
+            <field name="ach_account_number">
+                <aspect name="to_order_payment" />
+            </field>
+            <field name="ach_routing_number">
+                <aspect name="to_order_payment" />
+            </field>
+            <field name="ach_check_number">
+                <aspect name="to_order_payment" />
+            </field>
+        </fieldset>
+        <fieldset id="sales_convert_order_payment">
+            <field name="ach_account_number">
+                <aspect name="to_order_payment" />
+            </field>
+            <field name="ach_routing_number">
+                <aspect name="to_order_payment" />
+            </field>
+            <field name="ach_check_number">
+                <aspect name="to_order_payment" />
+            </field>
+        </fieldset>
+    </scope>
+</config>
