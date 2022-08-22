@@ -46,8 +46,8 @@ class OrderPaymentSaveBefore implements \Magento\Framework\Event\ObserverInterfa
         $paymentQuote = $quote->getPayment();
         $method = $paymentQuote->getMethodInstance()->getCode();
         if ($this->_state->getAreaCode() !== \Magento\Framework\App\Area::AREA_ADMINHTML &&
-            ($method == PaymentMethod::PAYMENT_METHOD_OFFLINEPAYPAL_CODE ||
-                $method == AchPaymentMethod::PAYMENT_METHOD_ACHUSPAYMENT_CODE)
+            ($method === PaymentMethod::PAYMENT_METHOD_OFFLINEPAYPAL_CODE ||
+                $method === AchPaymentMethod::PAYMENT_METHOD_ACHUSPAYMENT_CODE)
         ) {
             $inputParams = $this->inputParamsResolver->resolve();
             foreach ($inputParams as $inputParam) {
