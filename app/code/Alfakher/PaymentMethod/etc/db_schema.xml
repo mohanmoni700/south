@@ -1,0 +1,17 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="quote_payment" resource="checkout" engine="innodb" comment="Sales Flat Quote Payment">
+        <column xsi:type="text" name="paypal_email" nullable="true" comment="email for your PayPal account"/>
+        <column xsi:type="text" name="account_number" nullable="true" comment="Bank Account Number"/>
+        <column xsi:type="text" name="bank_name" nullable="true" comment="Bank Name"/>
+        <column xsi:type="text" name="routing_number" nullable="true" comment="Routing Number"/>
+        <column xsi:type="text" name="address" nullable="true" comment="Address"/>
+    </table>
+    <table name="sales_order_payment" resource="sales" engine="innodb" comment="Sales Flat Order Payment">
+        <column xsi:type="text" name="paypal_email" nullable="true" comment="email for your PayPal account"/>
+        <column xsi:type="text" name="account_number" nullable="true" comment="Bank Account Number"/>
+        <column xsi:type="text" name="bank_name" nullable="true" comment="Bank Name"/>
+        <column xsi:type="text" name="routing_number" nullable="true" comment="Routing Number"/>
+        <column xsi:type="text" name="address" nullable="true" comment="Address"/>
+    </table>
+</schema>
