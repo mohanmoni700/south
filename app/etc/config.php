@@ -847,6 +847,7 @@ return [
         'Alfakher_Productpageb2b' => 1,
         'Alfakher_RmaCustomization' => 1,
         'Alfakher_SalesApprove' => 1,
+        'Alfakher_Seamlesschex' => 1,
         'Alfakher_SeoUrlPrefix' => 1,
         'Alfakher_ShippingEdit' => 1,
         'Alfakher_StoreCredit' => 1,
