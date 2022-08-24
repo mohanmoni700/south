@@ -952,6 +952,7 @@ return [
         'Mageplaza_Seo' => 1,
         'Mageplaza_Sitemap' => 1,
         'Alfakher_Webhook' => 1,
+        'MagestyApps_WebImages' => 1,
         'HookahShisha_Customization' => 1,
         'OlegKoval_RegenerateUrlRewrites' => 1,
         'PCAPredict_Tag' => 1,
