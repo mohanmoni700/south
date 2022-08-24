@@ -25,5 +25,58 @@
                 </field>
             </group>
         </section>
+        <section id="hookahshisha" translate="label" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="excise_tax_note" translate="label" type="text" sortOrder="6" showInDefault="0" showInWebsite="1" showInStore="1">
+                <label>Excise Tax Note</label>
+                <field id="incl_excise_tax_note" translate="label" type="text" sortOrder="20" showInDefault="0" showInWebsite="1" showInStore="1" >
+                    <label>Included Excise Tax</label>
+                </field>
+                <field id="excl_excise_tax_note" translate="label" type="text" sortOrder="20" showInDefault="0" showInWebsite="1" showInStore="1" >
+                    <label>Excluded Excise Tax</label>
+                </field>
+            </group>
+            <group id="default_shipping_selection_conf" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Default Selected Shiping Configuration</label>
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Enabled for select by name</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="selected_shipping_name" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0" >
+                    <label>Shipping Method Code</label>
+                    <comment><![CDATA[Like tablerate_bestway]]></comment>
+                </field>
+                <field id="enable_position" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Enabled for select by position</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="selected_shipping_position" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0" >
+                    <label>Selected Shipping Method Position</label>
+                    <comment><![CDATA[It will start from zero(0)]]></comment>
+                </field>
+                <field id="timeout" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0" >
+                    <label>Timeout</label>
+                </field>
+            </group>
+        </section>
+        <section id="graphql_payment" translate="label" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top-graphql</class>
+            <label>Graphql Settings</label>
+            <tab>hookahshisha</tab>
+            <resource>HookahShisha_Customerb2b::customer_config</resource>
+            <group id="payment_details" translate="label" type="text" sortOrder="6" showInDefault="1">
+                <label>Payment Details</label>
+                <field id="disable_payment_garphql" translate="label" type="select" sortOrder="10" showInDefault="1" canRestore="1">
+                    <label>Disable Payment Method For Graphql</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="payment_needs_disable" translate="label" type="text" sortOrder="20" showInDefault="1">
+                    <label>Methods That Needs To Be Disable</label>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="disable_payment_garphql">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
 	</system>
 </config>

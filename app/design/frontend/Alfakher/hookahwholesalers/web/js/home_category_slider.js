@@ -16,7 +16,7 @@ require([
                 slidesToShow: 6,
                 slidesToScroll: 6,
                 autoplay: false,
-                infinite: true,
+                infinite: false,
                 responsive: [{
                     breakpoint: 1200,
                         settings: {
@@ -29,7 +29,7 @@ require([
                             settings: {
                                 slidesToShow: 4,
                                 slidesToScroll: 4,
-                                infinite: true,
+                                infinite: false,
                             }
                         },
                     {
@@ -37,7 +37,7 @@ require([
                         settings: {
                             slidesToShow: 2,
                             slidesToScroll: 1,
-                            infinite: true,
+                            infinite: false,
                         }
                     },
                     {
@@ -45,7 +45,7 @@ require([
                         settings: {
                             slidesToShow: 1,
                             slidesToScroll: 1,
-                            infinite: true,
+                            infinite: false,
                         }
                     }
                 ]
