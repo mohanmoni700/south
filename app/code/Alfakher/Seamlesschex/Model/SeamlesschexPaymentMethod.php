@@ -137,6 +137,12 @@ class SeamlesschexPaymentMethod extends \Magento\Payment\Model\Method\AbstractMe
                     $apiResponse = json_decode($response['response'], 1);
 
                     if ($response['http_status'] == 200) {
+                        if ($apiResponse['check']['status'] == 'void') {
+                            throw new \Magento\Framework\Validator\Exception(
+                                __("Your ACH payment request has been decline,".
+                                    " please try with another ACH details or choose another payment method.")
+                            );
+                        }
                         $payment->setTransactionId($apiResponse['check']['check_id'])
                         ->setIsTransactionClosed(0)
                         ->setAdditionalInformation(array_replace_recursive(
@@ -181,7 +187,7 @@ class SeamlesschexPaymentMethod extends \Magento\Payment\Model\Method\AbstractMe
         $quote
     ) {
         return [
-            'memo' => "Order from hookahwholesaler.com",
+            'memo' => "order #".$order->getIncrementId(),
             'name' => $order->getCustomerName(),
             'email' => $order->getCustomerEmail(),
             'bank_routing' => $quote->getPayment()->getAchRoutingNumber(),
