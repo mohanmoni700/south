@@ -1,4 +1,7 @@
 <?php
+    /**
+     * @var \Alfakher\Seamlesschex\Block\System\Config\Button $block
+     */
     $request = $block->getRequest()->getParams();
     $websiteId = isset($request['website']) ? $request['website'] : 0;
     $controller = $block->getCustomUrl();
