@@ -87,6 +87,14 @@ class Data extends AbstractHelper
     /**
      * @inheritDoc
      */
+    public function getCustomercollection($customerid)
+    {
+        return $this->customer->create()->load($customerid);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function sendMail($post, $customerid)
     {
         foreach ($post as $value) {
@@ -98,7 +106,7 @@ class Data extends AbstractHelper
             $msg = "accepted";
         }
 
-        $customer = $this->customer->create()->load($customerid);
+        $customer = $this->getCustomercollection($customerid);
         $customerEmail = $customer->getEmail();
         $customerName = $customer->getFirstname();
         $rejectedDoc = [];
@@ -163,7 +171,7 @@ class Data extends AbstractHelper
     public function sendExpiryMail($post, $customerid)
     {
         try {
-            $customer = $this->customer->create()->load($customerid);
+            $customer = $this->getCustomercollection($customerid);
             $customerEmail = $customer->getEmail();
             $customerName = $customer->getFirstname();
 
@@ -179,15 +187,6 @@ class Data extends AbstractHelper
                 $rejectedDoc[] = ['docname' => $docname];
             }
 
-            $this->_inlineTranslation->suspend();
-            $fromEmail = $this->_scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE);
-            $fromName = $this->_scopeConfig->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE);
-
-            $sender = [
-                'name' => $fromName,
-                'email' => $fromEmail,
-            ];
-
             /** Get current storeId start[BS]*/
             $storeManagerDataList = $this->storeManager->getStores();
             $options = [];
@@ -199,6 +198,17 @@ class Data extends AbstractHelper
                 }
             }
             /** Get current storeId end[BS]*/
+
+            $this->_inlineTranslation->suspend();
+            $fromEmail = $this->_scopeConfig
+                ->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE, $storeId);
+            $fromName = $this->_scopeConfig
+                ->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE, $storeId);
+
+            $sender = [
+                'name' => $fromName,
+                'email' => $fromEmail,
+            ];
 
             $transport = $this->_transportBuilder
                 ->setTemplateIdentifier('custom_expiry_doc_email')
@@ -231,8 +241,7 @@ class Data extends AbstractHelper
     {
         // Check expiry document mail enable from configuration
         $configPath = 'hookahshisha/productpage/productpageb2b_documents_expired_mail_enable';
-        $enableMail = $this->_scopeConfig->getValue($configPath, ScopeInterface::SCOPE_STORE);
-        return $enableMail;
+        return $this->_scopeConfig->getValue($configPath, ScopeInterface::SCOPE_STORE);
     }
 
     /**
@@ -264,8 +273,7 @@ class Data extends AbstractHelper
      */
     public function getMediaUrl()
     {
-        $mediaUrl = $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
-        return $mediaUrl;
+        return $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
     }
 
     /**
@@ -273,7 +281,6 @@ class Data extends AbstractHelper
      */
     public function checkExtension($file)
     {
-        $pathInfo = $this->filesystem->getPathInfo($file, PATHINFO_EXTENSION);
-        return $pathInfo;
+        return $this->filesystem->getPathInfo($file, PATHINFO_EXTENSION);
     }
 }
