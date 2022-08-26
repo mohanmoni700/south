@@ -78,13 +78,13 @@
         },
         {
             "name": "amasty/base",
-            "version": "1.13.1",
+            "version": "1.13.6",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/base-1.13.1-ee.zip"
+                "url": "https://composer.amasty.com/enterprise/packages/amasty/base-1.13.6.zip"
             },
             "require": {
-                "php": ">=7.3.0"
+                "php": ">=7.3"
             },
             "type": "magento2-module",
             "autoload": {
@@ -318,18 +318,18 @@
         },
         {
             "name": "amasty/promo",
-            "version": "2.11.0",
+            "version": "2.11.7",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/promo-2.11.0-ee.zip"
+                "url": "https://composer.amasty.com/enterprise/packages/amasty/promo-2.11.7.zip"
             },
             "require": {
-                "amasty/base": ">=1.13.1",
-                "amasty/module-advanced-conditions": ">=1.5.4",
-                "amasty/module-banners-lite": ">=1.0.19",
-                "amasty/module-salesrulewizard": ">=1.0.3",
-                "amasty/rgrid": ">=1.0.7",
-                "php": "^7.3.0"
+                "amasty/base": ">=1.13.5",
+                "amasty/module-advanced-conditions": ">=1.3.6",
+                "amasty/module-banners-lite": ">=1.0.5",
+                "amasty/module-salesrulewizard": "*",
+                "amasty/rgrid": "*",
+                "php": ">=7.3.0"
             },
             "suggest": {
                 "amasty/module-promo-mftf-2": "Install module-promo-mftf-2 module to be able to run Free Gift MFTF tests for Magento 2.3.5+ version.",
