@@ -55,6 +55,8 @@ class Expirydocument
      */
     public function execute()
     {
+        $this->sendDataToWebhook();
+
         // Check Expired Mail is enabled from configuration
         if ($this->documentHelper->getExpirymailEnable()) {
             $documentArray = $this->getDocumentCollection();
@@ -74,7 +76,6 @@ class Expirydocument
 
             }
         }
-        $this->sendDataToWebhook();
     }
 
     /**
