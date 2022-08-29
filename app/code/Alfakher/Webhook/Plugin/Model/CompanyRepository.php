@@ -5,19 +5,10 @@ use Magento\Company\Api\CompanyRepositoryInterface as Subject;
 
 class CompanyRepository
 {
-    /**
-     * @var companyRepository
-     */
-    protected $companyRepository;
-    /**
-     * @param \Magento\Company\Api\CompanyRepositoryInterface $companyRepository
-     */
-    public function __constructor(\Magento\Company\Api\CompanyRepositoryInterface $companyRepository)
-    {
-        $this->companyRepository = $companyRepository;
-    }
 
     /**
+     * Function for set extension attribute value
+     *
      * @param Subject $subject
      * @param CategoryInterface $data
      * @return CategoryInterface
