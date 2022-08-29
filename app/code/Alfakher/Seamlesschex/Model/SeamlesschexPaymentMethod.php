@@ -136,6 +136,16 @@ class SeamlesschexPaymentMethod extends \Magento\Payment\Model\Method\AbstractMe
                     $response = $this->createCheck($requestPayload, $order);
                     $apiResponse = json_decode($response['response'], 1);
 
+                    /* add logs; Start */
+                    $this->_seamlesschexHelper->addLog(
+                        \Alfakher\Seamlesschex\Helper\Data::TYPE_CREATE,
+                        $order->getIncrementId(),
+                        json_encode($requestPayload),
+                        $response['response'],
+                        $response['http_status']                        
+                    );
+                    /* add logs; End */
+
                     if ($response['http_status'] == 200) {
                         if ($apiResponse['check']['status'] == 'void') {
                             throw new \Magento\Framework\Validator\Exception(

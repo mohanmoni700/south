@@ -14,6 +14,9 @@ class Data extends AbstractHelper
     const CONFIG_PATH_LIVE_ENDPOINT = "payment/seamlesschex/live_endpoint";
     const CONFIG_PATH_LIVE_PUBLISHABLE_KEY = "payment/seamlesschex/live_publishable_key";
     const CONFIG_PATH_LIVE_SECRET_KEY = "payment/seamlesschex/live_secret_key";
+    const TYPE_CREATE = "create";
+    const TYPE_UPDATE = "update";
+    const TYPE_VOID = "void";
 
     /**
      * Constructor
@@ -27,11 +30,13 @@ class Data extends AbstractHelper
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Framework\HTTP\Client\Curl $curl,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Framework\Encryption\EncryptorInterface $encryptor
+        \Magento\Framework\Encryption\EncryptorInterface $encryptor,
+        \Alfakher\Seamlesschex\Model\SeamlesschexLogFactory $logFactory
     ) {
         $this->_scopeConfig = $scopeConfig;
         $this->_curl = $curl;
         $this->_encryptor = $encryptor;
+        $this->_logFactory = $logFactory;
 
         parent::__construct($context);
     }
@@ -95,5 +100,69 @@ class Data extends AbstractHelper
         } else {
             return ['status' => 0,'message' => "Please enable the Seamlesschex and configure"];
         }
+    }
+
+    /**
+     * Update check
+     *
+     * @param object $order
+     */
+    public function updateCheck(
+        $order
+    ) {
+        $config = $this->getConfigData($order->getStore()->getWebsiteId());
+        if (count($config) && $order->getPayment()->getMethod() == "seamlesschex") {
+            $paymentAdditionalInformation = $order->getPayment()->getAdditionalInformation();
+            $data = [
+                "check_id" => $paymentAdditionalInformation['check']['check_id'],
+                "number" => $paymentAdditionalInformation['check']['number'],
+                "amount" => $order->getTotalDue(),
+                "memo" => "order #".$order->getIncrementId()." - updated",
+                "name" => $order->getCustomerName(),
+                "bank_account" => $order->getPayment()->getAchAccountNumber(),
+                "bank_routing" =>$order->getPayment()->getAchRoutingNumber(),
+                "verify_before_save" => true
+            ];
+
+            $jsonPayload = json_encode($data);
+
+            $this->_curl->addHeader("Content-Type", "application/json");
+            $this->_curl->addHeader("Authorization", "Bearer ".$config['secret_key']);
+            $this->_curl->post($config['endpoint']."check/edit", $jsonPayload);
+
+            $responseStatus = $this->_curl->getStatus();
+            $response = $this->_curl->getBody();
+            
+            /* add logs; Start */
+            $this->addLog(self::TYPE_UPDATE, $order->getIncrementId(), $jsonPayload, $response, $responseStatus);
+            /* add logs; End */
+        }
+    }
+
+    /**
+     * Add log
+     *
+     * @param string $type
+     * @param string $orderNumber
+     * @param string $request
+     * @param string $response
+     * @param string $responseCode
+     */
+    public function addLog(
+        $type,
+        $orderNumber,
+        $request,
+        $response,
+        $responseCode
+    ) {
+        try{
+            $model = $this->_logFactory->create();
+            $model->setType($type)
+            ->setOrder($orderNumber)
+            ->setRequest($request)
+            ->setResponse($response)
+            ->setResponseCode($responseCode)
+            ->save();
+        } catch(\Exception $e) {}
     }
 }
