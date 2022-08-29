@@ -4,5 +4,6 @@
         <referenceContainer name="content">
             <block class="Alfakher\MyDocument\Block\Index\Document" name="document.messages" template="Alfakher_AddtocartPriceHide::documentMessage.phtml" before="-"/>
         </referenceContainer>
+        <move element="document.messages" destination="main.content" before="-" />
     </body>
 </page>
