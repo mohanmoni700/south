@@ -52,14 +52,15 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
-        $filter = [
+        /*$filter = [
             $this->_filterBuilder->setField('type_id')
                 ->setValue("simple")
                 ->setConditionType('eq')
                 ->create(),
-        ];
+        ];*/
 
-        $searchCriteria = $this->_searchCriteriaBuilder->addFilters($filter)->create();
+        /*$searchCriteria = $this->_searchCriteriaBuilder->addFilters($filter)->create();*/
+        $searchCriteria = $this->_searchCriteriaBuilder->create();
         $list = $this->_productsInterface->getList($searchCriteria)->getItems();
 
         $productArray = [];
@@ -68,7 +69,7 @@ class Index extends \Magento\Framework\App\Action\Action
             $productUrl = $pro->getUrlKey();
             $parentProducts = $this->_groupedProduct->getParentIdsByChild($pro->getId());
 
-            if ($pro->getVisibility() === 1 && count($parentProducts)) {
+            if (count($parentProducts)) {
                 try {
                     $groupProduct = $this->_productsInterface->getById($parentProducts[0]);
                     $productUrl = $groupProduct->getUrlKey();
