@@ -29,4 +29,8 @@
     <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Shipping" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Shipping" />
 
     <preference for="Mageplaza\Webhook\Observer\AfterOrder" type="Alfakher\Webhook\Observer\AfterOrderObserver" />
+
+    <type name="Magento\Company\Api\CompanyRepositoryInterface">
+        <plugin name="company_api_data" type="Alfakher\Webhook\Plugin\Model\CompanyRepository"/>
+    </type>
 </config>
