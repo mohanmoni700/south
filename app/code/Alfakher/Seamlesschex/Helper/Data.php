@@ -3,6 +3,7 @@
 namespace Alfakher\Seamlesschex\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
+use Zend\Http\Client;
 
 class Data extends AbstractHelper
 {
@@ -23,20 +24,27 @@ class Data extends AbstractHelper
      *
      * @param \Magento\Framework\App\Helper\Context $context
      * @param \Magento\Framework\HTTP\Client\Curl $curl
+     * @param \Magento\Framework\HTTP\Adapter\Curl $advanceCurl
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Framework\Encryption\EncryptorInterface $encryptor
+     * @param \Alfakher\Seamlesschex\Model\SeamlesschexLogFactory $logFactory
+     * @param Client $zendClient
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Framework\HTTP\Client\Curl $curl,
+        \Magento\Framework\HTTP\Adapter\CurlFactory $advanceCurl,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Framework\Encryption\EncryptorInterface $encryptor,
-        \Alfakher\Seamlesschex\Model\SeamlesschexLogFactory $logFactory
+        \Alfakher\Seamlesschex\Model\SeamlesschexLogFactory $logFactory,
+        Client $zendClient
     ) {
         $this->_scopeConfig = $scopeConfig;
         $this->_curl = $curl;
+        $this->_advanceCurl = $advanceCurl;
         $this->_encryptor = $encryptor;
         $this->_logFactory = $logFactory;
+        $this->zendClient = $zendClient;
 
         parent::__construct($context);
     }
@@ -155,7 +163,7 @@ class Data extends AbstractHelper
         $response,
         $responseCode
     ) {
-        try{
+        try {
             $model = $this->_logFactory->create();
             $model->setType($type)
             ->setOrder($orderNumber)
@@ -163,6 +171,52 @@ class Data extends AbstractHelper
             ->setResponse($response)
             ->setResponseCode($responseCode)
             ->save();
-        } catch(\Exception $e) {}
+        } catch (\Exception $e) {
+            return true;
+        }
+    }
+
+    /**
+     * Void check
+     *
+     * @param object $order
+     */
+    public function voidCheck(
+        $order
+    ) {
+        $config = $this->getConfigData($order->getStore()->getWebsiteId());
+        if (count($config) && $order->getPayment()->getMethod() == "seamlesschex") {
+            $paymentAdditionalInformation = $order->getPayment()->getAdditionalInformation();
+            $checkId = $paymentAdditionalInformation['check']['check_id'];
+
+            $this->zendClient->reset();
+            $this->zendClient->setUri($config['endpoint']."check/".$paymentAdditionalInformation['check']['check_id']);
+            $this->zendClient->setMethod(\Zend\Http\Request::METHOD_DELETE);
+            $this->zendClient->setHeaders([
+                'Content-Type' => 'application/json',
+                "Authorization" => "Bearer ".$config['secret_key']
+            ]);
+            $this->zendClient->setMethod('delete');
+            $this->zendClient->setEncType('application/json');
+            $this->zendClient->send();
+            $response = $this->zendClient->getResponse();
+            $decodedResponse = json_decode($response->getBody(), 1);
+
+            /* add logs; Start */
+            $this->addLog(
+                self::TYPE_VOID,
+                $order->getIncrementId(),
+                $paymentAdditionalInformation['check']['check_id'],
+                $response->getBody(),
+                ''
+            );
+            /* add logs; End */
+
+            if (isset($decodedResponse['error'])) {
+                throw new \Magento\Framework\Validator\Exception(
+                    __($decodedResponse['message'])
+                );
+            }
+        }
     }
 }

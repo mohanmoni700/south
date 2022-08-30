@@ -4,8 +4,8 @@ namespace Alfakher\Seamlesschex\Model\ResourceModel\SeamlesschexLog;
 
 class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
 {
-	
-	/**
+    
+    /**
      * Construct
      */
     protected function _construct()

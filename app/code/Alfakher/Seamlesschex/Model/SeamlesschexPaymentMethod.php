@@ -142,7 +142,7 @@ class SeamlesschexPaymentMethod extends \Magento\Payment\Model\Method\AbstractMe
                         $order->getIncrementId(),
                         json_encode($requestPayload),
                         $response['response'],
-                        $response['http_status']                        
+                        $response['http_status']
                     );
                     /* add logs; End */
 

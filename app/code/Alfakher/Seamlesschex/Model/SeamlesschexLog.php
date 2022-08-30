@@ -4,8 +4,8 @@ namespace Alfakher\Seamlesschex\Model;
 
 class SeamlesschexLog extends \Magento\Framework\Model\AbstractModel
 {
-	
-	/**
+    
+    /**
      * Construct
      */
     protected function _construct()
