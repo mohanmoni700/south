@@ -46,7 +46,11 @@ class Login extends Action implements HttpPostActionInterface
     const PWA_STORES = [
         'default',
         'hookah_company_store_view',
-        'hookah_store_view'
+        'hookah_store_view',
+        'ooka_de_store_de',
+        'ooka_de_store_en',
+        'ooka_usa_store_en',
+        'ooka_store_view'
         ];
 
     /**

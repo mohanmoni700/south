@@ -11,6 +11,8 @@ class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
     const SUBTOTAL_FEE = "hookahshisha/af_discount_group/subtotal_enable";
     const SHIPPING_FEE = "hookahshisha/af_discount_group/shipping_enable";
     const ZERO_OUT = "hookahshisha/af_discount_group/zero_out_enable";
+    const IS_SUBTOTAL_INCL_TAX = "tax/sales_display/subtotal";
+    const IS_SHIPPING_INCL_TAX = "tax/sales_display/shipping";
 
     /**
      * Constructor
@@ -65,5 +67,27 @@ class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
     {
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE;
         return $this->scopeConfig->getValue(self::ZERO_OUT, $storeScope, $websiteId);
+    }
+
+    /**
+     * Check if need to display subtotal including tax
+     *
+     * @param int $websiteId
+     */
+    public function isSubtotalInclTax($websiteId)
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE;
+        return $this->scopeConfig->getValue(self::IS_SUBTOTAL_INCL_TAX, $storeScope, $websiteId);
+    }
+
+    /**
+     * Check if need to display shipping including tax
+     *
+     * @param int $websiteId
+     */
+    public function isShippingInclTax($websiteId)
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE;
+        return $this->scopeConfig->getValue(self::IS_SHIPPING_INCL_TAX, $storeScope, $websiteId);
     }
 }
