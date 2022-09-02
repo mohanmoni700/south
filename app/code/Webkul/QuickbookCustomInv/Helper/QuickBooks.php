@@ -371,7 +371,7 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
         ${'line'.$lineNum} = new IPPLine();
         ${'line'.$lineNum}->LineNum = $lineNum;
         ${'line'.$lineNum}->Amount = $orderItem['AmountTotal'];
-        ${'line'.$lineNum}->Description = substr($description, 0, 3990);
+        ${'line'.$lineNum}->Description = substr(addslashes($description), 0, 3990);
         ${'line'.$lineNum}->DetailType = "SalesItemLineDetail";
         ${'salesItemLineDetail'.$lineNum} = new IPPSalesItemLineDetail();
         $item = $this->quickBookItem->getItem($this->dataService, $orderItem, $accountId);
