@@ -5,14 +5,14 @@ namespace Alfakher\HandlingFee\ViewModel;
 class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
 
-    const MODULE_ENABLE = "hookahshisha/handling_fee_group/handling_fee_enable";
-    const HANDLING_FEE_TYPE = "hookahshisha/handling_fee_group/handling_fee_type";
-    const HANDLING_FEE = "hookahshisha/handling_fee_group/handling_fee";
-    const SUBTOTAL_FEE = "hookahshisha/af_discount_group/subtotal_enable";
-    const SHIPPING_FEE = "hookahshisha/af_discount_group/shipping_enable";
-    const ZERO_OUT = "hookahshisha/af_discount_group/zero_out_enable";
-    const IS_SUBTOTAL_INCL_TAX = "tax/sales_display/subtotal";
-    const IS_SHIPPING_INCL_TAX = "tax/sales_display/shipping";
+    public const MODULE_ENABLE = "hookahshisha/handling_fee_group/handling_fee_enable";
+    public const HANDLING_FEE_TYPE = "hookahshisha/handling_fee_group/handling_fee_type";
+    public const HANDLING_FEE = "hookahshisha/handling_fee_group/handling_fee";
+    public const SUBTOTAL_FEE = "hookahshisha/af_discount_group/subtotal_enable";
+    public const SHIPPING_FEE = "hookahshisha/af_discount_group/shipping_enable";
+    public const ZERO_OUT = "hookahshisha/af_discount_group/zero_out_enable";
+    public const IS_SUBTOTAL_INCL_TAX = "tax/sales_display/subtotal";
+    public const IS_SHIPPING_INCL_TAX = "tax/sales_display/shipping";
 
     /**
      * Constructor
@@ -89,5 +89,17 @@ class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
     {
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE;
         return $this->scopeConfig->getValue(self::IS_SHIPPING_INCL_TAX, $storeScope, $websiteId);
+    }
+
+    /**
+     * Excise note message
+     *
+     * @param string $section
+     * @return string
+     */
+
+    public function getExciseNote($section)
+    {
+        return $this->scopeConfig->getValue($section, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 }
