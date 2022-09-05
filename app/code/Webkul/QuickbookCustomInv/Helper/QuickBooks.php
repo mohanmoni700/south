@@ -239,107 +239,6 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
     }
 
     /**
-     * createCreditMemo
-     * @param array $creditmemoReceiptData
-     * @return
-     */
-    /*public function createCreditMemo($creditmemoReceiptData, $accountId)
-    {
-        try {
-            $this->setDataServiceObject($accountId);
-
-            $creditmemoReceipt = new IPPCreditMemo();
-            $creditmemoReceipt->DocNumber = $creditmemoReceiptData['docNumber'];
-            date_default_timezone_set('UTC');
-            $creditmemoReceipt->TxnDate = date('Y-m-d', time());
-            $itemDataForQB = $this->getItemDataForQB(
-                $creditmemoReceiptData['items'],
-                $creditmemoReceiptData['tax_percent'],
-                $accountId
-            );
-            $lineNum = $itemDataForQB['line_num'];
-            $lineList = $itemDataForQB['line_list'];
-            $totalAmt = $itemDataForQB['total_amt'];
-            $discountTotal = $itemDataForQB['discount_total'];
-            $totalTax = $itemDataForQB['total_tax'];
-            $splitedTax = $itemDataForQB['splited_tax'];
-            $taxCodeRef = $itemDataForQB['tax_code_ref'];
-            $taxLineList = [];
-
-            if ($creditmemoReceiptData['discount_on_creditmemo']) {
-                ${'line'.$lineNum} = new IPPLine();
-                ${'line'.$lineNum}->LineNum = $lineNum;
-                ${'line'.$lineNum}->Amount = -$creditmemoReceiptData['discount_on_creditmemo'];
-                ${'line'.$lineNum}->DetailType = 'DiscountLineDetail';
-                ${'line'.$lineNum}->DiscountLineDetail = new IPPDiscountLineDetail();
-                ${'line'.$lineNum}->DiscountLineDetail->PercentBased = 'false';
-                array_push($lineList, ${'line'.$lineNum});
-                $totalAmt = ($totalAmt + $totalTax) - $creditmemoReceiptData['discount_on_creditmemo'];
-                $lineNum++;
-            }
-
-            if ($totalTax) {
-                if (isset($taxCodeRef['tax_code']) && $taxCodeRef['tax_code']) {
-                    $creditmemoReceipt->TxnTaxDetail = new IPPTxnTaxDetail();
-                    $creditmemoReceipt->TxnTaxDetail->TxnTaxCodeRef = $taxCodeRef['tax_code'];
-                    $creditmemoReceipt->TxnTaxDetail->TotalTax = $totalTax;
-                    $creditmemoReceipt->TxnTaxDetail->TaxLine = [];
-                    $taxLineNum = 1;
-                    foreach ($taxCodeRef['tax_rate_list'] as $taxRateId => $taxRateValue) {
-                        ${'taxLine'.$taxLineNum} =  new IPPLine();
-                        $taxLine = new IPPLine();
-                        ${'taxLine'.$taxLineNum}->Amount = $splitedTax[$taxRateId]['tax_amt'];
-                        ${'taxLine'.$taxLineNum}->DetailType = "TaxLineDetail";
-                        ${'taxLine'.$taxLineNum}->TaxLineDetail = new IPPTaxLineDetail();
-                        ${'taxLine'.$taxLineNum}->TaxLineDetail->TaxRateRef = $taxRateId;
-                        ${'taxLine'.$taxLineNum}->TaxLineDetail->PercentBased = 'true';
-                        ${'taxLine'.$taxLineNum}->TaxLineDetail->TaxPercent = $taxRateValue;
-                        ${'taxLine'.$taxLineNum}->TaxLineDetail->NetAmountTaxable =
-                                                    $splitedTax[$taxRateId]['taxabl_amt'];
-                        array_push($taxLineList, ${'taxLine'.$taxLineNum});
-                        $taxLineNum++;
-                    }
-                    $creditmemoReceipt->TxnTaxDetail->TaxLine = $taxLineList;
-                } else {
-                    $errorMsg = __('Tax class not created on quickbooks for applied tax rates on order. ');
-                    $this->logger->addError(
-                        $errorMsg.$this->jsonHelperData->jsonEncode($creditmemoReceiptData['tax_percent'])
-                    );
-                    $response = ['error' => 1, 'msg' => $errorMsg];
-                    return $response;
-                }
-            }
-            $creditmemoReceipt->Line = $lineList;
-            $customer = $this->quickBookCustomer->getCustomer(
-                $this->dataService,
-                $creditmemoReceiptData['customerData']
-            );
-            $creditmemoReceipt->CustomerRef = $customer->Id;
-            $billAddress = $creditmemoReceiptData['customerData']['bill_address'];
-            $creditmemoReceipt->BillAddr = $this->helperData->getPhysicalAddress($billAddress);
-            // $paymentMethod = $this->quickBookPaymentMethod->getPaymentMethod(
-            //     $this->dataService,
-            //     substr($creditmemoReceiptData['paymentMethod'], 0, 31)
-            // );
-            $taxApplyAfterDiscount = $this->scopeConfig->getValue('tax/calculation/apply_after_discount');
-            // $creditmemoReceipt->PaymentMethodRef = $paymentMethod->Id;
-            $creditmemoReceipt->PONumber = $billAddress['telephone'];
-            $creditmemoReceipt->ApplyTaxAfterDiscount = $taxApplyAfterDiscount ? 'true' : 'false';
-            $creditmemoReceipt->TotalAmt = $totalAmt;
-            $resultingCreditmemoObj = $this->dataService->Add($creditmemoReceipt);
-            $response = ['error' => 0, 'creditmemoReceiptData' => $resultingCreditmemoObj];
-            return $response;
-        } catch (ServiceException $e) {
-            $this->logger->addError('creditmemoReceipt on ServiceException : '.$e->getMessage());
-            return $this->getFilterErrorMsg($e->getMessage());
-        } catch (\Exception $e) {
-            $response = ['error' => 1, 'msg' => $e->getMessage()];
-            $this->logger->addError('creditmemoReceipt : '.$e->getMessage());
-            return $response;
-        }
-    }*/
-
-    /**
      * getFilterErrorMsg
      * @param string $errorContent
      * @return array
@@ -472,7 +371,7 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
         ${'line'.$lineNum} = new IPPLine();
         ${'line'.$lineNum}->LineNum = $lineNum;
         ${'line'.$lineNum}->Amount = $orderItem['AmountTotal'];
-        ${'line'.$lineNum}->Description = $description;
+        ${'line'.$lineNum}->Description = substr(addslashes($description), 0, 3990);
         ${'line'.$lineNum}->DetailType = "SalesItemLineDetail";
         ${'salesItemLineDetail'.$lineNum} = new IPPSalesItemLineDetail();
         $item = $this->quickBookItem->getItem($this->dataService, $orderItem, $accountId);
@@ -519,7 +418,7 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
         $taxCodeRef = [];
         $customTax = 0;
         foreach ($orderItemList as $orderItem) {
-            if ($orderItem['Name']) {
+            if ($orderItem && $orderItem['Name']) {
                 $taxDetails = $taxPercent[$orderItem['ItemId']] ?? [];
                 $arrangedItem = $this->arrangeItemDataForQB($orderItem, $lineNum, $taxDetails, $accountId);
                 if (!empty($arrangedItem['tax_code_ref'])) {
@@ -550,5 +449,28 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
             'tax_code_ref' => $taxCodeRef,
             'customTax' => $customTax
         ];
+    }
+
+    /**
+     * Get TaxClassList
+     * @param array $orderItemList
+     * @param array $taxPercent
+     * @return array
+     */
+    public function getTaxClassList($accountId)
+    {
+        try {
+            $this->setDataServiceObject($accountId);
+
+            $allTaxClass = [];
+            if (isset($this->dataService)) {
+                $allTaxClass = $this->dataService->Query("Select * From TaxCode", 0, 50);
+            }
+            return $allTaxClass;
+        } catch (\Exception $e) {
+            $this->logger->addError('QuickBooks helper getTaxClassList -'.$e->getMessage());
+            $response = $this->getFilterErrorMsg($e->getMessage());
+            return $allTaxClass;
+        }
     }
 }

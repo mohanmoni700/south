@@ -1,0 +1,12 @@
+<?php
+/**
+ * @var $block \Magento\OfflinePayments\Block\Info\OfflinePaypal
+ */
+?>
+<dl class="payment-method purchase order">
+    <dt class="title"><?= $block->escapeHtml($block->getMethod()->getTitle()) ?></dt>
+    <dd class="content">
+        <strong><?= $block->escapeHtml(__('PayPal Email')) ?></strong>
+        <span class="number"><?= $block->escapeHtml($block->getInfo()->getPaypalEmail()) ?></span>
+    </dd>
+</dl>

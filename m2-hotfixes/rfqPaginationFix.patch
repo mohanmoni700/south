@@ -1,0 +1,11 @@
+--- a/vendor/amasty/module-request-quote/Block/Account/Quote/Items.php	2022-03-09 20:39:51.000000000 +0530
++++ b/vendor/amasty/module-request-quote/Block/Account/Quote/Items.php	2022-06-22 19:08:03.839573642 +0530
+@@ -110,7 +110,7 @@
+     {
+         $this->itemsPerPage = (int)$this->_scopeConfig->getValue('sales/orders/items_per_page');
+ 
+-        $this->itemCollection = $this->getQuote()->getItemsCollection();
++        $this->itemCollection = $this->getQuote()->getItemsCollection(false);
+         $this->itemCollection->addFieldToFilter('parent_item_id', ['null' => 'parent_item_id']);
+         /** @var \Magento\Theme\Block\Html\Pager $pagerBlock */
+         $pagerBlock = $this->getChildBlock('amasty_quote_item_pager');

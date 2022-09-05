@@ -1,0 +1,65 @@
+<?php
+/**
+ * @var \Magento\Payment\Block\Info $block
+ */
+$specificInfo = $block->getSpecificInformation();
+$title = $block->escapeHtml($block->getMethod()->getTitle());
+$payment = $block->getInfo();
+$method = $block->getMethod()->getCode();
+?>
+<dl class="payment-method">
+    <dt class="title"><?= /* @noEscape */ $title ?></dt>
+<?php if ($method == 'offline_paypal' && $payment->getData('paypal_email')):?>
+    <div class="admin__page-section-item-content">
+        <strong><?= $block->escapeHtml(__('PayPal Email:')) ?></strong>
+        <span class="info">
+            <?= $block->escapeHtmlAttr($payment->getData('paypal_email')); ?>
+        </span>                        
+    </div>
+<?php endif; ?>
+<?php if ($method == 'ach_us_payment' && $payment->getData('account_number')):?>
+    <div class="admin__page-section-item-content">
+        <span class="info">
+            <strong><?= $block->escapeHtml(__('Account Number :')) ?></strong>                 
+        </span>
+        <span class="info"><?= $block->escapeHtmlAttr($payment->getData('account_number')); ?></span> 
+    </div>
+    <div class="admin__page-section-item-content">
+        <span class="info">
+            <strong><?= $block->escapeHtml(__('Name of Bank :')) ?></strong>                 
+        </span>    
+        <span class="info"><?= $block->escapeHtmlAttr($payment->getData('bank_name')); ?></span>
+    </div>
+    <div class="admin__page-section-item-content">    
+        <span class="info">
+            <strong><?= $block->escapeHtml(__('Routing Number :')) ?></strong>                 
+        </span>
+        <span class="info"><?= $block->escapeHtmlAttr($payment->getData('routing_number')); ?></span>
+    </div>
+    <div class="admin__page-section-item-content">    
+        <span class="info">
+            <strong><?= $block->escapeHtml(__('Address :')) ?></strong>                 
+        </span>
+        <span class="info"><?= $block->escapeHtmlAttr($payment->getData('address')); ?></span>                       
+    </div>
+<?php endif; ?>
+<?php if ($specificInfo): ?>
+    <dd class="content">
+        <table class="data table">
+            <caption class="table-caption"><?= /* @noEscape */ $title ?></caption>
+            <?php foreach ($specificInfo as $label => $value): ?>
+                <tr>
+                    <th scope="row"><?= $block->escapeHtml($label) ?></th>
+                    <td>
+                        <?= $block->escapeHtml(nl2br($block->escapeHtml(implode(
+                            "\n",
+                            $block->getValueAsArray($value, true)
+                        )))) ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    </dd>
+<?php endif;?>
+</dl>
+<?= $block->getChildHtml() ?>

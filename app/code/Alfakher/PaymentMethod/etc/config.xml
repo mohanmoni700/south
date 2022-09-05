@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <offline_paypal>
+                <active>0</active>
+                <title>Pay Pal</title>
+                <order_status>pending</order_status>
+                <allowspecific>0</allowspecific>
+                <model>Alfakher\PaymentMethod\Model\PaymentMethod</model>
+                <group>offline</group>
+                <sort_order>1</sort_order>
+            </offline_paypal>
+            <ach_us_payment>
+                <active>0</active>
+                <title>ACH (US payment)</title>
+                <order_status>pending</order_status>
+                <allowspecific>0</allowspecific>
+                <model>Alfakher\PaymentMethod\Model\AchPaymentMethod</model>
+                <group>offline</group>
+                <sort_order>1</sort_order>
+            </ach_us_payment>
+            <zelle>
+                <active>0</active>
+                <title>Zelle</title>
+                <order_status>pending</order_status>
+                <allowspecific>0</allowspecific>
+                <model>Alfakher\PaymentMethod\Model\ZellePaymentMethod</model>
+                <group>offline</group>
+                <sort_order>1</sort_order>
+            </zelle>
+        </payment>
+    </default>
+</config>
