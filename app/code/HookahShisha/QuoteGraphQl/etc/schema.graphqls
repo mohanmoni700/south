@@ -24,3 +24,7 @@ type SimpleCartItem {
 type Cart {
     checkoutUrl: String
 }
+
+input UpdateCartItemsInput {
+    is_checkout: Boolean @doc(description: "To check wheather request is from checkout")
+}

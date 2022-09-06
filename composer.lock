@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "221cbf8f043a1a6ef92f7a43580716b1",
+    "content-hash": "5edcd71fb10c0e30141373b8b9b006a4",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -78,13 +78,13 @@
         },
         {
             "name": "amasty/base",
-            "version": "1.13.1",
+            "version": "1.13.6",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/base-1.13.1-ee.zip"
+                "url": "https://composer.amasty.com/enterprise/packages/amasty/base-1.13.6.zip"
             },
             "require": {
-                "php": ">=7.3.0"
+                "php": ">=7.3"
             },
             "type": "magento2-module",
             "autoload": {
@@ -318,18 +318,18 @@
         },
         {
             "name": "amasty/promo",
-            "version": "2.11.0",
+            "version": "2.11.7",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/promo-2.11.0-ee.zip"
+                "url": "https://composer.amasty.com/enterprise/packages/amasty/promo-2.11.7.zip"
             },
             "require": {
-                "amasty/base": ">=1.13.1",
-                "amasty/module-advanced-conditions": ">=1.5.4",
-                "amasty/module-banners-lite": ">=1.0.19",
-                "amasty/module-salesrulewizard": ">=1.0.3",
-                "amasty/rgrid": ">=1.0.7",
-                "php": "^7.3.0"
+                "amasty/base": ">=1.13.5",
+                "amasty/module-advanced-conditions": ">=1.3.6",
+                "amasty/module-banners-lite": ">=1.0.5",
+                "amasty/module-salesrulewizard": "*",
+                "amasty/rgrid": "*",
+                "php": ">=7.3.0"
             },
             "suggest": {
                 "amasty/module-promo-mftf-2": "Install module-promo-mftf-2 module to be able to run Free Gift MFTF tests for Magento 2.3.5+ version.",
@@ -1882,11 +1882,11 @@
         },
         {
             "name": "corra/log",
-            "version": "1.3.3",
+            "version": "1.3.5",
             "dist": {
                 "type": "zip",
-                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/log/1.3.3.0/907e2732ca280a003b0cd61365d89fc25664c3b3.zip",
-                "reference": "907e2732ca280a003b0cd61365d89fc25664c3b3",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/log/1.3.5.0/9e0654035af4e436d967d66919bec423ccb70716.zip",
+                "reference": "9e0654035af4e436d967d66919bec423ccb70716",
                 "mirrors": [
                     {
                         "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
@@ -1900,7 +1900,6 @@
                 "magento/framework-message-queue": ">=100.2.1",
                 "magento/module-backend": ">=100.2.0",
                 "magento/module-config": ">=101.0.0",
-                "php": "7.0.2|7.0.4|~7.0.6|~7.1.0|~7.2.0|~7.3.0|^7.4",
                 "psr/log": ">=1.0"
             },
             "type": "magento2-module",
@@ -1925,17 +1924,17 @@
             "description": "Corra Log",
             "homepage": "https://bitbucket.org/corratech/log",
             "support": {
-                "source": "https://bitbucket.org/corratech/log/src/907e2732ca280a003b0cd61365d89fc25664c3b3/?at=1.3.3"
+                "source": "https://bitbucket.org/corratech/log/src/9e0654035af4e436d967d66919bec423ccb70716/?at=1.3.5"
             },
-            "time": "2021-06-03T13:52:13+00:00"
+            "time": "2022-06-08T05:10:57+00:00"
         },
         {
             "name": "corra/log-cloud-support",
-            "version": "2.0.0",
+            "version": "2.0.1",
             "dist": {
                 "type": "zip",
-                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/log-cloud-support/2.0.0.0/d6beadf67f6298540af11e083ebc42158316fa21.zip",
-                "reference": "d6beadf67f6298540af11e083ebc42158316fa21",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/log-cloud-support/2.0.1.0/e5cd61ba1055c5069789e197a455b810e834719a.zip",
+                "reference": "e5cd61ba1055c5069789e197a455b810e834719a",
                 "mirrors": [
                     {
                         "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
@@ -1967,9 +1966,10 @@
             ],
             "homepage": "https://bitbucket.org/corratech/logcloudsupport",
             "support": {
-                "source": "https://bitbucket.org/corratech/logcloudsupport/src/d6beadf67f6298540af11e083ebc42158316fa21/?at=master"
+                "source": "https://bitbucket.org/corratech/logcloudsupport/src/e5cd61ba1055c5069789e197a455b810e834719a/?at=2.0.1",
+                "issues": "https://bitbucket.org/corratech/logcloudsupport/issues"
             },
-            "time": "2019-10-25T10:52:19+00:00"
+            "time": "2022-06-08T05:12:53+00:00"
         },
         {
             "name": "corra/module-amasty-promo-graph-ql",
@@ -2015,6 +2015,51 @@
                 "issues": "https://bitbucket.org/corratech/amastypromographql/issues"
             },
             "time": "2022-03-29T08:43:00+00:00"
+        },
+        {
+            "name": "corra/module-cms-sitemap-graph-ql",
+            "version": "1.0.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-cms-sitemap-graph-ql/1.0.0.0/71bb2167038ce766ef0571afc806aad35e3f94f7.zip",
+                "reference": "71bb2167038ce766ef0571afc806aad35e3f94f7",
+                "mirrors": [
+                    {
+                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
+                        "preferred": true
+                    }
+                ]
+            },
+            "require": {
+                "magento/module-cms": "*"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Corra\\CmsSitemapGraphQl\\": ""
+                }
+            },
+            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "CORRA"
+                }
+            ],
+            "description": "GraphQl to fetch the CMS page data for sitemap in pylot projects",
+            "homepage": "https://bitbucket.org/corratech/cmssitemapgraphql",
+            "support": {
+                "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/3789848577/CmsSitemapGraphQl",
+                "source": "https://bitbucket.org/corratech/cmssitemapgraphql/src/71bb2167038ce766ef0571afc806aad35e3f94f7/?at=1.0.0",
+                "issues": "https://bitbucket.org/corratech/cmssitemapgraphql/issues"
+            },
+            "time": "2022-05-05T07:27:23+00:00"
         },
         {
             "name": "corra/module-link-guest-order-graph-ql",
@@ -2187,11 +2232,11 @@
         },
         {
             "name": "corra/module-spreedly",
-            "version": "1.1.4",
+            "version": "1.1.5",
             "dist": {
                 "type": "zip",
-                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-spreedly/1.1.4.0/370ad3b2d8de0ae8525dfd5ffd57d0d5662ec798.zip",
-                "reference": "370ad3b2d8de0ae8525dfd5ffd57d0d5662ec798",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-spreedly/1.1.5.0/415b7b30842830ed9e389cfc111b6a27b90ed156.zip",
+                "reference": "415b7b30842830ed9e389cfc111b6a27b90ed156",
                 "mirrors": [
                     {
                         "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
@@ -2222,10 +2267,10 @@
             "homepage": "https://bitbucket.org/corratech/spreedly",
             "support": {
                 "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/3579707442/Spreedly+PaymentGateway",
-                "source": "https://bitbucket.org/corratech/spreedly/src/370ad3b2d8de0ae8525dfd5ffd57d0d5662ec798/?at=1.1.4",
+                "source": "https://bitbucket.org/corratech/spreedly/src/415b7b30842830ed9e389cfc111b6a27b90ed156/?at=1.1.5",
                 "issues": "https://bitbucket.org/corratech/spreedly/issues"
             },
-            "time": "2022-04-28T12:01:47+00:00"
+            "time": "2022-08-09T08:54:30+00:00"
         },
         {
             "name": "corra/module-veratad",
@@ -2313,11 +2358,11 @@
         },
         {
             "name": "corra/new-relic-reporting-graph-ql",
-            "version": "1.0.3",
+            "version": "1.0.4",
             "dist": {
                 "type": "zip",
-                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/new-relic-reporting-graph-ql/1.0.3.0/c07118af21695684714e7c1b6989925c22a4c263.zip",
-                "reference": "c07118af21695684714e7c1b6989925c22a4c263",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/new-relic-reporting-graph-ql/1.0.4.0/d29b29d178a8a4936daaeffa9f39e456834b9be4.zip",
+                "reference": "d29b29d178a8a4936daaeffa9f39e456834b9be4",
                 "mirrors": [
                     {
                         "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
@@ -2351,10 +2396,10 @@
             "homepage": "https://bitbucket.org/corratech/newrelicreportinggraphql",
             "support": {
                 "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/2058158729/NewRelic+Reporting+of+GraphQl+Transactions",
-                "source": "https://bitbucket.org/corratech/newrelicreportinggraphql/src/c07118af21695684714e7c1b6989925c22a4c263/?at=1.0.3",
+                "source": "https://bitbucket.org/corratech/newrelicreportinggraphql/src/d29b29d178a8a4936daaeffa9f39e456834b9be4/?at=1.0.4",
                 "issues": "https://bitbucket.org/corratech/newrelicreportinggraphql/issues"
             },
-            "time": "2021-10-22T10:04:40+00:00"
+            "time": "2021-12-09T12:49:16+00:00"
         },
         {
             "name": "dasprid/enum",
@@ -3276,69 +3321,6 @@
                 "source": "https://github.com/ezyang/htmlpurifier/tree/v4.14.0"
             },
             "time": "2021-12-25T01:21:49+00:00"
-        },
-        {
-            "name": "facebook/graph-sdk",
-            "version": "5.7.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/facebook/php-graph-sdk.git",
-                "reference": "2d8250638b33d73e7a87add65f47fabf91f8ad9b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/facebook/php-graph-sdk/zipball/2d8250638b33d73e7a87add65f47fabf91f8ad9b",
-                "reference": "2d8250638b33d73e7a87add65f47fabf91f8ad9b",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^5.4|^7.0"
-            },
-            "require-dev": {
-                "guzzlehttp/guzzle": "~5.0",
-                "mockery/mockery": "~0.8",
-                "phpunit/phpunit": "~4.0"
-            },
-            "suggest": {
-                "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client",
-                "paragonie/random_compat": "Provides a better CSPRNG option in PHP 5"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "5.x-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Facebook\\": "src/Facebook/"
-                },
-                "files": [
-                    "src/Facebook/polyfills.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Facebook Platform"
-            ],
-            "authors": [
-                {
-                    "name": "Facebook",
-                    "homepage": "https://github.com/facebook/php-graph-sdk/contributors"
-                }
-            ],
-            "description": "Facebook SDK for PHP",
-            "homepage": "https://github.com/facebook/php-graph-sdk",
-            "keywords": [
-                "facebook",
-                "sdk"
-            ],
-            "support": {
-                "issues": "https://github.com/facebook/php-graph-sdk/issues",
-                "source": "https://github.com/facebook/php-graph-sdk/tree/5.7.0"
-            },
-            "abandoned": true,
-            "time": "2018-12-11T22:56:31+00:00"
         },
         {
             "name": "fastly/magento2",
@@ -4517,16 +4499,16 @@
         },
         {
             "name": "klaviyo/magento2-extension",
-            "version": "4.0.2",
+            "version": "4.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/klaviyo/magento2-klaviyo.git",
-                "reference": "3498ac4fcb3a77f06a8433fd8e3e53aca5cff849"
+                "reference": "6ae94a8fc248bd7ebd191075a4386d2f6f8f4c06"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/klaviyo/magento2-klaviyo/zipball/3498ac4fcb3a77f06a8433fd8e3e53aca5cff849",
-                "reference": "3498ac4fcb3a77f06a8433fd8e3e53aca5cff849",
+                "url": "https://api.github.com/repos/klaviyo/magento2-klaviyo/zipball/6ae94a8fc248bd7ebd191075a4386d2f6f8f4c06",
+                "reference": "6ae94a8fc248bd7ebd191075a4386d2f6f8f4c06",
                 "shasum": ""
             },
             "require": {
@@ -4546,9 +4528,9 @@
             "description": "Klaviyo extension for Magento 2. Allows pushing newsletters to Klaviyo's platform and more.",
             "support": {
                 "issues": "https://github.com/klaviyo/magento2-klaviyo/issues",
-                "source": "https://github.com/klaviyo/magento2-klaviyo/tree/4.0.2"
+                "source": "https://github.com/klaviyo/magento2-klaviyo/tree/4.0.5"
             },
-            "time": "2022-03-16T16:45:55+00:00"
+            "time": "2022-07-28T18:11:06+00:00"
         },
         {
             "name": "laminas/laminas-captcha",
@@ -6075,26 +6057,25 @@
         },
         {
             "name": "laminas/laminas-serializer",
-            "version": "2.11.0",
+            "version": "2.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laminas/laminas-serializer.git",
-                "reference": "a76e3a341a1a4993fd88e1d3587b93d60406d08e"
+                "reference": "aa72a694d79f01ef1252b276ca9930158c3b877d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laminas/laminas-serializer/zipball/a76e3a341a1a4993fd88e1d3587b93d60406d08e",
-                "reference": "a76e3a341a1a4993fd88e1d3587b93d60406d08e",
+                "url": "https://api.github.com/repos/laminas/laminas-serializer/zipball/aa72a694d79f01ef1252b276ca9930158c3b877d",
+                "reference": "aa72a694d79f01ef1252b276ca9930158c3b877d",
                 "shasum": ""
             },
             "require": {
                 "laminas/laminas-json": "^3.1",
                 "laminas/laminas-stdlib": "^3.2",
-                "laminas/laminas-zendframework-bridge": "^1.0",
-                "php": "^7.3 || ~8.0.0 || ~8.1.0"
+                "php": "^7.4 || ~8.0.0 || ~8.1.0"
             },
-            "replace": {
-                "zendframework/zend-serializer": "^2.9.1"
+            "conflict": {
+                "zendframework/zend-serializer": "*"
             },
             "require-dev": {
                 "laminas/laminas-coding-standard": "~2.3.0",
@@ -6142,7 +6123,7 @@
                     "type": "community_bridge"
                 }
             ],
-            "time": "2021-10-24T10:53:34+00:00"
+            "time": "2022-04-11T19:50:04+00:00"
         },
         {
             "name": "laminas/laminas-server",
@@ -7411,6 +7392,64 @@
             "time": "2020-05-30T13:11:16+00:00"
         },
         {
+            "name": "magefan/facebook-php-graph-sdk",
+            "version": "5.7.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magefan/facebook-php-graph-sdk.git",
+                "reference": "334fc17b01989995d47fcfd7bc0f4c70f1f29d82"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/magefan/facebook-php-graph-sdk/zipball/334fc17b01989995d47fcfd7bc0f4c70f1f29d82",
+                "reference": "334fc17b01989995d47fcfd7bc0f4c70f1f29d82",
+                "shasum": ""
+            },
+            "require-dev": {
+                "guzzlehttp/guzzle": "~5.0",
+                "mockery/mockery": "~0.8",
+                "phpunit/phpunit": "~4.0"
+            },
+            "suggest": {
+                "guzzlehttp/guzzle": "Allows for implementation of the Guzzle HTTP client",
+                "paragonie/random_compat": "Provides a better CSPRNG option in PHP 5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.x-dev"
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Facebook/polyfills.php"
+                ],
+                "psr-4": {
+                    "Facebook\\": "src/Facebook/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Facebook Platform"
+            ],
+            "authors": [
+                {
+                    "name": "Facebook",
+                    "homepage": "https://github.com/facebook/php-graph-sdk/contributors"
+                }
+            ],
+            "description": "Facebook SDK for PHP",
+            "homepage": "https://github.com/facebook/php-graph-sdk",
+            "keywords": [
+                "facebook",
+                "sdk"
+            ],
+            "support": {
+                "source": "https://github.com/magefan/facebook-php-graph-sdk/tree/5.7.2"
+            },
+            "time": "2022-04-15T12:56:03+00:00"
+        },
+        {
             "name": "magefan/module-admin-user-guide",
             "version": "2.0.1",
             "source": {
@@ -7443,21 +7482,22 @@
         },
         {
             "name": "magefan/module-blog",
-            "version": "2.10.6",
+            "version": "2.10.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/magefan/module-blog.git",
-                "reference": "e8080a34f76a3bab83c84a7b58d54968e7911898"
+                "reference": "e03bb3c341774e2cab3c819e5db940fccbcd905b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/magefan/module-blog/zipball/e8080a34f76a3bab83c84a7b58d54968e7911898",
-                "reference": "e8080a34f76a3bab83c84a7b58d54968e7911898",
+                "url": "https://api.github.com/repos/magefan/module-blog/zipball/e03bb3c341774e2cab3c819e5db940fccbcd905b",
+                "reference": "e03bb3c341774e2cab3c819e5db940fccbcd905b",
                 "shasum": ""
             },
             "require": {
-                "magefan/module-community": ">=2.1.8",
-                "magefan/module-wysiwyg-advanced": ">=2.0.10"
+                "magefan/module-blog-graph-ql": ">=2.1.7",
+                "magefan/module-community": ">=2.1.10",
+                "magefan/module-wysiwyg-advanced": ">=2.0.12"
             },
             "suggest": {
                 "magefan/module-blog-amp": "Install this module to activate Blog integration with the Plumrocket AMP extension.",
@@ -7477,16 +7517,16 @@
             "description": "Implements Blog functionality on Magento 2 store",
             "support": {
                 "issues": "https://github.com/magefan/module-blog/issues",
-                "source": "https://github.com/magefan/module-blog/tree/2.10.6"
+                "source": "https://github.com/magefan/module-blog/tree/2.10.10"
             },
-            "time": "2022-03-09T11:18:17+00:00"
+            "time": "2022-08-17T09:22:32+00:00"
         },
         {
             "name": "magefan/module-blog-author",
-            "version": "2.10.6",
+            "version": "2.10.10",
             "dist": {
                 "type": "zip",
-                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-author/version/2.10.6/"
+                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-author/version/2.10.10/"
             },
             "type": "magento2-module",
             "autoload": {
@@ -7504,17 +7544,17 @@
         },
         {
             "name": "magefan/module-blog-extra",
-            "version": "2.10.6",
+            "version": "2.10.10",
             "dist": {
                 "type": "zip",
-                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-extra/version/2.10.6/"
+                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-extra/version/2.10.10/"
             },
             "require": {
-                "magefan/module-blog-author": ">= 2.10.6",
-                "magefan/module-blog-import": ">= 2.10.6",
-                "magefan/module-blog-plus": ">= 2.10.6",
-                "magefan/module-productwidget": ">=2.0.8",
-                "magefan/module-youtube-widget": ">=2.0.11"
+                "magefan/module-blog-author": ">=2.10.10",
+                "magefan/module-blog-import": ">= 2.10.10",
+                "magefan/module-blog-plus": ">= 2.10.10",
+                "magefan/module-productwidget": ">=2.0.10",
+                "magefan/module-youtube-widget": ">=2.0.13"
             },
             "type": "magento2-module",
             "autoload": {
@@ -7538,20 +7578,10 @@
         },
         {
             "name": "magefan/module-blog-graph-ql",
-            "version": "2.1.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/magefan/module-blog-graph-ql.git",
-                "reference": "bc50f515b88078370d1d13191b2527cbd701c178"
-            },
+            "version": "2.1.7",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/magefan/module-blog-graph-ql/zipball/bc50f515b88078370d1d13191b2527cbd701c178",
-                "reference": "bc50f515b88078370d1d13191b2527cbd701c178",
-                "shasum": ""
-            },
-            "require": {
-                "magefan/module-blog": ">=2.10.4"
+                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-graph-ql/version/2.1.7/"
             },
             "type": "magento2-module",
             "autoload": {
@@ -7562,20 +7592,14 @@
                     "Magefan\\BlogGraphQl\\": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
-            "description": "GrapQl for Magento 2 Blog extension by Magefan",
-            "support": {
-                "issues": "https://github.com/magefan/module-blog-graph-ql/issues",
-                "source": "https://github.com/magefan/module-blog-graph-ql/tree/2.1.4"
-            },
-            "time": "2021-12-09T14:47:22+00:00"
+            "description": "GrapQl for Magento 2 Blog extension by Magefan"
         },
         {
             "name": "magefan/module-blog-import",
-            "version": "2.10.6",
+            "version": "2.10.10",
             "dist": {
                 "type": "zip",
-                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-import/version/2.10.6/"
+                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-import/version/2.10.10/"
             },
             "type": "magento2-module",
             "autoload": {
@@ -7593,14 +7617,14 @@
         },
         {
             "name": "magefan/module-blog-plus",
-            "version": "2.10.6",
+            "version": "2.10.10",
             "dist": {
                 "type": "zip",
-                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-plus/version/2.10.6/"
+                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-blog-plus/version/2.10.10/"
             },
             "require": {
-                "facebook/graph-sdk": "^5.6.3",
-                "magefan/module-blog": ">=2.10.6"
+                "magefan/facebook-php-graph-sdk": "^5.7.2",
+                "magefan/module-blog": ">=2.10.10"
             },
             "type": "magento2-module",
             "autoload": {
@@ -7618,20 +7642,20 @@
         },
         {
             "name": "magefan/module-community",
-            "version": "2.1.8",
+            "version": "2.1.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/magefan/module-community.git",
-                "reference": "1ba131ffe9d60f01194fb28785bc004803f0f97b"
+                "reference": "ff7fb0142f5326dcb35276a00a3015f5c2cbc2e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/magefan/module-community/zipball/1ba131ffe9d60f01194fb28785bc004803f0f97b",
-                "reference": "1ba131ffe9d60f01194fb28785bc004803f0f97b",
+                "url": "https://api.github.com/repos/magefan/module-community/zipball/ff7fb0142f5326dcb35276a00a3015f5c2cbc2e6",
+                "reference": "ff7fb0142f5326dcb35276a00a3015f5c2cbc2e6",
                 "shasum": ""
             },
             "require": {
-                "magefan/module-admin-user-guide": ">=2.0.0"
+                "magefan/module-admin-user-guide": ">=2.0.1"
             },
             "type": "magento2-module",
             "autoload": {
@@ -7645,20 +7669,20 @@
             "notification-url": "https://packagist.org/downloads/",
             "support": {
                 "issues": "https://github.com/magefan/module-community/issues",
-                "source": "https://github.com/magefan/module-community/tree/2.1.8"
+                "source": "https://github.com/magefan/module-community/tree/2.1.10"
             },
-            "time": "2021-12-22T11:09:27+00:00"
+            "time": "2022-04-19T07:01:39+00:00"
         },
         {
             "name": "magefan/module-productwidget",
-            "version": "2.0.8",
+            "version": "2.0.10",
             "dist": {
                 "type": "zip",
-                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-productwidget/version/2.0.8/"
+                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-productwidget/version/2.0.10/"
             },
             "require": {
-                "magefan/module-community": ">=2.1.8",
-                "magefan/module-wysiwyg-advanced": ">=2.0.10"
+                "magefan/module-community": ">=2.1.10",
+                "magefan/module-wysiwyg-advanced": ">=2.0.12"
             },
             "type": "magento2-module",
             "autoload": {
@@ -7676,13 +7700,20 @@
         },
         {
             "name": "magefan/module-wysiwyg-advanced",
-            "version": "2.0.10",
+            "version": "2.0.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/magefan/module-wysiwyg-advanced.git",
+                "reference": "760b0746bb4f7acd0da10a9b0bff928bd52cfad9"
+            },
             "dist": {
                 "type": "zip",
-                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-wysiwyg-advanced/version/2.0.10/"
+                "url": "https://api.github.com/repos/magefan/module-wysiwyg-advanced/zipball/760b0746bb4f7acd0da10a9b0bff928bd52cfad9",
+                "reference": "760b0746bb4f7acd0da10a9b0bff928bd52cfad9",
+                "shasum": ""
             },
             "require": {
-                "magefan/module-community": ">=2.0.12"
+                "magefan/module-community": ">=2.1.8"
             },
             "type": "magento2-module",
             "autoload": {
@@ -7693,21 +7724,27 @@
                     "Magefan\\WysiwygAdvanced\\": ""
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "OSL-3.0",
                 "AFL-3.0"
             ],
-            "description": "Extend TinyMCE 4 in Magento 2"
+            "description": "Extend TinyMCE 4 in Magento 2",
+            "support": {
+                "issues": "https://github.com/magefan/module-wysiwyg-advanced/issues",
+                "source": "https://github.com/magefan/module-wysiwyg-advanced/tree/2.0.12"
+            },
+            "time": "2022-04-20T08:57:37+00:00"
         },
         {
             "name": "magefan/module-youtube-widget",
-            "version": "2.0.11",
+            "version": "2.0.13",
             "dist": {
                 "type": "zip",
-                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-youtube-widget/version/2.0.11/"
+                "url": "https://EskhNm2ngLubrLmh7t7wvKpZDD2joFMF:uoXgzFEhOaPyoOsdag9Q8YBlesCWla2i@magefan.com/repo/packages/download/package/magefan-module-youtube-widget/version/2.0.13/"
             },
             "require": {
-                "magefan/module-community": ">=2.1.4"
+                "magefan/module-community": ">=2.1.10"
             },
             "type": "magento2-module",
             "autoload": {
@@ -25957,17 +25994,17 @@
         },
         {
             "name": "mageplaza/module-product-labels",
-            "version": "4.1.0",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "git@gitlab.com:mageplaza/uranus/module-product-labels.git",
-                "reference": "93e1978a956c285d1897701024cf967f5efaf9e6"
+                "reference": "60b98b9bb12fdcc9ecd9940722b586017e272700"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://repo.mageplaza.com/public/dist/mageplaza/module-product-labels/mageplaza-module-product-labels-93e1978a956c285d1897701024cf967f5efaf9e6-zip-c432ed.zip",
-                "reference": "93e1978a956c285d1897701024cf967f5efaf9e6",
-                "shasum": "a7f590a7d53de9f2e9db1d8ef9746e9389b833cf"
+                "url": "https://repo.mageplaza.com/public/dist/mageplaza/module-product-labels/mageplaza-module-product-labels-60b98b9bb12fdcc9ecd9940722b586017e272700-zip-06cc26.zip",
+                "reference": "60b98b9bb12fdcc9ecd9940722b586017e272700",
+                "shasum": "4a9546c41a77f0e3f097486c5e7fb752368c6865"
             },
             "require": {
                 "mageplaza/module-core": "^1.4.5"
@@ -25993,7 +26030,7 @@
                 }
             ],
             "description": "Magento 2 Product Labels Extension",
-            "time": "2021-11-22T04:03:59+00:00"
+            "time": "2021-12-28T07:53:54+00:00"
         },
         {
             "name": "mageplaza/module-product-labels-graphql",
@@ -26128,6 +26165,44 @@
                 "source": "https://github.com/mageplaza/magento-2-webhook/tree/v4.1.2"
             },
             "time": "2021-11-17T01:38:24+00:00"
+        },
+        {
+            "name": "magestyapps/module-web-images",
+            "version": "1.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/MagestyApps/module-web-images.git",
+                "reference": "e70657ee1a9ee277f4efae3cb38bd46536e8d736"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/MagestyApps/module-web-images/zipball/e70657ee1a9ee277f4efae3cb38bd46536e8d736",
+                "reference": "e70657ee1a9ee277f4efae3cb38bd46536e8d736",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "MagestyApps\\WebImages\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Upload SVG images in Magento 2",
+            "support": {
+                "issues": "https://github.com/MagestyApps/module-web-images/issues",
+                "source": "https://github.com/MagestyApps/module-web-images/tree/1.1.6"
+            },
+            "time": "2022-03-24T16:42:33+00:00"
         },
         {
             "name": "magetrend/pdf-templates",
@@ -29428,11 +29503,11 @@
         },
         {
             "name": "signifyd/module-connect",
-            "version": "4.4.1",
+            "version": "4.4.4",
             "dist": {
                 "type": "zip",
-                "url": "https://repo.magento.com/archives/signifyd/module-connect/signifyd-module-connect-4.4.1.0.zip",
-                "shasum": "7cb2a10db6cd2c18bb7812bb7c29254f9ef686cd"
+                "url": "https://repo.magento.com/archives/signifyd/module-connect/signifyd-module-connect-4.4.4.0.zip",
+                "shasum": "bf0c61d3fe618748a3f86d38c84012a59a0a9763"
             },
             "require": {
                 "monolog/monolog": ">=1.16.0",
@@ -33783,11 +33858,11 @@
         },
         {
             "name": "yotpo/magento2-module-yotpo-loyalty",
-            "version": "1.2.5",
+            "version": "1.3.0",
             "dist": {
                 "type": "zip",
-                "url": "https://repo.magento.com/archives/yotpo/magento2-module-yotpo-loyalty/yotpo-magento2-module-yotpo-loyalty-1.2.5.0.zip",
-                "shasum": "a95004d2824a7fbc65b5ba542849eefa071de827"
+                "url": "https://repo.magento.com/archives/yotpo/magento2-module-yotpo-loyalty/yotpo-magento2-module-yotpo-loyalty-1.3.0.0.zip",
+                "shasum": "bb2aa4dfc34d9866594dc6b700559bcbfa03c852"
             },
             "require": {
                 "magento/framework": ">=100.1.0",
@@ -33796,7 +33871,6 @@
             "type": "magento2-module",
             "autoload": {
                 "files": [
-                    "cli_commands.php",
                     "registration.php"
                 ],
                 "psr-4": {

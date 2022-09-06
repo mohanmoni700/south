@@ -127,9 +127,9 @@ class AlfaBundle
      *
      * @param Item|CreditmemoItem $item
      * @param array $items
-     * @return int
+     * @return float
      */
-    public function getSuperPackItemPrice($item, array $items): int
+    public function getSuperPackItemPrice($item, array $items): float
     {
         $price = 0;
         $superPack = $this->getSuperPackItems($item);
@@ -146,6 +146,6 @@ class AlfaBundle
             }
         }
 
-        return $price;
+        return (float) $price;
     }
 }
