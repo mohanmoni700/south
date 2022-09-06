@@ -41,7 +41,8 @@ class AfterShipping
 
         if ($handelingFee > 0) {
 
-            $newamount = $amountInclTaxConfig ? $amountInclTax + $handelingFee + $totalShippingFeeDiscount : $subject->getAmount() + $handelingFee + $totalShippingFeeDiscount;
+            $newamount = $amountInclTaxConfig ? $amountInclTax + $handelingFee + $totalShippingFeeDiscount
+            : $subject->getAmount() + $handelingFee + $totalShippingFeeDiscount;
 
             $amount = $subject->getOrder()->formatPriceTxt($newamount);
             foreach ($result as $key => $value) {
