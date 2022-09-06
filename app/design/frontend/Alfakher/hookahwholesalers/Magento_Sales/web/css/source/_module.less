@@ -347,6 +347,18 @@
         }
 
         .table-order-items {
+            .excise-note {
+                width: 70%;
+                float: left;
+                color: @hookah_errormessage_bg;
+            }
+            .order-without-pager  {
+                padding-top: 0;
+                padding-bottom: 20px;
+                .excise-note {
+                    width: 100%;
+                }
+            }
             .product-item-name {
                 font-size: 14px;
                 margin-bottom: 0;
@@ -878,6 +890,17 @@
     .order-details-items {
         border: 0;
         padding: 0;
+        .table-order-items {
+            .order-pager-wrapper-top {
+                padding-left: 0;
+                padding-right: 0;
+            }
+            .excise-note {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+        
         .amount {
             text-align: right !important;
         }
