@@ -94,10 +94,12 @@ class Shipping extends \MageWorx\OrderEditor\Controller\Adminhtml\Edit\Shipping
      */
     protected function updateShippingMethod()
     {
+        /* bv_mp; date : 06-09-22; save quote after edit shipping method*/
         $order = $this->getOrder();
         $quote = $this->cartRepository->get($order->getQuoteId());
         $quote->collectTotals()->save();
-        
+        /* bv_mp; date : 06-09-22; save quote after edit shipping method */
+
         $params = $this->prepareParams();
         $this->shipping->initParams($params);
 
