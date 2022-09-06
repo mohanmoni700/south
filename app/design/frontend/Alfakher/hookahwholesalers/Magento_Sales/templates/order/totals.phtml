@@ -21,9 +21,9 @@ $order = $block->getOrder();
     
     <?php if ($shippingInclTax == 2): ?>
         <?php $shippingAmount = $block->getOrder()->getTotalShippingFeeDiscount() > 0
-              ? $order->getOriginalShippingInclTax() : $order->getShippingAmount(); ?>
+              ? $order->getOriginalShippingInclTax() : $order->getShippingInclTax(); ?>
         <?php $shippingBaseAmount = $block->getOrder()->getTotalShippingFeeDiscount() > 0
-              ? $order->getOriginalBaseShippingInclTax() : $order->getShippingAmount(); ?>  
+              ? $order->getOriginalBaseShippingInclTax() : $order->getShippingInclTax(); ?>  
     <?php else: ?>
         <?php $shippingAmount = $block->getOrder()->getTotalShippingFeeDiscount() > 0
               ? $order->getOriginalShippingFee() : $order->getShippingAmount(); ?>
