@@ -38,17 +38,12 @@ class AfterShipping
         if (!$amountInclTax) {
             $amountInclTax = $subject->getAmount() + $subject->getSource()->getShippingTaxAmount();
         }
+        $newamount = $amountInclTaxConfig ? $amountInclTax + $handelingFee + $totalShippingFeeDiscount
+        : $subject->getAmount() + $handelingFee + $totalShippingFeeDiscount;
 
-        if ($handelingFee > 0) {
-
-            $newamount = $amountInclTaxConfig ? $amountInclTax + $handelingFee + $totalShippingFeeDiscount
-            : $subject->getAmount() + $handelingFee + $totalShippingFeeDiscount;
-
-            $amount = $subject->getOrder()->formatPriceTxt($newamount);
-            foreach ($result as $key => $value) {
-                $result[$key]['amount'] = $subject->getAmountPrefix() . $amount;
-            }
-            return $result;
+        $amount = $subject->getOrder()->formatPriceTxt($newamount);
+        foreach ($result as $key => $value) {
+            $result[$key]['amount'] = $subject->getAmountPrefix() . $amount;
         }
         return $result;
     }
