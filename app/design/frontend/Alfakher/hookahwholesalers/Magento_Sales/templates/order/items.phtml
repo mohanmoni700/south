@@ -13,9 +13,6 @@ if ($order->getExciseTax() > 0) {
 }
 ?>
 <div class="table-wrapper order-items">
-    <div class="excise-note" style="color: red; padding-top: 0px; padding-bottom: 16px; padding-left: 10px;">    
-        <strong><?= $block->escapeHtml(__($exciseNote)); ?></strong>
-    </div>
     <table class="data table table-order-items" id="my-orders-table"
     summary="<?= $block->escapeHtml(__('Items Ordered')) ?>">
         <caption class="table-caption"><?= $block->escapeHtml(__('Items Ordered')) ?></caption>
@@ -24,10 +21,23 @@ if ($order->getExciseTax() > 0) {
                 <tr>
                     <td colspan="6" data-block="order-items-pager-top"
                     class="test order-pager-wrapper order-pager-wrapper-top">
+                    <div class="excise-note">    
+                        <strong><?= $block->escapeHtml(__($exciseNote)); ?></strong>
+                    </div>
                         <?= $block->getPagerHtml() ?>
                     </td>
                 </tr>
-            <?php endif ?>
+            <?php else: ?>
+                <tr>
+                    <td colspan="6" data-block="order-items-pager-top"
+                    class="order-without-pager">
+                        <div class="excise-note">    
+                            <strong><?= $block->escapeHtml(__($exciseNote)); ?></strong>
+                        </div>
+                    </td>
+                </tr>
+            </div>
+            <?php endif; ?>
             <tr>
                 <th class="col name"><?= $block->escapeHtml(__('Product Name')) ?></th>
                 <th class="col sku"><?= $block->escapeHtml(__('SKU')) ?></th>
