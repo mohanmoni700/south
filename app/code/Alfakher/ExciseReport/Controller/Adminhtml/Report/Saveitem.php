@@ -10,6 +10,9 @@ use Alfakher\ExciseReport\Block\Adminhtml\Report\ExciseTax;
 
 class Saveitem extends \Magento\Backend\App\Action
 {
+    public const B2B_ITEM_REPORT = "b2b_item_excise_report.csv";
+    public const B2C_ITEM_REPORT = "b2c_item_excise_report.csv";
+    public const WITHOUT_ITEM_REPORT = "without_cost_excise_report.csv";
     /**
      * Construct
      *
@@ -53,22 +56,21 @@ class Saveitem extends \Magento\Backend\App\Action
         $header = [];
         $values = [];
 
-        if (($store_code == 'hookah_wholesalers' || $store_code == 'base') &&
-            $check_value == 1) {
+        if (($store_code === 'hookah_wholesalers' || $store_code === 'base') &&
+            $check_value === 1) {
             /*query for b2b and b2c without costreport*/
             $query = $this->withoutCost($startdate, $enddate, $storeid);
-            $fileName = 'without_cost_excise_report.csv';
+            $fileName = self::WITHOUT_ITEM_REPORT;
         }
-        if ($store_code == 'hookah_wholesalers' && $check_value == 0) {
+        if ($store_code === 'hookah_wholesalers' && $check_value === 0) {
             /*query for b2b item report*/
             $query = $this->b2bItems($startdate, $enddate, $storeid);
-            $fileName = 'b2b_item_excise_report.csv';
-
+            $fileName = self::B2B_ITEM_REPORT;
         }
-        if ($store_code == 'base' && $check_value == 0) {
+        if ($store_code === 'base' && $check_value === 0) {
             /*query for b2c item report*/
             $query = $this->b2cItems($startdate, $enddate, $storeid);
-            $fileName = "b2c_item_excise_report.csv";
+            $fileName = self::B2C_ITEM_REPORT;
         }
 
         $header[] = [
@@ -92,7 +94,7 @@ class Saveitem extends \Magento\Backend\App\Action
             $values = $connection->fetchAll($query);
         }
 
-        if ($check_value == 1) {
+        if ($check_value === 1) {
             unset($header[0]['SKU Cost']);
             /*to remove superpack column from withoutCost() csv*/
             foreach ($values as $key => $val) {
