@@ -1,8 +1,11 @@
-<?php /* @var $block \Magento\Bundle\Block\Catalog\Product\View\Type\Bundle\Option\Select */ ?>
+<?php
+// phpcs:disable Magento2.Templates.ThisInTemplate
+/* @var $block \Magento\Bundle\Block\Catalog\Product\View\Type\Bundle\Option\Select */ ?>
 <?php $_option      = $block->getOption(); ?>
 <?php $_selections  = $_option->getSelections(); ?>
 <?php $_default     = $_option->getDefaultSelection(); ?>
 <?php list($_defaultQty, $_canChangeQty) = $block->getDefaultValues(); ?>
+<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 
 <div class="field option <?= ($_option->getRequired()) ? ' required': '' ?>">
     <label class="label" for="bundle-option-<?= $block->escapeHtmlAttr($_option->getId()) ?>">
@@ -20,11 +23,13 @@
                     name="bundle_option[<?= $block->escapeHtmlAttr($_option->getId()) ?>]"
                     data-selector="bundle_option[<?= $block->escapeHtmlAttr($_option->getId()) ?>]"
                     class="bundle-option-<?= $block->escapeHtmlAttr($_option->getId())
-                    ?> product bundle option bundle-option-select change-container-classname"
+                    ?> product bundle option bundle-option-select change-container-classname dropdown-stock"
                 <?php if ($_option->getRequired()) { echo 'data-validate = {required:true}'; } ?>>
                 <option value=""><?= $block->escapeHtml(__('Choose a selection...')) ?></option>
                 <?php foreach ($_selections as $_selection): ?>
                     <option value="<?= $block->escapeHtmlAttr($_selection->getSelectionId()) ?>"
+                        data-select-avai-qty="<?= /* @noEscape */
+                        $_helperB2b->getStockQty($block->escapeHtmlAttr($_selection->getId()))?>"
                         <?php if ($block->isSelected($_selection)) { echo ' selected="selected"'; } ?>
                         <?php if (!$_selection->isSaleable()) { echo ' disabled="disabled"'; } ?>>
                         <?= /* @noEscape */ $block->getSelectionTitlePrice($_selection, false) ?>
@@ -48,14 +53,52 @@
                 <div class="control">
                     <input <?php if (!$_canChangeQty) { echo ' disabled="disabled"'; } ?>
                            id="bundle-option-<?= $block->escapeHtmlAttr($_option->getId()) ?>-qty-input"
-                           class="input-text qty<?php if (!$_canChangeQty) { echo ' qty-disabled'; } ?>"
+                           class="dropdown-qty input-text qty<?php if (!$_canChangeQty) { echo ' qty-disabled'; } ?>"
                            type="number"
+                           min = "1"
                            name="bundle_option_qty[<?= $block->escapeHtmlAttr($_option->getId()) ?>]"
                            data-selector="bundle_option_qty[<?= $block->escapeHtmlAttr($_option->getId()) ?>]"
-                           value="<?= $block->escapeHtmlAttr($_defaultQty) ?>"/>
+                           value="<?= $block->escapeHtmlAttr($_defaultQty) ?>"
+                           onclick="this.select();"/>
                 </div>
+                 <span id="select-stock-msg" style="color: red;"></span>
             </div>
         </div>
     </div>
 </div>
-    
+<script>
+    require(['jquery'], function ($) {
+        jQuery(".dropdown-stock").on('change', function(){
+            $('.dropdown-qty').attr('data-select-avai-qty',
+                ($('.dropdown-stock :selected').attr("data-select-avai-qty")));
+            $('.dropdown-qty').attr('data-option-id', $(this).val());
+        });
+    });
+
+</script>
+<script>
+    require(['jquery'], function ($) {
+        jQuery(".dropdown-qty").on('keyup', function(){
+           
+            var regex = new RegExp("^[0-9]+$");
+            if (regex.test(this.value)) {
+                var reqQty = this.value;
+                    if(reqQty < 0) {
+                        $(this).val(0);
+                }
+           
+            var avaiQty = $(this).data('select-avai-qty');
+            if(reqQty > avaiQty){
+                $("#select-stock-msg")
+                .html("Requested Qty "+reqQty+" Is Not Available")
+                .show().delay(15000).fadeOut();
+                $(this).val(0);
+            } else {
+                    $("#select-stock-msg").html("");
+                }
+            } else {
+                $(this).val(0);
+            }  
+        });
+    });
+</script>

@@ -1,8 +1,10 @@
+<?php // phpcs:disable Magento2.Templates.ThisInTemplate?>
 <?php /* @var $block \Magento\Bundle\Block\Catalog\Product\View\Type\Bundle\Option\Radio */ ?>
 <?php $_option = $block->getOption(); ?>
 <?php $_selections  = $_option->getSelections(); ?>
 <?php $_default     = $_option->getDefaultSelection(); ?>
 <?php list($_defaultQty, $_canChangeQty) = $block->getDefaultValues(); ?>
+<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 
 <div class="field option <?= ($_option->getRequired()) ? ' required': '' ?>">
     <label class="label">
@@ -37,7 +39,7 @@
                 <?php foreach ($_selections as $_selection): ?>
                     <div class="field choice">
                         <input type="radio"
-                               class="radio product bundle option change-container-classname"
+                               class="radio product bundle option change-container-classname radio-stock"
                                id="bundle-option-<?= $block->escapeHtmlAttr($_option->getId()) ?>-
                                <?= $block->escapeHtmlAttr($_selection->getSelectionId()) ?>"
                                <?php if ($_option->getRequired()) {
@@ -46,13 +48,17 @@
                                data-selector="bundle_option[<?= $block->escapeHtmlAttr($_option->getId()) ?>]"
                                <?php if ($block->isSelected($_selection)) { echo ' checked="checked"'; } ?>
                                <?php if (!$_selection->isSaleable()) { echo ' disabled="disabled"'; } ?>
-                               value="<?= $block->escapeHtmlAttr($_selection->getSelectionId()) ?>"/>
+                               value="<?= $block->escapeHtmlAttr($_selection->getSelectionId()) ?>"
+                               data-radio-available-qty="<?= /* @noEscape */
+                                $_helperB2b->getStockQty($block->escapeHtmlAttr($_selection->getId()))?>"/>
                         <label class="label"
                                for="bundle-option-<?= $block->escapeHtmlAttr($_option->getId()) ?>-
                                <?= $block->escapeHtmlAttr($_selection->getSelectionId()) ?>">
                             <span><?= /* @noEscape */ $block->getSelectionTitlePrice($_selection) ?></span>
                             <br/>
                         </label>
+                        <span id="radio-stock-msg_<?= $block->escapeHtmlAttr($_selection->getSelectionId()) ?>"
+                         style="color: red;"></span>
                     </div>
                 <?php endforeach; ?>
                 <div id="bundle-option-<?= $block->escapeHtmlAttr($_option->getId()) ?>-container"></div>
@@ -64,13 +70,52 @@
                 <div class="control">
                     <input <?php if (!$_canChangeQty) { echo ' disabled="disabled"'; } ?>
                            id="bundle-option-<?= $block->escapeHtmlAttr($_option->getId()) ?>-qty-input"
-                           class="input-text qty<?php if (!$_canChangeQty) { echo ' qty-disabled'; } ?>"
+                           class="radio-qty input-text qty<?php if (!$_canChangeQty) { echo ' qty-disabled'; } ?>"
                            type="number"
+                           min = "1"
                            name="bundle_option_qty[<?= $block->escapeHtmlAttr($_option->getId()) ?>]"
                            data-selector="bundle_option_qty[<?= $block->escapeHtmlAttr($_option->getId()) ?>]"
-                           value="<?= $block->escapeHtmlAttr($_defaultQty) ?>"/>
+                           value="<?= $block->escapeHtmlAttr($_defaultQty) ?>"
+                           onclick="this.select();"
+                            />
                 </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    require(['jquery'], function ($) {
+        jQuery(".radio-stock").on('change', function(){
+            $('.radio-qty').attr('data-radio-available-qty', $(this).attr("data-radio-available-qty"));
+            $('.radio-qty').attr('data-option-id', $(this).val());
+        });
+    });
+
+</script>
+<script>
+    require(['jquery'], function ($) {
+        jQuery(".radio-qty").on('keyup', function(){
+
+            var regex = new RegExp("^[0-9]+$");
+            if (regex.test(this.value)) {
+                var requestQty = this.value;
+                if(requestQty < 0){
+                    $(this).val(0);
+                }
+                
+                var availableProductQty = $(this).data('radio-available-qty');
+                if(requestQty > availableProductQty){
+                    $("#radio-stock-msg_"+$(this).attr("data-option-id"))
+                    .html("Requested Qty "+requestQty+" Is Not Available")
+                    .show().delay(15000).fadeOut();
+                    $(this).val(0);
+                } else {
+                    $("#radio-stock-msg_"+$(this).attr("data-option-id")).html("");
+                }
+
+            } else {
+                $(this).val(0);
+            }  
+        });
+    });
+</script>
