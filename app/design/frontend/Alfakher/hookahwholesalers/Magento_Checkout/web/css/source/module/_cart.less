@@ -283,6 +283,40 @@
             margin-bottom: 6px;
             text-decoration: none;
         }
+        .pages {
+            .item {
+                margin: 0 8px 0 0;
+            }
+            .action {
+                width: 30px;
+                height: 30px;
+                line-height: 29px;
+                border-color: @hookah_theme_color;
+                border-radius: 100%;
+                &:hover {
+                    background-color: @hookah_theme_color;
+                    &::before {
+                        color: @color_white !important;
+                    }
+                }
+                &.previous {
+                    margin-right: 0;
+                    &:before {
+                        color: @hookah_theme_color;
+                        font-size: 40px;
+                    }
+                }
+                &.next {
+                    margin-left: 0;
+                    &:before {
+                        color: @hookah_theme_color;
+                        font-size: 40px;
+                        margin: 0 0 0 -5px;
+                    }
+                }
+            }
+        }
+
     }
     .item-actions {
         .actions-toolbar {
@@ -1024,6 +1058,9 @@
         .message.error,
         .message.success {
             letter-spacing: .5px;
+        }
+        div.pages {
+            margin: 10px 0 15px;
         }
     }
     .cart {
