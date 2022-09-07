@@ -80,7 +80,7 @@ abstract class AfterSave implements ObserverInterface
      */
     public function execute(Observer $observer)
     {
-        if ($this->hookType == 'order') {
+        if ($this->hookType === 'order') {
             $item = $observer->getEvent()->getOrder();
         } else {
             $item = $observer->getEvent()->getData();

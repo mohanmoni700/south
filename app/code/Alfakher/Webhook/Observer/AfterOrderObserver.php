@@ -65,9 +65,10 @@ class AfterOrderObserver extends \Mageplaza\Webhook\Observer\AfterSave
         $item = $observer->getDataObject();
         $orderStatus = [];
         $orderStatus = $this->registry->registry('orderStatus');
-        if ($orderStatus == null) {
+        if (!$orderStatus) {
             $orderStatus[] = 'status options';
         }
+
         if (!in_array($item->getStatus(), $orderStatus)) {
             $orderStatus[] = $item->getStatus();
             if ($this->registry->registry('orderStatus')) {
