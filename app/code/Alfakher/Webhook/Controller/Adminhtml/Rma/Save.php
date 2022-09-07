@@ -37,8 +37,7 @@ class Save extends SaveNew implements HttpPostActionInterface
             if ($model->getStatus() !== $model->getOrigData('status')) {
                 $statusHistory->saveSystemComment();
             }
-            //echo "<pre>";
-            //var_dump($model->getData());die;
+
             $this->messageManager->addSuccess(__('You saved the RMA request.'));
             $redirectBack = $this->getRequest()->getParam('back', false);
             /* Start - New event added*/

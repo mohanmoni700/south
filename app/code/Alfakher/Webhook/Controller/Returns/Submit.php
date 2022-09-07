@@ -3,7 +3,9 @@ declare (strict_types = 1);
 
 namespace Alfakher\Webhook\Controller\Returns;
 
+use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
+use Magento\Framework\Registry;
 use Magento\Framework\Stdlib\DateTime\DateTime;
 use Magento\Rma\Api\Data\RmaInterface;
 use Magento\Rma\Controller\Returns\Returns;
@@ -66,8 +68,8 @@ class Submit extends Returns implements HttpPostActionInterface
      * @param Data|null $rmaHelper
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\Registry $coreRegistry,
+        Context $context,
+        Registry $coreRegistry,
         RmaFactory $rmaModelFactory,
         OrderRepository $orderRepository,
         LoggerInterface $logger,

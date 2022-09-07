@@ -27,7 +27,7 @@ class AfterRmaCreate extends AfterSave
     public function execute(Observer $observer)
     {
         $event = $observer->getEvent();
-        if ($event->getName() == "rma_create_after") {
+        if ($event->getName() === "rma_create_after") {
             parent::execute($observer);
         } else {
             $this->updateObserver($observer);
