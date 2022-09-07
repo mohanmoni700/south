@@ -68,10 +68,14 @@ class ProductDataProvider extends \Magento\Catalog\Ui\DataProvider\Product\Form\
                 $cost = $proData['cost'];
             }
 
-            if (!isset($proData['gross_margin'])) {
+            if (!isset($proData['gross_margin']) ||
+                $proData['gross_margin'] === '0' ||
+                $proData['gross_margin'] === '0.00%'
+            ) {
                 try {
                     $grossMargin = ($price - $cost) / $price * 100;
-                    $this->data[$this->request->getParam('id')]['product']['gross_margin'] = number_format($grossMargin, 2) . "%";
+                    $this->data[$this->request->getParam('id')]
+                    ['product']['gross_margin'] = number_format($grossMargin, 2) . "%";
                 } catch (\Exception $e) {
                     $this->data[$this->request->getParam('id')]['product']['gross_margin'] = "0.00%";
                 }
