@@ -35,7 +35,7 @@ class PostModifiedDate
      * Set modified date
      *
      * @param \Magefan\Blog\Model\ResourceModel\Post $subject
-     * @param $object
+     * @param array $object
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function beforeSave(

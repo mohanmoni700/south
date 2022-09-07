@@ -27,7 +27,7 @@ class ModifiedDateProvider
      * Get Meta data
      *
      * @param \Magefan\Blog\Ui\DataProvider\Post\Form\PostDataProvider $subject
-     * @param $result
+     * @param array $result
      * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function afterGetMeta(
