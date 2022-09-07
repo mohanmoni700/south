@@ -69,8 +69,8 @@ class ProductDataProvider extends \Magento\Catalog\Ui\DataProvider\Product\Form\
             }
 
             if (!isset($proData['gross_margin']) ||
-                $proData['gross_margin'] == 0 ||
-                $proData['gross_margin'] == '0.00%'
+                $proData['gross_margin'] === '0' ||
+                $proData['gross_margin'] === '0.00%'
             ) {
                 try {
                     $grossMargin = ($price - $cost) / $price * 100;
