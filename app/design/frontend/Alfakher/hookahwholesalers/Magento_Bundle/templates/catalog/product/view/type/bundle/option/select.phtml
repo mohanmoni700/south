@@ -69,7 +69,7 @@
 <script>
     require(['jquery'], function ($) {
         jQuery(".dropdown-stock").on('change', function(){
-            $('.dropdown-qty').attr('data-select-avai-qty',
+            $('.dropdown-qty').attr('data-select-available-qty',
                 ($('.dropdown-stock :selected').attr("data-select-avai-qty")));
             $('.dropdown-qty').attr('data-option-id', $(this).val());
         });
@@ -82,22 +82,24 @@
            
             var regex = new RegExp("^[0-9]+$");
             if (regex.test(this.value)) {
-                var reqQty = this.value;
+                var reqQty = parseInt(this.value);
                     if(reqQty < 0) {
                         $(this).val(0);
                 }
            
-            var avaiQty = $(this).data('select-avai-qty');
+            var avaiQty = $(this).attr('data-select-available-qty');
             if(reqQty > avaiQty){
                 $("#select-stock-msg")
                 .html("Requested Qty "+reqQty+" Is Not Available")
                 .show().delay(15000).fadeOut();
                 $(this).val(0);
+                $(".dropdown-qty").blur();
             } else {
                     $("#select-stock-msg").html("");
                 }
             } else {
                 $(this).val(0);
+                $(".dropdown-qty").blur();
             }  
         });
     });

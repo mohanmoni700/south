@@ -86,7 +86,7 @@
 <script>
     require(['jquery'], function ($) {
         jQuery(".radio-stock").on('change', function(){
-            $('.radio-qty').attr('data-radio-available-qty', $(this).attr("data-radio-available-qty"));
+            $('.radio-qty').attr('data-radio-avail-qty', $(this).attr("data-radio-available-qty"));
             $('.radio-qty').attr('data-option-id', $(this).val());
         });
     });
@@ -98,23 +98,26 @@
 
             var regex = new RegExp("^[0-9]+$");
             if (regex.test(this.value)) {
-                var requestQty = this.value;
+                var requestQty = parseInt(this.value);
                 if(requestQty < 0){
                     $(this).val(0);
                 }
                 
-                var availableProductQty = $(this).data('radio-available-qty');
+                var availableProductQty = $(this).attr('data-radio-avail-qty');
+               
                 if(requestQty > availableProductQty){
                     $("#radio-stock-msg_"+$(this).attr("data-option-id"))
                     .html("Requested Qty "+requestQty+" Is Not Available")
                     .show().delay(15000).fadeOut();
                     $(this).val(0);
+                    $(".radio-qty").blur();
                 } else {
                     $("#radio-stock-msg_"+$(this).attr("data-option-id")).html("");
                 }
 
             } else {
                 $(this).val(0);
+                $(".radio-qty").blur();
             }  
         });
     });
