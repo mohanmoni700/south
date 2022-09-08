@@ -89,11 +89,7 @@
             $('.radio-qty').attr('data-radio-avail-qty', $(this).attr("data-radio-available-qty"));
             $('.radio-qty').attr('data-option-id', $(this).val());
         });
-    });
 
-</script>
-<script>
-    require(['jquery'], function ($) {
         jQuery(".radio-qty").on('keyup', function(){
 
             var regex = new RegExp("^[0-9]+$");

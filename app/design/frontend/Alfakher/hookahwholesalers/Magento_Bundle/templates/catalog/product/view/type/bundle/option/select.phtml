@@ -73,11 +73,7 @@
                 ($('.dropdown-stock :selected').attr("data-select-avai-qty")));
             $('.dropdown-qty').attr('data-option-id', $(this).val());
         });
-    });
 
-</script>
-<script>
-    require(['jquery'], function ($) {
         jQuery(".dropdown-qty").on('keyup', function(){
            
             var regex = new RegExp("^[0-9]+$");
