@@ -842,6 +842,7 @@ return [
         'Alfakher_MyDocument' => 1,
         'Alfakher_NotPaidInvoice' => 1,
         'Alfakher_OfflinePaymentRecords' => 1,
+        'Alfakher_OrderComment' => 1,
         'Alfakher_OrderPdf' => 1,
         'Alfakher_OutOfStockProduct' => 1,
         'Alfakher_PaymentMethod' => 1,

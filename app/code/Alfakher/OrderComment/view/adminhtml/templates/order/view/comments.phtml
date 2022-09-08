@@ -1,0 +1,11 @@
+<?php
+if ($block->getOrderComment()):?>
+    <section class="admin__page-section kaushik-ordercomment">
+        <div class="admin__page-section-title">
+            <span class="title"><?= $block->escapeHtml(__('Order Comment')) ?></span>
+        </div>
+        <div class="admin__page-section-content">
+            <?=  $block->escapeHtmlAttr($block->getOrderComment()) ?>
+        </div>
+    </section>
+<?php endif; ?>
