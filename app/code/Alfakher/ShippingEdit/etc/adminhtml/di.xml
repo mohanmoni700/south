@@ -7,4 +7,8 @@
   <!-- For save new quote after edit shipping method --> 
     <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Shipping" type="Alfakher\ShippingEdit\Controller\Adminhtml\Edit\Shipping" />
 
+    <type name="MageWorx\OrderEditor\Model\Shipping">
+        <plugin name="Alfakher_remove" type="Alfakher\ShippingEdit\Plugin\Model\Shipping" sortOrder="10" disabled="false"  />
+    </type>
+
 </config>
