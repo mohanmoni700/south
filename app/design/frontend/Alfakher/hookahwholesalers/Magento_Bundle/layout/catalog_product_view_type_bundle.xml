@@ -3,8 +3,7 @@
     <body>
         <move element="product.info" destination="product.info.price"/>
         <move element="bundle.options.container" destination="product.info.price"/>
-        <move element="product.info.sku" destination="product.info.bundle.options.top" after='-'/>
-        <move element="product.info.bundle" destination="product.info.bundle.options.top" after='-'/>
+        <move element="product.info.stock.sku" destination="product.info.price" after="product.price.final"/>
         <referenceBlock name="bundle.back.button" remove="true"/>
         <referenceBlock name="product.price.render.bundle.customization" remove="true"/>
     </body>
