@@ -22,4 +22,9 @@
         </arguments>
     </virtualType>
 
+    <!-- removed clone as quote from sales order grid -->
+    <type name="Magento\Sales\Ui\Component\Listing\Column\ViewAction">
+        <plugin name="Amasty_Request::add-quote-button-listing" disabled="true" />
+    </type>
+
 </config>

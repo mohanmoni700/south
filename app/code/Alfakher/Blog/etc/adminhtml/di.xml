@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<!-- Save Modified Date -->
+	<type name="Magefan\Blog\Model\ResourceModel\Post">
+		<plugin disabled="false" name="add_modified_date" sortOrder="20" type="Alfakher\Blog\Plugin\Model\ResourceModel\PostModifiedDate"/>
+	</type>
+
+	<!-- Disable Publish Date -->
+	<type name="Magefan\Blog\Ui\DataProvider\Post\Form\PostDataProvider">
+		<plugin disabled="false" name="disable_publish" sortOrder="10" type="Alfakher\Blog\Plugin\Ui\DataProvider\Form\ModifiedDateProvider"/>
+	</type>
+
+</config>
