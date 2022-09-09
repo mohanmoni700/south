@@ -91,6 +91,8 @@ class AddAmount extends \Magento\Framework\App\Action\Action
         if ($storeCreditAmount > $baseBalance || $storeCreditAmount > $quote->getBaseGrandTotal()) {
             return $resultJson->setData([
                 'success' => false,
+                'applied' => $storeCreditAmount,
+                'total' => $quote->getBaseGrandTotal(),
             ]);
         } else {
             return $resultJson->setData([

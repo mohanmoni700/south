@@ -13,11 +13,11 @@
     @_breadcrumbs-container-margin: @breadcrumbs__container-margin,
     @_breadcrumbs-padding: @breadcrumbs__padding,
 
-    //  Breadcrumbs separating symbol
+//  Breadcrumbs separating symbol
     @_breadcrumbs-separator-symbol: @breadcrumbs-separator__symbol,
     @_breadcrumbs-separator-color: @breadcrumbs-separator__color,
 
-    //  Use icon as a separating symbol
+//  Use icon as a separating symbol
     @_breadcrumbs-icon-use: @breadcrumbs-icon__use,
     @_breadcrumbs-icon-font-content: @breadcrumbs-icon__font-content,
     @_icon-font: @breadcrumbs-icon__font,
@@ -27,7 +27,7 @@
     @_icon-font-margin: @breadcrumbs-icon__font-margin,
     @_icon-font-vertical-align: @breadcrumbs-icon__font-vertical-align,
 
-    //  Breadcrumbs current
+//  Breadcrumbs current
     @_breadcrumbs-current-color: @breadcrumbs-current__color,
     @_breadcrumbs-current-font-weight: @breadcrumbs-current__font-weight,
     @_breadcrumbs-current-background: @breadcrumbs-current__background,
@@ -37,11 +37,11 @@
     @_breadcrumbs-current-gradient-color-start: @breadcrumbs-current__gradient-color-start,
     @_breadcrumbs-current-gradient-color-end: @breadcrumbs-current__gradient-color-end,
 
-    //  Breadcrumbs link - gradient
+//  Breadcrumbs link - gradient
     @_breadcrumbs-link-gradient: @breadcrumbs-link__gradient,
     @_breadcrumbs-link-gradient-direction: @breadcrumbs-link__gradient-direction,
 
-    //  Breadcrumbs link color - default
+//  Breadcrumbs link color - default
     @_breadcrumbs-link-color: @breadcrumbs-link__color,
     @_breadcrumbs-link-background: @breadcrumbs-link__background,
     @_breadcrumbs-link-border: @breadcrumbs-link__border,
@@ -49,7 +49,7 @@
     @_breadcrumbs-link-gradient-color-start: @breadcrumbs-link__gradient-color-start,
     @_breadcrumbs-link-gradient-color-end: @breadcrumbs-link__gradient-color-end,
 
-    //  Breadcrumbs link - visited
+//  Breadcrumbs link - visited
     @_breadcrumbs-link-color-visited: @breadcrumbs-link__visited__color,
     @_breadcrumbs-link-background-visited: @breadcrumbs-link__visited__background,
     @_breadcrumbs-link-border-visited: @breadcrumbs-link__visited__border,
@@ -57,7 +57,7 @@
     @_breadcrumbs-link-gradient-color-start-visited: @breadcrumbs-link__visited__gradient-color-start,
     @_breadcrumbs-link-gradient-color-end-visited: @breadcrumbs-link__visited__gradient-color-end,
 
-    //  Breadcrumbs link - hover
+//  Breadcrumbs link - hover
     @_breadcrumbs-link-color-hover: @breadcrumbs-link__hover__color,
     @_breadcrumbs-link-background-hover: @breadcrumbs-link__hover__background,
     @_breadcrumbs-link-border-hover: @breadcrumbs-link__hover__border,
@@ -65,7 +65,7 @@
     @_breadcrumbs-link-gradient-color-start-hover: @breadcrumbs-link__hover__gradient-color-start,
     @_breadcrumbs-link-gradient-color-end-hover: @breadcrumbs-link__hover__gradient-color-end,
 
-    //  Breadcrumbs link - active
+//  Breadcrumbs link - active
     @_breadcrumbs-link-color-active: @breadcrumbs-link__active__color,
     @_breadcrumbs-link-background-active: @breadcrumbs-link__active__background,
     @_breadcrumbs-link-border-active: @breadcrumbs-link__active__border,
@@ -152,7 +152,7 @@
         .lib-css(padding, @_breadcrumbs-padding);
     }
 
-    & when not (@_breadcrumbs-separator-symbol = '') and not (@_breadcrumbs-separator-symbol = false) { // Insert separating symbol to "content"
+    & when not (@_breadcrumbs-separator-symbol = '') and not (@_breadcrumbs-separator-symbol = false) { // Insert separating symbol to 'content'
         .item:not(:last-child) {
             &:after {
                 .lib-css(color, @_breadcrumbs-separator-color);
@@ -161,7 +161,7 @@
         }
     }
 
-    & when (@_breadcrumbs-icon-use = false) {  // Use font icon as a separating symbol
+    & when (@_breadcrumbs-icon-use = false) { // Use font icon as a separating symbol
         .item:not(:last-child) {
             .lib-icon-font(
                 @_icon-font-content: @_breadcrumbs-icon-font-content,

@@ -1,4 +1,4 @@
-// /**
+//  /**
 //  * Copyright © Magento, Inc. All rights reserved.
 //  * See COPYING.txt for license details.
 //  */
@@ -51,11 +51,11 @@
                             .checkbox {
                                 display: none;
                                 + label {
-                                    display: inline-block;
                                     cursor: pointer;
+                                    display: inline-block;
                                 }
                             }
-                            input[type="hidden"] {
+                            input[type='hidden'] {
                                 + label {
                                     cursor: not-allowed;
                                     &:before {
@@ -63,13 +63,13 @@
                                         border-color: @input-border_color;
                                     }
                                     &::after {
+                                        background: url('@{baseDir}images/true_arrow.svg');
                                         content: '';
-                                        position: absolute;
+                                        height: 7px;
                                         left: 5px;
+                                        position: absolute;
                                         top: 6px;
                                         width: 10px;
-                                        height: 7px;
-                                        background: url('@{baseDir}images/true_arrow.svg');
                                     }
                                 }
                             }
@@ -81,11 +81,11 @@
 
         .payment-method-title {
             .lib-css(padding, @checkout-payment-method-title__padding 0);
-            margin: 0;
-            display: flex;
             align-items: center;
+            display: flex;
             flex-wrap: wrap;
-            input[type="radio"] {
+            margin: 0;
+            input[type='radio'] {
                 margin: 0;
                 opacity: 0;
                 position: absolute;
@@ -95,41 +95,42 @@
                             border-color: @hookah_theme_color;
                         }
                         &:after {
-                            content: "";
-                            width: 10px;
-                            height: 10px;
                             background: @hookah_theme_color;
-                            display: block;
                             border-radius: 50%;
+                            content: '';
+                            display: block;
+                            height: 10px;
+                            left: 2px;
                             position: absolute;
                             top: 4px;
-                            left: 2px;
+                            width: 10px;
                         }
                     }
                 }
-                &::after, &::before {
+                &::after,
+                &::before {
                     display: none;
                 }
                 + label {
+                    display: inline-block;
                     min-height: 18px;
                     min-width: 18px;
-                    display: inline-block;
-                    vertical-align: middle;
                     padding-left: 26px;
+                    vertical-align: middle;
                     &:before {
-                        content: "";
-                        width: 16px;
-                        height: 16px;
-                        border: 1px solid #000;
-                        display: block;
+                        background: @color-white;
+                        border: 1px solid @color-black;
                         border-radius: 50%;
-                        background: #fff;
-                        margin-left: -2px;
+                        content: '';
+                        display: block;
+                        height: 16px;
                         left: 0;
-                        top: 0;
+                        margin-left: -2px;
                         position: absolute;
+                        top: 0;
+                        width: 16px;
                     }
-                }          
+                }
             }
             .payment-icon {
                 display: inline-block;
@@ -151,14 +152,14 @@
                     margin: 0 0 @indent__base;
                 }
                 .field.field-select-billing {
+                    margin: .5rem 0 3rem 0;
                     width: 100%;
-                    margin: 0.5rem 0 3rem 0;
                 }
                 &.payment.ccard {
                     .label {
-                        margin-bottom: 10px;
                         display: block;
                         font-weight: @font-weight__bold;
+                        margin-bottom: 10px;
                     }
                 }
             }
@@ -196,52 +197,52 @@
         .billing-address-same-as-shipping-block {
             margin: 6px 0 22px;
             padding-left: 20px;
-            input[type="checkbox"] {
-                position: absolute;
-                opacity: 0;
+            input[type='checkbox'] {
                 display: none;
-                &:focus{
+                opacity: 0;
+                position: absolute;
+                &:focus {
                     outline: none;
                 }
-                & + label{
+                & + label {
+                    cursor: pointer;
+                    display: inline-block;
                     padding-left: 30px;
                     padding-top: 0;
                     position: relative;
-                    cursor: pointer;
-                    display: inline-block;
                 }
                 & + label:before {
+                    background: @color-white;
+                    border: 1px solid @color-gray20;
+                    border-radius: 0;
                     content: '';
-                    margin-right: 10px;
                     display: inline-block;
+                    height: 18px;
+                    left: 0;
+                    margin-right: 10px;
+                    position: absolute;
+                    top: 0;
                     vertical-align: text-top;
                     width: 18px;
-                    height: 18px;
-                    background: #ffffff;
-                    position: absolute;
-                    left: 0;
-                    top: 0px;
-                    border: 1px solid #333333;
-                    border-radius: 0px;
                 }
             
                 &:focus + label:before {
                     box-shadow: none;
                 }
                 &:checked + label:before {
-                    background: #333333;
-                    border: 1px solid #333333;
-                    border-radius: 0px;
+                    background: @color-gray20;
+                    border: 1px solid @color-gray20;
+                    border-radius: 0;
                 }
             
                 &:checked + label:after {
+                    background: @color-gray20 url('@{baseDir}images/true_arrow.svg');
                     content: '';
-                    position: absolute;
+                    height: 7px;
                     left: 5px;
+                    position: absolute;
                     top: 6px;
                     width: 10px;
-                    height: 7px;
-                    background: #333333 url('@{baseDir}images/true_arrow.svg');    
                 }
             }
         }
@@ -261,11 +262,11 @@
                 }
             }
             .fieldset .actions-toolbar {
-                text-align: left;
-                width: 100%;
                 display: inline-block;
                 float: left;
                 margin-left: 0;
+                text-align: left;
+                width: 100%;
                 .primary {
                     float: left;
                 }
@@ -282,13 +283,13 @@
                 }
             }
             .action-edit-address {
-                margin-top: 10px;
                 .lib-button-primary();
                 border-radius: 20px;
                 margin-bottom: 10px;
+                margin-top: 10px;
                 &:hover {
-                    border-color: transparent;
                     background: @hookah_theme_gradient;
+                    border-color: transparent;
                     border-left-color: @border_left_gradient;
                     border-right-color: @border_right_gradient;
                 }
@@ -329,14 +330,14 @@
         }
         .actions-toolbar {
             .primary.checkout {
-                margin: 0;
-                width: 300px;
-                padding: 12px 17px;
-                font-size: 16px;
                 background: @hookah_theme_color;
                 border-color: @hookah_theme_color;
+                font-size: 16px;
                 line-height: 24px;
-                &:hover{
+                margin: 0;
+                padding: 12px 17px;
+                width: 300px;
+                &:hover {
                     background: @hookah_theme_gradient;
                     border-color: transparent;
                     border-left-color: @border_left_gradient;
@@ -349,15 +350,16 @@
     //
     //  Order Success
     //  _____________________________________________
+
     .checkout-onepage-success {
         .page-main {
-            text-align: center;
-            padding: 160px 20px 60px 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.10);
-            border-radius: 10px;
-            margin: 40px auto 80px;            
             background: @color_white url('@{baseDir}images/order-success.svg') no-repeat center 60px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .10);
+            margin: 40px auto 80px;
             max-width: @layout_container_xl;
+            padding: 160px 20px 60px 20px;
+            text-align: center;
         }
         .actions-toolbar {
             .primary {
@@ -380,14 +382,14 @@
             margin-top: 30px;
         }
         .action.primary.continue {
+            background: @hookah_theme_color;
+            border-color: @hookah_theme_color;
+            border-radius: 30px;
+            font-size: 16px;
+            letter-spacing: 2px;
             margin: 0;
             min-width: 375px;
             padding: 12px 17px;
-            font-size: 16px;
-            background: @hookah_theme_color;
-            border-color: @hookah_theme_color;
-            letter-spacing: 2px;
-            border-radius: 30px;
             text-transform: uppercase;
             &:hover {
                 background: @hookah_theme_gradient;
@@ -401,6 +403,7 @@
     //
     //  Responsive
     //  _____________________________________________
+
     @media only screen and (max-width: 1399px) {
         .checkout-onepage-success {
             .page-main {
@@ -425,13 +428,13 @@
     .checkout-payment-method {
         .checkout-billing-address {
             .fieldset .actions-toolbar {
-                width: 100%;
                 display: block;
-                max-width: 300px;
                 margin: 0 auto;
+                max-width: 300px;
+                width: 100%;
             }
             .primary .action-cancel {
-                margin: @indent__s 0 0 ;
+                margin: @indent__s 0 0;
             }
         }
         .actions-toolbar {
@@ -454,20 +457,22 @@
                 }
             }
         }
-    }        
+    }
+    
     
     //
     //  Order Success
     //  _____________________________________________
+    
     .checkout-onepage-success {
         .action.primary.continue {
             min-width: 100%;
         }
         .page-main {
-            width: 90%;
+            background-position: center 30px;
             margin: 20px auto;
             padding: 140px 16px 40px 16px;
-            background-position: center 30px;
+            width: 90%;
         }
         .page-title {
             .lib-font-size(26);
@@ -512,7 +517,7 @@
                             width: 0;
                         }
                         .checkbox {
-                            display: none;                            
+                            display: none;
                         }
                         .label {
                             .lib-font-size(14);
@@ -530,8 +535,8 @@
                     &.cvv {
                         width: 100%;
                         ~ .field {
-                            width: 100%;
                             padding-left: 20px;
+                            width: 100%;
                         }
                     }
                 }
