@@ -1,4 +1,4 @@
-// /**
+//  /**
 //  * Copyright © Magento, Inc. All rights reserved.
 //  * See COPYING.txt for license details.
 //  */
@@ -9,7 +9,7 @@
 
 @toolbar-mode-icon-font-size: 24px;
 @toolbar-element-background: @panel__background-color;
-@toolbar-element-background-active: #DEDEDE;
+@toolbar-element-background-active: #dedede;
 
 //
 //  Common
@@ -70,13 +70,13 @@
             &:hover {
                 &:before {
                     color: @color_black;
-                }   
+                }
             }
         }
         .sorter-label {
             font-weight: @font-weight__bold;
             &::after {
-                content: ":";
+                content: ':';
                 display: inline-block;
                 margin-left: 2px;
             }
@@ -84,18 +84,18 @@
     }
 
     .sorter-options {
-        margin: 0 0 0 7px;
-        width: 180px;
-        height: 32px;
-        border-top: 0;
-        border-left: 0;
-        border-right: 0;
-        border-radius: 0;
-        border-width: 1px;
-        border-color: @input-border_color;
+        background-position: ~'calc(100% - 14px)';
         background-size: 12px;
-        background-position: ~"calc(100% - 14px)";
+        border-color: @input-border_color;
+        border-left: 0;
+        border-radius: 0;
+        border-right: 0;
+        border-top: 0;
+        border-width: 1px;
+        height: 32px;
+        margin: 0 0 0 7px;
         padding-right: 36px;
+        width: 180px;
         @media only screen and (max-width: 1199px) and  (min-width: 992px) {
             width: 160px;
         }
@@ -144,23 +144,23 @@
             .label {
                 font-weight: @font-weight__bold;
                 &::after {
-                    content: ":";
+                    content: ':';
                     display: inline-block;
                 }
             }
             .limiter-options {
-                margin: 0 0 0 2px;
-                width: 80px;
-                height: 32px;
-                border-top: 0;
-                border-left: 0;
-                border-right: 0;
-                border-radius: 0;
-                border-width: 1px;
-                border-color: @input-border_color;
+                background-position: ~'calc(100% - 14px)';
                 background-size: 12px;
-                background-position: ~"calc(100% - 14px)";
+                border-color: @input-border_color;
+                border-left: 0;
+                border-radius: 0;
+                border-right: 0;
+                border-top: 0;
+                border-width: 1px;
+                height: 32px;
+                margin: 0 0 0 2px;
                 padding-right: 36px;
+                width: 80px;
             }
         }
     }
@@ -186,9 +186,9 @@
     }
 
     .toolbar-amount {
+        display: inline-block !important;
         float: left;
         margin-right: 10px;
-        display: inline-block !important;
     }
 
     .sorter {
@@ -209,6 +209,7 @@
 
     .modes-mode {
         .lib-css(color, @text__color__muted);
+        background-color: @panel__background-color;
         border: 1px solid @border-color__base;
         border-right: 0;
         float: left;
@@ -216,7 +217,6 @@
         line-height: 1;
         padding: 1px 3px;
         text-align: center;
-        background-color: @panel__background-color;
         &:before {
             font-size: @toolbar-mode-icon-font-size - 4;
         }
@@ -227,13 +227,13 @@
             }
         }
         &:nth-child(2) {
-            border-top-left-radius: 4px;
             border-bottom-left-radius: 4px;
+            border-top-left-radius: 4px;
         }
         &:last-child {
-            border-top-right-radius: 4px;
             border-bottom-right-radius: 4px;
             border-right: 1px solid @border-color__base;
+            border-top-right-radius: 4px;
         }
 
         &.active {
@@ -265,13 +265,13 @@
     }
     .filter_button {
         background: transparent url('@{baseDir}images/filter.svg') no-repeat center right;
-        padding: 0 26px 0 0;
-        line-height: 32px;
         border: none;
-        font-weight: @font-weight__regular;
         color: @color-black;
-        text-decoration: none !important;
         display: inline-block;
+        font-weight: @font-weight__regular;
+        line-height: 32px;
+        padding: 0 26px 0 0;
+        text-decoration: none !important;
         &:hover {
             color: @color-black;
         }
@@ -292,16 +292,16 @@
     }
     .toolbar-sorter {
         &.sorter {
-            width: 50%;
+            align-items: center;
+            border-left: 1px solid @input-border_color;
+            display: flex;
             float: right;
-            text-align: center;
+            justify-content: center;
             min-height: 60px;
             padding: 2px 0;
-            border-left: 1px solid @input-border_color;
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            text-align: center;
+            width: 50%;
             .sorter-options {
                 margin: 0;
                 width: 100%;
@@ -315,16 +315,16 @@
         }
     }
     .cate-filter {
-        float: left;
-        width: 50%;
-        text-align: center;
-        display: flex;
-        flex-wrap: wrap;
         align-items: center;
-        justify-content: center;
         border-right: solid 1px @input-border_color;
-        min-height: 60px;
+        display: flex;
         display: none;
+        flex-wrap: wrap;
+        float: left;
+        justify-content: center;
+        min-height: 60px;
+        text-align: center;
+        width: 50%;
         .filter_button {
             .lib-font-size(16);
             color: @color-black;
@@ -335,19 +335,20 @@
     }
     .sorter {
         .sorter-label {
-            .lib-font-size(16);            
+            .lib-font-size(16);
             &:after {
                 display: none;
             }
         }
     }
-    .catalog-category-view, .catalogsearch-result-index {
+    .catalog-category-view,
+    .catalogsearch-result-index {
         .toolbar {
-            padding-bottom: 0;
             border-top: 1px solid @input-border_color;
-            margin-top: -61px;
             margin-left: -15px;
             margin-right: -15px;
+            margin-top: -61px;
+            padding-bottom: 0;
         }
     }
     .toolbar-products {

@@ -1,80 +1,90 @@
 
-@color_black: #000;
+//
+//   Variables
+//  _____________________________________________
+
+@hookah_color_grey: #cdcaca;
+@border_right_gradient: #9b2269;
+@border_left_gradient: #d378ff;
+@color_primary: #961e70;
+
+
 
 //
 //  Common
 //  _____________________________________________
 
 & when (@media-common = true) {
-	
-	.form-cart{
-		&.amasty-quote-update{
-			.cart.actions{
-				.action{
-					padding: 8px 20px;
-				    font-weight: 700;
-				    text-transform: uppercase;
-				    letter-spacing: 2px;
-				    color: #000000;
-				    font-size: 1.2rem;
-				    text-align: center;
-				    background: #ffffff;
-				    border: 1px solid #000000;
-				    border-radius: 30px;
-				    &.cotinue{
-				    	padding: 8px 20px;
-					    font-weight: 700;
-					    text-transform: uppercase;
-					    letter-spacing: 2px;
-					    color: #000000;
-					    font-size: 1.2rem;
-					    text-align: center;
-					    background: #ffffff;
-					    border: 1px solid #000000;
-					    border-radius: 30px;
-				    }
-				    &:hover{
-				    	color: #ffffff;
-					    background: linear-gradient(275deg, #9b2269 5%, #d378ff 100%);
-					    border-color: transparent;
-					    border-left-color: #d378ff;
-					    border-right-color: #9b2269;
-				    }
-				}
-			}
-		}
-	}
+    
+    .form-cart {
+        &.amasty-quote-update {
+            .cart.actions {
+                .action {
+                    background: @color-white;
+                    border: 1px solid @color-black;
+                    border-radius: 30px;
+                    color: @color-black;
+                    font-size: 1.2rem;
+                    font-weight: 700;
+                    letter-spacing: 2px;
+                    padding: 8px 20px;
+                    text-align: center;
+                    text-transform: uppercase;
+                    &.cotinue {
+                        background: @color-white;
+                        border: 1px solid @color-black;
+                        border-radius: 30px;
+                        color: @color-black;
+                        font-size: 1.2rem;
+                        font-weight: 700;
+                        letter-spacing: 2px;
+                        padding: 8px 20px;
+                        text-align: center;
+                        text-transform: uppercase;
+                    }
+                    &:hover {
+                        background: linear-gradient(275deg, @border_right_gradient 5%, @border_left_gradient 100%);
+                        border-color: transparent;
+                        border-left-color: @border_left_gradient;
+                        border-right-color: @border_right_gradient;
+                        color: @color-white;
+                    }
+                }
+            }
+        }
+    }
 
-	.fieldset.amquote-summary-details{
-		.field.textarea{
-			.control{
-				width: 100%;
-				textarea{
-					background: transparent;
-					border: 1px solid #ccc;
-				}
-			}
-		}
-	}
+    .fieldset.amquote-summary-details {
+        .field.textarea {
+            .control {
+                width: 100%;
+                textarea {
+                    background: transparent;
+                    border: 1px solid @color-gray80;
+                }
+            }
+        }
+    }
 
-	.amasty_quote-quote-success{
-        .checkout-success{
+    .amasty_quote-quote-success {
+        .checkout-success {
             text-align: center;
-            .actions-toolbar{
-                .primary{
+            .actions-toolbar {
+                .primary {
                     float: unset;
                 }
             }
         }
     }
 
-    .amquote-addto-button{
-    	background: none;
-        border: 1px solid @color_black;
+    .amquote-addto-button {
+        background: none;
+        border: 1px solid @color-black;
+        border-radius: 26px;
         border-radius: 3px;
         box-shadow: none;
         box-sizing: border-box;
-        color: @color_black;
+        color: @color-black;
         cursor: pointer;
         display: inline-block;
         font-size: 1.8rem;
@@ -82,136 +92,135 @@
         line-height: 2.2rem;
         margin: 0 0 15px;
         padding: 14px 17px;
+        text-transform: uppercase;
         transition-property: background-color, color;
         vertical-align: top;
         width: 100%;
-        border-radius: 26px;
-        text-transform: uppercase;
         &:hover,
         &:active,
         &:focus {
-            color: #ffffff;
-            background: linear-gradient(275deg, #9b2269 5%, #d378ff 100%);
+            color: @color-white;
+            background: linear-gradient(275deg, @border_right_gradient 5%, @border_left_gradient 100%);
             border-color: transparent;
-            border-left-color: #d378ff;
-            border-right-color: #9b2269;
+            border-left-color: @border_left_gradient;
+            border-right-color: @border_right_gradient;
             box-shadow: none;
             text-decoration: none;
         }
     }
 
-    .amasty_quote-cart-index{
-    	.cart.table-wrapper{
-    		.control.price{
-    			display: flex;
-    			input{
-    				margin-left: 5px;
-    			}
-    		}
-    	}
-    	.cart-empty{
-            text-align: center;
+    .amasty_quote-cart-index {
+        .cart.table-wrapper {
+            .control.price {
+                display: flex;
+                input {
+                    margin-left: 5px;
+                }
+            }
+        }
+        .cart-empty {
             background: url('@{baseDir}images/shopping-bag.svg') no-repeat center 0;
             background-size: 140px auto;
+            color: @color-black;
             padding-top: 150px;
-            color: #000;
+            text-align: center;
         }
     }
 
-    .minicart-wrapper{
-    	&.amquote-cart-wrapper {
-		    text-align: center;
-			align-self: flex-end;
-		    .action.close:before {
-			    font-size: 25px;
-			    margin-bottom: 20px;
-			}
-		}
-    	.amquote-showcart{
-			text-decoration: none;
-    		&:before{
-    			content: "";
-			    display: inline-block;
-			    -webkit-font-smoothing: antialiased;
-			    height: 20px;
-			    line-height: 28px;
-			    speak: none;
-			    text-align: center;
-			    vertical-align: top;
-			    width: 20px;
-			    background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNSAyNSI+PHBhdGggZmlsbD0iIzc1NzU3NSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMjQgMjFoLTFsLS4wMTItMTEuNTEyQS40ODguNDg4IDAgMCAwIDIyLjUgOUgyMFYxLjVhLjQ4OC40ODggMCAwIDAtLjQ4OC0uNDg4SDkuNDg4QS40ODguNDg4IDAgMCAwIDkgMS41VjIwaC0uMzM3QTMuNTE1IDMuNTE1IDAgMCAwIDcgMTguMzM3VjEuMzU5QzcgLjU1MSA2LjUgMCA1LjY2NCAwSDFTMCAwIDAgMXMxIDEgMSAxaDR2MTYuMDM1QTMuNSAzLjUgMCAxIDAgOC42NjMgMjNIMjRzMSAwIDEtMWMwLTEuMDAxLTEtMS0xLTF6bS0xMy4wMDEgMGwtLjAwMS0xMEgxNGwuMDAxIDQuMjM2YS40ODguNDg4IDAgMCAwIC43ODEuMzlsMS4xMzctMS4yNDUgMS4zMDEgMS4yNDZhLjQ4OC40ODggMCAwIDAgLjc4LS4zOTF2LTQuMjM1TDIxIDExdjkuOTk5TDEwLjk5OSAyMXptMS45OS0xNS4zNThhLjQ4OC40ODggMCAwIDAgLjc1OC40MDZsLjcwNi0uNzk3Ljc4OC43OTZBLjQ4Ny40ODcgMCAwIDAgMTYgNS42NFYzaDJ2NmgtN1YzaDEuOTg4djIuNjQyeiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PC9zdmc+) center center no-repeat;
-			    margin: 0 0 3px 0;
-			    overflow: hidden;
-			    transition: opacity 0.3s ease 0s;
-    		}
-    		.counter-label{
-    			clip: rect(0px, 0px, 0px, 0px);
-			    height: 1px;
-			    position: absolute;
-			    width: 1px;
-			    border-width: 0px;
-			    border-style: initial;
-			    border-color: initial;
-			    border-image: initial;
-			    margin: -1px;
-			    overflow: hidden;
-			    padding: 0px;
-    		}
-    		.text {
-			    width: 100%;
-			    font-size: 12px;
-			    color: #000000;
-			    font-weight: 600;
-			    text-decoration: none;
-			    display: block;
-			    padding-top: 3px;
-			}
-    		.counter.qty{
-    			height: 18px;
-			    padding: 1px 5px;
-			    min-width: 24px;
-			    top: -7px;
-			    left: 60%;
-			    position: absolute;
-			    font-size: 11px;
-			    background-color: #961e70;
-			    text-align: left;
-			    margin: 0;
-			    line-height: 16px;
-			    border-radius: 10px;
-			    font-family: montserrat;
-			    text-align: center;
-			    font-weight: 600;
-			    white-space: nowrap;
-			    overflow: hidden;
-			    text-overflow: ellipsis;
-			    max-width: 72px;
-			    color: #fff;
-    		}
+    .minicart-wrapper {
+        &.amquote-cart-wrapper {
+            align-self: flex-end;
+            text-align: center;
+            .action.close:before {
+                font-size: 25px;
+                margin-bottom: 20px;
+            }
+        }
+        .amquote-showcart {
+            text-decoration: none;
+            &:before {
+                -webkit-font-smoothing: antialiased;
+                background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCAyNSAyNSI+PHBhdGggZmlsbD0iIzc1NzU3NSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMjQgMjFoLTFsLS4wMTItMTEuNTEyQS40ODguNDg4IDAgMCAwIDIyLjUgOUgyMFYxLjVhLjQ4OC40ODggMCAwIDAtLjQ4OC0uNDg4SDkuNDg4QS40ODguNDg4IDAgMCAwIDkgMS41VjIwaC0uMzM3QTMuNTE1IDMuNTE1IDAgMCAwIDcgMTguMzM3VjEuMzU5QzcgLjU1MSA2LjUgMCA1LjY2NCAwSDFTMCAwIDAgMXMxIDEgMSAxaDR2MTYuMDM1QTMuNSAzLjUgMCAxIDAgOC42NjMgMjNIMjRzMSAwIDEtMWMwLTEuMDAxLTEtMS0xLTF6bS0xMy4wMDEgMGwtLjAwMS0xMEgxNGwuMDAxIDQuMjM2YS40ODguNDg4IDAgMCAwIC43ODEuMzlsMS4xMzctMS4yNDUgMS4zMDEgMS4yNDZhLjQ4OC40ODggMCAwIDAgLjc4LS4zOTF2LTQuMjM1TDIxIDExdjkuOTk5TDEwLjk5OSAyMXptMS45OS0xNS4zNThhLjQ4OC40ODggMCAwIDAgLjc1OC40MDZsLjcwNi0uNzk3Ljc4OC43OTZBLjQ4Ny40ODcgMCAwIDAgMTYgNS42NFYzaDJ2NmgtN1YzaDEuOTg4djIuNjQyeiIgY2xpcC1ydWxlPSJldmVub2RkIi8+PC9zdmc+) center center no-repeat;
+                content: '';
+                display: inline-block;
+                height: 20px;
+                line-height: 28px;
+                margin: 0 0 3px 0;
+                overflow: hidden;
+                speak: none;
+                text-align: center;
+                transition: opacity .3s ease 0s;
+                vertical-align: top;
+                width: 20px;
+            }
+            .counter-label {
+                border-color: initial;
+                border-image: initial;
+                border-style: initial;
+                border-width: 0;
+                clip: rect(0, 0, 0, 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+            .text {
+                color: @color-black;
+                display: block;
+                font-size: 12px;
+                font-weight: 600;
+                padding-top: 3px;
+                text-decoration: none;
+                width: 100%;
+            }
+            .counter.qty {
+                background-color: @color_primary;
+                border-radius: 10px;
+                color: @color-white;
+                font-family: montserrat;
+                font-size: 11px;
+                font-weight: 600;
+                height: 18px;
+                left: 60%;
+                line-height: 16px;
+                margin: 0;
+                max-width: 72px;
+                min-width: 24px;
+                overflow: hidden;
+                padding: 1px 5px;
+                position: absolute;
+                text-align: center;
+                text-align: left;
+                text-overflow: ellipsis;
+                top: -7px;
+                white-space: nowrap;
+            }
 
-    	}
+        }
     }
     .amasty_quote-account-view {
-    	.order-details-items.ordered {
-		    border-top: 1px solid #cdcaca;
-		}
-	}
-	.amasty_quote-account-index {
-		.page-title {
-		    padding-bottom: 10px;
-		    border-bottom: 1px solid #cdcaca;
-		    margin-bottom: 30px;
-		    font-weight: 700;
-		    font-size: 1.8rem;
-		    line-height: 28px;
-		    color: #333333;
-		}
-	}
-	.table-wrapper.quotes-history .table-quote-items {
-		.action.quote {
-		    padding-left: 10px;
-		}
-	}
+        .order-details-items.ordered {
+            border-top: 1px solid @hookah_color_grey;
+        }
+    }
+    .amasty_quote-account-index {
+        .page-title {
+            border-bottom: 1px solid @hookah_color_grey;
+            color: @color-gray20;
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 28px;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+        }
+    }
+    .table-wrapper.quotes-history .table-quote-items {
+        .action.quote {
+            padding-left: 10px;
+        }
+    }
 }
 
 
@@ -220,49 +229,49 @@
 //  _____________________________________________
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
-    .minicart-wrapper{
-    	.amquote-showcart{
-    		&:before{
-    			height: 22px;
-    			width: 18px;
-    		}
-    	}
+    .minicart-wrapper {
+        .amquote-showcart {
+            &:before {
+                height: 22px;
+                width: 18px;
+            }
+        }
     }
-    .amasty_quote-cart-index{
-    	.cart-empty {
+    .amasty_quote-cart-index {
+        .cart-empty {
             background-size: 100px auto;
             padding-top: 120px;
         }
     }
     .amasty_quote-account-index {
-		.page-title {
-			text-align: center;
-		}
-	}
-    .table-wrapper.quotes-history .table-quote-items{
-    	tbody tr {
-            border-bottom: 1px solid #cdcaca;
-    	}
-	}
-	.minicart-wrapper {
-		.amquote-showcart {
-			.counter.qty {
-				max-width: 36px;
-				min-width: 20px;
-				padding: 0;
-				font-size: 10px;
-				line-height: 18px;
-			}
-		}
-	}
+        .page-title {
+            text-align: center;
+        }
+    }
+    .table-wrapper.quotes-history .table-quote-items {
+        tbody tr {
+            border-bottom: 1px solid @hookah_color_grey;
+        }
+    }
+    .minicart-wrapper {
+        .amquote-showcart {
+            .counter.qty {
+                font-size: 10px;
+                line-height: 18px;
+                max-width: 36px;
+                min-width: 20px;
+                padding: 0;
+            }
+        }
+    }
 }
 
-@media screen and (max-width: 479px){
-	.minicart-wrapper{
-		.block-minicart{
-			&.block-quotecart{
-				right: -120px !important;
-			}
-		}
-	}
+@media screen and (max-width: 479px) {
+    .minicart-wrapper {
+        .block-minicart {
+            &.block-quotecart {
+                right: -120px !important;
+            }
+        }
+    }
 }

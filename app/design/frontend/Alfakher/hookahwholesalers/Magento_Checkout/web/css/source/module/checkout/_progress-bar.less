@@ -11,7 +11,7 @@
 @checkout-progress-bar__font-weight: 400;
 @checkout-progress-bar__margin: @indent__base;
 
-@checkout-progress-bar-item__background-color: #E3D8FA;
+@checkout-progress-bar-item__background-color: #e3d8fa;
 @checkout-progress-bar-item__border-radius: 0;
 @checkout-progress-bar-item__color: @hookah_theme_color;
 @checkout-progress-bar-item__margin: @indent__s;
@@ -47,8 +47,8 @@
         .lib-css(margin, 4rem 0 2rem);
         counter-reset: i;
         font-size: 0;
-        width: 66.66666667%;
         padding-right: 30px;
+        width: 66.66666667%;
     }
 
     .opc-progress-bar-item {
@@ -156,7 +156,7 @@
             cursor: pointer;
 
             > span {
-                .lib-css(color, #000);
+                .lib-css(color, @color-black);
 
                 &:after {
                     .lib-css(content, @checkout-progress-bar-item-element-inner__active__content);
@@ -180,11 +180,11 @@
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .opc-progress-bar {
-        width: 100%;
-        padding-right: 0;
         margin-top: 2rem;
+        padding-right: 0;
+        width: 100%;
     }
-    .opc-progress-bar-item  {
+    .opc-progress-bar-item {
         > span {
             font-size: 14px;
         }
@@ -192,19 +192,19 @@
     .back-button {
         display: block;
         .go-back {
-            color: @color_black;
-            font-size: 14px;
-            display: inline-flex;
             align-items: center;
+            color: @color_black;
+            display: inline-flex;
+            font-size: 14px;
             text-decoration: none !important;
             &::before {
-                content: "";
                 background: url('@{baseDir}images/left_arrow_black.svg') no-repeat center left;
-                width: 10px;
-                height: 16px;
+                content: '';
                 display: inline-block;
-                vertical-align: middle;
+                height: 16px;
                 margin-right: 14px;
+                vertical-align: middle;
+                width: 10px;
             }
         }
     }

@@ -126,7 +126,9 @@
         display: block;
     }
 
-    input.mage-error, select.mage-error, textarea.mage-error {
+    input.mage-error,
+    select.mage-error,
+    textarea.mage-error {
         border-color: @color_black;
     }
 
@@ -180,35 +182,35 @@
     }
 
     //
-    //  Radio button design 
+    //  Radio button design
     //  -----------------------------------------
 
-    input[type="radio"] {
+    input[type='radio'] {
         position: relative;
         & + label {
             cursor: pointer;
         }
         &:before {
-            content: "";
-            width: 16px;
-            height: 16px;
-            border: 1px solid #000;
-            display: block;
+            background: @color-white;
+            border: 1px solid @color-black;
             border-radius: 50%;
-            background: #fff;
+            content: '';
+            display: block;
+            height: 16px;
             margin-left: -2px;
             margin-top: -2px;
+            width: 16px;
         }
         &:checked:after {
-            content: "";
-            width: 10px;
-            height: 10px;
             background: @hookah_theme_color;
-            display: block;
             border-radius: 50%;
+            content: '';
+            display: block;
+            height: 10px;
+            left: 2px;
             position: absolute;
             top: 2px;
-            left: 2px;
+            width: 10px;
         }
         &:checked:before {
             border-color: @hookah_theme_color;
@@ -217,7 +219,7 @@
             box-shadow: none;
         }
     }
-    input[type="checkbox"] {
+    input[type='checkbox'] {
         position: absolute;
     }
 }
