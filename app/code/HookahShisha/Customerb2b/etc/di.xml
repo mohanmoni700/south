@@ -34,10 +34,4 @@
     <preference for="Magento\Ui\Model\Export\ConvertToCsv" type="HookahShisha\Customerb2b\Model\Export\ConvertToCsv" />
     
     <preference for="Magento\Shipping\Helper\Data" type="HookahShisha\Customerb2b\Helper\Data" />
-
-    <!-- disable welcome emails -->
-    <type name="Magento\Customer\Model\EmailNotification">
-        <plugin name="stop_welcome_email" sortOrder="1"
-                type="HookahShisha\Customerb2b\Plugin\EmailNotificationPlugin"/>
-    </type>
 </config>
