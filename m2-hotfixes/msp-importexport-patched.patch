@@ -1,0 +1,28 @@
+Index: vendor/msp/cmsimportexport/Model/Content.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vendor/msp/cmsimportexport/Model/Content.php b/vendor/msp/cmsimportexport/Model/Content.php
+--- a/vendor/msp/cmsimportexport/Model/Content.php	
++++ b/vendor/msp/cmsimportexport/Model/Content.php	(date 1662708223186)
+@@ -106,6 +106,8 @@
+ 
+         // Add media files
+         foreach ($contentArray['media'] as $mediaFile) {
++            //Strip Quotes if any
++            $mediaFile = str_replace(array('"',"&quot;","'"), '', $mediaFile);
+             $absMediaPath = $this->filesystem->getMediaPath($mediaFile);
+             if ($this->file->fileExists($absMediaPath, true)) {
+                 $zipArchive->addFile($absMediaPath, self::MEDIA_ARCHIVE_PATH . '/' . $mediaFile);
+@@ -184,8 +186,8 @@
+      */
+     public function getMediaAttachments($content): array
+     {
+-        if (preg_match_all('/\{\{media.+?url\s*=\s*("|&quot;)(.+?)("|&quot;).*?\}\}/', $content, $matches)) {
+-            return $matches[2];
++        if (preg_match_all('/\{\{media.+?url\s*=\s*(.+?)\}\}/', $content, $matches)) {
++            return $matches[1];
+         }
+ 
+         return [];
