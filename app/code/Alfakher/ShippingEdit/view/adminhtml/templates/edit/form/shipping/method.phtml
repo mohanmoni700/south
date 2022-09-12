@@ -120,14 +120,10 @@ $taxHelper = $block->getTaxHelper();
                                     <label class="discount_amount">
                                         <?= $block->escapeHtml(__('Shipping Discount Amount')) ?>
                                         <input type="text"
-                                               name="shipping_method[<?= $block->escapeHtmlAttr($_code) ?>]
-                                               [discount_amount]"
-                                               value="<?= $block->escapeHtmlAttr(number_format(
-                                                   $discountAmount,
-                                                   2,
-                                                   '.',
-                                                   ''
-                                               ));?>"
+                                               name="shipping_method[<?=
+                                                $block->escapeHtmlAttr($_code) ?>][discount_amount]"
+                                               value="<?=
+                                                $block->escapeHtmlAttr(number_format($discountAmount, 2, '.', '')); ?>"
                                                title="<?= $block->escapeHtmlAttr(__('Shipping Discount Amount')) ?>" />
                                     </label>
                                     <br/>
