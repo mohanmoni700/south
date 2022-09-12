@@ -7,17 +7,17 @@ use Zend\Http\Client;
 
 class Data extends AbstractHelper
 {
-    const CONFIG_PATH_ENABLE = "payment/seamlesschex/active";
-    const CONFIG_PATH_SANDBOX = "payment/seamlesschex/is_sandbox";
-    const CONFIG_PATH_TEST_ENDPOINT = "payment/seamlesschex/test_endpoint";
-    const CONFIG_PATH_TEST_PUBLISHABLE_KEY = "payment/seamlesschex/test_publishable_key";
-    const CONFIG_PATH_TEST_SECRET_KEY = "payment/seamlesschex/test_secret_key";
-    const CONFIG_PATH_LIVE_ENDPOINT = "payment/seamlesschex/live_endpoint";
-    const CONFIG_PATH_LIVE_PUBLISHABLE_KEY = "payment/seamlesschex/live_publishable_key";
-    const CONFIG_PATH_LIVE_SECRET_KEY = "payment/seamlesschex/live_secret_key";
-    const TYPE_CREATE = "create";
-    const TYPE_UPDATE = "update";
-    const TYPE_VOID = "void";
+    public const CONFIG_PATH_ENABLE = "payment/seamlesschex/active";
+    public const CONFIG_PATH_SANDBOX = "payment/seamlesschex/is_sandbox";
+    public const CONFIG_PATH_TEST_ENDPOINT = "payment/seamlesschex/test_endpoint";
+    public const CONFIG_PATH_TEST_PUBLISHABLE_KEY = "payment/seamlesschex/test_publishable_key";
+    public const CONFIG_PATH_TEST_SECRET_KEY = "payment/seamlesschex/test_secret_key";
+    public const CONFIG_PATH_LIVE_ENDPOINT = "payment/seamlesschex/live_endpoint";
+    public const CONFIG_PATH_LIVE_PUBLISHABLE_KEY = "payment/seamlesschex/live_publishable_key";
+    public const CONFIG_PATH_LIVE_SECRET_KEY = "payment/seamlesschex/live_secret_key";
+    public const TYPE_CREATE = "create";
+    public const TYPE_UPDATE = "update";
+    public const TYPE_VOID = "void";
 
     /**
      * Constructor
@@ -72,7 +72,7 @@ class Data extends AbstractHelper
 
             return [
                 'endpoint' => $apiEndpoint,
-                'secret_key' => $this->_encryptor->decrypt($secretKey)
+                'secret_key' => $this->_encryptor->decrypt($secretKey),
             ];
         } else {
             return [];
@@ -90,23 +90,23 @@ class Data extends AbstractHelper
         $config = $this->getConfigData($websiteId);
         if (count($config)) {
             $this->_curl->addHeader("Content-Type", "application/json");
-            $this->_curl->addHeader("Authorization", "Bearer ".$config['secret_key']);
-            $this->_curl->get($config['endpoint']."check/list?limit=10&page=1&sort=date&direction=DESC");
+            $this->_curl->addHeader("Authorization", "Bearer " . $config['secret_key']);
+            $this->_curl->get($config['endpoint'] . "check/list?limit=10&page=1&sort=date&direction=DESC");
 
             $responseStatus = $this->_curl->getStatus();
             $response = $this->_curl->getBody();
 
             if ($responseStatus == 200) {
-                return ['status' => 1,'message' => "Connection establised successfully"];
+                return ['status' => 1, 'message' => "Connection establised successfully"];
             } else {
                 $errorResponse = json_decode($response, 1);
                 $message['status'] = $responseStatus;
                 $message['message'] = isset($errorResponse['message']) ? $errorResponse['message'] : "";
                 $message['response'] = $response;
-                return ['status' => 0,'message' => json_encode($message)];
+                return ['status' => 0, 'message' => json_encode($message)];
             }
         } else {
-            return ['status' => 0,'message' => "Please enable the Seamlesschex and configure"];
+            return ['status' => 0, 'message' => "Please enable the Seamlesschex and configure"];
         }
     }
 
@@ -125,22 +125,22 @@ class Data extends AbstractHelper
                 "check_id" => $paymentAdditionalInformation['check']['check_id'],
                 "number" => $paymentAdditionalInformation['check']['number'],
                 "amount" => $order->getTotalDue(),
-                "memo" => "order #".$order->getIncrementId()." - updated",
+                "memo" => "order #" . $order->getIncrementId() . " - updated",
                 "name" => $order->getCustomerName(),
                 "bank_account" => $order->getPayment()->getAchAccountNumber(),
-                "bank_routing" =>$order->getPayment()->getAchRoutingNumber(),
-                "verify_before_save" => true
+                "bank_routing" => $order->getPayment()->getAchRoutingNumber(),
+                "verify_before_save" => true,
             ];
 
             $jsonPayload = json_encode($data);
 
             $this->_curl->addHeader("Content-Type", "application/json");
-            $this->_curl->addHeader("Authorization", "Bearer ".$config['secret_key']);
-            $this->_curl->post($config['endpoint']."check/edit", $jsonPayload);
+            $this->_curl->addHeader("Authorization", "Bearer " . $config['secret_key']);
+            $this->_curl->post($config['endpoint'] . "check/edit", $jsonPayload);
 
             $responseStatus = $this->_curl->getStatus();
             $response = $this->_curl->getBody();
-            
+
             /* add logs; Start */
             $this->addLog(self::TYPE_UPDATE, $order->getIncrementId(), $jsonPayload, $response, $responseStatus);
             /* add logs; End */
@@ -166,11 +166,11 @@ class Data extends AbstractHelper
         try {
             $model = $this->_logFactory->create();
             $model->setType($type)
-            ->setOrder($orderNumber)
-            ->setRequest($request)
-            ->setResponse($response)
-            ->setResponseCode($responseCode)
-            ->save();
+                ->setOrder($orderNumber)
+                ->setRequest($request)
+                ->setResponse($response)
+                ->setResponseCode($responseCode)
+                ->save();
         } catch (\Exception $e) {
             return true;
         }
@@ -190,11 +190,12 @@ class Data extends AbstractHelper
             $checkId = $paymentAdditionalInformation['check']['check_id'];
 
             $this->zendClient->reset();
-            $this->zendClient->setUri($config['endpoint']."check/".$paymentAdditionalInformation['check']['check_id']);
+            $this->zendClient->setUri($config['endpoint'] . "check/" .
+                $paymentAdditionalInformation['check']['check_id']);
             $this->zendClient->setMethod(\Zend\Http\Request::METHOD_DELETE);
             $this->zendClient->setHeaders([
                 'Content-Type' => 'application/json',
-                "Authorization" => "Bearer ".$config['secret_key']
+                "Authorization" => "Bearer " . $config['secret_key'],
             ]);
             $this->zendClient->setMethod('delete');
             $this->zendClient->setEncType('application/json');
