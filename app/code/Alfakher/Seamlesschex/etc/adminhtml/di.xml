@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- project specif dependency; Start -->
+    <type name="Alfakher\GrossMargin\Observer\OrderEditTaxCalculation">
+        <plugin name="update_check_amount" type="Alfakher\Seamlesschex\Plugin\UpdateCheck"/>
+    </type>
+    <!-- project specif dependency; End -->
+
+</config>
