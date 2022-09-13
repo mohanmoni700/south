@@ -805,6 +805,11 @@
         select[multiple]:focus option:checked {
             background: #961e70 linear-gradient(0deg, #961e70 0%, #961e70 100%);
         }
+        @supports (-moz-appearance:none) {
+            .bundle-checkbox.field.choice {
+                margin: 0;
+            }
+        }
     }
     .bundle-options-wrapper {
         #product-options-wrapper p.required:before {
