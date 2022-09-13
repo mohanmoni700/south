@@ -1,0 +1,28 @@
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="quote_payment" resource="checkout">
+        <column xsi:type="text" name="ach_account_number" nullable="true" comment="ACH - Bank Account Number"/>
+        <column xsi:type="text" name="ach_routing_number" nullable="true" comment="ACH - Routing Number"/>
+        <column xsi:type="text" name="ach_check_number" nullable="true" comment="ACH - Check Number"/>
+    </table>
+    <table name="sales_order_payment" resource="sales">
+        <column xsi:type="text" name="ach_account_number" nullable="true" comment="ACH - Bank Account Number"/>
+        <column xsi:type="text" name="ach_routing_number" nullable="true" comment="ACH - Routing Number"/>
+        <column xsi:type="text" name="ach_check_number" nullable="true" comment="ACH - Check Number"/>
+    </table>
+
+    <!-- log table; Start -->
+    <table name="seamlesschex_log" resource="default" comment="Seamlesschex Log(ACH)">
+        <column xsi:type="int" name="entity_id" padding="10" identity="true" unsigned="true" nullable="false" comment="Entity Id"/>
+        <column xsi:type="varchar" name="type" nullable="true" length="255" comment="Type"/>
+        <column xsi:type="text" name="order" nullable="true" comment="Order #"/>
+        <column xsi:type="text" name="request" nullable="true" comment="Request"/>
+        <column xsi:type="text" name="response" nullable="true" comment="Response"/>
+        <column xsi:type="varchar" name="response_code" nullable="true" comment="Response Code"/>
+        <column name="created_at" nullable="false" xsi:type="datetime" default="CURRENT_TIMESTAMP" on_update="false"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+    </table>
+    <!-- log table; End -->
+</schema>
