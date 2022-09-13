@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5edcd71fb10c0e30141373b8b9b006a4",
+    "content-hash": "19be0c2f03785d0b940b959d78a3a818",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -26441,6 +26441,44 @@
             "time": "2021-07-01T19:01:15+00:00"
         },
         {
+            "name": "mondu/magento2-payment",
+            "version": "1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mondu-ai/magento2-checkout.git",
+                "reference": "75cf3d35aba58564b1dbf4b84924927ff0e3208c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mondu-ai/magento2-checkout/zipball/75cf3d35aba58564b1dbf4b84924927ff0e3208c",
+                "reference": "75cf3d35aba58564b1dbf4b84924927ff0e3208c",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": ">=7.1"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Mondu\\Mondu\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Mondu payment method for magento 2",
+            "support": {
+                "issues": "https://github.com/mondu-ai/magento2-checkout/issues",
+                "source": "https://github.com/mondu-ai/magento2-checkout/tree/1.1.1"
+            },
+            "time": "2022-08-17T13:37:16+00:00"
+        },
+        {
             "name": "monolog/monolog",
             "version": "1.27.0",
             "source": {
@@ -34007,5 +34045,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.3.0"
+    "plugin-api-version": "2.2.0"
 }
