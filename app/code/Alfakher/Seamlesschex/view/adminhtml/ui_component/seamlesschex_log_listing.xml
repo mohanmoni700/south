@@ -1,0 +1,88 @@
+<?xml version="1.0" ?>
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+	<argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">seamlesschex_log_listing.seamlesschex_log_listing_data_source</item>
+            <item name="deps" xsi:type="string">seamlesschex_log_listing.seamlesschex_log_listing_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">seamlesschex_log_columns</item>
+    </argument>
+
+    <listingToolbar name="listing_top">
+        <paging name="listing_paging"/>
+        <filters name="listing_filters" />
+    </listingToolbar>
+
+    <dataSource component="Magento_Ui/js/grid/provider" name="seamlesschex_log_listing_data_source">
+        <settings>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Alfakher_Seamlesschex::seamlesschex_log</aclResource>
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="seamlesschex_log_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <columns name="seamlesschex_log_columns">
+    	<column name="entity_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">#</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="type">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Type</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="order">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Order #</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="request">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Request</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="response">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Response</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="response_code">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Code</item>
+                </item>
+            </argument>
+        </column>
+
+    </columns>
+
+
+</listing>
