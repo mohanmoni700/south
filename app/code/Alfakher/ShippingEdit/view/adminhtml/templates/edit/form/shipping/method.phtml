@@ -9,8 +9,8 @@ $taxHelper = $block->getTaxHelper();
     <div id="order-shipping-method-choose">
         <dl class="admin__order-shipment-methods">
         <?php foreach ($_shippingRateGroups as $code => $rates): ?>
-            <dt class="admin__order-shipment-methods-title">
-                <?= $block->escapeHtml($block->getCarrierName($code)) ?></dt>
+            <dt class="admin__order-shipment-methods-title"><?=
+            $block->escapeHtml($block->getCarrierName($code)) ?></dt>
             <dd class="admin__order-shipment-methods-options">
                 <ul class="admin__order-shipment-methods-options-list">
                 <?php foreach ($rates as $rate): ?>
@@ -32,8 +32,8 @@ $taxHelper = $block->getTaxHelper();
                                                                  <?= /* @noEscape */ $checked ?>
                                                                  class="admin__control-radio"/>
                             <label class="admin__field-label" for="s_method_<?= $block->escapeHtmlAttr($_code) ?>">
-                                <?php $methodTitle = $rate->getMethodTitle() ? $rate->getMethodTitle() :
-                                $rate->getMethodDescription() ?>
+                                <?php $methodTitle =
+                                $rate->getMethodTitle() ? $rate->getMethodTitle() : $rate->getMethodDescription() ?>
                                 <?= $block->escapeHtml($methodTitle) ?> -
                                 <strong>
                                     <?php
@@ -44,7 +44,7 @@ $taxHelper = $block->getTaxHelper();
                                         );
                                         $shippingPriceInclTaxFormatted =
                                         $block->getShippingPrice($rate->getPrice(), true);
-                                
+                                    
                                     ?>
 
                                     <?= /* @noEscape */ $shippingPriceExclTaxFormatted; ?>
@@ -87,20 +87,18 @@ $taxHelper = $block->getTaxHelper();
                                                 $block->escapeHtmlAttr($_code) ?>][price_excl_tax]"
                                                value="<?=
                                                 $block->escapeHtmlAttr(number_format($priceExcl, 2, '.', '')); ?>"
-                                               title="<?= $block->escapeHtmlAttr(__('Price Excl. Tax')) ?>" />
+                                               title="<?=
+                                                $block->escapeHtmlAttr(__('Price Excl. Tax')) ?>" />
                                     </label>
                                     <label class="tax_percent">
                                         + <?= $block->escapeHtml(__('Tax')) ?>
                                         <input type="text"
                                                name="shipping_method[<?=
                                                 $block->escapeHtmlAttr($_code) ?>][tax_percent]"
-                                               value="<?= $block->escapeHtmlAttr(number_format(
-                                                   $pricePercent,
-                                                   2,
-                                                   '.',
-                                                   ''
-                                               )); ?>"
-                                               title="<?= $block->escapeHtmlAttr(__('Tax Percent')) ?>"
+                                               value="<?=
+                                                $block->escapeHtmlAttr(number_format($pricePercent, 2, '.', '')); ?>"
+                                               title="<?=
+                                                $block->escapeHtmlAttr(__('Tax Percent')) ?>"
                                                readonly="readonly"
                                                class="disabled" />%
                                     </label>
@@ -109,12 +107,8 @@ $taxHelper = $block->getTaxHelper();
                                         <input type="text"
                                                name="shipping_method[<?=
                                                 $block->escapeHtmlAttr($_code) ?>][price_incl_tax]"
-                                               value="<?= $block->escapeHtmlAttr(number_format(
-                                                   $priceIncl,
-                                                   2,
-                                                   '.',
-                                                   ''
-                                               )); ?>"
+                                               value="<?=
+                                                $block->escapeHtmlAttr(number_format($priceIncl, 2, '.', '')); ?>"
                                                title="<?= $block->escapeHtmlAttr(__('Price Incl. Tax')) ?>" />
                                     </label>
                                     <label class="discount_amount">
@@ -130,35 +124,33 @@ $taxHelper = $block->getTaxHelper();
                                     <label class="tax_rates">
                                         <?= $block->escapeHtml(__('Tax Rates')); ?>
                                         <div class="order-shipping-applied-rates-container"
-                                             id="order-shipping-applied-rates-container-
-                                             <?= $block->escapeHtml($_code); ?>">
+                                             id="order-shipping-applied-rates-container-<?=
+                                                $block->escapeHtml($_code); ?>">
                                             <?php
                                             $activeRates = $block->getShippingActiveRates();
                                             if (!empty($activeRates)):
                                                 foreach ($activeRates as $activeRate) {
                                                     ?>
-                                                    <label for="tax-applied-rates-<?= $block->escapeHtmlAttr($_code);
-                                                    ?>-<?=$block->escapeHtmlAttr($activeRate->getCode()); ?>">
-                                                        <b><?= $block->escapeHtml($activeRate->getCode()); ?></b>
-                                                        <input name="shipping_method
-                                                        [<?= $block->escapeHtmlAttr($_code) ?>][tax_applied_rates]
-                                                        [<?= $block->escapeHtmlAttr($activeRate->getCode()) ?>]"
-                                                               id="tax-applied-rates-
-                                                               <?= $block->escapeHtmlAttr($_code); ?>
-                                                               -<?= $block->escapeHtmlAttr($activeRate->getCode()); ?>"
-                                                               title="<?=
-                                                                $block->escapeHtmlAttr($activeRate->getCode() . ' 
-                                                               (' . $activeRate->getPercent() . '%)'); ?>"
-                                                               class="mw-order-editor-order-shipping 
-                                                               tax-applied-rate-code"
-                                                               type="text"
-                                                               value="<?=
-                                                                $block->escapeHtmlAttr(round(
-                                                                    $activeRate->getPercent(),
-                                                                    2
-                                                                )); ?>"
-                                                        />
-                                                    </label>
+                                            <label for="tax-applied-rates-<?=
+                                            $block->escapeHtmlAttr($_code); ?>-<?=
+                                            $block->escapeHtmlAttr($activeRate->getCode()); ?>">
+                                                <b><?= $block->escapeHtml($activeRate->getCode()); ?></b>
+                                                <input name="shipping_method[<?=
+                                                $block->escapeHtmlAttr($_code) ?>][tax_applied_rates][<?=
+                                                $block->escapeHtmlAttr($activeRate->getCode()) ?>]"
+                                                       id="tax-applied-rates-<?=
+                                                        $block->escapeHtmlAttr($_code); ?>-<?=
+                                                        $block->escapeHtmlAttr($activeRate->getCode()); ?>"
+                                                       title="<?=
+                                                        $block->escapeHtmlAttr($activeRate->getCode()
+                                                        . ' (' . $activeRate->getPercent() . '%)'); ?>"
+                                                       class="mw-order-editor-order-shipping 
+                                                       tax-applied-rate-code"
+                                                       type="text"
+                                                       value="<?=
+                                                        $block->escapeHtmlAttr(round($activeRate->getPercent(), 2)); ?>"
+                                                />
+                                            </label>
                                                     <?php
                                                 }
                                             else:
@@ -171,23 +163,21 @@ $taxHelper = $block->getTaxHelper();
                                                 $block->escapeHtmlAttr($_code); ?>">
                                             <label for="tax-rates-<?= $block->escapeHtmlAttr($_code); ?>">
                                                 <b><?= $block->escapeHtml(__('Select Rates:')); ?></b>
-                                                <select name="shipping_method[<?=
-                                                $block->escapeHtmlAttr($_code) ?>][tax_rates][]"
-                                                        id="tax-rates-<?= $block->escapeHtmlAttr($_code); ?>"
-                                                        title="<?= $block->escapeHtmlAttr(__("Tax Rates")) ?>"
-                                                        class="mw-order-editor-order-shipping"
-                                                        multiple="multiple">
-                                                    <?= /* @noEscape */ $block->renderTaxRatesOptions(); ?>
-                                                </select>
+                                    <select name="shipping_method[<?= $block->escapeHtmlAttr($_code) ?>][tax_rates][]"
+                                            id="tax-rates-<?= $block->escapeHtmlAttr($_code); ?>"
+                                            title="<?= $block->escapeHtmlAttr(__("Tax Rates")) ?>"
+                                            class="mw-order-editor-order-shipping"
+                                            multiple="multiple">
+                                        <?= /* @noEscape */ $block->renderTaxRatesOptions(); ?>
+                                    </select>
                                             </label>
                                         </div>
                                     </label>
-                                    <input type="hidden"
-                                           name="shipping_method[<?= $block->escapeHtmlAttr($_code) ?>][description]"
-                                           value="<?= $block->escapeHtmlAttr($block->getCarrierName(
-                                               $code
-                                           )) ?> - <?=
-                                           $block->escapeHtmlAttr($methodTitle) ?>"/>
+                        <input type="hidden"
+                               name="shipping_method[<?= $block->escapeHtmlAttr($_code) ?>][description]"
+                               value="<?=
+                                $block->escapeHtmlAttr($block->getCarrierName($code)) ?> - <?=
+                                $block->escapeHtmlAttr($methodTitle) ?>"/>
                                 </div>
                             </label>
                         <?php endif ?>
