@@ -1536,6 +1536,15 @@
         }
     }
 
+    .product-info-main, 
+    .product-options-bottom {
+        .box-tocart {
+            .input-text.qty {
+                width: 90px;
+            }
+        }
+    }
+
     .block.related {
         .action.select {
             display: block;
@@ -1741,7 +1750,19 @@
         }
     }
 }
-
+@media only screen and (max-width: 430px) {
+    /* My Document Pricing */
+    .myproduct-pricing {
+        .table-myproduct-pricing {
+            tbody tr td.qty span {
+                display: inline-block;
+                width: 130px;
+                vertical-align: middle;
+                margin-left: 10px;
+            }
+        }
+    }
+}
 //
 //  Desktop
 //  _____________________________________________

@@ -34,6 +34,7 @@
 @return_block_bg: #fbfbfb;
 @table_link_color: #404040;
 @password_text_color: #7f7f7f;
+@theme_color: #961e70;
 
 //
 //  Common
@@ -595,12 +596,12 @@
                 }
                 .checkbox:checked {
                     + label:before {
-                        background: @disable_checkbox_clr;
-                        border-color: @disable_border;
+                        background: @theme_color;
+                        border-color: @theme_color;
                     }
                 }
                 .checkbox:checked + label:after {
-                    background: @disable_checkbox_clr url('@{baseDir}images/true_arrow.svg');
+                    background: @theme_color url('@{baseDir}images/true_arrow.svg');
                 }
                 .field.choice.newsletter {
                     .label {
