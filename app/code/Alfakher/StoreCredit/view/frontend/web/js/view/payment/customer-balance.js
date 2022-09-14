@@ -97,7 +97,7 @@ define([
                             'message': message
                         });
                     }
-                    if(response.applied > response.total){
+                    if(parseInt(response.applied) > parseInt(response.total)){
                         messageList.addErrorMessage({
                             'message': totalmessage
                         });

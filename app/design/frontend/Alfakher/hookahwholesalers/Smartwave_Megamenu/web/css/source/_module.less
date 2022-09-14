@@ -783,9 +783,9 @@
         &.active {
             display: block !important;
             position: fixed;
-            height: calc(~'100% - 188px');
+            height: calc(~'100% - 210px');
             overflow: auto;
-            top: 188px;
+            top: 210px;
             z-index: 998;
             left: 0;
         }
@@ -902,7 +902,12 @@
         }
         li.ui-menu-item {
             position: relative;
-            
+            &.level0 .open-children-toggle {
+                right: -10px;
+            }
+            &.level1 .open-children-toggle {
+                right: 10px;
+            }
             > a {
                 position: relative;
             }
@@ -910,9 +915,7 @@
                 cursor: pointer;
                 display: block;
                 height: 40px;
-                left: 0;
-                position: absolute;
-                right: 0;
+                position: absolute;                
                 top: 0;
                 width: 100%;
                 width: 32px;
@@ -989,8 +992,8 @@
     .sw-megamenu.navigation {
         padding-top: 20px;
         &.active {
-            height: calc(~'100% - 200px');
-            top: 200px;
+            height: calc(~'100% - 205px');
+            top: 205px;
         }
     }
 }
