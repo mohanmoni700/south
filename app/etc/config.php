@@ -324,6 +324,20 @@ return [
                         'code' => 'de_DE'
                     ]
                 ]
+            ],
+            'shisha_world_b2b_store_view_de' => [
+                'general' => [
+                    'locale' => [
+                        'code' => 'de_DE'
+                    ]
+                ]
+            ],
+            'shisha_world_b2b_store_view_es' => [
+                'general' => [
+                    'locale' => [
+                        'code' => 'es_ES'
+                    ]
+                ]
             ]
         ],
         'websites' => [
