@@ -1,0 +1,49 @@
+<?php
+  /**
+   * @var Magento\Payment\Block\Form $block
+   */
+  $code = $block->escapeHtml($block->getMethodCode());
+?>
+
+<fieldset class="admin__fieldset payment-method" id="payment_form_<?= /* @noEscape */ $code ?>">
+
+  <div class="field-number admin__field _required">
+        <label class="admin__field-label" for="ach_accountnumber">
+            <span><?= $block->escapeHtml(__('Account Number')) ?></span>
+        </label>
+        <div class="admin__field-control">
+            <input type="text" id="ach_accountnumber"
+                   name="payment[ach_account_number]"
+                   title="<?= $block->escapeHtmlAttr(__('Account Number')) ?>"
+                   class="admin__control-text validate-number required-entry"
+                   value="<?= /* @noEscape */ $block->getInfoData('ach_account_number') ?>"/>
+        </div>
+    </div>
+
+    <div class="field-number admin__field _required">
+        <label class="admin__field-label" for="ach_routingnumber">
+            <span><?= $block->escapeHtml(__('Routing Number')) ?></span>
+        </label>
+        <div class="admin__field-control">
+            <input type="text" id="ach_routingnumber"
+                   name="payment[ach_routing_number]"
+                   title="<?= $block->escapeHtmlAttr(__('Account Number')) ?>"
+                   class="admin__control-text validate-number required-entry"
+                   value="<?= /* @noEscape */ $block->getInfoData('ach_routing_number') ?>"/>
+        </div>
+    </div>
+
+    <div class="field-number admin__field">
+        <label class="admin__field-label" for="ach_check_number">
+            <span><?= $block->escapeHtml(__('Check Number')) ?></span>
+        </label>
+        <div class="admin__field-control">
+            <input type="text" id="ach_check_number"
+                   name="payment[ach_check_number]"
+                   title="<?= $block->escapeHtmlAttr(__('Account Number')) ?>"
+                   class="admin__control-text validate-number"
+                   value="<?= /* @noEscape */ $block->getInfoData('ach_check_number') ?>"/>
+        </div>
+    </div>
+
+</fieldset>

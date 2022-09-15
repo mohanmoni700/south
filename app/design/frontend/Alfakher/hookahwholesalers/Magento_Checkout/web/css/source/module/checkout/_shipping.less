@@ -1,4 +1,4 @@
-// /**
+//  /**
 //  * Copyright © Magento, Inc. All rights reserved.
 //  * See COPYING.txt for license details.
 //  */
@@ -14,7 +14,7 @@
 @checkout-shipping-item-icon__color: @color-white;
 @checkout-shipping-item-icon__content: @icon-checkmark;
 
-@checkout-shipping-item__border: 1px solid #000;
+@checkout-shipping-item__border: 1px solid @color-black;
 @checkout-shipping-item__line-height: 30px;
 @checkout-shipping-item__margin: @indent__l @indent__l @indent__l 0;
 @checkout-shipping-item__padding: @indent__base (@indent__l + 5px) @indent__base @indent__base;
@@ -67,9 +67,9 @@
             }
         }
         .shipping-address-items {
-            font-size: 0;
             display: flex;
             flex-wrap: wrap;
+            font-size: 0;
         }
 
         .shipping-address-item {
@@ -80,12 +80,12 @@
             .lib-css(padding, @checkout-shipping-item__padding);
             .lib-css(transition, @checkout-shipping-item__transition);
             .lib-css(width, @checkout-shipping-item-tablet__width);
+            border-radius: 10px;
             display: inline-block;
             font-size: @font-size__base;
             position: relative;
             vertical-align: top;
             word-wrap: break-word;
-            border-radius: 10px;
             &::first-line {
                 font-weight: @font-weight__bold;
             }
@@ -97,10 +97,10 @@
 
                 &:after {
                     .lib-css(color, @checkout-shipping-item-icon__color);
-                    content: "";
-                    background: @hookah_theme_color url('@{baseDir}images/true_arrow.svg') no-repeat center center;
                     .lib-css(height, @checkout-shipping-item-icon__selected__height);
                     .lib-css(width, @checkout-shipping-item-icon__selected__width);
+                    background: @hookah_theme_color url('@{baseDir}images/true_arrow.svg') no-repeat center center;
+                    content: '';
                     font-size: 20px;
                     line-height: 20px;
                     padding-top: 0;
@@ -114,12 +114,12 @@
                 }
             }
             .action.action-select-shipping-item {
-                margin-top: 0;
                 font-size: 12px;
+                letter-spacing: 1px;
+                margin-top: -22px;
+                margin-top: 0;
                 min-height: 35px;
                 padding: 7px 20px;
-                letter-spacing: 1px;
-                margin-top: -22px;                
             }
         }
 
@@ -163,12 +163,12 @@
             margin: @indent__base 0;
         }
         .actions-toolbar .action.primary {
-            margin: 0;
-            width: 200px;
-            padding: 12px 17px;
-            font-size: 16px;
             background: @hookah_theme_color;
             border-color: @hookah_theme_color;
+            font-size: 16px;
+            margin: 0;
+            padding: 12px 17px;
+            width: 200px;
             &:hover {
                 background: @hookah_theme_gradient;
                 border-color: transparent;
@@ -201,8 +201,8 @@
                 .lib-css(border-top, @checkout-shipping-method__border);
                 .lib-css(padding-bottom, @checkout-shipping-method__padding);
                 .lib-css(padding-top, @checkout-shipping-method__padding);
-                vertical-align: middle;
                 cursor: pointer;
+                vertical-align: middle;
                 &:first-child {
                     padding-left: 0;
                     padding-right: 0;
@@ -211,7 +211,7 @@
                 .price {
                     font-weight: @font-weight__bold;
                 }
-                input[type="radio"] {
+                input[type='radio'] {
                     margin: 0;
                     opacity: 0;
                     position: absolute;
@@ -221,40 +221,41 @@
                                 border-color: @hookah_theme_color;
                             }
                             &:after {
-                                content: "";
-                                width: 10px;
-                                height: 10px;
                                 background: @hookah_theme_color;
-                                display: block;
                                 border-radius: 50%;
+                                content: '';
+                                display: block;
+                                height: 10px;
+                                left: 2px;
                                 position: absolute;
                                 top: 4px;
-                                left: 2px;
+                                width: 10px;
                             }
                         }
                     }
-                    &::after, &::before {
+                    &::after,
+                    &::before {
                         display: none;
                     }
                     + label {
-                        height: 18px;
-                        width: 18px;
                         display: inline-block;
+                        height: 18px;
                         vertical-align: middle;
+                        width: 18px;
                         &:before {
-                            content: "";
-                            width: 16px;
-                            height: 16px;
-                            border: 1px solid #000;
-                            display: block;
+                            background: @color-white;
+                            border: 1px solid @color-black;
                             border-radius: 50%;
-                            background: #fff;
-                            margin-left: -2px;
+                            content: '';
+                            display: block;
+                            height: 16px;
                             left: 0;
-                            top: 0;
+                            margin-left: -2px;
                             position: absolute;
+                            top: 0;
+                            width: 16px;
                         }
-                    }          
+                    }
                 }
             }
 
@@ -280,16 +281,16 @@
             }
         }
 
-        .courier-section{
+        .courier-section {
             display: flex;
             justify-content: space-between;
             .left-section,
-            .right-section{
+            .right-section {
                 width: 47%;
-                label{
-                    margin-bottom: 5px;
+                label {
                     display: inline-block;
-                    font-weight: 600; 
+                    font-weight: 600;
+                    margin-bottom: 5px;
                 }
             }
         }
@@ -322,8 +323,8 @@
     @media only screen and (max-width: 991px) {
         .opc-wrapper {
             .shipping-address-item {
-                width: 100%;
                 margin-right: 0;
+                width: 100%;
                 + .shipping-address-item {
                     margin-top: 0;
                 }
@@ -367,8 +368,8 @@
 
         .shipping-address-item {
             .lib-css(margin, 0 0 20px 0);
-            width: 100%;
             .lib-css(padding, @checkout-shipping-item-mobile__active__padding);
+            width: 100%;
             &.selected-item {
                 .lib-css(padding, @checkout-shipping-item-mobile__active__padding);
 
@@ -405,13 +406,13 @@
             right: 0;
             top: 1px;
             &:before {
-                content : "";
+                content : '';
                 background: url('@{baseDir}images/pencil.svg') center no-repeat !important;
                 background-size: contain;
                 width: 18px;
                 height: 18px;
             }
-        }        
+        }
     }
     .checkout-shipping-method {
         .actions-toolbar {
@@ -445,7 +446,7 @@
         .form-login,
         .form-shipping-address {
             .lib-css(max-width, @checkout-shipping-address__max-width);
-        }        
+        }
     }
 
     .table-checkout-shipping-method {

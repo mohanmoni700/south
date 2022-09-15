@@ -120,7 +120,6 @@ class Submit extends \Magento\Rma\Controller\Returns implements HttpPostActionIn
                 if (!$this->_canViewOrder($order)) {
                     return $resultRedirect->setPath('sales/order/history');
                 }
-
                 /** @var Rma $rmaObject */
                 $rmaObject = $this->buildRma($order, $custom_items);
                 if (!$rmaObject->saveRma($custom_items)) {
@@ -146,6 +145,15 @@ class Submit extends \Magento\Rma\Controller\Returns implements HttpPostActionIn
                         $rmaObject->getIncrementId()
                     )
                 );
+
+                /* Start - New event added*/
+                $this->_eventManager->dispatch(
+                    'rma_create_after',
+                    [
+                        'item' => $rmaObject,
+                    ]
+                );
+                /* end - New event added*/
 
                 return $resultRedirect->setPath('rma/*/history');
             } catch (\Throwable $e) {

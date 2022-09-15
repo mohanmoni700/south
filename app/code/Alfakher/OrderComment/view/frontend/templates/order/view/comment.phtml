@@ -1,0 +1,12 @@
+<?php if ($block->getOrder() && $block->getOrderComment()):?>
+<div class="block block-order-details-view">
+    <div class="block-content">
+        <div class="box box-order-comment">
+            <strong class="box-title"><span><?= $block->escapeHtml(__('Order Comment')) ?></span></strong>
+            <div class="box-content">
+                <?= $block->escapeHtmlAttr($block->getOrderComment()) ?>
+            </div>
+        </div>
+    </div>
+</div>
+<?php endif; ?>
