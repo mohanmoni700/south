@@ -419,7 +419,7 @@ return [
                 ],
                 'design' => [
                     'theme' => [
-                        'theme_id' => 'frontend/Alfakher/hookahwholesalers'
+                        'theme_id' => 'frontend/Alfakher/shishaworld'
                     ]
                 ]
             ]
@@ -1131,6 +1131,15 @@ return [
             'area' => 'frontend',
             'type' => '1',
             'code' => 'Corra/ooka-de'
+        ],
+        'frontend/Alfakher/shishaworld' => [
+            'parent_id' => 'Alfakher/hookahwholesalers',
+            'theme_path' => 'Alfakher/shishaworld',
+            'theme_title' => 'Shisha World B2B',
+            'is_featured' => '0',
+            'area' => 'frontend',
+            'type' => '0',
+            'code' => 'Alfakher/shishaworld',
         ]
     ],
     'i18n' => [
