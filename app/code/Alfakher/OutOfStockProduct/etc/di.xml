@@ -3,4 +3,10 @@
     <type name="Magento\Elasticsearch\Model\Adapter\BatchDataMapper\ProductDataMapper">
         <plugin sortOrder="10" name="productDataMapper" type="Alfakher\OutOfStockProduct\Plugin\Model\ProductDataMapperPlugin"/>
     </type>
+    <!-- alfa_hd start start -->
+    <preference for="Magento\Bundle\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Select" type="Alfakher\OutOfStockProduct\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Select"/>
+    <preference for="Magento\Bundle\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Multi" type="Alfakher\OutOfStockProduct\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Multi"/>
+    <preference for="Magento\Bundle\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Radio" type="Alfakher\OutOfStockProduct\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Radio"/>
+    <preference for="Magento\Bundle\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Checkbox" type="Alfakher\OutOfStockProduct\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Checkbox"/>
+    <!-- alfa_hd start end -->
 </config>
