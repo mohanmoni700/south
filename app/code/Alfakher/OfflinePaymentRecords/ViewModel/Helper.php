@@ -4,22 +4,25 @@ namespace Alfakher\OfflinePaymentRecords\ViewModel;
 
 class Helper implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
-    const MODULE_ENABLE = "hookahshisha/af_offline_payment_records/enable";
-    const INVOICE_ENABLE = "hookahshisha/af_offline_payment_records/after_invoice";
-    const ALLOWED_PAYMENT = "hookahshisha/af_offline_payment_records/valid_payment";
+    public const MODULE_ENABLE = "hookahshisha/af_offline_payment_records/enable";
+    public const INVOICE_ENABLE = "hookahshisha/af_offline_payment_records/after_invoice";
+    public const ALLOWED_PAYMENT = "hookahshisha/af_offline_payment_records/valid_payment";
 
     /**
      * Constructor
      *
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Alfakher\OfflinePaymentRecords\Model\OfflinePaymentRecordFactory $paymentRecords
+     * @param \Magento\Directory\Model\Currency $currency
      */
     public function __construct(
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Alfakher\OfflinePaymentRecords\Model\OfflinePaymentRecordFactory $paymentRecords
+        \Alfakher\OfflinePaymentRecords\Model\OfflinePaymentRecordFactory $paymentRecords,
+        \Magento\Directory\Model\Currency $currency
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->_paymentRecords = $paymentRecords;
+        $this->currency = $currency;
     }
 
     /**
@@ -72,7 +75,8 @@ class Helper implements \Magento\Framework\View\Element\Block\ArgumentInterface
      */
     public function getTotalPaidAmount($orderId)
     {
-        $collection = $this->_paymentRecords->create()->getCollection()->addFieldToFilter("order_id", ['eq' => $orderId]);
+        $collection = $this->_paymentRecords->create()->getCollection()
+            ->addFieldToFilter("order_id", ['eq' => $orderId]);
         if ($collection->count()) {
             $collectioArr = $collection->getData();
             $totalPaid = array_sum(
@@ -87,5 +91,15 @@ class Helper implements \Magento\Framework\View\Element\Block\ArgumentInterface
         } else {
             return 0;
         }
+    }
+
+    /**
+     * Get formatted total due
+     *
+     * @param float $totalDue
+     */
+    public function getTotalDue($totalDue)
+    {
+        return $this->currency->format($totalDue, ['display' => \Zend_Currency::NO_SYMBOL], false);
     }
 }
