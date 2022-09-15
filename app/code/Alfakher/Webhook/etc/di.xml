@@ -28,5 +28,10 @@
     <!-- override for dispatch new event -->
     <preference for="MageWorx\OrderEditor\Controller\Adminhtml\Edit\Shipping" type="Alfakher\Webhook\Controller\Adminhtml\Edit\Shipping" />
 
+    <!-- override for resolve the issue of multiple times order webhook called  -->
     <preference for="Mageplaza\Webhook\Observer\AfterOrder" type="Alfakher\Webhook\Observer\AfterOrderObserver" />
+
+    <type name="Magento\Rma\Model\Rma">
+        <plugin name="Alfakher_Webhook_AddNewRMA" type="Alfakher\Webhook\Plugin\AddNewRMA"  />
+    </type>
 </config>
