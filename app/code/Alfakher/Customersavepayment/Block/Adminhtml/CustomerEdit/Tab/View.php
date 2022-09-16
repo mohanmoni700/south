@@ -1,22 +1,27 @@
 <?php
 namespace Alfakher\Customersavepayment\Block\Adminhtml\CustomerEdit\Tab;
 
+use Magento\Backend\Block\Template\Context;
+use Magento\Framework\Registry;
+use Magento\Framework\Serialize\SerializerInterface;
+use Magento\Vault\Model\CreditCardTokenFactory;
+
 class View extends \Magento\Backend\Block\Template implements \Magento\Ui\Component\Layout\Tabs\TabInterface
 {
     /**
      * [__construct]
      *
-     * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Vault\Model\CreditCardTokenFactory $creditCardTokenFactory
-     * @param \Magento\Framework\Serialize\SerializerInterface $serializer
+     * @param Context $context
+     * @param Registry $registry
+     * @param CreditCardTokenFactory $creditCardTokenFactory
+     * @param SerializerInterface $serializer
      * @param array $data
      */
     public function __construct(
-        \Magento\Backend\Block\Template\Context $context,
-        \Magento\Framework\Registry $registry,
-        \Magento\Vault\Model\CreditCardTokenFactory $creditCardTokenFactory,
-        \Magento\Framework\Serialize\SerializerInterface $serializer,
+        Context $context,
+        Registry $registry,
+        CreditCardTokenFactory $creditCardTokenFactory,
+        SerializerInterface $serializer,
         array $data = []
     ) {
         $this->_coreRegistry = $registry;
@@ -98,7 +103,7 @@ class View extends \Magento\Backend\Block\Template implements \Magento\Ui\Compon
      */
     public function getTabUrl()
     {
-        return $this->getUrl('customercreditbvi/customer/index', ['_current' => true]);
+        return $this->getUrl('customercredithistory/customer/index', ['_current' => true]);
     }
 
     /**

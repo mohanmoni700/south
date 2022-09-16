@@ -4,6 +4,8 @@ namespace Alfakher\Customersavepayment\Block\Adminhtml\CustomerEdit\Tab\View;
 
 class DeactiveAction extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\Action
 {
+    public const SPEEDLY_PAYMENT_CODE = "spreedly";
+    public const PARADOXLABS_PAYMENT_CODE = "paradoxlabs_firstdata";
     /**
      * [render]
      *
@@ -12,23 +14,19 @@ class DeactiveAction extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\
      */
     public function render(\Magento\Framework\DataObject $row)
     {
-        /*$writer = new \Zend_Log_Writer_Stream(BP . '/var/log/DeactiveAction.log');
-                                    $logger = new \Zend_Log();
-                                    $logger->addWriter($writer);
-        */
-        if (null !== $row->getPaymentMethodCode() && $row->getPaymentMethodCode() == "spreedly") {
+        if (null !== $row->getPaymentMethodCode() && $row->getPaymentMethodCode() === self::SPEEDLY_PAYMENT_CODE) {
             $action = [
                 'url' => $this->getUrl(
-                    'customercreditbvi/customer/deactivate',
+                    'customercredithistory/customer/deactivate',
                     ['id' => $row->getId(), 'payment_method' => $row->getPaymentMethodCode()]
                 ),
                 'caption' => __('Deactivate'),
             ];
             return $this->_toLinkHtml($action, $row);
-        } elseif (null !== $row->getMethod() && $row->getMethod() == "paradoxlabs_firstdata") {
+        } elseif (null !== $row->getMethod() && $row->getMethod() === self::PARADOXLABS_PAYMENT_CODE) {
             $action = [
                 'url' => $this->getUrl(
-                    'customercreditbvi/customer/deactivate',
+                    'customercredithistory/customer/deactivate',
                     ['id' => $row->getId(), 'payment_method' => $row->getMethod()]
                 ),
                 'caption' => __('Deactivate'),

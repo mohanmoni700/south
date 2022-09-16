@@ -5,26 +5,33 @@ namespace Alfakher\Customersavepayment\Controller\Adminhtml\Customer;
 use Magento\Customer\Model\Session;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Response\RedirectInterface;
+use Magento\Framework\Controller\ResultFactory;
+use Magento\Vault\Model\CreditCardTokenFactory;
+use ParadoxLabs\TokenBase\Model\CardFactory;
 
 class Deactivate extends Action
 {
+    public const SPEEDLY_PAYMENT_CODE = "spreedly";
+    public const PARADOXLABS_PAYMENT_CODE = "paradoxlabs_firstdata";
+
     /**
      * [__construct]
      *
      * @param Context $context
-     * @param \Magento\Vault\Model\CreditCardTokenFactory $customerCreditCardFactory
+     * @param CreditCardTokenFactory $customerCreditCardFactory
      * @param Session $customerSession
-     * @param \ParadoxLabs\TokenBase\Model\CardFactory $cardCollectionFactory
-     * @param \Magento\Framework\Controller\ResultFactory $resultFactory
-     * @param \Magento\Framework\App\Response\RedirectInterface $redirect
+     * @param CardFactory $cardCollectionFactory
+     * @param ResultFactory $resultFactory
+     * @param RedirectInterface $redirect
      */
     public function __construct(
         Context $context,
-        \Magento\Vault\Model\CreditCardTokenFactory $customerCreditCardFactory,
+        CreditCardTokenFactory $customerCreditCardFactory,
         Session $customerSession,
-        \ParadoxLabs\TokenBase\Model\CardFactory $cardCollectionFactory,
-        \Magento\Framework\Controller\ResultFactory $resultFactory,
-        \Magento\Framework\App\Response\RedirectInterface $redirect
+        CardFactory $cardCollectionFactory,
+        ResultFactory $resultFactory,
+        RedirectInterface $redirect
     ) {
         $this->customerCreditCardFactory = $customerCreditCardFactory;
         $this->customerSession = $customerSession;
@@ -44,7 +51,7 @@ class Deactivate extends Action
         $resultRedirect = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_REDIRECT);
         try {
             $params = $this->getRequest()->getParams();
-            if ($params['payment_method'] == 'spreedly') {
+            if ($params['payment_method'] === self::SPEEDLY_PAYMENT_CODE) {
                 $id = $params['id'];
                 if ($id) {
                     try {
@@ -57,7 +64,7 @@ class Deactivate extends Action
                         $this->messageManager->addErrorMessage(__("Card Details doesn't exist"));
                     }
                 }
-            } elseif ($params['payment_method'] == 'paradoxlabs_firstdata') {
+            } elseif ($params['payment_method'] === self::PARADOXLABS_PAYMENT_CODE) {
                 $id = $params['id'];
                 if ($id) {
                     try {

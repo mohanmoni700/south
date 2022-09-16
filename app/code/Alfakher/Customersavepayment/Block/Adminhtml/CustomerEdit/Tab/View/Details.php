@@ -5,30 +5,36 @@ namespace Alfakher\Customersavepayment\Block\Adminhtml\CustomerEdit\Tab\View;
 use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Helper\Data as BackenHelper;
 use Magento\Customer\Controller\RegistryConstants;
+use Magento\Customer\Model\Customer;
 use Magento\Framework\Registry;
+use Magento\Payment\Api\PaymentMethodListInterface;
+use Magento\Vault\Model\CreditCardTokenFactory;
+use ParadoxLabs\TokenBase\Model\CardFactory;
 
 class Details extends \Magento\Backend\Block\Widget\Grid\Extended
 {
+    public const SPEEDLY_PAYMENT_CODE = "spreedly";
+    public const PARADOXLABS_PAYMENT_CODE = "paradoxlabs_firstdata";
     /**
      * [__construct]
      *
-     * @param \Magento\Vault\Model\CreditCardTokenFactory $collectionFactory
+     * @param CreditCardTokenFactory $collectionFactory
      * @param Registry $coreRegistry
      * @param Context $context
      * @param BackenHelper $backendHelper
-     * @param \Magento\Customer\Model\Customer $customer
-     * @param \Magento\Payment\Api\PaymentMethodListInterface $paymentMethodList
-     * @param \ParadoxLabs\TokenBase\Model\CardFactory $cardCollectionFactory
+     * @param Customer $customer
+     * @param PaymentMethodListInterface $paymentMethodList
+     * @param CardFactory $cardCollectionFactory
      * @param array $data
      */
     public function __construct(
-        \Magento\Vault\Model\CreditCardTokenFactory $collectionFactory,
+        CreditCardTokenFactory $collectionFactory,
         Registry $coreRegistry,
         Context $context,
         BackenHelper $backendHelper,
-        \Magento\Customer\Model\Customer $customer,
-        \Magento\Payment\Api\PaymentMethodListInterface $paymentMethodList,
-        \ParadoxLabs\TokenBase\Model\CardFactory $cardCollectionFactory,
+        Customer $customer,
+        PaymentMethodListInterface $paymentMethodList,
+        CardFactory $cardCollectionFactory,
         array $data = []
     ) {
         $this->_collectionFactory = $collectionFactory;
@@ -64,7 +70,7 @@ class Details extends \Magento\Backend\Block\Widget\Grid\Extended
         $activePaymentMethodList = $this->paymentMethodList->getActiveList($storeId);
         foreach ($activePaymentMethodList as $payment) {
             $paymentMethodCode = $payment->getCode();
-            if ($paymentMethodCode == "spreedly") {
+            if ($paymentMethodCode === self::SPEEDLY_PAYMENT_CODE) {
                 $collection = $this->_collectionFactory->create()
                     ->getCollection()->addFieldToFilter('customer_id', $customerId)
                     ->addFieldToFilter('is_active', 1)
@@ -73,7 +79,7 @@ class Details extends \Magento\Backend\Block\Widget\Grid\Extended
                     $this->setCollection($collection);
                     return parent::_prepareCollection();
                 }
-            } elseif ($paymentMethodCode == "paradoxlabs_firstdata") {
+            } elseif ($paymentMethodCode === self::PARADOXLABS_PAYMENT_CODE) {
                 $collection = $this->cardCollectionFactory->create()
                     ->getCollection()->addFieldToFilter('customer_id', $customerId)
                     ->addFieldToFilter('active', 1);
@@ -98,7 +104,7 @@ class Details extends \Magento\Backend\Block\Widget\Grid\Extended
             [
                 'header' => __('Id'),
                 'index' => 'entity_id',
-                'renderer' => 'Alfakher\Customersavepayment\Block\Adminhtml\CustomerEdit\Grid\Renderer\EntityId',
+                'renderer' => \Alfakher\Customersavepayment\Block\Adminhtml\CustomerEdit\Grid\Renderer\EntityId::class,
             ]
         );
 
@@ -107,7 +113,7 @@ class Details extends \Magento\Backend\Block\Widget\Grid\Extended
             [
                 'header' => __('Details'),
                 'index' => 'details',
-                'renderer' => 'Alfakher\Customersavepayment\Block\Adminhtml\CustomerEdit\Grid\Renderer\Details',
+                'renderer' => \Alfakher\Customersavepayment\Block\Adminhtml\CustomerEdit\Grid\Renderer\Details::class,
             ]
         );
 
