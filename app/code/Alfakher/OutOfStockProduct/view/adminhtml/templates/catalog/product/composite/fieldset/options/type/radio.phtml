@@ -6,10 +6,7 @@
 <?php list($_defaultQty, $_canChangeQty) = $block->getDefaultValues(); ?>
 <?php
 /*alfa_hd start */
-$blockObj= $block->getLayout()
-->createBlock(
-    \Alfakher\OutOfStockProduct\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Select::class
-);
+$viewModel = $block->getData('viewModel');
 /*alfa_hd end */
 ?>
 <div class="field admin__field options<?php if ($_option->getRequired()) { echo ' _required'; } ?>">
@@ -46,7 +43,7 @@ $blockObj= $block->getLayout()
                 <?php
                     /*alfa_hd start */
                     $selectionSku= $_selection->getSku();
-                    $response=$blockObj->getValidateProductForDropdown($selectionSku);
+                    $response=$viewModel->getValidateProductForDropdown($selectionSku);
                     /*alfa_hd end */
                 ?>
                 <div class="field choice admin__field admin__field-option">
@@ -59,7 +56,6 @@ $blockObj= $block->getLayout()
                            <?php if ($block->isSelected($_selection)) { echo ' checked="checked"'; } ?>
                            <?php
                            /*alfa_hd start */
-                            /*if (!$_selection->isSaleable() && !$_skipSaleableCheck) { echo ' disabled="disabled"'; }*/
                             if ($response===false) { echo ' disabled="disabled"'; }
                             /*alfa_hd end */
                             ?>

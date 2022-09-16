@@ -4,9 +4,7 @@
 <?php $_skipSaleableCheck = $this->helper(Magento\Catalog\Helper\Product::class)->getSkipSaleableCheck(); ?>
 <?php
 /*alfa_hd start */
-$blockObj= $block->getLayout()->createBlock(
-    Alfakher\OutOfStockProduct\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Select::class
-);
+$viewModel = $block->getData('viewModel');
 /*alfa_hd end */
 ?>
 <div class="field admin__field <?php if ($_option->getRequired()) { echo ' _required'; } ?>
@@ -32,15 +30,14 @@ if ($_option->getRequired()) { echo ' required-entry'; } ?> multiselect change-c
                 <?php
                     /*alfa_hd start */
                     $selectionSku= $_selection->getSku();
-                    $response=$blockObj->getValidateProductForDropdown($selectionSku);
+                    $response=$viewModel->getValidateProductForDropdown($selectionSku);
                     /*alfa_hd end */
                 ?>
                 <option value="<?= $block->escapeHtmlAttr($_selection->getSelectionId()) ?>"
                     <?php if ($block->isSelected($_selection)) { echo ' selected="selected"'; } ?>
                     <?php
                     /*alfa_hd start */
-                    /*if (!$_selection->isSaleable() && !$_skipSaleableCheck) { echo ' disabled="disabled"'; }*/
-                    if ($response==false) { echo ' disabled="disabled"'; }
+                    if ($response===false) { echo ' disabled="disabled"'; }
                     /*alfa_hd end */
                     ?>
                     price="<?= $block->escapeHtmlAttr($block->getSelectionPrice($_selection)) ?>">

@@ -4,9 +4,7 @@
 <?php $_skipSaleableCheck = $this->helper(Magento\Catalog\Helper\Product::class)->getSkipSaleableCheck(); ?>
 <?php
 /*alfa_hd start: block*/
-$blockObj= $block->getLayout()->createBlock(
-    Alfakher\OutOfStockProduct\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Select::class
-);
+$viewModel = $block->getData('viewModel');
 /*alfa_hd end: block*/
 ?>
 
@@ -30,7 +28,7 @@ $blockObj= $block->getLayout()->createBlock(
                     <?php
                         /*alfa_hd start */
                         $selectionSku= $_selection->getSku();
-                        $response=$blockObj->getValidateProductForDropdown($selectionSku);
+                        $response=$viewModel->getValidateProductForDropdown($selectionSku);
                         /*alfa_hd end */
                     ?>
                     <div class="field choice admin__field admin__field-option">
@@ -51,7 +49,7 @@ if ($_option->getRequired()) { echo 'validate-one-required-by-name'; } ?>"
                             
                             <?php
                             /*alfa_hd start */
-                             /*if (!$_selection->isSaleable() && !$_skipSaleableCheck)*/ if ($response==false):?>
+                            if ($response===false):?>
                                 <?= ' disabled="disabled"' ?>
                                 <?php /*alfa_hd end */?>
                             <?php endif;?>

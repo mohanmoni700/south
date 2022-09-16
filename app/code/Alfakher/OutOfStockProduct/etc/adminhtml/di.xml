@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type  name="Magento\Bundle\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Select">
+       <plugin name="template_of_select" sortOrder="1" disabled="false" type="Alfakher\OutOfStockProduct\Plugin\Select"/>
+    </type>
+    <type  name="Magento\Bundle\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Multi">
+       <plugin name="template_of_multi" sortOrder="1" disabled="false" type="Alfakher\OutOfStockProduct\Plugin\Multi"/>
+    </type>
+    <type  name="Magento\Bundle\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Radio">
+       <plugin name="template_of_radio" sortOrder="1" disabled="false" type="Alfakher\OutOfStockProduct\Plugin\Radio"/>
+    </type>
+    <type  name="Magento\Bundle\Block\Adminhtml\Catalog\Product\Composite\Fieldset\Options\Type\Checkbox">
+       <plugin name="template_of_checkbox" sortOrder="1" disabled="false" type="Alfakher\OutOfStockProduct\Plugin\Checkbox"/>
+    </type>
+</config>
