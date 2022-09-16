@@ -416,6 +416,11 @@ return [
                         'default' => 'EUR',
                         'allow' => 'EUR'
                     ]
+                ],
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Alfakher/shishaworld'
+                    ]
                 ]
             ]
         ]
