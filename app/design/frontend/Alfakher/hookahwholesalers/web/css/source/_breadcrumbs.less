@@ -6,71 +6,72 @@
 //
 //  Common
 //  _____________________________________________
-@breadcrumbs-txtclr: #000000;
+
+@breadcrumbs-txtclr: #000;
 @breadcrumbs-activeclr: #404040;
 & when (@media-common = true) {
     .breadcrumbs {
-    	padding: 0;
-    	margin: 30px 0;
         .lib-breadcrumbs();
+        margin: 30px 0;
+        padding: 0;
     }
-    .page-wrapper{
-    	.breadcrumbs {
-    		padding: 0;
-    		a{
-    			color: @breadcrumbs-txtclr;
-    			font-weight: @font-weight__bold;
-    			.lib-font-size(12);
-    			line-height: 24px;
-    			display: inline-block;
-				text-decoration: underline;
-    		}
-    		strong{
-    			color: @breadcrumbs-txtclr;
-    			.lib-font-size(12);
-    			line-height: 24px;
-    			display: inline-block;
-    		}
-		   .item{
-			   vertical-align: middle;
-			   .lib-font-size(12);
-			   color: @color-black;
-			   line-height: 24px;
-			   text-transform: capitalize;
-			&:not(:last-child) {
-				&:after{
-					content:'';
-					width: 2px;
-					height: 12px;
-					display: inline-block;
-					position: relative;
-					vertical-align: middle;
-					background: @breadcrumbs-txtclr;
-					margin: 0 7px;	
-				}
-			}
-		   }
-    	}
+    .page-wrapper {
+        .breadcrumbs {
+            padding: 0;
+            a {
+                .lib-font-size(12);
+                color: @breadcrumbs-txtclr;
+                display: inline-block;
+                font-weight: @font-weight__bold;
+                line-height: 24px;
+                text-decoration: underline;
+            }
+            strong {
+                .lib-font-size(12);
+                color: @breadcrumbs-txtclr;
+                display: inline-block;
+                line-height: 24px;
+            }
+            .item {
+                .lib-font-size(12);
+                color: @color-black;
+                line-height: 24px;
+                text-transform: capitalize;
+                vertical-align: middle;
+                &:not(:last-child) {
+                    &:after {
+                        background: @breadcrumbs-txtclr;
+                        content:'';
+                        display: inline-block;
+                        height: 12px;
+                        margin: 0 7px;
+                        position: relative;
+                        vertical-align: middle;
+                        width: 2px;
+                    }
+                }
+            }
+        }
     }
 
-	@media only screen and (max-width: 1299px) {
-		.page-wrapper {
-			.breadcrumbs {
-				padding: 0 15px;
-			}
-		}
-	}
+    @media only screen and (max-width: 1299px) {
+        .page-wrapper {
+            .breadcrumbs {
+                padding: 0 15px;
+            }
+        }
+    }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
-    .page-wrapper{
-        .breadcrumbs{
+    .page-wrapper {
+        .breadcrumbs {
             display: none;
         }
     }
-    .product.attribute.description{
-        .pagebuilder-column{
+    .product.attribute.description {
+        .pagebuilder-column {
             padding: 0;
-        } 
+        }
     }
 }

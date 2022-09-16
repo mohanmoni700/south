@@ -12,4 +12,10 @@
     <event name="blueedit_save_after">
         <observer name="al_wh_blueedit_save_after" instance="Alfakher\Webhook\Observer\AfterBlueeditOrder"/>
     </event>
+    <event name="rma_create_after">
+        <observer name="al_wh_rma_save_after" instance="Alfakher\Webhook\Observer\AfterRmaCreate"/>
+    </event>
+    <event name="rma_update_after">
+        <observer name="al_wh_rma_update_after" instance="Alfakher\Webhook\Observer\AfterRmaCreate"/>
+    </event>
 </config>

@@ -8,7 +8,11 @@
                 </argument>
             </arguments>
             <referenceBlock name="default_order_items_renderer">
+                <action method="setTemplate">
+                    <argument name="template" xsi:type="string">HookahShisha_Customization::default.phtml</argument>
+                </action>
                 <arguments>
+                    <argument name="view_model" xsi:type="object">HookahShisha\Customization\ViewModel\YotpoConfig</argument>
                     <argument name="columns" xsi:type="array">
                         <item name="grossmargin" xsi:type="string" translate="true">col-grossmargin last</item>
                         <item name="weight" xsi:type="string" translate="true">col-weight</item>

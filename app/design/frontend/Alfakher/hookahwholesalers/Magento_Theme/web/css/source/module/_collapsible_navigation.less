@@ -90,26 +90,26 @@
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .block-collapsible-nav {
         left: 0;
+        margin: 0 auto;
+        right: 0;
         top: -21px;
         width: calc(~'100% - 30px');
         z-index: 5;
-        right: 0;
-        margin: 0 auto;
 
         .title {
             &:extend(.abs-toggling-title-mobile all);
-            padding: @indent__s + 5px  40px  @indent__s + 5px  @indent__s + 5px;
             border-radius: 10px;
-            strong{
-                font-weight: 400;
+            padding: @indent__s + 5px  40px  @indent__s + 5px  @indent__s + 5px;
+            strong {
                 color: @color_black;
+                font-weight: 400;
             }
         }
 
         .content {
             border: 2px solid @navborder_clr;
-            display: none;
             border-radius: 10px;
+            display: none;
             overflow: hidden;
             &.active {
                 display: block;

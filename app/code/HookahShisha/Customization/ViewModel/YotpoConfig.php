@@ -30,4 +30,17 @@ class YotpoConfig implements ArgumentInterface
     {
         return $this->scopeConfig->getValue($section, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
+
+    /**
+     * Gross margin configuration value
+     *
+     * @param string $section
+     * @param string $websiteid
+     * @return string
+     */
+    public function isModuleEnabled($section, $websiteid)
+    {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE;
+        return $this->scopeConfig->getValue($section, $storeScope, $websiteid);
+    }
 }
