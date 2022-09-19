@@ -22,9 +22,18 @@
         </arguments>
     </virtualType>
 
+    <!-- add handeling fee in invoice pdf -->
+    <type name="Magento\Tax\Model\Sales\Pdf\Shipping">
+        <plugin name="handelingFeeplugin" type="HookahShisha\Customization\Model\Sales\Pdf\AfterShipping"/>
+    </type>
+
+    <!--subtotal issue solve in invoice pdf -->
+    <type name="Magento\Tax\Model\Sales\Pdf\Subtotal">
+        <plugin name="subtotalAfterPlugin" type="HookahShisha\Customization\Model\Sales\Pdf\AfterSubtotal"/>
+    </type>
+    
     <!-- removed clone as quote from sales order grid -->
     <type name="Magento\Sales\Ui\Component\Listing\Column\ViewAction">
         <plugin name="Amasty_Request::add-quote-button-listing" disabled="true" />
     </type>
-
 </config>
