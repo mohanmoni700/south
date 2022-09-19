@@ -5,7 +5,7 @@
 <?php $_skipSaleableCheck = $this->helper(Magento\Catalog\Helper\Product::class)->getSkipSaleableCheck(); ?>
 <?php list($_defaultQty, $_canChangeQty) = $block->getDefaultValues(); ?>
 <?php
-    $viewModel = $block->getData('viewModel');
+    $viewModel = $block->getData('view_model_select');
 ?>
 <div class="field admin__field option<?php
 if ($_option->getDecoratedIsLast()):?> last<?php endif; ?><?php
