@@ -3,10 +3,12 @@
 /** @var \Magento\Customer\ViewModel\Address $viewModel */
 /** @var \Magento\Framework\Escaper $escaper */
 /** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+// phpcs:disable Magento2.Templates.ThisInTemplate
 $viewModel = $block->getViewModel();
 $actionURL = "#";
 $formDisable = 1;
 ?>
+<?php $hub_mobile_number = $block->getCustomer()->getCustomAttribute('hub_mobile_number');?>
 <?php $_company = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Company::class) ?>
 <?php $_telephone = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Telephone::class) ?>
 <?php $_fax = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Fax::class) ?>
@@ -77,14 +79,32 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
         <?php if ($_fax->isEnabled()): ?>
             <?= $_fax->setFax($block->getAddress()->getFax())->toHtml() ?>
         <?php endif ?>
-          <div class="field country required">
+        <div class="field country required">
             <label class="label" for="country">
                 <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>
             </label>
             <div class="control">
                 <?= $block->getCountryHtmlSelect() ?>
             </div>
+        </div>
+        <?php if ($block->getWebsiteCode() === "shisha_world_b2b"): ?>
+            <?php $hub_mobile_number = $hub_mobile_number ? $hub_mobile_number->getValue() : "" ?>    
+        <div class="field">
+            <label for="hub_mobile_number" class="label">
+                <span><?= $block->escapeHtml(__('Mobile Number')) ?>                    
+                </span>
+            </label>
+            <div class="control">
+                <input type="text" 
+                        name="hub_mobile_number" 
+                        id="hub_mobile_number" 
+                        placeholder="<?= $block->escapeHtml(__('Mobile Number')) ?>"
+                        value="<?= /* @noEscape */ $hub_mobile_number ?>" 
+                        title="<?php /* @noEscape */ __('Mobile Number') ?>" 
+                        class="input-text" />
+            </div>
         </div> 
+        <?php endif;?>
     </fieldset>
     <fieldset class="fieldset">
         <legend></legend>
@@ -130,7 +150,8 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                        value="<?= $escaper->escapeHtmlAttr($block->getAddress()->getCity()) ?>"
                        title="<?= $escaper->escapeHtmlAttr(__('City')) ?>"
                        placeholder="<?= $escaper->escapeHtmlAttr(__('City')) ?>"
-                       class="input-text wholesalers-validate-text <?= $escaper->escapeHtmlAttr($_cityValidationClass) ?>"
+                       class="input-text wholesalers-validate-text
+                        <?= $escaper->escapeHtmlAttr($_cityValidationClass) ?>"
                        id="city">
             </div>
         </div>
@@ -185,8 +206,11 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                     </label>
                         <input type="text"
                                name="county"
-                               placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
-                               value="<?= $block->escapeHtmlAttr(!empty($block->getAddress()->getCustomAttribute('county')) ? $block->getAddress()->getCustomAttribute('county')->getValue() : ''); ?>"
+                               placeholder="<?= /* @noEscape */
+                                $block->getAttributeData()->getFrontendLabel('county') ?>"
+                               value="<?= $block->escapeHtmlAttr(!empty($block->getAddress()
+                                ->getCustomAttribute('county')) ? $block->getAddress()
+                                ->getCustomAttribute('county')->getValue() : ''); ?>"
                                title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
                                id="county"
                                class="input-text <?= $escaper->escapeHtmlAttr($_county) ?>"/>
@@ -214,13 +238,19 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
         <div class="field choice newsletter">
             <input type="checkbox"
                    name="is_subscribed"
-                   title="<?= $block->escapeHtmlAttr(__('Would you like to join our Monthly Mailing list for discounts and promotions?')) ?>"
+                   title="<?= $block
+                    ->escapeHtmlAttr(__('Would you like to join our Monthly 
+                    Mailing list for discounts and promotions?')) ?>"
                    value="1"
                    id="is_subscribed"
                    <?php if ($block->getIsSubscribed()): ?> checked="checked"<?php endif; ?>
                    class="checkbox"/>
             <label for="is_subscribed" class="label">
-                <span><?= $block->escapeHtml(__('Would you like to join our Monthly Mailing list for discounts and promotions?')) ?></span>
+                <span>
+                    <?= $block
+                        ->escapeHtml(__('Would you like to join our Monthly 
+                        Mailing list for discounts and promotions?')) ?>
+                </span>
             </label>
         </div>
     </fieldset>

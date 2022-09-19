@@ -101,7 +101,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
      * @param \HookahShisha\Customerb2b\Helper\Data $helperdata
      * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
      * @param EmailAddress $emailValidator
-     * @param \Magento\LoginAsCustomerAssistance\Model\ResourceModel\SaveLoginAsCustomerAssistanceAllowed $saveLoginAsCustomerAssistanceAllowed
+     * @param SaveLoginAsCustomerAssistanceAllowed $saveLoginAsCustomerAssistanceAllowed
      * @param \Magento\Company\Model\CompanyUser|null $companyUser
      */
     public function __construct(
@@ -208,6 +208,9 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
             $this->checkPasswordConfirmation($password, $confirmation);
 
             $extensionAttributes = $customer->getExtensionAttributes();
+            if ($this->getRequest()->getParam('hub_mobile_number')) {
+                $customer->setCustomAttribute('hub_mobile_number', $this->getRequest()->getParam('hub_mobile_number'));
+            }
             $extensionAttributes->setIsSubscribed($this->getRequest()->getParam('is_subscribed', false));
             $customer->setExtensionAttributes($extensionAttributes);
 
