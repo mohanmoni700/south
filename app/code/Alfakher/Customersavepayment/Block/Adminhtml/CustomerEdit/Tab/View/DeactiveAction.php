@@ -2,10 +2,11 @@
 
 namespace Alfakher\Customersavepayment\Block\Adminhtml\CustomerEdit\Tab\View;
 
+use Corra\Spreedly\Model\Ui\ConfigProvider as CorraConfig;
+use ParadoxLabs\FirstData\Model\ConfigProvider as ParadoxsConfig;
+
 class DeactiveAction extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\Action
 {
-    public const SPEEDLY_PAYMENT_CODE = "spreedly";
-    public const PARADOXLABS_PAYMENT_CODE = "paradoxlabs_firstdata";
     /**
      * [render]
      *
@@ -14,7 +15,7 @@ class DeactiveAction extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\
      */
     public function render(\Magento\Framework\DataObject $row)
     {
-        if (null !== $row->getPaymentMethodCode() && $row->getPaymentMethodCode() === self::SPEEDLY_PAYMENT_CODE) {
+        if (null !== $row->getPaymentMethodCode() && $row->getPaymentMethodCode() === CorraConfig::CODE) {
             $action = [
                 'url' => $this->getUrl(
                     'customercredithistory/customer/deactivate',
@@ -23,7 +24,7 @@ class DeactiveAction extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\
                 'caption' => __('Deactivate'),
             ];
             return $this->_toLinkHtml($action, $row);
-        } elseif (null !== $row->getMethod() && $row->getMethod() === self::PARADOXLABS_PAYMENT_CODE) {
+        } elseif (null !== $row->getMethod() && $row->getMethod() === ParadoxsConfig::CODE) {
             $action = [
                 'url' => $this->getUrl(
                     'customercredithistory/customer/deactivate',

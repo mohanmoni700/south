@@ -2,19 +2,18 @@
 
 namespace Alfakher\Customersavepayment\Controller\Adminhtml\Customer;
 
+use Corra\Spreedly\Model\Ui\ConfigProvider as CorraConfig;
 use Magento\Customer\Model\Session;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Response\RedirectInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Vault\Model\CreditCardTokenFactory;
+use ParadoxLabs\FirstData\Model\ConfigProvider as ParadoxsConfig;
 use ParadoxLabs\TokenBase\Model\CardFactory;
 
 class Deactivate extends Action
 {
-    public const SPEEDLY_PAYMENT_CODE = "spreedly";
-    public const PARADOXLABS_PAYMENT_CODE = "paradoxlabs_firstdata";
-
     /**
      * [__construct]
      *
@@ -51,7 +50,7 @@ class Deactivate extends Action
         $resultRedirect = $this->resultFactory->create(\Magento\Framework\Controller\ResultFactory::TYPE_REDIRECT);
         try {
             $params = $this->getRequest()->getParams();
-            if ($params['payment_method'] === self::SPEEDLY_PAYMENT_CODE) {
+            if ($params['payment_method'] === CorraConfig::CODE) {
                 $id = $params['id'];
                 if ($id) {
                     try {
@@ -64,7 +63,7 @@ class Deactivate extends Action
                         $this->messageManager->addErrorMessage(__("Card Details doesn't exist"));
                     }
                 }
-            } elseif ($params['payment_method'] === self::PARADOXLABS_PAYMENT_CODE) {
+            } elseif ($params['payment_method'] === ParadoxsConfig::CODE) {
                 $id = $params['id'];
                 if ($id) {
                     try {

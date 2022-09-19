@@ -2,17 +2,16 @@
 
 namespace Alfakher\Customersavepayment\Block\Adminhtml\CustomerEdit\Grid\Renderer;
 
+use Corra\Spreedly\Model\Ui\ConfigProvider as CorraConfig;
 use Magento\Backend\Block\Context;
 use Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer;
 use Magento\Framework\DataObject;
 use Magento\Framework\Serialize\SerializerInterface;
 use Magento\Vault\Model\CreditCardTokenFactory;
+use ParadoxLabs\FirstData\Model\ConfigProvider as ParadoxsConfig;
 
 class EntityId extends AbstractRenderer
 {
-    public const SPEEDLY_PAYMENT_CODE = "spreedly";
-    public const PARADOXLABS_PAYMENT_CODE = "paradoxlabs_firstdata";
-
     /**
      * [__construct]
      *
@@ -39,10 +38,10 @@ class EntityId extends AbstractRenderer
      */
     public function render(DataObject $row)
     {
-        if (null !== $row->getPaymentMethodCode() && $row->getPaymentMethodCode() === self::SPEEDLY_PAYMENT_CODE) {
+        if (null !== $row->getPaymentMethodCode() && $row->getPaymentMethodCode() === CorraConfig::CODE) {
             $entityId = $row->getEntityId();
             return $entityId;
-        } elseif (null !== $row->getMethod() && $row->getMethod() === self::PARADOXLABS_PAYMENT_CODE) {
+        } elseif (null !== $row->getMethod() && $row->getMethod() === ParadoxsConfig::CODE) {
             $entityId = $row->getId();
             return $entityId;
         }

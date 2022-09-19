@@ -2,6 +2,7 @@
 
 namespace Alfakher\Customersavepayment\Block\Adminhtml\CustomerEdit\Tab\View;
 
+use Corra\Spreedly\Model\Ui\ConfigProvider as CorraConfig;
 use Magento\Backend\Block\Template\Context;
 use Magento\Backend\Helper\Data as BackenHelper;
 use Magento\Customer\Controller\RegistryConstants;
@@ -9,12 +10,11 @@ use Magento\Customer\Model\Customer;
 use Magento\Framework\Registry;
 use Magento\Payment\Api\PaymentMethodListInterface;
 use Magento\Vault\Model\CreditCardTokenFactory;
+use ParadoxLabs\FirstData\Model\ConfigProvider as ParadoxsConfig;
 use ParadoxLabs\TokenBase\Model\CardFactory;
 
 class Details extends \Magento\Backend\Block\Widget\Grid\Extended
 {
-    public const SPEEDLY_PAYMENT_CODE = "spreedly";
-    public const PARADOXLABS_PAYMENT_CODE = "paradoxlabs_firstdata";
     /**
      * [__construct]
      *
@@ -70,7 +70,7 @@ class Details extends \Magento\Backend\Block\Widget\Grid\Extended
         $activePaymentMethodList = $this->paymentMethodList->getActiveList($storeId);
         foreach ($activePaymentMethodList as $payment) {
             $paymentMethodCode = $payment->getCode();
-            if ($paymentMethodCode === self::SPEEDLY_PAYMENT_CODE) {
+            if ($paymentMethodCode === CorraConfig::CODE) {
                 $collection = $this->_collectionFactory->create()
                     ->getCollection()->addFieldToFilter('customer_id', $customerId)
                     ->addFieldToFilter('is_active', 1)
@@ -79,7 +79,7 @@ class Details extends \Magento\Backend\Block\Widget\Grid\Extended
                     $this->setCollection($collection);
                     return parent::_prepareCollection();
                 }
-            } elseif ($paymentMethodCode === self::PARADOXLABS_PAYMENT_CODE) {
+            } elseif ($paymentMethodCode === ParadoxsConfig::CODE) {
                 $collection = $this->cardCollectionFactory->create()
                     ->getCollection()->addFieldToFilter('customer_id', $customerId)
                     ->addFieldToFilter('active', 1);
