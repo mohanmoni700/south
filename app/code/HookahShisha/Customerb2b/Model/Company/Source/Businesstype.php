@@ -54,9 +54,10 @@ class Businesstype implements \Magento\Framework\Data\OptionSourceInterface
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
         $website_code = $this->storeManager->getWebsite()->getCode();
         $config_website = $this->scopeConfig->getValue(self::WEBSITE_CODE, $storeScope);
+        $websidecodes = explode(',', $config_website);
         $options = [];
 
-        if ($website_code === $config_website) {
+        if (in_array($website_code, $websidecodes)) {
             foreach ($this->getOptionArrayHub() as $key => $value) {
                 $options[] = ['label' => __($value), 'value' => $key];
             }

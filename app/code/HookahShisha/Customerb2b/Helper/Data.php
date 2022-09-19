@@ -134,8 +134,9 @@ class Data extends \Magento\Shipping\Helper\Data
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
         $website_code = $this->storeManager->getWebsite()->getCode();
         $config_website = $this->scopeConfig->getValue(self::WEBSITE_CODE, $storeScope);
+        $websidecodes = explode(',', $config_website);
 
-        if ($website_code === $config_website) {
+        if (in_array($website_code, $websidecodes)) {
 
             $annual_turnover = $this->annualturnover->getOptionArrayHub();
             $annual_turn_over = $annual_turnover[$data['company']['annual_turn_over']];
