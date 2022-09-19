@@ -8,6 +8,11 @@ $viewModel = $block->getViewModel();
 $actionURL = "#";
 $formDisable = 1;
 ?>
+<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
+<?php $websitecode = $_helperB2b->getConfigValue('hookahshisha/website_code_setting/website_code');
+    $websitecodes = explode(',', $websitecode);
+?>
+
 <?php $hub_mobile_number = $block->getCustomer()->getCustomAttribute('hub_mobile_number');?>
 <?php $_company = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Company::class) ?>
 <?php $_telephone = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Telephone::class) ?>
@@ -87,7 +92,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                 <?= $block->getCountryHtmlSelect() ?>
             </div>
         </div>
-        <?php if ($block->getWebsiteCode() === "shisha_world_b2b"): ?>
+        <?php if (in_array($block->getWebsiteCode(), $websitecodes)): ?>
             <?php $hub_mobile_number = $hub_mobile_number ? $hub_mobile_number->getValue() : "" ?>    
         <div class="field">
             <label for="hub_mobile_number" class="label">
