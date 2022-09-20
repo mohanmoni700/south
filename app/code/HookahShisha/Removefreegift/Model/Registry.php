@@ -1,9 +1,4 @@
 <?php
-/**
- * @author Amasty Team
- * @copyright Copyright (c) 2022 Amasty (https://www.amasty.com)
- * @package Free Gift Base for Magento 2
- */
 
 namespace HookahShisha\Removefreegift\Model;
 
@@ -155,9 +150,11 @@ class Registry extends \Amasty\Promo\Model\Registry
             );
 
             if ($autoAdd) {
+                /* condition starts for restrict auto add free gift product during remove free gift item*/
                 if (!strpos($graphrequest, "updateCartItems") !== false) {
                     $item->setAutoAdd($autoAdd);
                 }
+                /* condition ends for restrict auto add free gift product during remove free gift item*/
             }
         } else {
             foreach ($sku as $key => $skuValue) {
