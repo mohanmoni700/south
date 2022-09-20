@@ -24,6 +24,7 @@ $regionProvinceLabel = $block->escapeHtml(__('Province'));
 $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel;
 /* End Change the region_id Label if the Country is US for State and Other for the State */?>
 
+
 <form class="form create account form-create-account"
       method="post"
       id="form-validate"
@@ -138,6 +139,21 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                         <?= $block->getCountryHtmlSelect() ?>
                     </div>
                 </div>
+                    <div class="field">
+                        <label for="hub_mobile_number" class="label">
+                            <span><?= $block->escapeHtml(__('Mobile Number')) ?>
+                            </span>
+                        </label>
+                        <div class="control">
+                            <input type="text" 
+                                    name="hub_mobile_number" 
+                                    id="hub_mobile_number" 
+                                    placeholder="<?= $block->escapeHtml(__('Mobile Number')) ?>"
+                                    value="" 
+                                    title="<?php /* @noEscape */ __('Mobile Number') ?>" 
+                                    class="input-text" />
+                        </div>
+                    </div>
                 <div class="field street required">
                     <label for="street_1" class="label">
                         <span><?= $block->escapeHtml(__($_streetLabel . ' 1')) ?></span>
