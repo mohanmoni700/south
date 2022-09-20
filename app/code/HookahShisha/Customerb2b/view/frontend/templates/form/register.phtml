@@ -22,7 +22,8 @@ $formData = $block->getFormData();
 $regionStateLabel = $block->escapeHtml(__('State'));
 $regionProvinceLabel = $block->escapeHtml(__('Province'));
 $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel;
-/* End Change the region_id Label if the Country is US for State and Other for the State */?>
+/* End Change the region_id Label if the Country is US for State and Other for the State */
+?>
 
 <form class="form create account form-create-account"
       method="post"
@@ -60,6 +61,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 ->setForceUseCustomerAttributes(true)
                 ->toHtml()
             ?>
+
             <?php $_dob = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Dob::class) ?>
             <?php if ($_dob->isEnabled()): ?>
                 <?= $_dob->setDate($formData->getDob())->toHtml() ?>
@@ -92,8 +94,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 <legend></legend>
                 <input type="hidden" name="create_address" value="1"/>
                               
-                <?php /* data-validate="{required:true, 'validate-email':true, 'remote':'
-                <?php echo $this->getUrl('customerb2b/customer/emailcheck', ['_secure' => true]); ?>'}" */ ?>
+                <?php /* data-validate="{required:true, 'validate-email':true, 'remote':'<?php echo $this->getUrl('customerb2b/customer/emailcheck', ['_secure' => true]); ?>'}" */ ?>
                 <div class="field required">
                     <?php $emailLabel = __('Email'); ?>
                     <label for="email_address" class="label"><span><?= $block->escapeHtml($emailLabel) ?></span></label>
@@ -110,11 +111,9 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                 data-async-is-valid="true"
                                 data-mage-init='{"Magento_Company/js/form/element/async-validation": {
                                     "name": "customer_email",
-                                    "validateUrl": "<?=
-                                    $block->escapeUrl($block->getUrl('customerb2b/validate/validate')) ?>"
+                                    "validateUrl": "<?= $block->escapeUrl($block->getUrl('customerb2b/validate/validate')) ?>"
                                 }}'
-                                data-validate="{required:true, 
-                                'validate-email': true, 'validate-async-customer-email': true}"
+                                data-validate="{required:true, 'validate-email': true, 'validate-async-customer-email': true}"
                                 />
 
                     </div>
@@ -138,6 +137,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                         <?= $block->getCountryHtmlSelect() ?>
                     </div>
                 </div>
+
                 <div class="field street required">
                     <label for="street_1" class="label">
                         <span><?= $block->escapeHtml(__($_streetLabel . ' 1')) ?></span>
@@ -151,8 +151,9 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                id="street_1"
                                class="input-text <?= /* @noEscape */ $_streetValidationClass ?>"/>
                         <div class="nested">
-                        <?php $_streetValidationClass =trim(str_replace('required-entry', '', $_streetValidationClass));
-                        ?>
+                        <?php $_streetValidationClass = trim(str_replace('required-entry', '', $_streetValidationClass)); ?>
+
+
                         <?php for ($_i = 2, $_n = $addressHelper->getStreetLines(); $_i <= $_n; $_i++): ?>
                             <div class="field additional">
                                 <label class="label" for="street_<?= /* @noEscape */ $_i ?>">
@@ -183,8 +184,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>"
                                value="<?= $block->escapeHtmlAttr($formData->getCity()) ?>"
                                title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>"
-                               class="input-text <?= /* @noEscape */
-                                $addressHelper->getAttributeValidationClass('city') ?>"
+                               class="input-text <?= /* @noEscape */ $addressHelper->getAttributeValidationClass('city') ?>"
                                id="city"/>
                     </div>
                 </div>
@@ -221,22 +221,19 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                name="region"
                                value="<?= $block->escapeHtml($block->getRegion()) ?>"
                                title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?>"
-                               class="input-text <?= /* @noEscape */
-                                $addressHelper->getAttributeValidationClass('region') ?>"/>
+                               class="input-text <?= /* @noEscape */ $addressHelper->getAttributeValidationClass('region') ?>"/>
                     </div>
                 </div>
 
                 <div class="field zip required">
                     <label for="zip" class="label">
-                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?>
-                        </span>
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?></span>
                     </label>
                     <div class="control">
                         <?php $zipValidationClass = $addressHelper->getAttributeValidationClass('postcode'); ?>
                         <input type="text"
                                name="postcode"
-                               placeholder="<?= /* @noEscape */
-                                $block->getAttributeData()->getFrontendLabel('postcode') ?>"
+                               placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?>"
                                value="<?= $block->escapeHtml($formData->getPostcode()) ?>"
                                title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?>"
                                id="zip"
@@ -251,8 +248,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     </label>
                         <input type="text"
                                name="county"
-                               placeholder="<?= /* @noEscape */
-                                $block->getAttributeData()->getFrontendLabel('county') ?>"
+                               placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
                                value="<?= $block->escapeHtml($formData->getCounty()) ?>"
                                title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
                                id="county"
@@ -271,8 +267,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                             <input type="text"
                                    name="vat_id"
                                    value="<?= $escaper->escapeHtmlAttr($formData->getVatId()) ?>"
-                                   placeholder="<?= /* @noEscape */
-                                    $block->getAttributeData()->getFrontendLabel('vat_id') ?>"
+                                   placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('vat_id') ?>"
                                    title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('vat_id') ?>"
                                    class="input-text <?= $escaper->escapeHtmlAttr($_vatidValidationClass) ?>"
                                    id="vat_id">
@@ -283,8 +278,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     <?php $addressAttributes = $block->getChildBlock('customer_form_address_user_attributes');?>
                     <?php if ($addressAttributes): ?>
                         <?php $addressAttributes->setEntityType('customer_address'); ?>
-                        <?php $addressAttributes->setFieldIdFormat('address:%1$s')
-                         ->setFieldNameFormat('address[%1$s]');?>
+                        <?php $addressAttributes->setFieldIdFormat('address:%1$s')->setFieldNameFormat('address[%1$s]');?>
                         <?php $block->restoreSessionData($addressAttributes->getMetadataForm(), 'address');?>
                         <?= $addressAttributes->setShowContainer(false)->toHtml() ?>
                     <?php endif;?>
@@ -319,11 +313,9 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
 
     <div id="business_details" style="display: none;" class="business_details_tab">
         <fieldset class="fieldset" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
-            <fieldset class="fieldset create account" 
-            data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+            <fieldset class="fieldset create account" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
                 <legend></legend>
-                <!-- start Adding the Company field refrence from 
-                    vendor/magento/module-company/view/frontend/templates/company/account/create.phtml-->
+                <!-- start Adding the Company field refrence from vendor/magento/module-company/view/frontend/templates/company/account/create.phtml-->
                 <input type="hidden" name="company[status]" value="1"/>
                 <input type="hidden" name="company[company_email]" id="company_email"/>
                 <input type="hidden" name="company[com_account_verified]" value="0"/>
@@ -349,8 +341,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     <div class="control">
                         <select id="business_type"
                                 name="company[business_type]"
-                                title="<?= /* @noEscape */
-                                 $block->getAttributeData()->getFrontendLabel('Business Type') ?>"
+                                title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('Business Type') ?>"
                                 class="validate-select business_type">
                             <option value="">
                                 <?= $block->escapeHtml(__('Please select business type.')) ?>
@@ -370,8 +361,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     <div class="control">
                         <select id="annual_turn_over"
                                 name="company[annual_turn_over]"
-                                title="<?= /* @noEscape */
-                                 $block->getAttributeData()->getFrontendLabel('What is your Annual Turn Over') ?>"
+                                title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('What is your Annual Turn Over') ?>"
                                 class="validate-select annual_turn_over">
                             <option value="">
                                 <?= $block->escapeHtml(__('Please select your annual turn over.')) ?>
@@ -391,8 +381,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     <div class="control">
                         <select id="number_of_emp"
                                 name="company[number_of_emp]"
-                                title="<?= /* @noEscape */
-                                 $block->getAttributeData()->getFrontendLabel('Number of Employees') ?>"
+                                title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('Number of Employees') ?>"
                                 class="validate-select number_of_emp">
                             <option value="">
                                 <?= $block->escapeHtml(__('Please select number of employees')) ?>
@@ -410,11 +399,9 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     <label class="label" for="vat_tax_id">
                         <span class="tax_tooltip">
                         <span><?= /* @noEscape */ $block->escapeHtml($salesTaxID) ?></span>
-                        <?php $tooltipSalesTaxEnable = $block
-                        ->getConfig('hookahshisha/business_details/enable_business'); ?>
+                        <?php $tooltipSalesTaxEnable = $block->getConfig('hookahshisha/business_details/enable_business'); ?>
                         <?php if ($tooltipSalesTaxEnable): ?>
-                            <?php $tooltipSalesTaxId = $block
-                            ->getConfig('hookahshisha/business_details/tooltip_sales_tax_id'); ?>
+                            <?php $tooltipSalesTaxId = $block->getConfig('hookahshisha/business_details/tooltip_sales_tax_id'); ?>
                             <span class="sales-tax-tooltip">
                                 <a href="javascript::void(0);" class="tooltip-toggle">?</a>
                                 <span class="tooltip-content"><?= $block->escapeHtml($tooltipSalesTaxId) ?></span>
@@ -463,8 +450,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     <div class="control">
                         <select id="hear_about_us"
                                 name="company[hear_about_us]"
-                                title="<?= /* @noEscape */
-                                 $block->getAttributeData()->getFrontendLabel('How did you hear about us ?') ?>"
+                                title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('How did you hear about us ?') ?>"
                                 class="validate-select hear_about_us">
                             <option value="">
                                 <?= $block->escapeHtml(__('Please select you hear about us')) ?>
@@ -504,8 +490,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                title="<?= $block->escapeHtmlAttr($passwordLabel) ?>"
                                class="input-text"
                                placeholder="<?= $block->escapeHtmlAttr($passwordLabel) ?>"
-                               data-password-min-length="<?= $block
-                                ->escapeHtmlAttr($block->getMinimumPasswordLength()) ?>"
+                               data-password-min-length="<?= $block->escapeHtmlAttr($block->getMinimumPasswordLength()) ?>"
                                data-password-min-character-sets="<?= /* @noEscape */ $requiredCharacterClassesNumber ?>"
                                data-validate="{required:true, 'validate-customer-password':true}"
                                autocomplete="off">
@@ -532,19 +517,13 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     <div class="field choice newsletter">
                         <input type="checkbox"
                                name="is_subscribed"
-                               title="<?= $block
-                                ->escapeHtmlAttr(__('Would you like to join our Monthly Mailing 
-                                list for discounts and promotions?')) ?>"
+                               title="<?= $block->escapeHtmlAttr(__('Would you like to join our Monthly Mailing list for discounts and promotions?')) ?>"
                                value="1"
                                id="is_subscribed"
                                checked="checked"
                                class="checkbox"/>
                         <label for="is_subscribed" class="label">
-                            <span>
-                                <?= $block
-                                ->escapeHtml(__('Would you like to join our Monthly 
-                                Mailing list for discounts and promotions?')) ?> 
-                            </span>
+                            <span><?= $block->escapeHtml(__('Would you like to join our Monthly Mailing list for discounts and promotions?')) ?></span>
                         </label>
                     </div>
                     <?php /* Extensions placeholder */ ?>
@@ -589,9 +568,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
         height="60"
         loading="lazy" />
     <h1 class="success_msg"><?= $block->escapeHtml(__('Registration Successful')); ?></h1>
-    <h5><?= $block
-    ->escapeHtml(__('Thanks for Registering with us, one of our customer
-     service team will be in-touch with you for document verification.')); ?></h5>
+    <h5><?= $block->escapeHtml(__('Thanks for Registering with us, one of our customer service team will be in-touch with you for document verification.')); ?></h5>
 </div>
 <div id="popup-modal-non-usa" style="display:none">
     <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/success_union.svg')); ?>"
