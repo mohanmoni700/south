@@ -8,6 +8,7 @@ $viewModel = $block->getViewModel();
 $actionURL = "#";
 $formDisable = 1;
 ?>
+<?php $hub_mobile_number = $block->getCustomer()->getCustomAttribute('hub_mobile_number');?>
 <?php $_company = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Company::class) ?>
 <?php $_telephone = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Telephone::class) ?>
 <?php $_fax = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Fax::class) ?>
@@ -91,6 +92,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                 <span><?= $block->escapeHtml(__('Mobile Number')) ?>                    
                 </span>
             </label>
+            <?php $hub_mobile_number = $hub_mobile_number ? $hub_mobile_number->getValue() : "" ?> 
             <div class="control">
                 <input type="text" 
                         name="hub_mobile_number" 
