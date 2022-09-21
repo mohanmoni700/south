@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Sales:etc/pdf_file.xsd">
     <totals>
         <total name="total_subtotal_discount">
-            <title translate="true">Subtotal Discount</title>
+            <title translate="true">Subtotal Discounts</title>
             <source_field>total_subtotal_discount</source_field>
             <display_zero>true</display_zero>
             <model>HookahShisha\Customization\Model\Sales\Pdf\SubtotalDisc</model>
@@ -19,6 +19,14 @@
         </total>
         <total name="shipping">
             <display_zero>true</display_zero>
+        </total>
+        <total name="new_discount">
+            <title translate="true">Discount</title>
+            <source_field>discount_amount</source_field>
+            <display_zero>false</display_zero>
+            <model>HookahShisha\Customization\Model\Sales\Pdf\NewDiscount</model>
+            <font_size>7</font_size>
+            <sort_order>200</sort_order>
         </total>
     </totals>
 </config>

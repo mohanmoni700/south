@@ -40,14 +40,6 @@ class Zeroout extends \Magento\Backend\App\Action
             try {
                 $order = $this->_orderRepository->get($post['order_id']);
 
-                /* bv_mp; set product line custom discount 0 start */
-                foreach ($order->getAllItems() as $item) {
-                    $item->setDiscountPercent(0);
-                    $item->setDiscountAmount(0);
-                    $item->setBaseDiscountAmount(0);
-                }
-                /* bv_mp; set product line custom discount 0 End */
-
                 /* bv_op; backup the original shipping fee values; Start */
                 if ($order->getOriginalShippingFee() <= 0) {
                     $order->setOriginalShippingFee($order->getShippingAmount());
@@ -109,11 +101,6 @@ class Zeroout extends \Magento\Backend\App\Action
                 # setting discount to zero
                 $order->setDiscountAmount(0);
                 $order->setBaseDiscountAmount(0);
-
-                /* bv_mp; set shipping custom discount 0 End */
-                $order->setShippingDiscountAmount(0);
-                $order->setBaseShippingDiscountAmount(0);
-                /* bv_mp; set shipping custom discount 0 End */
 
                 # setting grand totals to zero
                 $order->setBaseGrandTotal(0);
