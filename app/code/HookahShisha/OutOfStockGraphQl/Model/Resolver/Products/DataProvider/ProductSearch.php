@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 declare(strict_types=1);
 
 namespace HookahShisha\OutOfStockGraphQl\Model\Resolver\Products\DataProvider;
@@ -105,17 +101,15 @@ class ProductSearch extends \Magento\CatalogGraphQl\Model\Resolver\Products\Data
         /** @var Collection $collection */
         $collection = $this->collectionFactory->create();
         $optest = $searchCriteria->getSortOrders();
-        if (!empty($optest)) {
-            if ($optest[0]->getField() == "position" || $optest[0]->getField() == '') {
-                $collection->joinField(
-                    'stock_status',
-                    'cataloginventory_stock_status',
-                    'stock_status',
-                    'product_id=entity_id',
-                    'stock_status>=0',
-                    'left'
-                )->setOrder('stock_status', 'DESC');
-            }
+        if (!empty($optest) && ($optest[0]->getField() == "position" || $optest[0]->getField() == '')) {
+            $collection->joinField(
+                'stock_status',
+                'cataloginventory_stock_status',
+                'stock_status',
+                'product_id=entity_id',
+                'stock_status>=0',
+                'left'
+            )->setOrder('stock_status', 'DESC');
         }
         //Create a copy of search criteria without filters to preserve the results from search
         $searchCriteriaForCollection = $this->searchCriteriaBuilder->build($searchCriteria);
