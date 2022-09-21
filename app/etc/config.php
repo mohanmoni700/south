@@ -884,6 +884,7 @@ return [
         'Corra_NewRelicReportingGraphql' => 1,
         'Corra_PageBuilderCustomisation' => 1,
         'Corra_PwaMaintenanceCheck' => 1,
+        'Corra_QuoteBundleItemStock' => 1,
         'Signifyd_Connect' => 1,
         'Alfakher_Payment' => 1,
         'Corra_Veratad' => 1,
