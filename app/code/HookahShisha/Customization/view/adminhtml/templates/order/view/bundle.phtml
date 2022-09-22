@@ -16,8 +16,8 @@
 <?php $_count = count($items) ?>
 <?php $_index = 0 ?>
 <?php $_prevOptionId = '' ?>
-<?php $helper = $this->helper(HookahShisha\Customization\Helper\Data::class);?>
-<?php $moduleEn = $helper->getConfigValue('hookahshisha/gross_margin_group/gross_margin_enable', $_item->getStoreId())?>
+<?php $helper = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);?>
+<?php $moduleEn = $helper->getGrossStatus('hookahshisha/gross_margin_group/gross_margin_enable', $_item->getStoreId())?>
 
 <?php if ($block->getOrderOptions() || $block->canDisplayGiftmessage()): ?>
     <?php $_showlastRow = true ?>
