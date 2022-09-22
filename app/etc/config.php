@@ -846,6 +846,7 @@ return [
         'Alfakher_OrderComment' => 1,
         'Alfakher_OrderPdf' => 1,
         'Alfakher_OutOfStockProduct' => 1,
+        'Corra_Spreedly' => 1,
         'Alfakher_PaymentMethod' => 1,
         'Alfakher_Productpageb2b' => 1,
         'Alfakher_RmaCustomization' => 1,
