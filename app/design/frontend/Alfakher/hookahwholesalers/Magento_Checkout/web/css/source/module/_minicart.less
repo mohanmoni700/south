@@ -659,6 +659,15 @@
                             position: absolute;
                             width: 100%;
                         }
+                        .minicart-items {
+                            button.update-cart-item:hover {
+                                background: @color_primary;
+                                border-color: @color_primary;
+                                span {
+                                    color: @color_white;
+                                }
+                            }
+                        }
                     }
                     .actions {
                         .secondary {
@@ -672,6 +681,7 @@
                 }
             }
         }
+        
     }
     .confirm._show .modal-footer .action-secondary {
         border-radius: 60px;
