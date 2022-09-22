@@ -20,7 +20,7 @@ $directoryHelper = $block->getData('directoryHelper');
 $formData = $block->getFormData();
 /* Start Change the region_id Label if the Country is US for State and Other for the State */
 $regionStateLabel = $block->escapeHtml(__('State'));
-$regionProvinceLabel = $block->escapeHtml(__('Province'));
+$regionProvinceLabel = $block->escapeHtml(__(''));
 $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel;
 /* End Change the region_id Label if the Country is US for State and Other for the State */?>
 
@@ -216,32 +216,6 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 );
                 ?>
 
-                <div class="field region required">
-                    <label for="region_id" class="label">
-                        <label for="region_id" class="label" id="region_id_label">
-                        <?php /* $block->getAttributeData()->getFrontendLabel('region') */ ?>
-                        <span><?= /* @noEscape */ $regionLabel ?></span>
-                    </label>
-                    </label>
-                    <div class="control">
-                        <select id="region_id"
-                                name="region_id"
-                                title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?>"
-                                class="validate-select region_id">
-                            <option value="">
-                                <?= $block->escapeHtml(__('Please select a region, state or province.')) ?>
-                            </option>
-                        </select>
-                        <input type="text"
-                               id="region"
-                               name="region"
-                               value="<?= $block->escapeHtml($block->getRegion()) ?>"
-                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?>"
-                               class="input-text <?= /* @noEscape */
-                                $addressHelper->getAttributeValidationClass('region') ?>"/>
-                    </div>
-                </div>
-
                 <div class="field zip required">
                     <label for="zip" class="label">
                         <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?>
@@ -260,22 +234,25 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                data-validate="{'required':true, 'validate-zip-international':true}"/>
                     </div>
                 </div>
-
-                <div class="field county">
-                    <label for="county" class="label">
-                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?></span>
-                    </label>
-                        <input type="text"
-                               name="county"
-                               placeholder="<?= /* @noEscape */
-                                $block->getAttributeData()->getFrontendLabel('county') ?>"
-                               value="<?= $block->escapeHtml($formData->getCounty()) ?>"
-                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
-                               id="county"
-                               class="county"/>
-                </div> 
                 
-  
+                <div class="field region required">
+                    <label for="region_id" class="label">
+                        <label for="region_id" class="label" id="region_id_label">
+                        <?php /* $block->getAttributeData()->getFrontendLabel('region') */ ?>
+                        <span><?= /* @noEscape */ $regionLabel ?></span>
+                    </label>
+                    </label>
+                    <div class="control">
+                        <select id="region_id"
+                                name="region_id"
+                                title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?>"
+                                class="validate-select region_id">
+                            <option value="">
+                                <?= $block->escapeHtml(__('Please select a region, state or province.')) ?>
+                            </option>
+                        </select>
+                    </div>
+                </div> 
 
                 <?php if ($addressHelper->isVatAttributeVisible()): ?>
                     <?php $_vatidValidationClass = $addressHelper->getAttributeValidationClass('vat_id'); ?>

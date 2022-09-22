@@ -30,7 +30,7 @@ $formDisable = 1;
 <?php
 /* Start Change the region_id Label if the Country is US for State and Other for the State */
 $regionStateLabel = $block->escapeHtml(__('State'));
-$regionProvinceLabel = $block->escapeHtml(__('Province'));
+$regionProvinceLabel = $block->escapeHtml(__(''));
 $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel;
 /* End Change the region_id Label if the Country is US for State and Other for the State */
 ?>
@@ -154,30 +154,6 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
             </div>
         </div>
 
-        <div class="field region required">
-            <label class="label" for="region_id" id="region_id_label">
-                <span><?= /* @noEscape */ $_region ?></span>
-            </label>
-            <div class="control">
-                <select id="region_id" name="region_id"
-                        title="<?= /* @noEscape */ $_region ?>"
-                        placeholder="<?= /* @noEscape */ $_region ?>"
-                        class="validate-select region_id"
-                        <?= /* @noEscape */ !$_displayAll ? ' disabled="disabled"' : '' ?>>
-                    <option value=""><?= $escaper->escapeHtml(__($_selectRegion)) ?></option>
-                </select>
-                <input type="text"
-                       id="region"
-                       name="region"
-                       value="<?= $escaper->escapeHtmlAttr($block->getRegion()) ?>"
-                       title="<?= /* @noEscape */ $_region ?>"
-                       placeholder="<?= /* @noEscape */ $_region ?>"
-                       class="input-text validate-not-number-first
-                        <?= $escaper->escapeHtmlAttr($_regionValidationClass) ?>"
-                        <?= !$_displayAll ? ' disabled="disabled"' : '' ?>/>
-            </div>
-        </div>
-
         <div class="field zip required">
             <label class="label" for="zip">
                 <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?></span>
@@ -198,22 +174,20 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
             </div>
         </div>
 
-        <div class="field county">
-                    <label for="county" class="label">
-                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?></span>
-                    </label>
-                        <input type="text"
-                               name="county"
-                               placeholder="<?= /* @noEscape */
-                                $block->getAttributeData()->getFrontendLabel('county') ?>"
-                               value="<?= $block->escapeHtmlAttr(!empty($block->getAddress()
-                                ->getCustomAttribute('county')) ? $block->getAddress()
-                                ->getCustomAttribute('county')->getValue() : ''); ?>"
-                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
-                               id="county"
-                               class="input-text <?= $escaper->escapeHtmlAttr($_county) ?>"/>
-        </div> 
-
+        <div class="field region required">
+            <label class="label" for="region_id" id="region_id_label">
+                <span><?= /* @noEscape */ $_region ?></span>
+            </label>
+            <div class="control">
+                <select id="region_id" name="region_id"
+                        title="<?= /* @noEscape */ $_region ?>"
+                        placeholder="<?= /* @noEscape */ $_region ?>"
+                        class="validate-select region_id"
+                        <?= /* @noEscape */ !$_displayAll ? ' disabled="disabled"' : '' ?>>
+                    <option value=""><?= $escaper->escapeHtml(__($_selectRegion)) ?></option>
+                </select>
+            </div>
+        </div>
 
         <?php if ($viewModel->addressIsVatAttributeVisible()): ?>
             <div class="field taxvat">

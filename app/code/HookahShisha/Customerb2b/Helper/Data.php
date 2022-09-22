@@ -18,300 +18,307 @@ use Magento\Store\Model\StoreManagerInterface;
  *
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class Data extends \Magento\Shipping\Helper\Data
-{
+class Data extends \Magento\Shipping\Helper\Data {
 
-    /**
-     * Website Code
-     */
-    public const WEBSITE_CODE = 'hookahshisha/website_code_setting/website_code';
+	/**
+	 * Website Code
+	 */
+	public const WEBSITE_CODE = 'hookahshisha/website_code_setting/website_code';
 
-    /**
-     * Scope Configuration
-     *
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
-     */
-    protected $scopeConfig;
+	/**
+	 * Scope Configuration
+	 *
+	 * @var \Magento\Framework\App\Config\ScopeConfigInterface
+	 */
+	protected $scopeConfig;
 
-    /**
-     * @var TransportBuilder
-     */
-    protected $transportBuilder;
+	/**
+	 * @var TransportBuilder
+	 */
+	protected $transportBuilder;
 
-    /**
-     * @var StoreManagerInterface
-     */
-    protected $storeManager;
+	/**
+	 * @var StoreManagerInterface
+	 */
+	protected $storeManager;
 
-    /**
-     * @var StateInterface
-     */
-    protected $inlineTranslation;
+	/**
+	 * @var StateInterface
+	 */
+	protected $inlineTranslation;
 
-    /**
-     * @var AnnualTurnOver
-     */
-    protected $annualturnover;
+	/**
+	 * @var AnnualTurnOver
+	 */
+	protected $annualturnover;
 
-    /**
-     * @var Businesstype
-     */
-    protected $businesstype;
+	/**
+	 * @var Businesstype
+	 */
+	protected $businesstype;
 
-    /**
-     * @var HearAboutUs
-     */
-    protected $hearaboutus;
+	/**
+	 * @var HearAboutUs
+	 */
+	protected $hearaboutus;
 
-    /**
-     * @var NumberOfEmp
-     */
-    protected $numberffemp;
+	/**
+	 * @var NumberOfEmp
+	 */
+	protected $numberffemp;
 
-    /**
-     * @var RegionFactory
-     */
-    protected $regionFactory;
+	/**
+	 * @var RegionFactory
+	 */
+	protected $regionFactory;
 
-    /**
-     * @var Url
-     */
-    protected $urlHelper;
+	/**
+	 * @var Url
+	 */
+	protected $urlHelper;
 
-    /**
-     * @param Context $context
-     * @param TransportBuilder $transportBuilder
-     * @param StoreManagerInterface $storeManager
-     * @param StateInterface $state
-     * @param AnnualTurnOver $annualturnover
-     * @param Businesstype $businesstype
-     * @param HearAboutUs $hearaboutus
-     * @param NumberOfEmp $numberffemp
-     * @param RegionFactory $regionFactory
-     * @param Url $urlHelper
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     */
-    public function __construct(
-        Context $context,
-        TransportBuilder $transportBuilder,
-        StoreManagerInterface $storeManager,
-        StateInterface $state,
-        AnnualTurnOver $annualturnover,
-        Businesstype $businesstype,
-        HearAboutUs $hearaboutus,
-        NumberOfEmp $numberffemp,
-        RegionFactory $regionFactory,
-        Url $urlHelper,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-    ) {
-        $this->transportBuilder = $transportBuilder;
-        $this->storeManager = $storeManager;
-        $this->inlineTranslation = $state;
-        $this->annualturnover = $annualturnover;
-        $this->businesstype = $businesstype;
-        $this->hearaboutus = $hearaboutus;
-        $this->numberffemp = $numberffemp;
-        $this->regionFactory = $regionFactory;
-        $this->urlHelper = $urlHelper;
-        $this->scopeConfig = $scopeConfig;
-        parent::__construct($context, $storeManager);
-    }
+	/**
+	 * @param Context $context
+	 * @param TransportBuilder $transportBuilder
+	 * @param StoreManagerInterface $storeManager
+	 * @param StateInterface $state
+	 * @param AnnualTurnOver $annualturnover
+	 * @param Businesstype $businesstype
+	 * @param HearAboutUs $hearaboutus
+	 * @param NumberOfEmp $numberffemp
+	 * @param RegionFactory $regionFactory
+	 * @param Url $urlHelper
+	 * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+	 * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+	 */
+	public function __construct(
+		Context $context,
+		TransportBuilder $transportBuilder,
+		StoreManagerInterface $storeManager,
+		StateInterface $state,
+		AnnualTurnOver $annualturnover,
+		Businesstype $businesstype,
+		HearAboutUs $hearaboutus,
+		NumberOfEmp $numberffemp,
+		RegionFactory $regionFactory,
+		Url $urlHelper,
+		\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+	) {
+		$this->transportBuilder = $transportBuilder;
+		$this->storeManager = $storeManager;
+		$this->inlineTranslation = $state;
+		$this->annualturnover = $annualturnover;
+		$this->businesstype = $businesstype;
+		$this->hearaboutus = $hearaboutus;
+		$this->numberffemp = $numberffemp;
+		$this->regionFactory = $regionFactory;
+		$this->urlHelper = $urlHelper;
+		$this->scopeConfig = $scopeConfig;
+		parent::__construct($context, $storeManager);
+	}
 
-    /**
-     * @inheritdoc
-     */
-    public function sendEmail($data)
-    {
-        if (isset($data['region_id'])) {
-            $region_id = $data['region_id'];
-            $region = $this->regionFactory->create()->load($region_id);
-            $region_name = $region->getName();
-        } else {
-            $region_name = $data['region'];
-        }
+	/**
+	 * @inheritdoc
+	 */
+	public function sendEmail($data) {
 
-        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
-        $website_code = $this->storeManager->getWebsite()->getCode();
-        $config_website = $this->scopeConfig->getValue(self::WEBSITE_CODE, $storeScope);
-        $websidecodes = explode(',', $config_website);
+		$region_name = '';
+		$storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+		$website_code = $this->storeManager->getWebsite()->getCode();
+		$config_website = $this->scopeConfig->getValue(self::WEBSITE_CODE, $storeScope);
+		$websidecodes = explode(',', $config_website);
 
-        if (in_array($website_code, $websidecodes)) {
+		if (in_array($website_code, $websidecodes)) {
 
-            $annual_turnover = $this->annualturnover->getOptionArrayHub();
-            $annual_turn_over = $annual_turnover[$data['company']['annual_turn_over']];
+			if (isset($data['region_id'])) {
+				$region_id = $data['region_id'];
+				$region = $this->regionFactory->create()->load($region_id);
+				$region_name = $region->getName();
+			}
 
-            $businesstypes = $this->businesstype->getOptionArrayHub();
-            $business_type = $businesstypes[$data['company']['business_type']];
+			$annual_turnover = $this->annualturnover->getOptionArrayHub();
+			$annual_turn_over = $annual_turnover[$data['company']['annual_turn_over']];
 
-            $numberof_emp = $this->numberffemp->getOptionArray();
-            $number_of_emp = $numberof_emp[$data['company']['number_of_emp']];
+			$businesstypes = $this->businesstype->getOptionArrayHub();
+			$business_type = $businesstypes[$data['company']['business_type']];
 
-            $hearabout_us = $this->hearaboutus->getOptionArrayHub();
-            $hear_about_us = $hearabout_us[$data['company']['hear_about_us']];
+			$numberof_emp = $this->numberffemp->getOptionArray();
+			$number_of_emp = $numberof_emp[$data['company']['number_of_emp']];
 
-        } else {
-            $annual_turnover = $this->annualturnover->getOptionArray();
-            $annual_turn_over = $annual_turnover[$data['company']['annual_turn_over']];
+			$hearabout_us = $this->hearaboutus->getOptionArrayHub();
+			$hear_about_us = $hearabout_us[$data['company']['hear_about_us']];
 
-            $businesstypes = $this->businesstype->getOptionArray();
-            $business_type = $businesstypes[$data['company']['business_type']];
+		} else {
 
-            $numberof_emp = $this->numberffemp->getOptionArray();
-            $number_of_emp = $numberof_emp[$data['company']['number_of_emp']];
+			if (isset($data['region_id'])) {
+				$region_id = $data['region_id'];
+				$region = $this->regionFactory->create()->load($region_id);
+				$region_name = $region->getName();
+			} else {
+				$region_name = $data['region'];
+			}
 
-            $hearabout_us = $this->hearaboutus->getOptionArray();
-            $hear_about_us = $hearabout_us[$data['company']['hear_about_us']];
-        }
+			$annual_turnover = $this->annualturnover->getOptionArray();
+			$annual_turn_over = $annual_turnover[$data['company']['annual_turn_over']];
 
-        try {
-            $templateId = 'b2b_customer_admin_email_template';
+			$businesstypes = $this->businesstype->getOptionArray();
+			$business_type = $businesstypes[$data['company']['business_type']];
 
-            $street = $data['street'];
-            $streetm = implode(',', $street);
+			$numberof_emp = $this->numberffemp->getOptionArray();
+			$number_of_emp = $numberof_emp[$data['company']['number_of_emp']];
 
-            $fromEmail = $this->scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE);
-            $fromName = $this->scopeConfig->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE);
+			$hearabout_us = $this->hearaboutus->getOptionArray();
+			$hear_about_us = $hearabout_us[$data['company']['hear_about_us']];
+		}
 
-            $templateVars = [
-                'email' => $data['email'],
-                'firstname' => $data['firstname'],
-                'lastname' => $data['lastname'],
-                'telephone' => $data['telephone'],
-                'country_id' => $data['country_id'],
-                'region' => $region_name,
-                'country_id' => $data['country_id'],
-                'city' => $data['city'],
-                'postcode' => $data['postcode'],
-                'street' => $streetm,
-                'company_name' => $data['company']['company_name'],
-                'business_type' => $business_type,
-                'annual_turn_over' => $annual_turn_over,
-                'number_of_emp' => $number_of_emp,
-                'vat_tax_id' => $data['company']['vat_tax_id'],
-                'tin_number' => $data['company']['tin_number'],
-                'tobacco_permit_number' => $data['company']['tobacco_permit_number'],
-                'hear_about_us' => $hear_about_us,
-                'questions' => $data['company']['questions'],
+		try {
+			$templateId = 'b2b_customer_admin_email_template';
 
-            ];
+			$street = $data['street'];
+			$streetm = implode(',', $street);
 
-            $storeId = $this->storeManager->getStore()->getId();
+			$fromEmail = $this->scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE);
+			$fromName = $this->scopeConfig->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE);
 
-            $receiver = $this->scopeConfig->getValue(
-                'hookahshisha/b2bsendmail/b2bcstadminsendmail',
-                ScopeInterface::SCOPE_STORE,
-                $storeId
-            );
-            $toEmail = explode(',', $receiver);
+			$templateVars = [
+				'email' => $data['email'],
+				'firstname' => $data['firstname'],
+				'lastname' => $data['lastname'],
+				'telephone' => $data['telephone'],
+				'country_id' => $data['country_id'],
+				'region' => $region_name,
+				'country_id' => $data['country_id'],
+				'city' => $data['city'],
+				'postcode' => $data['postcode'],
+				'street' => $streetm,
+				'company_name' => $data['company']['company_name'],
+				'business_type' => $business_type,
+				'annual_turn_over' => $annual_turn_over,
+				'number_of_emp' => $number_of_emp,
+				'vat_tax_id' => $data['company']['vat_tax_id'],
+				'tin_number' => $data['company']['tin_number'],
+				'tobacco_permit_number' => $data['company']['tobacco_permit_number'],
+				'hear_about_us' => $hear_about_us,
+				'questions' => $data['company']['questions'],
 
-            $from = ['email' => $fromEmail, 'name' => $fromName];
-            $this->inlineTranslation->suspend();
+			];
 
-            $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
-            $templateOptions = [
-                'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
-                'store' => $storeId,
-            ];
-            $transport = $this->transportBuilder->setTemplateIdentifier($templateId, $storeScope)
-                ->setTemplateOptions($templateOptions)
-                ->setTemplateVars($templateVars)
-                ->setFrom($from)
-                ->addTo($toEmail)
-                ->getTransport();
-            $transport->sendMessage();
-            $this->inlineTranslation->resume();
-        } catch (\Exception $e) {
-            $this->_logger->info($e->getMessage());
-        }
-    }
+			if (in_array($website_code, $websidecodes) && $region_name == '') {
+				unset($templateVars['region']);
+			}
 
-    /**
-     * @inheritdoc
-     */
-    public function getReorderUrl($itemId)
-    {
-        return $this->urlHelper->getUrl(
-            'customerb2b/order/reorderproduct',
-            [
-                'order_item' => $itemId,
-            ]
-        );
-    }
+			$storeId = $this->storeManager->getStore()->getId();
 
-    /**
-     * @inheritdoc
-     */
-    public function sendRejectEmail($isCstCom, $templateVars, $status)
-    {
-        try {
-            $this->inlineTranslation->suspend();
-            $fromEmail = $this->scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE);
-            $fromName = $this->scopeConfig->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE);
-            $sender = [
-                'name' => $fromName,
-                'email' => $fromEmail,
-            ];
-            $toEmail = [$templateVars['email']];
-            if ($isCstCom == "reject") {
-                $emailIdentifier = "b2b_company_customer_account_reject_email";
-            } else {
-                $emailIdentifier = "b2b_company_customer_account_verfiy_email";
-            }
-            $storeId = $templateVars['store_id'];
-            $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+			$receiver = $this->scopeConfig->getValue(
+				'hookahshisha/b2bsendmail/b2bcstadminsendmail',
+				ScopeInterface::SCOPE_STORE,
+				$storeId
+			);
+			$toEmail = explode(',', $receiver);
 
-            $transport = $this->transportBuilder
-                ->setTemplateIdentifier($emailIdentifier, $storeScope)
-                ->setTemplateOptions(
-                    [
-                        'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
-                        'store' => $storeId,
-                    ]
-                )
-                ->setTemplateVars($templateVars)
-                ->setFrom($sender)
-                ->addTo($toEmail)
-                ->getTransport();
-            $transport->sendMessage();
-            $this->inlineTranslation->resume();
-        } catch (\Exception $e) {
-            $this->_logger->debug($e->getMessage());
-        }
-    }
+			$from = ['email' => $fromEmail, 'name' => $fromName];
+			$this->inlineTranslation->suspend();
 
-    /**
-     * @inheritdoc
-     */
-    public function getEmployees($emp)
-    {
-        if ($this->storeManager->getWebsite()->getCode() === "shisha_world_b2b") {
-            $numberof_emp = $this->numberffemp->getOptionArrayHub();
-        } else {
-            $numberof_emp = $this->numberffemp->getOptionArray();
-        }
-        if (in_array($emp, $numberof_emp)) {
-            return $numberof_emp[$emp];
-        }
-    }
+			$storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+			$templateOptions = [
+				'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
+				'store' => $storeId,
+			];
+			$transport = $this->transportBuilder->setTemplateIdentifier($templateId, $storeScope)
+				->setTemplateOptions($templateOptions)
+				->setTemplateVars($templateVars)
+				->setFrom($from)
+				->addTo($toEmail)
+				->getTransport();
+			$transport->sendMessage();
+			$this->inlineTranslation->resume();
+		} catch (\Exception $e) {
+			$this->_logger->info($e->getMessage());
+		}
+	}
 
-    /**
-     * GetTrackingUrl
-     *
-     * @param  mixed $key
-     * @param  mixed $model
-     * @param  mixed $method
-     */
-    protected function _getTrackingUrl($key, $model, $method = 'getId')
-    {
-        $urlPart = "{$key}:{$model->{$method}()}:{$model->getProtectCode()}";
-        $params = [
-            '_scope' => $model->getStoreId(),
-            '_nosid' => true,
-            '_direct' => 'shipping/tracking/popup',
-            '_query' => ['hash' => $this->urlEncoder->encode($urlPart)],
-        ];
+	/**
+	 * @inheritdoc
+	 */
+	public function getReorderUrl($itemId) {
+		return $this->urlHelper->getUrl(
+			'customerb2b/order/reorderproduct',
+			[
+				'order_item' => $itemId,
+			]
+		);
+	}
 
-        return $this->_storeManager->getStore($model->getStoreId())->getUrl('', $params);
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public function sendRejectEmail($isCstCom, $templateVars, $status) {
+		try {
+			$this->inlineTranslation->suspend();
+			$fromEmail = $this->scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE);
+			$fromName = $this->scopeConfig->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE);
+			$sender = [
+				'name' => $fromName,
+				'email' => $fromEmail,
+			];
+			$toEmail = [$templateVars['email']];
+			if ($isCstCom == "reject") {
+				$emailIdentifier = "b2b_company_customer_account_reject_email";
+			} else {
+				$emailIdentifier = "b2b_company_customer_account_verfiy_email";
+			}
+			$storeId = $templateVars['store_id'];
+			$storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+
+			$transport = $this->transportBuilder
+				->setTemplateIdentifier($emailIdentifier, $storeScope)
+				->setTemplateOptions(
+					[
+						'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
+						'store' => $storeId,
+					]
+				)
+				->setTemplateVars($templateVars)
+				->setFrom($sender)
+				->addTo($toEmail)
+				->getTransport();
+			$transport->sendMessage();
+			$this->inlineTranslation->resume();
+		} catch (\Exception $e) {
+			$this->_logger->debug($e->getMessage());
+		}
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function getEmployees($emp) {
+		if ($this->storeManager->getWebsite()->getCode() === "shisha_world_b2b") {
+			$numberof_emp = $this->numberffemp->getOptionArrayHub();
+		} else {
+			$numberof_emp = $this->numberffemp->getOptionArray();
+		}
+		if (in_array($emp, $numberof_emp)) {
+			return $numberof_emp[$emp];
+		}
+	}
+
+	/**
+	 * GetTrackingUrl
+	 *
+	 * @param  mixed $key
+	 * @param  mixed $model
+	 * @param  mixed $method
+	 */
+	protected function _getTrackingUrl($key, $model, $method = 'getId') {
+		$urlPart = "{$key}:{$model->{$method}()}:{$model->getProtectCode()}";
+		$params = [
+			'_scope' => $model->getStoreId(),
+			'_nosid' => true,
+			'_direct' => 'shipping/tracking/popup',
+			'_query' => ['hash' => $this->urlEncoder->encode($urlPart)],
+		];
+
+		return $this->_storeManager->getStore($model->getStoreId())->getUrl('', $params);
+	}
 }
