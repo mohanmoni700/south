@@ -152,7 +152,8 @@ class Registry extends \Amasty\Promo\Model\Registry
             if ($autoAdd) {
                 /* condition starts for restrict auto add free gift product during
                 remove free gift item updateCartItems*/
-                if (!strpos($graphrequest, "removeItemFromCart") !== false) {
+                if (!strpos($graphrequest, "removeItemFromCart") !== false &&
+                    !strpos($graphrequest, "updateCartItems") !== false) {
                     $item->setAutoAdd($autoAdd);
                 }
                 /* condition ends for restrict auto add free gift product during remove free gift item*/
