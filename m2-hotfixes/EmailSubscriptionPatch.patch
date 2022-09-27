@@ -1,0 +1,16 @@
+diff --git a/vendor/magento/module-newsletter/Model/Subscriber.php b/vendor/magento/module-newsletter/Model/Subscriber.php
+index 6b8caec5..72a90866 100644
+--- a/vendor/magento/module-newsletter/Model/Subscriber.php
++++ b/vendor/magento/module-newsletter/Model/Subscriber.php
+@@ -565,8 +565,9 @@ class Subscriber extends AbstractModel
+             ]
+         )->setTemplateVars(
+             $templateVars
+-        )->setFrom(
+-            $identity
++        )->setFromByScope(
++            $identity,
++            $this->getStoreId()
+         )->addTo(
+             $this->getEmail(),
+             $this->getName()
