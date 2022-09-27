@@ -50,6 +50,7 @@ class Post extends \Magento\Contact\Controller\Index\Post
      * @param MailInterface $mail
      * @param DataPersistorInterface $dataPersistor
      * @param LoggerInterface $logger
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         Context $context,
@@ -81,7 +82,7 @@ class Post extends \Magento\Contact\Controller\Index\Post
         $websidecodes = explode(',', $config_website);
         $request = $this->getRequest();
 
-        // Server Side Validation - Custom Function for First Name And Last Name 
+        // Server Side Validation - Custom Function for First Name And Last Name
         if (in_array($website_code, $websidecodes)) {
 
             if (trim($request->getParam('first_name')) === '') {
@@ -90,10 +91,10 @@ class Post extends \Magento\Contact\Controller\Index\Post
             if (trim($request->getParam('last_name')) === '') {
                 throw new LocalizedException(__('Enter the Last Name and try again.'));
             }
-        }else{
+        } else {
 
             if (trim($request->getParam('name')) === '') {
-            throw new LocalizedException(__('Enter the Name and try again.'));
+                throw new LocalizedException(__('Enter the Name and try again.'));
 
             }
         }
