@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace HookahShisha\Customization\ViewModel;
 
 use HookahShisha\Customization\Helper\UserData;
@@ -20,7 +20,7 @@ class UserDataProvider extends \Magento\Contact\ViewModel\UserDataProvider
      * @param Data $helper
      */
     public function __construct(
-        Data $helper
+        UserData $helper
     ) {
         $this->helper = $helper;
     }
