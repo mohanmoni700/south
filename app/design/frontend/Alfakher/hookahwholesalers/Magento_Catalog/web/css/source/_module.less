@@ -53,10 +53,6 @@
             max-height: 200px !important;
         }
     }
-    .old-price,
-    .old.price {
-        text-decoration: line-through;
-    }
     .viewingproducts {
         bottom: 60px;
         left: 0;
@@ -809,8 +805,42 @@
     }
     @supports (-moz-appearance:none) {
         .fieldset-bundle-options {
-            .bundle-checkbox.field.choice {
+            .bundle-checkbox.field.choice,
+            .field.choice.bundle-radio {
                 display: flex;
+            }
+            input[type="radio"] + label {
+                cursor: pointer;
+                position: relative;
+                padding-left: 30px;
+            }
+            input[type="radio"] + label::before {
+                content: "";
+                width: 16px;
+                height: 16px;
+                position: absolute;
+                left: 0;
+                top: 0;
+                border-radius: 50%;
+                border: 1px solid @hookah_theme_color;
+                background: @color_white;
+            }
+            input[type="radio"] + label::after {
+                content: "";
+                width: 10px;
+                height: 10px;
+                background: @hookah_theme_color;
+                position: absolute;
+                border-radius: 100%;
+                top: 4px;
+                left: 4px;
+                opacity: 0;
+            }
+            input[type="radio"]:disabled + label::before {
+                border: @hookah_theme_border;
+            }
+            input[type="radio"]:checked + label::after {
+                opacity: 1;
             }
         }
     }
