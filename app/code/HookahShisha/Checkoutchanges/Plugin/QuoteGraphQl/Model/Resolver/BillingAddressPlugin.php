@@ -1,69 +1,53 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 declare(strict_types=1);
 
-namespace HookahShisha\Checkoutchanges\Model\Resolver;
+namespace HookahShisha\Checkoutchanges\Plugin\QuoteGraphQl\Model\Resolver;
 
-use Magento\Framework\Exception\LocalizedException;
+use Magento\QuoteGraphQl\Model\Resolver\BillingAddress as Subject;
 use Magento\Framework\GraphQl\Config\Element\Field;
-use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\Quote\Api\Data\CartInterface;
-use Magento\QuoteGraphQl\Model\Cart\ExtractQuoteAddressData;
-use Magento\QuoteGraphQl\Model\Cart\ValidateAddressFromSchema;
 use Psr\Log\LoggerInterface;
 
-/**
- * @inheritdoc
- */
-class BillingAddress extends \Magento\QuoteGraphQl\Model\Resolver\BillingAddress
+class BillingAddressPlugin
 {
-    /**
-     * @var ExtractQuoteAddressData
-     */
-    private $extractQuoteAddressData;
 
     /**
-     * @var ValidateAddressFromSchema
-     */
-    private $validateAddressFromSchema;
-
-    /**
-     * @param ExtractQuoteAddressData $extractQuoteAddressData
-     * @param ValidateAddressFromSchema $validateAddressFromSchema
      * @param \Magento\Customer\Model\CustomerFactory $customerFactory
      * @param \Magento\Customer\Model\AddressFactory $addressFactory
      * @param LoggerInterface $logger
      */
     public function __construct(
-        ExtractQuoteAddressData $extractQuoteAddressData,
-        ValidateAddressFromSchema $validateAddressFromSchema,
         \Magento\Customer\Model\CustomerFactory $customerFactory,
         \Magento\Customer\Model\AddressFactory $addressFactory,
         LoggerInterface $logger
     ) {
-        $this->extractQuoteAddressData = $extractQuoteAddressData;
-        $this->validateAddressFromSchema = $validateAddressFromSchema;
         $this->_customerFactory = $customerFactory;
         $this->_addressFactory = $addressFactory;
         $this->logger = $logger;
     }
 
     /**
-     * @inheritdoc
+     * AfterResolve
+     *
+     * @param Subject $subject
+     * @param array $result
+     * @param Field $field
+     * @param array $context
+     * @param ResolveInfo $info
+     * @param array $value
+     * @param array $args
      */
-    public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
-    {
-        if (!isset($value['model'])) {
-            throw new LocalizedException(__('"model" value should be specified'));
-        }
-     
-        /** @var CartInterface $cart */
+    public function afterResolve(
+        Subject $subject,
+        $result,
+        Field $field,
+        $context,
+        ResolveInfo $info,
+        array $value = null,
+        array $args = null
+    ) {
         $cart = $value['model'];
-        $billingAddress = $cart->getBillingAddress();
 
         if ($cart->getBillingAddress()->getCustomerId()) {
 
@@ -91,10 +75,7 @@ class BillingAddress extends \Magento\QuoteGraphQl\Model\Resolver\BillingAddress
                 }
             }
         }
-        $addressData = $this->extractQuoteAddressData->execute($billingAddress);
-        if (!$this->validateAddressFromSchema->execute($addressData)) {
-            return null;
-        }
-        return $addressData;
+
+        return $result;
     }
 }

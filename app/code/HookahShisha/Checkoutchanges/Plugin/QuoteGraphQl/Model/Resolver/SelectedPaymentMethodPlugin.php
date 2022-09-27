@@ -1,28 +1,21 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 declare(strict_types=1);
 
-namespace HookahShisha\Checkoutchanges\Model\Resolver;
+namespace HookahShisha\Checkoutchanges\Plugin\QuoteGraphQl\Model\Resolver;
 
-use Magento\Framework\Exception\LocalizedException;
+use Magento\QuoteGraphQl\Model\Resolver\SelectedPaymentMethod as Subject;
 use Magento\Framework\GraphQl\Config\Element\Field;
-use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Corra\Spreedly\Model\Ui\ConfigProvider as CorraConfig;
-use ParadoxLabs\FirstData\Model\ConfigProvider as ParadoxsConfig;
 use Magento\Vault\Model\CreditCardTokenFactory;
 use ParadoxLabs\TokenBase\Model\CardFactory;
 use Magento\Payment\Api\PaymentMethodListInterface;
 use Magento\Customer\Model\Customer;
 use Psr\Log\LoggerInterface;
+use Corra\Spreedly\Model\Ui\ConfigProvider as CorraConfig;
+use ParadoxLabs\FirstData\Model\ConfigProvider as ParadoxsConfig;
 
-/**
- * @inheritdoc
- */
-class SelectedPaymentMethod extends \Magento\QuoteGraphQl\Model\Resolver\SelectedPaymentMethod
+class SelectedPaymentMethodPlugin
 {
     /**
      * @param CreditCardTokenFactory $collectionFactory
@@ -46,21 +39,25 @@ class SelectedPaymentMethod extends \Magento\QuoteGraphQl\Model\Resolver\Selecte
     }
 
     /**
-     * @inheritdoc
+     * BeforeResolve
+     *
+     * @param Subject $subject
+     * @param Field $field
+     * @param array $context
+     * @param ResolveInfo $info
+     * @param array $value
+     * @param array $args
      */
-    public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
-    {
-        if (!isset($value['model'])) {
-            throw new LocalizedException(__('"model" value should be specified'));
-        }
-
-        /** @var \Magento\Quote\Model\Quote $cart */
+    public function beforeResolve(
+        Subject $subject,
+        Field $field,
+        $context,
+        ResolveInfo $info,
+        array $value = null,
+        array $args = null
+    ) {
         $cart = $value['model'];
-        
         $payment = $cart->getPayment();
-        if (!$payment) {
-            return [];
-        }
 
         if ($cart->getCustomerId() && !$payment->getMethod()) {
             $customerId = $cart->getCustomerId();
@@ -101,16 +98,6 @@ class SelectedPaymentMethod extends \Magento\QuoteGraphQl\Model\Resolver\Selecte
             
         }
 
-        try {
-            $methodTitle = $payment->getMethodInstance()->getTitle();
-        } catch (LocalizedException $e) {
-            $methodTitle = '';
-        }
-
-        return [
-            'code' => $payment->getMethod() ?? '',
-            'title' => $methodTitle,
-            'purchase_order_number' => $payment->getPoNumber(),
-        ];
+        return [$field, $context, $info, $value, $args];
     }
 }
