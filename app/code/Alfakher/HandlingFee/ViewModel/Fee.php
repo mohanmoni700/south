@@ -97,7 +97,6 @@ class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
      * @param string $section
      * @return string
      */
-
     public function getExciseNote($section)
     {
         return $this->scopeConfig->getValue($section, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
