@@ -3,6 +3,7 @@
 //  * See COPYING.txt for license details.
 //  */
 
+
 //
 //  Navigation
 //  _____________________________________________
@@ -117,7 +118,7 @@
             }
 
             &.active,
-            &.has-active { // ToDo UI: remove "has_active" here, when mobile navigation default open state is implemented
+            &.has-active { // ToDo UI: remove 'has_active' here, when mobile navigation default open state is implemented
                 > a:not(.ui-state-active) {
                     .lib-css(background, @_nav-level0-item-background-color-active);
                     .lib-css(border-color, @_nav-level0-item__active__border-color);
@@ -306,8 +307,8 @@
         }
 
         ul {
-            margin-top: 0;
             margin-bottom: 0;
+            margin-top: 0;
             padding: 0;
             position: relative;
         }
@@ -330,11 +331,11 @@
                 &:after {
                     content: '';
                     display: block;
+                    height: calc(~'100% + 3px');
+                    left: 100%;
                     position: absolute;
                     top: 0;
-                    left: 100%;
                     width: 10px;
-                    height: calc(~'100% + 3px');
                     z-index: 1;
                 }
             }
@@ -347,10 +348,11 @@
                 .lib-css(padding, 0);
                 .lib-css(text-decoration, @_nav-level0-item-text-decoration);
                 box-sizing: border-box;
-                position: relative;
                 display: inline-block;
+                position: relative;
 
-                &:hover, &.ui-state-focus {
+                &:hover,
+                &.ui-state-focus {
                     .lib-css(background, @_nav-level0-item-background-color-hover);
                     .lib-css(border, @_nav-level0-item-border-hover);
                     .lib-css(color, @_nav-level0-item-color-hover);
@@ -377,7 +379,7 @@
 
             &.parent {
                 > .level-top {
-                    padding-right: 0px;
+                    padding-right: 0;
 
                     > .ui-menu-icon {
                         position: absolute;
@@ -455,11 +457,11 @@
                 }
 
                 .submenu {
-                    top: -1px !important;
                     left: 100% !important;
+                    top: -1px !important;
                 }
 
-                .submenu-reverse{
+                .submenu-reverse {
                     left: auto !important;
                     right: 100%;
                 }

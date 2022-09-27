@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">  
+      <body>
+        <referenceBlock name="product.info.bundle.options.select">
+            <arguments>
+               <argument name="view_model_select" xsi:type="object">Alfakher\OutOfStockProduct\ViewModel\BundleProduct</argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="product.info.bundle.options.multi">
+            <arguments>
+               <argument name="view_model_multi" xsi:type="object">Alfakher\OutOfStockProduct\ViewModel\BundleProduct</argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="product.info.bundle.options.radio">
+            <arguments>
+               <argument name="view_model_radio" xsi:type="object">Alfakher\OutOfStockProduct\ViewModel\BundleProduct</argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="product.info.bundle.options.checkbox">
+            <arguments>
+               <argument name="view_model_checkbox" xsi:type="object">Alfakher\OutOfStockProduct\ViewModel\BundleProduct</argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>
