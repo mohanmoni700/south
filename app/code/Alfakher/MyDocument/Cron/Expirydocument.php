@@ -26,6 +26,7 @@ class Expirydocument
      * @var webhookHelper
      */
     protected $webhookHelper;
+
     /**
      * @param \Psr\Log\LoggerInterface $loggerInterface
      * @param \Alfakher\MyDocument\Helper\Data $documentHelper
@@ -80,6 +81,8 @@ class Expirydocument
 
     /**
      * Call update document webhook to pass expire document data
+     *
+     * @return void
      */
     public function sendDataToWebhook()
     {
