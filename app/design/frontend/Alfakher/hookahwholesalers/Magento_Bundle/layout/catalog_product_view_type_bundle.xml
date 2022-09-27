@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <move element="product.info" destination="product.info.price"/>
+        <move element="bundle.options.container" destination="product.info.price"/>
+        <move element="product.info.stock.sku" destination="product.info.price" after="product.price.final"/>
+        <move element="product.price.tier" destination="product.info.price" after="product.price.final"/>
+        <referenceBlock name="bundle.back.button" remove="true"/>
+        <referenceBlock name="product.price.render.bundle.customization" remove="true"/>
+    </body>
+</page>

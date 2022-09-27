@@ -1,0 +1,28 @@
+<?php
+    /**
+     * @var \Alfakher\Seamlesschex\Block\System\Config\Button $block
+     */
+    $request = $block->getRequest()->getParams();
+    $websiteId = isset($request['website']) ? $request['website'] : 0;
+    $controller = $block->getCustomUrl();
+?>
+
+<?= $block->getButtonHtml() ?>
+
+<script>
+    require(['jquery'], function ($){
+        $(document).on('click','#seamlesschex_test', function (){
+            $.ajax({
+                url: "<?= /* @noEscape */ $block->getCustomUrl() ?>",
+                showLoader: true,
+                type: 'POST',
+                data: {
+                    website_id:<?= /* @noEscape */ $websiteId ?>
+                },
+                success: function(response) {
+                    alert(response.message);
+                }
+            });
+        });
+    });
+</script>

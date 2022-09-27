@@ -1,4 +1,4 @@
-// /**
+//  /**
 //  * Copyright © Magento, Inc. All rights reserved.
 //  * See COPYING.txt for license details.
 //  */
@@ -8,14 +8,14 @@
 //  _____________________________________________
 
 @checkout-payment-option-title__border: @checkout-payment-method-title__border;
-@checkout-payment-option-title__color: #000;
+@checkout-payment-option-title__color: @color-black;
 @checkout-payment-option-title__padding: @checkout-payment-method-title__padding;
 @checkout-payment-option-title-mobile__padding: @checkout-payment-method-title-mobile__padding;
 
 @checkout-payment-option-title-icon__font-size: 32px;
 @checkout-payment-option-title-icon__line-height: 16px;
 @checkout-payment-option-title-icon__margin: 0;
-@checkout-payment-option-title-icon__color: #000;
+@checkout-payment-option-title-icon__color: @color-black;
 @checkout-payment-option-title-icon__hover__color: @primary__color;
 
 @checkout-payment-option-content__padding__xl: 20px;
@@ -73,33 +73,34 @@
         .payment-option-content {
             .lib-css(padding, 0 0 @indent__base @checkout-payment-option-content__padding__xl);
 
-            .form-discount, .form-giftcard-account {
+            .form-discount,
+            .form-giftcard-account {
                 position: relative;
                 input {
-                    height: 35px;
                     border-color: @hookah_theme_color;
-                    padding-right: 130px;
                     border-radius: 30px;
-                    color: #000000;
+                    color: @color-black;
+                    height: 35px;
+                    padding-right: 130px;
                     text-transform: capitalize;
                 }
                 .actions-toolbar .primary {
                     position: absolute;
-                    top: 0px;
                     right: 0;
+                    top: 0;
                     button {
-                        margin-right: 0;
-                        line-height: 22px;
-                        border-radius: 0;
                         background: @hookah_theme_color;
                         border-color: @hookah_theme_color;
+                        border-radius: 0;
+                        border-radius: 0 30px 30px 0;
+                        color: @color-white;
                         font-size: 1.2rem;
                         letter-spacing: 2px;
-                        padding: 5.5px 20px;
-                        border-radius: 0px 30px 30px 0px;
-                        color: #fff;
+                        line-height: 22px;
+                        margin-right: 0;
                         min-width: 160px;
-                        &:hover{
+                        padding: 5.5px 20px;
+                        &:hover {
                             background: @hookah_theme_gradient;
                             border-color: transparent;
                             border-left-color: @border_left_gradient;
@@ -109,12 +110,12 @@
                 }
                 .actions-toolbar .secondary {
                     button {
-                        box-shadow: none;
-                        border: none;
                         background: transparent;
-                        padding: 0;
-                        color: @hookah_theme_color;
+                        border: none;
                         border-radius: 0;
+                        box-shadow: none;
+                        color: @hookah_theme_color;
+                        padding: 0;
                         text-decoration: underline;
                     }
                 }
@@ -178,17 +179,17 @@
 
             .month {
                 .select {
-                    width: 150px;
                     background-position: calc(~'100% - 10px');
                     padding-right: 32px;
+                    width: 150px;
                 }
             }
 
             .year {
                 .select {
-                    width: 150px;
                     background-position: calc(~'100% - 10px');
                     padding-right: 32px;
+                    width: 150px;
                 }
             }
 
@@ -231,7 +232,8 @@
     }
     #co-payment-form {
         .fieldset {
-            > br, > hr {
+            > br,
+            > hr {
                 display: none;
             }
         }
@@ -240,10 +242,11 @@
     @media only screen and (max-width: 1199px) and (min-width: 992px) {
         .checkout-payment-method {
             .ccard {
-                .month, .year {
+                .month,
+                .year {
                     .select {
-                        width: 120px;
                         padding-right: 32px;
+                        width: 120px;
                     }
                 }
             }
@@ -254,7 +257,8 @@
             .payment-method-content {
                 .fieldset {
                     > .field {
-                        &.number, &.date {
+                        &.number,
+                        &.date {
                             width: 100%;
                         }
                         &.cvv {
@@ -266,14 +270,16 @@
                 }
             }
         }
-        .opc-block-summary, .opc-block-shipping-information {
+        .opc-block-summary,
+        .opc-block-shipping-information {
             padding: 14px;
-        }    
+        }
     }
     @media only screen and (max-width: 370px) {
         .checkout-payment-method {
             .ccard {
-                .month, .year {
+                .month,
+                .year {
                     select.select {
                         width: 120px;
                     }
@@ -288,7 +294,7 @@
 //  _____________________________________________
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
-    .checkout-payment-method {        
+    .checkout-payment-method {
         .payment-method-content {
             .fieldset {
                 > .field {
@@ -296,8 +302,8 @@
                         width: auto;
                     }
                     &.date {
-                        width: auto;
                         margin-right: 10px;
+                        width: auto;
                     }
                 }
             }
@@ -308,12 +314,13 @@
                     padding-left: 5px;
                 }
             }
-            .month, .year {
+            .month,
+            .year {
                 .select {
-                    width: 80px;
-                    padding-right: 18px;
-                    background-size: 10px;
                     background-position: calc(~'100% - 6px');
+                    background-size: 10px;
+                    padding-right: 18px;
+                    width: 80px;
                 }
             }
             .cvv {
