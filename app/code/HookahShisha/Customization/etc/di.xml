@@ -20,7 +20,6 @@
                 type="Magetrend\PdfTemplates\Plugin\Sales\Controller\Order\PrintShipment"
                 sortOrder="10" disabled="true"/>
     </type>
-    
     <!-- Company field search adding on the customer grid -->
     <preference for="Magento\Customer\Model\ResourceModel\Grid\Collection"
     type="HookahShisha\Customization\Model\ResourceModel\Grid\Collection" />
@@ -33,11 +32,32 @@
     <type name="Magetrend\PdfTemplates\Model\Pdf\Filter">
        <plugin name="custom_magetrend_pdftemplates" type="HookahShisha\Customization\Model\Pdf\Filter" />
     </type>
-
     <type name="Magento\ImportExport\Controller\Adminhtml\Import\Index">
         <plugin name="warning_meassage_import" type="HookahShisha\Customization\Controller\Adminhtml\Import\Index" />
     </type>
     
     <preference for="Magetrend\PdfTemplates\Model\Pdf\Invoice"
     type="HookahShisha\Customization\Model\Pdf\Invoice" />
+
+    <type name="Amasty\RequestQuote\Model\Pdf\PdfInformation">
+        <arguments>
+            <argument name="variables" xsi:type="array">
+                <item name="9" xsi:type="array">
+                    <item name="objectType" xsi:type="string">quote</item>
+                    <item name="variable" xsi:type="const">\Amasty\RequestQuote\Model\Source\PdfVariables::QUOTE_DATE</item>
+                    <item name="method" xsi:type="string">getSubmitedDate</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- to create functions and get data into contact-us form -->
+    <preference for="Magento\Contact\ViewModel\UserDataProvider" type="HookahShisha\Customization\ViewModel\UserDataProvider" />
+
+    <!-- to create functions and get data into contact-us form -->
+    <preference for="Magento\Contact\Helper\Data" type="HookahShisha\Customization\Helper\UserData" />
+
+    <!-- custom field server validation for contact form -->
+    <preference for="Magento\Contact\Controller\Index\Post" type="HookahShisha\Customization\Controller\Contact\Post" />
+
 </config>
