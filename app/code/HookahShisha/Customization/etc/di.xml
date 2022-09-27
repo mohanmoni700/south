@@ -49,13 +49,7 @@
                 </item>
             </argument>
         </arguments>
-    </type>
-
-    <!-- to create functions and get data into contact-us form -->
-    <preference for="Magento\Contact\ViewModel\UserDataProvider" type="HookahShisha\Customization\ViewModel\UserDataProvider" />
-
-    <!-- to create functions and get data into contact-us form -->
-    <preference for="Magento\Contact\Helper\Data" type="HookahShisha\Customization\Helper\UserData" />
+    </type> 
 
     <!-- custom field server validation for contact form -->
     <preference for="Magento\Contact\Controller\Index\Post" type="HookahShisha\Customization\Controller\Contact\Post" />

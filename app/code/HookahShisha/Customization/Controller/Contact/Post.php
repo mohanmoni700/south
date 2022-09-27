@@ -13,6 +13,18 @@ use Psr\Log\LoggerInterface;
 class Post extends \Magento\Contact\Controller\Index\Post
 {
     /**
+     * Website Code
+     */
+    public const WEBSITE_CODE = 'hookahshisha/website_code_setting/website_code';
+
+    /**
+     * Scope Configuration
+     *
+     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    /**
      * @var DataPersistorInterface
      */
     private $dataPersistor;
@@ -44,13 +56,15 @@ class Post extends \Magento\Contact\Controller\Index\Post
         ConfigInterface $contactsConfig,
         MailInterface $mail,
         DataPersistorInterface $dataPersistor,
-        LoggerInterface $logger = null
+        LoggerInterface $logger = null,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
     ) {
         parent::__construct($context, $contactsConfig, $mail, $dataPersistor, $logger);
         $this->context = $context;
         $this->mail = $mail;
         $this->dataPersistor = $dataPersistor;
         $this->logger = $logger ?: ObjectManager::getInstance()->get(LoggerInterface::class);
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -61,13 +75,30 @@ class Post extends \Magento\Contact\Controller\Index\Post
      */
     private function validatedParams()
     {
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+        $website_code = $this->storeManager->getWebsite()->getCode();
+        $config_website = $this->scopeConfig->getValue(self::WEBSITE_CODE, $storeScope);
+        $websidecodes = explode(',', $config_website);
         $request = $this->getRequest();
-        if (trim($request->getParam('first_name')) === '') {
-            throw new LocalizedException(__('Enter the First Name and try again.'));
+
+        // Server Side Validation - Custom Function for First Name And Last Name 
+        if (in_array($website_code, $websidecodes)) {
+
+            if (trim($request->getParam('first_name')) === '') {
+                throw new LocalizedException(__('Enter the First Name and try again.'));
+            }
+            if (trim($request->getParam('last_name')) === '') {
+                throw new LocalizedException(__('Enter the Last Name and try again.'));
+            }
+        }else{
+
+            if (trim($request->getParam('name')) === '') {
+            throw new LocalizedException(__('Enter the Name and try again.'));
+
+            }
         }
-        if (trim($request->getParam('last_name')) === '') {
-            throw new LocalizedException(__('Enter the Last Name and try again.'));
-        }
+        // Server Side Validation - End of Custom Function for First Name And Last Name
+        
         if (trim($request->getParam('comment')) === '') {
             throw new LocalizedException(__('Enter the comment and try again.'));
         }

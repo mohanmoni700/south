@@ -2,7 +2,7 @@
  
 namespace HookahShisha\Customization\ViewModel;
 
-use Magento\Contact\Helper\Data;
+use HookahShisha\Customization\Helper\UserData;
 
 /**
  * Provides the user data to fill the form.
