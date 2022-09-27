@@ -10,6 +10,7 @@ use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Psr\Log\LoggerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
 
 class Post extends \Magento\Contact\Controller\Index\Post
 {
@@ -59,7 +60,7 @@ class Post extends \Magento\Contact\Controller\Index\Post
         MailInterface $mail,
         DataPersistorInterface $dataPersistor,
         LoggerInterface $logger = null,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig
     ) {
         parent::__construct($context, $contactsConfig, $mail, $dataPersistor, $logger);
         $this->context = $context;
@@ -79,9 +80,7 @@ class Post extends \Magento\Contact\Controller\Index\Post
     {
         $websiteCode = $this->storeManager->getWebsite()->getCode();
         $configWebsite = $this->scopeConfig->getValue(
-            self::WEBSITE_CODE,
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
-        );
+            self::WEBSITE_CODE, ScopeInterface::SCOPE_STORE);
         $websiteCodes = explode(',', $configWebsite);
         $request = $this->getRequest();
 
