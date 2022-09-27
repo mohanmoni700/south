@@ -79,8 +79,7 @@ class Post extends \Magento\Contact\Controller\Index\Post
     private function validatedParams()
     {
         $websiteCode = $this->storeManager->getWebsite()->getCode();
-        $configWebsite = $this->scopeConfig->getValue(
-            self::WEBSITE_CODE, ScopeInterface::SCOPE_STORE);
+        $configWebsite = $this->scopeConfig->getValue(self::WEBSITE_CODE, ScopeInterface::SCOPE_STORE);
         $websiteCodes = explode(',', $configWebsite);
         $request = $this->getRequest();
 
