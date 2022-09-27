@@ -2,6 +2,8 @@
 
 namespace HookahShisha\Customerb2b\Block\Account;
 
+use \Magento\Catalog\Model\Product\Attribute\Source\Status;
+
 class MyProducts extends \Magento\Catalog\Block\Product\AbstractProduct
 {
 
@@ -140,11 +142,19 @@ class MyProducts extends \Magento\Catalog\Block\Product\AbstractProduct
             );
 
             $collection->addAttributeToSelect(['price', 'regular_price', 'final_price', 'name', 'small_image']);
-            $collection->addAttributeToFilter('status', \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
+            $collection->addAttributeToFilter('status', Status::STATUS_ENABLED);
             $collection->addAttributeToFilter('type_id', 'simple');
             $collection->setPageSize($pageSize);
             $collection->setCurPage($page);
             $collection->getSelect()->group('entity_id');
+            /*For out of stock product display in last.*/
+            $collection->setOrder('name', 'ASC');
+            $collection->getSelect()->joinLeft(
+                ['_inventory_table' => 'cataloginventory_stock_item'],
+                "_inventory_table.product_id = e.entity_id",
+                ['is_in_stock']
+            );
+            $collection->getSelect()->order(['is_in_stock desc']);
         }
         return $collection;
     }
