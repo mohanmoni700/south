@@ -68,6 +68,14 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
                         $item->setExciseTax($quoteItem->getExciseTax());
                         $item->setTaxAmount($quoteItem->getSalesTax() + $quoteItem->getExciseTax());
                         $item->setTaxPercent($quoteItem->getTaxPercent());
+
+                        /* bv_op; date : 24-8-22; resolving issue of row subtotal; Start */
+                        $item->setPriceInclTax($quoteItem->getPriceInclTax());
+                        $item->setBasePriceInclTax($quoteItem->getBasePriceInclTax());
+
+                        $item->setRowTotalInclTax($quoteItem->getRowTotal() + $quoteItem->getSalesTax() + $quoteItem->getExciseTax());
+                        $item->setBaseRowTotalInclTax($quoteItem->getBaseRowTotal() + $quoteItem->getSalesTax() + $quoteItem->getExciseTax());
+                        /* bv_op; date : 24-8-22; resolving issue of row subtotal; End */
                     }
                 } else {
                     $this->clearItemTax($order);
@@ -148,6 +156,10 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
                 - abs($order->getBaseGiftCardsAmount())
                 - abs($order->getBaseCustomerBalanceAmount());
         }
+
+        /* bv_op; date : 1-8-22; resolving issue of incorrect subtotal on price change; Start */
+        $order->setSubtotalInclTax($order->getSubtotal() + $order->getExciseTax() + $order->getSalesTax());
+        /* bv_op; date : 1-8-22; resolving issue of incorrect subtotal on price change; End */
 
         $order->setGrandTotal($grandTotal)
              ->setBaseGrandTotal($baseGrandTotal)->save();

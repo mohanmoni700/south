@@ -1097,17 +1097,26 @@
         }
     }
 
-    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .sales-order-creditmemo, .sales-order-printcreditmemo, .magento_rma-returns-returns, .amasty_quote-account-view {
+    .sales-order-view,
+    .sales-order-invoice,
+    .sales-order-shipment,
+    .sales-order-print,
+    .sales-order-printinvoice,
+    .sales-order-printshipment,
+    .sales-order-creditmemo,
+    .sales-order-printcreditmemo,
+    .magento_rma-returns-returns,
+    .amasty_quote-account-view {
         .page-main {
             .page-title-wrapper {
                 .order-date {
                     .lib-font-size(18);
+                    float: left;
                     margin: 0;
+                    margin: 17px 0;
                     max-width: 100%;
                     width: 100%;
-                    float: left;
-                    margin: 17px 0;
-                    strong{
+                    strong {
                         display: none;
                     }
                 }
@@ -1445,75 +1454,82 @@
 //  ---------------------------------------------
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
-    .sales-order-view, .sales-order-invoice, .sales-order-shipment, .sales-order-print, .sales-order-printinvoice, .sales-order-printshipment, .magento_rma-returns-returns, .amasty_quote-account-view {
-        &.account{
-            .page-title-wrapper{
-                .page-title{
-                    width: 100%;
-                    text-align: center;
-                    margin-right: 0;
-                    padding-bottom: 10px;
+    .sales-order-view,
+    .sales-order-invoice,
+    .sales-order-shipment,
+    .sales-order-print,
+    .sales-order-printinvoice,
+    .sales-order-printshipment,
+    .magento_rma-returns-returns,
+    .amasty_quote-account-view {
+        &.account {
+            .page-title-wrapper {
+                .page-title {
                     border-bottom: 1px solid @color-black;
                     margin-bottom: 25px;
+                    margin-right: 0;
+                    padding-bottom: 10px;
+                    text-align: center;
+                    width: 100%;
                 }
                 .order-date {
                     .lib-font-size(14);
                 }
-                span.order-status{
-                    border: 0;
+                span.order-status {
                     .lib-font-size(14);
+                    border: 0;
+                    font-weight: @font-weight__regular;
+                    padding: 0;
                     text-transform: capitalize;
                     width: 100%;
-                    padding: 0;
-                    font-weight: @font-weight__regular;
                 }
-                .negotiable-quote-order-information{
-                    .order-date{
+                .negotiable-quote-order-information {
+                    .order-date {
                         .lib-font-size(14);
                     }
-                } 
-                .order-actions-toolbar{
-                    a.action.order{
+                }
+                .order-actions-toolbar {
+                    a.action.order {
                         position: relative;
-                        &:before{
-                            content:'';
+                        &:before {
                             background-image: url('@{baseDir}images/Union.svg');
                             background-repeat: no-repeat;
+                            background-size: contain;
+                            content:'';
                             display: inline-block;
+                            filter: invert(18%) sepia(100%) saturate(1964%) hue-rotate(298deg) brightness(85%) contrast(95%);
+                            height: 13px;
+                            margin-right: 12px;
                             position: relative;
                             top: 1px;
                             width: 18px;
-                            height: 13px;
-                            margin-right: 12px;
-                            background-size: contain;
-                            filter: invert(18%) sepia(100%) saturate(1964%) hue-rotate(298deg) brightness(85%) contrast(95%);
                         }
                     }
-                    a.action.print{
-                        span{
-                            color:#404040;
+                    a.action.print {
+                        span {
+                            color: @print_color;
                             text-decoration: underline;
                         }
                     }
-                } 
-            } 
+                }
+            }
         }
-    } 
+    }
 }
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
     .order-references {
         margin-top: 20px;
     }
-    .modals-wrapper{
-        .modal-popup.popup-reorder-quote{
-            .actions-toolbar{
-                > .primary{
+    .modals-wrapper {
+        .modal-popup.popup-reorder-quote {
+            .actions-toolbar {
+                > .primary {
                     flex-direction: column;
                 }
-            } 
-        } 
-    } 
+            }
+        }
+    }
 
     .negotiable-quote-quote-index {
         .table-wrapper {

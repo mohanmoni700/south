@@ -145,9 +145,9 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
         $this->logger = $logger;
         $this->encryptor = $encryptor;
         $this->accountRepository = $accountRepository;
-        $this->productRepository = $productRepository;
         /*
         $this->jsonHelperData = $jsonHelperData;
+        $this->productRepository = $productRepository;
         $this->linkFactory = $linkFactory;
         $this->filterManager = $filterManager;
         $this->itemTax = $itemTax;

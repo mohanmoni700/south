@@ -24,8 +24,8 @@
         .lib-button-primary();
         border-radius: 20px;
         &:hover {
-            border-color: transparent;
             background: @hookah_theme_gradient;
+            border-color: transparent;
             border-left-color: @border_left_gradient;
             border-right-color: @border_right_gradient;
         }
@@ -33,16 +33,16 @@
 
     button.action.secondary,
     button.action.secondary:hover {
-        border: 1px solid #000000;
         background: transparent;
-        color: #000;
-        cursor: pointer;
-        font-weight: 700;
-        padding: 7px 25px;
+        border: 1px solid @color-black;
         border-radius: 50px;
-        min-height: 50px;
-        text-transform: uppercase;
+        color: @color-black;
+        cursor: pointer;
         font-size: 16px;
+        font-weight: 700;
+        min-height: 50px;
+        padding: 7px 25px;
+        text-transform: uppercase;
         &:hover {
             color: @color-white;
             border-color: transparent;
@@ -53,21 +53,22 @@
     }
     
     .action-ouline-primary {
-        font-size: 16px;
-        border: solid 1px @color_black;
         background-color: transparent;
-        display: inline-block;
+        border: solid 1px @color_black;
+        border-radius: 50px;
         color: @color-black;
         cursor: pointer;
+        display: inline-block;
+        display: inline-block;
+        font-size: 16px;
         font-weight: @font-weight__bold;
-        padding: 16px 25px;
-        border-radius: 50px;
         line-height: 1;
-        text-transform: uppercase;        
-        text-decoration: none !important;
-        display: inline-block;        
+        padding: 16px 25px;
         text-align: center;
-        &:hover, &:active {
+        text-decoration: none !important;
+        text-transform: uppercase;
+        &:hover,
+        &:active {
             color: @color-white;
             border-color: transparent;
             background: @hookah_theme_gradient;
@@ -88,16 +89,18 @@
     }
 
     @media only screen and (max-width: 360px) {
-        .action.primary, .action-primary {
+        .action.primary,
+        .action-primary {
             padding-left: 20px;
             padding-right: 20px;
-        }        
+        }
     }
 }
 
 //
 //  Mobile
 //  _____________________________________________
+
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .action-ouline-primary {
         font-size: 10px;

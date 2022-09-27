@@ -3,4 +3,11 @@
     <type name="Magento\Catalog\Block\Product\AbstractProduct">
         <plugin name="mpproductlabels_product" type="Mageplaza\ProductLabels\Plugin\Block\AbstractProduct" />
     </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="additional_provider_shipping_selected" xsi:type="object">HookahShisha\Customization\Model\ConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
