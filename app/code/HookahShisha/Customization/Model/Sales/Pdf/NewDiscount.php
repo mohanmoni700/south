@@ -2,7 +2,7 @@
 
 namespace HookahShisha\Customization\Model\Sales\Pdf;
 
-class ShippingDisc extends \Magento\Sales\Model\Order\Pdf\Total\DefaultTotal
+class NewDiscount extends \Magento\Sales\Model\Order\Pdf\Total\DefaultTotal
 {
 
     /**
@@ -20,14 +20,13 @@ class ShippingDisc extends \Magento\Sales\Model\Order\Pdf\Total\DefaultTotal
     public function getTotalsForDisplay(): array
     {
         $fontSize = $this->getFontSize() ? $this->getFontSize() : 7;
-        $shippingDisc = $this->getOrder()->getTotalShippingFeeDiscount();
-        $shippingInclTax = $this->getOrder()->formatPriceTxt($shippingDisc);
-        $value = $shippingDisc == 0 ? '' : '-' . $shippingInclTax;
-
+        $orderDisc= $this->getOrder()->getDiscountAmount();
+        $orderValue = $this->getOrder()->formatPriceTxt($orderDisc);
+        $value = $this->getOrder()->getGrandTotal() > 0 ? $orderValue : 0 ;
         $total = [
             'amount' => $value,
-            'label' => 'Shipping Fee Discount',
-            'font_size' => $fontSize,
+            'label' => 'Discount',
+            'font_size' => $fontSize
         ];
 
         return [$total];
