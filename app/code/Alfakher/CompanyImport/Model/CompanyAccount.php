@@ -9,14 +9,18 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class CompanyAccount extends Command
 {
     /**
      * Url path
      */
-    const NAME = 'name';
-
+    public const NAME = 'name';
+    /**
+     * Url path
+     */
+    public const WEBSITEID = 'hookahshisha/website_code_setting/website_id';
     /**
      * @var csv
      */
@@ -105,7 +109,6 @@ class CompanyAccount extends Command
      * @var newfileSystem
      */
     protected $newfileSystem;
-
     /**
      * @var int
      */
@@ -134,6 +137,7 @@ class CompanyAccount extends Command
      * @param \Magento\Company\Model\ResourceModel\Company\CollectionFactory $companyCollectionFactory
      * @param \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customerCollectionFactory
      * @param \Magento\Framework\Registry $registry
+     * @param  ScopeConfigInterface $scopeConfig
      * @param \Magento\Framework\Filesystem\Driver\File $newfileSystem
      */
 
@@ -159,6 +163,7 @@ class CompanyAccount extends Command
         \Magento\Company\Model\ResourceModel\Company\CollectionFactory $companyCollectionFactory,
         \Magento\Customer\Model\ResourceModel\Customer\CollectionFactory $customerCollectionFactory,
         \Magento\Framework\Registry $registry,
+        ScopeConfigInterface $scopeConfig,
         \Magento\Framework\Filesystem\Driver\File $newfileSystem
     ) {
         $this->csv = $csv;
@@ -183,6 +188,7 @@ class CompanyAccount extends Command
         $this->customerCollectionFactory = $customerCollectionFactory;
         $this->registry = $registry;
         $this->newfileSystem = $newfileSystem;
+        $this->scopeConfig = $scopeConfig;
         $this->registry->register('isSecureArea', true);
         parent::__construct();
     }
@@ -253,7 +259,7 @@ class CompanyAccount extends Command
 
                         $websiteID = $this->_storemanager->getStore()->getWebsiteId();
                         $isEmailNotExists = $this->customerAccountManagement
-                            ->isEmailAvailable($value['email'], 8);
+                            ->isEmailAvailable($value['email'], $this->getConfigWebsiteId());
 
                         if ($isEmailNotExists) {
                             $customer = $this->customerDataFactory->create();
@@ -264,37 +270,13 @@ class CompanyAccount extends Command
                             );
                             $customer = $this->customerAccountManagement->createAccount($customer);
                         } else {
-                            $customer = $this->customerRepository->get($value['email'], 8);
+                            $customer = $this->customerRepository->get($value['email'], $this->getConfigWebsiteId());
                         }
 
                         //skip if customer has already company assigned
                         $customer_company = $this->companyManagement->getByCustomerId($customer->getId());
                         $this->companyAssigned($customer_company, $value, $customer, $output);
-                        /*
-                    $companyData = [
-                    'company_name' => $value['company_name'],
-                    'status' => 1,
-                    'company_email' => $value['company_email'],
-                    'vat_tax_id' => $value['vat_tax_id'],
-                    'telephone' => $value['telephone'],
-                    'street' => $value['street'],
-                    'city' => $value['city'],
-                    'country_id' => $value['country_id'],
-                    'region_id' => 55,
-                    'region' => '',
-                    'postcode' => $value['postcode'],
-                    'tobbaco_permit_number' => $value['tobbaco_permit_number'],
-                    ];
-
-                    $companyDataObject = $this->companyFactory->create(['data' => $companyData]);
-                    if ($companyDataObject->getCustomerGroupId() === null) {
-                    $companyDataObject->setCustomerGroupId($this->groupManagement->getDefaultGroup()->getId());
-                    }
-
-                    $companyDataObject->setSuperUserId($customer->getId());
-
-                    $this->companyRepositoryInterface->save($companyDataObject);
-                     */
+                      
                     }
                 }
                 return \Magento\Framework\Console\Cli::RETURN_SUCCESS;
@@ -422,5 +404,12 @@ class CompanyAccount extends Command
                 $output->writeln('<info> Customer removed : ' . $item->getEmail() . '</info>');
             }
         }
+    }
+    /**
+     * For get congig website id.
+     */
+    public function getConfigWebsiteId()
+    {
+        return $this->scopeConfig->getValue(self::WEBSITEID, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 }
