@@ -10,9 +10,9 @@ use Alfakher\ExciseReport\Block\Adminhtml\Report\ExciseTax;
 
 class Saveitem extends \Magento\Backend\App\Action
 {
-    public const B2B_ITEM_REPORT = "b2b_item_excise_report.csv";
-    public const B2C_ITEM_REPORT = "b2c_item_excise_report.csv";
-    public const WITHOUT_ITEM_REPORT = "without_cost_excise_report.csv";
+    public const B2B_ITEM_REPORT="b2b_item_excise_report.csv";
+    public const B2C_ITEM_REPORT="b2c_item_excise_report.csv";
+    public const WITHOUT_ITEM_REPORT="without_cost_excise_report.csv";
     /**
      * Construct
      *
@@ -23,7 +23,6 @@ class Saveitem extends \Magento\Backend\App\Action
      * @param \Magento\Framework\App\Filesystem\DirectoryList $directoryList
      * @param ExciseTax $block
      */
-
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\App\ResourceConnection $resourceConnection,
@@ -150,7 +149,11 @@ class Saveitem extends \Magento\Backend\App\Action
                 soi.qty_shipped as Shipped_Quantity,
                 soi.excise_tax as Excise_Tax,
                 soi.sales_tax as Sales_Tax,
-                soi.base_price as Price,
+                IF((SELECT base_price
+                    from sales_order_item
+                    where item_id = soi.parent_item_id) IS null, soi.base_price, (SELECT base_price
+                    from sales_order_item
+                    where item_id = soi.parent_item_id)) as Price,
                 (SELECT value FROM catalog_product_entity_int
                     WHERE store_id=0
                     AND row_id=cpe.entity_id
@@ -200,7 +203,11 @@ class Saveitem extends \Magento\Backend\App\Action
                 soi.excise_tax as Excise_Tax,
                 soi.sales_tax as Sales_Tax,
                 soi.base_cost as Product_Cost,
-                soi.base_price as Price
+                IF((SELECT base_price
+                    from sales_order_item
+                    where item_id=soi.parent_item_id) IS null, soi.base_price, (SELECT base_price
+                    from sales_order_item
+                    where item_id = soi.parent_item_id)) as Price
                 FROM
                 sales_order as so
                 left join sales_invoice as si on si.order_id = so.entity_id
@@ -244,7 +251,11 @@ class Saveitem extends \Magento\Backend\App\Action
                             WHERE attribute_code = 'cost'
                             )
                     ) AS cost,
-                soi.base_price AS Price
+                IF((SELECT base_price
+                    from sales_order_item
+                    where item_id=soi.parent_item_id) IS null, soi.base_price, (SELECT base_price
+                    from sales_order_item
+                    where item_id = soi.parent_item_id)) as Price
                 FROM
                     sales_order AS so
                 LEFT JOIN sales_invoice AS si
