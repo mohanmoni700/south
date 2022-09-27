@@ -9,6 +9,7 @@ use Magento\Framework\App\ObjectManager;
 use Magento\Framework\App\Request\DataPersistorInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Psr\Log\LoggerInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class Post extends \Magento\Contact\Controller\Index\Post
 {
@@ -76,14 +77,16 @@ class Post extends \Magento\Contact\Controller\Index\Post
      */
     private function validatedParams()
     {
-        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
-        $website_code = $this->storeManager->getWebsite()->getCode();
-        $config_website = $this->scopeConfig->getValue(self::WEBSITE_CODE, $storeScope);
-        $websidecodes = explode(',', $config_website);
+        $websiteCode = $this->storeManager->getWebsite()->getCode();
+        $configWebsite = $this->scopeConfig->getValue(
+            self::WEBSITE_CODE,
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+        $websiteCodes = explode(',', $configWebsite);
         $request = $this->getRequest();
 
         // Server Side Validation - Custom Function for First Name And Last Name
-        if (in_array($website_code, $websidecodes)) {
+        if (in_array($websiteCode, $websiteCodes)) {
 
             if (trim($request->getParam('first_name')) === '') {
                 throw new LocalizedException(__('Enter the First Name and try again.'));
