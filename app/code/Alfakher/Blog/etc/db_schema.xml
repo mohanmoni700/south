@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+   <table name="magefan_blog_post" resource="default" engine="innodb" comment="Magefan Blog Post Table" >
+      <column xsi:type="timestamp" name="modified_time" nullable="true" on_update="false" comment="Post Modified Time"/>
+   </table>
+</schema>

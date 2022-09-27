@@ -25,7 +25,6 @@ use Magento\Framework\App\Action\Action;
         <?php foreach ($items as $_item): ?>
             <?= /* @noEscape */ ($iterator++ == 1) ?
             '<li class="item product product-item">' : '</li><li class="item product product-item">' ?>
-            <div class="product-item-info">
                 <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>" class="product-item-photo">
                     <?= $block->getImage($_item, $image)->toHtml() ?>
                 </a>
@@ -53,9 +52,7 @@ use Magento\Framework\App\Action\Action;
                             <?= $block->getProductDetailsHtml($_item) ?>
                     <?php endif; ?>
                         <div class="product-item-inner">
-                            <div class="product-item-actions">
-                                <!-- check the documnet is uploaded or verified  -->
-                          
+                                <!-- check the documnet is uploaded or verified  -->                          
                                 <?php if ($showCart): ?>
                                     <div class="actions-primary">
                                         
@@ -84,17 +81,15 @@ use Magento\Framework\App\Action\Action;
                                                 */
                                                 ?>
                                                 <?php if ($IsFinanceVerified == 1): ?>
-                                                <?php else: ?>  
-                                                 <div class="actions-primary">
-                                                        <div class="logged-in-action">
-                                                            <a
-                                                            href="<?= $block
-                                                            ->escapeUrl($block
-                                                            ->getProductUrl($_item)) ?>">
-                                                            <?= $block->escapeHtml(__('View Details')) ?>
-                                                            </a>
-                                                        </div>
-                                                </div>
+                                                <?php else: ?>
+                                                    <div class="logged-in-action">
+                                                        <a
+                                                        href="<?= $block
+                                                        ->escapeUrl($block
+                                                        ->getProductUrl($_item)) ?>">
+                                                        <?= $block->escapeHtml(__('View Details')) ?>
+                                                        </a>
+                                                    </div>
                                             <?php endif; ?>
                                             </form>
                                         <?php else: ?>
@@ -114,14 +109,12 @@ use Magento\Framework\App\Action\Action;
                                         <?php endif; ?>
                                     </div>
                                 <?php elseif (!$showCart): ?>
-                                    <div class="actions-primary">
-                                        <div class="logged-in-action">
-                                            <a href="<?= $block->escapeUrl($block
-                                            ->getUrl('customer/account/login')) ?>"
-                                            >
-                                            <?= $block->escapeHtml(__('Signin / Register')) ?>
-                                            </a>
-                                        </div>
+                                    <div class="logged-in-action">
+                                        <a href="<?= $block->escapeUrl($block
+                                        ->getUrl('customer/account/login')) ?>"
+                                        >
+                                        <?= $block->escapeHtml(__('Signin / Register')) ?>
+                                        </a>
                                     </div>
                                 <?php endif; ?>
                                 <?php if ($showWishlist || $showCompare): ?>
@@ -150,11 +143,9 @@ use Magento\Framework\App\Action\Action;
                                         <?php endif; ?>
                                     </div>
                                 <?php endif; ?>
-                            </div>
                         </div>
 
                 </div>
-            </div>
             <?= ($iterator == count($items) + 1) ? '</li>' : '' ?>
         <?php endforeach ?>
     </ol>

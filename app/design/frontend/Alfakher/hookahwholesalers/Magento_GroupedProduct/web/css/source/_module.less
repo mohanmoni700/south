@@ -1,4 +1,4 @@
-// /**
+//  /**
 //  * Copyright © Magento, Inc. All rights reserved.
 //  * See COPYING.txt for license details.
 //  */
@@ -6,43 +6,44 @@
 //
 //  Common
 //  _____________________________________________
+
 @qtyborder-color: #838282;
 @tableprice_clr:#404040;
 & when (@media-common = true) {
 
     .table.grouped {
         .lib-table-bordered(
-            @_table_type: horizontal
+            @_table_type: horizontal;
         );
 
         > thead > tr > th {
             border-bottom: 0;
         }
-        > tbody{
-            > tr{
-                border-bottom: 1px solid #C4C4C4;
+        > tbody {
+            > tr {
+                border-bottom: 1px solid @color_C4C4C4;
                 > td {
                     padding:8px 0;
                     vertical-align: middle;
-                    &.col.qty{
-                        width: 140px;
-                        text-align: right;
+                    &.col.qty {
                         padding-right: 20px;
+                        text-align: right;
+                        width: 140px;
                         .control.qty {
                             > span {
+                                clear: right;
+                                float: right;
                                 font-size: 10px;
                                 margin-top: 8px;
-                                float: right;
-                                clear: right;
                             }
                         }
                     }
                 }
-            } 
-        } 
-        .price-box{
+            }
+        }
+        .price-box {
             padding: 0 5px;
-            .price-label{
+            .price-label {
                 display: none;
             }
         }
@@ -56,34 +57,34 @@
 
         .price-box {
             .price {
-                font-size: @font-size__base;
                 color: @tableprice_clr;
+                font-size: @font-size__base;
                 font-weight: @font-weight__bold;
             }
-            .old-price{
-                 .price{
+            .old-price {
+                .price {
                     .lib-font-size(12);
-                 }
+                }
             }
         }
 
         .control {
             .qty {
                 &:extend(.abs-input-qty all);
-                width: 70px;
-                height: 25px;
+                .lib-font-size(14);
                 border: 1px solid @qtyborder-color;
                 border-radius: 30px;
-                .lib-font-size(14);
+                height: 25px;
                 min-width: 60px;
                 padding: 0 4px;
+                width: 70px;
             }
-            select {             
+            select {
                 &.qty {
-                    text-align: left;
-                    background-size: 8px auto;
                     background-position: calc(~'100% - 8px');
+                    background-size: 8px auto;
                     padding: 0 20px 0 10px;
+                    text-align: left;
                 }
             }
         }
@@ -108,38 +109,38 @@
 }
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
-    .table-wrapper.grouped{
-        .table:not(.cart):not(.totals):not(.table-comparison){
-            > tbody{
-                > tr{
-                    td[data-th]:before{
+    .table-wrapper.grouped {
+        .table:not(.cart):not(.totals):not(.table-comparison) {
+            > tbody {
+                > tr {
+                    td[data-th]:before {
                         display:none;
                     }
-                    td{
+                    td {
                         display: table-cell;
                     }
-                } 
-            } 
-        } 
-    } 
-    .product-add-form{
+                }
+            }
+        }
+    }
+    .product-add-form {
         .table-wrapper {
-            .table.grouped{
-                tbody{
-                    > tr{
-                        > td{
-                            &:first-child{
+            .table.grouped {
+                tbody {
+                    > tr {
+                        > td {
+                            &:first-child {
                                 padding-top: 5px !important;
                             }
-                            &:last-child{
+                            &:last-child {
                                 padding-bottom: 5px !important;
                             }
                             &.col.item {
                                 width: 100%;
                             }
                             &.col.qty {
-                                width: 70px;
                                 padding-left: 6px !important;
+                                width: 70px;
                                 .control.qty {
                                     > span {
                                         font-size: 8px;

@@ -1,0 +1,14 @@
+<?php $_product = $block->getProduct() ?>
+<?php if ($block->displayProductStockStatus()): ?>
+    <?php if ($_product->isAvailable()): ?>
+        <div class="stock available" title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
+            <span class="availability"><?= $block->escapeHtml(__('Availability: ')) ?></span>
+            <span class="stock"><?= $block->escapeHtml(__('In stock')) ?></span>
+        </div>
+    <?php else: ?>
+        <div class="stock unavailable" title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
+            <span class="outofstock"><?= $block->escapeHtml(__('Out of stock')) ?></span>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+<?= $block->getChildHtml('bundle_prices') ?>
