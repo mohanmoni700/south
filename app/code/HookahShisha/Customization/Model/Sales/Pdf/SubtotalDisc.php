@@ -20,14 +20,14 @@ class SubtotalDisc extends \Magento\Sales\Model\Order\Pdf\Total\DefaultTotal
     public function getTotalsForDisplay(): array
     {
         $fontSize = $this->getFontSize() ? $this->getFontSize() : 7;
-        $subDisc= $this->getOrder()->getTotalSubtotalDiscount();
+        $subDisc = $this->getOrder()->getTotalSubtotalDiscount();
         $subInclTax = $this->getOrder()->formatPriceTxt($subDisc);
-        $value = $subDisc == 0 ? $subInclTax : '-'.$subInclTax;
+        $value = $subDisc == 0 ? '' : '-' . $subInclTax;
 
         $total = [
             'amount' => $value,
             'label' => 'Subtotal Discount',
-            'font_size' => $fontSize
+            'font_size' => $fontSize,
         ];
 
         return [$total];

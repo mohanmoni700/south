@@ -10,4 +10,15 @@
             </argument>
         </arguments>
     </type>
+    
+    <!-- add handeling fee in invoice pdf -->
+    <type name="Magento\Tax\Model\Sales\Pdf\Shipping">
+        <plugin name="handelingFeeplugin" type="HookahShisha\Customization\Model\Sales\Pdf\AfterShipping"/>
+    </type>
+
+    <!--subtotal issue solve in invoice pdf -->
+    <type name="Magento\Tax\Model\Sales\Pdf\Subtotal">
+        <plugin name="subtotalAfterPlugin" type="HookahShisha\Customization\Model\Sales\Pdf\AfterSubtotal"/>
+    </type>
+
 </config>
