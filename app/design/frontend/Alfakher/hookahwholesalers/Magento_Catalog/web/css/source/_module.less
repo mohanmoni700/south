@@ -818,11 +818,14 @@
                 .lib-css(padding-left, @indent__l);
                 .lib-css(position, relative);
             }
+            input[type="radio"]:checked + label::before {
+                border: 1px solid @hookah_theme_color;
+            }
             input[type="radio"] + label::before {
                 .lib-css(position, absolute);
                 background: @color_white;
                 border-radius: 50%;
-                border: 1px solid @hookah_theme_color;
+                border: 1px solid @color_black;
                 content: "";
                 height: 16px;
                 left: 0;
@@ -849,6 +852,7 @@
             input[type="radio"]:checked + label::after {
                 opacity: 1;
             }
+            
         }
     }
     .bundle-options-wrapper {
