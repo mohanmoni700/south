@@ -93,7 +93,7 @@ class MyProducts extends \Magento\Catalog\Block\Product\AbstractProduct
             $pager = $this->getLayout()->createBlock(
                 \Magento\Theme\Block\Html\Pager::class,
                 'my.product.pricing.pager'
-            )->setAvailableLimit([5 => 5, 10 => 10, 15 => 15, 20 => 20])
+            )->setAvailableLimit([20 => 20, 40 => 40, 60 => 60, 80 => 80])
                 ->setShowPerPage(true)
                 ->setCollection($this->getSharedCatalogCollection());
             $this->setChild('pager', $pager);
@@ -118,7 +118,7 @@ class MyProducts extends \Magento\Catalog\Block\Product\AbstractProduct
         $collection = [];
         if ($customer = $this->getCurrentCustomer()) {
             $page = ($this->getRequest()->getParam('p')) ? $this->getRequest()->getParam('p') : 1;
-            $pageSize = ($this->getRequest()->getParam('limit')) ? $this->getRequest()->getParam('limit') : 5;
+            $pageSize = ($this->getRequest()->getParam('limit')) ? $this->getRequest()->getParam('limit') : 20;
             $collection = $this->productFactory->create()->getCollection();
 
             $joinAndConditions[] = "u.sku = e.sku";
