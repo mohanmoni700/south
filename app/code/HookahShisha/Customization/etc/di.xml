@@ -50,6 +50,9 @@
             </argument>
         </arguments>
     </type> 
+    
+    <!-- to create functions and get data into contact-us form -->
+    <preference for="Magento\Contact\ViewModel\UserDataProvider" type="HookahShisha\Customization\ViewModel\UserDataProvider" />
 
     <!-- custom field server validation for contact form -->
     <preference for="Magento\Contact\Controller\Index\Post" type="HookahShisha\Customization\Controller\Contact\Post" />
