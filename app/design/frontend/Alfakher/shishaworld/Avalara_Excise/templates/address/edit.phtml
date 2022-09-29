@@ -8,7 +8,7 @@
 <?php
 /* Start Change the region_id Label if the Country is US for State and Other for the State */
 $regionStateLabel = $block->escapeHtml(__('State'));
-$regionProvinceLabel = $block->escapeHtml(__(''));
+$regionProvinceLabel = $block->escapeHtml(__('Province'));
 $regionLabel = ($block->getCountryId() == 'US') ? $regionStateLabel:$regionProvinceLabel;
 /* End Change the region_id Label if the Country is US for State and Other for the State */
 ?>
