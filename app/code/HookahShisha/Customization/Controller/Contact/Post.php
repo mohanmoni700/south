@@ -11,6 +11,7 @@ use Magento\Framework\Exception\LocalizedException;
 use Psr\Log\LoggerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Post extends \Magento\Contact\Controller\Index\Post
 {
@@ -47,12 +48,18 @@ class Post extends \Magento\Contact\Controller\Index\Post
     private $logger;
 
     /**
+     * @var StoreManagerInterface
+     */
+    protected $storeManager;
+
+    /**
      * @param Context $context
      * @param ConfigInterface $contactsConfig
      * @param MailInterface $mail
      * @param DataPersistorInterface $dataPersistor
      * @param LoggerInterface $logger
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
         Context $context,
@@ -60,7 +67,8 @@ class Post extends \Magento\Contact\Controller\Index\Post
         MailInterface $mail,
         DataPersistorInterface $dataPersistor,
         LoggerInterface $logger = null,
-        ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig,
+        StoreManagerInterface $storeManager
     ) {
         parent::__construct($context, $contactsConfig, $mail, $dataPersistor, $logger);
         $this->context = $context;
@@ -68,6 +76,7 @@ class Post extends \Magento\Contact\Controller\Index\Post
         $this->dataPersistor = $dataPersistor;
         $this->logger = $logger ?: ObjectManager::getInstance()->get(LoggerInterface::class);
         $this->scopeConfig = $scopeConfig;
+        $this->storeManager = $storeManager;
     }
 
     /**
