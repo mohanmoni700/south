@@ -23,6 +23,7 @@ class Saveitem extends \Magento\Backend\App\Action
      * @param \Magento\Framework\App\Filesystem\DirectoryList $directoryList
      * @param ExciseTax $block
      */
+     
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\App\ResourceConnection $resourceConnection,
@@ -164,7 +165,7 @@ class Saveitem extends \Magento\Backend\App\Action
                           )
                     ),
                     soi.base_price
-                  ) as Price
+                  ) as Price,
                 (SELECT value FROM catalog_product_entity_int
                     WHERE store_id=0
                     AND row_id=cpe.entity_id
