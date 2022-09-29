@@ -1,32 +1,19 @@
 <?php
- 
 namespace HookahShisha\Customization\Controller\Contact;
 
 use Magento\Contact\Model\ConfigInterface;
 use Magento\Contact\Model\MailInterface;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Framework\Controller\Result\Redirect;
+use Magento\Framework\DataObject;
 use Magento\Framework\Exception\LocalizedException;
 use Psr\Log\LoggerInterface;
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Store\Model\ScopeInterface;
-use Magento\Store\Model\StoreManagerInterface;
 
-class Post extends \Magento\Contact\Controller\Index\Post
+class Post extends \Magento\Contact\Controller\Index implements HttpPostActionInterface
 {
-    /**
-     * Website Code
-     */
-    public const WEBSITE_CODE = 'hookahshisha/website_code_setting/website_code';
-
-    /**
-     * Scope Configuration
-     *
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
-     */
-    protected $scopeConfig;
-
     /**
      * @var DataPersistorInterface
      */
@@ -48,68 +35,80 @@ class Post extends \Magento\Contact\Controller\Index\Post
     private $logger;
 
     /**
-     * @var StoreManagerInterface
-     */
-    protected $storeManager;
-
-    /**
      * @param Context $context
      * @param ConfigInterface $contactsConfig
      * @param MailInterface $mail
      * @param DataPersistorInterface $dataPersistor
      * @param LoggerInterface $logger
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param StoreManagerInterface $storeManager
      */
     public function __construct(
         Context $context,
         ConfigInterface $contactsConfig,
         MailInterface $mail,
         DataPersistorInterface $dataPersistor,
-        LoggerInterface $logger = null,
-        ScopeConfigInterface $scopeConfig,
-        StoreManagerInterface $storeManager
+        LoggerInterface $logger = null
     ) {
-        parent::__construct($context, $contactsConfig, $mail, $dataPersistor, $logger);
+        parent::__construct($context, $contactsConfig);
         $this->context = $context;
         $this->mail = $mail;
         $this->dataPersistor = $dataPersistor;
         $this->logger = $logger ?: ObjectManager::getInstance()->get(LoggerInterface::class);
-        $this->scopeConfig = $scopeConfig;
-        $this->storeManager = $storeManager;
     }
 
     /**
-     * Validate function
+     * Post user question
      *
+     * @return Redirect
+     */
+    public function execute()
+    {
+        if (!$this->getRequest()->isPost()) {
+            return $this->resultRedirectFactory->create()->setPath('*/*/');
+        }
+        try {
+            $this->sendEmail($this->validatedParams());
+            $this->messageManager->addSuccessMessage(
+                __('Thanks for contacting us with your comments and questions. We\'ll respond to you very soon.')
+            );
+            $this->dataPersistor->clear('contact_us');
+        } catch (LocalizedException $e) {
+            $this->messageManager->addErrorMessage($e->getMessage());
+            $this->dataPersistor->set('contact_us', $this->getRequest()->getParams());
+        } catch (\Exception $e) {
+            $this->logger->critical($e);
+            $this->messageManager->addErrorMessage(
+                __('An error occurred while processing your form. Please try again later.')
+            );
+            $this->dataPersistor->set('contact_us', $this->getRequest()->getParams());
+        }
+        return $this->resultRedirectFactory->create()->setPath('contact/index');
+    }
+
+    /**
+     * @param array $post Post data from contact form
+     * @return void
+     */
+    private function sendEmail($post)
+    {
+        $this->mail->send(
+            $post['email'],
+            ['data' => new DataObject($post)]
+        );
+    }
+
+    /**
      * @return array
      * @throws \Exception
      */
     private function validatedParams()
     {
-        $websiteCode = $this->storeManager->getWebsite()->getCode();
-        $configWebsite = $this->scopeConfig->getValue(self::WEBSITE_CODE, ScopeInterface::SCOPE_STORE);
-        $websiteCodes = explode(',', $configWebsite);
         $request = $this->getRequest();
-
-        // Server Side Validation - Custom Function for First Name And Last Name
-        if (in_array($websiteCode, $websiteCodes)) {
-
-            if (trim($request->getParam('first_name')) === '') {
-                throw new LocalizedException(__('Enter the First Name and try again.'));
-            }
-            if (trim($request->getParam('last_name')) === '') {
-                throw new LocalizedException(__('Enter the Last Name and try again.'));
-            }
-        } else {
-
-            if (trim($request->getParam('name')) === '') {
-                throw new LocalizedException(__('Enter the Name and try again.'));
-
-            }
+        if (trim($request->getParam('first_name')) === '') {
+            throw new LocalizedException(__('Enter the First Name and try again.'));
         }
-        // Server Side Validation - End of Custom Function for First Name And Last Name
-        
+        if (trim($request->getParam('last_name')) === '') {
+            throw new LocalizedException(__('Enter the Last Name and try again.'));
+        }
         if (trim($request->getParam('comment')) === '') {
             throw new LocalizedException(__('Enter the comment and try again.'));
         }
@@ -117,11 +116,9 @@ class Post extends \Magento\Contact\Controller\Index\Post
             throw new LocalizedException(__('The email address is invalid. Verify the email address and try again.'));
         }
         if (trim($request->getParam('hideit')) !== '') {
-            throw new LocalizedException(__(''));
+            throw new \Exception();
         }
 
         return $request->getParams();
     }
 }
-
-
