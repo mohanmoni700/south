@@ -1,16 +1,12 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 
 // phpcs:disable Magento2.Templates.ThisInTemplate
 // phpcs:disable Generic.Files.LineLength.TooLong
 
 /** @var \Magento\Contact\Block\ContactForm $block */
-/** @var \Magento\Contact\ViewModel\UserDataProvider $viewModel */
+/** @var \HookahShisha\Customization\ViewModel\UserDataProvider $viewModel */
 
-$viewModel = $block->getViewModel();
+$viewModel = $block->getViewModelData();
 ?> 
 <form class="form contact"
       action="<?= $block->escapeUrl($block->getUrl('custom/contact/post')) ?>"
