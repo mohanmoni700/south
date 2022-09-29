@@ -131,8 +131,8 @@ class UpdateCartItem extends SourceUpdateCartItem
             if (!empty($errors)) {
                 throw new GraphQlInputException(
                     __(
-                        '%sku is out of stock.',
-                        ['sku' => $cartItem->getSku(), 'message' => __(implode("\n", $errors))]
+                        '%message',
+                        ['message' => __(implode("\n", $errors))]
                     )
                 );
             }
