@@ -8,11 +8,10 @@
 // phpcs:disable Generic.Files.LineLength.TooLong
 
 /** @var \Magento\Contact\Block\ContactForm $block */
-/** @var \HookahShisha\Customization\ViewModel\UserDataProvider $viewModel */
+/** @var \Magento\Contact\ViewModel\UserDataProvider $viewModel */
 
 $viewModel = $block->getViewModel();
-?>
-
+?> 
 <form class="form contact"
       action="<?= $block->escapeUrl($block->getFormAction()) ?>"
       id="contact-form"
