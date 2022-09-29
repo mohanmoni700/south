@@ -31,27 +31,30 @@
         > .secondary {
             .action.back {
                 .lib-button-primary();
-                border-radius: 30px;
-                width: auto;
-                display: none;
-                text-decoration: none !important;
                 .lib-font-size(16);
-                text-transform: uppercase;
+                border-radius: 30px;
+                display: none;
+                line-height: 2.2rem;
+                margin-top: 0;
                 min-width: 200px;
                 padding: 13px 30px;
-                line-height: 2.2rem;
                 text-align: center;
-                margin-top: 0;
+                text-decoration: none !important;
+                text-transform: uppercase;
+                width: auto;
                 &:hover {
-                    border-color: transparent;
                     background: @hookah_theme_gradient;
+                    border-color: transparent;
                     border-left-color: @border_left_gradient;
                     border-right-color: @border_right_gradient;
                 }
             }
         }
     }
-    .customer-address-index, .order-details-items, .customer-address-form, .customer-paymentinfo-index {
+    .customer-address-index,
+    .order-details-items,
+    .customer-address-form,
+    .customer-paymentinfo-index {
         .actions-toolbar {
             > .secondary {
                 .action.back {
@@ -85,8 +88,12 @@
 //
 //  Mobile
 //  _____________________________________________
+
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
-    .sales-order-history, .customer-address-index, .customer-address-form, .customer-paymentinfo-index {
+    .sales-order-history,
+    .customer-address-index,
+    .customer-address-form,
+    .customer-paymentinfo-index {
         .actions-toolbar {
             > .secondary {
                 .action.back {

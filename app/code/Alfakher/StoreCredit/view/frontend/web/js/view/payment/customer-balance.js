@@ -70,6 +70,7 @@ define([
         sendRequest: function () {
             messageList.clear();
             var message = $t('Entered Amount is invalid');
+            var totalmessage = $t('Please enter the value less than Grand Total')
             var validationMessage = $t('Please add the partial amount.');
             var amount = jQuery('#partial_storecredit').val();
             var storeCreditType = jQuery('#storecredit-type').val();
@@ -94,6 +95,11 @@ define([
                     } else {
                         messageList.addErrorMessage({
                             'message': message
+                        });
+                    }
+                    if(parseInt(response.applied) > parseInt(response.total)){
+                        messageList.addErrorMessage({
+                            'message': totalmessage
                         });
                     }
                 }
