@@ -85,6 +85,8 @@ class Post extends \Magento\Contact\Controller\Index implements HttpPostActionIn
     }
 
     /**
+     * Send Email
+     *
      * @param array $post Post data from contact form
      * @return void
      */
@@ -97,6 +99,8 @@ class Post extends \Magento\Contact\Controller\Index implements HttpPostActionIn
     }
 
     /**
+     * Validate Params data
+     *
      * @return array
      * @throws \Exception
      */
@@ -116,7 +120,7 @@ class Post extends \Magento\Contact\Controller\Index implements HttpPostActionIn
             throw new LocalizedException(__('The email address is invalid. Verify the email address and try again.'));
         }
         if (trim($request->getParam('hideit')) !== '') {
-            throw new \Exception();
+            throw new \LocalizedException("Please try again letter.");
         }
 
         return $request->getParams();
