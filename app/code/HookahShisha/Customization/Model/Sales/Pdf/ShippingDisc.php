@@ -20,14 +20,14 @@ class ShippingDisc extends \Magento\Sales\Model\Order\Pdf\Total\DefaultTotal
     public function getTotalsForDisplay(): array
     {
         $fontSize = $this->getFontSize() ? $this->getFontSize() : 7;
-        $shippingDisc= $this->getOrder()->getTotalShippingFeeDiscount();
+        $shippingDisc = $this->getOrder()->getTotalShippingFeeDiscount();
         $shippingInclTax = $this->getOrder()->formatPriceTxt($shippingDisc);
-        $value = $shippingDisc == 0 ? $shippingInclTax : '-'.$shippingInclTax;
-        
+        $value = $shippingDisc == 0 ? '' : '-' . $shippingInclTax;
+
         $total = [
             'amount' => $value,
             'label' => 'Shipping Fee Discount',
-            'font_size' => $fontSize
+            'font_size' => $fontSize,
         ];
 
         return [$total];

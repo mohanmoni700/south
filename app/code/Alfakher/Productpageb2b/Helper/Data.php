@@ -158,4 +158,15 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $customerData = $this->customerFactory->create()->load($customerId);
         return $customerData->getIsfinanceVerified();
     }
+    /**
+     * Check if module is enable
+     *
+     * @param string $section
+     * @param int $websiteid
+     */
+
+    public function getGrossStatus($section, $websiteid)
+    {
+        return $this->scopeConfig->getValue($section, \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $websiteid);
+    }
 }

@@ -1,12 +1,15 @@
 <?php /** @var \Amasty\RequestQuote\Block\Account\Quote\Items $block */ ?>
 <div class="order-details-items ordered">
     <div class="table-wrapper order-items">
-        <table class="data table table-order-items" id="my-orders-table" summary="<?= $escaper->escapeHtml(__('Items Ordered')) ?>">
+        <table class="data table table-order-items"
+        id="my-orders-table"
+        summary="<?= $escaper->escapeHtml(__('Items Ordered')) ?>">
             <caption class="table-caption"><?= $escaper->escapeHtml(__('Items Ordered')) ?></caption>
             <thead>
             <?php if ($block->isPagerDisplayed()): ?>
                 <tr>
-                    <td colspan="8" data-block="order-items-pager-top" class="order-pager-wrapper order-pager-wrapper-top">
+                    <td colspan="8" data-block="order-items-pager-top"
+                    class="order-pager-wrapper order-pager-wrapper-top">
                         <?= $block->getPagerHtml() ?>
                     </td>
                 </tr>
@@ -22,41 +25,40 @@
                 <th class="col subtotal"><?= $escaper->escapeHtml(__('Subtotal')) ?></th>
             </tr>
             </thead>
-            <?php $items = $block->getItems(); ?>
+            <?php $items = $block->getItems();?>
             <?php foreach ($items as $item): ?>
                 <?php if ($item->getParentItem()) {
                     continue;
                 } ?>
                 <tbody>
                 <?= $block->getItemHtml($item) ?>
-                </tbody>
-                <tbody class="quote-item-notes">
-                <?php if ($item->getNotes()): ?>
-                    <tr>
-                        <td colspan="4" class="amquote-cell-container">
-                            <?php if ($item->getNotes()->getCustomerNote()): ?>
-                                <?= $escaper->escapeHtml(__('Customer Note:')) ?>
+                <tr>
+                    <?php if ($item->getNotes()):?>
+                    <td colspan="4" class="amquote-cell-container">
+                        <?php if ($item->getNotes()->getCustomerNote()): ?>
+                            <?= $escaper->escapeHtml(__('Customer Note:')) ?>
+                        <div class="item-note amquote-note">
+                            <?= /* @noEscape */ nl2br($item->getNotes()->getCustomerNote()) ?>
+                        </div>
+                        <?php endif;?>
+                    </td>
+                    <td colspan="4" class="amquote-cell-container">
+                        <?php if ($item->getNotes()->getAdminNote()): ?>
+                            <?= $escaper->escapeHtml(__('Administrator Note:')) ?>
                             <div class="item-note amquote-note">
-                                <?= /* @noEscape */ nl2br($item->getNotes()->getCustomerNote()) ?>
+                                <?= /* @noEscape */ nl2br($item->getNotes()->getAdminNote()) ?>
                             </div>
-                            <?php endif;?>
-                        </td>
-                        <td colspan="4" class="amquote-cell-container">
-                            <?php if ($item->getNotes()->getAdminNote()): ?>
-                                <?= $escaper->escapeHtml(__('Administrator Note:')) ?>
-                                <div class="item-note amquote-note">
-                                    <?= /* @noEscape */ nl2br($item->getNotes()->getAdminNote()) ?>
-                                </div>
-                            <?php endif; ?>
-                        </td>
-                    </tr>
+                        <?php endif; ?>
+                    </td>
                 <?php endif; ?>
+                </tr>
                 </tbody>
             <?php endforeach; ?>
             <tfoot>
             <?php if ($block->isPagerDisplayed()): ?>
                 <tr>
-                    <td colspan="8" data-block="order-items-pager-bottom" class="order-pager-wrapper order-pager-wrapper-bottom">
+                    <td colspan="8" data-block="order-items-pager-bottom"
+                    class="order-pager-wrapper order-pager-wrapper-bottom">
                         <?= $block->getPagerHtml() ?>
                     </td>
                 </tr>
@@ -84,7 +86,8 @@
             title="<?= $escaper->escapeHtml(__('Move to Checkout')) ?>"
             class="action tocart primary"
             amcart-observed="true"
-            data-post='<?= $escaper->escapeHtml($block->getPostData($block->getMoveUrl(['redirect_url' => 'checkout']))) ?>'
+            data-post='<?= $escaper
+            ->escapeHtml($block->getPostData($block->getMoveUrl(['redirect_url' => 'checkout']))) ?>'
     ><span><?= $escaper->escapeHtml(__('Move to Checkout')) ?></span>
     </button>
 <?php endif; ?>

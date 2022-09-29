@@ -616,6 +616,13 @@
                                                 padding: 0 4px;
                                                 position: relative;
                                                 top: 2px;
+                                                &.update-cart-item:hover {
+                                                    background: @color_primary;
+                                                    border-color: @color_primary;
+                                                    span {
+                                                        color: @color_white;
+                                                    }
+                                                }
                                                 span {
                                                     color: @color-black;
                                                     font-size: 10px;
@@ -671,7 +678,7 @@
                     }
                 }
             }
-        }
+        }        
     }
     .confirm._show .modal-footer .action-secondary {
         border-radius: 60px;
