@@ -854,6 +854,16 @@
             }
             
         }
+        .product-options-wrapper {
+            .fieldset-bundle-options {
+                input[type="radio"] + label::before {
+                    border: 1px solid @color_black;
+                }
+                input[type="radio"]:disabled + label::before {
+                    border: 1px solid @hookah_color_grey;
+                } 
+            }
+        }
     }
     .bundle-options-wrapper {
         #product-options-wrapper p.required:before {
