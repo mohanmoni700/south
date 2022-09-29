@@ -10,9 +10,9 @@ use Alfakher\ExciseReport\Block\Adminhtml\Report\ExciseTax;
 
 class Saveitem extends \Magento\Backend\App\Action
 {
-    public const B2B_ITEM_REPORT="b2b_item_excise_report.csv";
-    public const B2C_ITEM_REPORT="b2c_item_excise_report.csv";
-    public const WITHOUT_ITEM_REPORT="without_cost_excise_report.csv";
+    public const B2B_ITEM_REPORT = "b2b_item_excise_report.csv";
+    public const B2C_ITEM_REPORT = "b2c_item_excise_report.csv";
+    public const WITHOUT_ITEM_REPORT = "without_cost_excise_report.csv";
     /**
      * Construct
      *
@@ -149,11 +149,22 @@ class Saveitem extends \Magento\Backend\App\Action
                 soi.qty_shipped as Shipped_Quantity,
                 soi.excise_tax as Excise_Tax,
                 soi.sales_tax as Sales_Tax,
-                IF((SELECT base_price
-                    from sales_order_item
-                    where item_id = soi.parent_item_id) IS null, soi.base_price, (SELECT base_price
-                    from sales_order_item
-                    where item_id = soi.parent_item_id)) as Price,
+                IF(
+                    soi.base_price = 0,
+                    (
+                        IF(
+                            (SELECT base_price
+                            from sales_order_item
+                            where item_id = soi.parent_item_id) is null,
+                            soi.base_price,
+                            (
+                            SELECT base_price
+                            from sales_order_item
+                            where item_id = soi.parent_item_id)
+                          )
+                    ),
+                    soi.base_price
+                  ) as Price
                 (SELECT value FROM catalog_product_entity_int
                     WHERE store_id=0
                     AND row_id=cpe.entity_id
@@ -173,6 +184,7 @@ class Saveitem extends \Magento\Backend\App\Action
                 AND so.store_id = '" . $storeid . "'
                 AND si.increment_id IS NOT Null
                 AND soi.product_type != 'configurable'
+                AND soi.product_type != 'bundle'
                 HAVING
                 superpack is null
                 or superpack = 0
@@ -203,11 +215,22 @@ class Saveitem extends \Magento\Backend\App\Action
                 soi.excise_tax as Excise_Tax,
                 soi.sales_tax as Sales_Tax,
                 soi.base_cost as Product_Cost,
-                IF((SELECT base_price
-                    from sales_order_item
-                    where item_id=soi.parent_item_id) IS null, soi.base_price, (SELECT base_price
-                    from sales_order_item
-                    where item_id = soi.parent_item_id)) as Price
+                IF(
+                    soi.base_price = 0,
+                    (
+                        IF(
+                            (SELECT base_price
+                            from sales_order_item
+                            where item_id = soi.parent_item_id) is null,
+                            soi.base_price,
+                            (
+                            SELECT base_price
+                            from sales_order_item
+                            where item_id = soi.parent_item_id)
+                          )
+                    ),
+                    soi.base_price
+                  ) as Price
                 FROM
                 sales_order as so
                 left join sales_invoice as si on si.order_id = so.entity_id
@@ -218,6 +241,8 @@ class Saveitem extends \Magento\Backend\App\Action
                 AND so.created_at <= '" . $enddate . "'
                 AND so.store_id = '" . $storeid . "'
                 AND si.increment_id IS NOT Null
+                AND soi.product_type != 'configurable'
+                AND soi.product_type != 'bundle'
                 ORDER BY
                 so.created_at";
     }
@@ -251,11 +276,22 @@ class Saveitem extends \Magento\Backend\App\Action
                             WHERE attribute_code = 'cost'
                             )
                     ) AS cost,
-                IF((SELECT base_price
-                    from sales_order_item
-                    where item_id=soi.parent_item_id) IS null, soi.base_price, (SELECT base_price
-                    from sales_order_item
-                    where item_id = soi.parent_item_id)) as Price
+                IF(
+                    soi.base_price = 0,
+                    (
+                        IF(
+                            (SELECT base_price
+                            from sales_order_item
+                            where item_id = soi.parent_item_id) is null,
+                            soi.base_price,
+                            (
+                            SELECT base_price
+                            from sales_order_item
+                            where item_id = soi.parent_item_id)
+                          )
+                    ),
+                    soi.base_price
+                  ) as Price
                 FROM
                     sales_order AS so
                 LEFT JOIN sales_invoice AS si
@@ -271,6 +307,7 @@ class Saveitem extends \Magento\Backend\App\Action
                     AND so.store_id = '" . $storeid . "'
                     AND si.increment_id IS NOT NULL
                     AND soi.product_type != 'configurable'
+                    AND soi.product_type != 'bundle'
                 ORDER BY
                     so.created_at";
     }
