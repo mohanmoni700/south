@@ -76,11 +76,11 @@ class Registry extends \Amasty\Promo\Model\Registry
     /**
      * @var \Magento\Framework\App\Request\Http
      */
-    protected $httprequest
+    protected $httprequest;
 
     /**
      * construct method
-     * 
+     *
      * @param \Magento\Checkout\Model\Session $resourceSession
      * @param ProductCollectionFactory $productCollectionFactory
      * @param \Magento\Catalog\Model\ProductRepository $productRepository
