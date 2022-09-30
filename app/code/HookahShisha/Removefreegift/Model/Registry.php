@@ -127,7 +127,6 @@ class Registry extends \Amasty\Promo\Model\Registry
         $discountData = $this->getCurrencyDiscount($discountData);
 
         $autoAdd = false;
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $request = $this->httprequest;
     
         $graphrequest = $request->getContent();
