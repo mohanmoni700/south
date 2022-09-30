@@ -1,11 +1,17 @@
 <?php
-
 namespace Alfakher\CustomerCourierAccount\Model\Carrier;
 
 use Magento\Quote\Model\Quote\Address\RateRequest;
 use Magento\Shipping\Model\Carrier\AbstractCarrier;
 use Magento\Shipping\Model\Carrier\CarrierInterface;
+use Magento\Shipping\Model\Rate\Result;
 
+/**
+ * WarehouseShipping rate shipping model
+ *
+ * @api
+ * @since 100.0.2
+ */
 class CustomerCourierShipping extends AbstractCarrier implements CarrierInterface
 {
     /**
@@ -21,16 +27,14 @@ class CustomerCourierShipping extends AbstractCarrier implements CarrierInterfac
     /**
      * @var \Magento\Shipping\Model\Rate\ResultFactory
      */
-    private $rateResultFactory;
+    protected $_rateResultFactory;
 
     /**
      * @var \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory
      */
-    private $rateMethodFactory;
+    protected $_rateMethodFactory;
 
     /**
-     * Construct
-     *
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory
      * @param \Psr\Log\LoggerInterface $logger
@@ -46,17 +50,18 @@ class CustomerCourierShipping extends AbstractCarrier implements CarrierInterfac
         \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory,
         array $data = []
     ) {
+        $this->_rateResultFactory = $rateResultFactory;
+        $this->_rateMethodFactory = $rateMethodFactory;
         parent::__construct($scopeConfig, $rateErrorFactory, $logger, $data);
-
-        $this->rateResultFactory = $rateResultFactory;
-        $this->rateMethodFactory = $rateMethodFactory;
     }
 
     /**
-     * Custom Shipping Rates Collector
+     * Collect and get rates
      *
      * @param RateRequest $request
-     * @return \Magento\Shipping\Model\Rate\Result|bool
+     * @return Result|bool
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function collectRates(RateRequest $request)
     {
@@ -64,11 +69,87 @@ class CustomerCourierShipping extends AbstractCarrier implements CarrierInterfac
             return false;
         }
 
-        /** @var \Magento\Shipping\Model\Rate\Result $result */
-        $result = $this->rateResultFactory->create();
+        $freeBoxes = $this->getFreeBoxesCount($request);
+        $this->setFreeBoxes($freeBoxes);
 
+        /** @var Result $result */
+        $result = $this->_rateResultFactory->create();
+
+        $shippingPrice = $this->getShippingPrice($request, $freeBoxes);
+
+        if ($shippingPrice !== false) {
+            $method = $this->createResultMethod($shippingPrice);
+            $result->append($method);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get count of free boxes
+     *
+     * @param RateRequest $request
+     * @return int
+     */
+    private function getFreeBoxesCount(RateRequest $request)
+    {
+        $freeBoxes = 0;
+        if ($request->getAllItems()) {
+            foreach ($request->getAllItems() as $item) {
+                if ($item->getProduct()->isVirtual() || $item->getParentItem()) {
+                    continue;
+                }
+
+                if ($item->getHasChildren() && $item->isShipSeparately()) {
+                    $freeBoxes += $this->getFreeBoxesCountFromChildren($item);
+                } elseif ($item->getFreeShipping()) {
+                    $freeBoxes += $item->getQty();
+                }
+            }
+        }
+        return $freeBoxes;
+    }
+    /**
+     * Get allowed shipping methods
+     *
+     * @return array
+     */
+    public function getAllowedMethods()
+    {
+        return [$this->_code => $this->getConfigData('name')];
+    }
+
+    /**
+     * Returns shipping price
+     *
+     * @param RateRequest $request
+     * @param int $freeBoxes
+     * @return bool|float
+     */
+    private function getShippingPrice(RateRequest $request, $freeBoxes)
+    {
+        $shippingPrice = false;
+
+        $configPrice = $this->getConfigData('shipping_cost');
+
+        $shippingPrice = $this->getFinalPriceWithHandlingFee($configPrice);
+
+        if ($shippingPrice !== false && $request->getPackageQty() == $freeBoxes) {
+            $shippingPrice = '0.00';
+        }
+        return $shippingPrice;
+    }
+
+    /**
+     * Creates result method
+     *
+     * @param int|float $shippingPrice
+     * @return \Magento\Quote\Model\Quote\Address\RateResult\Method
+     */
+    private function createResultMethod($shippingPrice)
+    {
         /** @var \Magento\Quote\Model\Quote\Address\RateResult\Method $method */
-        $method = $this->rateMethodFactory->create();
+        $method = $this->_rateMethodFactory->create();
 
         $method->setCarrier($this->_code);
         $method->setCarrierTitle($this->getConfigData('title'));
@@ -76,23 +157,25 @@ class CustomerCourierShipping extends AbstractCarrier implements CarrierInterfac
         $method->setMethod($this->_code);
         $method->setMethodTitle($this->getConfigData('name'));
 
-        $shippingCost = (float) $this->getConfigData('shipping_cost');
-
-        $method->setPrice($shippingCost);
-        $method->setCost($shippingCost);
-
-        $result->append($method);
-
-        return $result;
+        $method->setPrice($shippingPrice);
+        $method->setCost($shippingPrice);
+        return $method;
     }
 
     /**
-     * Get allowed methods
+     * Returns free boxes count of children
      *
-     * @return array
+     * @param mixed $item
+     * @return mixed
      */
-    public function getAllowedMethods()
+    private function getFreeBoxesCountFromChildren($item)
     {
-        return [$this->_code => $this->getConfigData('name')];
+        $freeBoxes = 0;
+        foreach ($item->getChildren() as $child) {
+            if ($child->getFreeShipping() && !$child->getProduct()->isVirtual()) {
+                $freeBoxes += $item->getQty() * $child->getQty();
+            }
+        }
+        return $freeBoxes;
     }
 }

@@ -109,7 +109,7 @@
                                                value="<?=  $block->escapeHtmlAttr($_item->getQty() * 1) ?>"
                                                title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
                                                id="qtytext_<?= $block->escapeHtmlAttr($_item->getId()) ?>"
-                                               class="input-text qty"
+                                               class="input-text qty err-show"
                                                data-validate="{'validate-grouped-qty':'#super-product-table'}"
                                                data-errors-message-box="#validation-message-box"
                                                data-product-id="<?=  $block->escapeHtmlAttr($_item->getId()) ?>"
@@ -249,3 +249,30 @@
         });
     </script>
     <?php /* bv_op; date : 10-2-22; End */ ?>
+
+<script>
+    require(['jquery'], function ($) {
+
+     function setSelectionRange(input, selectionStart, selectionEnd) {
+      if (input.setSelectionRange) {
+        input.focus();
+        input.setSelectionRange(selectionStart, selectionEnd);
+      }
+    }
+
+    function setCaretToPos(input, pos) {
+        setSelectionRange(input, pos, pos);
+    }
+
+    $(document).ready(function() {
+        $(document).on("click", '#product-addtocart-button', function(e){ 
+            if(!$(".err-show").valid()){
+                setCaretToPos($(".err-show")[0], 1);
+            }
+            else{
+                $(".err-show").blur();
+            }
+        });
+    });
+});
+</script>

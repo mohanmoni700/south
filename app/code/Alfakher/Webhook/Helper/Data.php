@@ -109,7 +109,8 @@ class Data extends \Mageplaza\Webhook\Helper\Data
             $history = $this->historyFactory->create();
             if ($hookType == "update_document" || $hookType == "new_document") {
                 $documentData = $this->AddFilePath($item, $hookType);
-                $itemData = new DataObject($documentData);
+                $docItems = $this->addDocumentStatus($documentData, $hookType);
+                $itemData = new DataObject($docItems);
             } elseif ($hookType == "delete_document") {
                 $documentData = $this->AddFilePath($item, $hookType);
                 $itemData = new DataObject($documentData['items']);
@@ -197,6 +198,41 @@ class Data extends \Mageplaza\Webhook\Helper\Data
             }
         }
         return $items;
+    }
+
+    /**
+     * Add document status
+     *
+     * @param array $docItems
+     * @param string $hookType
+     * @return array
+     */
+    public function addDocumentStatus($docItems, $hookType)
+    {
+        if ($hookType == "update_document") {
+            foreach ($docItems['items'] as $dockey => $docItem) {
+                $docItems['items'][$dockey]['pending_document'] = 0;
+                $docItems['items'][$dockey]['rejected_document'] = 0;
+                $docItems['items'][$dockey]['expired_document'] = 0;
+                $docItems['items'][$dockey]['approved_document'] = 0;
+                $todate = date("Y-m-d");
+                $expiryDate = $docItem['expiry_date'];
+
+                if (($expiryDate <= $todate && $expiryDate != "")) {
+                    $docItems['items'][$dockey]['expired_document'] = 1;
+                }
+                if ($docItem['status'] == 0 && $docItem['message'] == null) {
+                    $docItems['items'][$dockey]['pending_document'] = 1;
+                } else {
+                    if ($docItem['status'] == 0 && $docItem['message'] != null) {
+                        $docItems['items'][$dockey]['rejected_document'] = 1;
+                    } elseif ($docItem['status'] == 1 && $docItem['message'] == null) {
+                        $docItems['items'][$dockey]['approved_document'] = 1;
+                    }
+                }
+            }
+        }
+        return $docItems;
     }
 
     /**
