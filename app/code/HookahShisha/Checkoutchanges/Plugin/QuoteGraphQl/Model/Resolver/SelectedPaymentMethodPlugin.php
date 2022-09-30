@@ -18,6 +18,30 @@ use ParadoxLabs\FirstData\Model\ConfigProvider as ParadoxsConfig;
 class SelectedPaymentMethodPlugin
 {
     /**
+     * @var \Magento\Vault\Model\CreditCardTokenFactory
+     */
+    private $collectionFactory;
+
+    /**
+     * @var \ParadoxLabs\TokenBase\Model\CardFactory
+     */
+    private $cardCollectionFactory;
+
+    /**
+     * @var \Magento\Payment\Api\PaymentMethodListInterface
+     */
+    private $paymentMethodList;
+
+    /**
+     * @var \Magento\Customer\Model\Customer
+     */
+    private $customer;
+
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
+    /**
      * @param CreditCardTokenFactory $collectionFactory
      * @param CardFactory $cardCollectionFactory
      * @param PaymentMethodListInterface $paymentMethodList
@@ -47,6 +71,8 @@ class SelectedPaymentMethodPlugin
      * @param ResolveInfo $info
      * @param array $value
      * @param array $args
+     * @return SelectedPaymentMethod
+     * @throws Exception
      */
     public function beforeResolve(
         Subject $subject,

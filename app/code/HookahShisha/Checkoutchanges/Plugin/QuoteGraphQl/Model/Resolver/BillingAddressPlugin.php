@@ -11,7 +11,18 @@ use Psr\Log\LoggerInterface;
 
 class BillingAddressPlugin
 {
-
+    /**
+     * @var \Magento\Customer\Model\CustomerFactory
+     */
+    private $customerFactory;
+    /**
+     * @var \Magento\Customer\Model\AddressFactory
+     */
+    private $addressFactory;
+    /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    private $logger;
     /**
      * @param \Magento\Customer\Model\CustomerFactory $customerFactory
      * @param \Magento\Customer\Model\AddressFactory $addressFactory
@@ -37,6 +48,8 @@ class BillingAddressPlugin
      * @param ResolveInfo $info
      * @param array $value
      * @param array $args
+     * @return BillingAddress
+     * @throws Exception
      */
     public function afterResolve(
         Subject $subject,
@@ -50,7 +63,6 @@ class BillingAddressPlugin
         $cart = $value['model'];
 
         if ($cart->getBillingAddress()->getCustomerId()) {
-
             $customerid = $cart->getBillingAddress()->getCustomerId();
             if (!$cart->getShippingAddress()->getCity()) {
                 $customer = $this->_customerFactory->create()->load($customerid);
