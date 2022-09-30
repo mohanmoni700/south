@@ -26,54 +26,61 @@ class Registry extends \Amasty\Promo\Model\Registry
     /**
      * @var \Magento\Checkout\Model\Session
      */
-    private $checkoutSession;
+    protected $checkoutSession;
 
     /**
      * @var ProductCollectionFactory
      */
-    private $productCollectionFactory;
+    protected $productCollectionFactory;
 
     /**
      * @var \Magento\Store\Model\StoreManagerInterface
      */
-    private $storeManager;
+    protected $storeManager;
 
     /**
      * @var \Amasty\Promo\Helper\Item
      */
-    private $promoItemHelper;
+    protected $promoItemHelper;
 
     /**
      * @var \Amasty\Promo\Helper\Messages
      */
-    private $promoMessagesHelper;
+    protected $promoMessagesHelper;
 
     /**
      * @var \Magento\Store\Model\Store
      */
-    private $store;
+    protected $store;
 
     /**
      * @var array
      */
-    private $fullDiscountItems;
+    protected $fullDiscountItems;
 
     /**
      * @var \Amasty\Promo\Model\DiscountCalculator
      */
-    private $discountCalculator;
+    protected $discountCalculator;
 
     /**
      * @var ItemRegistry\PromoItemRegistry
      */
-    private $promoItemRegistry;
+    protected $promoItemRegistry;
 
     /**
      * @var \Magento\Catalog\Model\ProductRepository
      */
-    private $productRepository;
+    protected $productRepository;
 
     /**
+     * @var \Magento\Framework\App\Request\Http
+     */
+    protected $httprequest
+
+    /**
+     * construct method
+     * 
      * @param \Magento\Checkout\Model\Session $resourceSession
      * @param ProductCollectionFactory $productCollectionFactory
      * @param \Magento\Catalog\Model\ProductRepository $productRepository
@@ -119,8 +126,8 @@ class Registry extends \Amasty\Promo\Model\Registry
      * @param array $discountData
      * @param int $type
      * @param string $discountAmount
-     *
-     * @sine 2.8.0 qty check removed; item check only if no checked before (performance)
+     * @return array
+     * @throws \Magento\Framework\Exception\LocalizedException
      */
     public function addPromoItem($sku, $qty, $ruleId, $discountData, $type, $discountAmount)
     {
@@ -264,59 +271,5 @@ class Registry extends \Amasty\Promo\Model\Registry
         }
 
         return $discountData;
-    }
-
-    /**
-     * Set reserved quantity according cart products
-     *
-     * @param string $quote
-     */
-    public function updatePromoItemsReservedQty($quote = null)
-    {
-        if (!$quote) {
-            $quote = $this->checkoutSession->getQuote();
-        }
-        $this->promoItemRegistry->resetQtyReserve();
-
-        /** @var \Magento\Quote\Model\Quote\Item $item */
-        foreach ($quote->getAllVisibleItems() as $item) {
-            if ($this->promoItemHelper->isPromoItem($item)) {
-                $sku = $item->getProduct()->getData('sku');
-                $ruleId = $this->promoItemHelper->getRuleId($item);
-                $promoItem = $this->promoItemRegistry->getItemBySkuAndRuleId($sku, $ruleId);
-                if (!$promoItem) {
-                    continue;
-                }
-
-                $this->promoItemRegistry->assignQtyToItem(
-                    $item->getQty(),
-                    $promoItem,
-                    ItemRegistry\PromoItemRegistry::QTY_ACTION_RESERVE
-                );
-            }
-        }
-    }
-
-    /**
-     * DeleteProduct
-     *
-     * @param \Magento\Quote\Model\Quote\Item $item
-     */
-    public function deleteProduct($item)
-    {
-        $fullDiscountItems = $this->checkoutSession->getAmpromoFullDiscountItems();
-        $sku = $item->getProduct()->getTypeId() == \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE
-            ? $item->getProduct()->getData('sku') : $item->getProduct()->getSku();
-
-        $item = $this->promoItemRegistry->getItemBySkuAndRuleId($sku, $this->promoItemHelper->getRuleId($item));
-        if ($item) {
-            $item->isDeleted(true);
-            $item->setReservedQty(0);
-        }
-
-        if (isset($fullDiscountItems[$sku])) {
-            unset($fullDiscountItems[$sku]);
-            $this->checkoutSession->setAmpromoFullDiscountItems($fullDiscountItems);
-        }
     }
 }
