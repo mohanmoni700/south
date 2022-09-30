@@ -22,7 +22,7 @@
             <?php else: ?>
                 <?php foreach ($_selections as $selection): ?>
                     <?php $sectionId = $selection->getSelectionId() ?>
-                    <div class="field choice">
+                    <div class="field choice bundle-checkbox">
                         <input class="<?=/* @noEscape */ $inputClass ?> change-container-classname"
                                id="<?=/* @noEscape */ $inputId . '-' . $block->escapeHtmlAttr($sectionId)?>"
                                type="checkbox"
