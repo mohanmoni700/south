@@ -48,7 +48,7 @@ class BillingAddressPlugin
      * @param ResolveInfo $info
      * @param array $value
      * @param array $args
-     * @return BillingAddress
+     * @return array
      * @throws Exception
      */
     public function afterResolve(

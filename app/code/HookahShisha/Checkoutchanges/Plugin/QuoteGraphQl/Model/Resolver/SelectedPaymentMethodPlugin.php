@@ -71,7 +71,7 @@ class SelectedPaymentMethodPlugin
      * @param ResolveInfo $info
      * @param array $value
      * @param array $args
-     * @return SelectedPaymentMethod
+     * @return array
      * @throws Exception
      */
     public function beforeResolve(
