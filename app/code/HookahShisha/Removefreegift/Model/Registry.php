@@ -2,7 +2,16 @@
 
 namespace HookahShisha\Removefreegift\Model;
 
+use Magento\Checkout\Model\Session;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
+use Magento\Catalog\Model\ProductRepository;
+use Magento\Store\Model\StoreManagerInterface;
+use Amasty\Promo\Helper\Item;
+use Amasty\Promo\Helper\Messages;
+use Magento\Store\Model\Store;
+use Amasty\Promo\Model\DiscountCalculator;
+use Amasty\Promo\Model\ItemRegistry\PromoItemRegistry;
+use Magento\Framework\App\Request\Http;
 
 /**
  * Promo Items Registry
@@ -77,16 +86,16 @@ class Registry extends \Amasty\Promo\Model\Registry
      * @param \Magento\Framework\App\Request\Http $httprequest
      */
     public function __construct(
-        \Magento\Checkout\Model\Session $resourceSession,
+        Session $resourceSession,
         ProductCollectionFactory $productCollectionFactory,
-        \Magento\Catalog\Model\ProductRepository $productRepository,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Amasty\Promo\Helper\Item $promoItemHelper,
-        \Amasty\Promo\Helper\Messages $promoMessagesHelper,
-        \Magento\Store\Model\Store $store,
-        \Amasty\Promo\Model\DiscountCalculator $discountCalculator,
-        \Amasty\Promo\Model\ItemRegistry\PromoItemRegistry $promoItemRegistry,
-        \Magento\Framework\App\Request\Http $httprequest
+        ProductRepository $productRepository,
+        StoreManagerInterface $storeManager,
+        Item $promoItemHelper,
+        Messages $promoMessagesHelper,
+        Store $store,
+        DiscountCalculator $discountCalculator,
+        PromoItemRegistry $promoItemRegistry,
+        Http $httprequest
     ) {
         $this->checkoutSession = $resourceSession;
         $this->productCollectionFactory = $productCollectionFactory;
