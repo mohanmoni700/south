@@ -14,27 +14,27 @@ class BillingAddressPlugin
     /**
      * @var \Magento\Customer\Model\CustomerFactory
      */
-    private $customerFactory;
+    private $_customerFactory;
     /**
      * @var \Magento\Customer\Model\AddressFactory
      */
-    private $addressFactory;
+    private $_addressFactory;
     /**
      * @var \Psr\Log\LoggerInterface
      */
     private $logger;
     /**
-     * @param \Magento\Customer\Model\CustomerFactory $customerFactory
-     * @param \Magento\Customer\Model\AddressFactory $addressFactory
+     * @param \Magento\Customer\Model\CustomerFactory $_customerFactory
+     * @param \Magento\Customer\Model\AddressFactory $_addressFactory
      * @param LoggerInterface $logger
      */
     public function __construct(
-        \Magento\Customer\Model\CustomerFactory $customerFactory,
-        \Magento\Customer\Model\AddressFactory $addressFactory,
+        \Magento\Customer\Model\CustomerFactory $_customerFactory,
+        \Magento\Customer\Model\AddressFactory $_addressFactory,
         LoggerInterface $logger
     ) {
-        $this->_customerFactory = $customerFactory;
-        $this->_addressFactory = $addressFactory;
+        $this->_customerFactory = $_customerFactory;
+        $this->_addressFactory = $_addressFactory;
         $this->logger = $logger;
     }
 

@@ -20,7 +20,7 @@ class SelectedPaymentMethodPlugin
     /**
      * @var \Magento\Vault\Model\CreditCardTokenFactory
      */
-    private $collectionFactory;
+    private $_collectionFactory;
 
     /**
      * @var \ParadoxLabs\TokenBase\Model\CardFactory
@@ -42,20 +42,20 @@ class SelectedPaymentMethodPlugin
      */
     private $logger;
     /**
-     * @param CreditCardTokenFactory $collectionFactory
+     * @param CreditCardTokenFactory $_collectionFactory
      * @param CardFactory $cardCollectionFactory
      * @param PaymentMethodListInterface $paymentMethodList
      * @param Customer $customer
      * @param LoggerInterface $logger
      */
     public function __construct(
-        CreditCardTokenFactory $collectionFactory,
+        CreditCardTokenFactory $_collectionFactory,
         CardFactory $cardCollectionFactory,
         PaymentMethodListInterface $paymentMethodList,
         Customer $customer,
         LoggerInterface $logger
     ) {
-        $this->_collectionFactory = $collectionFactory;
+        $this->_collectionFactory = $_collectionFactory;
         $this->cardCollectionFactory = $cardCollectionFactory;
         $this->paymentMethodList = $paymentMethodList;
         $this->customer = $customer;
