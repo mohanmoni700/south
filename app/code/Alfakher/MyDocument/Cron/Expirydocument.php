@@ -23,21 +23,29 @@ class Expirydocument
      */
     protected $documentRepository;
     /**
+     * @var webhookHelper
+     */
+    protected $webhookHelper;
+
+    /**
      * @param \Psr\Log\LoggerInterface $loggerInterface
      * @param \Alfakher\MyDocument\Helper\Data $documentHelper
      * @param \Alfakher\MyDocument\Model\MyDocumentRepository $documentRepository
      * @param DocumentCollectionFactory $documentcollection
+     * @param \Alfakher\Webhook\Helper\Data $webhookHelper
      */
     public function __construct(
         \Psr\Log\LoggerInterface $loggerInterface,
         \Alfakher\MyDocument\Helper\Data $documentHelper,
         \Alfakher\MyDocument\Model\MyDocumentRepository $documentRepository,
-        DocumentCollectionFactory $documentcollection
+        DocumentCollectionFactory $documentcollection,
+        \Alfakher\Webhook\Helper\Data $webhookHelper
     ) {
         $this->logger = $loggerInterface;
         $this->documentHelper = $documentHelper;
         $this->documentRepository = $documentRepository;
         $this->documentcollection = $documentcollection;
+        $this->webhookHelper = $webhookHelper;
     }
 
     /**
@@ -48,6 +56,8 @@ class Expirydocument
      */
     public function execute()
     {
+        $this->sendDataToWebhook();
+
         // Check Expired Mail is enabled from configuration
         if ($this->documentHelper->getExpirymailEnable()) {
             $documentArray = $this->getDocumentCollection();
@@ -70,6 +80,23 @@ class Expirydocument
     }
 
     /**
+     * Call update document webhook to pass expire document data
+     *
+     * @return void
+     */
+    public function sendDataToWebhook()
+    {
+        $documentData = $this->getExpiredDocumentCollection();
+        $docItems = [];
+        foreach ($documentData as $document) {
+            $docItems['items'][] = $document->getData();
+        }
+        if (count($docItems) > 0) {
+            $this->webhookHelper->send($docItems, 'update_document');
+        }
+    }
+
+    /**
      * Get document collection for expired document mail
      *
      * @return array
@@ -77,12 +104,7 @@ class Expirydocument
      */
     public function getDocumentCollection()
     {
-        $now = new \DateTime();
-        $documentcollection = $this->documentcollection->create()
-            ->addFieldToFilter('is_delete', ['eq' => 0])
-            ->addFieldToFilter('expiry_date', ['lteq' => $now->format('Y-m-d H:i:s')])
-            ->addFieldToFilter('notify_expire_doc_mail', ['eq' => 0]);
-
+        $documentcollection = $this->getExpiredDocumentCollection();
         $customerDocumentArray = [];
         foreach ($documentcollection as $documentArray) {
             $customerArray = [];
@@ -102,6 +124,21 @@ class Expirydocument
 
         }
         return $customerDocumentArray;
+    }
+
+    /**
+     * Get collection of all expired documents
+     *
+     * @return collection
+     */
+    public function getExpiredDocumentCollection()
+    {
+        $now = new \DateTime();
+        $expiredDoccollection = $this->documentcollection->create()
+            ->addFieldToFilter('is_delete', ['eq' => 0])
+            ->addFieldToFilter('expiry_date', ['lteq' => $now->format('Y-m-d H:i:s')])
+            ->addFieldToFilter('notify_expire_doc_mail', ['eq' => 0]);
+        return $expiredDoccollection;
     }
     /**
      * Set expired mail flag
