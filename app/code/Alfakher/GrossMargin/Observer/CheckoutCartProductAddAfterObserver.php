@@ -1,5 +1,4 @@
 <?php
-
 namespace Alfakher\GrossMargin\Observer;
 
 /**
@@ -22,7 +21,6 @@ class CheckoutCartProductAddAfterObserver implements \Magento\Framework\Event\Ob
         $this->proRepo = $proRepo;
         $this->grossMarginViewModel = $grossMarginViewModel;
     }
-
     /**
      * Execute
      *
@@ -34,13 +32,16 @@ class CheckoutCartProductAddAfterObserver implements \Magento\Framework\Event\Ob
         $websiteId = $item->getQuote()->getStore()->getWebsiteId();
         $moduleEnable = $this->grossMarginViewModel->isModuleEnabled($websiteId);
         if ($moduleEnable) {
+            $grossMargin = 0;
             try {
                 $cost = $this->proRepo->getById($item->getProduct()->getId())->getCost();
-                $grossMargin = ($item->getPrice() - $cost) / $item->getPrice() * 100;
-                $item->setGrossMargin($grossMargin);
+                if ($item->getPrice() > 0) {
+                    $grossMargin = ($item->getPrice() - $cost) / $item->getPrice() * 100;
+                }
             } catch (\Exception $e) {
-
+                $grossMargin = 0;
             }
+            $item->setGrossMargin($grossMargin);
         }
     }
 }

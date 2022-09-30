@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    
+    <event name="payment_method_assign_data_seamlesschex">
+        <observer name="ach_assign_data" instance="Alfakher\Seamlesschex\Observer\AssignData" />
+    </event>
+
+    <event name="sales_model_service_quote_submit_before">
+        <observer name="alfakher_seamlesschex_sales_model_service_quote_submit_before" instance="Alfakher\Seamlesschex\Observer\SaveOrderBeforeSalesModelQuoteObserver" />
+    </event>
+
+    <event name="order_cancel_after">
+    	<observer name="alfakher_seamlesschex_order_cancel_after" instance="Alfakher\Seamlesschex\Observer\CancelCheck" />
+    </event>
+    
+</config>

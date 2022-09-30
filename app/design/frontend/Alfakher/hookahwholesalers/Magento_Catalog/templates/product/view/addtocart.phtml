@@ -1,21 +1,20 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-
+// phpcs:disable Magento2.Templates.ThisInTemplate
 /** @var $block \Magento\Catalog\Block\Product\View */
 ?>
 <?php $_product = $block->getProduct(); ?>
 <?php $buttonTitle = __('Add to Cart'); ?>
 <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php $is_mobile = $_helperB2b->isMobileDevice();?>
+<?php $IsFinanceVerified = $_helperB2b->getIsFinanceVerified();?>
+
 <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
     <?php if ($_product->isSaleable()):?>
 <div class="box-tocart">
     <div class="fieldset">
-        <?php if ($block->shouldRenderQuantity()):?>
-        <div class="field qty">
+        <?php if ($IsFinanceVerified == 1): ?>
+            <?php if ($block->shouldRenderQuantity()):?>
+        <div class="field qty required">
             <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
             <div class="control">
                 <?php
@@ -51,8 +50,9 @@
                        min="0"
                        value="<?= /* @noEscape */ $block->getProductDefaultQty() * 1 ?>"
                        title="<?= /* @noEscape */ $block->escapeHtmlAttr(__('Qty')) ?>"
-                       class="input-text qty"
+                       class="input-text qty err-show"
                        data-validate="<?= /* @noEscape */ $block->escapeHtml($dataValidate) ?>"
+                       onclick="this.select();"
                        /> 
                   <?php endif; ?>  
             </div>
@@ -67,6 +67,7 @@
             </button>
                 <?= $block->getChildHtml('', true) ?>
         </div>
+        <?php endif; ?>        
     </div>
 </div>
     <?php endif; ?>
@@ -78,16 +79,29 @@
     }
 </script>
 <?php else:?>
-    <div class="message info notlogged" id="review-form">
-        <div>
-            <?php $loginUrl=$block->getUrl('customer/account/login');
-            $creatUrl=$block->getUrl('customer/account/create'); ?>
-            <?= $block->escapeHtml(
-                __('Only registered users can see the price. 
-                    Please <a href="%1">Sign in</a> or <a href="%2">create an account</a>', $loginUrl, $creatUrl),
-                ['a']
-            )
-            ?>
+    <div class="box-tocart">
+        <div class="actions-primary">
+            <div class="logged-in-action">
+                <a
+                href="<?= /* @noEscape */ $block->getUrl('customer/account/login') ?>">
+                <?= $block->escapeHtml(__('Signin / Register')) ?></a>
+            </div>
         </div>
     </div>
 <?php endif;?>
+<script>
+    require(['jquery'], function ($) {
+        jQuery(".err-show").on('keyup', function(){
+
+            var regex = new RegExp("^[0-9]+$");
+            if (regex.test(this.value)) {
+                var requestQty = this.value;
+                if(requestQty < 0){
+                    $(this).val(1);
+                }
+            } else {
+                $(this).val(1);
+            }  
+        });
+    });
+</script>

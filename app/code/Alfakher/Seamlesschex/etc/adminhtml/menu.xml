@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+	<menu>
+		<add id="Alfakher_Seamlesschex::alfakher_seamlesschex" title="Seamlesschex(ACH)" translate="title" module="Alfakher_Seamlesschex" sortOrder="100" parent="Magento_Backend::stores" resource="Magento_Backend::stores_other_settings"/>
+			<add id="Alfakher_Seamlesschex::seamlesschex_log" title="Logs" module="Alfakher_Seamlesschex" sortOrder="10" parent="Alfakher_Seamlesschex::alfakher_seamlesschex" action="seamlesschex/index/log" resource="Alfakher_Seamlesschex::seamlesschex_log"/>
+	</menu>
+</config>

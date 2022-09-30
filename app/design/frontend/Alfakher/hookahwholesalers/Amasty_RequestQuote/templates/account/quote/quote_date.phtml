@@ -1,0 +1,15 @@
+<?php /** @var $block \Amasty\RequestQuote\Block\Account\Quote\Info */ ?>
+
+<div class="order-date">
+    <span><?= $escaper->escapeHtml(__('Creation Date:')) ?></span>
+    <date><?= $escaper->escapeHtml($block->formatDate($block
+        ->getQuote()->getSubmitedDate(), \IntlDateFormatter::LONG)) ?>
+    </date>
+</div>
+
+<?php if ($block->isExpiryColumnShow()): ?>
+    <div class="order-date">
+        <span><?= $escaper->escapeHtml(__('Expiry Date:')) ?></span>
+        <date><?= $escaper->escapeHtml($block->getExpiredDate()) ?></date>
+    </div>
+<?php endif; ?>
