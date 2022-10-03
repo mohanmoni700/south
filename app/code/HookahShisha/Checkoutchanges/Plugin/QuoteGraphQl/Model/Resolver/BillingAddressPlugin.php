@@ -32,12 +32,12 @@ class BillingAddressPlugin
      * @param LoggerInterface $logger
      */
     public function __construct(
-        \Magento\Customer\Model\CustomerFactory $_customerFactory,
-        \Magento\Customer\Model\AddressFactory $_addressFactory,
+        \Magento\Customer\Model\CustomerFactory $customerFactory,
+        \Magento\Customer\Model\AddressFactory $addressFactory,
         LoggerInterface $logger
     ) {
-        $this->customerFactory = $_customerFactory;
-        $this->addressFactory = $_addressFactory;
+        $this->customerFactory = $customerFactory;
+        $this->addressFactory = $addressFactory;
         $this->logger = $logger;
     }
 

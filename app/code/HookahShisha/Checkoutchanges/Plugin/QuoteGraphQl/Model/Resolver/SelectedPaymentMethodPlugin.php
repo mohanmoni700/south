@@ -50,13 +50,13 @@ class SelectedPaymentMethodPlugin
      * @param LoggerInterface $logger
      */
     public function __construct(
-        CreditCardTokenFactory $_collectionFactory,
+        CreditCardTokenFactory $collectionFactory,
         CardFactory $cardCollectionFactory,
         PaymentMethodListInterface $paymentMethodList,
         Customer $customer,
         LoggerInterface $logger
     ) {
-        $this->collectionFactory = $_collectionFactory;
+        $this->collectionFactory = $collectionFactory;
         $this->cardCollectionFactory = $cardCollectionFactory;
         $this->paymentMethodList = $paymentMethodList;
         $this->customer = $customer;
