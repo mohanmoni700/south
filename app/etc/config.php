@@ -920,6 +920,7 @@ return [
         'HookahShisha_Quote' => 1,
         'HookahShisha_QuoteGraphQl' => 1,
         'HookahShisha_RelatedProductGraphQl' => 1,
+        'HookahShisha_Removefreegift' => 1,
         'HookahShisha_RmaGraphQl' => 1,
         'HookahShisha_Sales' => 1,
         'HookahShisha_SalesGraphQl' => 1,
