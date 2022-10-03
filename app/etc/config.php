@@ -905,6 +905,7 @@ return [
         'HookahShisha_CatalogGraphQl' => 1,
         'HookahShisha_CatalogImportExport' => 1,
         'HookahShisha_ChangePassword' => 1,
+        'HookahShisha_Checkoutchanges' => 1,
         'HookahShisha_CustomerGraphQl' => 1,
         'HookahShisha_Customerb2b' => 1,
         'Magetrend_PdfTemplates' => 1,
