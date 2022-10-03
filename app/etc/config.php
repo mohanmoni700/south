@@ -67,11 +67,11 @@ return [
                 'is_default' => '0'
             ],
             'shisha_world_b2b' => [
-                'website_id' => '31',
+                'website_id' => '18',
                 'code' => 'shisha_world_b2b',
                 'name' => 'Shisha-World.com (B2B)',
                 'sort_order' => '0',
-                'default_group_id' => '31',
+                'default_group_id' => '18',
                 'is_default' => '0'
             ]
         ],
@@ -140,12 +140,12 @@ return [
                 'default_store_id' => '20',
                 'code' => 'ooka_store'
             ],
-            31 => [
-                'group_id' => '31',
-                'website_id' => '31',
+            18 => [
+                'group_id' => '18',
+                'website_id' => '18',
                 'name' => 'Shisha-World.com (B2B) Store',
-                'root_category_id' => '1291',
-                'default_store_id' => '46',
+                'root_category_id' => '1170',
+                'default_store_id' => '21',
                 'code' => 'shisha_world_b2b_store'
             ]
         ],
@@ -232,29 +232,29 @@ return [
                 'is_active' => '1'
             ],
             'shisha_world_b2b_store_view_de' => [
-                'store_id' => '46',
+                'store_id' => '21',
                 'code' => 'shisha_world_b2b_store_view_de',
-                'website_id' => '31',
-                'group_id' => '31',
-                'name' => 'Shisha-World.com (B2B) Store View DE',
+                'website_id' => '18',
+                'group_id' => '18',
+                'name' => 'DE',
                 'sort_order' => '1',
                 'is_active' => '1'
             ],
             'shisha_world_b2b_store_view_en' => [
-                'store_id' => '49',
+                'store_id' => '22',
                 'code' => 'shisha_world_b2b_store_view_en',
-                'website_id' => '31',
-                'group_id' => '31',
-                'name' => 'Shisha-World.com (B2B) Store View EN',
+                'website_id' => '18',
+                'group_id' => '18',
+                'name' => 'EN',
                 'sort_order' => '2',
                 'is_active' => '1'
             ],
             'shisha_world_b2b_store_view_es' => [
-                'store_id' => '52',
+                'store_id' => '23',
                 'code' => 'shisha_world_b2b_store_view_es',
-                'website_id' => '31',
-                'group_id' => '31',
-                'name' => 'Shisha-World.com (B2B) Store View ES',
+                'website_id' => '18',
+                'group_id' => '18',
+                'name' => 'ES',
                 'sort_order' => '3',
                 'is_active' => '1'
             ]
