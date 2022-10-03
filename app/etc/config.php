@@ -21,7 +21,7 @@ return [
             'hookah' => [
                 'website_id' => '2',
                 'code' => 'hookah',
-                'name' => 'Hookah.com (B2C)',
+                'name' => 'Shisha-World.com (B2C)',
                 'sort_order' => '30',
                 'default_group_id' => '2',
                 'is_default' => '0'
@@ -95,7 +95,7 @@ return [
             2 => [
                 'group_id' => '2',
                 'website_id' => '2',
-                'name' => 'Hookah.com (B2C) Store',
+                'name' => 'Shisha-World.com (B2C) Store',
                 'root_category_id' => '650',
                 'default_store_id' => '2',
                 'code' => 'hookah_store'
@@ -173,8 +173,26 @@ return [
                 'code' => 'hookah_store_view',
                 'website_id' => '2',
                 'group_id' => '2',
-                'name' => 'Hookah.com (B2C) Store View',
-                'sort_order' => '0',
+                'name' => 'Shisha-World.com (B2C) Store View EN',
+                'sort_order' => '1',
+                'is_active' => '1'
+            ],
+            'hookah_store_view_de' => [
+                'store_id' => '24',
+                'code' => 'hookah_store_view_de',
+                'website_id' => '2',
+                'group_id' => '2',
+                'name' => 'Shisha-World.com (B2C) Store View DE',
+                'sort_order' => '1',
+                'is_active' => '1'
+            ],
+            'hookah_store_view_es' => [
+                'store_id' => '25',
+                'code' => 'hookah_store_view_es',
+                'website_id' => '2',
+                'group_id' => '2',
+                'name' => 'Shisha-World.com (B2C) Store View ES',
+                'sort_order' => '3',
                 'is_active' => '1'
             ],
             'hookah_company_store_view' => [
@@ -1144,7 +1162,7 @@ return [
             'is_featured' => '0',
             'area' => 'frontend',
             'type' => '0',
-            'code' => 'Alfakher/shishaworld',
+            'code' => 'Alfakher/shishaworld'
         ]
     ],
     'i18n' => [
