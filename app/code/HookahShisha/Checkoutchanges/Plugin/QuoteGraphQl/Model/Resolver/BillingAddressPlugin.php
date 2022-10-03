@@ -14,27 +14,30 @@ class BillingAddressPlugin
     /**
      * @var \Magento\Customer\Model\CustomerFactory
      */
-    private $_customerFactory;
+    private $customerFactory;
+
     /**
      * @var \Magento\Customer\Model\AddressFactory
      */
-    private $_addressFactory;
+    private $addressFactory;
+
     /**
      * @var \Psr\Log\LoggerInterface
      */
     private $logger;
+
     /**
      * @param \Magento\Customer\Model\CustomerFactory $_customerFactory
      * @param \Magento\Customer\Model\AddressFactory $_addressFactory
      * @param LoggerInterface $logger
      */
     public function __construct(
-        \Magento\Customer\Model\CustomerFactory $_customerFactory,
-        \Magento\Customer\Model\AddressFactory $_addressFactory,
+        \Magento\Customer\Model\CustomerFactory $customerFactory,
+        \Magento\Customer\Model\AddressFactory $addressFactory,
         LoggerInterface $logger
     ) {
-        $this->_customerFactory = $_customerFactory;
-        $this->_addressFactory = $_addressFactory;
+        $this->customerFactory = $customerFactory;
+        $this->addressFactory = $addressFactory;
         $this->logger = $logger;
     }
 
@@ -65,10 +68,10 @@ class BillingAddressPlugin
         if ($cart->getBillingAddress()->getCustomerId()) {
             $customerid = $cart->getBillingAddress()->getCustomerId();
             if (!$cart->getShippingAddress()->getCity()) {
-                $customer = $this->_customerFactory->create()->load($customerid);
+                $customer = $this->customerFactory->create()->load($customerid);
                 $shippingAddressId = $customer->getDefaultShipping();
                 if ($shippingAddressId) {
-                    $shippingAddress = $this->_addressFactory->create()->load($shippingAddressId);
+                    $shippingAddress = $this->addressFactory->create()->load($shippingAddressId);
                     $addressnew = $shippingAddress->getData();
                     $cart->getShippingAddress()->setFirstname($addressnew['firstname']);
                     $cart->getShippingAddress()->setLastname($addressnew['lastname']);

@@ -20,7 +20,7 @@ class SelectedPaymentMethodPlugin
     /**
      * @var \Magento\Vault\Model\CreditCardTokenFactory
      */
-    private $_collectionFactory;
+    private $collectionFactory;
 
     /**
      * @var \ParadoxLabs\TokenBase\Model\CardFactory
@@ -41,6 +41,7 @@ class SelectedPaymentMethodPlugin
      * @var \Psr\Log\LoggerInterface
      */
     private $logger;
+
     /**
      * @param CreditCardTokenFactory $_collectionFactory
      * @param CardFactory $cardCollectionFactory
@@ -49,13 +50,13 @@ class SelectedPaymentMethodPlugin
      * @param LoggerInterface $logger
      */
     public function __construct(
-        CreditCardTokenFactory $_collectionFactory,
+        CreditCardTokenFactory $collectionFactory,
         CardFactory $cardCollectionFactory,
         PaymentMethodListInterface $paymentMethodList,
         Customer $customer,
         LoggerInterface $logger
     ) {
-        $this->_collectionFactory = $_collectionFactory;
+        $this->collectionFactory = $collectionFactory;
         $this->cardCollectionFactory = $cardCollectionFactory;
         $this->paymentMethodList = $paymentMethodList;
         $this->customer = $customer;
@@ -96,7 +97,7 @@ class SelectedPaymentMethodPlugin
             foreach ($activePaymentMethodList as $activepayment) {
                 $paymentMethodCode = $activepayment->getCode();
                 if ($paymentMethodCode === CorraConfig::CODE) {
-                    $collection = $this->_collectionFactory->create()
+                    $collection = $this->collectionFactory->create()
                             ->getCollection()->addFieldToFilter('customer_id', $customerId)
                             ->addFieldToFilter('is_active', 1)
                             ->addFieldToFilter('is_visible', 1);
