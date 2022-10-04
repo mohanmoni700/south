@@ -11,18 +11,18 @@ namespace HookahShisha\Customerb2b\Api\Company\Data;
 interface CompanyInterface extends \Magento\Company\Api\Data\CompanyInterface
 {
 
-    const BUSINESS_TYPE = 'business_type';
-    const ANNUAL_TURN_OVER = 'annual_turn_over';
-    const NUMBER_OF_EMP = 'number_of_emp';
-    const TIN_NUMBER = 'tin_number';
-    const TOBACCO_PERMIT_NUMBER = 'tobacco_permit_number';
-    const HEAR_ABOUT_US = 'hear_about_us';
-    const QUESTIONS = 'questions';
-    const COM_ACCOUNT_VERIFIED = 'com_account_verified';
-    const COM_DETAILS_CHANGED = 'com_details_changed';
-    const COM_VERIFICATION_MESSAGE = 'com_verification_message';
-    const UST_ID = 'ust_id';
-    const FISCAL_NUMBER = 'fiscal_number';
+    public const BUSINESS_TYPE = 'business_type';
+    public const ANNUAL_TURN_OVER = 'annual_turn_over';
+    public const NUMBER_OF_EMP = 'number_of_emp';
+    public const TIN_NUMBER = 'tin_number';
+    public const TOBACCO_PERMIT_NUMBER = 'tobacco_permit_number';
+    public const HEAR_ABOUT_US = 'hear_about_us';
+    public const QUESTIONS = 'questions';
+    public const COM_ACCOUNT_VERIFIED = 'com_account_verified';
+    public const COM_DETAILS_CHANGED = 'com_details_changed';
+    public const COM_VERIFICATION_MESSAGE = 'com_verification_message';
+    public const UST_ID = 'ust_id';
+    public const FISCAL_NUMBER = 'fiscal_number';
 
     /**
      * Set rejected at time.
