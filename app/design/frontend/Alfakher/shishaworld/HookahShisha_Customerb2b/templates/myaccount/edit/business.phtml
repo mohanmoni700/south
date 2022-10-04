@@ -4,6 +4,8 @@
  * @var \Magento\Framework\DataObject $formSelectOptionsData
  * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
  */
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
 $formMessages = $block->getFormMessages();
 $countries = $block->getCountriesList();
 $company = $block->getCustomerCompany();
@@ -151,7 +153,7 @@ $count_id=$country->getCountryId();
                 </div>
             </div>
         <!-- added condition for showing below fields for USA only 08/03/2022 start[BS]  -->
-        <?php if($count_id == 'US') { ?>
+        <?php if ($count_id == 'US') { ?>
         <div class="field vat-tax-id">
             <?php $salesTaxID = __('Sales Tax ID'); ?>
             <label class="label" for="vat_tax_id">
