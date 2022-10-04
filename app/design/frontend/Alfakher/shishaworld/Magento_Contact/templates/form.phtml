@@ -69,11 +69,11 @@ $viewModel = $block->getViewModelData();
         </div>
         <div class="field tax_id">
             <label class="label" for="tax_id"><span>
-            <?= $block->escapeHtml(__('Sales Tax ID or EIN Number')) ?></span></label>
+            <?= $block->escapeHtml(__('Fiscal Number')) ?></span></label>
             <div class="control">
                 <input name="tax_id"
                        id="tax_id"
-                       title="<?= $block->escapeHtmlAttr(__('Sales Tax ID or EIN Number')) ?>"
+                       title="<?= $block->escapeHtmlAttr(__('Fiscal Number')) ?>"
                        value="<?= $block->escapeHtmlAttr($viewModel->getTaxId()) ?>"
                        class="input-text"
                        type="text" />
@@ -81,11 +81,11 @@ $viewModel = $block->getViewModelData();
         </div>
         <div class="field tobacco_permit_number">
             <label class="label" for="tobacco_permit_number"><span>
-            <?= $block->escapeHtml(__('Tobacco Permit Number')) ?></span></label>
+            <?= $block->escapeHtml(__('UST ID')) ?></span></label>
             <div class="control">
                 <input name="tobacco_permit_number"
                        id="tobacco_permit_number"
-                       title="<?= $block->escapeHtmlAttr(__('Tobacco Permit Number')) ?>"
+                       title="<?= $block->escapeHtmlAttr(__('UST ID')) ?>"
                        value="<?= $block->escapeHtmlAttr($viewModel->getTobaccoPermitNumber()) ?>"
                        class="input-text"
                        type="text" />
