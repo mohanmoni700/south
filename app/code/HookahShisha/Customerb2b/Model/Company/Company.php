@@ -124,6 +124,48 @@ class Company extends \Magento\Company\Model\Company implements CompanyInterface
     /**
      * Set rejected at time.
      *
+     * @param string $ustID
+     * @return \Magento\Company\Api\Data\CompanyInterface
+     */
+    public function setUstId($ustID)
+    {
+        return $this->setData(self::UST_ID, $ustID);
+    }
+
+    /**
+     * Get rejected at time.
+     *
+     * @return string
+     */
+    public function getUstId()
+    {
+        return $this->getData(self::UST_ID);
+    }
+
+    /**
+     * Set rejected at time.
+     *
+     * @param string $fiscalNumber
+     * @return \Magento\Company\Api\Data\CompanyInterface
+     */
+    public function setFiscalNumber($fiscalNumber)
+    {
+        return $this->setData(self::FISCAL_NUMBER, $fiscalNumber);
+    }
+
+    /**
+     * Get rejected at time.
+     *
+     * @return string
+     */
+    public function getFiscalNumber()
+    {
+        return $this->getData(self::FISCAL_NUMBER);
+    }
+
+    /**
+     * Set rejected at time.
+     *
      * @param string $hearAboutUs
      * @return \Magento\Company\Api\Data\CompanyInterface
      */

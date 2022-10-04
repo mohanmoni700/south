@@ -21,6 +21,8 @@ interface CompanyInterface extends \Magento\Company\Api\Data\CompanyInterface
     const COM_ACCOUNT_VERIFIED = 'com_account_verified';
     const COM_DETAILS_CHANGED = 'com_details_changed';
     const COM_VERIFICATION_MESSAGE = 'com_verification_message';
+    const UST_ID = 'ust_id';
+    const FISCAL_NUMBER = 'fiscal_number';
 
     /**
      * Set rejected at time.
@@ -96,6 +98,36 @@ interface CompanyInterface extends \Magento\Company\Api\Data\CompanyInterface
      * @return string
      */
     public function getTobaccoPermitNumber();
+
+    /**
+     * Set rejected at time.
+     *
+     * @param string $ustID
+     * @return \Magento\Company\Api\Data\CompanyInterface
+     */
+    public function setUstId($ustID);
+
+    /**
+     * Get rejected at time.
+     *
+     * @return string
+     */
+    public function getUstId();
+
+    /**
+     * Set rejected at time.
+     *
+     * @param string $fiscalNumber
+     * @return \Magento\Company\Api\Data\CompanyInterface
+     */
+    public function setFiscalNumber($fiscalNumber);
+
+    /**
+     * Get rejected at time.
+     *
+     * @return string
+     */
+    public function getFiscalNumber();
 
     /**
      * Set rejected at time.
