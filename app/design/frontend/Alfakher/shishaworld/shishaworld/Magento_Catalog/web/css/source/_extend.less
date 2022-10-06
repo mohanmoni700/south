@@ -1,0 +1,66 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+
+    @supports (-moz-appearance:none) {
+        input[type="radio"]:checked,
+        input[type="radio"]:not(:checked) {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+                 appearance: none;
+        }
+    }
+    //
+    //  Category sList Page (C)
+    //  ---------------------------------------------
+    .catalog-category-view,
+    .catalogsearch-result-index {
+        .page-main {
+            .pending-tooltip {
+                .lib-css(margin-bottom, @indent__base);
+            }
+        }
+    }
+
+    //
+    //  Category view
+    //  ---------------------------------------------
+
+    .clp_faq_main {
+        .clp_faq_toggle {
+            .lib-css(color, @color_primary);
+        }
+    }
+    //
+    //  Product view
+    //  ---------------------------------------------
+    .fieldset-bundle-options {
+        .lib-css(margin-bottom, @indent__s);
+        select[multiple]:focus option:checked {
+            background: @color_primary linear-gradient(0deg, @color_primary 0%, @color_primary 100%);
+        }
+    }
+    .catalog-product-view {
+        #reviews {
+            margin-bottom: @indent__base;
+        }
+    }
+    @supports (-moz-appearance:none) {
+        .fieldset-bundle-options {
+            .bundle-checkbox.field.choice {
+                .lib-vendor-prefix-display(flex);
+            }
+        }
+    }
+}
+
+
+& when (@media-target = 'desktop'), (@media-target = 'all') {
+    @media only screen and (min-width: @screen__m) and (max-width: (@screen__l)) {
+        .toolbar .modes {
+            margin-top: 15px;
+        }        
+    }
+}
