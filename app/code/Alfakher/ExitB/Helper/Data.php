@@ -11,7 +11,7 @@ use Magento\Framework\App\Helper\AbstractHelper;
  */
 class Data extends AbstractHelper
 {
-
+    public const EXITB_ENABLE = 'exitb/general/enabled';
     public const ORDER_PREFIX = 'exitb/exitb_ordersync/prefix_order';
     public const ORDER_ISB2B  = 'exitb/exitb_ordersync/order_isb2b';
     public const ORDER_ADM    = 'exitb/exitb_ordersync/ad_medium';
@@ -41,6 +41,10 @@ class Data extends AbstractHelper
      * @var \Magento\Framework\Serialize\Serializer\Json $json
      */
     protected $json;
+    /**
+     * @var \Magento\Framework\Message\ManagerInterface
+     */
+    protected $messageManager;
 
     /**
      * New construct
@@ -49,18 +53,21 @@ class Data extends AbstractHelper
      * @param \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
      * @param \Magento\Framework\HTTP\Client\Curl $curl
      * @param \Magento\Framework\Serialize\Serializer\Json $json
+     * @param \Magento\Framework\Message\ManagerInterface $messageManager
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
         \Magento\Framework\HTTP\Client\Curl $curl,
-        \Magento\Framework\Serialize\Serializer\Json $json
+        \Magento\Framework\Serialize\Serializer\Json $json,
+        \Magento\Framework\Message\ManagerInterface $messageManager
     ) {
         parent::__construct($context);
         $this->scopeConfig = $context->getScopeConfig();
         $this->order = $orderRepository;
         $this->curl = $curl;
         $this->json = $json;
+        $this->messageManager = $messageManager;
     }
 
     /**
@@ -76,6 +83,16 @@ class Data extends AbstractHelper
             \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE,
             $WebsiteId
         );
+    }
+
+    /**
+     * Module enable
+     *
+     * @param int $websiteId
+     */
+    public function isModuleEnabled($websiteId)
+    {
+        return (bool) $this->getConfigValue(self::EXITB_ENABLE, $websiteId);
     }
 
     /**
@@ -96,8 +113,10 @@ class Data extends AbstractHelper
 
                 $websiteId = $order->getStore()->getWebsiteId();
 
-                $orderData['orderData']['number'] = $this->getConfigValue(self::ORDER_PREFIX, $websiteId)
-                .'-'.$order->getIncrementId();
+                $orderData['orderData']['number'] = $this->getConfigValue(
+                    self::ORDER_PREFIX,
+                    $websiteId
+                ).'-'.$order->getIncrementId();
                 // $orderData['externalNumber'] = $order->getIncrementId();
                 $orderData['orderData']['date'] = $order->getCreatedAt();
                 $orderData['orderData']['currency'] = $order->getOrderCurrencyCode();
@@ -159,15 +178,21 @@ class Data extends AbstractHelper
      */
     public function tokenAuthentication($websiteId)
     {
-        $authData = [
-            'client' => $this->getConfigValue(self::CLINT_CODE, $websiteId),
-            'apiKey' => $this->getConfigValue(self::API_KEY, $websiteId)
-        ];
-        $this->curl->setOption(CURLOPT_RETURNTRANSFER, true);
-        $this->curl->post($this->getConfigValue(self::AUTH_API, $websiteId), $authData);
-        $response = $this->curl->getBody();
-        $token = $this->json->unserialize($response, true)['response']['jwt'];
-        return $token;
+        if ($this->isModuleEnabled($websiteId)) {
+            $authData = [
+                'client' => $this->getConfigValue(self::CLINT_CODE, $websiteId),
+                'apiKey' => $this->getConfigValue(self::API_KEY, $websiteId)
+            ];
+            if (isset($authData) && !empty($authData)) {
+                $this->curl->setOption(CURLOPT_RETURNTRANSFER, true);
+                $this->curl->post($this->getConfigValue(self::AUTH_API, $websiteId), $authData);
+                $response = $this->curl->getBody();
+                $token = $this->json->unserialize($response, true)['response']['jwt'];
+                return $token;
+            }
+        } else {
+            return '';
+        }
     }
     /**
      * Get delivery address

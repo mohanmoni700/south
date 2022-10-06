@@ -13,6 +13,7 @@ use Magento\Sales\Api\OrderManagementInterface;
  */
 class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAction
 {
+
     /**
      * @var OrderManagementInterface
      */
@@ -50,18 +51,24 @@ class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
      */
     protected function massAction(AbstractCollection $collection)
     {
-        $token_value = $this->helperData->tokenAuthentication(8);
+        $token_value ='';
         $countOrdersync = 0;
         foreach ($collection->getItems() as $order) {
             if (!$order->getEntityId()) {
                 continue;
             }
-            $this->helperData->orderSync($order->getEntityId(), $token_value);
-            $countOrdersync++;
+            $orderSyncArray[$order->getStore()->getWebsiteId()][]=$order->getEntityId();
+        }
+
+        foreach ($orderSyncArray as $key => $value) {
+            $token_value = $this->helperData->tokenAuthentication($key);
+            foreach ($value as $keys => $orderId) {
+                $this->helperData->orderSync($orderId, $token_value);
+                $countOrdersync++;
+            }
         }
 
         $countNonDeleteOrder = $collection->count() - $countOrdersync;
-
         if ($countNonDeleteOrder && $countOrdersync) {
             $this->messageManager->addError(__('%1 order(s) were not sync in ExitB.', $countNonDeleteOrder));
         } elseif ($countNonDeleteOrder) {
