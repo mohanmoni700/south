@@ -178,7 +178,7 @@ return [
                 'is_active' => '1'
             ],
             'hookah_store_view_de' => [
-                'store_id' => '24',
+                'store_id' => '21',
                 'code' => 'hookah_store_view_de',
                 'website_id' => '2',
                 'group_id' => '2',
@@ -187,7 +187,7 @@ return [
                 'is_active' => '1'
             ],
             'hookah_store_view_es' => [
-                'store_id' => '25',
+                'store_id' => '22',
                 'code' => 'hookah_store_view_es',
                 'website_id' => '2',
                 'group_id' => '2',
@@ -250,7 +250,7 @@ return [
                 'is_active' => '1'
             ],
             'shisha_world_b2b_store_view_de' => [
-                'store_id' => '21',
+                'store_id' => '23',
                 'code' => 'shisha_world_b2b_store_view_de',
                 'website_id' => '18',
                 'group_id' => '18',
@@ -259,7 +259,7 @@ return [
                 'is_active' => '1'
             ],
             'shisha_world_b2b_store_view_en' => [
-                'store_id' => '22',
+                'store_id' => '24',
                 'code' => 'shisha_world_b2b_store_view_en',
                 'website_id' => '18',
                 'group_id' => '18',
@@ -268,7 +268,7 @@ return [
                 'is_active' => '1'
             ],
             'shisha_world_b2b_store_view_es' => [
-                'store_id' => '23',
+                'store_id' => '25',
                 'code' => 'shisha_world_b2b_store_view_es',
                 'website_id' => '18',
                 'group_id' => '18',
