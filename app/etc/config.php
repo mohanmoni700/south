@@ -70,7 +70,7 @@ return [
                 'website_id' => '18',
                 'code' => 'shisha_world_b2b',
                 'name' => 'Shisha-World.com (B2B)',
-                'sort_order' => '0',
+                'sort_order' => '40',
                 'default_group_id' => '18',
                 'is_default' => '0'
             ]
