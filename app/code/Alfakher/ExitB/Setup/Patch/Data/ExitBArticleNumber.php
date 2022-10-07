@@ -10,9 +10,9 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 
 /**
- * Ean code product
+ * Article Number product
  */
-class Ean implements DataPatchInterface
+class ExitBArticleNumber implements DataPatchInterface
 {
     /**
      * ModuleDataSetupInterface
@@ -48,6 +48,28 @@ class Ean implements DataPatchInterface
         /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
 
+        $eavSetup->addAttribute('catalog_product', 'vhsarticlenumber', [
+            'type' => 'text',
+            'backend' => '',
+            'frontend' => '',
+            'label' => 'VhsArticleNumber',
+            'input' => 'text',
+            'class' => '',
+            'source' => '',
+            'global' => ScopedAttributeInterface::SCOPE_STORE,
+            'visible' => true,
+            'required' => false,
+            'user_defined' => false,
+            'default' => '',
+            'searchable' => false,
+            'filterable' => true,
+            'comparable' => false,
+            'visible_on_front' => false,
+            'used_in_product_listing' => false,
+            'unique' => false,
+            'apply_to' => '',
+        ]);
+
         $eavSetup->addAttribute('catalog_product', 'ean', [
             'type' => 'text',
             'backend' => '',
@@ -69,10 +91,32 @@ class Ean implements DataPatchInterface
             'unique' => false,
             'apply_to' => '',
         ]);
+        
+        $eavSetup->addAttribute('catalog_product', 'articlenumber', [
+            'type' => 'text',
+            'backend' => '',
+            'frontend' => '',
+            'label' => 'ArticleNumber',
+            'input' => 'text',
+            'class' => '',
+            'source' => '',
+            'global' => ScopedAttributeInterface::SCOPE_STORE,
+            'visible' => true,
+            'required' => false,
+            'user_defined' => false,
+            'default' => '',
+            'searchable' => false,
+            'filterable' => true,
+            'comparable' => false,
+            'visible_on_front' => false,
+            'used_in_product_listing' => false,
+            'unique' => false,
+            'apply_to' => '',
+        ]);
     }
 
     /**
-     * Function
+     * New function
      */
     public static function getDependencies()
     {
