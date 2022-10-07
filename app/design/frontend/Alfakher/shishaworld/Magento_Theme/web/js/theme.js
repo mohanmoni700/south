@@ -43,16 +43,15 @@ define([
         $(".ui-menu-item.parent.level1:first-child").addClass('current');
 
         //passvisible 
-        jQuery(document).on('click','#showlgpass',function(){
-            var vis = jQuery(this).data('vis');
-            if(vis == 0){
-                jQuery(this).closest('.control').find('input').attr('type','text');
-                jQuery(this).removeClass('fa-eye-slash').addClass('fa-eye');
-                jQuery(this).data('vis',1);
-            }else{
-                jQuery(this).closest('.control').find('input').attr('type','password');
-                jQuery(this).removeClass('fa-eye').addClass('fa-eye-slash');
-                jQuery(this).data('vis',0);
+        $("body").on('click','#showlgpass',function(){
+            if($(this).hasClass('fa-eye-slash')) {
+              $(this).removeClass('fa-eye-slash');
+              $(this).addClass('fa-eye');
+              $(this).parent('.control').find('input').attr('type','text');
+            } else {
+              $(this).removeClass('fa-eye');
+              $(this).addClass('fa-eye-slash');  
+              $(this).parent('.control').find('input').attr('type','password');
             }
         });
 
