@@ -27,12 +27,10 @@ class Data extends AbstractHelper
      * @var \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      */
     protected $scopeConfig;
-
     /**
      * @var \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
      */
     private $orderRepository;
-
     /**
      * @var \Magento\Framework\HTTP\Client\Curl $curl
      */
@@ -101,23 +99,19 @@ class Data extends AbstractHelper
      * @param int $orderId
      * @param mixed $token
      */
-
     public function orderSync($orderId, $token)
     {
-
         try {
             if (isset($orderId) && !empty($orderId)) {
                 $order = $this->order->get($orderId);
 
                 $orderData = [];
-
                 $websiteId = $order->getStore()->getWebsiteId();
-
                 $orderData['orderData']['number'] = $this->getConfigValue(
                     self::ORDER_PREFIX,
                     $websiteId
                 ).'-'.$order->getIncrementId();
-                // $orderData['externalNumber'] = $order->getIncrementId();
+                // $orderData['externalNumber'] = $order->getMonduReferenceId();
                 $orderData['orderData']['date'] = $order->getCreatedAt();
                 $orderData['orderData']['currency'] = $order->getOrderCurrencyCode();
                 $orderData['orderData']['isB2B'] = filter_var(
@@ -150,7 +144,7 @@ class Data extends AbstractHelper
 
                 $items = $order->getAllItems();
                 $orderData['orderData']['items'] = $this->orderItems($items);
-                
+
                 $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/ordersync.log');
                 $logger = new \Zend_Log();
                 $logger->addWriter($writer);
@@ -165,7 +159,8 @@ class Data extends AbstractHelper
                     $websiteId
                 ), $this->json->serialize($orderData));
                 $result = $this->curl->getBody();
-                $logger->info(print_r($this->json->unserialize($result, true)['message']));
+                $logger->info(print_r($result, true));
+                return $result;
             }
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
             $this->messageManager->addError($e->getMessage());
@@ -183,7 +178,7 @@ class Data extends AbstractHelper
                 'client' => $this->getConfigValue(self::CLINT_CODE, $websiteId),
                 'apiKey' => $this->getConfigValue(self::API_KEY, $websiteId)
             ];
-            if (isset($authData) && !empty($authData)) {
+            if (!empty($authData['client']) && !empty($authData['apiKey'])) {
                 $this->curl->setOption(CURLOPT_RETURNTRANSFER, true);
                 $this->curl->post($this->getConfigValue(self::AUTH_API, $websiteId), $authData);
                 $response = $this->curl->getBody();
@@ -249,26 +244,24 @@ class Data extends AbstractHelper
      */
     public function orderItems($items)
     {
-        // foreach ($items as $key => $item) {
-        //     $productData[$key]['sku']  = $item->getSku();
-        //     $productData[$key]['name'] = $item->getName();
-        //     // $vhsArticleNumber = $item->getvhsArticleNumber();
-        //     // $articleNumber = $item->getarticleNumber();
-        //     // $ean13 = $item->getean13();
-        //     $productData[$key]['quantity'] = $item->getQtyOrdered();
-        //     $price = $item->getPrice() * $item->getQtyOrdered();
-        //     $taxAmount = $item->getBaseTaxAmount();
-        //     $productData[$key]['price'] = $price + $taxAmount;
-        //     $productData[$key]['discount'] = $item->getDiscountAmount();
-        //        // print_r($item->getProductOptions());
-        // }
-        // return $productData;
-        $productData[] =[
-            'ean13' => "4260500000368",
-            'quantity'=> 1,
-            'price' => 21.30,
-            'discount'=> 0
-        ];
+        foreach ($items as $key => $item) {
+            $vhsArticleNumber = $item->getProduct()->getData('vhsarticlenumber');
+            $ean = $item->getProduct()->getData('ean');
+            $articleNumber = $item->getProduct()->getData('articlenumber');
+            if (!empty($vhsArticleNumber)) {
+                $productData[$key]['vhsArticleNumber'] = $vhsArticleNumber;
+            } elseif (!empty($ean)) {
+                $productData[$key]['ean13'] = $ean;
+            } elseif (!empty($articleNumber)) {
+                $productData[$key]['articleNumber'] = $articleNumber;
+            }
+            $productData[$key]['quantity'] = $item->getQtyOrdered();
+            $price = $item->getPrice() * $item->getQtyOrdered();
+            $taxAmount = $item->getBaseTaxAmount();
+            $productData[$key]['price'] = $price + $taxAmount;
+            $productData[$key]['discount'] = $item->getDiscountAmount();
+               // print_r($item->getProductOptions());
+        }
         return $productData;
     }
 }

@@ -3,7 +3,6 @@
 namespace Alfakher\ExitB\Controller\Index;
 
 use Magento\Sales\Api\Data\OrderInterface;
-use Magento\Store\Model\ScopeInterface;
 
 /**
  * Single order sync
@@ -26,11 +25,6 @@ class Index extends \Magento\Framework\App\Action\Action
     protected $json;
 
     /**
-     * @var \Magento\Framework\Message\ManagerInterface
-     */
-    protected $messageManager;
-
-    /**
      * New construct
      *
      * @param \Magento\Framework\App\Action\Context $context
@@ -39,7 +33,6 @@ class Index extends \Magento\Framework\App\Action\Action
      * @param \Alfakher\ExitB\Helper\Data $helperData
      * @param \Magento\Framework\HTTP\Client\Curl $curl
      * @param \Magento\Framework\Serialize\Serializer\Json $json
-     * @param \Magento\Framework\Message\ManagerInterface $messageManager
      */
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
@@ -47,16 +40,14 @@ class Index extends \Magento\Framework\App\Action\Action
         \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
         \Alfakher\ExitB\Helper\Data $helperData,
         \Magento\Framework\HTTP\Client\Curl $curl,
-        \Magento\Framework\Serialize\Serializer\Json $json,
-        \Magento\Framework\Message\ManagerInterface $messageManager
+        \Magento\Framework\Serialize\Serializer\Json $json
     ) {
+        parent::__construct($context);
         $this->pageFactory = $pageFactory;
         $this->order = $orderRepository;
         $this->helperData = $helperData;
         $this->curl = $curl;
         $this->json = $json;
-        $this->messageManager = $messageManager;
-        parent::__construct($context);
     }
 
     /**
@@ -67,19 +58,21 @@ class Index extends \Magento\Framework\App\Action\Action
     public function execute()
     {
         $id = $this->getRequest()->getParam('id');
-        try {
-            if (isset($id) && !empty($id)) {
-                $order = $this->order->get($id);
-                $orderData = [];
+        
+        if (isset($id) && !empty($id)) {
+            $order = $this->order->get($id);
+            $orderData = [];
 
-                $websiteId = $order->getStore()->getWebsiteId();
-                $token_value = $this->helperData->tokenAuthentication($order->getStore()->getWebsiteId());
+            $websiteId = $order->getStore()->getWebsiteId();
+            if ($this->helperData->isModuleEnabled($websiteId)) {
+                $token_value = $this->helperData->tokenAuthentication($websiteId);
                 $result = $this->helperData->orderSync($id, $token_value);
+                echo '<pre>'; print_r($result); echo '</pre>'; exit;
             } else {
-                $this->messageManager->addError(__("Somthing you missing(id) !!!"));
+                echo "Module is Not Enable!!!";
             }
-        } catch (\Magento\Framework\Exception\LocalizedException $e) {
-            $this->messageManager->addError($e->getMessage());
+        } else {
+            echo "Somthing you missed(id)!!!";
         }
     }
 }

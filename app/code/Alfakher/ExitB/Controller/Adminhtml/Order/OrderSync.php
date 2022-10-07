@@ -13,7 +13,6 @@ use Magento\Sales\Api\OrderManagementInterface;
  */
 class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAction
 {
-
     /**
      * @var OrderManagementInterface
      */
@@ -62,9 +61,11 @@ class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
 
         foreach ($orderSyncArray as $key => $value) {
             $token_value = $this->helperData->tokenAuthentication($key);
-            foreach ($value as $keys => $orderId) {
-                $this->helperData->orderSync($orderId, $token_value);
-                $countOrdersync++;
+            if (!empty($token_value)) {
+                foreach ($value as $keys => $orderId) {
+                    $this->helperData->orderSync($orderId, $token_value);
+                    $countOrdersync++;
+                }
             }
         }
 
@@ -74,7 +75,6 @@ class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
         } elseif ($countNonDeleteOrder) {
             $this->messageManager->addError(__('No order(s) were sync.'));
         }
-
         if ($countOrdersync) {
             $this->messageManager->addSuccess(__('Order Sync In ExitB %1 order(s).', $countOrdersync));
         }
