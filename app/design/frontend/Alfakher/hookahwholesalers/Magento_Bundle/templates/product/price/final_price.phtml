@@ -37,6 +37,7 @@ if ($IsFinanceVerified == 1 && $isCustomerLoggedIn == 1): ?>
             'include_container' => true
         ]); ?>
         <?php if ($minimalPrice < $minimalRegularPrice): ?>
+            <br>
             <span class="old-price">
                 <?= /* @noEscape */ $renderMinimalRegularPrice ?>
             </span>
@@ -52,6 +53,7 @@ if ($IsFinanceVerified == 1 && $isCustomerLoggedIn == 1): ?>
                     'include_container' => true
                 ]); ?>
                 <?php if ($minimalPrice < $minimalRegularPrice): ?>
+                    <br>
                     <span class="old-price">
                         <?= /* @noEscape */ $renderMinimalRegularPrice ?>
                     </span>
@@ -65,6 +67,7 @@ if ($IsFinanceVerified == 1 && $isCustomerLoggedIn == 1): ?>
                     'include_container' => true
                 ]); ?>
                 <?php if ($maximalPrice < $maximalRegularPrice): ?>
+                    <br>
                     <span class="old-price">
                         <?= /* @noEscape */ $block->renderAmount($maximalRegularPrice, $regularPriceAttributes); ?>
                     </span>
@@ -76,6 +79,7 @@ if ($IsFinanceVerified == 1 && $isCustomerLoggedIn == 1): ?>
                     'include_container' => true
                 ]); ?>
             <?php if ($minimalPrice < $minimalRegularPrice): ?>
+                <br>
                 <span class="old-price">
                     <?= /* @noEscape */ $renderMinimalRegularPrice ?>
                 </span>
