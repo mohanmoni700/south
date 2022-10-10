@@ -1,4 +1,5 @@
 <?php
+declare (strict_types = 1);
 
 namespace Alfakher\ShippingEdit\Plugin\Model;
 
@@ -19,7 +20,7 @@ class Shipping
         $order = $object->getOrder();
 
         $order->collectOrderTotals();
-        
+
         $order->setOriginalSubtotal(0);
         $order->setOriginalSubtotalInclTax(0);
         $order->setOriginalBaseSubtotal(0);
