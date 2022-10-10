@@ -50,6 +50,20 @@
         #reviews {
             margin-bottom: @indent__base;
         }
+        #customer-reviews {
+            .review-title {
+                .lib-css(letter-spacing, 2px);
+            }
+            .review-ratings {
+                .lib-css(margin-bottom, @indent__base);
+            }
+        }
+        
+        .block.review-list {
+            .review-details {
+                .lib-css(max-width, 100%);
+            }
+        }
     }
     @supports (-moz-appearance:none) {
         .fieldset-bundle-options {
