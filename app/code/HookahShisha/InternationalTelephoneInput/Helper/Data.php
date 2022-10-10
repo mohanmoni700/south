@@ -124,7 +124,6 @@ class Data extends AbstractHelper
      * @param string $method
      * @return array
      */
-
     public function telephoneFieldConfigBilling($addressType, $method = '')
     {
         return [
