@@ -1,4 +1,6 @@
 <?php
+declare (strict_types = 1);
+
 namespace Alfakher\CheckoutPage\Block\Checkout;
 
 use HookahShisha\InternationalTelephoneInput\Helper\Data;
@@ -19,11 +21,13 @@ class LayoutProcessor
     {
         $this->helper = $helper;
     }
+
     /**
      * AfterProcess
      *
      * @param LayoutProcessor $subject
      * @param array $jsLayout
+     * @return array $jsLayout
      */
     public function afterProcess(
         \Magento\Checkout\Block\Checkout\LayoutProcessor $subject,
@@ -95,8 +99,8 @@ class LayoutProcessor
                 }
 
                 if (isset($payment['children']['form-fields']['children']['telephone'])) {
-                    $customScope = $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
-                        ['payment']['children']['payments-list']['children'][$key]
+                    $customScope = $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']
+                        ['children']['payment']['children']['payments-list']['children'][$key]
                         ['children']['form-fields']['children']['telephone']['config']['customScope'];
 
                     $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']

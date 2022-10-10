@@ -1,4 +1,5 @@
 <?php
+declare (strict_types = 1);
 
 namespace HookahShisha\InternationalTelephoneInput\Helper;
 
@@ -121,6 +122,7 @@ class Data extends AbstractHelper
      *
      * @param string $addressType
      * @param string $method
+     * @return array
      */
 
     public function telephoneFieldConfigBilling($addressType, $method = '')
