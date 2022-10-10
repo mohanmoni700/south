@@ -18,5 +18,18 @@ define([
                 },
                 $.mage.__("Not Enter Special Characters")
             );
+
+            $.validator.addMethod(
+                'country-code-validate-num',
+                function (value, params) {
+                    var num = /^[+]([[0-9 ]{1,})?([1-9 ][0-9])$/;
+                    if(value.match(num)){
+                        return true;
+                    }
+                    return false;
+                },
+                $.mage.__("Please enter a valid number")
+            );
         }
+        
     });
