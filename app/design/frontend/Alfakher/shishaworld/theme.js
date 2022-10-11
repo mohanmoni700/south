@@ -22,7 +22,6 @@ define([
 
     keyboardHandler.apply();
 
-
     $(document).ready(function(){
         $(window).scroll(function() {
             if ($(this).scrollTop() >= 50) {        
@@ -56,7 +55,6 @@ define([
         });
     });
 
-
     $(".login.primary").click(function() {
         $('html,body').animate({
             scrollTop: $(".login-container").offset().top},
@@ -72,7 +70,6 @@ define([
                 scrollTop : 0
             }, 0);
         });
-
         // mobile menu custom toggle
         $('.hamburger_icon').on('click', function () {
             $('.sw-megamenu').toggleClass('active');
