@@ -14,6 +14,7 @@ use Magento\Newsletter\Model\SubscriptionManagerInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Phrase;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 
 /**
  * New newsletter subscription action
@@ -22,6 +23,9 @@ use Magento\Framework\Phrase;
  */
 class NewAction extends \Magento\Newsletter\Controller\Subscriber\NewAction
 {
+
+    public const WEBSITE_CODE = 'hookahshisha/website_code_setting/website_code';
+
     /**
      * @var CustomerAccountManagement
      */
@@ -38,6 +42,7 @@ class NewAction extends \Magento\Newsletter\Controller\Subscriber\NewAction
      * @param SubscriberFactory $subscriberFactory
      * @param Session $customerSession
      * @param StoreManagerInterface $storeManager
+     * @param ScopeConfigInterface $scopeConfig
      * @param CustomerUrl $customerUrl
      * @param CustomerAccountManagement $customerAccountManagement
      * @param SubscriptionManagerInterface $subscriptionManager
@@ -51,6 +56,7 @@ class NewAction extends \Magento\Newsletter\Controller\Subscriber\NewAction
         SubscriberFactory $subscriberFactory,
         Session $customerSession,
         StoreManagerInterface $storeManager,
+        ScopeConfigInterface $scopeConfig,
         CustomerUrl $customerUrl,
         CustomerAccountManagement $customerAccountManagement,
         SubscriptionManagerInterface $subscriptionManager,
@@ -59,6 +65,7 @@ class NewAction extends \Magento\Newsletter\Controller\Subscriber\NewAction
         \Magento\Newsletter\Controller\Subscriber\NewAction $messageinfo,
         ResultFactory $resultFactory
     ) {
+        $this->scopeConfig = $scopeConfig;
         $this->customerAccountManagement = $customerAccountManagement;
         $this->subscriptionManager = $subscriptionManager;
         $this->emailValidator = $emailValidator ?: ObjectManager::getInstance()->get(EmailValidator::class);
@@ -88,8 +95,12 @@ class NewAction extends \Magento\Newsletter\Controller\Subscriber\NewAction
         $response = [];
         $websiteId = (int) $this->_storeManager->getStore()->getWebsiteId();
 
-        $storeCodeId = $this->_storeManager->getWebsite()->getCode();
-        if ($storeCodeId == 'shisha_world_b2b') {
+        $websiteCode = $this->_storeManager->getWebsite()->getCode();
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+        $configWebsite = $this->scopeConfig->getValue(self::WEBSITE_CODE, $storeScope);
+        $websideCodes = explode(',', $configWebsite);
+
+        if (in_array($websiteCode, $websideCodes)) {
             return $this->informactionMessage();
         } else {
             if ($this->getRequest()->isPost() && $this->getRequest()->getPost('email')) {
