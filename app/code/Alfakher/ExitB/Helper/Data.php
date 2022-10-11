@@ -114,7 +114,7 @@ class Data extends AbstractHelper
                     self::ORDER_PREFIX,
                     $websiteId
                 ) . '-' . $order->getIncrementId();
-                // $orderData['externalNumber'] = $order->getMonduReferenceId();
+                $orderData['orderData']['externalNumber'] = $order->getMonduReferenceId();
                 $orderData['orderData']['date'] = $order->getCreatedAt();
                 $orderData['orderData']['currency'] = $order->getOrderCurrencyCode();
                 $orderData['orderData']['isB2B'] = filter_var(
@@ -138,6 +138,7 @@ class Data extends AbstractHelper
 
                 $isOffline = $order->getPayment()->getMethodInstance()->isOffline();
                 $orderData['orderData']['payment']['code'] = $this->paymentType($websiteId, $isOffline);
+                $orderData['orderData']['payment']['token'] = $order->getMonduReferenceId();
 
                 $shippingMethod = $order->getShippingMethod();
                 $orderData['orderData']['shipment']['code'] = $this->getConfigValue(self::SHIP_CODE, $websiteId);
