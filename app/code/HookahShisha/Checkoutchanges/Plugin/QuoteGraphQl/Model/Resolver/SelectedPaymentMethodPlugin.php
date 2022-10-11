@@ -41,9 +41,8 @@ class SelectedPaymentMethodPlugin
      * @var \Psr\Log\LoggerInterface
      */
     private $logger;
-
     /**
-     * @param CreditCardTokenFactory $_collectionFactory
+     * @param CreditCardTokenFactory $collectionFactory
      * @param CardFactory $cardCollectionFactory
      * @param PaymentMethodListInterface $paymentMethodList
      * @param Customer $customer
@@ -94,6 +93,9 @@ class SelectedPaymentMethodPlugin
             
             $customerId = $cart->getCustomerId();
             $paymentmethodcode = "";
+            $publichash = "";
+            $savedinfo = [];
+  
             foreach ($activePaymentMethodList as $activepayment) {
                 $paymentMethodCode = $activepayment->getCode();
                 if ($paymentMethodCode === CorraConfig::CODE) {
@@ -101,7 +103,18 @@ class SelectedPaymentMethodPlugin
                             ->getCollection()->addFieldToFilter('customer_id', $customerId)
                             ->addFieldToFilter('is_active', 1)
                             ->addFieldToFilter('is_visible', 1);
+                    $collection->setOrder('entity_id', 'DESC');
+                   
                     if (count($collection)>0) {
+                        $paymentinfo = $collection->getFirstItem();
+                        $publichash = $paymentinfo['public_hash'];
+                        $paym_custid = $paymentinfo['customer_id'];
+                        if ($publichash) {
+                            $savedinfo = [
+                                'public_hash' => $publichash,
+                                'customer_id' => $paym_custid
+                            ];
+                        }
                         $paymentmethodcode = CorraConfig::CC_VAULT_CODE;
                         
                     }
@@ -117,6 +130,7 @@ class SelectedPaymentMethodPlugin
             if ($paymentmethodcode) {
                 try {
                     $payment->setMethod($paymentmethodcode);
+                    $payment->setAdditionalInformation($savedinfo);
                     $payment->save();
                 } catch (Exception $e) {
                     $this->logger->err($e->getMessage());
