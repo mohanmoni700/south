@@ -105,7 +105,7 @@ class Data extends AbstractHelper
     public function orderSync($orderId, $token)
     {
         try {
-            if (isset($orderId) && !empty($orderId)) {
+            if (isset($orderId) && !empty($orderId) && !empty($token)) {
                 $order = $this->order->get($orderId);
 
                 $orderData = [];
@@ -145,10 +145,12 @@ class Data extends AbstractHelper
                 $items = $order->getAllItems();
                 $orderData['orderData']['items'] = $this->orderItems($items);
 
-                if (isset($token) && !empty($token)) {
-                    $existData = $this->exitbmodel->load($orderId, 'order_id');
+                $existData = $this->exitbmodel->load($orderId, 'order_id');
+                if ($existData->getSyncStatus() == 1) {
+                    return $existData;
+                } else {
                     if (isset($existData) && !empty($existData->getData())) {
-                        $updateData = $this->orderExist($existData->getEntityId(), $token, $websiteId, $orderData);
+                        $updateData = $this->orderExist($existData, $token, $websiteId, $orderData);
                         return $updateData;
                     } else {
                         $exitBData = [
@@ -160,7 +162,7 @@ class Data extends AbstractHelper
                         $this->exitbmodel->setData($exitBData);
                         $save = $this->exitbmodel->save();
                         if (!empty($save->getEntityId())) {
-                            $firstData = $this->orderExist($save->getEntityId(), $token, $websiteId, $orderData);
+                            $firstData = $this->orderExist($save, $token, $websiteId, $orderData);
                             return $firstData;
                         }
                     }
@@ -173,21 +175,20 @@ class Data extends AbstractHelper
     /**
      * Order record update
      *
-     * @param int   $entityId
+     * @param mixed $data
      * @param mixed $token
      * @param int   $websiteId
      * @param mixed $orderData
      */
-    public function orderExist($entityId, $token, $websiteId, $orderData)
+    public function orderExist($data, $token, $websiteId, $orderData)
     {
-        $load_data = $this->exitbmodel->load($entityId);
         $result = $this->orderSyncApi($token, $websiteId, $orderData);
         $result_message = $this->json->unserialize($result)['success'];
         $status = $result_message === true ? 1 : 3;
-        $load_data->setData('request_param', $this->json->serialize($orderData));
-        $load_data->setData('response_param', $result);
-        $load_data->setData('sync_status', 3);
-        $result = $load_data->save();
+        $data->setData('request_param', $this->json->serialize($orderData));
+        $data->setData('response_param', $result);
+        $data->setData('sync_status', $status);
+        $result = $data->save();
         return $result;
     }
     /**
