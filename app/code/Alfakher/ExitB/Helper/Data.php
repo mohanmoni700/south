@@ -2,23 +2,23 @@
 
 namespace Alfakher\ExitB\Helper;
 
-use Magento\Store\Model\ScopeInterface;
+use Alfakher\ExitB\Model\ExitbOrder;
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Store\Model\ScopeInterface;
 
 /**
  * ExitB helper
- *
  */
 class Data extends AbstractHelper
 {
     public const EXITB_ENABLE = 'exitb/general/enabled';
     public const ORDER_PREFIX = 'exitb/exitb_ordersync/prefix_order';
-    public const ORDER_ISB2B  = 'exitb/exitb_ordersync/order_isb2b';
-    public const ORDER_ADM    = 'exitb/exitb_ordersync/ad_medium';
+    public const ORDER_ISB2B = 'exitb/exitb_ordersync/order_isb2b';
+    public const ORDER_ADM = 'exitb/exitb_ordersync/ad_medium';
     public const SHIP_CODE = 'exitb/exitb_ordersync/ship_code';
-    public const ORDER_API ='exitb/exitb_ordersync/order_api';
-    public const CLINT_CODE ='exitb/exitb_auth/auth_clientcode';
-    public const API_KEY ='exitb/exitb_auth/auth_apikey';
+    public const ORDER_API = 'exitb/exitb_ordersync/order_api';
+    public const CLINT_CODE = 'exitb/exitb_auth/auth_clientcode';
+    public const API_KEY = 'exitb/exitb_auth/auth_apikey';
     public const AUTH_API = 'exitb/exitb_auth/auth_api';
     public const OFFLINE = 'exitb/exitb_ordersync/payment_offline';
     public const ONLINE = 'exitb/exitb_ordersync/payment_online';
@@ -47,18 +47,20 @@ class Data extends AbstractHelper
     /**
      * New construct
      *
-     * @param \Magento\Framework\App\Helper\Context $context
-     * @param \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
-     * @param \Magento\Framework\HTTP\Client\Curl $curl
+     * @param \Magento\Framework\App\Helper\Context        $context
+     * @param \Magento\Sales\Api\OrderRepositoryInterface  $orderRepository
+     * @param \Magento\Framework\HTTP\Client\Curl          $curl
      * @param \Magento\Framework\Serialize\Serializer\Json $json
-     * @param \Magento\Framework\Message\ManagerInterface $messageManager
+     * @param \Magento\Framework\Message\ManagerInterface  $messageManager
+     * @param \Alfakher\ExitB\Model\ExitbOrder             $exitbmodel
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
         \Magento\Framework\HTTP\Client\Curl $curl,
         \Magento\Framework\Serialize\Serializer\Json $json,
-        \Magento\Framework\Message\ManagerInterface $messageManager
+        \Magento\Framework\Message\ManagerInterface $messageManager,
+        \Alfakher\ExitB\Model\ExitbOrder $exitbmodel
     ) {
         parent::__construct($context);
         $this->scopeConfig = $context->getScopeConfig();
@@ -66,13 +68,14 @@ class Data extends AbstractHelper
         $this->curl = $curl;
         $this->json = $json;
         $this->messageManager = $messageManager;
+        $this->exitbmodel = $exitbmodel;
     }
 
     /**
      * Get website Config Value
      *
      * @param mixed $config_path
-     * @param int $WebsiteId
+     * @param int   $WebsiteId
      */
     public function getConfigValue($config_path, $WebsiteId = null)
     {
@@ -96,7 +99,7 @@ class Data extends AbstractHelper
     /**
      * Order sync
      *
-     * @param int $orderId
+     * @param int   $orderId
      * @param mixed $token
      */
     public function orderSync($orderId, $token)
@@ -110,7 +113,7 @@ class Data extends AbstractHelper
                 $orderData['orderData']['number'] = $this->getConfigValue(
                     self::ORDER_PREFIX,
                     $websiteId
-                ).'-'.$order->getIncrementId();
+                ) . '-' . $order->getIncrementId();
                 // $orderData['externalNumber'] = $order->getMonduReferenceId();
                 $orderData['orderData']['date'] = $order->getCreatedAt();
                 $orderData['orderData']['currency'] = $order->getOrderCurrencyCode();
@@ -118,12 +121,10 @@ class Data extends AbstractHelper
                     $this->getConfigValue(self::ORDER_ISB2B, $websiteId),
                     FILTER_VALIDATE_BOOLEAN
                 );
-
                 $orderData['orderData']['advertisingMedium']['code'] = $this->getConfigValue(
                     self::ORDER_ADM,
                     $websiteId
                 );
-
                 $customerId = $order->getCustomerId();
                 if ($customerId) {
                     $orderData['orderData']['customer']['number'] = $order->getCustomerId();
@@ -132,39 +133,83 @@ class Data extends AbstractHelper
 
                 $shippingaddress = $order->getShippingAddress();
                 $orderData['orderData']['deliveryAddress'] = $this->deliveryAddress($shippingaddress);
-
                 $billingaddress = $order->getBillingAddress();
                 $orderData['orderData']['invoiceAddress'] = $this->invoiceAddress($billingaddress);
 
                 $isOffline = $order->getPayment()->getMethodInstance()->isOffline();
                 $orderData['orderData']['payment']['code'] = $this->paymentType($websiteId, $isOffline);
 
-                $shippingMethod  = $order->getShippingMethod();
+                $shippingMethod = $order->getShippingMethod();
                 $orderData['orderData']['shipment']['code'] = $this->getConfigValue(self::SHIP_CODE, $websiteId);
 
                 $items = $order->getAllItems();
                 $orderData['orderData']['items'] = $this->orderItems($items);
 
-                $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/ordersync.log');
-                $logger = new \Zend_Log();
-                $logger->addWriter($writer);
-                $logger->info(print_r($orderData, true));
-                $logger->info(print_r($token, true));
-
-                $this->curl->addHeader('Content-Type', 'application/json');
-                $this->curl->addHeader('Authorization', 'Bearer '.$token);
-                $this->curl->setOption(CURLOPT_RETURNTRANSFER, true);
-                $this->curl->post($this->getConfigValue(
-                    self::ORDER_API,
-                    $websiteId
-                ), $this->json->serialize($orderData));
-                $result = $this->curl->getBody();
-                $logger->info(print_r($result, true));
-                return $result;
+                if (isset($token) && !empty($token)) {
+                    $existData = $this->exitbmodel->load($orderId, 'order_id');
+                    if (isset($existData) && !empty($existData->getData())) {
+                        $updateData = $this->orderExist($existData->getEntityId(), $token, $websiteId, $orderData);
+                        return $updateData;
+                    } else {
+                        $exitBData = [
+                            'order_id' => $order->getEntityId(),
+                            'customer_email' => $order->getCustomerEmail(),
+                            'increment_id' => $order->getIncrementId(),
+                            'sync_status' => 2,
+                        ];
+                        $this->exitbmodel->setData($exitBData);
+                        $save = $this->exitbmodel->save();
+                        if (!empty($save->getEntityId())) {
+                            $firstData = $this->orderExist($save->getEntityId(), $token, $websiteId, $orderData);
+                            return $firstData;
+                        }
+                    }
+                }
             }
         } catch (\Magento\Framework\Exception\LocalizedException $e) {
             $this->messageManager->addError($e->getMessage());
         }
+    }
+    /**
+     * Order record update
+     *
+     * @param int   $entityId
+     * @param mixed $token
+     * @param int   $websiteId
+     * @param mixed $orderData
+     */
+    public function orderExist($entityId, $token, $websiteId, $orderData)
+    {
+        $load_data = $this->exitbmodel->load($entityId);
+        $result = $this->orderSyncApi($token, $websiteId, $orderData);
+        $result_message = $this->json->unserialize($result)['success'];
+        $status = $result_message === true ? 1 : 3;
+        $load_data->setData('request_param', $this->json->serialize($orderData));
+        $load_data->setData('response_param', $result);
+        $load_data->setData('sync_status', 3);
+        $result = $load_data->save();
+        return $result;
+    }
+    /**
+     * Order sync api
+     *
+     * @param mixed $token
+     * @param int   $websiteId
+     * @param mixed $orderData
+     */
+    public function orderSyncApi($token, $websiteId, $orderData)
+    {
+        $this->curl->addHeader('Content-Type', 'application/json');
+        $this->curl->addHeader('Authorization', 'Bearer ' . $token);
+        $this->curl->setOption(CURLOPT_RETURNTRANSFER, true);
+        $this->curl->post(
+            $this->getConfigValue(
+                self::ORDER_API,
+                $websiteId
+            ),
+            $this->json->serialize($orderData)
+        );
+        return $this->curl->getBody();
     }
     /**
      * Get token Config Value
@@ -176,7 +221,7 @@ class Data extends AbstractHelper
         if ($this->isModuleEnabled($websiteId)) {
             $authData = [
                 'client' => $this->getConfigValue(self::CLINT_CODE, $websiteId),
-                'apiKey' => $this->getConfigValue(self::API_KEY, $websiteId)
+                'apiKey' => $this->getConfigValue(self::API_KEY, $websiteId),
             ];
             if (!empty($authData['client']) && !empty($authData['apiKey'])) {
                 $this->curl->setOption(CURLOPT_RETURNTRANSFER, true);
@@ -198,12 +243,12 @@ class Data extends AbstractHelper
     {
         if ($shippingaddress) {
             return [
-                'firstName'=> $shippingaddress->getFirstname(),
+                'firstName' => $shippingaddress->getFirstname(),
                 'lastName' => $shippingaddress->getLastname(),
-                'street'   => implode($shippingaddress->getStreet()),
-                'zip'      => $shippingaddress->getPostcode(),
-                'city'     => $shippingaddress->getCity(),
-                'countryCode' => $shippingaddress->getCountryId()
+                'street' => implode($shippingaddress->getStreet()),
+                'zip' => $shippingaddress->getPostcode(),
+                'city' => $shippingaddress->getCity(),
+                'countryCode' => $shippingaddress->getCountryId(),
             ];
         }
     }
@@ -216,19 +261,19 @@ class Data extends AbstractHelper
     {
         if ($billingaddress) {
             return [
-                'firstName'=> $billingaddress->getFirstname(),
+                'firstName' => $billingaddress->getFirstname(),
                 'lastName' => $billingaddress->getLastname(),
-                'street'   => implode($billingaddress->getStreet()),
-                'zip'      => $billingaddress->getPostcode(),
-                'city'     => $billingaddress->getCity(),
-                'countryCode' => $billingaddress->getCountryId()
+                'street' => implode($billingaddress->getStreet()),
+                'zip' => $billingaddress->getPostcode(),
+                'city' => $billingaddress->getCity(),
+                'countryCode' => $billingaddress->getCountryId(),
             ];
         }
     }
     /**
      * Get payment
      *
-     * @param int $websiteId
+     * @param int   $websiteId
      * @param mixed $isOffline
      */
     public function paymentType($websiteId, $isOffline)
@@ -260,7 +305,7 @@ class Data extends AbstractHelper
             $taxAmount = $item->getBaseTaxAmount();
             $productData[$key]['price'] = $price + $taxAmount;
             $productData[$key]['discount'] = $item->getDiscountAmount();
-               // print_r($item->getProductOptions());
+            // print_r($item->getProductOptions());
         }
         return $productData;
     }

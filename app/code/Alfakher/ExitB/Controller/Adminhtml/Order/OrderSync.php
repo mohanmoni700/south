@@ -23,10 +23,10 @@ class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
     protected $helperData;
 
     /**
-     * @param Context $context
-     * @param Filter $filter
-     * @param CollectionFactory $collectionFactory
-     * @param OrderManagementInterface $orderManagement
+     * @param Context                     $context
+     * @param Filter                      $filter
+     * @param CollectionFactory           $collectionFactory
+     * @param OrderManagementInterface    $orderManagement
      * @param \Alfakher\ExitB\Helper\Data $helperData
      */
     public function __construct(
@@ -45,7 +45,7 @@ class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
     /**
      * Sync selected orders
      *
-     * @param AbstractCollection $collection
+     * @param  AbstractCollection $collection
      * @return \Magento\Backend\Model\View\Result\Redirect
      */
     protected function massAction(AbstractCollection $collection)
@@ -59,8 +59,8 @@ class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
             $orderSyncArray[$order->getStore()->getWebsiteId()][]=$order->getEntityId();
         }
 
-        foreach ($orderSyncArray as $key => $value) {
-            $token_value = $this->helperData->tokenAuthentication($key);
+        foreach ($orderSyncArray as $websiteId => $value) {
+            $token_value = $this->helperData->tokenAuthentication($websiteId);
             if (!empty($token_value)) {
                 foreach ($value as $keys => $orderId) {
                     $this->helperData->orderSync($orderId, $token_value);

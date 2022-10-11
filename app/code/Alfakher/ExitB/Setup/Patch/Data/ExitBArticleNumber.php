@@ -1,6 +1,4 @@
 <?php
-
-declare (strict_types = 1);
 namespace Alfakher\ExitB\Setup\Patch\Data;
 
 use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
@@ -45,10 +43,15 @@ class ExitBArticleNumber implements DataPatchInterface
      */
     public function apply()
     {
-        /** @var EavSetup $eavSetup */
+        /**
+ * @var EavSetup $eavSetup
+*/
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
 
-        $eavSetup->addAttribute('catalog_product', 'vhsarticlenumber', [
+        $eavSetup->addAttribute(
+            'catalog_product',
+            'vhsarticlenumber',
+            [
             'type' => 'text',
             'backend' => '',
             'frontend' => '',
@@ -68,9 +71,13 @@ class ExitBArticleNumber implements DataPatchInterface
             'used_in_product_listing' => false,
             'unique' => false,
             'apply_to' => '',
-        ]);
+            ]
+        );
 
-        $eavSetup->addAttribute('catalog_product', 'ean', [
+        $eavSetup->addAttribute(
+            'catalog_product',
+            'ean',
+            [
             'type' => 'text',
             'backend' => '',
             'frontend' => '',
@@ -90,9 +97,13 @@ class ExitBArticleNumber implements DataPatchInterface
             'used_in_product_listing' => false,
             'unique' => false,
             'apply_to' => '',
-        ]);
+            ]
+        );
         
-        $eavSetup->addAttribute('catalog_product', 'articlenumber', [
+        $eavSetup->addAttribute(
+            'catalog_product',
+            'articlenumber',
+            [
             'type' => 'text',
             'backend' => '',
             'frontend' => '',
@@ -112,7 +123,8 @@ class ExitBArticleNumber implements DataPatchInterface
             'used_in_product_listing' => false,
             'unique' => false,
             'apply_to' => '',
-        ]);
+            ]
+        );
     }
 
     /**

@@ -4,10 +4,10 @@
         <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true" comment="Entity Id"/>
         <column xsi:type="int" name="order_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Order Id"/>
         <column xsi:type="varchar" name="customer_email" nullable="true" length="255" comment="Customer Email"/>
-        <column xsi:type="int" name="increment_id" padding="10" unsigned="true" nullable="true" identity="false" comment="Order Increment Number"/>
-        <column xsi:type="varchar" name="sync_status" nullable="true" length="255" comment="Sync Status"/>
-        <column xsi:type="varchar" name="request_param" nullable="true" length="255" comment="Request Param"/>
-        <column xsi:type="varchar" name="response_param" nullable="true" length="255" comment="Response Param"/>
+        <column xsi:type="varchar" name="increment_id" nullable="true" length="255" comment="Order Increment Number"/>
+        <column xsi:type="int" name="sync_status" padding="10" unsigned="true" nullable="true" identity="false" comment="1=done,2=inprogress,3=failed"/>
+        <column xsi:type="text" name="request_param" nullable="true" comment="Request Param"/>
+        <column xsi:type="text" name="response_param" nullable="true" comment="Response Param"/>
         <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
                 comment="Creation Time"/>
         <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP"

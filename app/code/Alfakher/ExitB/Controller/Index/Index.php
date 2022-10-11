@@ -27,11 +27,11 @@ class Index extends \Magento\Framework\App\Action\Action
     /**
      * New construct
      *
-     * @param \Magento\Framework\App\Action\Context $context
-     * @param \Magento\Framework\View\Result\PageFactory $pageFactory
-     * @param \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
-     * @param \Alfakher\ExitB\Helper\Data $helperData
-     * @param \Magento\Framework\HTTP\Client\Curl $curl
+     * @param \Magento\Framework\App\Action\Context        $context
+     * @param \Magento\Framework\View\Result\PageFactory   $pageFactory
+     * @param \Magento\Sales\Api\OrderRepositoryInterface  $orderRepository
+     * @param \Alfakher\ExitB\Helper\Data                  $helperData
+     * @param \Magento\Framework\HTTP\Client\Curl          $curl
      * @param \Magento\Framework\Serialize\Serializer\Json $json
      */
     public function __construct(
@@ -67,7 +67,6 @@ class Index extends \Magento\Framework\App\Action\Action
             if ($this->helperData->isModuleEnabled($websiteId)) {
                 $token_value = $this->helperData->tokenAuthentication($websiteId);
                 $result = $this->helperData->orderSync($id, $token_value);
-                echo '<pre>'; print_r($result); echo '</pre>'; exit;
             } else {
                 echo "Module is Not Enable!!!";
             }
