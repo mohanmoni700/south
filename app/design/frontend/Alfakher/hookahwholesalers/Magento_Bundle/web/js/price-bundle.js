@@ -1,9 +1,4 @@
 /**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-
-/**
  * @api
  */
 define([
@@ -14,7 +9,8 @@ define([
     'priceBox'
 ], function ($, _, mageTemplate, utils) {
     'use strict';
-
+    
+    /*removed final price from optionTemplate*/
     var globalOptions = {
         optionConfig: null,
         productBundleSelector: 'input.bundle.option, select.bundle.option, textarea.bundle.option',
