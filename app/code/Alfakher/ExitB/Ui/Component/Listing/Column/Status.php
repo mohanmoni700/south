@@ -44,11 +44,11 @@ class Status extends Column
             foreach ($dataSource['data']['items'] as &$items) {
                 if (isset($items['sync_status'])) {
                     if ($items['sync_status'] == 1) {
-                        $items['sync_status'] = 'Sync Done';
+                        $items['sync_status'] = 1;
                     } elseif ($items['sync_status'] == 2) {
-                        $items['sync_status'] = 'In Progress';
-                    } else {
-                        $items['sync_status'] = 'Failed';
+                        $items['sync_status'] = 2;
+                    } elseif ($items['sync_status'] == 3) {
+                        $items['sync_status'] = 3;
                     }
                 }
             }

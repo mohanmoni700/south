@@ -111,15 +111,17 @@
         </column>
         <column name="sync_status" sortOrder="50" class="Alfakher\ExitB\Ui\Component\Listing\Column\Status">
             <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Alfakher\ExitB\Model\Status</item> 
                 <item name="config" xsi:type="array">
-                    <item name="filter" xsi:type="string">text</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="filter" xsi:type="string">select</item>
                     <item name="label" xsi:type="string" translate="true">Status</item>
+                    <item name="dataType" xsi:type="string">select</item>
                 </item>
             </argument>
         </column>
         <column name="request_param" sortOrder="60">
             <settings>
-                <!-- <filter>text</filter> -->
                 <sortable>false</sortable>
                 <label translate="true">Request Param</label>
                 <visible>false</visible>
@@ -127,7 +129,6 @@
         </column>
         <column name="response_param" sortOrder="70">
             <settings>
-                <!-- <filter>text</filter> -->
                 <sortable>false</sortable>
                 <label translate="true">Response Param</label>
                 <visible>false</visible>
@@ -138,8 +139,6 @@
                 <filter>dateRange</filter>
                 <dataType>date</dataType>
                 <label translate="true">Order Sync Date</label>
-                <!-- <sorting>desc</sorting>
-                <dateFormat>yyyy-MM-dd hh:mm:ss</dateFormat> -->
             </settings>
         </column>
         <column name="updated_at" sortOrder="90" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
@@ -147,8 +146,6 @@
                 <filter>dateRange</filter>
                 <dataType>date</dataType>
                 <label translate="true">Update Date</label>
-                <!-- <sorting>desc</sorting>
-                <dateFormat>yyyy-MM-dd hh:mm:ss</dateFormat> -->
             </settings>
         </column>
     </columns>
