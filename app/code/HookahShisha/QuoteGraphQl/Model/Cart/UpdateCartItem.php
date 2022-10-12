@@ -131,8 +131,8 @@ class UpdateCartItem extends SourceUpdateCartItem
             if (!empty($errors)) {
                 throw new GraphQlInputException(
                     __(
-                        'Could not update the product with SKU %sku: %message',
-                        ['sku' => $cartItem->getSku(), 'message' => __(implode("\n", $errors))]
+                        '%message',
+                        ['message' => __(implode("\n", $errors))]
                     )
                 );
             }
