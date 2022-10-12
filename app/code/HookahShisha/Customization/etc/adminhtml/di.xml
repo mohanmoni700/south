@@ -36,4 +36,10 @@
     <type name="Magento\Sales\Ui\Component\Listing\Column\ViewAction">
         <plugin name="Amasty_Request::add-quote-button-listing" disabled="true" />
     </type>
+    
+    <!-- incl tax price for bundle product in invoice pdf -->
+    <type name="Magetrend\PdfTemplates\Model\Pdf\Element\Items\Renderer\Bundle">
+        <plugin name="incl_tax_bundle" type="HookahShisha\Customization\Model\Pdf\Bundle" />
+    </type>
+
 </config>

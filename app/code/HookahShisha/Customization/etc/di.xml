@@ -65,10 +65,5 @@
     <type name="Amasty\RequestQuote\Model\Quote">
         <plugin name="date_format_quote" type="HookahShisha\Customization\Model\Quote" />
     </type>
-    
-    <!-- incl tax price for bundle product in invoice pdf -->
-    <type name="Magetrend\PdfTemplates\Model\Pdf\Element\Items\Renderer\Bundle">
-        <plugin name="incl_tax_bundle" type="HookahShisha\Customization\Model\Pdf\Bundle" />
-    </type>
 
 </config>
