@@ -45,18 +45,36 @@
                         -ms-flex-order: 1;
                         -webkit-order: 1;
                         order: 1; 
+                        .lib-css(margin-right, @indent__base);
+                        @media only screen and (max-width: @screen__xs) {
+                            .lib-css(margin-right, @indent__s);
+                        }
                     }
-                    .minicart-wrapper {
+                    .amquote-cart-wrapper.minicart-wrapper {
                         -ms-flex-order: 2;
                         -webkit-order: 2;
                         order: 2;
+                        align-self: auto;
+                        @media only screen and (max-width: @screen__xs) {
+                            .lib-css(margin-right, 0);
+                        }
+                    }
+                    .minicart-wrapper {
+                        -ms-flex-order: 3;
+                        -webkit-order: 3;
+                        order: 3;
+                        .lib-css(margin-right, @indent__base);
+                        .lib-css(margin-left, 0);
+                        @media only screen and (max-width: @screen__xs) {
+                            .lib-css(margin-right, @indent__s);
+                        }
                     }
                     .switcher {
-                        -ms-flex-order: 4;
-                        -webkit-order: 4;
+                        -ms-flex-order: 5;
+                        -webkit-order: 5;
+                        order: 5; 
                         .lib-css(margin, 0  0 0 15px);
                         float: none;
-                        order: 4; 
                         @media only screen and (max-width: @screen__l) {
                             .lib-css(margin, 0);
                             .lib-css(width, 65px);
@@ -87,11 +105,14 @@
                         }
                     }                           
                     .sign-in {
-                        -ms-flex-order: 3;
-                        -webkit-order: 3;
-                        order: 3;
+                        -ms-flex-order: 4;
+                        -webkit-order: 4;
+                        order: 4;
+                        @media only screen and (min-width: @screen__xs) and (max-width: @screen__l) {
+                            .lib-css(margin-right, @indent__s)
+                        }
                         .sign-up {
-                            @media only screen and (min-width: 1024px) and (max-width: 1199px) {
+                            @media only screen and (min-width: 1024px) and (max-width: 1240px) {
                                 .lib-css(text-align, center);
                             }
                         }
