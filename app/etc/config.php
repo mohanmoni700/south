@@ -144,8 +144,8 @@ return [
                 'group_id' => '18',
                 'website_id' => '18',
                 'name' => 'Shisha-World.com (B2B) Store',
-                'root_category_id' => '1170',
-                'default_store_id' => '21',
+                'root_category_id' => '1182',
+                'default_store_id' => '27',
                 'code' => 'shisha_world_b2b_store'
             ]
         ],
@@ -187,7 +187,7 @@ return [
                 'is_active' => '1'
             ],
             'hookah_store_view_es' => [
-                'store_id' => '22',
+                'store_id' => '24',
                 'code' => 'hookah_store_view_es',
                 'website_id' => '2',
                 'group_id' => '2',
@@ -250,7 +250,7 @@ return [
                 'is_active' => '1'
             ],
             'shisha_world_b2b_store_view_de' => [
-                'store_id' => '23',
+                'store_id' => '27',
                 'code' => 'shisha_world_b2b_store_view_de',
                 'website_id' => '18',
                 'group_id' => '18',
@@ -259,7 +259,7 @@ return [
                 'is_active' => '1'
             ],
             'shisha_world_b2b_store_view_en' => [
-                'store_id' => '24',
+                'store_id' => '30',
                 'code' => 'shisha_world_b2b_store_view_en',
                 'website_id' => '18',
                 'group_id' => '18',
@@ -268,7 +268,7 @@ return [
                 'is_active' => '1'
             ],
             'shisha_world_b2b_store_view_es' => [
-                'store_id' => '25',
+                'store_id' => '33',
                 'code' => 'shisha_world_b2b_store_view_es',
                 'website_id' => '18',
                 'group_id' => '18',
