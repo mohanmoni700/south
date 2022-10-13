@@ -302,11 +302,11 @@ class Data extends AbstractHelper
             } elseif (!empty($articleNumber)) {
                 $productData[$key]['articleNumber'] = $articleNumber;
             }
-            $productData[$key]['quantity'] = $item->getQtyOrdered();
+            $productData[$key]['quantity'] = (int)$item->getQtyOrdered();
             $price = $item->getPrice() * $item->getQtyOrdered();
             $taxAmount = $item->getBaseTaxAmount();
             $productData[$key]['price'] = $price + $taxAmount;
-            $productData[$key]['discount'] = $item->getDiscountAmount();
+            $productData[$key]['discount'] = (float)$item->getDiscountAmount();
             // print_r($item->getProductOptions());
         }
         return $productData;
