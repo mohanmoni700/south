@@ -114,7 +114,7 @@ class Data extends AbstractHelper
                     self::ORDER_PREFIX,
                     $websiteId
                 ) . '-' . $order->getIncrementId();
-                $orderData['orderData']['externalNumber'] = $order->getMonduReferenceId();
+                $orderData['orderData']['externalNumber'] = $order->getEntityId();
                 $orderData['orderData']['date'] = $order->getCreatedAt();
                 $orderData['orderData']['currency'] = $order->getOrderCurrencyCode();
                 $orderData['orderData']['isB2B'] = filter_var(
