@@ -55,7 +55,7 @@ class Button extends \Magento\Config\Block\System\Config\Form\Field
     public function getButtonHtml()
     {
         $button = $this->getLayout()->createBlock(
-            Magento\Backend\Block\Widget\Button::class
+            \Magento\Backend\Block\Widget\Button::class
         )->setData(
             [
                 'id' => 'generate_mega_menu',
