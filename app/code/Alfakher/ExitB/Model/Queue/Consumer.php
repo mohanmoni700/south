@@ -62,8 +62,7 @@ class Consumer extends ConsumerConfiguration
             $token_value = $this->helperData->tokenAuthentication($websiteId);
             $result = $this->helperData->orderSync($data['orderId'], $token_value);
             
-            $logger->info(print_r("order id".$data['orderId'], true));
-            $logger->info(print_r($result, true));
+            $logger->info(print_r("orderid".$data['orderId'], true));
         } catch (\Exception $e) {
             $logger->info("Error update.product.attribute: " . $e->getMessage());
         }
