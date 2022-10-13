@@ -3,13 +3,25 @@
 namespace HookahShisha\Customization\Block\System\Config\MegaMenu;
 
 /**
- *
+ * MegaMenu
  */
 use Magento\Framework\Data\Form\Element\AbstractElement;
 
 class Button extends \Magento\Config\Block\System\Config\Form\Field
 {
+    /**
+     * @var _template
+     */
     protected $_template = 'HookahShisha_Customization::system/config/megamenu/button.phtml';
+
+    /**
+     * @param Context $context
+     * @param Http $request
+     * @param ScopeConfigInterface $scopeConfig
+     * @param StoreManagerInterface $storeManager
+     * @param Url $frontUrl
+     * @param array $data
+     */
 
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
@@ -27,15 +39,23 @@ class Button extends \Magento\Config\Block\System\Config\Form\Field
         $this->frontUrl = $frontUrl;
     }
 
+    /**
+     * ElementHtml
+     *
+     * @param data $element
+     */
     protected function _getElementHtml(AbstractElement $element)
     {
         return $this->_toHtml();
     }
 
+    /**
+     * GetButtonHtml
+     */
     public function getButtonHtml()
     {
         $button = $this->getLayout()->createBlock(
-            'Magento\Backend\Block\Widget\Button'
+            Magento\Backend\Block\Widget\Button::class
         )->setData(
             [
                 'id' => 'generate_mega_menu',
@@ -46,10 +66,14 @@ class Button extends \Magento\Config\Block\System\Config\Form\Field
         return $button->toHtml();
     }
 
+    /**
+     * GetAjaxUrl
+     */
     public function getAjaxUrl()
     {
         $storeId = $this->request->getParam('store');
-        $storeUrl = $this->scopeConfig->getValue('web/secure/base_url', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $storeId);
+        $storeUrl = $this->scopeConfig
+            ->getValue('web/secure/base_url', \Magento\Store\Model\ScopeInterface::SCOPE_STORE, 0);
         $url = $storeUrl . 'custom/storeblock/generatemegamenu/store/' . $storeId;
         $url .= "?___store=" . $this->_storeManager->getStore($storeId)->getCode();
 
