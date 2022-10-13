@@ -12,7 +12,7 @@ class SyncPlugin
      */
     protected $request;
     /**
-     * @var \Magento\Sales\Api\OrderRepositoryInterface 
+     * @var \Magento\Sales\Api\OrderRepositoryInterface
      */
     private $orderRepository;
     /**
@@ -20,7 +20,7 @@ class SyncPlugin
      */
     protected $helperData;
     /**
-     * @var \Magento\Framework\Serialize\Serializer\Json 
+     * @var \Magento\Framework\Serialize\Serializer\Json
      */
     protected $json;
     /**
@@ -31,12 +31,12 @@ class SyncPlugin
     /**
      * Check construct
      *
-     * @param \Magento\Framework\App\RequestInterface      $request
-     * @param \Magento\Sales\Api\OrderRepositoryInterface  $orderRepository
+     * @param \Magento\Framework\App\RequestInterface                   $request
+     * @param \Magento\Sales\Api\OrderRepositoryInterface               $orderRepository
      * @param \Alfakher\ExitB\Model\ResourceModel\ExitbOrder\collection $exitborderModel
-     * @param \Alfakher\ExitB\Helper\Data                  $helperData
-     * @param \Magento\Framework\Serialize\Serializer\Json $json
-     * @param \Magento\Framework\MessageQueue\PublisherInterface $publisher
+     * @param \Alfakher\ExitB\Helper\Data                               $helperData
+     * @param \Magento\Framework\Serialize\Serializer\Json              $json
+     * @param \Magento\Framework\MessageQueue\PublisherInterface        $publisher
      */
     public function __construct(
         \Magento\Framework\App\RequestInterface $request,
@@ -45,7 +45,7 @@ class SyncPlugin
         \Alfakher\ExitB\Helper\Data $helperData,
         \Magento\Framework\Serialize\Serializer\Json $json,
         \Magento\Framework\MessageQueue\PublisherInterface $publisher
-    ){
+    ) {
         $this->request = $request;
         $this->order = $orderRepository;
         $this->exitborderModel = $exitborderModel;
@@ -54,9 +54,17 @@ class SyncPlugin
         $this->publisher = $publisher;
     }
 
-    public function afterExecute(\Alfakher\SalesApprove\Controller\Adminhtml\Order\Approve $subject, 
-        $result)
-    {
+    /**
+     * After sales approve
+     *
+     * @param \Alfakher\SalesApprove\Controller\Adminhtml\Order\Approve $subject
+     * @param mixed $result
+     * @return $result
+     */
+    public function afterExecute(
+        \Alfakher\SalesApprove\Controller\Adminhtml\Order\Approve $subject,
+        $result
+    ) {
         $data = (array) $this->request->getParams();
         $orderId = [
             "orderId" => $data['order_id'],

@@ -6,11 +6,11 @@ use Magento\Framework\MessageQueue\ConsumerConfiguration;
 /**
  * Exitb Order
  */
-class Consumer extends ConsumerConfiguration 
+class Consumer extends ConsumerConfiguration
 {
     public const TOPIC_NAME = "exitb.massorder.sync";
     /**
-     * @var \Magento\Sales\Api\OrderRepositoryInterface 
+     * @var \Magento\Sales\Api\OrderRepositoryInterface
      */
     private $orderRepository;
     /**
@@ -25,7 +25,6 @@ class Consumer extends ConsumerConfiguration
     /**
      * Check construct
      *
-     * @param 
      * @param \Magento\Sales\Api\OrderRepositoryInterface  $orderRepository
      * @param \Alfakher\ExitB\Helper\Data                  $helperData
      * @param \Magento\Framework\Serialize\Serializer\Json $json
@@ -42,19 +41,18 @@ class Consumer extends ConsumerConfiguration
 
     /**
      * Consumer process start
-     * 
+     *
      * @param mixed $request
      * @return void
      */
-    public function process($request) 
+    public function process($request)
     {
-        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/mysql_message_queue.log');
-        $logger = new \Zend_Log();
-        $logger->addWriter($writer);
-        $logger->info('text message');
-        $logger->info(print_r('Request'.$request, true));
-
         try {
+            $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/mysql_message_queue.log');
+            $logger = new \Zend_Log();
+            $logger->addWriter($writer);
+            $logger->info('text message');
+            $logger->info(print_r('Request'.$request, true));
             $data = $this->json->unserialize($request, true);
 
             $order = $this->order->get($data['orderId']);
@@ -62,7 +60,7 @@ class Consumer extends ConsumerConfiguration
             $token_value = $this->helperData->tokenAuthentication($websiteId);
             $result = $this->helperData->orderSync($data['orderId'], $token_value);
             
-            $logger->info(print_r("orderid".$data['orderId'], true));
+            $logger->info(print_r("order id".$data['orderId'], true));
         } catch (\Exception $e) {
             $logger->info("Error update.product.attribute: " . $e->getMessage());
         }
