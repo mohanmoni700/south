@@ -42,18 +42,38 @@
                     .lib-css(border, 0);
                     .lib-css(color, @color-black);
                     .reorder-wrapper {
-                        -ms-flex-order: 1;
-                        -webkit-order: 1;
-                        order: 1; 
-                        .lib-css(margin-right, @indent__base);
-                        @media only screen and (max-width: @screen__xs) {
-                            .lib-css(margin-right, @indent__s);
+                        -ms-flex-order: 2;
+                        -webkit-order: 2;
+                        order: 2; 
+                        a.header_account_link {
+                            .lib-css(color, @color_black);
+                            .lib-css(font-weight, @font-weight__semibold);
+                            .lib-css(text-decoration, none);
+                            display: block;
+                            font-size: 12px;
+                            padding-top: @indent__xl;
+                            position: relative;
+                            &::after {
+                                -webkit-transform: translate(-50%, 0);
+                                background-image: url('@{baseDir}images/Union.svg');
+                                background-position: center;
+                                background-repeat: no-repeat;
+                                background-size: contain;
+                                content: '';
+                                height: 17px;
+                                left: 50%;
+                                order: 2;
+                                position: absolute;
+                                top: 30%;
+                                transform: translate(-50%, 0);
+                                width: 21px;
+                            }
                         }
                     }
                     .amquote-cart-wrapper.minicart-wrapper {
-                        -ms-flex-order: 2;
-                        -webkit-order: 2;
-                        order: 2;
+                        -ms-flex-order: 1;
+                        -webkit-order: 1;
+                        order: 1;
                         align-self: auto;
                         @media only screen and (max-width: @screen__xs) {
                             .lib-css(margin-right, 0);
@@ -65,9 +85,6 @@
                         order: 3;
                         .lib-css(margin-right, @indent__base);
                         .lib-css(margin-left, 0);
-                        @media only screen and (max-width: @screen__xs) {
-                            .lib-css(margin-right, @indent__s);
-                        }
                     }
                     .switcher {
                         -ms-flex-order: 5;
@@ -111,10 +128,8 @@
                         @media only screen and (min-width: @screen__xs) and (max-width: @screen__l) {
                             .lib-css(margin-right, @indent__s)
                         }
-                        .sign-up {
-                            @media only screen and (min-width: 1024px) and (max-width: 1240px) {
-                                .lib-css(text-align, center);
-                            }
+                        span.sign-up {
+                            .lib-css(text-align, center);
                         }
                     }
                 }
