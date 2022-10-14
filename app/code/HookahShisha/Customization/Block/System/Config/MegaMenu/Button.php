@@ -43,6 +43,7 @@ class Button extends \Magento\Config\Block\System\Config\Form\Field
      * ElementHtml
      *
      * @param data $element
+     * @return template
      */
     protected function _getElementHtml(AbstractElement $element)
     {
@@ -51,6 +52,8 @@ class Button extends \Magento\Config\Block\System\Config\Form\Field
 
     /**
      * GetButtonHtml
+     *
+     * @return template
      */
     public function getButtonHtml()
     {
@@ -68,6 +71,8 @@ class Button extends \Magento\Config\Block\System\Config\Form\Field
 
     /**
      * GetAjaxUrl
+     *
+     * @return url
      */
     public function getAjaxUrl()
     {
