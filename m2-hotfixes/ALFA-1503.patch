@@ -8,14 +8,14 @@ diff --git a/vendor/avalara/excise/Helper/Config.php b/vendor/avalara/excise/Hel
 +++ b/vendor/avalara/excise/Helper/Config.php
 @@ -117,6 +117,13 @@
      protected $timeZone;
-
+ 
      /**
 +     * flag for addressTaxable
 +     *
 +     * @var bool
 +     */
 +    protected $isTaxable = true;
-+
++    
 +    /**
       * Class constructor
       *
