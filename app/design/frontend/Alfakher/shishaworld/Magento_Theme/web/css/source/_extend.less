@@ -53,6 +53,9 @@
                             font-size: 12px;
                             padding-top: @indent__xl;
                             position: relative;
+                            @media only screen and (max-width: @screen__l) {
+                                font-size: 0;
+                            }
                             &::after {
                                 -webkit-transform: translate(-50%, 0);
                                 background-image: url('@{baseDir}images/Union.svg');
@@ -75,16 +78,20 @@
                         -webkit-order: 1;
                         order: 1;
                         align-self: auto;
+                        @media only screen and (max-width: @screen__l) {
+                            .lib-css(margin-top, @indent__xs);
+                        }
                         @media only screen and (max-width: @screen__xs) {
-                            .lib-css(margin-right, 0);
+                            .lib-css(margin-right, @indent__xs);
                         }
                     }
                     .minicart-wrapper {
                         -ms-flex-order: 3;
                         -webkit-order: 3;
                         order: 3;
-                        .lib-css(margin-right, @indent__base);
-                        .lib-css(margin-left, 0);
+                        @media only screen and (max-width: @screen__xs) {
+                            .lib-css(margin-left, @indent__xs);
+                        }
                     }
                     .switcher {
                         -ms-flex-order: 5;
@@ -94,7 +101,7 @@
                         float: none;
                         @media only screen and (max-width: @screen__l) {
                             .lib-css(margin, 0);
-                            .lib-css(width, 65px);
+                            .lib-css(width, 55px);
                         }
                         strong {
                             .lib-font-size(12);
@@ -109,9 +116,11 @@
                         .options .action.toggle:after {
                             .lib-font-size(32);
                             line-height: 15px;
+                            position: relative;
+                            left: -5px;
                         }
                         .options ul.dropdown {
-                            min-width: 140px;
+                            min-width: 80px;
                             li {
                                 .lib-vendor-prefix-display(flex);
                                 align-items: center;
@@ -125,9 +134,6 @@
                         -ms-flex-order: 4;
                         -webkit-order: 4;
                         order: 4;
-                        @media only screen and (min-width: @screen__xs) and (max-width: @screen__l) {
-                            .lib-css(margin-right, @indent__s)
-                        }
                         span.sign-up {
                             .lib-css(text-align, center);
                         }
@@ -215,9 +221,9 @@
         background-size: contain;
         content: '';
         @media only screen and (max-width: @screen__l) {
-            .lib-css(height, @indent__base);
+            .lib-css(height, 15px);
             .lib-css(margin-right, 0);
-            .lib-css(width, @indent__l);
+            .lib-css(width, @indent__m);
             vertical-align: top;
         }
     }
@@ -240,9 +246,9 @@
         background-size: contain;
         content: '';
         @media only screen and (max-width: @screen__l) {
-            .lib-css(height, @indent__base);
+            .lib-css(height, 15px);
             .lib-css(margin-right, 0);
-            .lib-css(width, @indent__l);
+            .lib-css(width, @indent__m);
             vertical-align: top;
         }
     }
@@ -265,9 +271,9 @@
         background-size: contain;
         content: '';
         @media only screen and (max-width: @screen__l) {
-            .lib-css(height, @indent__base);
+            .lib-css(height, 15px);
             .lib-css(margin-right, 0);
-            .lib-css(width, @indent__l);
+            .lib-css(width, @indent__m);
             vertical-align: top;
         }
     }
