@@ -1,8 +1,10 @@
-define([ 'jquery',
-'Magento_Ui/js/modal/modal',
-'mage/cookies',
-'mage/mage'
+define([ 
+	'jquery',
+	'Magento_Ui/js/modal/modal',
+	'mage/cookies',
+	'mage/mage'
 ], function($,modal) {
+	'use strict';
 	var options = {
 		type: 'popup',
 		responsive: true,
@@ -21,19 +23,19 @@ define([ 'jquery',
 		$(".modal-footer").hide();
 		}
 	};
+
 	$(document).ready(function() {
-	var popup = modal(options, $('#popup'));
-	if ($.cookie('popuplogintext') != 'open') {
-		$("#popup").modal('openModal');
-	if( "#newsletter-popup" ){
-		$( "#newsletter-popup" ).click(function() {
-            $.cookie('popuplogintext', 'open', { path: '/' });
-          });
-		$( ".action-close" ).click(function() {
-            $.cookie('popuplogintext', 'open', { path: '/' });
-          });
-		} 
-	  }
+		var popup = modal(options, $('#popup'));
+		if ($.cookie('popuplogintext') != 'open') {
+			$("#popup").modal('openModal');
+			if( "#newsletter-popup" ){
+				$( "#newsletter-popup" ).click(function() {
+					$.cookie('popuplogintext', 'open', { path: '/' });
+				});
+				$( ".action-close" ).click(function() {
+					$.cookie('popuplogintext', 'open', { path: '/' });
+				});
+			} 
+		}
 	});
-  }
-);
+});
