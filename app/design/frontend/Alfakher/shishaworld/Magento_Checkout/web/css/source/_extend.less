@@ -33,6 +33,19 @@
     }
 }
 //  
+//  Desktop only
+//  __________________
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+    .minicart-wrapper {
+        .action.showcart,
+        .amquote-showcart {
+            .counter.qty {
+                transform: translateX(20px);
+            }
+        }
+    }
+}
+//  
 //  Minimim Mobile
 //  __________________
 
@@ -50,6 +63,15 @@
 //
 //  Mobile
 //  _____________________________________________
+& when (@media-target = 'mobile'), (@media-target = 'all') {
+    @media only screen and (max-width: 991px) {
+        .cart-container {
+            form.form-cart {
+                .lib-css(background, @color_white);
+            }
+        }
+    }
+}
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
     //
