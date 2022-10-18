@@ -100,6 +100,9 @@
                         order: 5; 
                         .lib-css(margin, 0  0 0 15px);
                         float: none;
+                        @media only screen and (min-width: @screen__l) {
+                            padding-top: 22px;
+                        }
                         @media only screen and (max-width: @screen__l) {
                             .lib-css(margin, 0);
                             .lib-css(width, 50px);
@@ -138,13 +141,19 @@
                         -ms-flex-order: 4;
                         -webkit-order: 4;
                         order: 4;
+                        @media only screen and (min-width: @screen__l) {
+                            width: 100px;
+                        }
                         span.sign-up {
                             .lib-css(text-align, center);
                         }
                     }
                 }
                 .sign-in{
-                    ul.sign-up-ul.customer_logged_in{
+                    ul.sign-up-ul.customer_logged_in {
+                        li a {
+                            .lib-css(white-space, unset);
+                        }
                         &:after{
                             border-bottom: 12px solid @color_white;
                         }
@@ -154,7 +163,13 @@
                             border-bottom: 12px solid @color_primary;
                         }
                     }
-                } 
+                }                 
+            } 
+        } 
+    }
+    [lang="de"] #html-body{
+        .page-header{
+            .header.content{
                 .minicart-wrapper {
                     .action.showcart {
                         &::before {
@@ -164,9 +179,10 @@
                         }
                     }
                 }
-            } 
-        } 
+            }
+        }
     }
+    
     .kuQuickSearchAutoCompleteLayout{
         .klevuResultsBlock{
             .klevuQuickSearchResults{
