@@ -65,6 +65,11 @@ define([
     });
     $('.block-collapsible-nav .block-collapsible-nav-title strong').html($('.block-collapsible-nav .block-collapsible-nav-content strong').html());
 
+    $(".clp_faq_toggle").click(function(){
+        $(".clp_faq_toggle").toggleClass('active');
+        $(".clp_faq_inner").toggle();
+    });
+    
     $(window).load(function() {
         $(".mobile_menu_icon").click(function(){  
             $(".mobile_menu_icon").toggleClass("change");
