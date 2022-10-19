@@ -78,12 +78,13 @@
                         -ms-flex-order: 1;
                         -webkit-order: 1;
                         order: 1;
-                        align-self: auto;
                         @media only screen and (max-width: @screen__l) {
                             .lib-css(margin-top, @indent__xs);
+                            align-self: auto;
                         }
                         @media only screen and (max-width: @screen__xs) {
-                            .lib-css(margin-right, @indent__xs);
+                            .lib-css(margin-left, 0);
+                            .lib-css(margin-right, @indent__s);
                         }
                     }
                     .minicart-wrapper {
