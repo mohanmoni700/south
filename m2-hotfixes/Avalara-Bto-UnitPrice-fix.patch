@@ -46,7 +46,7 @@ Index: ../vendor/avalara/excise/Model/ProcessTaxQuote.php
 +                
                  $itemSku = $item->getSku();
 -                $itemUnitPrice = $item->getPrice();
-+                if($item->getParentItem()->getId() && $item->getParentItem()->getProductType() == 'configurable'){
++                if($item->getParentItem() != null && $item->getParentItem()->getProductType() == 'configurable'){
 +                    $itemUnitPrice = $item->getParentItem()->getPrice();
 +                }else{
 +                    $itemUnitPrice = $item->getPrice();
@@ -59,7 +59,7 @@ Index: ../vendor/avalara/excise/Model/ProcessTaxQuote.php
                      'UnitPrice' => $itemUnitPrice,
                      'BilledUnits' => $itemQty,
 -                    'LineAmount' => $item->getRowTotal() - $item->getDiscountAmount(),
-+                    'LineAmount' => ($item->getParentItem()->getId() && $item->getParentItem()->getProductType() == 'configurable') ? ($item->getParentItem()->getRowTotal() - $item->getDiscountAmount()) : ($item->getRowTotal() - $item->getDiscountAmount()),
++                    'LineAmount' => ($item->getParentItem() != null && $item->getParentItem()->getProductType() == 'configurable') ? ($item->getParentItem()->getRowTotal() - $item->getDiscountAmount()) : ($item->getRowTotal() - $item->getDiscountAmount()),
                      'AlternateUnitPrice' => $itemAlternateUnitPrice,
                      'AlternateLineAmount' => $itemAlternateUnitPrice * $itemQty,
                      'Currency' => $currencyCode,
