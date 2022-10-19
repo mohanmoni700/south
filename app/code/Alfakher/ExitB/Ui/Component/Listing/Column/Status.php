@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Alfakher\ExitB\Ui\Component\Listing\Column;
 
 use Magento\Framework\UrlInterface;

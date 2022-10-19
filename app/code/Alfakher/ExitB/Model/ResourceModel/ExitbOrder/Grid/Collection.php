@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Alfakher\ExitB\Model\ResourceModel\ExitbOrder\Grid;
 
 use Magento\Framework\Data\Collection\Db\FetchStrategyInterface as FetchStrategy;

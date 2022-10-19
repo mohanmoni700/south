@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Alfakher\ExitB\Controller\Adminhtml\Order;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
@@ -17,6 +17,7 @@ class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
      * @var OrderManagementInterface
      */
     protected $orderManagement;
+    
     /**
      * @var \Alfakher\ExitB\Helper\Data
      */

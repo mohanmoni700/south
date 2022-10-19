@@ -4,6 +4,5 @@
       queue="exitb.massorder.sync"
       connection="db"
       maxMessages="500"
-      consumerInstance="Magento\Framework\MessageQueue\Consumer"
       handler="Alfakher\ExitB\Model\Queue\Consumer::process"/>
 </config>

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Alfakher\ExitB\Model\ResourceModel\ExitbOrder;
 
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;

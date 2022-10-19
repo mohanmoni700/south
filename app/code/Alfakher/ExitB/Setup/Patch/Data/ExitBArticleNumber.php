@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Alfakher\ExitB\Setup\Patch\Data;
 
 use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;

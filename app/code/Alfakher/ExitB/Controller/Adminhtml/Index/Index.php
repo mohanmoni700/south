@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Alfakher\ExitB\Controller\Adminhtml\Index;
 
 use Magento\Backend\App\Action;

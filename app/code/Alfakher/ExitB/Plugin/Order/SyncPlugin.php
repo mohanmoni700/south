@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Alfakher\ExitB\Plugin\Order;
 
 /**
@@ -7,22 +8,27 @@ namespace Alfakher\ExitB\Plugin\Order;
 class SyncPlugin
 {
     public const TOPIC_NAME = 'exitb.massorder.sync';
+    
     /**
      * @var \Magento\Framework\App\RequestInterface
      */
     protected $request;
+
     /**
      * @var \Magento\Sales\Api\OrderRepositoryInterface
      */
     private $orderRepository;
+
     /**
      * @var \Alfakher\ExitB\Helper\Data
      */
     protected $helperData;
+
     /**
      * @var \Magento\Framework\Serialize\Serializer\Json
      */
     protected $json;
+    
     /**
      * @var \Magento\Framework\MessageQueue\PublisherInterface
      */

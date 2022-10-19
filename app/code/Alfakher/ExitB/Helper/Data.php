@@ -1,8 +1,7 @@
 <?php
-
+declare(strict_types=1);
 namespace Alfakher\ExitB\Helper;
 
-use Alfakher\ExitB\Model\ExitbOrder;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Store\Model\ScopeInterface;
 
@@ -27,18 +26,22 @@ class Data extends AbstractHelper
      * @var \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      */
     protected $scopeConfig;
+
     /**
      * @var \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
      */
     private $orderRepository;
+
     /**
      * @var \Magento\Framework\HTTP\Client\Curl $curl
      */
     protected $curl;
+
     /**
      * @var \Magento\Framework\Serialize\Serializer\Json $json
      */
     protected $json;
+    
     /**
      * @var \Magento\Framework\Message\ManagerInterface
      */
@@ -52,7 +55,7 @@ class Data extends AbstractHelper
      * @param \Magento\Framework\HTTP\Client\Curl          $curl
      * @param \Magento\Framework\Serialize\Serializer\Json $json
      * @param \Magento\Framework\Message\ManagerInterface  $messageManager
-     * @param \Alfakher\ExitB\Model\ExitbOrder             $exitbmodel
+     * @param \Alfakher\ExitB\Model\ExitbOrderFactory      $exitbmodelFactory
      */
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
@@ -60,7 +63,7 @@ class Data extends AbstractHelper
         \Magento\Framework\HTTP\Client\Curl $curl,
         \Magento\Framework\Serialize\Serializer\Json $json,
         \Magento\Framework\Message\ManagerInterface $messageManager,
-        \Alfakher\ExitB\Model\ExitbOrder $exitbmodel
+        \Alfakher\ExitB\Model\ExitbOrderFactory $exitbmodelFactory
     ) {
         parent::__construct($context);
         $this->scopeConfig = $context->getScopeConfig();
@@ -68,7 +71,7 @@ class Data extends AbstractHelper
         $this->curl = $curl;
         $this->json = $json;
         $this->messageManager = $messageManager;
-        $this->exitbmodel = $exitbmodel;
+        $this->exitbmodelFactory = $exitbmodelFactory;
     }
 
     /**
@@ -76,6 +79,7 @@ class Data extends AbstractHelper
      *
      * @param mixed $config_path
      * @param int   $WebsiteId
+     * @return string
      */
     public function getConfigValue($config_path, $WebsiteId = null)
     {
@@ -90,6 +94,7 @@ class Data extends AbstractHelper
      * Module enable
      *
      * @param int $websiteId
+     * @return string
      */
     public function isModuleEnabled($websiteId)
     {
@@ -101,6 +106,7 @@ class Data extends AbstractHelper
      *
      * @param int   $orderId
      * @param mixed $token
+     * @return array
      */
     public function orderSync($orderId, $token)
     {
@@ -130,7 +136,6 @@ class Data extends AbstractHelper
                     $orderData['orderData']['customer']['number'] = $order->getCustomerId();
                     $orderData['orderData']['customer']['email'] = $order->getCustomerEmail();
                 }
-
                 $shippingaddress = $order->getShippingAddress();
                 $orderData['orderData']['deliveryAddress'] = $this->deliveryAddress($shippingaddress);
                 $billingaddress = $order->getBillingAddress();
@@ -146,26 +151,24 @@ class Data extends AbstractHelper
                 $items = $order->getAllItems();
                 $orderData['orderData']['items'] = $this->orderItems($items);
 
-                $existData = $this->exitbmodel->load($orderId, 'order_id');
-                if ($existData->getSyncStatus() == 1) {
-                    return $existData;
+                $exitBModel = $this->exitbmodelFactory->create();
+                $exitBorderSync = $exitBModel->load($orderId, 'order_id');
+
+                if ($exitBorderSync->getSyncStatus() == 1) {
+                    return $exitBorderSync;
+                } elseif ($exitBorderSync->getSyncStatus() == 2 || $exitBorderSync->getSyncStatus() == 3) {
+                    $updateData = $this->orderExist($exitBorderSync, $token, $websiteId, $orderData);
+                    return $updateData;
                 } else {
-                    if (isset($existData) && !empty($existData->getData())) {
-                        $updateData = $this->orderExist($existData, $token, $websiteId, $orderData);
-                        return $updateData;
-                    } else {
-                        $exitBData = [
-                            'order_id' => $order->getEntityId(),
-                            'customer_email' => $order->getCustomerEmail(),
-                            'increment_id' => $order->getIncrementId(),
-                            'sync_status' => 2,
-                        ];
-                        $this->exitbmodel->setData($exitBData);
-                        $save = $this->exitbmodel->save();
-                        if (!empty($save->getEntityId())) {
-                            $firstData = $this->orderExist($save, $token, $websiteId, $orderData);
-                            return $firstData;
-                        }
+                    $creatModel = $this->exitbmodelFactory->create();
+                    $creatModel->setData('order_id', $order->getEntityId());
+                    $creatModel->setData('customer_email', $order->getCustomerEmail());
+                    $creatModel->setData('increment_id', $order->getIncrementId());
+                    $creatModel->setData('sync_status', 2);
+                    $creatModel->save();
+                    if (!empty($creatModel->getEntityId())) {
+                        $newData = $this->orderExist($creatModel, $token, $websiteId, $orderData);
+                        return $newData;
                     }
                 }
             }
@@ -173,6 +176,7 @@ class Data extends AbstractHelper
             $this->messageManager->addError($e->getMessage());
         }
     }
+
     /**
      * Order record update
      *
@@ -180,6 +184,7 @@ class Data extends AbstractHelper
      * @param mixed $token
      * @param int   $websiteId
      * @param mixed $orderData
+     * @return array
      */
     public function orderExist($data, $token, $websiteId, $orderData)
     {
@@ -192,12 +197,14 @@ class Data extends AbstractHelper
         $result = $data->save();
         return $result;
     }
+
     /**
      * Order sync api
      *
      * @param mixed $token
      * @param int   $websiteId
      * @param mixed $orderData
+     * @return mixed
      */
     public function orderSyncApi($token, $websiteId, $orderData)
     {
@@ -213,10 +220,12 @@ class Data extends AbstractHelper
         );
         return $this->curl->getBody();
     }
+
     /**
      * Get token Config Value
      *
      * @param int $websiteId
+     * @return mixed
      */
     public function tokenAuthentication($websiteId)
     {
@@ -236,10 +245,12 @@ class Data extends AbstractHelper
             return '';
         }
     }
+
     /**
      * Get delivery address
      *
      * @param array $shippingaddress
+     * @return array
      */
     public function deliveryAddress($shippingaddress)
     {
@@ -254,10 +265,12 @@ class Data extends AbstractHelper
             ];
         }
     }
+
     /**
      * Get invoice address
      *
      * @param array $billingaddress
+     * @return array
      */
     public function invoiceAddress($billingaddress)
     {
@@ -272,11 +285,13 @@ class Data extends AbstractHelper
             ];
         }
     }
+
     /**
      * Get payment
      *
      * @param int   $websiteId
      * @param mixed $isOffline
+     * @return string
      */
     public function paymentType($websiteId, $isOffline)
     {
@@ -284,14 +299,17 @@ class Data extends AbstractHelper
         $online = $this->getConfigValue(self::ONLINE, $websiteId);
         return $isOffline ? $offline : $online;
     }
+    
     /**
      * Get order items
      *
      * @param mixed $items
+     * @return array
      */
     public function orderItems($items)
     {
         foreach ($items as $key => $item) {
+            $productData[$key]['externalNumber'] = $item->getItemId();
             $vhsArticleNumber = $item->getProduct()->getData('vhsarticlenumber');
             $ean = $item->getProduct()->getData('ean');
             $articleNumber = $item->getProduct()->getData('articlenumber');
@@ -307,7 +325,6 @@ class Data extends AbstractHelper
             $taxAmount = $item->getBaseTaxAmount();
             $productData[$key]['price'] = $price + $taxAmount;
             $productData[$key]['discount'] = (float)$item->getDiscountAmount();
-            // print_r($item->getProductOptions());
         }
         return $productData;
     }

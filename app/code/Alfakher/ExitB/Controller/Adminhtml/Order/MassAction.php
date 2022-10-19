@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Alfakher\ExitB\Controller\Adminhtml\Order;
 
 use Magento\Backend\App\Action;
@@ -19,10 +19,12 @@ class MassAction extends Action
      * @var \Alfakher\ExitB\Model\ResourceModel\ExitbOrder\CollectionFactory
      */
     protected $collectionFactory;
+
     /**
      * @var \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
      */
     private $orderRepository;
+
     /**
      * @var \Alfakher\ExitB\Helper\Data
      */

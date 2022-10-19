@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 namespace Alfakher\ExitB\Controller\Index;
 
 use Magento\Sales\Api\Data\OrderInterface;
@@ -67,11 +67,7 @@ class Index extends \Magento\Framework\App\Action\Action
             if ($this->helperData->isModuleEnabled($websiteId)) {
                 $token_value = $this->helperData->tokenAuthentication($websiteId);
                 $result = $this->helperData->orderSync($id, $token_value);
-            } else {
-                echo "Module is Not Enable!!!";
             }
-        } else {
-            echo "Somthing you missed(id)!!!";
         }
     }
 }
