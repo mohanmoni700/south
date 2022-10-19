@@ -11,13 +11,15 @@ class YotpoConfig implements ArgumentInterface
     protected $scopeConfig;
 
     /**
-     *
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param \Magento\Bundle\Block\Sales\Order\Items\Renderer $renderer
      */
     public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Bundle\Block\Sales\Order\Items\Renderer $renderer
     ) {
         $this->scopeConfig = $scopeConfig;
+        $this->renderer = $renderer;
     }
 
     /**
@@ -42,5 +44,19 @@ class YotpoConfig implements ArgumentInterface
     {
         $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE;
         return $this->scopeConfig->getValue($section, $storeScope, $websiteid);
+    }
+
+    /**
+     * Remove price for bundle options
+     *
+     * @param mixed $item
+     * @return string
+     */
+    public function getCustomBundlePrice($item)
+    {
+        if ($attributes = $this->renderer->getSelectionAttributes($item)) {
+            return sprintf('%d', $attributes['qty']) . ' x ' . $this->renderer->escapeHtml($item->getName());
+        }
+        return $this->renderer->escapeHtml($item->getName());
     }
 }
