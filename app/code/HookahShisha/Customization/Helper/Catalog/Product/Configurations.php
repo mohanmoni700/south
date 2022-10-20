@@ -18,10 +18,12 @@ class Configurations
         \Magento\Bundle\Helper\Catalog\Product\Configuration $subject,
         array $result
     ) {
-        foreach ($result as $key => $option) {
-            $excludePrice = explode(" ", $option['value'][0]);
-            array_pop($excludePrice);
-            $result[$key]['value'][0] = implode(" ", $excludePrice) . "<br>";
+        foreach ($result as $key => $options) {
+            foreach ($options['value'] as $val => $option) {
+                $excludePrice = explode(" ", $options['value'][$val]);
+                array_pop($excludePrice);
+                $result[$key]['value'][$val] = implode(" ", $excludePrice) . "<br>";
+            }
         }
         return $result;
     }
