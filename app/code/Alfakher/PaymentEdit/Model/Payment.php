@@ -330,6 +330,7 @@ class Payment extends \MageWorx\OrderEditor\Model\Payment
                 $this->getPaymentTitle()
             );
         }
+        $payment->save();
         $this->messageManager->addSuccessMessage("Payment method is changed successfully.");
         
         $this->_eventManager->dispatch(
