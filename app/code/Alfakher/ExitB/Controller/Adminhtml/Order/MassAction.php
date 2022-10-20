@@ -33,11 +33,11 @@ class MassAction extends Action
     protected $helperData;
 
     /**
-     * @param \Magento\Backend\App\Action\Context               $context
-     * @param \Magento\Ui\Component\MassAction\Filter           $filter
-     * @param \Alfakher\ExitB\Model\ResourceModel\ExitbOrder    $collectionFactory
-     * @param \Magento\Sales\Api\OrderRepositoryInterface       $orderRepository
-     * @param \Alfakher\ExitB\Helper\Data                       $helperData
+     * @param Context                  $context
+     * @param Filter                   $filter
+     * @param CollectionFactory        $collectionFactory
+     * @param OrderRepositoryInterface $orderRepository
+     * @param Data                     $helperData
      */
     public function __construct(
         Context $context,

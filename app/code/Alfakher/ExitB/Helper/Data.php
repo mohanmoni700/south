@@ -2,10 +2,15 @@
 declare(strict_types=1);
 namespace Alfakher\ExitB\Helper;
 
+use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Framework\HTTP\Client\Curl;
+use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Framework\Message\ManagerInterface;
+use Alfakher\ExitB\Model\ExitbOrderFactory;
 
 /**
  * ExitB helper
@@ -35,37 +40,37 @@ class Data extends AbstractHelper
     private $orderRepository;
 
     /**
-     * @var \Magento\Framework\HTTP\Client\Curl $curl
+     * @var Curl $curl
      */
     protected $curl;
 
     /**
-     * @var \Magento\Framework\Serialize\Serializer\Json $json
+     * @var Json $json
      */
     protected $json;
     
     /**
-     * @var \Magento\Framework\Message\ManagerInterface
+     * @var ManagerInterface
      */
     protected $messageManager;
 
     /**
      * New construct
      *
-     * @param \Magento\Framework\App\Helper\Context        $context
-     * @param \Magento\Sales\Api\OrderRepositoryInterface  $orderRepository
-     * @param \Magento\Framework\HTTP\Client\Curl          $curl
-     * @param \Magento\Framework\Serialize\Serializer\Json $json
-     * @param \Magento\Framework\Message\ManagerInterface  $messageManager
-     * @param \Alfakher\ExitB\Model\ExitbOrderFactory      $exitbmodelFactory
+     * @param Context                  $context
+     * @param OrderRepositoryInterface $orderRepository
+     * @param Curl                     $curl
+     * @param Json                     $json
+     * @param ManagerInterface         $messageManager
+     * @param ExitbOrderFactory        $exitbmodelFactory
      */
     public function __construct(
-        \Magento\Framework\App\Helper\Context $context,
-        \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
-        \Magento\Framework\HTTP\Client\Curl $curl,
-        \Magento\Framework\Serialize\Serializer\Json $json,
-        \Magento\Framework\Message\ManagerInterface $messageManager,
-        \Alfakher\ExitB\Model\ExitbOrderFactory $exitbmodelFactory
+        Context $context,
+        OrderRepositoryInterface $orderRepository,
+        Curl $curl,
+        Json $json,
+        ManagerInterface $messageManager,
+        ExitbOrderFactory $exitbmodelFactory
     ) {
         parent::__construct($context);
         $this->scopeConfig = $context->getScopeConfig();

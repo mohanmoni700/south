@@ -29,7 +29,7 @@ class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
      * @param Filter                      $filter
      * @param CollectionFactory           $collectionFactory
      * @param OrderManagementInterface    $orderManagement
-     * @param \Alfakher\ExitB\Helper\Data $helperData
+     * @param Data                        $helperData
      */
     public function __construct(
         Context $context,

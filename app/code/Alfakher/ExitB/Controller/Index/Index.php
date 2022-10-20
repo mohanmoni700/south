@@ -2,11 +2,13 @@
 declare(strict_types=1);
 namespace Alfakher\ExitB\Controller\Index;
 
-use Magento\Sales\Api\Data\OrderInterface;
+use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\View\Result\PageFactory;
 use Alfakher\ExitB\Helper\Data;
 use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Framework\HTTP\Client\Curl;
 
 /**
  * Single order sync
@@ -31,20 +33,20 @@ class Index extends Action
     /**
      * New construct
      *
-     * @param \Magento\Framework\App\Action\Context        $context
-     * @param \Magento\Framework\View\Result\PageFactory   $pageFactory
-     * @param \Magento\Sales\Api\OrderRepositoryInterface  $orderRepository
-     * @param \Alfakher\ExitB\Helper\Data                  $helperData
-     * @param \Magento\Framework\HTTP\Client\Curl          $curl
-     * @param \Magento\Framework\Serialize\Serializer\Json $json
+     * @param Context                  $context
+     * @param PageFactory              $pageFactory
+     * @param OrderRepositoryInterface $orderRepository
+     * @param Data                     $helperData
+     * @param Curl                     $curl
+     * @param Json                     $json
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $pageFactory,
-        \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
-        \Alfakher\ExitB\Helper\Data $helperData,
-        \Magento\Framework\HTTP\Client\Curl $curl,
-        \Magento\Framework\Serialize\Serializer\Json $json
+        Context $context,
+        PageFactory $pageFactory,
+        OrderRepositoryInterface $orderRepository,
+        Data $helperData,
+        Curl $curl,
+        Json $json
     ) {
         parent::__construct($context);
         $this->pageFactory = $pageFactory;
