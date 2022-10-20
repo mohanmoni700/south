@@ -1,0 +1,417 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    //
+    //  Header Section
+    //  -------------------------
+
+    body {
+        .page-header {
+            .header-links-wrapper {
+                .header-links {
+                    .header-item.whatsapp {
+                        &::before {
+                            .lib-css(height, 23px);
+                            .lib-css(top, 0);
+                            .lib-css(width, 23px);
+                            background-image: url('@{baseDir}images/whatsapp.png');
+                        }
+                    }
+                }
+            }
+        }
+    }
+    h2 {
+        color: @color_primary;
+    }
+    .message.success,
+    .message.error{
+        a{
+            &:hover{
+                color: @color_black;
+            }
+        }
+    }
+    #html-body{
+        .page-header{
+            .header.content{
+                .left_section {
+                    flex-basis: 62%;
+                }
+                .right_section.panel.wrapper {
+                    .lib-css(align-items, center);
+                    .lib-css(background, transparent);
+                    .lib-css(border, 0);
+                    .lib-css(color, @color-black);
+                    flex-basis: 40%;
+                    .reorder-wrapper {
+                        -ms-flex-order: 2;
+                        -webkit-order: 2;
+                        order: 2; 
+                        a.header_account_link {
+                            .lib-css(color, @color_black);
+                            .lib-css(font-weight, @font-weight__semibold);
+                            .lib-css(text-decoration, none);
+                            display: block;
+                            font-size: 12px;
+                            padding-top: @indent__xl;
+                            position: relative;
+                            @media only screen and (max-width: @screen__l) {
+                                font-size: 0;
+                            }
+                            &::after {
+                                -webkit-transform: translate(-50%, 0);
+                                background-image: url('@{baseDir}images/Union.svg');
+                                background-position: center;
+                                background-repeat: no-repeat;
+                                background-size: contain;
+                                content: '';
+                                height: 17px;
+                                left: 50%;
+                                order: 2;
+                                position: absolute;
+                                top: 30%;
+                                transform: translate(-50%, 0);
+                                width: 21px;
+                            }
+                        }
+                    }
+                    .amquote-cart-wrapper.minicart-wrapper {
+                        -ms-flex-order: 1;
+                        -webkit-order: 1;
+                        order: 1;
+                        @media only screen and (min-width: @screen__l) {
+                            .lib-css(width, 80px);
+                        }
+                        @media only screen and (max-width: @screen__l) {
+                            .lib-css(margin-top, @indent__xs);
+                            align-self: auto;
+                        }
+                        @media only screen and (max-width: @screen__xs) {
+                            .lib-css(margin-left, 0);
+                            .lib-css(margin-right, @indent__s);
+                        }
+                    }
+                    .minicart-wrapper {
+                        -ms-flex-order: 3;
+                        -webkit-order: 3;
+                        order: 3;
+                        @media only screen and (max-width: @screen__xs) {
+                            .lib-css(margin-left, @indent__xs);
+                        }
+                    }
+                    .switcher {
+                        -ms-flex-order: 5;
+                        -webkit-order: 5;
+                        order: 5; 
+                        .lib-css(margin, 0  0 0 15px);
+                        float: none;
+                        @media only screen and (min-width: @screen__l) {
+                            padding-top: 22px;
+                        }
+                        @media only screen and (max-width: @screen__l) {
+                            .lib-css(margin, 0);
+                            .lib-css(width, 50px);
+                        }
+                        strong {
+                            .lib-font-size(12);
+                            .lib-vendor-prefix-display(flex);
+                            .lib-vendor-prefix-flex-direction(column);
+                            align-items: center;
+                            font-weight: @font-weight__semibold;
+                            @media only screen and (max-width: @screen__l) {
+                                .lib-font-size(0);
+                            }
+                        }
+                        .options .action.toggle:after {
+                            .lib-font-size(32);
+                            line-height: 15px;
+                            position: relative;
+                            left: -5px;
+                        }
+                        .options ul.dropdown {
+                            min-width: 80px;
+                            @media only screen and (max-width: @screen__l) {
+                                .lib-css(right, @indent__s);
+                            }
+                            li {
+                                .lib-vendor-prefix-display(flex);
+                                align-items: center;
+                            }
+                            a {
+                                width: ~"calc(100% - 30px)";
+                            }
+                        }
+                    }                           
+                    .sign-in {
+                        -ms-flex-order: 4;
+                        -webkit-order: 4;
+                        order: 4;
+                        @media only screen and (min-width: @screen__l) {
+                            width: 100px;
+                        }
+                        span.sign-up {
+                            .lib-css(text-align, center);
+                        }
+                    }
+                }
+                .sign-in{
+                    ul.sign-up-ul.customer_logged_in {
+                        li a {
+                            .lib-css(white-space, unset);
+                        }
+                        &:after{
+                            border-bottom: 12px solid @color_white;
+                        }
+                    }
+                    .sign-up-ul {
+                        &::before{
+                            border-bottom: 12px solid @color_primary;
+                        }
+                    }
+                }                 
+            } 
+        } 
+    }
+    [lang="de"] #html-body{
+        .page-header{
+            .header.content{
+                .minicart-wrapper {
+                    .action.showcart {
+                        &::before {
+                            @media only screen and (min-width: @screen__l) {
+                                transform: translateY(-50%) translateX(20px);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    [lang="es"] #html-body {
+        .page-header{
+            .header.content{
+                .right_section.panel.wrapper  {
+                    .reorder-wrapper {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+    
+    .kuQuickSearchAutoCompleteLayout{
+        .klevuResultsBlock{
+            .klevuQuickSearchResults{
+                ul li {
+                    .klevuQuickProductName{
+                        &:hover{
+                            color: @color_primary;
+                        }
+                    }
+                }
+            }
+            span.klevuHeadingText{
+                color: @color_black;
+            } 
+        } 
+        .klevuAutosuggestions,
+        .klevuCmsSuggestions,
+        .klevuCategorySuggestions{
+            ul{
+                li{
+                    a{
+                        &:hover{
+                            color: @color_primary;
+                        }
+                    }
+                } 
+            } 
+        }
+        span.klevuHeadingText{
+            color: @color_black;
+        } 
+        &.kuEmptySearchBox{
+            .kuPopularSearchTerms{
+                ul{
+                    li{
+                        a{
+                            &:hover{
+                                color:@color_primary;
+                            }
+                        }
+                    } 
+                }
+            }
+        }
+    }
+    //
+    //  Language Switcher
+    //  ---------------------------------
+    #switcher-language-trigger {
+        .lib-vendor-prefix-display(flex);
+        align-items: end;        
+        @media only screen and (max-width: @screen__l) {
+            .lib-css(margin-left, @indent__xs);
+            .lib-css(margin-top, 8px);
+            align-items: center;
+        }
+    }
+    .view-shisha_world_b2b_store_view_de:before,
+    .view-hubbly_bubbly_store_view_de:before {
+        .lib-css(display, inline-block);
+        .lib-css(height, @indent__base);
+        .lib-css(margin-left, @indent__xs);
+        .lib-css(width, @indent__l);
+        background: url('@{baseDir}images/german-flag.png') no-repeat;
+        background-size: contain;
+        content: '';
+        @media only screen and (max-width: @screen__l) {
+            .lib-css(height, 15px);
+            .lib-css(margin-right, 0);
+            .lib-css(width, @indent__m);
+            vertical-align: top;
+        }
+    }
+    .view-shisha_world_b2b_store_view_de.switcher-option:before {
+        .lib-css(display, inline-block);
+        .lib-css(height, @indent__base);
+        .lib-css(margin-left, @indent__s);
+        .lib-css(margin-top, 3px);
+        .lib-css(width, @indent__l);
+        background: url('@{baseDir}images/german-flag.png') no-repeat;
+        background-size: contain;
+        content: '';  
+    }
+    .view-shisha_world_b2b_store_view_en:before{
+        .lib-css(display, inline-block);
+        .lib-css(height, @indent__base);
+        .lib-css(margin-left, @indent__xs);
+        .lib-css(width, @indent__l);
+        background: url('@{baseDir}images/usa-flag.png') no-repeat;
+        background-size: contain;
+        content: '';
+        @media only screen and (max-width: @screen__l) {
+            .lib-css(height, 15px);
+            .lib-css(margin-right, 0);
+            .lib-css(width, @indent__m);
+            vertical-align: top;
+        }
+    }
+    .view-shisha_world_b2b_store_view_en.switcher-option:before {
+        .lib-css(display, inline-block);
+        .lib-css(height, @indent__base);
+        .lib-css(margin-left, @indent__s);
+        .lib-css(margin-top, 3px);
+        .lib-css(width, @indent__l);
+        background: url('@{baseDir}images/usa-flag.png') no-repeat;
+        background-size: contain;
+        content: '';        
+    }
+    .view-shisha_world_b2b_store_view_es:before {
+        .lib-css(display, inline-block);
+        .lib-css(height, @indent__base);
+        .lib-css(margin-left, @indent__xs);
+        .lib-css(width, @indent__l);
+        background: url('@{baseDir}images/spain-flag.png') no-repeat;
+        background-size: contain;
+        content: '';
+        @media only screen and (max-width: @screen__l) {
+            .lib-css(height, 15px);
+            .lib-css(margin-right, 0);
+            .lib-css(width, @indent__m);
+            vertical-align: top;
+        }
+    }
+    .view-shisha_world_b2b_store_view_es.switcher-option:before {
+        .lib-css(display, inline-block);
+        .lib-css(height, @indent__base);
+        .lib-css(margin-left, @indent__s);
+        .lib-css(width, @indent__l);
+        background: url('@{baseDir}images/spain-flag.png') no-repeat;
+        background-size: contain;
+        content: '';
+    }
+
+    //
+    //  404 page
+    //  ---------------------------------------------
+    .cms-no-route {
+        .contact-links {
+            color: @color_black;
+        }
+        .main-heading {
+            color: @color_primary; 
+        }
+        .sub-heading {
+            font-family: @DMSerifDisplay;
+        }
+        .back-btn {
+            a {
+                background: @color_black;
+                border: 1px solid @color_black;
+                color: @color_white;
+            }
+        }
+    }
+
+    //
+    //  Contact page
+    //  ---------------------------------------------
+    
+    #contactBoxHead {
+        color: @color_white;
+    }
+    
+    //
+    //  Other Home page
+    //  ---------------------------------------------
+    
+    .limited_sale {
+        .limited_left {
+            h2 {
+                .lib-css(color, @color_white);
+            }
+            .per_off {
+                -webkit-text-fill-color: unset;
+            }
+        }
+    }
+    body .page-header {
+        .warning-section-wrapper .warning-section {
+            .heading-section {
+                h3 {
+                    font-family: unset;
+                }
+            }
+        }
+    }
+    .welcomesale_block {
+        .lib-css(background-color, transparent);   
+    }
+}
+
+& when (@media-target = 'mobile'), (@media-target = 'all') {
+    
+    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+        body {
+            .page-header {
+                .header.content {
+                    .left_section {
+                        flex-basis: 60%;
+                    }
+                }
+            }
+        }
+    }
+    //  @screen__l
+    @media only screen and (min-width: 1025px) and (max-width: 1280px) {
+        body .page-header .header.content {
+            .block-search {
+                padding-left: @indent__l;
+            }
+        }
+    }
+}
