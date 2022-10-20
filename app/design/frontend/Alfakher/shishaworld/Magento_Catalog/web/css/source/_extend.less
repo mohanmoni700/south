@@ -25,34 +25,46 @@
     .pending-tooltip {
         .lib-css(margin-bottom, 0);
     }
+    .catalog-category-view .products-grid .product-item-details 
     .catalog-category-view {
         .products-grid {
             .product-item-details {
                 display: flex;
                 flex-direction: column;
                 .blank-review {
-                    min-height: 35px;
                     -ms-flex-order: 0;
                     -webkit-order: 0;
+                    min-height: 35px;
                     order: 0;
                 }
                 .product-reviews-summary {
-                    margin: 0 auto;
+                    .lib-css(margin, 0 auto);
                 }
                 .product-item-name {
                     -ms-flex-order: 1;
                     -webkit-order: 1;
+                    .lib-css(margin-bottom, @indent__xs);
                     order: 1;
                 }
                 .price-box {
                     -ms-flex-order: 2;
                     -webkit-order: 2;
+                    .lib-css(margin, 0);
                     order: 2;
                 }
+                
+                .actions-primary {
+                    -ms-flex-order: 8;
+                    -webkit-order: 8;
+                    order: 8;
+                }
                 .product-item-inner {
-                    -ms-flex-order: 3;
-                    -webkit-order: 3;
-                    order: 3;
+                    -ms-flex-order: 9;
+                    -webkit-order: 9;
+                    order: 9;
+                    .product-item-actions {
+                        .lib-css(margin, 0 0 @indent__s 0);
+                    }
                 }
             }
         }

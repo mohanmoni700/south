@@ -37,11 +37,15 @@
     #html-body{
         .page-header{
             .header.content{
+                .left_section {
+                    flex-basis: 62%;
+                }
                 .right_section.panel.wrapper {
                     .lib-css(align-items, center);
                     .lib-css(background, transparent);
                     .lib-css(border, 0);
                     .lib-css(color, @color-black);
+                    flex-basis: 40%;
                     .reorder-wrapper {
                         -ms-flex-order: 2;
                         -webkit-order: 2;
@@ -78,6 +82,9 @@
                         -ms-flex-order: 1;
                         -webkit-order: 1;
                         order: 1;
+                        @media only screen and (min-width: @screen__l) {
+                            .lib-css(width, 80px);
+                        }
                         @media only screen and (max-width: @screen__l) {
                             .lib-css(margin-top, @indent__xs);
                             align-self: auto;
@@ -178,6 +185,17 @@
                                 transform: translateY(-50%) translateX(20px);
                             }
                         }
+                    }
+                }
+            }
+        }
+    }
+    [lang="es"] #html-body {
+        .page-header{
+            .header.content{
+                .right_section.panel.wrapper  {
+                    .reorder-wrapper {
+                        text-align: center;
                     }
                 }
             }
@@ -367,6 +385,32 @@
                 h3 {
                     font-family: unset;
                 }
+            }
+        }
+    }
+    .welcomesale_block {
+        .lib-css(background-color, transparent);   
+    }
+}
+
+& when (@media-target = 'mobile'), (@media-target = 'all') {
+    
+    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+        body {
+            .page-header {
+                .header.content {
+                    .left_section {
+                        flex-basis: 60%;
+                    }
+                }
+            }
+        }
+    }
+    //  @screen__l
+    @media only screen and (min-width: 1025px) and (max-width: 1280px) {
+        body .page-header .header.content {
+            .block-search {
+                padding-left: @indent__l;
             }
         }
     }

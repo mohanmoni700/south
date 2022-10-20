@@ -18,3 +18,22 @@
         }
     }
 }
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__l) {
+    .minicart-wrapper {
+        .amquote-showcart {
+            .counter.qty {
+                font-size: 10px;
+                line-height: 18px;
+                max-width: 36px;
+                min-width: 20px;
+                padding: 0;
+                top: -10px;
+            }
+        }
+    }
+}
