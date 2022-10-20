@@ -39,7 +39,7 @@ class SyncPlugin
      *
      * @param \Magento\Framework\App\RequestInterface                   $request
      * @param \Magento\Sales\Api\OrderRepositoryInterface               $orderRepository
-     * @param \Alfakher\ExitB\Model\ResourceModel\ExitbOrder\collection $exitborderModel
+     * @param \Alfakher\ExitB\Model\ResourceModel\ExitbOrder\Collection $exitborderModel
      * @param \Alfakher\ExitB\Helper\Data                               $helperData
      * @param \Magento\Framework\Serialize\Serializer\Json              $json
      * @param \Magento\Framework\MessageQueue\PublisherInterface        $publisher
@@ -47,7 +47,7 @@ class SyncPlugin
     public function __construct(
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
-        \Alfakher\ExitB\Model\ResourceModel\ExitbOrder\collection $exitborderModel,
+        \Alfakher\ExitB\Model\ResourceModel\ExitbOrder\Collection $exitborderModel,
         \Alfakher\ExitB\Helper\Data $helperData,
         \Magento\Framework\Serialize\Serializer\Json $json,
         \Magento\Framework\MessageQueue\PublisherInterface $publisher
@@ -73,7 +73,7 @@ class SyncPlugin
     ) {
         $data = (array) $this->request->getParams();
         $orderId = [
-            "orderId" => $data['order_id'],
+            "orderId" => (int) $data['order_id'],
         ];
         $order = $this->order->get($orderId['orderId']);
         $websiteId = $order->getStore()->getWebsiteId();
