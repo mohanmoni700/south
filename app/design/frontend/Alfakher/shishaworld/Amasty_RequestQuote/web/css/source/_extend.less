@@ -1,0 +1,39 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .minicart-wrapper {
+        .amquote-showcart {
+            &:before {
+                background: url('@{baseDir}images/my-quote.svg') no-repeat;
+            }
+        }
+    }
+    .amasty_quote-account-index,
+    .amasty_quote-account-view {
+        .page-title {
+            font-family: @montserrat;
+            letter-spacing: 0;
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__l) {
+    .minicart-wrapper {
+        .amquote-showcart {
+            .counter.qty {
+                font-size: 10px;
+                line-height: 18px;
+                max-width: 36px;
+                min-width: 20px;
+                padding: 0;
+                top: -10px;
+            }
+        }
+    }
+}

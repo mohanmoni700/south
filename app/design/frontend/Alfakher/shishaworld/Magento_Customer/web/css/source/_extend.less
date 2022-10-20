@@ -1,0 +1,105 @@
+//
+//  Variables
+//  _____________________________________________
+
+@theme_color: #ff9800;
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+
+    //
+    //  Password Strength Meter
+    //  ---------------------------------------------
+    .control.captcha-image {
+        .captcha-reload {
+            padding: 7px @indent__base !important;
+        }
+    }
+    .customer-account-create,
+    .account .form-address-edit
+     {
+        fieldset {
+            .field.region {
+                display: none;
+            }
+            .field.region.required {
+                display: block;
+            }
+        }
+    }
+    /*============= Account style ==============*/
+    .account {
+        .nav.items {
+            .nav[class*='meinebestellungen'],
+            .nav[class*='mispedidos'] {
+                a,
+                strong {
+                    &:before {
+                        background: url('@{baseDir}images/myorder.svg') no-repeat;
+                        height: 16px;
+                        width: 19px;
+                    }
+                }               
+            }
+            .nav {
+                a,
+                &.shop-guthaben,
+                &.créditoenlatienda {
+                    a,
+                    strong {
+                        &:before {
+                            background: url('@{baseDir}images/Store-credit-black.svg') no-repeat;
+                        }
+                    }
+                }
+                &.adressbuch,
+                &.libretadedirecciones {
+                    a,
+                    strong {
+                        &:before {
+                            background: url('@{baseDir}images/manage_address.svg') no-repeat;
+                        }
+                    }
+                }
+                &.meineangebote,
+                &.mispresupuestos {
+                    a,
+                    strong {
+                        &:before {
+                            background: url('@{baseDir}images/myorder.svg') no-repeat;
+                            height: 16px;
+                            width: 19px;
+                        }
+                    }
+                }
+            }
+        }
+        .b2b_basic_business_contact #business_details {
+            .form-edit-company {
+                .field.vat-tax-id,
+                .field.tin-number,
+                .field.tobacco-permit-number {
+                    .lib-css(display, none);
+                }
+            }
+        }
+    }
+
+    //
+    //  Register Page
+    //  -------------------------
+    .customer-account-create {
+        .form-create-account {
+            #business_details {
+                .field.vat-tax-id,
+                .field.tin-number,
+                .field.tobacco-permit-number {
+                    display: none !important;
+                }
+            }
+        }
+    }
+}

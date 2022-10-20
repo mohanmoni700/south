@@ -1,0 +1,282 @@
+<?php
+/**
+ * @var \HookahShisha\Customerb2b\Block\Myaccount\Businessdetail $block
+ * @var \Magento\Framework\DataObject $formSelectOptionsData
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
+$formMessages = $block->getFormMessages();
+$countries = $block->getCountriesList();
+$company = $block->getCustomerCompany();
+$actionURL = "#";
+$formDisable = 1;
+$selectedElement = "selected='selected'";
+$country = $block->getLayout()->createBlock(HookahShisha\Customerb2b\Block\Myaccount\BasicDetail::class);
+$count_id=$country->getCountryId();
+
+?>
+<?php $messageData = $block->getMessagedata(); ?>
+<?php if ($messageData['comAccountVerified'] == 0 && $messageData['comDetailsChanged'] == 0): ?>
+    <?php $actionURL = $this->getUrl('customerb2b/account/businessPost'); ?>
+    <?php $formDisable = 0; ?>
+<?php endif; ?>
+
+<?php if (!empty($formMessages)): ?>
+    <div id="company_edit_form_messages">
+        <?php foreach ($formMessages as $formMessage): ?>
+            <div class="message error">
+                <span><?= $block->escapeHtml($formMessage) ?></span>
+            </div>
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>
+
+<form class="form form-edit-company" method="post" id="company-edit-form"
+      action="<?= $block->escapeUrl($actionURL) ?>"
+      data-mage-init='{"validation":{}}'>
+    <?= $block->getBlockHtml('formkey') ?>
+    <?php if ($block->isEditAccountAllowed()): ?>
+    <fieldset class="fieldset info">
+        <legend></legend>
+        <input
+        type="hidden"
+        name="company_email"
+        id="company_email"
+        value="<?= /* @noEscape */ $block->escapeHtmlAttr($company->getCompanyEmail()) ?>"/>
+        <input type="hidden" name="com_account_verified" value="0"/>
+        <input type="hidden" name="com_details_changed" value="1"/>
+        <div class="field company-name _required">
+            <?php $businessNameLabel = __('Business Name'); ?>
+            <label class="label" for="company_name">
+                <span><?= $block->escapeHtml($businessNameLabel) ?></span>
+            </label>
+            <div class="control">
+                <input type="text" name="company_name" id="company_name"
+                       value="<?= $block->escapeHtmlAttr($company->getCompanyName()) ?>"
+                       placeholder="<?= $block->escapeHtmlAttr($businessNameLabel) ?>"
+                       title="<?= $block->escapeHtmlAttr($businessNameLabel) ?>"
+                       class="input-text" data-validate="{required:true}">
+            </div>
+        </div>
+        <div class="field business-type required">
+            <?php $businessTypeLabel = __('Business Type'); ?>
+            <label class="label" for="business_type">
+                <span><?= $block->escapeHtml($businessTypeLabel) ?></span>
+            </label>
+            <div class="control">
+                <select id="business_type"
+                        name="business_type"
+                        title="<?= /* @noEscape */ $block->escapeHtmlAttr($businessTypeLabel) ?>"
+                        class="validate-select business_type">
+                    <option value="">
+                        <?= $block->escapeHtml(__('Please select business type.')) ?>
+                    </option>
+                    <?php foreach ($block->getBusinessType() as $key => $value): ?>
+                        <option value="<?= /* @noEscape */ $value['value']?>"
+                            <?php if ($value['value'] == $company->getBusinessType()):?>
+                                <?= /* @noEscape */ $selectedElement;?>
+                            <?php endif; ?>
+                            ><?= /* @noEscape */ $value['label']?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="field annual-turn-over required">
+            <label class="label" for="annual_turn_over">
+                <span><?= $block->escapeHtml(__('What is your Annual Turn Over')) ?></span>
+            </label>
+            <div class="control">
+                <select id="annual_turn_over"
+                        name="annual_turn_over"
+                        title="<?= /* @noEscape */ $block->escapeHtmlAttr(__('What is your Annual Turn Over')) ?>"
+                        class="validate-select annual_turn_over">
+                    <option value="">
+                        <?= $block->escapeHtml(__('Please select your annual turn over.')) ?>
+                    </option>
+                    <?php foreach ($block->getAnnualTurnOver() as $kAto => $valAto): ?>
+                        <option value="<?= /* @noEscape */ $valAto['value']?>"
+                            <?php if ($valAto['value'] == $company->getAnnualTurnOver()): ?>
+                                <?= /* @noEscape */ $selectedElement ?>
+                            <?php endif; ?>
+                            ><?= /* @noEscape */ $valAto['label']?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="field number-of-emp required">
+            <label class="label" for="number_of_emp">
+                <span><?= $block->escapeHtml(__('Number of Employees')) ?></span>
+            </label>
+            <div class="control">
+                <select id="number_of_emp"
+                        name="number_of_emp"
+                        title="<?= /* @noEscape */ $block->escapeHtmlAttr(__('Number of Employees')) ?>"
+                        class="validate-select number_of_emp">
+                    <option value="">
+                        <?= $block->escapeHtml(__('Please select number of employees')) ?>
+                    </option>
+                    <?php foreach ($block->getNumberOfEmp() as $knoe => $valnoe): ?>
+                        <option value="<?= /* @noEscape */ $valnoe['value']?>"
+                            <?php if ($valnoe['value'] == $company->getNumberOfEmp()): ?>
+                                <?= /* @noEscape */ $selectedElement; ?>
+                            <?php endif; ?>
+                            ><?= /* @noEscape */ $valnoe['label']?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="field fiscal-number">
+                <?php $fiscalNumber = __('Fiscal Number'); ?>
+                <label class="label" for="fiscal_number">
+                    <span><?= $block->escapeHtml($fiscalNumber) ?></span>
+                </label>
+                <div class="control">
+                    <input type="text" name="fiscal_number" id="fiscal_number"
+                           value="<?= $block->escapeHtmlAttr($company->getFiscalNumber()) ?>"
+                           placeholder="<?= $block->escapeHtmlAttr($fiscalNumber) ?>"
+                           title="<?= $block->escapeHtmlAttr($fiscalNumber) ?>"
+                           class="input-text validate-alphanum-with-spaces">
+                </div>
+            </div>
+            <div class="field ust-id">
+                <?php $UstId = __('UST ID'); ?> 
+                <label class="label" for="ust_id">
+                    <span><?= $block->escapeHtml($UstId) ?></span>
+                </label>
+                <div class="control">
+                    <input type="text" name="ust_id" id="ust_id"
+                           value="<?= $block->escapeHtmlAttr($company->getUstId()) ?>"
+                           placeholder="<?= $block->escapeHtmlAttr($UstId) ?>"
+                           title="<?= $block->escapeHtmlAttr($UstId) ?>"
+                           class="input-text validate-alphanum-with-spaces">
+                </div>
+            </div>
+        <!-- added condition for showing below fields for USA only 08/03/2022 start[BS]  -->
+        <?php if ($count_id == 'US') { ?>
+        <div class="field vat-tax-id">
+            <?php $salesTaxID = __('Sales Tax ID'); ?>
+            <label class="label" for="vat_tax_id">
+                <span class="tax_tooltip">
+                <span><?= $block->escapeHtml($salesTaxID) ?></span>
+                <?php $tooltipSalesTaxEnable = $block->getConfig('hookahshisha/business_details/enable_business'); ?>
+                <?php if ($tooltipSalesTaxEnable): ?>
+                    <?php
+                    $tooltipSalesTaxId = $block->getConfig(
+                        'hookahshisha/business_details/tooltip_sales_tax_id'
+                    );
+                    ?>
+                    <span class="sales-tax-tooltip">
+                        <a href="javascript::void(0);" class="tooltip-toggle">?</a>
+                        <span class="tooltip-content"><?= $block->escapeHtml($tooltipSalesTaxId) ?></span>
+                    </span>
+                <?php endif; ?>
+                </span>
+            </label>
+            <div class="control">
+                <input type="text" name="vat_tax_id" id="vat_tax_id"
+                       value="<?= $block->escapeHtmlAttr($company->getVatTaxId()) ?>"
+                       placeholder="<?= $block->escapeHtmlAttr($salesTaxID) ?>"
+                       title="<?= $block->escapeHtmlAttr($salesTaxID) ?>"
+                       class="input-text validate-alphanum-with-spaces">
+            </div>
+        </div>
+        <div class="field tin-number">
+            <?php $tinNumberLabel = __('TIN Number'); ?>
+            <label class="label" for="tin_number">
+                <span><?= $block->escapeHtml($tinNumberLabel) ?></span>
+            </label>
+            <div class="control">
+                <input type="text" name="tin_number" id="tin_number"
+                       value="<?= $block->escapeHtmlAttr($company->getTinNumber()) ?>"
+                       placeholder="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
+                       title="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
+                       class="input-text validate-alphanum-with-spaces">
+            </div>
+        </div>
+        <div class="field tobacco-permit-number">
+            <?php $tobaccoPermitNumber = __('Tobacco Permit Number'); ?>
+            <label class="label" for="tobacco_permit_number">
+                <span><?= $block->escapeHtml($tobaccoPermitNumber) ?></span>
+            </label>
+            <div class="control">
+                <input type="text" name="tobacco_permit_number" id="tobacco_permit_number"
+                       value="<?= $block->escapeHtmlAttr($company->getTobaccoPermitNumber()) ?>"
+                       placeholder="<?= $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
+                       title="<?= $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
+                       class="input-text validate-alphanum-with-spaces">
+            </div>
+        </div>
+    <?php } ?>
+      <!-- condition for showing below fields for USA only 08/03/2022 end[BS] -->
+        <div class="field hear-about-us required">
+            <label class="label" for="hear_about_us">
+                <span><?= $block->escapeHtml(__('How did you hear about us ?')) ?></span>
+            </label>
+            <div class="control">
+                <select id="hear_about_us"
+                        name="hear_about_us"
+                        title="<?= /* @noEscape */ $block->escapeHtmlAttr(__('How did you hear about us ?')) ?>"
+                        class="validate-select hear_about_us">
+                    <option value="">
+                        <?= $block->escapeHtml(__('Please select you hear about us')) ?>
+                    </option>
+                    <?php foreach ($block->getHearAboutUs() as $khau => $valhau): ?>
+                        <option value="<?= /* @noEscape */ $valhau['value']?>"
+                            <?php if ($valhau['value'] == $company->getHearAboutUs()): ?> 
+                                <?= /* @noEscape */ $selectedElement; ?>
+                            <?php endif; ?>
+                            ><?= /* @noEscape */ $valhau['label']?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="field hear-about-us message">
+            <?php $questionsLabel = __('Questions?'); ?>
+            <label class="label" for="questions">
+                <span><?= $block->escapeHtml($questionsLabel) ?></span>
+            </label>
+            <div class="control">
+                <textarea name="questions" id="questions"
+                       placeholder="<?= $block->escapeHtmlAttr($questionsLabel) ?>"
+                       title="<?= $block->escapeHtmlAttr($questionsLabel) ?>"
+                       class="input-text"><?= $block->escapeHtmlAttr($company->getQuestions()) ?></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button
+            type="submit"
+            class="action save primary"
+            title="<?= $block->escapeHtmlAttr(__('Save business details')) ?>">
+                <span><?= $block->escapeHtml(__('Save business details')) ?></span>
+            </button>
+        </div>
+    </div>
+    <?php endif; ?>
+</form>
+<?php
+    $scriptString = <<<script
+        require(['jquery'], function($){
+    script;
+?>
+<?php if ($formDisable == 1): ?>
+    <?php
+        $scriptString .= <<<script
+            $(document).ready(function(){
+                $("#company-edit-form :input").prop("disabled", true);
+            });
+        script;
+    ?>
+<?php endif; ?>
+<?php
+    $scriptString .= <<<script
+            $("#company-edit-form").submit(function( event ) {
+                if($('#company-edit-form').valid()){
+                    $("body").trigger('processStart');
+                }
+            });
+        });
+    script; ?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>

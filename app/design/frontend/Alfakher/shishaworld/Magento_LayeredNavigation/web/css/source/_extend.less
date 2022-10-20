@@ -1,0 +1,28 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+
+    .block.filter {
+        //
+        //  Amasty Shop By
+        //  _____________________________________________
+        .filter-options {
+            .-am-singleselect {
+                .item {
+                    > a {
+                        &::before {
+                            border: solid 1px @color_primary;
+                        }
+                        &.amshopby-link-selected {
+                            &::after {
+                                background-color: @color_primary;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
