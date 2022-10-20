@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 define([ 
 	'jquery',
 	'Magento_Ui/js/modal/modal',
