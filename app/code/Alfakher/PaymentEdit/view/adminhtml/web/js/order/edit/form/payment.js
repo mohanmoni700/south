@@ -50,6 +50,7 @@ define(
                     var ccExpMonth= $('#paradoxlabs_firstdata-cc-exp-month').find(":selected").val() != "";
                     var ccExpYear= $('#paradoxlabs_firstdata-cc-exp-year').find(":selected").val() != "";
                     var ccCid= $('#paradoxlabs_firstdata-cc-cid').val().length > 0;
+                    
                     if(card_id || (ccNumber && ccExpMonth && ccExpYear && ccCid  && $('#paradoxlabs_firstdata-cc-cid').hasClass("valid"))){
                         return true;
                     }else{
