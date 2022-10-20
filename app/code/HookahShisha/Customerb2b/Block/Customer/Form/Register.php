@@ -280,7 +280,7 @@ class Register extends \Magento\Directory\Block\Data
      * Get number of password required character classes
      *
      * @return string
-     * @since  100.1.0
+     * @since 100.1.0
      */
     public function getRequiredCharacterClassesNumber()
     {

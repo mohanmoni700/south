@@ -1,5 +1,5 @@
 <?php
- 
+
 namespace HookahShisha\Customization\Helper;
 
 use Magento\Contact\Model\ConfigInterface;
@@ -9,9 +9,6 @@ use Magento\Framework\App\Request\DataPersistorInterface;
 
 /**
  * Contact base helper
- *
- * @deprecated 100.2.0
- * @see \Magento\Contact\Model\ConfigInterface
  */
 class UserData extends \Magento\Contact\Helper\Data
 {
@@ -57,7 +54,7 @@ class UserData extends \Magento\Contact\Helper\Data
     /**
      * Get first name
      *
-     * @return string
+     * @return string|null
      */
     public function getFirstName()
     {
@@ -76,7 +73,7 @@ class UserData extends \Magento\Contact\Helper\Data
     /**
      * Get last name
      *
-     * @return string
+     * @return string|null
      */
     public function getLastName()
     {
@@ -91,5 +88,3 @@ class UserData extends \Magento\Contact\Helper\Data
         return $lastname;
     }
 }
-
-

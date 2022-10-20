@@ -17,6 +17,7 @@ class UserDataProvider extends \Magento\Contact\ViewModel\UserDataProvider
 
     /**
      * UserDataProvider constructor.
+     *
      * @param Data $helper
      */
     public function __construct(
@@ -28,7 +29,7 @@ class UserDataProvider extends \Magento\Contact\ViewModel\UserDataProvider
     /**
      * Get user first name
      *
-     * @return string
+     * @return string|null
      */
     public function getFirstName()
     {
@@ -108,12 +109,10 @@ class UserDataProvider extends \Magento\Contact\ViewModel\UserDataProvider
     /**
      * Get user comment
      *
-     * @return string
+     * @return string|null
      */
     public function getUserComment()
     {
         return $this->helper->getPostValue('comment');
     }
 }
-
-

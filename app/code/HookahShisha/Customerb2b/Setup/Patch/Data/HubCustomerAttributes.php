@@ -1,4 +1,7 @@
 <?php
+
+declare (strict_types = 1);
+
 namespace HookahShisha\Customerb2b\Setup\Patch\Data;
 
 use Magento\Customer\Setup\CustomerSetup;

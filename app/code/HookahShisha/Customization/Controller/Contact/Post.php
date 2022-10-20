@@ -1,4 +1,7 @@
 <?php
+
+declare (strict_types = 1);
+
 namespace HookahShisha\Customization\Controller\Contact;
 
 use Magento\Contact\Model\ConfigInterface;
