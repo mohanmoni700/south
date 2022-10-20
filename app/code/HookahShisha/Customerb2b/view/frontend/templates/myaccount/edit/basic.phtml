@@ -1,4 +1,5 @@
 <?php
+// phpcs:disable Magento2.Templates.ThisInTemplate
 /** @var \HookahShisha\Customerb2b\Block\Myaccount\Basicdetail $block */
 /** @var \Magento\Customer\ViewModel\Address $viewModel */
 /** @var \Magento\Framework\Escaper $escaper */
@@ -34,12 +35,11 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
 ?>
 <?php $messageData = $block->getMessagedata(); ?>
 <?php if ($messageData['cstAccountVerified'] == 0 && $messageData['cstDetailsChanged'] == 0): ?>
-    <?php $actionURL = $this->getUrl('customerb2b/account/basicPost'); ?>
     <?php $formDisable = 0; ?>
 <?php endif; ?>
 
 <form class="form-address-edit"
-      action="<?= $block->escapeUrl($this->getUrl('customerb2b/account/basicPost')) ?>"
+      action="<?= $block->escapeUrl($block->getUrl('customerb2b/account/basicPost')) ?>"
       method="post"
       id="form-validate"
       enctype="multipart/form-data"
@@ -130,7 +130,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                        value="<?= $escaper->escapeHtmlAttr($block->getAddress()->getCity()) ?>"
                        title="<?= $escaper->escapeHtmlAttr(__('City')) ?>"
                        placeholder="<?= $escaper->escapeHtmlAttr(__('City')) ?>"
-                       class="input-text wholesalers-validate-text <?= $escaper->escapeHtmlAttr($_cityValidationClass) ?>"
+                       class="input-text <?= $escaper->escapeHtmlAttr($_cityValidationClass) ?>"
                        id="city">
             </div>
         </div>
@@ -184,12 +184,14 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                         <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?></span>
                     </label>
                         <input type="text"
-                               name="county"
-                               placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
-                               value="<?= $block->escapeHtmlAttr(!empty($block->getAddress()->getCustomAttribute('county')) ? $block->getAddress()->getCustomAttribute('county')->getValue() : ''); ?>"
-                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
-                               id="county"
-                               class="input-text <?= $escaper->escapeHtmlAttr($_county) ?>"/>
+                            name="county"
+                            placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
+                            value="<?= $block->escapeHtmlAttr(!empty($block->getAddress()
+                               ->getCustomAttribute('county')) ? $block
+                                         ->getAddress()->getCustomAttribute('county')->getValue() : ''); ?>"
+                            title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
+                            id="county"
+                            class="input-text <?= $escaper->escapeHtmlAttr($_county) ?>"/>
         </div> 
 
 
@@ -214,13 +216,17 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
         <div class="field choice newsletter">
             <input type="checkbox"
                    name="is_subscribed"
-                   title="<?= $block->escapeHtmlAttr(__('Would you like to join our Monthly Mailing list for discounts and promotions?')) ?>"
+                   title="<?= $block
+                    ->escapeHtmlAttr(__('Would you like to join our 
+                    Monthly Mailing list for discounts and promotions?')) ?>"
                    value="1"
                    id="is_subscribed"
                    <?php if ($block->getIsSubscribed()): ?> checked="checked"<?php endif; ?>
                    class="checkbox"/>
             <label for="is_subscribed" class="label">
-                <span><?= $block->escapeHtml(__('Would you like to join our Monthly Mailing list for discounts and promotions?')) ?></span>
+                <span><?= $block->
+                escapeHtml(__('Would you like to join our Monthly 
+                Mailing list for discounts and promotions?')) ?></span>
             </label>
         </div>
     </fieldset>
@@ -236,6 +242,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
         </div>
     </div>
 </form>
+<?php // phpcs:disable ?>
 <script type="text/x-magento-init">
     {
         "#form-validate": {

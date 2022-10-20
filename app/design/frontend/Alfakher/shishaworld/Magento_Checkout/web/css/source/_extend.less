@@ -1,0 +1,159 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+
+    //
+    //  Shopping cart
+    //  ---------------------------------------------
+
+    #shipping-new-address-form,
+    #co-shipping-form {
+        .field[name="shippingAddress.custom_attributes.county"],
+        .field[name="shippingAddress.region"] {
+            .lib-css(display, none);
+        }
+    }
+    
+    //  Products table
+
+    .cart.table-wrapper {
+        th {
+            &.col {
+                .lib-css(padding-top, @indent__base);
+            }
+        }
+        .col {
+            padding-bottom: @indent__base !important;
+        }
+    }
+
+    //
+    //  Checkout payment method for mondu
+    //  ----------------------------------------------
+    
+    .checkout-payment-method .payment-method+.payment-method {
+        .payment-method-title {
+            label[for=mondusepa],
+            label[for=mondu] {
+                background-position-x: 30px;
+                background-position-y: 2px;
+                padding-left: 100px;
+                padding-top: 0;
+            }
+        }
+    }
+}
+//  
+//  Desktop only
+//  __________________
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+    [lang="de"] .minicart-wrapper {
+        .action.showcart {
+            .counter.qty {
+                transform: translateX(20px);
+            }
+        }
+    }
+}
+//  
+//  Minimim Mobile
+//  __________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    //
+    //  Minicart
+    //  ----------------------------------------------
+    .right_section .minicart-wrapper {
+        .block-minicart {
+            width: 350px !important;
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+& when (@media-target = 'mobile'), (@media-target = 'all') {
+    @media only screen and (max-width: 991px) {
+        .cart-container {
+            form.form-cart {
+                .lib-css(background, @color_white);
+            }
+            .cart-discount {
+                .lib-css(background, @color_white);
+                .lib-css(margin-bottom, 0);
+                .lib-css(margin-top, 0);
+                .lib-css(padding-top, @indent__xl);
+                .lib-css(position, relative);
+                .lib-css(width, 100%);
+                .lib-css(z-index, 9);
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
+    //
+    //  Shopping cart
+    //  ---------------------------------------------
+
+    //  Summary block
+    .cart-discount {
+        .block {
+            &.discount {
+                .coupon {
+                    .control {
+                        input {
+                            &::placeholder {
+                                .lib-font-size(13);
+                            }
+                        }
+                    }
+                }
+                .actions-toolbar {
+                    .primary .action {
+                        .lib-font-size(10);
+                        padding: 5.5px 10px;
+                    }
+                }
+            }
+        }
+    }
+    .right_section .minicart-wrapper .block-minicart {
+        width: 300px !important;
+    }
+}
+
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .checkout-cart-index,
+    .amasty_quote-cart-index {
+        .cart.table-wrapper .product-image-wrapper {
+            height: 90px;
+        }
+    }
+    .right_section .minicart-wrapper .block-minicart {
+        width: 300px !important;
+    }
+
+    //
+    //  Checkout Estimated Total
+    //  ---------------------------------------------
+
+    .opc-estimated-wrapper {
+        .minicart-wrapper {
+            .action {
+                &.showcart {
+                    .counter.qty {
+                        .lib-css(height, @indent__base);
+                        .lib-css(line-height, @indent__base);
+                        .lib-css(min-width, @indent__base);
+                        .lib-css(top, -@indent__s);
+                    }
+                }
+            }
+        }
+    }
+}
