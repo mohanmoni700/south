@@ -7,26 +7,28 @@ use Magento\Backend\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Ui\Component\MassAction\Filter;
 use Alfakher\ExitB\Model\ResourceModel\ExitbOrder\CollectionFactory;
+use Magento\Sales\Api\OrderRepositoryInterface;
+use Alfakher\ExitB\Helper\Data;
 
 class MassAction extends Action
 {
     /**
-     * @var \Magento\Ui\Component\MassAction\Filter
+     * @var Filter
      */
     protected $filter;
 
     /**
-     * @var \Alfakher\ExitB\Model\ResourceModel\ExitbOrder\CollectionFactory
+     * @var CollectionFactory
      */
     protected $collectionFactory;
 
     /**
-     * @var \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
+     * @var OrderRepositoryInterface
      */
     private $orderRepository;
 
     /**
-     * @var \Alfakher\ExitB\Helper\Data
+     * @var Data
      */
     protected $helperData;
 
@@ -41,8 +43,8 @@ class MassAction extends Action
         Context $context,
         Filter $filter,
         CollectionFactory $collectionFactory,
-        \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
-        \Alfakher\ExitB\Helper\Data $helperData
+        OrderRepositoryInterface $orderRepository,
+        Data $helperData
     ) {
         $this->filter = $filter;
         $this->collectionFactory = $collectionFactory;

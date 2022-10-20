@@ -7,6 +7,7 @@ use Magento\Backend\App\Action\Context;
 use Magento\Ui\Component\MassAction\Filter;
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 use Magento\Sales\Api\OrderManagementInterface;
+use Alfakher\ExitB\Helper\Data;
 
 /**
  * Class MassSync
@@ -19,7 +20,7 @@ class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
     protected $orderManagement;
     
     /**
-     * @var \Alfakher\ExitB\Helper\Data
+     * @var Data
      */
     protected $helperData;
 
@@ -35,7 +36,7 @@ class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
         Filter $filter,
         CollectionFactory $collectionFactory,
         OrderManagementInterface $orderManagement,
-        \Alfakher\ExitB\Helper\Data $helperData
+        Data $helperData
     ) {
         parent::__construct($context, $filter);
         $this->collectionFactory = $collectionFactory;

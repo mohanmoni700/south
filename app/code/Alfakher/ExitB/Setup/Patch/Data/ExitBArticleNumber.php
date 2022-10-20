@@ -40,13 +40,11 @@ class ExitBArticleNumber implements DataPatchInterface
     }
 
     /**
-     * Main function
+     * @inheritdoc
      */
     public function apply()
     {
-        /**
- * @var EavSetup $eavSetup
-*/
+        /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
 
         $eavSetup->addAttribute(
@@ -129,7 +127,7 @@ class ExitBArticleNumber implements DataPatchInterface
     }
 
     /**
-     * New function
+     * @inheritdoc
      */
     public static function getDependencies()
     {
@@ -137,7 +135,7 @@ class ExitBArticleNumber implements DataPatchInterface
     }
 
     /**
-     * New function
+     * @inheritdoc
      */
     public function getAliases()
     {

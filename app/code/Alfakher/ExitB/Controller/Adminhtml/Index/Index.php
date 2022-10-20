@@ -9,11 +9,10 @@ use Magento\Framework\View\Result\PageFactory;
 /**
  * Create page
  */
-class Index extends \Magento\Backend\App\Action
+class Index extends Action
 {
-
     /**
-     * @var \Magento\Framework\View\Result\PageFactory
+     * @var PageFactory
      */
     protected $resultPageFactory;
 

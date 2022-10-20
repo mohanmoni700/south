@@ -4,6 +4,8 @@ namespace Alfakher\ExitB\Helper;
 
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Store\Model\ScopeInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Sales\Api\OrderRepositoryInterface;
 
 /**
  * ExitB helper
@@ -23,12 +25,12 @@ class Data extends AbstractHelper
     public const ONLINE = 'exitb/exitb_ordersync/payment_online';
 
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @var ScopeConfigInterface
      */
     protected $scopeConfig;
 
     /**
-     * @var \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
+     * @var OrderRepositoryInterface
      */
     private $orderRepository;
 
@@ -94,7 +96,7 @@ class Data extends AbstractHelper
      * Module enable
      *
      * @param int $websiteId
-     * @return string
+     * @return boolean
      */
     public function isModuleEnabled($websiteId)
     {
@@ -106,7 +108,7 @@ class Data extends AbstractHelper
      *
      * @param int   $orderId
      * @param mixed $token
-     * @return array
+     * @return mixed
      */
     public function orderSync($orderId, $token)
     {

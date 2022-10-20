@@ -1,7 +1,12 @@
 <?php
+declare(strict_types=1);
 namespace Alfakher\ExitB\Model\Queue;
 
 use Magento\Framework\MessageQueue\ConsumerConfiguration;
+use Magento\Sales\Api\OrderRepositoryInterface;
+use Alfakher\ExitB\Helper\Data;
+use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Framework\Message\ManagerInterface;
 
 /**
  * Exitb Order
@@ -9,18 +14,26 @@ use Magento\Framework\MessageQueue\ConsumerConfiguration;
 class Consumer extends ConsumerConfiguration
 {
     public const TOPIC_NAME = "exitb.massorder.sync";
+
     /**
-     * @var \Magento\Sales\Api\OrderRepositoryInterface
+     * @var OrderRepositoryInterface
      */
     private $orderRepository;
+
     /**
-     * @var \Alfakher\ExitB\Helper\Data
+     * @var Data
      */
     protected $helperData;
+    
     /**
-     * @var \Magento\Framework\Serialize\Serializer\Json
+     * @var Json
      */
     protected $json;
+
+    /**
+     * @var \Magento\Framework\Message\ManagerInterface
+     */
+    protected $messageManager;
 
     /**
      * Check construct
@@ -28,15 +41,18 @@ class Consumer extends ConsumerConfiguration
      * @param \Magento\Sales\Api\OrderRepositoryInterface  $orderRepository
      * @param \Alfakher\ExitB\Helper\Data                  $helperData
      * @param \Magento\Framework\Serialize\Serializer\Json $json
+     * @param \Magento\Framework\Message\ManagerInterface  $messageManager
      */
     public function __construct(
         \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
         \Alfakher\ExitB\Helper\Data $helperData,
-        \Magento\Framework\Serialize\Serializer\Json $json
+        \Magento\Framework\Serialize\Serializer\Json $json,
+        \Magento\Framework\Message\ManagerInterface $messageManager
     ) {
         $this->order = $orderRepository;
         $this->helperData = $helperData;
         $this->json = $json;
+        $this->messageManager = $messageManager;
     }
 
     /**
@@ -48,21 +64,13 @@ class Consumer extends ConsumerConfiguration
     public function process($request)
     {
         try {
-            $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/mysql_message_queue.log');
-            $logger = new \Zend_Log();
-            $logger->addWriter($writer);
-            $logger->info('text message');
-            $logger->info(print_r('Request'.$request, true));
             $data = $this->json->unserialize($request, true);
-
             $order = $this->order->get($data['orderId']);
             $websiteId = $order->getStore()->getWebsiteId();
             $token_value = $this->helperData->tokenAuthentication($websiteId);
-            $result = $this->helperData->orderSync($data['orderId'], $token_value);
-            
-            $logger->info(print_r("order id".$data['orderId'], true));
+            $this->helperData->orderSync($data['orderId'], $token_value);
         } catch (\Exception $e) {
-            $logger->info("Error update.product.attribute: " . $e->getMessage());
+            $this->messageManager->addError($e->getMessage());
         }
     }
 }

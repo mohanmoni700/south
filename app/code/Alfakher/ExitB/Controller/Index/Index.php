@@ -3,24 +3,28 @@ declare(strict_types=1);
 namespace Alfakher\ExitB\Controller\Index;
 
 use Magento\Sales\Api\Data\OrderInterface;
+use Magento\Framework\App\Action\Action;
+use Magento\Framework\View\Result\PageFactory;
+use Alfakher\ExitB\Helper\Data;
+use Magento\Framework\Serialize\Serializer\Json;
 
 /**
  * Single order sync
  */
-class Index extends \Magento\Framework\App\Action\Action
+class Index extends Action
 {
     /**
-     * @var \Magento\Framework\View\Result\PageFactory
+     * @var PageFactory
      */
     protected $pageFactory;
 
     /**
-     * @var \Alfakher\ExitB\Helper\Data
+     * @var Data
      */
     protected $helperData;
 
     /**
-     * @var \Magento\Framework\Serialize\Serializer\Json
+     * @var Json
      */
     protected $json;
 
