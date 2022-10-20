@@ -20,7 +20,7 @@ $directoryHelper = $block->getData('directoryHelper');
 $formData = $block->getFormData();
 /* Start Change the region_id Label if the Country is US for State and Other for the State */
 $regionStateLabel = $block->escapeHtml(__('State'));
-$regionProvinceLabel = $block->escapeHtml(__(''));
+$regionProvinceLabel = $block->escapeHtml(__('Province'));
 $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel;
 /* End Change the region_id Label if the Country is US for State and Other for the State */?>
 
@@ -396,6 +396,32 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                                 </option>
                             <?php endforeach; ?>
                         </select>
+                    </div>
+                </div>
+                <div class="field fiscal-number">
+                    <?php $fiscalNumber = __('Fiscal Number'); ?>
+                    <label class="label" for="fiscal_number">
+                        <span><?= $block->escapeHtml($fiscalNumber) ?></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" name="company[fiscal_number]" id="fiscal_number"
+                               value=""
+                               placeholder="<?= $block->escapeHtmlAttr($fiscalNumber) ?>"
+                               title="<?= $block->escapeHtmlAttr($fiscalNumber) ?>"
+                               class="input-text validate-alphanum-with-spaces">
+                    </div>
+                </div>
+                <div class="field ust-id">
+                    <?php $UstId = __('UST ID'); ?>
+                    <label class="label" for="ust_id">
+                        <span><?= $block->escapeHtml($UstId) ?></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" name="company[ust_id]" id="ust_id"
+                               value=""
+                               placeholder="<?= $block->escapeHtmlAttr($UstId) ?>"
+                               title="<?= $block->escapeHtmlAttr($UstId) ?>"
+                               class="input-text validate-alphanum-with-spaces">
                     </div>
                 </div>
                 <div class="field vat-tax-id">

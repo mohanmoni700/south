@@ -1,0 +1,92 @@
+// /**
+//  * Copyright © 2018 Porto. All rights reserved.
+//  */
+
+//m - L
+& when (@media-target = 'desktop'), (@media-target = 'all') {
+    @media only screen and (min-width: 1025px) {
+        .sw-megamenu.navigation {
+            .level0.submenu{
+                scrollbar-color: @color_primary transparent;
+                ::-webkit-scrollbar-thumb {
+                background: @color_primary;
+                }
+            }
+            .level0.Zubehör {
+                .submenu {
+                    .subchildmenu {
+                        .lib-css(background, @color_white);
+                        display: inline-flex;
+                        height: 380px;
+                        overflow-x: hidden;
+                        overflow-y: scroll;
+                        > .subcat-show-all {
+                            .lib-css(position, unset);
+                        }
+                        &.mega-columns:before {
+                            .lib-css(border-bottom, 0);
+                        }
+                    }
+                }
+            }
+            .Other.Hookah.Accessories{
+                .level0.submenu{
+                    scrollbar-color: @color_primary transparent;
+                    .subchildmenu{
+                        .ui-menu-item.level1{
+                            a{
+                                &:hover{
+                                    color: @color_primary; //#961E70;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .subchildmenu{
+                &.mega-columns{
+                    > .level1 { 
+                        z-index: 9;
+                    }
+                    .subchildmenu {
+                        > ul {
+                            li {
+                                a {
+                                    &:hover{
+                                        .lib-css(color, @color_primary);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            li.level0 {
+                &:hover{
+                >  a{
+                        &:before{
+                            background: @color_primary;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+//  m - L
+@media only screen and (max-width: 1025px) {
+    .sw-megamenu.navigation {
+        &.active {
+            height: calc(~'100% - 200px');
+            top: 200px;
+        }
+    }
+}
+@media only screen and (max-width: 560px) {
+    .sw-megamenu.navigation {
+        &.active {
+            height: calc(~'100% - 223px');
+            top: 223px;
+        }
+    }
+}

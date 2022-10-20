@@ -1,0 +1,22 @@
+
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+    .amasty_quote-account-view {
+        &.account {
+            .page-title-wrapper {
+                .order-actions-toolbar {
+                    a.action.order {
+                        &:before {
+                            .lib-css(content, unset);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
