@@ -15,7 +15,9 @@ class CompanyAccount extends Command
     /**
      * Url path
      */
-    const NAME = 'name';
+    public const NAME = 'name';
+
+    public const WEBSITE = 'website';
 
     /**
      * @var csv
@@ -200,6 +202,12 @@ class CompanyAccount extends Command
             InputOption::VALUE_REQUIRED,
             'File Name'
         );
+        $this->addOption(
+            self::WEBSITE,
+            null,
+            InputOption::VALUE_REQUIRED,
+            'Web Site'
+        );
         parent::configure();
     }
 
@@ -214,9 +222,10 @@ class CompanyAccount extends Command
     {
         $this->state->setAreaCode(Area::AREA_ADMINHTML);
         $filename = $input->getOption(self::NAME);
-        if (!$filename) {
+        $optionWebsiteId =  $input->getOption(self::WEBSITE);
+        if (!$filename && !$optionWebsiteId) {
             return $output->writeln('<error>The name param is missing.
-                Use command alfakher:create:company:account --name "xyz.csv"</error>');
+                Use command alfakher:create:company:account --name "xyz.csv" -- --website "8" </error>');
         }
 
         $ext = $this->file->getPathInfo($filename, PATHINFO_EXTENSION);
@@ -253,7 +262,7 @@ class CompanyAccount extends Command
 
                         $websiteID = $this->_storemanager->getStore()->getWebsiteId();
                         $isEmailNotExists = $this->customerAccountManagement
-                            ->isEmailAvailable($value['email'], 8);
+                            ->isEmailAvailable($value['email'], $optionWebsiteId);
 
                         if ($isEmailNotExists) {
                             $customer = $this->customerDataFactory->create();
@@ -264,37 +273,12 @@ class CompanyAccount extends Command
                             );
                             $customer = $this->customerAccountManagement->createAccount($customer);
                         } else {
-                            $customer = $this->customerRepository->get($value['email'], 8);
+                            $customer = $this->customerRepository->get($value['email'], $optionWebsiteId);
                         }
 
                         //skip if customer has already company assigned
                         $customer_company = $this->companyManagement->getByCustomerId($customer->getId());
                         $this->companyAssigned($customer_company, $value, $customer, $output);
-                        /*
-                    $companyData = [
-                    'company_name' => $value['company_name'],
-                    'status' => 1,
-                    'company_email' => $value['company_email'],
-                    'vat_tax_id' => $value['vat_tax_id'],
-                    'telephone' => $value['telephone'],
-                    'street' => $value['street'],
-                    'city' => $value['city'],
-                    'country_id' => $value['country_id'],
-                    'region_id' => 55,
-                    'region' => '',
-                    'postcode' => $value['postcode'],
-                    'tobbaco_permit_number' => $value['tobbaco_permit_number'],
-                    ];
-
-                    $companyDataObject = $this->companyFactory->create(['data' => $companyData]);
-                    if ($companyDataObject->getCustomerGroupId() === null) {
-                    $companyDataObject->setCustomerGroupId($this->groupManagement->getDefaultGroup()->getId());
-                    }
-
-                    $companyDataObject->setSuperUserId($customer->getId());
-
-                    $this->companyRepositoryInterface->save($companyDataObject);
-                     */
                     }
                 }
                 return \Magento\Framework\Console\Cli::RETURN_SUCCESS;
