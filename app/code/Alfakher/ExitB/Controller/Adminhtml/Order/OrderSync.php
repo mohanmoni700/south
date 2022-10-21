@@ -8,6 +8,7 @@ use Magento\Ui\Component\MassAction\Filter;
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 use Magento\Sales\Api\OrderManagementInterface;
 use Alfakher\ExitB\Helper\Data;
+use Magento\Sales\Model\Order;
 
 /**
  * Class MassSync
@@ -54,13 +55,16 @@ class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
     {
         $token_value ='';
         $countOrdersync = 0;
+        $orderSyncArray = [];
         foreach ($collection->getItems() as $order) {
             if (!$order->getEntityId()) {
                 continue;
             }
-            $orderSyncArray[$order->getStore()->getWebsiteId()][]=$order->getEntityId();
+            $history = $order->getStatusHistoryCollection()->addFieldToFilter('comment', ['eq' => 'Sales Approved'])->load();
+            if ($history->toArray()['totalRecords']) {
+                $orderSyncArray[$order->getStore()->getWebsiteId()][]=$order->getEntityId();
+            }
         }
-
         foreach ($orderSyncArray as $websiteId => $value) {
             $token_value = $this->helperData->tokenAuthentication($websiteId);
             if (!empty($token_value)) {
