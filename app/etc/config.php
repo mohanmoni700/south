@@ -836,6 +836,7 @@ return [
         'Alfakher_Customersavepayment' => 1,
         'Alfakher_DocumentStatus' => 1,
         'Alfakher_ExciseReport' => 1,
+        'Alfakher_ExitB' => 1,
         'Alfakher_FinanceVerified' => 1,
         'MageWorx_OrdersBase' => 1,
         'MageWorx_OrderEditor' => 1,
