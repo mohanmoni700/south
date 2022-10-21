@@ -10,6 +10,7 @@ use Magento\Newsletter\Model\Config;
 use Magento\Newsletter\Model\Subscriber;
 use Magento\Newsletter\Model\SubscriberFactory;
 use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 /**
  * Basic detail edit block
@@ -74,6 +75,11 @@ class Basicdetail extends \Magento\Directory\Block\Data
     protected $subscriberFactory;
 
     /**
+     * @var StoreManagerInterface
+     */
+    private $storeManager;
+
+    /**
      * Constructor
      *
      * @param \Magento\Framework\View\Element\Template\Context $context
@@ -92,6 +98,7 @@ class Basicdetail extends \Magento\Directory\Block\Data
      * @param AddressMetadataInterface $addressMetadata = null
      * @param Address $addressHelper = null
      * @param Config $newsLetterConfig = null
+     * @param StoreManagerInterface $storeManager
      * @param array $data = []
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
@@ -113,6 +120,7 @@ class Basicdetail extends \Magento\Directory\Block\Data
         AddressMetadataInterface $addressMetadata = null,
         Address $addressHelper = null,
         Config $newsLetterConfig = null,
+        StoreManagerInterface $storeManager,
         array $data = []
     ) {
         $this->_customerSession = $customerSession;
@@ -126,6 +134,8 @@ class Basicdetail extends \Magento\Directory\Block\Data
         $this->_moduleManager = $moduleManager;
         $this->newsLetterConfig = $newsLetterConfig ?: ObjectManager::getInstance()->get(Config::class);
         $this->subscriberFactory = $subscriberFactory;
+        $this->storeManager = $storeManager;
+
         parent::__construct(
             $context,
             $directoryHelper,
@@ -398,5 +408,14 @@ class Basicdetail extends \Magento\Directory\Block\Data
         $contact['contact_email'] = $contactemail ? $contactemail->getValue() : "";
 
         return $contact;
+    }
+    /**
+     * Get website code
+     *
+     * @return string|null
+     */
+    public function getWebsiteCode():  ? string
+    {
+        return $this->storeManager->getWebsite()->getCode();
     }
 }

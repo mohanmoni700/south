@@ -217,6 +217,11 @@ class BasicPost extends \Magento\Customer\Controller\Address implements HttpPost
             $currentCustomerDataObject->setExtensionAttributes($extensionAttributes);
             $currentCustomerDataObject->setFirstname($this->getRequest()->getParam('firstname'));
             $currentCustomerDataObject->setLastname($this->getRequest()->getParam('lastname'));
+
+            if ($this->getRequest()->getParam('hub_mobile_number')) {
+                $hub_mobile_number = $this->getRequest()->getParam('hub_mobile_number');
+                $currentCustomerDataObject->setCustomAttribute('hub_mobile_number', $hub_mobile_number);
+            }
             $this->customerRepository->save($currentCustomerDataObject);
             /* ENd Change the Customer objct Name */
 

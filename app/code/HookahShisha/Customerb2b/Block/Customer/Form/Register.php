@@ -1,5 +1,4 @@
 <?php
-
 namespace HookahShisha\Customerb2b\Block\Customer\Form;
 
 use Magento\Customer\Helper\Address;
@@ -7,6 +6,7 @@ use Magento\Customer\Model\AccountManagement;
 use Magento\Framework\App\ObjectManager;
 use Magento\Newsletter\Model\Config;
 use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 /**
  * Customer register form block
@@ -38,6 +38,11 @@ class Register extends \Magento\Directory\Block\Data
     private $newsLetterConfig;
 
     /**
+     * @var StoreManagerInterface
+     */
+    private $storeManager;
+
+    /**
      * Constructor
      *
      * @param \Magento\Framework\View\Element\Template\Context $context
@@ -55,6 +60,7 @@ class Register extends \Magento\Directory\Block\Data
      * @param \HookahShisha\Customerb2b\Model\Company\Source\NumberOfEmp $numberOfEmp
      * @param Config $newsLetterConfig
      * @param Address|null $addressHelper
+     * @param StoreManagerInterface $storeManager
      * @param array $data
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
@@ -74,6 +80,7 @@ class Register extends \Magento\Directory\Block\Data
         \HookahShisha\Customerb2b\Model\Company\Source\NumberOfEmp $numberOfEmp,
         Config $newsLetterConfig = null,
         Address $addressHelper = null,
+        StoreManagerInterface $storeManager,
         array $data = []
     ) {
         $data['addressHelper'] = $addressHelper ?: ObjectManager::getInstance()->get(Address::class);
@@ -96,6 +103,7 @@ class Register extends \Magento\Directory\Block\Data
         $this->annualTurnOver = $annualTurnOver;
         $this->hearAboutUs = $hearAboutUs;
         $this->numberOfEmp = $numberOfEmp;
+        $this->storeManager = $storeManager;
     }
 
     /**
