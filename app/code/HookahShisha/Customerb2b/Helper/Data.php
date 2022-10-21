@@ -149,7 +149,7 @@ class Data extends \Magento\Shipping\Helper\Data
             $number_of_emp = isset($numberof_emp[$data['company']['number_of_emp']]) ? $numberof_emp[$data['company']['number_of_emp']] : "";
 
             $hearabout_us = $this->hearaboutus->getOptionArrayHub();
-            $hear_about_us = isset($hearabout_us[$data['company']['hear_about_us']]) ? $hear_about_us = $hearabout_us[$data['company']['hear_about_us']] : "";
+            $hear_about_us = isset($hearabout_us[$data['company']['hear_about_us']]) ? $hearabout_us[$data['company']['hear_about_us']] : "";
 
         } else {
 
@@ -299,11 +299,7 @@ class Data extends \Magento\Shipping\Helper\Data
      */
     public function getEmployees($emp)
     {
-        if ($this->storeManager->getWebsite()->getCode() === "shisha_world_b2b") {
-            $numberof_emp = $this->numberffemp->getOptionArrayHub();
-        } else {
-            $numberof_emp = $this->numberffemp->getOptionArray();
-        }
+        $numberof_emp = $this->storeManager->getWebsite()->getCode() === "shisha_world_b2b" ? $this->numberffemp->getOptionArrayHub() : $this->numberffemp->getOptionArray();
         if (in_array($emp, $numberof_emp)) {
             return $numberof_emp[$emp];
         }
