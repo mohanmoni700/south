@@ -69,6 +69,16 @@
                         }
                     }
                 }
+                &.fullwidth,
+                &.staticwidth {
+                    .submenu {
+                        li.level1 {
+                            > a {
+                                .lib-css(text-transform, capitalize);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

@@ -1,3 +1,6 @@
+
+@discription_bg: @hookah_primary_light;
+
 //
 //  Common
 //  _____________________________________________
@@ -25,7 +28,6 @@
     .pending-tooltip {
         .lib-css(margin-bottom, 0);
     }
-    .catalog-category-view .products-grid .product-item-details 
     .catalog-category-view {
         .products-grid {
             .product-item-details {
@@ -107,6 +109,28 @@
         .block.review-list {
             .review-details {
                 .lib-css(max-width, 100%);
+            }
+        }
+        .product-info-main {
+            .product-info-price .price-final_price {
+                .lib-css(margin-top, @indent__s);
+            }
+            .product-info-stock-sku {
+                .stock.unavailable {
+                    .lib-font-size(22);
+                }
+            }
+        }
+        .product.attribute.description {
+            .description {
+                background: @discription_bg;
+                .title-sec {
+                    span {
+                        &:before {
+                            bottom: -14px;
+                        }
+                    }
+                }
             }
         }
     }
