@@ -146,11 +146,12 @@
                         -ms-flex-order: 4;
                         -webkit-order: 4;
                         order: 4;
-                        @media only screen and (min-width: @screen__l) {
-                            width: 100px;
+                        @media only screen and (min-width: 768px) and (max-width: 1024px) {
+                            .lib-css(margin-right, 15px);
                         }
                         span.sign-up {
                             .lib-css(text-align, center);
+                            .lib-css(text-transform, capitalize);
                         }
                     }
                 }
@@ -408,6 +409,23 @@
         body .page-header .header.content {
             .block-search {
                 padding-left: @indent__l;
+            }
+        }
+    }
+}
+
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    #html-body{
+        .page-header{
+            .header.content{
+                .left_section {
+                    flex-basis: 30%;
+                }
             }
         }
     }
