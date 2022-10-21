@@ -1,0 +1,110 @@
+diff --git a/vendor/avalara/excise/Model/Tax/Sales/Total/Quote/Tax.php b/vendor/avalara/excise/Model/Tax/Sales/Total/Quote/Tax.php
+Index: ../vendor/avalara/excise/Model/Tax/Sales/Total/Quote/Tax.php
+--- a/vendor/avalara/excise/Model/Tax/Sales/Total/Quote/Tax.php	2022-05-31 19:01:31.000000000 +0530
++++ b/vendor/avalara/excise/Model/Tax/Sales/Total/Quote/Tax.php	2022-10-18 18:06:35.371914291 +0530
+@@ -316,29 +316,34 @@
+         );
+ 
+         $itemId = ($item->getQuote()->getIsMultiShipping()) ? $item->getQuoteItemId() : $item->getItemId();
+-        $lineItemTaxs = $this->processTaxQuote->getResponseLineItem($itemId);
+ 
+-        $extensionAttributes = $itemDataObject->getExtensionAttributes()
+-            ? $itemDataObject->getExtensionAttributes()
+-            : $this->extensionFactory->create();
++        if($item->getHasChildren() && $item->getProductType() == "configurable") {
++            $extensionAttributes = $itemDataObject->getExtensionAttributes()
++                ? $itemDataObject->getExtensionAttributes()
++                : $this->extensionFactory->create();
+ 
+-        if (is_array($lineItemTaxs) && count($lineItemTaxs)) {
+             $taxamount = $taxrate = $salesTax = $exciseTax = 0;
+-            foreach ($lineItemTaxs as $lineItemTax) {
+-                $taxamount += $lineItemTax['TaxAmount'];
+-                if (isset($lineItemTax['TaxRate'])) {
+-                    $taxrate += $lineItemTax['TaxRate'];
+-                } else {
+-                    if ($item->getPrice() > 0 && $lineItemTax['TaxAmount'] > 0) {
+-                        $tax_rate = $lineItemTax['TaxAmount'] / ($item->getPrice()*$item->getQty());
+-                        $taxrate += $tax_rate;
++
++            foreach ($item->getChildren() as $child) {
++                $lineItemTaxs = $this->processTaxQuote->getResponseLineItem($child->getId());
++                if (is_array($lineItemTaxs) && count($lineItemTaxs)) {
++                    foreach ($lineItemTaxs as $lineItemTax) {
++                        $taxamount += $lineItemTax['TaxAmount'];
++                        if (isset($lineItemTax['TaxRate'])) {
++                            $taxrate += $lineItemTax['TaxRate'];
++                        } else {
++                            if ($item->getPrice() > 0 && $lineItemTax['TaxAmount'] > 0) {
++                                $tax_rate = $lineItemTax['TaxAmount'] / ($item->getPrice()*$item->getQty());
++                                $taxrate += $tax_rate;
++                            }
++                        }
++                        if ($lineItemTax['TaxType']=="S") {
++                            $salesTax += $lineItemTax['TaxAmount'];
++                        } else {
++                            $exciseTax += $lineItemTax['TaxAmount'];
++                        }
+                     }
+                 }
+-                if ($lineItemTax['TaxType']=="S") {
+-                    $salesTax += $lineItemTax['TaxAmount'];
+-                } else {
+-                    $exciseTax += $lineItemTax['TaxAmount'];
+-                }
+             }
+             $item->setExciseTax($exciseTax);
+             $item->setSalesTax($salesTax);
+@@ -357,8 +362,51 @@
+             $extensionAttributes->setData('tax_breakdown', json_encode($lineItemTaxs));
+             $extensionAttributes->setData('tax_collectable', $taxCollectable);
+             $extensionAttributes->setData('combined_tax_rate', ($taxrate * 100));
+-        }
++        }else{
++            $lineItemTaxs = $this->processTaxQuote->getResponseLineItem($itemId);
+ 
++            $extensionAttributes = $itemDataObject->getExtensionAttributes()
++                ? $itemDataObject->getExtensionAttributes()
++                : $this->extensionFactory->create();
++
++            if (is_array($lineItemTaxs) && count($lineItemTaxs)) {
++                $taxamount = $taxrate = $salesTax = $exciseTax = 0;
++                foreach ($lineItemTaxs as $lineItemTax) {
++                    $taxamount += $lineItemTax['TaxAmount'];
++                    if (isset($lineItemTax['TaxRate'])) {
++                        $taxrate += $lineItemTax['TaxRate'];
++                    } else {
++                        if ($item->getPrice() > 0 && $lineItemTax['TaxAmount'] > 0) {
++                            $tax_rate = $lineItemTax['TaxAmount'] / ($item->getPrice()*$item->getQty());
++                            $taxrate += $tax_rate;
++                        }
++                    }
++                    if ($lineItemTax['TaxType']=="S") {
++                        $salesTax += $lineItemTax['TaxAmount'];
++                    } else {
++                        $exciseTax += $lineItemTax['TaxAmount'];
++                    }
++                }
++                $item->setExciseTax($exciseTax);
++                $item->setSalesTax($salesTax);
++                $quoteExciseTax = $item->getQuote()->getExciseTax() + $exciseTax;
++                $quoteSalesTax = $item->getQuote()->getSalesTax() + $salesTax;
++
++                $item->getQuote()->setExciseTax($quoteExciseTax);
++                $item->getQuote()->setSalesTax($quoteSalesTax);
++
++                $taxCollectable = $this->priceCurrency->convertAndRound(
++                    $taxamount,
++                    $item->getQuote()->getStore(),
++                    $item->getQuote()->getCurrency()
++                );
++                $extensionAttributes->setData('excise_response', $item->getQuote()->getExciseTaxResponseOrder());
++                $extensionAttributes->setData('tax_breakdown', json_encode($lineItemTaxs));
++                $extensionAttributes->setData('tax_collectable', $taxCollectable);
++                $extensionAttributes->setData('combined_tax_rate', ($taxrate * 100));
++            }
++        }
++        
+         return $itemDataObject;
+     }
+ 
