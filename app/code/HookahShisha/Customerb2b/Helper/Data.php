@@ -130,10 +130,6 @@ class Data extends \Magento\Shipping\Helper\Data
         $website_code = $this->storeManager->getWebsite()->getCode();
         $config_website = $this->scopeConfig->getValue(self::WEBSITE_CODE, $storeScope);
         $websidecodes = explode(',', $config_website);
-        $annual_turn_over = "";
-        $business_type = "";
-        $number_of_emp = "";
-        $hear_about_us = "";
 
         if (in_array($website_code, $websidecodes)) {
 
@@ -144,24 +140,16 @@ class Data extends \Magento\Shipping\Helper\Data
             }
 
             $annual_turnover = $this->annualturnover->getOptionArrayHub();
-            if (array_key_exists($data['company']['annual_turn_over'], $annual_turnover)) {
-                $annual_turn_over = $annual_turnover[$data['company']['annual_turn_over']];
-            }
+            $annual_turn_over = isset($annual_turnover[$data['company']['annual_turn_over']]) ? $annual_turnover[$data['company']['annual_turn_over']] : "";
 
             $businesstypes = $this->businesstype->getOptionArrayHub();
-            if (array_key_exists($data['company']['business_type'], $businesstypes)) {
-                $business_type = $businesstypes[$data['company']['business_type']];
-            }
+            $business_type = isset($businesstypes[$data['company']['business_type']]) ? $businesstypes[$data['company']['business_type']] : "";
 
             $numberof_emp = $this->numberffemp->getOptionArray();
-            if (array_key_exists($data['company']['number_of_emp'], $numberof_emp)) {
-                $number_of_emp = $numberof_emp[$data['company']['number_of_emp']];
-            }
+            $number_of_emp = isset($numberof_emp[$data['company']['number_of_emp']]) ? $numberof_emp[$data['company']['number_of_emp']] : "";
 
             $hearabout_us = $this->hearaboutus->getOptionArrayHub();
-            if (array_key_exists($data['company']['hear_about_us'], $hearabout_us)) {
-                $hear_about_us = $hearabout_us[$data['company']['hear_about_us']];
-            }
+            $hear_about_us = isset($hearabout_us[$data['company']['hear_about_us']]) ? $hear_about_us = $hearabout_us[$data['company']['hear_about_us']] : "";
 
         } else {
 
@@ -174,24 +162,16 @@ class Data extends \Magento\Shipping\Helper\Data
             }
 
             $annual_turnover = $this->annualturnover->getOptionArray();
-            if (array_key_exists($data['company']['annual_turn_over'], $annual_turnover)) {
-                $annual_turn_over = $annual_turnover[$data['company']['annual_turn_over']];
-            }
+            $annual_turn_over = isset($annual_turnover[$data['company']['annual_turn_over']]) ? $annual_turnover[$data['company']['annual_turn_over']] : "";
 
             $businesstypes = $this->businesstype->getOptionArray();
-            if (array_key_exists($data['company']['business_type'], $businesstypes)) {
-                $business_type = $businesstypes[$data['company']['business_type']];
-            }
+            $business_type = isset($businesstypes[$data['company']['business_type']]) ? $businesstypes[$data['company']['business_type']] : "";
 
             $numberof_emp = $this->numberffemp->getOptionArray();
-            if (array_key_exists($data['company']['number_of_emp'], $numberof_emp)) {
-                $number_of_emp = $numberof_emp[$data['company']['number_of_emp']];
-            }
+            $number_of_emp = isset($numberof_emp[$data['company']['number_of_emp']]) ? $numberof_emp[$data['company']['number_of_emp']] : "";
 
             $hearabout_us = $this->hearaboutus->getOptionArray();
-            if (array_key_exists($data['company']['hear_about_us'], $hearabout_us)) {
-                $hear_about_us = $hearabout_us[$data['company']['hear_about_us']];
-            }
+            $hear_about_us = isset($hearabout_us[$data['company']['hear_about_us']]) ? $hearabout_us[$data['company']['hear_about_us']] : "";
         }
 
         try {
