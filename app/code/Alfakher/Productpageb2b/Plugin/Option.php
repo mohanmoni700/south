@@ -35,17 +35,12 @@ class Option
         $selection,
         $includeContainer = true
     ) {
-
-        if (!$this->helper->getIsFinanceVerified() || !$this->helper->isCustomerLoggedIn()) {
-            $subject->setFormatProduct($selection);
-            $priceTitle = '<span class="product-name">'
-            . $selection->getSelectionQty() * 1
-            . ' x '
-            . $subject->escapeHtml($selection->getName()) . '</span>';
-            return $priceTitle;
-        } else {
-            return $result;
-        }
+        $subject->setFormatProduct($selection);
+        $priceTitle = '<span class="product-name">'
+        . $selection->getSelectionQty() * 1
+        . ' x '
+        . $subject->escapeHtml($selection->getName()) . '</span>';
+        return $priceTitle;
     }
 
     /**
@@ -64,12 +59,7 @@ class Option
         $selection,
         $includeContainer = true
     ) {
-
-        if (!$this->helper->getIsFinanceVerified() || !$this->helper->isCustomerLoggedIn()) {
-            $priceTitle = '<span class="product-name">' . $subject->escapeHtml($selection->getName()) . '</span>';
-            return $priceTitle;
-        } else {
-            return $result;
-        }
+        $priceTitle = '<span class="product-name">' . $subject->escapeHtml($selection->getName()) . '</span>';
+        return $priceTitle;
     }
 }
