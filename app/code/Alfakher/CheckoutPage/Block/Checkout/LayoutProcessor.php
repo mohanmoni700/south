@@ -1,21 +1,63 @@
 <?php
+declare(strict_types=1);
+
 namespace Alfakher\CheckoutPage\Block\Checkout;
+
+use HookahShisha\InternationalTelephoneInput\Helper\Data;
 
 class LayoutProcessor
 {
+    /**
+     * @var Data
+     */
+    protected $helper;
+
+    /**
+     * LayoutProcessor constructor.
+     *
+     * @param Data $helper
+     */
+    public function __construct(Data $helper)
+    {
+        $this->helper = $helper;
+    }
+
+    /**
+     * AfterProcess
+     *
+     * @param LayoutProcessor $subject
+     * @param array $jsLayout
+     * @return array $jsLayout
+     */
     public function afterProcess(
         \Magento\Checkout\Block\Checkout\LayoutProcessor $subject,
         array $jsLayout
     ) {
         /*For shipping address form*/
         $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
-        ['children']['shippingAddress']['children']['shipping-address-fieldset']['children']['street']['children'][0]['label'] = __('Address Line 1*');
+        ['children']['shippingAddress']['children']['shipping-address-fieldset']
+        ['children']['street']['children'][0]['label'] = __('Address Line 1*');
 
         $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
-        ['children']['shippingAddress']['children']['shipping-address-fieldset']['children']['street']['children'][1]['label'] = __('Address Line 2');
+        ['children']['shippingAddress']['children']['shipping-address-fieldset']
+        ['children']['street']['children'][1]['label'] = __('Address Line 2');
 
         $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
-        ['children']['shippingAddress']['children']['shipping-address-fieldset']['children']['company']['label'] = __('Company Name');
+        ['children']['shippingAddress']['children']['shipping-address-fieldset']
+        ['children']['company']['label'] = __('Company Name');
+
+        /* Start 25April Country code Adding from the  HookahShisha_InternationalTelephoneInput extension */
+        if (isset($jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
+            ['children']['shippingAddress']['children']['shipping-address-fieldset']['children'])) {
+            $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
+            ['children']['shippingAddress']['children']['shipping-address-fieldset']
+            ['children']['telephone']['validation'] = ['required-entry' => true,
+                'validate-country-code-number' => true];
+            $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
+            ['children']['shippingAddress']['children']['shipping-address-fieldset']['children']
+            ['telephone'] = $this->helper->telephoneFieldConfig("shippingAddress");
+        }
+        /* End 25April */
 
         /*For billing address form change lable*/
         /* config: checkout/options/display_billing_address_on = payment_method */
@@ -28,7 +70,8 @@ class LayoutProcessor
                 if (isset($payment['children']['form-fields']['children']['street'])) {
 
                     $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
-                    ['payment']['children']['payments-list']['children'][$key]['children']['form-fields']['children']['street']['children'][0]['label'] = __('Address Line 1*');
+                    ['payment']['children']['payments-list']['children'][$key]
+                    ['children']['form-fields']['children']['street']['children'][0]['label'] = __('Address Line 1*');
 
                     $jsLayout['components']['checkout']['children']['steps']['children']
                     ['billing-step']['children']
@@ -39,7 +82,8 @@ class LayoutProcessor
                 if (isset($payment['children']['form-fields']['children']['company'])) {
 
                     $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
-                    ['payment']['children']['payments-list']['children'][$key]['children']['form-fields']['children']['company']['label'] = __('Company Name');
+                    ['payment']['children']['payments-list']['children'][$key]
+                    ['children']['form-fields']['children']['company']['label'] = __('Company Name');
                 }
 
                 /*For billing address Validation*/
@@ -55,9 +99,22 @@ class LayoutProcessor
                 }
 
                 if (isset($payment['children']['form-fields']['children']['telephone'])) {
+                    $customScope = $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']
+                        ['children']['payment']['children']['payments-list']['children'][$key]
+                        ['children']['form-fields']['children']['telephone']['config']['customScope'];
+
+                    $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
+                    ['payment']['children']['payments-list']['children'][$key]
+                    ['children']['form-fields']['children']['telephone']['config'] =
+                    $this->helper->telephoneFieldConfigBilling("billingAddress");
+
+                    $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
+                    ['payment']['children']['payments-list']['children'][$key]
+                    ['children']['form-fields']['children']['telephone']['config']['customScope'] = $customScope;
+
                     $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
                     ['payment']['children']['payments-list']['children'][$key]['children']['form-fields']['children']
-                    ['telephone']['validation'] = ['required-entry' => true, 'validate-number' => true];
+                    ['telephone']['validation'] = ['required-entry' => true, 'validate-country-code-number' => true];
 
                     $jsLayout['components']['checkout']['children']['steps']['children']
                     ['billing-step']['children']['payment']['children']
