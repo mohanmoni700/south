@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+      <referenceBlock name="head.additional">
+            <block class="Magento\Framework\View\Element\Template" name="js_GTM" template="Magento_Theme::html/search.phtml"/>
+            <block class="Magento\Newsletter\Block\Subscribe" name="newspopup" template="Magento_Theme::subscribe.phtml"/>
+        </referenceBlock>
+         <referenceBlock name="header.panel" remove="true"/>
+        <referenceContainer name="header.panel.wrapper">
+              <block class="Magento\Cms\Block\Block" name="warning_block">
+                <arguments>
+                  <argument name="block_id" xsi:type="string">warning_msg</argument>
+                </arguments>
+              </block>
+              <!-- <container name="header.info.bar" htmlTag="div" htmlClass="header-info-bar" after="-" /> -->
+        </referenceContainer>
+
+         <referenceContainer name="header.panel.wrapper">
+              <block class="Magento\Cms\Block\Block" name="header_links_hub" after="-">
+                <arguments>
+                  <argument name="block_id" xsi:type="string">header_links_hub</argument>
+                </arguments>
+              </block>
+        </referenceContainer>
+        <referenceContainer name="page.top">
+            <block class="Magento\Cms\Block\Block" name="megamenu-desktop">
+                <arguments>
+                  <argument name="block_id" xsi:type="string">megamenu-desktop</argument>
+                </arguments>
+              </block>
+        </referenceContainer>
+        <referenceBlock name="sw.topnav" remove="true"/>
+
+        <referenceBlock name="advanced-search-link" remove="true"/>
+        <referenceBlock name="catalog.topnav" remove="true"/>
+
+        <referenceContainer name="header-wrapper">
+              <block class='Magento\Framework\View\Element\Template' name="reorder_link"  after="top.search" template="Magento_Theme::reorder_link.phtml"/>
+              <block class='Magento\Framework\View\Element\Template' name="my_rewards"  after="reorder_link" template="Magento_Theme::my_rewards.phtml"/>
+              <block class='Magento\Framework\View\Element\Template' name="register_link"  after="minicart" template="Magento_Theme::register.phtml"/>
+              
+              <container name="left_section" label="Page Header Left Section" as="left-section" htmlTag="div" htmlClass="left_section" />
+              <container name="right_section" label="Page Header Right Section" as="right-section" htmlTag="div" htmlClass="right_section panel wrapper" />
+              <block class="Magento\Cms\Block\Block" name="mobile_toggle_icon">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">mobile_toggle_icon</argument>
+                </arguments>
+            </block>
+              
+        </referenceContainer>
+        <!-- Footer -->
+        <referenceContainer name="footer">
+            <block class="Magento\Cms\Block\Block" name="footer.content">
+                <arguments>
+                    <argument name="block_id" xsi:type="string">hookah_footer_link_hub</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+       <!--  <block class="Sm\MegaMenu\Block\MegaMenu\View" name="megamenu.topnav" as="megamenu_topnav" template="Sm_MegaMenu::megamenu.phtml"></block> -->
+       <!--  <move element="register-link" destination="header-wrapper"  after="minicart"/> -->
+       <move element="top.search" destination="left_section" after="logo"/>
+       <move element="reorder_link" destination="right_section" before="minicart"/>
+       <move element="minicart" destination="right_section" after="reorder_link"/>
+       <move element="register_link" destination="right_section" after="store_language"/>
+       <move element="my_rewards" destination="right_section" before="reorder_link"/>
+       <move element="logo" destination="left_section" after="top.search"/>
+       <move element="mobile_toggle_icon" destination="left_section" before="logo"/>
+       <!-- <move element="store_language" destination="header.info.bar" after="-"/>
+       <move element="header_links_hub" destination="header.info.bar" before="-"/> -->
+      <move element="store_language" destination="right_section" after="minicart"/>
+       <referenceContainer name="columns.top">
+            <block class="Magento\Theme\Block\Html\Title" name="page.main.title" template="Magento_Theme::html/title.phtml"/>
+       </referenceContainer> 
+       
+    </body>
+</page>

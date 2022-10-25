@@ -1,0 +1,122 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+
+    //
+    //  Shopping cart
+    //  ---------------------------------------------
+
+    .checkout-cart-index,
+    .amasty_quote-cart-index {
+        div.page-title-wrapper {
+            justify-content: center;
+        }
+    }
+    #shipping-new-address-form,
+    #co-shipping-form {
+        .field[name="shippingAddress.custom_attributes.county"],
+        .field[name="shippingAddress.region"] {
+            .lib-css(display, none);
+        }
+    }
+    
+    //
+    //  Checkout payment method for mondu
+    //  ----------------------------------------------
+    
+    .checkout-payment-method .payment-method+.payment-method {
+        .payment-method-title {
+            label[for=mondusepa],
+            label[for=mondu] {
+                background-position-x: 30px;
+                background-position-y: 2px;
+                padding-left: 100px;
+                padding-top: 0;
+            }
+        }
+    }
+}
+//  
+//  Minimim Mobile
+//  __________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    //
+    //  Minicart
+    //  ----------------------------------------------
+    .right_section .minicart-wrapper {
+        .block-minicart {
+            width: 350px !important;
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
+    //
+    //  Shopping cart
+    //  ---------------------------------------------
+
+    //  Summary block
+    .cart-discount {
+        .block {
+            &.discount {
+                .coupon {
+                    .control {
+                        input {
+                            &::placeholder {
+                                .lib-font-size(13);
+                            }
+                        }
+                    }
+                }
+                .actions-toolbar {
+                    .primary .action {
+                        .lib-font-size(10);
+                        padding: 5.5px 10px;
+                    }
+                }
+            }
+        }
+    }
+    .right_section .minicart-wrapper .block-minicart {
+        width: 300px !important;
+    }
+}
+
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .checkout-cart-index,
+    .amasty_quote-cart-index {
+        .cart.table-wrapper .product-image-wrapper {
+            height: 90px;
+        }
+    }
+    .right_section .minicart-wrapper .block-minicart {
+        width: 300px !important;
+    }
+
+    //
+    //  Checkout Estimated Total
+    //  ---------------------------------------------
+
+    .opc-estimated-wrapper {
+        .minicart-wrapper {
+            .action {
+                &.showcart {
+                    .counter.qty {
+                        .lib-css(height, @indent__base);
+                        .lib-css(line-height, @indent__base);
+                        .lib-css(min-width, @indent__base);
+                        .lib-css(top, -@indent__s);
+                    }
+                }
+            }
+        }
+    }
+}
