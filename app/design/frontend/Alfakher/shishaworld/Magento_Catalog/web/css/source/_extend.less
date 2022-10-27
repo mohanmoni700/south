@@ -70,23 +70,19 @@
                 }
             }
         }
-        .page-main-details {
-            .columns .column.main {
-                display: flex;
-                flex-direction: column;
-                .block.related {
-                    order: 1;
-                }
-                #reviews {
-                    order: 2;
-                }
-            }
-        } 
     }
     //
     //  Category view
     //  ---------------------------------------------
-
+    .catalog-category-view {
+        .category-view {
+            .product-item-info{
+                &:hover a {
+                    .lib-css(color, @color_primary);
+                }
+            }
+        }
+    }
     .clp_faq_main {
         .lib-css(background-color, unset);
         .clp_faq_toggle {
@@ -103,6 +99,24 @@
         }
     }
     .catalog-product-view {
+        .page-main-details {
+            .columns .column.main {
+                display: flex;
+                flex-direction: column;
+                .block.related {
+                    .lib-css(order, 1);
+                    .block-title {
+                        .lib-css(letter-spacing, 2px);
+                    }
+                    .block-title strong {
+                        .lib-font-size(20);
+                    }
+                }
+                #reviews {
+                    .lib-css(order, 2);
+                }
+            }
+        }
         #reviews {
             margin-bottom: @indent__base;
         }
