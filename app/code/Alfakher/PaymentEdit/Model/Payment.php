@@ -330,6 +330,16 @@ class Payment extends \MageWorx\OrderEditor\Model\Payment
                 $this->getPaymentTitle()
             );
         }
+        if ($this->getPaymentMethod() == 'paradoxlabs_firstdata') {
+            $payment->setTransactionId($response->getData('transaction_id'))
+                ->setCcType($ccType)
+                ->setCcLast4($ccLast4)
+                ->setTokenbaseId($tokenbaseId)
+                ->setAdditionalInformation(
+                    array_replace_recursive($payment->getAdditionalInformation(), $response->getData())
+                )
+                ->setIsTransactionClosed(0);
+        }
         $payment->save();
         $this->messageManager->addSuccessMessage("Payment method is changed successfully.");
         
