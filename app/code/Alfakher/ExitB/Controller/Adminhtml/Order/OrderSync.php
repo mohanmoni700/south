@@ -7,7 +7,7 @@ use Magento\Backend\App\Action\Context;
 use Magento\Ui\Component\MassAction\Filter;
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 use Magento\Sales\Api\OrderManagementInterface;
-use Alfakher\ExitB\Helper\Data;
+use Alfakher\ExitB\Model\ExitbSync;
 use Magento\Sales\Model\Order;
 
 /**
@@ -21,28 +21,28 @@ class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
     protected $orderManagement;
     
     /**
-     * @var Data
+     * @var ExitbSync
      */
-    protected $helperData;
+    protected $exitbsync;
 
     /**
      * @param Context                     $context
      * @param Filter                      $filter
      * @param CollectionFactory           $collectionFactory
      * @param OrderManagementInterface    $orderManagement
-     * @param Data                        $helperData
+     * @param ExitbSync                   $exitbsync
      */
     public function __construct(
         Context $context,
         Filter $filter,
         CollectionFactory $collectionFactory,
         OrderManagementInterface $orderManagement,
-        Data $helperData
+        ExitbSync $exitbsync
     ) {
         parent::__construct($context, $filter);
         $this->collectionFactory = $collectionFactory;
         $this->orderManagement = $orderManagement;
-        $this->helperData = $helperData;
+        $this->exitbsync = $exitbsync;
     }
 
     /**
@@ -66,10 +66,10 @@ class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
             }
         }
         foreach ($orderSyncArray as $websiteId => $value) {
-            $token_value = $this->helperData->tokenAuthentication($websiteId);
+            $token_value = $this->exitbsync->tokenAuthentication($websiteId);
             if (!empty($token_value)) {
                 foreach ($value as $keys => $orderId) {
-                    $this->helperData->orderSync($orderId, $token_value);
+                    $this->exitbsync->orderSync($orderId, $token_value);
                     $countOrdersync++;
                 }
             }

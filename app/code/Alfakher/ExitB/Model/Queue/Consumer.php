@@ -4,7 +4,7 @@ namespace Alfakher\ExitB\Model\Queue;
 
 use Magento\Framework\MessageQueue\ConsumerConfiguration;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use Alfakher\ExitB\Helper\Data;
+use Alfakher\ExitB\Model\ExitbSync;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\Message\ManagerInterface;
 use Alfakher\ExitB\Model\OrderTokenFactory;
@@ -23,9 +23,9 @@ class Consumer extends ConsumerConfiguration
     private $orderRepository;
 
     /**
-     * @var Data
+     * @var ExitbSync
      */
-    protected $helperData;
+    protected $exitbsync;
     
     /**
      * @var Json
@@ -46,7 +46,7 @@ class Consumer extends ConsumerConfiguration
      * Check construct
      *
      * @param OrderRepositoryInterface $orderRepository
-     * @param Data                     $helperData
+     * @param ExitbSync                $exitbsync
      * @param Json                     $json
      * @param ManagerInterface         $messageManager
      * @param OrderTokenFactory        $ordertokenFactory
@@ -54,14 +54,14 @@ class Consumer extends ConsumerConfiguration
      */
     public function __construct(
         OrderRepositoryInterface $orderRepository,
-        Data $helperData,
+        ExitbSync $exitbsync,
         Json $json,
         ManagerInterface $messageManager,
         OrderTokenFactory $ordertokenFactory,
         TimezoneInterface $date
     ) {
         $this->order = $orderRepository;
-        $this->helperData = $helperData;
+        $this->exitbsync = $exitbsync;
         $this->json = $json;
         $this->messageManager = $messageManager;
         $this->ordertokenFactory = $ordertokenFactory;
@@ -81,7 +81,7 @@ class Consumer extends ConsumerConfiguration
             $order = $this->order->get($data['orderId']);
             $websiteId = $order->getStore()->getWebsiteId();
             $tokenValue = $this->tokenCheck($websiteId);
-            $this->helperData->orderSync($data['orderId'], $tokenValue);
+            $this->exitbsync->orderSync($data['orderId'], $tokenValue);
         } catch (\Exception $e) {
             $this->messageManager->addError($e->getMessage());
         }
@@ -101,10 +101,10 @@ class Consumer extends ConsumerConfiguration
         $generateToken = true;
         if (!empty($tokenModel) && count($tokenModel) > 0) {
             foreach ($tokenModel as $tokenData) {
-                $currentDate = date_create($this->date->date()->format('Y-m-d H:i:s'));
-                $tokenDate = date_create($tokenData['created_at']);
-                $interval = date_diff($currentDate, $tokenDate);
-                if ($interval->y == 0 && $interval->m == 0 && $interval->d == 0 && $interval->h > 10) {
+                $currentDate = $this->date->date()->format('Y-m-d H:i:s');
+                $tokenDate = $tokenData['created_at'];
+                $hour = abs(strtotime($tokenDate) - strtotime($currentDate))/(60*60);
+                if ($hour > 10) {
                     $generateToken = true;
                 } else {
                     $generateToken = false;
@@ -112,14 +112,15 @@ class Consumer extends ConsumerConfiguration
             }
         }
         if ($generateToken == true) {
-            $token_value = $this->helperData->tokenAuthentication($websiteId);
+            $token_value = $this->exitbsync->tokenAuthentication($websiteId);
             $saveModel = $this->ordertokenFactory->create();
             $saveModel->setData('token', $token_value);
             $saveModel->save();
         }
 
-        $tokenModel->addFieldToSelect('token')->setOrder('entity_id', 'DESC')->setPageSize(1);
-        foreach ($tokenModel as $token) {
+        $model = $this->ordertokenFactory->create()->getCollection();
+        $model->addFieldToSelect('token')->setOrder('entity_id', 'DESC')->setPageSize(1);
+        foreach ($model as $token) {
             $token = $token['token'];
         }
         return $token;

@@ -20,9 +20,9 @@ class SyncPlugin
     private $orderRepository;
 
     /**
-     * @var \Alfakher\ExitB\Helper\Data
+     * @var \Alfakher\ExitB\Model\ExitbSync
      */
-    protected $helperData;
+    protected $exitbsync;
 
     /**
      * @var \Magento\Framework\Serialize\Serializer\Json
@@ -40,7 +40,7 @@ class SyncPlugin
      * @param \Magento\Framework\App\RequestInterface                   $request
      * @param \Magento\Sales\Api\OrderRepositoryInterface               $orderRepository
      * @param \Alfakher\ExitB\Model\ResourceModel\ExitbOrder\Collection $exitborderModel
-     * @param \Alfakher\ExitB\Helper\Data                               $helperData
+     * @param \Alfakher\ExitB\Model\ExitbSync                           $exitbsync
      * @param \Magento\Framework\Serialize\Serializer\Json              $json
      * @param \Magento\Framework\MessageQueue\PublisherInterface        $publisher
      */
@@ -48,14 +48,14 @@ class SyncPlugin
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
         \Alfakher\ExitB\Model\ResourceModel\ExitbOrder\Collection $exitborderModel,
-        \Alfakher\ExitB\Helper\Data $helperData,
+        \Alfakher\ExitB\Model\ExitbSync $exitbsync,
         \Magento\Framework\Serialize\Serializer\Json $json,
         \Magento\Framework\MessageQueue\PublisherInterface $publisher
     ) {
         $this->request = $request;
         $this->order = $orderRepository;
         $this->exitborderModel = $exitborderModel;
-        $this->helperData = $helperData;
+        $this->exitbsync = $exitbsync;
         $this->json = $json;
         $this->publisher = $publisher;
     }
@@ -82,7 +82,7 @@ class SyncPlugin
         $collection = $status->getColumnValues('sync_status');
         $status_collection = !empty($collection) ? $collection[0] : null;
 
-        if ($this->helperData->isModuleEnabled($websiteId) && $status_collection !== '1') {
+        if ($this->exitbsync->isModuleEnabled($websiteId) && $status_collection !== '1') {
             $this->publisher->publish(
                 self::TOPIC_NAME,
                 $this->json->serialize($orderId)

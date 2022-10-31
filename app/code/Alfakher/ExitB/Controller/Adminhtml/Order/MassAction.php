@@ -8,7 +8,7 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Ui\Component\MassAction\Filter;
 use Alfakher\ExitB\Model\ResourceModel\ExitbOrder\CollectionFactory;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use Alfakher\ExitB\Helper\Data;
+use Alfakher\ExitB\Model\ExitbSync;
 
 class MassAction extends Action
 {
@@ -28,28 +28,28 @@ class MassAction extends Action
     private $orderRepository;
 
     /**
-     * @var Data
+     * @var ExitbSync
      */
-    protected $helperData;
+    protected $exitbsync;
 
     /**
      * @param Context                  $context
      * @param Filter                   $filter
      * @param CollectionFactory        $collectionFactory
      * @param OrderRepositoryInterface $orderRepository
-     * @param Data                     $helperData
+     * @param ExitbSync                $exitbsync
      */
     public function __construct(
         Context $context,
         Filter $filter,
         CollectionFactory $collectionFactory,
         OrderRepositoryInterface $orderRepository,
-        Data $helperData
+        ExitbSync $exitbsync
     ) {
         $this->filter = $filter;
         $this->collectionFactory = $collectionFactory;
         $this->order = $orderRepository;
-        $this->helperData = $helperData;
+        $this->exitbsync = $exitbsync;
         parent::__construct($context);
     }
 
@@ -73,10 +73,10 @@ class MassAction extends Action
         }
 
         foreach ($orderSyncArray as $websiteId => $value) {
-            $token_value = $this->helperData->tokenAuthentication($websiteId);
+            $token_value = $this->exitbsync->tokenAuthentication($websiteId);
             if (!empty($token_value)) {
                 foreach ($value as $keys => $orderId) {
-                    $this->helperData->orderSync($orderId, $token_value);
+                    $this->exitbsync->orderSync($orderId, $token_value);
                     $countOrdersync++;
                 }
             }

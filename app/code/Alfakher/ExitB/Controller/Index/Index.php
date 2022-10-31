@@ -5,7 +5,7 @@ namespace Alfakher\ExitB\Controller\Index;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\View\Result\PageFactory;
-use Alfakher\ExitB\Helper\Data;
+use Alfakher\ExitB\Model\ExitbSync;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Framework\HTTP\Client\Curl;
@@ -21,9 +21,9 @@ class Index extends Action
     protected $pageFactory;
 
     /**
-     * @var Data
+     * @var ExitbSync
      */
-    protected $helperData;
+    protected $exitbsync;
 
     /**
      * @var Json
@@ -36,7 +36,7 @@ class Index extends Action
      * @param Context                  $context
      * @param PageFactory              $pageFactory
      * @param OrderRepositoryInterface $orderRepository
-     * @param Data                     $helperData
+     * @param ExitbSync                $exitbsync
      * @param Curl                     $curl
      * @param Json                     $json
      */
@@ -44,14 +44,14 @@ class Index extends Action
         Context $context,
         PageFactory $pageFactory,
         OrderRepositoryInterface $orderRepository,
-        Data $helperData,
+        ExitbSync $exitbsync,
         Curl $curl,
         Json $json
     ) {
         parent::__construct($context);
         $this->pageFactory = $pageFactory;
         $this->order = $orderRepository;
-        $this->helperData = $helperData;
+        $this->exitbsync = $exitbsync;
         $this->curl = $curl;
         $this->json = $json;
     }
@@ -70,9 +70,9 @@ class Index extends Action
             $orderData = [];
 
             $websiteId = $order->getStore()->getWebsiteId();
-            if ($this->helperData->isModuleEnabled($websiteId)) {
-                $token_value = $this->helperData->tokenAuthentication($websiteId);
-                $result = $this->helperData->orderSync($id, $token_value);
+            if ($this->exitbsync->isModuleEnabled($websiteId)) {
+                $token_value = $this->exitbsync->tokenAuthentication($websiteId);
+                $result = $this->exitbsync->orderSync($id, $token_value);
             }
         }
     }
