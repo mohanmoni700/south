@@ -12,15 +12,15 @@ class Helper implements \Magento\Framework\View\Element\Block\ArgumentInterface
     public const MODULE_ENABLE = "hookahshisha/af_offline_payment_records/enable";
     public const INVOICE_ENABLE = "hookahshisha/af_offline_payment_records/after_invoice";
     public const ALLOWED_PAYMENT = "hookahshisha/af_offline_payment_records/valid_payment";
-    
     /**
      * Constructor
      *
-     * @param ScopeConfigInterface $scopeConfig
-     * @param OfflinePaymentRecordFactory $paymentRecords
-     * @param Currency $currency
-     * @param PriceCurrency $priceCurrency
+     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param \Alfakher\OfflinePaymentRecords\Model\OfflinePaymentRecordFactory $paymentRecords
+     * @param \Magento\Directory\Model\Currency $currency
+     * @param \Magento\Directory\Model\PriceCurrency $priceCurrency
      */
+
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         OfflinePaymentRecordFactory $paymentRecords,
@@ -37,6 +37,7 @@ class Helper implements \Magento\Framework\View\Element\Block\ArgumentInterface
      * Check if module is enable
      *
      * @param int $websiteId
+     * @return int
      */
     public function isModuleEnabled($websiteId)
     {
@@ -48,6 +49,7 @@ class Helper implements \Magento\Framework\View\Element\Block\ArgumentInterface
      * Check if allowed for invoiced orders
      *
      * @param int $websiteId
+     * @return int
      */
     public function isAllowedForInvoicedOrder($websiteId)
     {
@@ -59,6 +61,7 @@ class Helper implements \Magento\Framework\View\Element\Block\ArgumentInterface
      * Get allowed payment method
      *
      * @param int $websiteId
+     * @return int
      */
     public function getAllowedPayment($websiteId)
     {
@@ -70,6 +73,7 @@ class Helper implements \Magento\Framework\View\Element\Block\ArgumentInterface
      * Get record collection
      *
      * @param int $orderId
+     * @return mixed
      */
     public function getRecordCollection($orderId)
     {
@@ -80,6 +84,7 @@ class Helper implements \Magento\Framework\View\Element\Block\ArgumentInterface
      * Get total paid amount
      *
      * @param int $orderId
+     * @return float
      */
     public function getTotalPaidAmount($orderId)
     {
@@ -105,6 +110,7 @@ class Helper implements \Magento\Framework\View\Element\Block\ArgumentInterface
      * Get formatted total due
      *
      * @param float $totalDue
+     * @return float
      */
     public function getTotalDue($totalDue)
     {
@@ -115,6 +121,7 @@ class Helper implements \Magento\Framework\View\Element\Block\ArgumentInterface
      * Get precise total due
      *
      * @param float $totalDue
+     * @return float
      */
     public function getRoundDue($totalDue)
     {
