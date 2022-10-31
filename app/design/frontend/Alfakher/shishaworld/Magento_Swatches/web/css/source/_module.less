@@ -61,6 +61,18 @@
 //  _____________________________________________
 
 & when (@media-common = true) {
+    .catalog-product-view {
+        .swatch {
+            &-attribute {
+                &.size,
+                &.manufacturer {
+                    .swatch-option {
+                        .lib-css(line-height, @indent__base);
+                    }
+                }
+            }
+        }
+    }    
     .swatch {
         &-attribute {
             &-label {

@@ -91,7 +91,7 @@
     .clp_faq_main {
         .lib-css(background-color, unset);
         .clp_faq_toggle,
-        .clp_faq_inner {
+        .clp_faq_inner h2 {
             .lib-css(color, @color_black);
         }
     }
@@ -104,7 +104,7 @@
             background: @color_primary linear-gradient(0deg, @color_primary 0%, @color_primary 100%);
         }
     }
-    .catalog-product-view {
+    body.catalog-product-view {
         .page-main-details {
             .columns .column.main {
                 display: flex;
@@ -123,6 +123,8 @@
                 }
             }
         }
+    }
+    .catalog-product-view {
         #reviews {
             margin-bottom: @indent__base;
         }
