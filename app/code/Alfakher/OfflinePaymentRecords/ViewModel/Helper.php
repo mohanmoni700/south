@@ -2,27 +2,35 @@
 
 namespace Alfakher\OfflinePaymentRecords\ViewModel;
 
+use Alfakher\OfflinePaymentRecords\Model\OfflinePaymentRecordFactory;
+use Magento\Directory\Model\Currency;
+use Magento\Directory\Model\PriceCurrency;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+
 class Helper implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
     public const MODULE_ENABLE = "hookahshisha/af_offline_payment_records/enable";
     public const INVOICE_ENABLE = "hookahshisha/af_offline_payment_records/after_invoice";
     public const ALLOWED_PAYMENT = "hookahshisha/af_offline_payment_records/valid_payment";
-
+    
     /**
      * Constructor
      *
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Alfakher\OfflinePaymentRecords\Model\OfflinePaymentRecordFactory $paymentRecords
-     * @param \Magento\Directory\Model\Currency $currency
+     * @param ScopeConfigInterface $scopeConfig
+     * @param OfflinePaymentRecordFactory $paymentRecords
+     * @param Currency $currency
+     * @param PriceCurrency $priceCurrency
      */
     public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Alfakher\OfflinePaymentRecords\Model\OfflinePaymentRecordFactory $paymentRecords,
-        \Magento\Directory\Model\Currency $currency
+        ScopeConfigInterface $scopeConfig,
+        OfflinePaymentRecordFactory $paymentRecords,
+        Currency $currency,
+        PriceCurrency $priceCurrency
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->_paymentRecords = $paymentRecords;
         $this->currency = $currency;
+        $this->priceCurrency = $priceCurrency;
     }
 
     /**
@@ -101,5 +109,15 @@ class Helper implements \Magento\Framework\View\Element\Block\ArgumentInterface
     public function getTotalDue($totalDue)
     {
         return $this->currency->format($totalDue, ['display' => \Zend_Currency::NO_SYMBOL], false);
+    }
+
+    /**
+     * Get precise total due
+     *
+     * @param float $totalDue
+     */
+    public function getRoundDue($totalDue)
+    {
+        return $this->priceCurrency->round($totalDue);
     }
 }
