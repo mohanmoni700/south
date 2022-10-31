@@ -12,13 +12,14 @@ class Helper implements \Magento\Framework\View\Element\Block\ArgumentInterface
     public const MODULE_ENABLE = "hookahshisha/af_offline_payment_records/enable";
     public const INVOICE_ENABLE = "hookahshisha/af_offline_payment_records/after_invoice";
     public const ALLOWED_PAYMENT = "hookahshisha/af_offline_payment_records/valid_payment";
+    
     /**
      * Constructor
      *
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Alfakher\OfflinePaymentRecords\Model\OfflinePaymentRecordFactory $paymentRecords
-     * @param \Magento\Directory\Model\Currency $currency
-     * @param \Magento\Directory\Model\PriceCurrency $priceCurrency
+     * @param ScopeConfigInterface $scopeConfig
+     * @param OfflinePaymentRecordFactory $paymentRecords
+     * @param Currency $currency
+     * @param PriceCurrency $priceCurrency
      */
 
     public function __construct(
