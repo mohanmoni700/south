@@ -28,8 +28,8 @@ if (!$order->getInvoiceCollection()->count()) {
 <?php if ($moduleEnable): ?>
 <input type="hidden" name="af_grandtotal" id="af_grandtotal" value="<?= /* @noEscape */ $grandtotal ?>">
 <input type="hidden" name="af_totalpaid" id="af_totalpaid" value="<?= /* @noEscape */ $totalPaid ?>">
-<input type="hidden" name="af_totaldue" id="af_totaldue"value="<?= /* @noEscape */
-$viewModel->getRoundDue($totalDue) ?>">
+<input type="hidden" name="af_totaldue" id="af_totaldue"
+    value="<?= /* @noEscape */ $viewModel->getRoundDue($totalDue) ?>">
 
 <section id="" class="admin__page-section order-view-billing-shipping">
     <div class="admin__page-section-title">
