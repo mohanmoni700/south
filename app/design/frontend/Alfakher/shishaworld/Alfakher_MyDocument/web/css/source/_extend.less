@@ -1,0 +1,57 @@
+@color_primary: #ff9800;
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    
+    //
+    // Upload document form and updated form common design [AR]
+    // __________________________________________________________
+
+
+    .upload-container,
+    .updated-container {
+        .upload,
+        .document {
+            .view-doc-link, 
+            .deletedocument, 
+            .download-doc-preview {
+                background: @color_primary;
+            }
+        }
+    }
+    .updatedocument {
+        .field .value {
+            &.date {
+                background: @color_primary;
+                border: 2px solid @color_primary;
+            }
+        }
+    }
+
+    //
+    // Toggle design [AR]
+    // __________________________________________________________
+
+    .cmn-toggle {
+        &:checked + .slider {
+            background-color: @color_primary;
+            border-color: @color_primary;
+        }
+    }
+
+    //
+    // Upload document form design [AR]
+    // __________________________________________________________
+
+    .expiry_dates {
+        position: relative;
+        .active-date {
+            background: @color_primary;
+            border-color: @color_primary;
+        }
+    }
+}
+

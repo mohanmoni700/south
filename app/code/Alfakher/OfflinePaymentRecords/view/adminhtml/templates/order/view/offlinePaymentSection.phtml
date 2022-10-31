@@ -27,7 +27,8 @@ if (!$order->getInvoiceCollection()->count()) {
 <?php if ($moduleEnable): ?>
 <input type="hidden" name="af_grandtotal" id="af_grandtotal" value="<?= /* @noEscape */ $grandtotal ?>">
 <input type="hidden" name="af_totalpaid" id="af_totalpaid" value="<?= /* @noEscape */ $totalPaid ?>">
-<input type="hidden" name="af_totaldue" id="af_totaldue" value="<?= /* @noEscape */ $totalDue ?>">
+<input type="hidden" name="af_totaldue" id="af_totaldue"value="<?= /* @noEscape */ $viewModel->getTotalDue($totalDue);
+?>">
 
 <section id="" class="admin__page-section order-view-billing-shipping">
     <div class="admin__page-section-title">
@@ -42,7 +43,8 @@ if (!$order->getInvoiceCollection()->count()) {
                     <span>Payment Type</span>
                 </label>
                 <div class="admin__field-control control">
-                    <select name="offline_payment_type" id="offline_payment_type" class="required-entry required-entry _required select admin__control-select">
+                    <select name="offline_payment_type" id="offline_payment_type"
+                    class="required-entry required-entry _required select admin__control-select">
                         <option value="Net 15">Net 15</option>
                         <option value="Net 30">Net 30</option>
                         <option value="Paypal">Paypal</option>
@@ -63,7 +65,10 @@ if (!$order->getInvoiceCollection()->count()) {
                                         <span>Transaction Number</span>
                                     </label>
                                     <div class="admin__field-control control">
-                                        <input name="offline_transaction_number" id="offline_transaction_number" class="admin__control-text input-text admin__control-text" type="text" placeholder="Transaction Number">
+                                        <input name="offline_transaction_number"
+                                            id="offline_transaction_number"
+                                            class="admin__control-text input-text admin__control-text"
+                                            type="text" placeholder="Transaction Number">
                                     </div>
                                 </div>
                             </td>
@@ -73,8 +78,15 @@ if (!$order->getInvoiceCollection()->count()) {
                                         <span>Amount Paid</span>
                                     </label>
                                     <div class="admin__field-control control">
-                                        <input name="offline_amount_paid" id="offline_amount_paid" class="admin__control-text input-text admin__control-text" type="text" placeholder="Amount Paid" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-                                        <label for="offline_amount_paid" generated="true" class="mage-error" id="offline_amount_paid-error" style="display: none;">This is a required field.</label>
+                                        <input name="offline_amount_paid"
+                                            id="offline_amount_paid"
+                                            class="admin__control-text input-text admin__control-text"
+                                            type="text" placeholder="Amount Paid"
+                                            oninput="this.value = 
+                                            this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                                        <label for="offline_amount_paid" generated="true"
+                                            class="mage-error" id="offline_amount_paid-error"
+                                            style="display: none;">This is a required field.</label>
                                     </div>
                                 </div>
                             </td>
@@ -84,8 +96,13 @@ if (!$order->getInvoiceCollection()->count()) {
                                         <span>Date</span>
                                     </label>
                                     <div class="admin__field-control control">
-                                        <input name="offline_transaction_date" id="offline_transaction_date" class="admin__control-text input-text admin__control-text" type="text" placeholder="Date (yy-mm-dd)" style="width: 100%">
-                                        <label for="offline_transaction_date" generated="true" class="mage-error" id="offline_transaction_date-error" style="display: none;">This is a required field.</label>
+                                        <input name="offline_transaction_date"
+                                            id="offline_transaction_date"
+                                            class="admin__control-text input-text admin__control-text"
+                                            type="text" placeholder="Date (yy-mm-dd)" style="width: 100%">
+                                        <label for="offline_transaction_date" generated="true"
+                                            class="mage-error" id="offline_transaction_date-error"
+                                            style="display: none;">This is a required field.</label>
                                     </div>
                                 </div>
                             </td>
@@ -94,7 +111,9 @@ if (!$order->getInvoiceCollection()->count()) {
                     <tfoot>
                         <tr>
                             <td style="border-bottom: unset; padding-left: unset;">
-                                <button type="button" class="action-default scalable custom-button primary" id="submit_offline_payment">Submit</button>
+                                <button type="button"
+                                    class="action-default scalable custom-button primary"
+                                    id="submit_offline_payment">Submit</button>
                             </td>
                         </tr>
                     </tfoot>
@@ -129,7 +148,11 @@ if (!$order->getInvoiceCollection()->count()) {
                                     <td><?= /* @noEscape */ $value->getTransactionNumber() ?></td>
                                     <td><?= /* @noEscape */ $order->formatPrice($value->getAmountPaid()) ?></td>
                                     <td><?= /* @noEscape */ $value->getTransactionDate() ?></td>
-                                    <td><button class="action-secondary af_payment_delete" type="button" data-record-id="<?= /* @noEscape */ $value->getId() ?>">Delete</button></td>
+                                    <td><button class="action-secondary af_payment_delete"
+                                            type="button"
+                                            data-record-id="<?= /* @noEscape */ $value->getId() ?>">Delete
+                                        </button>
+                                    </td>
                                 </tr>
                             <?php endforeach; ?>
                         <?php else: ?>
@@ -142,7 +165,8 @@ if (!$order->getInvoiceCollection()->count()) {
                         <tr>
                             <td>Grand Total : <?= /* @noEscape */ $order->formatPrice($grandtotal) ?></td>
                             <td>Paid Amount : <?= /* @noEscape */ $order->formatPrice($totalPaid) ?></td>
-                            <td>Amount Due : <?= /* @noEscape */ $order->formatPrice($totalDue) ?></td>
+                            <td>Amount Due : <?= /* @noEscape */ $order->formatPrice($viewModel
+                                ->getTotalDue($totalDue)) ?></td>
                         </tr>
                     </tfoot>
                 </table>
@@ -229,9 +253,9 @@ if (!$order->getInvoiceCollection()->count()) {
 
         $(document).on("click", ".af_payment_delete", function () {
             var recordId = $(this).data("record-id");
-            confirmation({
-                title: $.mage.__('Delete Payment Record'),
-                content: $.mage.__('This action will delete the payment record. Are you sure to perform this operation?'),
+        confirmation({
+            title: $.mage.__('Delete Payment Record'),
+            content: $.mage.__('This action will delete the payment record. Are you sure to perform this operation?'),
                 actions: {
                     confirm: function(){
                         $.ajax({
