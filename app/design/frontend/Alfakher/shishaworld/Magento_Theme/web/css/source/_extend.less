@@ -44,7 +44,9 @@
         .page-header{
             .header.content{
                 .left_section {
-                    flex-basis: 62%;
+                    @media only screen and (min-width: @screen__m) {
+                        flex-basis: 62%;
+                    }
                 }
                 .right_section.panel.wrapper {
                     .lib-css(align-items, center);
@@ -163,6 +165,7 @@
                 }
                 .sign-in{
                     ul.sign-up-ul.customer_logged_in {
+                        border: 1px solid @color_primary;
                         li a {
                             .lib-css(white-space, unset);
                         }
@@ -179,6 +182,17 @@
             } 
         } 
     }
+    .sign-up-ul.customer_logged_in {
+        li {
+            &.guest-heading,
+            &.logout {
+                &:before {
+                    .lib-css(background, @color_primary);
+                }
+            }
+        }
+    }
+
     [lang="de"] #html-body{
         .page-header{
             .header.content{
