@@ -10,6 +10,7 @@ use Magento\Framework\HTTP\Client\Curl;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\Message\ManagerInterface;
 use Alfakher\ExitB\Model\ExitbOrderFactory;
+use Magento\Framework\Exception\LocalizedException;
 
 /**
  * ExitB order sync
@@ -56,13 +57,13 @@ class ExitbSync
     /**
      * New construct
      *
-     * @param Context                  $context
-     * @param ScopeConfigInterface     $scopeConfig
+     * @param Context $context
+     * @param ScopeConfigInterface $scopeConfig
      * @param OrderRepositoryInterface $orderRepository
-     * @param Curl                     $curl
-     * @param Json                     $json
-     * @param ManagerInterface         $messageManager
-     * @param ExitbOrderFactory        $exitbmodelFactory
+     * @param Curl $curl
+     * @param Json $json
+     * @param ManagerInterface $messageManager
+     * @param ExitbOrderFactory $exitbmodelFactory
      */
     public function __construct(
         Context $context,
@@ -85,7 +86,7 @@ class ExitbSync
      * Get website Config Value
      *
      * @param mixed $config_path
-     * @param int   $WebsiteId
+     * @param int $WebsiteId
      * @return string
      */
     public function getConfigValue($config_path, $WebsiteId = null)
@@ -111,7 +112,7 @@ class ExitbSync
     /**
      * Order sync
      *
-     * @param int   $orderId
+     * @param int $orderId
      * @param mixed $token
      * @return mixed
      */
@@ -149,7 +150,8 @@ class ExitbSync
                 $orderData['orderData']['invoiceAddress'] = $this->invoiceAddress($billingaddress);
 
                 $isOffline = $order->getPayment()->getMethodInstance()->isOffline();
-                $orderData['orderData']['payment']['code'] = $this->paymentType($websiteId, $isOffline);
+                $paymentCode = $order->getPayment()->getMethod();
+                $orderData['orderData']['payment']['code'] = $this->paymentType($websiteId, $paymentCode, $isOffline);
                 $orderData['orderData']['payment']['token'] = $order->getMonduReferenceId();
 
                 $shippingMethod = $order->getShippingMethod();
@@ -161,9 +163,9 @@ class ExitbSync
                 $exitBModel = $this->exitbmodelFactory->create();
                 $exitBorderSync = $exitBModel->load($orderId, 'order_id');
 
-                if ($exitBorderSync->getSyncStatus() == 1) {
+                if ($exitBorderSync->getSyncStatus() === 1) {
                     return $exitBorderSync;
-                } elseif ($exitBorderSync->getSyncStatus() == 2 || $exitBorderSync->getSyncStatus() == 3) {
+                } elseif ($exitBorderSync->getSyncStatus() === 2 || $exitBorderSync->getSyncStatus() === 3) {
                     $updateData = $this->orderExist($exitBorderSync, $token, $websiteId, $orderData);
                     return $updateData;
                 } else {
@@ -179,7 +181,7 @@ class ExitbSync
                     }
                 }
             }
-        } catch (\Magento\Framework\Exception\LocalizedException $e) {
+        } catch (LocalizedException $e) {
             $this->messageManager->addError($e->getMessage());
         }
     }
@@ -189,7 +191,7 @@ class ExitbSync
      *
      * @param mixed $data
      * @param mixed $token
-     * @param int   $websiteId
+     * @param int $websiteId
      * @param mixed $orderData
      * @return array
      */
@@ -209,7 +211,7 @@ class ExitbSync
      * Order sync api
      *
      * @param mixed $token
-     * @param int   $websiteId
+     * @param int $websiteId
      * @param mixed $orderData
      * @return mixed
      */
@@ -296,14 +298,23 @@ class ExitbSync
     /**
      * Get payment
      *
-     * @param int   $websiteId
+     * @param int $websiteId
+     * @param string $paymentCode
      * @param mixed $isOffline
      * @return string
      */
-    public function paymentType($websiteId, $isOffline)
+    public function paymentType($websiteId, $paymentCode, $isOffline)
     {
+        if ($isOffline === false) {
+            if ($paymentCode == "mondu") {
+                $online = "monduBill";
+            } elseif ($paymentCode == "mondusepa") {
+                $online = "monduSepa";
+            } else {
+                $online = $this->getConfigValue(self::ONLINE, $websiteId);
+            }
+        }
         $offline = $this->getConfigValue(self::OFFLINE, $websiteId);
-        $online = $this->getConfigValue(self::ONLINE, $websiteId);
         return $isOffline ? $offline : $online;
     }
     

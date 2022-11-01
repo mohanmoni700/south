@@ -9,6 +9,8 @@ use Magento\Ui\Component\MassAction\Filter;
 use Alfakher\ExitB\Model\ResourceModel\ExitbOrder\CollectionFactory;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Alfakher\ExitB\Model\ExitbSync;
+use Magento\Backend\Model\View\Result\Redirect;
+use Magento\Framework\Exception\Exception;
 
 class MassAction extends Action
 {
@@ -33,11 +35,11 @@ class MassAction extends Action
     protected $exitbsync;
 
     /**
-     * @param Context                  $context
-     * @param Filter                   $filter
-     * @param CollectionFactory        $collectionFactory
+     * @param Context $context
+     * @param Filter $filter
+     * @param CollectionFactory $collectionFactory
      * @param OrderRepositoryInterface $orderRepository
-     * @param ExitbSync                $exitbsync
+     * @param ExitbSync $exitbsync
      */
     public function __construct(
         Context $context,
@@ -56,8 +58,8 @@ class MassAction extends Action
     /**
      * MassUpdate action
      *
-     * @return \Magento\Backend\Model\View\Result\Redirect
-     * @throws \Magento\Framework\Exception\LocalizedException|\Exception
+     * @return Redirect
+     * @throws Exception
      */
     public function execute()
     {
@@ -92,7 +94,7 @@ class MassAction extends Action
             $this->messageManager->addSuccess(__('Order Sync In ExitB %1 order(s).', $countOrdersync));
         }
 
-        /** @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect */
+        /** @var Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
         return $resultRedirect->setPath('exitbordersync/index/index');
     }
@@ -100,7 +102,7 @@ class MassAction extends Action
     /**
      * Get website id
      *
-     * @param int   $orderId
+     * @param int $orderId
      */
     public function getWebsiteId($orderId)
     {

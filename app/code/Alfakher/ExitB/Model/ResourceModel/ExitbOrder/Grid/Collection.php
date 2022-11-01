@@ -7,19 +7,19 @@ use Magento\Framework\Data\Collection\EntityFactoryInterface as EntityFactory;
 use Magento\Framework\Event\ManagerInterface as EventManager;
 use Psr\Log\LoggerInterface as Logger;
 use Alfakher\ExitB\Model\ResourceModel\ExitbOrder as ExitbModel;
+use Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult;
 
-class Collection extends \Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult
+class Collection extends SearchResult
 {
-    
     /**
      * Initialize dependencies.
      *
-     * @param \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy
-     * @param \Magento\Framework\Event\ManagerInterface $eventManager
+     * @param EntityFactoryInterface $entityFactory
+     * @param LoggerInterface $logger
+     * @param FetchStrategyInterface $fetchStrategy
+     * @param ManagerInterface $eventManager
      * @param mixed|null $mainTable
-     * @param \Alfakher\ExitB\Model\ResourceModel\ExitbOrder $resourceModel
+     * @param ExitbOrder $resourceModel
      */
     public function __construct(
         EntityFactory $entityFactory,

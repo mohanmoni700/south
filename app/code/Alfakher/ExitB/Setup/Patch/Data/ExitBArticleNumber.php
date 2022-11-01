@@ -29,7 +29,7 @@ class ExitBArticleNumber implements DataPatchInterface
 
     /**
      * @param ModuleDataSetupInterface $moduleDataSetup
-     * @param EavSetupFactory          $eavSetupFactory
+     * @param EavSetupFactory $eavSetupFactory
      */
     public function __construct(
         ModuleDataSetupInterface $moduleDataSetup,

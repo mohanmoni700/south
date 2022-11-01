@@ -2,6 +2,14 @@
 declare(strict_types=1);
 namespace Alfakher\ExitB\Plugin\Order;
 
+use Magento\Framework\App\RequestInterface;
+use Magento\Sales\Api\OrderRepositoryInterface;
+use Alfakher\ExitB\Model\ExitbSync;
+use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Framework\MessageQueue\PublisherInterface;
+use Alfakher\ExitB\Model\ResourceModel\ExitbOrder\Collection;
+use Alfakher\SalesApprove\Controller\Adminhtml\Order\Approve;
+
 /**
  * ExitB order sync
  */
@@ -10,47 +18,47 @@ class SyncPlugin
     public const TOPIC_NAME = 'exitb.massorder.sync';
     
     /**
-     * @var \Magento\Framework\App\RequestInterface
+     * @var RequestInterface
      */
     protected $request;
 
     /**
-     * @var \Magento\Sales\Api\OrderRepositoryInterface
+     * @var OrderRepositoryInterface
      */
     private $orderRepository;
 
     /**
-     * @var \Alfakher\ExitB\Model\ExitbSync
+     * @var ExitbSync
      */
     protected $exitbsync;
 
     /**
-     * @var \Magento\Framework\Serialize\Serializer\Json
+     * @var Json
      */
     protected $json;
     
     /**
-     * @var \Magento\Framework\MessageQueue\PublisherInterface
+     * @var PublisherInterface
      */
     protected $publisher;
     
     /**
      * Check construct
      *
-     * @param \Magento\Framework\App\RequestInterface                   $request
-     * @param \Magento\Sales\Api\OrderRepositoryInterface               $orderRepository
-     * @param \Alfakher\ExitB\Model\ResourceModel\ExitbOrder\Collection $exitborderModel
-     * @param \Alfakher\ExitB\Model\ExitbSync                           $exitbsync
-     * @param \Magento\Framework\Serialize\Serializer\Json              $json
-     * @param \Magento\Framework\MessageQueue\PublisherInterface        $publisher
+     * @param RequestInterface $request
+     * @param OrderRepositoryInterface $orderRepository
+     * @param Collection $exitborderModel
+     * @param ExitbSync $exitbsync
+     * @param Json $json
+     * @param PublisherInterface $publisher
      */
     public function __construct(
-        \Magento\Framework\App\RequestInterface $request,
-        \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
-        \Alfakher\ExitB\Model\ResourceModel\ExitbOrder\Collection $exitborderModel,
-        \Alfakher\ExitB\Model\ExitbSync $exitbsync,
-        \Magento\Framework\Serialize\Serializer\Json $json,
-        \Magento\Framework\MessageQueue\PublisherInterface $publisher
+        RequestInterface $request,
+        OrderRepositoryInterface $orderRepository,
+        Collection $exitborderModel,
+        ExitbSync $exitbsync,
+        Json $json,
+        PublisherInterface $publisher
     ) {
         $this->request = $request;
         $this->order = $orderRepository;
@@ -63,12 +71,12 @@ class SyncPlugin
     /**
      * After sales approve
      *
-     * @param \Alfakher\SalesApprove\Controller\Adminhtml\Order\Approve $subject
+     * @param Approve $subject
      * @param mixed $result
      * @return $result
      */
     public function afterExecute(
-        \Alfakher\SalesApprove\Controller\Adminhtml\Order\Approve $subject,
+        Approve $subject,
         $result
     ) {
         $data = (array) $this->request->getParams();

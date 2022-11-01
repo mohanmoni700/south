@@ -5,6 +5,7 @@ namespace Alfakher\ExitB\Controller\Adminhtml\Index;
 use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\View\Result\PageFactory;
+use Magento\Framework\View\Result\Page;
 
 /**
  * Create page
@@ -19,7 +20,7 @@ class Index extends Action
     /**
      * Index constructor.
      *
-     * @param Context     $context
+     * @param Context $context
      * @param PageFactory $resultPageFactory
      */
     public function __construct(
@@ -33,7 +34,7 @@ class Index extends Action
     /**
      * Page render
      *
-     * @return \Magento\Framework\View\Result\Page
+     * @return Page
      */
     public function execute()
     {

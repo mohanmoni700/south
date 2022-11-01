@@ -46,11 +46,11 @@ class Consumer extends ConsumerConfiguration
      * Check construct
      *
      * @param OrderRepositoryInterface $orderRepository
-     * @param ExitbSync                $exitbsync
-     * @param Json                     $json
-     * @param ManagerInterface         $messageManager
-     * @param OrderTokenFactory        $ordertokenFactory
-     * @param TimezoneInterface        $date
+     * @param ExitbSync $exitbsync
+     * @param Json $json
+     * @param ManagerInterface $messageManager
+     * @param OrderTokenFactory $ordertokenFactory
+     * @param TimezoneInterface $date
      */
     public function __construct(
         OrderRepositoryInterface $orderRepository,

@@ -9,6 +9,7 @@ use Alfakher\ExitB\Model\ExitbSync;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Framework\HTTP\Client\Curl;
+use Magento\Framework\Controller\ResultInterface;
 
 /**
  * Single order sync
@@ -33,12 +34,12 @@ class Index extends Action
     /**
      * New construct
      *
-     * @param Context                  $context
-     * @param PageFactory              $pageFactory
+     * @param Context $context
+     * @param PageFactory $pageFactory
      * @param OrderRepositoryInterface $orderRepository
-     * @param ExitbSync                $exitbsync
-     * @param Curl                     $curl
-     * @param Json                     $json
+     * @param ExitbSync $exitbsync
+     * @param Curl $curl
+     * @param Json $json
      */
     public function __construct(
         Context $context,
@@ -59,7 +60,7 @@ class Index extends Action
     /**
      * Execute view action
      *
-     * @return \Magento\Framework\Controller\ResultInterface
+     * @return ResultInterface
      */
     public function execute()
     {

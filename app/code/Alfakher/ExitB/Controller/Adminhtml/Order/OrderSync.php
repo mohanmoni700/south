@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace Alfakher\ExitB\Controller\Adminhtml\Order;
 
+use Magento\Sales\Controller\Adminhtml\Order\AbstractMassAction;
 use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 use Magento\Backend\App\Action\Context;
 use Magento\Ui\Component\MassAction\Filter;
@@ -9,11 +10,12 @@ use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 use Magento\Sales\Api\OrderManagementInterface;
 use Alfakher\ExitB\Model\ExitbSync;
 use Magento\Sales\Model\Order;
+use Magento\Backend\Model\View\Result\Redirect;
 
 /**
  * Class MassSync
  */
-class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAction
+class OrderSync extends AbstractMassAction
 {
     /**
      * @var OrderManagementInterface
@@ -26,11 +28,11 @@ class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
     protected $exitbsync;
 
     /**
-     * @param Context                     $context
-     * @param Filter                      $filter
-     * @param CollectionFactory           $collectionFactory
-     * @param OrderManagementInterface    $orderManagement
-     * @param ExitbSync                   $exitbsync
+     * @param Context $context
+     * @param Filter $filter
+     * @param CollectionFactory $collectionFactory
+     * @param OrderManagementInterface $orderManagement
+     * @param ExitbSync $exitbsync
      */
     public function __construct(
         Context $context,
@@ -49,7 +51,7 @@ class OrderSync extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAc
      * Sync selected orders
      *
      * @param  AbstractCollection $collection
-     * @return \Magento\Backend\Model\View\Result\Redirect
+     * @return Redirect
      */
     protected function massAction(AbstractCollection $collection)
     {
