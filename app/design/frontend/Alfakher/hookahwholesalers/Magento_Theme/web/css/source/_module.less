@@ -2471,7 +2471,9 @@
                         font-size: 12px;
                         padding-top: @indent__xl; // 50px
                         position: relative;
-                        text-align: center;
+                        @media only screen and (min-width: @screen__l) {
+                            .lib-css(text-align, center);
+                        }
                         &::after {
                             -webkit-transform: translate(-50%, 0);
                             background-image: url('@{baseDir}images/Union.svg');
@@ -2502,6 +2504,9 @@
                         font-size: 12px;
                         padding-top: @indent__xl; // 50px
                         position: relative;
+                        @media only screen and (min-width: @screen__l) {
+                            .lib-css(text-align, center);
+                        }
                         &::after {
                             content: '';
                             background-size: contain;
@@ -2523,8 +2528,7 @@
                     color: @color_black;
                     font-size: 12px;
                     padding-top: @indent__xl - 1; // 50px
-                    position: relative;
-                    text-align: center;
+                    position: relative;                    
                     span.sign-up {
                     }
                     &::after {
@@ -2890,7 +2894,6 @@
                 }
                 .right_section {
                     align-items: center;
-                    .header_account_link,
                     .minicart-wrapper .text,
                     .sign-in .sign-up {
                         display: none;
@@ -3123,7 +3126,7 @@
         }
     }
     @media only screen and (min-width: 768px) and (max-width: 1024px) {
-        body .page-header .header.content {
+        body .page-wrapper .page-header .header.content {
             .logo {
                 height: 44px;
                 margin: 0;
@@ -3139,7 +3142,7 @@
         }
 
         body {
-            .page-header {
+            .page-wrapper .page-header {
                 .header.content {
                     .block-search {
                         padding-left: 0;
@@ -3158,7 +3161,7 @@
     }
     @media only screen and (max-width: 767px) {
         body {
-            .page-header {
+            .page-wrapper .page-header {
                 .header.content {
                     .left_section {
                         flex-basis: 30%;
@@ -3192,7 +3195,7 @@
     }
     @media only screen and (max-width: 360px) {
         body {
-            .page-header {
+            .page-wrapper .page-header {
                 .header.content {
                     .left_section .logo {
                         width: 120px;
