@@ -14,6 +14,7 @@ use Magento\Framework\Controller\Result\Redirect;
 use Magento\Framework\DataObject;
 use Magento\Framework\Exception\LocalizedException;
 use Psr\Log\LoggerInterface;
+use Magento\Framework\App\Response\RedirectInterface;
 
 class Post extends \Magento\Contact\Controller\Index implements HttpPostActionInterface
 {
@@ -38,10 +39,16 @@ class Post extends \Magento\Contact\Controller\Index implements HttpPostActionIn
     private $logger;
 
     /**
+     * @var Redirect
+     */
+    private $redirect;
+
+    /**
      * @param Context $context
      * @param ConfigInterface $contactsConfig
      * @param MailInterface $mail
      * @param DataPersistorInterface $dataPersistor
+     * @param RedirectInterface $redirect
      * @param LoggerInterface $logger
      */
     public function __construct(
@@ -49,12 +56,14 @@ class Post extends \Magento\Contact\Controller\Index implements HttpPostActionIn
         ConfigInterface $contactsConfig,
         MailInterface $mail,
         DataPersistorInterface $dataPersistor,
+        RedirectInterface $redirect,
         LoggerInterface $logger = null
     ) {
         parent::__construct($context, $contactsConfig);
         $this->context = $context;
         $this->mail = $mail;
         $this->dataPersistor = $dataPersistor;
+        $this->redirect = $redirect;
         $this->logger = $logger ?: ObjectManager::getInstance()->get(LoggerInterface::class);
     }
 
@@ -84,7 +93,9 @@ class Post extends \Magento\Contact\Controller\Index implements HttpPostActionIn
             );
             $this->dataPersistor->set('contact_us', $this->getRequest()->getParams());
         }
-        return $this->resultRedirectFactory->create()->setPath('contact/index');
+        $resultRedirect = $this->resultRedirectFactory->create();
+        $resultRedirect->setUrl($this->redirect->getRefererUrl());
+        return $resultRedirect;
     }
 
     /**
