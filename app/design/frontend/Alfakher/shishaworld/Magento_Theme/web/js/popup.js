@@ -5,6 +5,7 @@ define([
 	'mage/mage'
 ], function($,modal) {
 	'use strict';
+	var form = $('form.subscribe');
 	var options = {
 		type: 'popup',
 		responsive: true,
@@ -23,15 +24,56 @@ define([
 		$(".modal-footer").hide();
 		}
 	};
+	form.submit(function(e) {
+            if(form.validation('isValid')){
+                var email = $("#newsletter").val();
+                var url = form.attr('action');
+                var loadingMessage = $('#loading-message');
 
+                if(loadingMessage.length == 0) {
+                    $('<div id="loading-message" style="display:none;padding-bottom:15px">&nbsp;</div>').insertBefore("#newslettermsg");
+                    var loadingMessage = $('#loading-message');
+                }
+                e.preventDefault();
+                try{
+                    loadingMessage.css("color","green");
+                    loadingMessage.html('Submitting...').show();
+                    $.ajax({
+                        url: url,
+                        dataType: 'json',
+                        type: 'POST',
+                        data: {email: email},
+                        success: function (data){
+                            if(data.status != "ERROR"){
+                                $('#newsletter').val('');
+                                loadingMessage.css("color","green");
+                                $.cookie('popuplogintext', 'open', { path: '/' });
+                                setTimeout(function(){
+	                                $("#popup").modal('closeModal');
+                            },3000);
+                            }else{
+                                loadingMessage.css("color","red");
+                            }
+                            loadingMessage.html(data.msg);
+                        },
+                        complete: function(){
+                            setTimeout(function(){
+                                loadingMessage.hide();
+                            },5000);
+                            $(".subscribe-enable").attr("disabled",false);
+                        }
+                    });
+                } catch (e){
+                    loadingMessage.html(e.message);
+                }
+            }
+            return false;
+        });
 	$(document).ready(function() {
 		var popup = modal(options, $('#popup'));
 		if ($.cookie('popuplogintext') != 'open') {
 			$("#popup").modal('openModal');
 			if( "#newsletter-popup" ){
-				$( "#newsletter-popup" ).click(function() {
-					$.cookie('popuplogintext', 'open', { path: '/' });
-				});
 				$( ".action-close" ).click(function() {
 					$.cookie('popuplogintext', 'open', { path: '/' });
 				});

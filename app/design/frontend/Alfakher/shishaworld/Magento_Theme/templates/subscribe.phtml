@@ -14,6 +14,8 @@
                 <div class="control">
                      <h3><?= $block->escapeHtml(__('Join Our Newsletter')) ?></h3>
                     <p><?= $block->escapeHtml(__('Be the first to know about new arrivals, sales & promos!')) ?></p>
+                    <div id="newslettermsg"> </div>
+                    <div class="action_filde">
                     <label for="newsletter">
                         <span class="label">
                             <?= $block->escapeHtml(__('Sign Up for Our Newsletter:')) ?>
@@ -24,10 +26,11 @@
                                data-validate="{required:true, 'validate-email':true}"
                         />
                     </label>
+                    </div>
+                  </div>
                 </div>
-            </div>
             <div class="actions">
-                <button class="action subscribe primary"
+                <button class="action subscribe primary subscribe-enable"
                         id = "newsletter-popup"
                         title="<?= $block->escapeHtmlAttr(__('Subscribe')) ?>"
                         type="submit"
