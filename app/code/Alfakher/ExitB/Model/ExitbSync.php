@@ -163,9 +163,9 @@ class ExitbSync
                 $exitBModel = $this->exitbmodelFactory->create();
                 $exitBorderSync = $exitBModel->load($orderId, 'order_id');
 
-                if ($exitBorderSync->getSyncStatus() === 1) {
+                if ($exitBorderSync->getSyncStatus() == 1) {
                     return $exitBorderSync;
-                } elseif ($exitBorderSync->getSyncStatus() === 2 || $exitBorderSync->getSyncStatus() === 3) {
+                } elseif ($exitBorderSync->getSyncStatus() == 2 || $exitBorderSync->getSyncStatus() == 3) {
                     $updateData = $this->orderExist($exitBorderSync, $token, $websiteId, $orderData);
                     return $updateData;
                 } else {
