@@ -7,9 +7,6 @@ use HookahShisha\Customization\Helper\UserData;
 
 /**
  * Main contact form block
- *
- * @api
- * @since 100.0.2
  */
 class ContactForm extends Template
 {

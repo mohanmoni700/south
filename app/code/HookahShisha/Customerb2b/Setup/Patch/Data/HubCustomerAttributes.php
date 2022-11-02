@@ -8,6 +8,7 @@ use Magento\Customer\Setup\CustomerSetupFactory;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\Patch\PatchRevertableInterface;
+use Magento\Customer\Model\Customer;
 
 class HubCustomerAttributes implements DataPatchInterface, PatchRevertableInterface
 {
@@ -79,7 +80,7 @@ class HubCustomerAttributes implements DataPatchInterface, PatchRevertableInterf
         $this->moduleDataSetup->getConnection()->startSetup();
         /** @var CustomerSetup $customerSetup */
         $customerSetup = $this->eavSetupFactory->create(['setup' => $this->moduleDataSetup]);
-        $customerSetup->removeAttribute(\Magento\Customer\Model\Customer::ENTITY, 'hub_mobile_number');
+        $customerSetup->removeAttribute(Customer::ENTITY, 'hub_mobile_number');
         $this->moduleDataSetup->getConnection()->endSetup();
     }
 

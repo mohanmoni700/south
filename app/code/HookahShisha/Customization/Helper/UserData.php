@@ -6,6 +6,8 @@ use Magento\Contact\Model\ConfigInterface;
 use Magento\Customer\Api\Data\CustomerInterface;
 use Magento\Customer\Helper\View as CustomerViewHelper;
 use Magento\Framework\App\Request\DataPersistorInterface;
+use Magento\Framework\App\Helper\Context;
+use Magento\Customer\Model\Session;
 
 /**
  * Contact base helper
@@ -17,33 +19,33 @@ class UserData extends \Magento\Contact\Helper\Data
     /**
      * Customer
      *
-     * @var \Magento\Customer\Model\Session
+     * @var Session $_customerSession
      */
     protected $_customerSession;
 
     /**
-     * @var \Magento\Customer\Helper\View
+     * @var CustomerViewHelper $_customerViewHelper
      */
     protected $_customerViewHelper;
 
     /**
-     * @var DataPersistorInterface
+     * @var DataPersistorInterface $dataPersistor
      */
     private $dataPersistor;
 
     /**
-     * @var array
+     * @var array $postData
      */
     private $postData = null;
 
     /**
-     * @param \Magento\Framework\App\Helper\Context $context
-     * @param \Magento\Customer\Model\Session $customerSession
+     * @param Context $context
+     * @param Session $customerSession
      * @param CustomerViewHelper $customerViewHelper
      */
     public function __construct(
-        \Magento\Framework\App\Helper\Context $context,
-        \Magento\Customer\Model\Session $customerSession,
+        Context $context,
+        Session $customerSession,
         CustomerViewHelper $customerViewHelper
     ) {
         $this->_customerSession = $customerSession;
@@ -63,7 +65,7 @@ class UserData extends \Magento\Contact\Helper\Data
         }
 
         /**
-         * @var \Magento\Customer\Api\Data\CustomerInterface $customer
+         * @var CustomerInterface $customer
          */
         $customer = $this->_customerSession->getCustomerDataObject();
         $firstname = $customer->getFirstname();
@@ -81,7 +83,7 @@ class UserData extends \Magento\Contact\Helper\Data
             return '';
         }
         /**
-         * @var \Magento\Customer\Api\Data\CustomerInterface $customer
+         * @var CustomerInterface $customer
          */
         $customer = $this->_customerSession->getCustomerDataObject();
         $lastname = $customer->getLastname();

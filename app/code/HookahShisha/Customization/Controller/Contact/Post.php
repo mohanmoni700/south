@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace HookahShisha\Customization\Controller\Contact;
 
@@ -74,8 +74,9 @@ class Post extends \Magento\Contact\Controller\Index implements HttpPostActionIn
      */
     public function execute()
     {
+        $resultRedirect = $this->resultRedirectFactory->create();
         if (!$this->getRequest()->isPost()) {
-            return $this->resultRedirectFactory->create()->setPath('*/*/');
+            return $resultRedirect->setPath('*/*/');
         }
         try {
             $this->sendEmail($this->validatedParams());
@@ -93,7 +94,6 @@ class Post extends \Magento\Contact\Controller\Index implements HttpPostActionIn
             );
             $this->dataPersistor->set('contact_us', $this->getRequest()->getParams());
         }
-        $resultRedirect = $this->resultRedirectFactory->create();
         $resultRedirect->setUrl($this->redirect->getRefererUrl());
         return $resultRedirect;
     }
@@ -116,7 +116,7 @@ class Post extends \Magento\Contact\Controller\Index implements HttpPostActionIn
      * Validate Params data
      *
      * @return array
-     * @throws \Exception
+     * @throws \LocalizedException
      */
     private function validatedParams()
     {

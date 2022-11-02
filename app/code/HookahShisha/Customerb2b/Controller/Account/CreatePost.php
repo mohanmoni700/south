@@ -1,6 +1,5 @@
 <?php
-
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace HookahShisha\Customerb2b\Controller\Account;
 
@@ -8,6 +7,23 @@ use Laminas\Validator\EmailAddress;
 use Magento\Framework\App\Action\HttpPostActionInterface as HttpPostActionInterface;
 use Magento\Framework\Exception\InputException;
 use Magento\LoginAsCustomerAssistance\Model\ResourceModel\SaveLoginAsCustomerAssistanceAllowed;
+use Magento\Framework\App\Action\Context;
+use Magento\Authorization\Model\UserContextInterface;
+use Psr\Log\LoggerInterface;
+use Magento\Framework\Api\DataObjectHelper;
+use Magento\Framework\Data\Form\FormKey\Validator;
+use Magento\Company\Model\Action\Validator\Captcha;
+use Magento\Customer\Api\AccountManagementInterface;
+use Magento\Customer\Api\Data\CustomerInterfaceFactory;
+use Magento\Company\Model\Create\Session;
+use Magento\Customer\Model\CustomerExtractor;
+use Magento\Customer\Model\Session as Customersession;
+use Magento\Customer\Model\Metadata\FormFactory;
+use Magento\Customer\Api\Data\RegionInterfaceFactory;
+use Magento\Customer\Api\Data\AddressInterfaceFactory;
+use HookahShisha\Customerb2b\Helper\Data;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Company\Model\CompanyUser;
 
 /**
  * Create company account action.
@@ -23,17 +39,17 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
     private $formId = 'company_create';
 
     /**
-     * @var \Magento\Framework\Api\DataObjectHelper
+     * @var DataObjectHelper
      */
-    private $objectHelper;
+    private $dataObjectHelper;
 
     /**
-     * @var \Magento\Framework\Data\Form\FormKey\Validator
+     * @var Validator
      */
     private $formKeyValidator;
 
     /**
-     * @var \Magento\Company\Model\Action\Validator\Captcha
+     * @var Captcha
      */
     private $captchaValidator;
 
@@ -43,17 +59,17 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
     private $userContext;
 
     /**
-     * @var \Magento\Customer\Api\AccountManagementInterface
+     * @var AccountManagementInterface
      */
     private $customerAccountManagement;
 
     /**
-     * @var \Magento\Customer\Api\Data\CustomerInterfaceFactory
+     * @var CustomerInterfaceFactory
      */
     private $customerDataFactory;
 
     /**
-     * @var \Psr\Log\LoggerInterface
+     * @var LoggerInterface
      */
     private $logger;
 
@@ -63,7 +79,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
     private $companyCreateSession;
 
     /**
-     * @var \Magento\Company\Model\CompanyUser|null
+     * @var CompanyUser|null
      */
     private $companyUser;
 
@@ -73,7 +89,7 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
     private $helperdata;
 
     /**
-     * @var \Magento\Framework\Controller\Result\JsonFactory
+     * @var JsonFactory
      */
     private $resultJsonFactory;
 
@@ -83,53 +99,50 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
     private $emailValidator;
 
     /**
-     * @param \Magento\Framework\App\Action\Context $context
-     * @param \Magento\Authorization\Model\UserContextInterface $userContext
-     * @param \Psr\Log\LoggerInterface $logger
-     * @param \Magento\Framework\Api\DataObjectHelper $objectHelper
-     * @param \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator
-     * @param \Magento\Company\Model\Action\Validator\Captcha $captchaValidator
-     * @param \Magento\Customer\Api\AccountManagementInterface $customerAccountManagement
-     * @param \Magento\Customer\Api\Data\CustomerInterfaceFactory $customerDataFactory
-     * @param \Magento\Company\Model\Create\Session $companyCreateSession
-     * @param \Magento\Customer\Model\CustomerExtractor $customerExtractor
-     * @param \Magento\Framework\Api\DataObjectHelper $dataObjectHelper
-     * @param \Magento\Customer\Model\Session $customerSession
-     * @param \Magento\Customer\Model\Metadata\FormFactory $formFactory
-     * @param \Magento\Customer\Api\Data\RegionInterfaceFactory $regionDataFactory
-     * @param \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory
-     * @param \HookahShisha\Customerb2b\Helper\Data $helperdata
-     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     * @param Context $context
+     * @param UserContextInterface $userContext
+     * @param LoggerInterface $logger
+     * @param DataObjectHelper $dataObjectHelper
+     * @param Validator $formKeyValidator
+     * @param Captcha $captchaValidator
+     * @param AccountManagementInterface $customerAccountManagement
+     * @param CustomerInterfaceFactory $customerDataFactory
+     * @param Session $companyCreateSession
+     * @param CustomerExtractor $customerExtractor
+     * @param Customersession $customerSession
+     * @param FormFactory $formFactory
+     * @param RegionInterfaceFactory $regionDataFactory
+     * @param AddressInterfaceFactory $addressDataFactory
+     * @param Data $helperdata
+     * @param JsonFactory $resultJsonFactory
      * @param EmailAddress $emailValidator
      * @param SaveLoginAsCustomerAssistanceAllowed $saveLoginAsCustomerAssistanceAllowed
-     * @param \Magento\Company\Model\CompanyUser|null $companyUser
+     * @param CompanyUser|null $companyUser
      */
     public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Authorization\Model\UserContextInterface $userContext,
-        \Psr\Log\LoggerInterface $logger,
-        \Magento\Framework\Api\DataObjectHelper $objectHelper,
-        \Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
-        \Magento\Company\Model\Action\Validator\Captcha $captchaValidator,
-        \Magento\Customer\Api\AccountManagementInterface $customerAccountManagement,
-        \Magento\Customer\Api\Data\CustomerInterfaceFactory $customerDataFactory,
-        \Magento\Company\Model\Create\Session $companyCreateSession,
-        \Magento\Customer\Model\CustomerExtractor $customerExtractor,
-        \Magento\Framework\Api\DataObjectHelper $dataObjectHelper,
-        \Magento\Customer\Model\Session $customerSession,
-        \Magento\Customer\Model\Metadata\FormFactory $formFactory,
-        \Magento\Customer\Api\Data\RegionInterfaceFactory $regionDataFactory,
-        \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory,
-        \HookahShisha\Customerb2b\Helper\Data $helperdata,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
+        Context $context,
+        UserContextInterface $userContext,
+        LoggerInterface $logger,
+        DataObjectHelper $dataObjectHelper,
+        Validator $formKeyValidator,
+        Captcha $captchaValidator,
+        AccountManagementInterface $customerAccountManagement,
+        CustomerInterfaceFactory $customerDataFactory,
+        Session $companyCreateSession,
+        CustomerExtractor $customerExtractor,
+        Customersession $customerSession,
+        FormFactory $formFactory,
+        RegionInterfaceFactory $regionDataFactory,
+        AddressInterfaceFactory $addressDataFactory,
+        Data $helperdata,
+        JsonFactory $resultJsonFactory,
         EmailAddress $emailValidator,
         SaveLoginAsCustomerAssistanceAllowed $saveLoginAsCustomerAssistanceAllowed,
-        \Magento\Company\Model\CompanyUser $companyUser = null
+        CompanyUser $companyUser = null
     ) {
         parent::__construct($context);
         $this->userContext = $userContext;
         $this->logger = $logger;
-        $this->objectHelper = $objectHelper;
         $this->formKeyValidator = $formKeyValidator;
         $this->captchaValidator = $captchaValidator;
         $this->customerAccountManagement = $customerAccountManagement;
@@ -226,7 +239,6 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
             /*End*/
 
             /* end create customer accounts */
-
             $this->companyCreateSession->setCustomerId($customer->getId());
 
             /*bv-hd customization for Allow remote shopping assistance */
@@ -234,8 +246,8 @@ class CreatePost extends \Magento\Framework\App\Action\Action implements HttpPos
             if ($customerId) {
                 $this->saveLoginAsCustomerAssistanceAllowed->execute((int) $customerId);
             }
-            /*bv-hd customization for Allow remote shopping assistance */
 
+            /*bv-hd customization for Allow remote shopping assistance */
             $this->helperdata->sendEmail($data);
 
             $resultJson->setData([

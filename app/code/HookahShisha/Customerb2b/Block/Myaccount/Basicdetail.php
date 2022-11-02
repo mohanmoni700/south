@@ -1,16 +1,30 @@
 <?php
-
 namespace HookahShisha\Customerb2b\Block\Myaccount;
 
 use Magento\Customer\Api\AddressMetadataInterface;
 use Magento\Customer\Helper\Address;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Newsletter\Model\Config;
+use Magento\Newsletter\Model\Config as NewsletterConfig;
 use Magento\Newsletter\Model\Subscriber;
 use Magento\Newsletter\Model\SubscriberFactory;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\View\Element\Template\Context;
+use Magento\Directory\Helper\Data;
+use Magento\Framework\Json\EncoderInterface;
+use Magento\Framework\App\Cache\Type\Config;
+use Magento\Directory\Model\ResourceModel\Region\CollectionFactory;
+use Magento\Directory\Model\ResourceModel\Country\CollectionFactory as Countrycollection;
+use Magento\Customer\Model\Session;
+use Magento\Customer\Api\AddressRepositoryInterface;
+use Magento\Customer\Api\Data\AddressInterfaceFactory;
+use Magento\Customer\Helper\Session\CurrentCustomer;
+use Magento\Framework\Api\DataObjectHelper;
+use Magento\Framework\Module\Manager;
+use Magento\Customer\Api\Data\AddressInterface;
+use Magento\Customer\Block\Widget\Name;
+use Magento\Customer\Api\Data\CustomerInterface;
 
 /**
  * Basic detail edit block
@@ -20,32 +34,32 @@ use Magento\Store\Model\StoreManagerInterface;
 class Basicdetail extends \Magento\Directory\Block\Data
 {
     /**
-     * @var \Magento\Customer\Api\Data\AddressInterface|null
+     * @var AddressInterface|null
      */
     protected $_address = null;
 
     /**
-     * @var \Magento\Customer\Model\Session
+     * @var Session
      */
     protected $_customerSession;
 
     /**
-     * @var \Magento\Customer\Api\AddressRepositoryInterface
+     * @var AddressRepositoryInterface
      */
     protected $_addressRepository;
 
     /**
-     * @var \Magento\Customer\Api\Data\AddressInterfaceFactory
+     * @var AddressInterfaceFactory
      */
     protected $addressDataFactory;
 
     /**
-     * @var \Magento\Customer\Helper\Session\CurrentCustomer
+     * @var CurrentCustomer
      */
     protected $currentCustomer;
 
     /**
-     * @var \Magento\Framework\Api\DataObjectHelper
+     * @var DataObjectHelper
      */
     protected $dataObjectHelper;
 
@@ -55,12 +69,12 @@ class Basicdetail extends \Magento\Directory\Block\Data
     private $addressMetadata;
 
     /**
-     * @var \Magento\Framework\Module\Manager
+     * @var Manager
      */
     protected $_moduleManager;
 
     /**
-     * @var Config
+     * @var NewsletterConfig
      */
     private $newsLetterConfig;
 
@@ -82,44 +96,44 @@ class Basicdetail extends \Magento\Directory\Block\Data
     /**
      * Constructor
      *
-     * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Magento\Directory\Helper\Data $directoryHelper
-     * @param \Magento\Framework\Json\EncoderInterface $jsonEncoder
-     * @param \Magento\Framework\App\Cache\Type\Config $configCacheType
-     * @param \Magento\Directory\Model\ResourceModel\Region\CollectionFactory $regionCollectionFactory
-     * @param \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $countryCollectionFactory
-     * @param \Magento\Customer\Model\Session $customerSession
-     * @param \Magento\Customer\Api\AddressRepositoryInterface $addressRepository
-     * @param \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory
-     * @param \Magento\Customer\Helper\Session\CurrentCustomer $currentCustomer
-     * @param \Magento\Framework\Api\DataObjectHelper $dataObjectHelper
+     * @param Context $context
+     * @param Data $directoryHelper
+     * @param EncoderInterface $jsonEncoder
+     * @param Config $configCacheType
+     * @param CollectionFactory $regionCollectionFactory
+     * @param Countrycollection $countryCollectionFactory
+     * @param Session $customerSession
+     * @param AddressRepositoryInterface $addressRepository
+     * @param AddressInterfaceFactory $addressDataFactory
+     * @param CurrentCustomer $currentCustomer
+     * @param DataObjectHelper $dataObjectHelper
      * @param SubscriberFactory $subscriberFactory
-     * @param \Magento\Framework\Module\Manager $moduleManager
+     * @param Manager $moduleManager
      * @param AddressMetadataInterface $addressMetadata = null
      * @param Address $addressHelper = null
-     * @param Config $newsLetterConfig = null
+     * @param NewsletterConfig $newsLetterConfig = null
      * @param StoreManagerInterface $storeManager
      * @param array $data = []
      *
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Directory\Helper\Data $directoryHelper,
-        \Magento\Framework\Json\EncoderInterface $jsonEncoder,
-        \Magento\Framework\App\Cache\Type\Config $configCacheType,
-        \Magento\Directory\Model\ResourceModel\Region\CollectionFactory $regionCollectionFactory,
-        \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $countryCollectionFactory,
-        \Magento\Customer\Model\Session $customerSession,
-        \Magento\Customer\Api\AddressRepositoryInterface $addressRepository,
-        \Magento\Customer\Api\Data\AddressInterfaceFactory $addressDataFactory,
-        \Magento\Customer\Helper\Session\CurrentCustomer $currentCustomer,
-        \Magento\Framework\Api\DataObjectHelper $dataObjectHelper,
+        Context $context,
+        Data $directoryHelper,
+        EncoderInterface $jsonEncoder,
+        Config $configCacheType,
+        CollectionFactory $regionCollectionFactory,
+        Countrycollection $countryCollectionFactory,
+        Session $customerSession,
+        AddressRepositoryInterface $addressRepository,
+        AddressInterfaceFactory $addressDataFactory,
+        CurrentCustomer $currentCustomer,
+        DataObjectHelper $dataObjectHelper,
         SubscriberFactory $subscriberFactory,
-        \Magento\Framework\Module\Manager $moduleManager,
+        Manager $moduleManager,
         AddressMetadataInterface $addressMetadata = null,
         Address $addressHelper = null,
-        Config $newsLetterConfig = null,
+        NewsletterConfig $newsLetterConfig = null,
         StoreManagerInterface $storeManager,
         array $data = []
     ) {
@@ -168,7 +182,7 @@ class Basicdetail extends \Magento\Directory\Block\Data
             $this->dataObjectHelper->populateWithArray(
                 $this->_address,
                 $postedData,
-                \Magento\Customer\Api\Data\AddressInterface::class
+                AddressInterface::class
             );
         }
         $this->precheckRequiredAttributes();
@@ -234,7 +248,7 @@ class Basicdetail extends \Magento\Directory\Block\Data
     public function getNameBlockHtml()
     {
         $nameBlock = $this->getLayout()
-            ->createBlock(\Magento\Customer\Block\Widget\Name::class)
+            ->createBlock(Name::class)
             ->setForceUseCustomerAttributes(true)
             ->setObject($this->getAddress());
 
@@ -267,7 +281,7 @@ class Basicdetail extends \Magento\Directory\Block\Data
     /**
      * Return the associated address.
      *
-     * @return \Magento\Customer\Api\Data\AddressInterface
+     * @return AddressInterface
      */
     public function getAddress()
     {
@@ -324,7 +338,7 @@ class Basicdetail extends \Magento\Directory\Block\Data
     /**
      * Retrieve the Customer Data using the customer Id from the customer session.
      *
-     * @return \Magento\Customer\Api\Data\CustomerInterface
+     * @return CustomerInterface
      */
     public function getCustomer()
     {

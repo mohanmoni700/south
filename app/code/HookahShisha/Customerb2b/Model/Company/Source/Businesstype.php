@@ -3,6 +3,9 @@
 namespace HookahShisha\Customerb2b\Model\Company\Source;
 
 use Magento\Company\Model\Company;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
 
 /**
  * Class Businesstype Config
@@ -18,26 +21,26 @@ class Businesstype implements \Magento\Framework\Data\OptionSourceInterface
     /**
      * Scope Configuration
      *
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface $scopeConfig
      */
     protected $scopeConfig;
 
     /**
      * Store
      *
-     * @var \Magento\Store\Model\StoreManagerInterface $storeManager
+     * @var StoreManagerInterface $storeManager
      */
     private $storeManager;
 
     /**
      * Construct
      *
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param StoreManagerInterface $storeManager
+     * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        StoreManagerInterface $storeManager,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->storeManager = $storeManager;
         $this->scopeConfig = $scopeConfig;
@@ -51,7 +54,7 @@ class Businesstype implements \Magento\Framework\Data\OptionSourceInterface
     public function toOptionArray()
     {
 
-        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+        $storeScope = ScopeInterface::SCOPE_STORE;
         $website_code = $this->storeManager->getWebsite()->getCode();
         $config_website = $this->scopeConfig->getValue(self::WEBSITE_CODE, $storeScope);
         $websidecodes = explode(',', $config_website);

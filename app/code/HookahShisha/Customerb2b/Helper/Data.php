@@ -13,6 +13,7 @@ use Magento\Framework\Translate\Inline\StateInterface;
 use Magento\Framework\Url;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\App\Area;
 
 /**
  * Helper to sent b2b form infom email to the admin
@@ -28,9 +29,7 @@ class Data extends \Magento\Shipping\Helper\Data
     public const WEBSITE_CODE = 'hookahshisha/website_code_setting/website_code';
 
     /**
-     * Scope Configuration
-     *
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface
      */
     protected $scopeConfig;
 
@@ -90,7 +89,7 @@ class Data extends \Magento\Shipping\Helper\Data
      * @param NumberOfEmp $numberffemp
      * @param RegionFactory $regionFactory
      * @param Url $urlHelper
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param ScopeConfigInterface $scopeConfig
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
@@ -126,7 +125,7 @@ class Data extends \Magento\Shipping\Helper\Data
     {
 
         $region_name = '';
-        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+        $storeScope = ScopeInterface::SCOPE_STORE;
         $website_code = $this->storeManager->getWebsite()->getCode();
         $config_website = $this->scopeConfig->getValue(self::WEBSITE_CODE, $storeScope);
         $websidecodes = explode(',', $config_website);
@@ -140,16 +139,20 @@ class Data extends \Magento\Shipping\Helper\Data
             }
 
             $annual_turnover = $this->annualturnover->getOptionArrayHub();
-            $annual_turn_over = isset($annual_turnover[$data['company']['annual_turn_over']]) ? $annual_turnover[$data['company']['annual_turn_over']] : "";
+            $annual_turn_over = isset($annual_turnover[$data['company']['annual_turn_over']]) ?
+            $annual_turnover[$data['company']['annual_turn_over']] : "";
 
             $businesstypes = $this->businesstype->getOptionArrayHub();
-            $business_type = isset($businesstypes[$data['company']['business_type']]) ? $businesstypes[$data['company']['business_type']] : "";
+            $business_type = isset($businesstypes[$data['company']['business_type']]) ?
+            $businesstypes[$data['company']['business_type']] : "";
 
             $numberof_emp = $this->numberffemp->getOptionArray();
-            $number_of_emp = isset($numberof_emp[$data['company']['number_of_emp']]) ? $numberof_emp[$data['company']['number_of_emp']] : "";
+            $number_of_emp = isset($numberof_emp[$data['company']['number_of_emp']]) ?
+            $numberof_emp[$data['company']['number_of_emp']] : "";
 
             $hearabout_us = $this->hearaboutus->getOptionArrayHub();
-            $hear_about_us = isset($hearabout_us[$data['company']['hear_about_us']]) ? $hearabout_us[$data['company']['hear_about_us']] : "";
+            $hear_about_us = isset($hearabout_us[$data['company']['hear_about_us']]) ?
+            $hearabout_us[$data['company']['hear_about_us']] : "";
 
         } else {
 
@@ -162,16 +165,20 @@ class Data extends \Magento\Shipping\Helper\Data
             }
 
             $annual_turnover = $this->annualturnover->getOptionArray();
-            $annual_turn_over = isset($annual_turnover[$data['company']['annual_turn_over']]) ? $annual_turnover[$data['company']['annual_turn_over']] : "";
+            $annual_turn_over = isset($annual_turnover[$data['company']['annual_turn_over']]) ?
+            $annual_turnover[$data['company']['annual_turn_over']] : "";
 
             $businesstypes = $this->businesstype->getOptionArray();
-            $business_type = isset($businesstypes[$data['company']['business_type']]) ? $businesstypes[$data['company']['business_type']] : "";
+            $business_type = isset($businesstypes[$data['company']['business_type']]) ?
+            $businesstypes[$data['company']['business_type']] : "";
 
             $numberof_emp = $this->numberffemp->getOptionArray();
-            $number_of_emp = isset($numberof_emp[$data['company']['number_of_emp']]) ? $numberof_emp[$data['company']['number_of_emp']] : "";
+            $number_of_emp = isset($numberof_emp[$data['company']['number_of_emp']]) ?
+            $numberof_emp[$data['company']['number_of_emp']] : "";
 
             $hearabout_us = $this->hearaboutus->getOptionArray();
-            $hear_about_us = isset($hearabout_us[$data['company']['hear_about_us']]) ? $hearabout_us[$data['company']['hear_about_us']] : "";
+            $hear_about_us = isset($hearabout_us[$data['company']['hear_about_us']]) ?
+            $hearabout_us[$data['company']['hear_about_us']] : "";
         }
 
         try {
@@ -222,9 +229,9 @@ class Data extends \Magento\Shipping\Helper\Data
             $from = ['email' => $fromEmail, 'name' => $fromName];
             $this->inlineTranslation->suspend();
 
-            $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+            $storeScope = ScopeInterface::SCOPE_STORE;
             $templateOptions = [
-                'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
+                'area' => Area::AREA_FRONTEND,
                 'store' => $storeId,
             ];
             $transport = $this->transportBuilder->setTemplateIdentifier($templateId, $storeScope)
@@ -273,13 +280,13 @@ class Data extends \Magento\Shipping\Helper\Data
                 $emailIdentifier = "b2b_company_customer_account_verfiy_email";
             }
             $storeId = $templateVars['store_id'];
-            $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+            $storeScope = ScopeInterface::SCOPE_STORE;
 
             $transport = $this->transportBuilder
                 ->setTemplateIdentifier($emailIdentifier, $storeScope)
                 ->setTemplateOptions(
                     [
-                        'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
+                        'area' => Area::AREA_FRONTEND,
                         'store' => $storeId,
                     ]
                 )
@@ -299,7 +306,9 @@ class Data extends \Magento\Shipping\Helper\Data
      */
     public function getEmployees($emp)
     {
-        $numberof_emp = $this->storeManager->getWebsite()->getCode() === "shisha_world_b2b" ? $this->numberffemp->getOptionArrayHub() : $this->numberffemp->getOptionArray();
+        $numberof_emp = $this->storeManager->getWebsite()
+        ->getCode() === "shisha_world_b2b" ? $this->numberffemp->getOptionArrayHub()
+        : $this->numberffemp->getOptionArray();
         if (in_array($emp, $numberof_emp)) {
             return $numberof_emp[$emp];
         }
