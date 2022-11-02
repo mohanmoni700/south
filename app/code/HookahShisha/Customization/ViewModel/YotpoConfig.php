@@ -1,25 +1,30 @@
 <?php
 namespace HookahShisha\Customization\ViewModel;
 
+use Magento\Bundle\Block\Sales\Order\Items\Renderer;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
 
 class YotpoConfig implements ArgumentInterface
 {
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface
      */
     protected $scopeConfig;
 
     /**
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Magento\Bundle\Block\Sales\Order\Items\Renderer $renderer
+     * Constructor
+     *
+     * @param Renderer $renderer
+     * @param ScopeConfigInterface $scopeConfig
      */
+
     public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Bundle\Block\Sales\Order\Items\Renderer $renderer
+        Renderer $renderer,
+        ScopeConfigInterface $scopeConfig
     ) {
-        $this->scopeConfig = $scopeConfig;
         $this->renderer = $renderer;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
