@@ -1035,6 +1035,7 @@ return [
         'Magefan_Blog' => 1,
         'Magefan_BlogAuthor' => 1,
         'Magefan_BlogPlus' => 1,
+        'HookahShisha_BlogGraphQl' => 1,
         'Magefan_BlogGraphQl' => 1,
         'Magefan_BlogImport' => 1,
         'Magefan_BlogExtra' => 1,
