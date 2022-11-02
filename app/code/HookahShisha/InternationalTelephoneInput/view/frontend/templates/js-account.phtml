@@ -1,0 +1,22 @@
+<?php
+/**
+ * @var $block HookahShisha\InternationalTelephoneInput\Block\PhoneNumber
+ */
+?>
+
+<script type="text/x-magento-init">
+    {
+        "input[name='telephone']": {
+            "HookahShisha_InternationalTelephoneInput/js/internationalTelephoneInput":
+             <?= /* @noEscape */ $block->phoneConfig();?>
+        }
+    }
+</script>
+<script type="text/x-magento-init">
+    {
+        "input[name='contact_phone']": {
+            "HookahShisha_InternationalTelephoneInput/js/internationalTelephoneInput":
+            <?= /* @noEscape */ $block->phoneConfig(); ?>
+        }
+    }
+</script>

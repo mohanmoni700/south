@@ -53,10 +53,6 @@
             max-height: 200px !important;
         }
     }
-    .old-price,
-    .old.price {
-        text-decoration: line-through;
-    }
     .viewingproducts {
         bottom: 60px;
         left: 0;
@@ -767,6 +763,11 @@
     //
     //  Product view
     //  ---------------------------------------------
+    .page-product-grouped {
+        .grouped .old-price {
+            text-decoration: line-through;
+        }
+    }
     .fieldset-bundle-options {
         .options-list {
             input[type="checkbox"] {
@@ -808,9 +809,52 @@
         
     }
     @supports (-moz-appearance:none) {
-        .fieldset-bundle-options {
-            .bundle-checkbox.field.choice {
-                margin: 0;
+        .product-options-wrapper {
+            .fieldset-bundle-options {
+                .bundle-checkbox.field.choice,
+                .field.choice.bundle-radio {
+                    display: flex;
+                }
+                input[type="radio"] {
+                    .lib-css(opacity, 0);
+                    .lib-css(position, absolute);
+                }
+                input[type="radio"] + label {
+                    .lib-css(cursor, pointer);
+                    .lib-css(padding-left, @indent__l);
+                    .lib-css(position, relative);
+                }
+                input[type="radio"]:checked + label::before {
+                    border: 1px solid @hookah_theme_color;
+                }
+                input[type="radio"] + label::before {
+                    .lib-css(position, absolute);
+                    background: @color_white;
+                    border-radius: 50%;
+                    border: 1px solid @color_black;
+                    content: "";
+                    height: 16px;
+                    left: 0;
+                    top: 0;
+                    width: 16px;
+                }
+                input[type="radio"]:checked + label::after {
+                    background: @hookah_theme_color;
+                    border-radius: 100%;
+                    content: "";
+                    height: 10px;
+                    left: 4px;
+                    opacity: 0;
+                    position: absolute;
+                    top: 4px;
+                    width: 10px;
+                }
+                input[type="radio"]:disabled + label::before {
+                    border: @hookah_theme_border;
+                }
+                input[type="radio"]:checked + label::after {
+                    opacity: 1;
+                }                
             }
         }
     }
@@ -2493,7 +2537,10 @@
             }
         }
         &.-before {
-            display: none !important;
+            display: block !important;
+            .lib-css(margin-top, @indent__l);
+            .lib-css(position, unset);
+            .lib-css(margin-bottom, @indent__xl);
         }
         .amscroll-loading-icon {
             display: none;
