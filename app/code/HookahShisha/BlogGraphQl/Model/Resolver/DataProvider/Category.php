@@ -78,7 +78,7 @@ class Category extends \Magefan\BlogGraphQl\Model\Resolver\DataProvider\Category
     }
 
     /**
-     * [getData]
+     * GetData
      *
      * @param  string $categoryId
      * @param  mixed $fields

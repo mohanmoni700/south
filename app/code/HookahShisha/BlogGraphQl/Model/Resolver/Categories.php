@@ -75,7 +75,7 @@ class Categories extends \Magefan\BlogGraphQl\Model\Resolver\Categories
         );
     }
     /**
-     * [resolve]
+     * Resolve
      *
      * @param Field $field
      * @param mixed $context
