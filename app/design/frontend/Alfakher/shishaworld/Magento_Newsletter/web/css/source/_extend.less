@@ -43,7 +43,19 @@
             }
         }
     }
-
+    .footer_social {
+        ul {
+            li {
+                .sicon {
+                    &.tiktok {
+                        .lib-css(height, 17px);
+                        .lib-css(width, 15px);
+                        background-image: url('@{baseDir}images/tiktok.svg');
+                    }
+                }
+            }
+        }
+    }
     // homepage pop up
 
     .modals-wrapper {
@@ -110,6 +122,27 @@
                 .block.newsletter {
                     max-width: 100%;
                     width: 100%;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .page-footer {
+        .footer_social {
+            ul {
+                li {
+                    .sicon {
+                        &.tiktok {
+                            .lib-css(background-size, contain);
+                            .lib-css(height, 23px);
+                            .lib-css(width, 20px);
+                        }
+                    }
                 }
             }
         }

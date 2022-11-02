@@ -1,11 +1,27 @@
 //m - L
 & when (@media-target = 'desktop'), (@media-target = 'all') {
-    @media only screen and (min-width: 1025px) {
+    @media only screen and (min-width: 1025px) {        
         .sw-megamenu.navigation {
             .level0.submenu{
                 scrollbar-color: @color_primary transparent;
                 ::-webkit-scrollbar-thumb {
                 background: @color_primary;
+                }
+                .subchildmenu.mega-columns {
+                    > .ui-menu-item.parent {
+                        > a {
+                            .lib-css(padding-right, 13px);
+                        }
+                    }
+                    .subchildmenu {
+                        > ul {
+                            li {
+                                a {
+                                    .lib-css(line-height, normal);
+                                }
+                            }
+                        }
+                    }
                 }
             }
             .Other.Hookah.Accessories{
