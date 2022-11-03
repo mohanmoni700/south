@@ -45,7 +45,8 @@ class Category extends \Magefan\BlogGraphQl\Model\Resolver\DataProvider\Category
     private $scopeConfig;
 
     /**
-     * Category constructor.
+     * Category constructor
+     *
      * @param CategoryRepositoryInterface $categoryRepository
      * @param FilterEmulate $widgetFilter
      * @param State $state

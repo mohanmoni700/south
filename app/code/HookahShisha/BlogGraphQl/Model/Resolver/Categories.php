@@ -19,6 +19,7 @@ class Categories extends \Magefan\BlogGraphQl\Model\Resolver\Categories
      * @var SearchCriteriaBuilder
      */
     private $searchCriteriaBuilder;
+
     /**
      * @var CategoryRepositoryInterface
      */
@@ -74,6 +75,7 @@ class Categories extends \Magefan\BlogGraphQl\Model\Resolver\Categories
             $scopeResolver
         );
     }
+
     /**
      * Resolve
      *
