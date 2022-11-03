@@ -1,9 +1,6 @@
 <?php
-
 /** @var \Magento\Contact\Block\ContactForm $block */
 /** @var \HookahShisha\Customization\ViewModel\UserDataProvider $viewModel */
-
-$viewModel = $block->getViewModelData();
 ?> 
 
 <form class="form contact"
@@ -22,7 +19,7 @@ $viewModel = $block->getViewModelData();
                     <input name="first_name"
                         id="first_name"
                         title="<?= $block->escapeHtmlAttr(__('First Name')) ?>"
-                        value="<?= $block->escapeHtmlAttr($viewModel->getFirstName()) ?>"
+                        value="<?= $block->escapeHtmlAttr($block->getFirstName()) ?>"
                         class="input-text"
                         type="text"/>
                 </div>
@@ -35,7 +32,7 @@ $viewModel = $block->getViewModelData();
                     <input name="last_name"
                         id="last_name"
                         title="<?= $block->escapeHtmlAttr(__('Last Name')) ?>"
-                        value="<?= $block->escapeHtmlAttr($viewModel->getLastName()) ?>"
+                        value="<?= $block->escapeHtmlAttr($block->getLastName()) ?>"
                         class="input-text"
                         type="text" />
                 </div>
@@ -48,7 +45,7 @@ $viewModel = $block->getViewModelData();
                     <input name="email"
                         id="email"
                         title="<?= $block->escapeHtmlAttr(__('Email')) ?>"
-                        value="<?= $block->escapeHtmlAttr($viewModel->getUserEmail()) ?>"
+                        value="<?= $block->escapeHtmlAttr($block->getUserEmail()) ?>"
                         class="input-text"
                         type="email"
                         data-validate="{required:true, 'validate-email':true}"/>
@@ -61,7 +58,7 @@ $viewModel = $block->getViewModelData();
                     <input name="telephone"
                         id="telephone"
                         title="<?= $block->escapeHtmlAttr(__('Phone Number')) ?>"
-                        value="<?= $block->escapeHtmlAttr($viewModel->getUserTelephone()) ?>"
+                        value="<?= $block->escapeHtmlAttr($block->getUserTelephone()) ?>"
                         class="input-text"
                         type="tel" />
                 </div>
@@ -70,24 +67,24 @@ $viewModel = $block->getViewModelData();
         <div class="form-column-2">
             <div class="field tax_id">
                 <label class="label" for="tax_id"><span>
-                <?= $block->escapeHtml(__('Sales Tax ID or EIN Number')) ?></span></label>
+                <?= $block->escapeHtml(__('Fiscal Number')) ?></span></label>
                 <div class="control">
                     <input name="tax_id"
                         id="tax_id"
-                        title="<?= $block->escapeHtmlAttr(__('Sales Tax ID or EIN Number')) ?>"
-                        value="<?= $block->escapeHtmlAttr($viewModel->getTaxId()) ?>"
+                        title="<?= $block->escapeHtmlAttr(__('Fiscal Number')) ?>"
+                        value="<?= $block->escapeHtmlAttr($block->getTaxId()) ?>"
                         class="input-text"
                         type="text" />
                 </div>
             </div>
             <div class="field tobacco_permit_number">
                 <label class="label" for="tobacco_permit_number"><span>
-                <?= $block->escapeHtml(__('Tobacco Permit Number')) ?></span></label>
+                <?= $block->escapeHtml(__('UST ID')) ?></span></label>
                 <div class="control">
                     <input name="tobacco_permit_number"
                         id="tobacco_permit_number"
-                        title="<?= $block->escapeHtmlAttr(__('Tobacco Permit Number')) ?>"
-                        value="<?= $block->escapeHtmlAttr($viewModel->getTobaccoPermitNumber()) ?>"
+                        title="<?= $block->escapeHtmlAttr(__('UST ID')) ?>"
+                        value="<?= $block->escapeHtmlAttr($block->getTobaccoPermitNumber()) ?>"
                         class="input-text"
                         type="text" />
                 </div>
@@ -122,7 +119,7 @@ $viewModel = $block->getViewModelData();
                     <input name="subject"
                             id="subject"
                             title="<?= $block->escapeHtmlAttr(__('Subject')) ?>"
-                            value="<?= $block->escapeHtmlAttr($viewModel->getSubject()) ?>"
+                            value="<?= $block->escapeHtmlAttr($block->getSubject()) ?>"
                             class="input-text"
                             type="text" data-validate="{required:true}"/>
                 </div>
@@ -141,7 +138,7 @@ $viewModel = $block->getViewModelData();
                             cols="5"
                             rows="3"
                             data-validate="{required:true}"
-                    ><?= $block->escapeHtml($viewModel->getUserComment()) ?></textarea>
+                    ><?= $block->escapeHtml($block->getUserComment()) ?></textarea>
                 </div>
             </div>
         </div>
