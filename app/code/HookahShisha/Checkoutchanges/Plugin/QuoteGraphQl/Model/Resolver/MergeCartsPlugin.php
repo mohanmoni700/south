@@ -27,191 +27,195 @@ use Psr\Log\LoggerInterface;
  *
  * @SuppressWarnings(PHPMD.LongVariable)
  */
-class MergeCartsPlugin {
-	/**
-	 * @var GetCartForUser
-	 */
-	private $getCartForUser;
+class MergeCartsPlugin
+{
+    /**
+     * @var GetCartForUser
+     */
+    private $getCartForUser;
 
-	/**
-	 * @var CartRepositoryInterface
-	 */
-	private $cartRepository;
+    /**
+     * @var CartRepositoryInterface
+     */
+    private $cartRepository;
 
-	/**
-	 * @var CustomerCartResolver
-	 */
-	private $customerCartResolver;
+    /**
+     * @var CustomerCartResolver
+     */
+    private $customerCartResolver;
 
-	/**
-	 * @var QuoteIdToMaskedQuoteIdInterface
-	 */
-	private $quoteIdToMaskedQuoteId;
+    /**
+     * @var QuoteIdToMaskedQuoteIdInterface
+     */
+    private $quoteIdToMaskedQuoteId;
 
-	/**
-	 * @var CartItemRepositoryInterface
-	 */
-	private $cartItemRepository;
+    /**
+     * @var CartItemRepositoryInterface
+     */
+    private $cartItemRepository;
 
-	/**
-	 * @var StockRegistryInterface
-	 */
-	private $stockRegistry;
+    /**
+     * @var StockRegistryInterface
+     */
+    private $stockRegistry;
 
-	/**
-	 * @var CartQuantityValidatorInterface
-	 */
-	private $cartQuantityValidator;
+    /**
+     * @var CartQuantityValidatorInterface
+     */
+    private $cartQuantityValidator;
 
-	/**
-	 * [__construct]
-	 *
-	 * @param GetCartForUser $getCartForUser
-	 * @param CartRepositoryInterface $cartRepository
-	 * @param CustomerCartResolver|null $customerCartResolver
-	 * @param QuoteIdToMaskedQuoteIdInterface|null $quoteIdToMaskedQuoteId
-	 * @param CartItemRepositoryInterface|null $cartItemRepository
-	 * @param StockRegistryInterface|null $stockRegistry
-	 * @param CartQuantityValidatorInterface|null $cartQuantityValidator
-	 * @param CustomerFactory $customerFactory
-	 * @param LoggerInterface $logger
-	 */
-	public function __construct(
-		GetCartForUser $getCartForUser,
-		CartRepositoryInterface $cartRepository,
-		CustomerCartResolver $customerCartResolver = null,
-		QuoteIdToMaskedQuoteIdInterface $quoteIdToMaskedQuoteId = null,
-		CartItemRepositoryInterface $cartItemRepository = null,
-		StockRegistryInterface $stockRegistry = null,
-		CartQuantityValidatorInterface $cartQuantityValidator = null,
-		CustomerFactory $customerFactory,
-		LoggerInterface $logger
-	) {
-		$this->getCartForUser = $getCartForUser;
-		$this->cartRepository = $cartRepository;
-		$this->customerCartResolver = $customerCartResolver
-		?: ObjectManager::getInstance()->get(CustomerCartResolver::class);
-		$this->quoteIdToMaskedQuoteId = $quoteIdToMaskedQuoteId
-		?: ObjectManager::getInstance()->get(QuoteIdToMaskedQuoteIdInterface::class);
-		$this->cartItemRepository = $cartItemRepository
-		?: ObjectManager::getInstance()->get(CartItemRepositoryInterface::class);
-		$this->stockRegistry = $stockRegistry
-		?: ObjectManager::getInstance()->get(StockRegistryInterface::class);
-		$this->cartQuantityValidator = $cartQuantityValidator
-		?: ObjectManager::getInstance()->get(CartQuantityValidatorInterface::class);
-		$this->customerFactory = $customerFactory;
-		$this->logger = $logger;
-	}
+    /**
+     * [__construct]
+     *
+     * @param GetCartForUser $getCartForUser
+     * @param CartRepositoryInterface $cartRepository
+     * @param CustomerCartResolver|null $customerCartResolver
+     * @param QuoteIdToMaskedQuoteIdInterface|null $quoteIdToMaskedQuoteId
+     * @param CartItemRepositoryInterface|null $cartItemRepository
+     * @param StockRegistryInterface|null $stockRegistry
+     * @param CartQuantityValidatorInterface|null $cartQuantityValidator
+     * @param CustomerFactory $customerFactory
+     * @param LoggerInterface $logger
+     */
+    public function __construct(
+        GetCartForUser $getCartForUser,
+        CartRepositoryInterface $cartRepository,
+        CustomerCartResolver $customerCartResolver = null,
+        QuoteIdToMaskedQuoteIdInterface $quoteIdToMaskedQuoteId = null,
+        CartItemRepositoryInterface $cartItemRepository = null,
+        StockRegistryInterface $stockRegistry = null,
+        CartQuantityValidatorInterface $cartQuantityValidator = null,
+        CustomerFactory $customerFactory,
+        LoggerInterface $logger
+    ) {
+        $this->getCartForUser = $getCartForUser;
+        $this->cartRepository = $cartRepository;
+        $this->customerCartResolver = $customerCartResolver
+        ?: ObjectManager::getInstance()->get(CustomerCartResolver::class);
+        $this->quoteIdToMaskedQuoteId = $quoteIdToMaskedQuoteId
+        ?: ObjectManager::getInstance()->get(QuoteIdToMaskedQuoteIdInterface::class);
+        $this->cartItemRepository = $cartItemRepository
+        ?: ObjectManager::getInstance()->get(CartItemRepositoryInterface::class);
+        $this->stockRegistry = $stockRegistry
+        ?: ObjectManager::getInstance()->get(StockRegistryInterface::class);
+        $this->cartQuantityValidator = $cartQuantityValidator
+        ?: ObjectManager::getInstance()->get(CartQuantityValidatorInterface::class);
+        $this->customerFactory = $customerFactory;
+        $this->logger = $logger;
+    }
 
-	/**
-	 * [beforeResolve]
-	 *
-	 * @param Subject $subject
-	 * @param Field $field
-	 * @param mixed $context
-	 * @param ResolveInfo $info
-	 * @param array|null $value
-	 * @param array|null $args
-	 * @return mixed
-	 */
-	public function beforeResolve(
-		Subject $subject,
-		Field $field,
-		$context,
-		ResolveInfo $info,
-		array $value = null,
-		array $args = null
-	) {
-		if (empty($args['source_cart_id'])) {
-			throw new GraphQlInputException(__(
-				'Required parameter "source_cart_id" is missing'
-			));
-		}
+    /**
+     * [beforeResolve]
+     *
+     * @param Subject $subject
+     * @param Field $field
+     * @param mixed $context
+     * @param ResolveInfo $info
+     * @param array|null $value
+     * @param array|null $args
+     * @return mixed
+     */
+    public function beforeResolve(
+        Subject $subject,
+        Field $field,
+        $context,
+        ResolveInfo $info,
+        array $value = null,
+        array $args = null
+    ) {
+        if (empty($args['source_cart_id'])) {
+            throw new GraphQlInputException(__(
+                'Required parameter "source_cart_id" is missing'
+            ));
+        }
 
-		/** @var ContextInterface $context */
-		if (false === $context->getExtensionAttributes()->getIsCustomer()) {
-			throw new GraphQlAuthorizationException(__(
-				'The current customer isn\'t authorized.'
-			));
-		}
-		$currentUserId = $context->getUserId();
+        /** @var ContextInterface $context */
+        if (false === $context->getExtensionAttributes()->getIsCustomer()) {
+            throw new GraphQlAuthorizationException(__(
+                'The current customer isn\'t authorized.'
+            ));
+        }
+        $currentUserId = $context->getUserId();
 
-		if (!isset($args['destination_cart_id'])) {
-			try {
-				$cart = $this->customerCartResolver->resolve($currentUserId);
-			} catch (CouldNotSaveException $exception) {
-				throw new GraphQlNoSuchEntityException(
-					__('Could not create empty cart for customer'),
-					$exception
-				);
-			}
-			$customerMaskedCartId = $this->quoteIdToMaskedQuoteId->execute(
-				(int) $cart->getId()
-			);
-		} else {
-			if (empty($args['destination_cart_id'])) {
-				throw new GraphQlInputException(__(
-					'The parameter "destination_cart_id" cannot be empty'
-				));
-			}
-		}
-		$guestMaskedCartId = $args['source_cart_id'];
-		$customerMaskedCartId = $customerMaskedCartId ?? $args['destination_cart_id'];
-		$storeId = (int) $context->getExtensionAttributes()->getStore()->getId();
-		try {
-			$guestCart = $this->getCartForUser->execute(
-				$guestMaskedCartId,
-				null,
-				$storeId
-			);
-			$customerCart = $this->getCartForUser->execute(
-				$customerMaskedCartId,
-				$currentUserId,
-				$storeId
-			);
-			if ($this->cartQuantityValidator->validateFinalCartQuantities($customerCart, $guestCart)) {
-				$guestCart = $this->getCartForUser->execute(
-					$guestMaskedCartId,
-					null,
-					$storeId
-				);
-			}
+        if (!isset($args['destination_cart_id'])) {
+            try {
+                $cart = $this->customerCartResolver->resolve($currentUserId);
+            } catch (CouldNotSaveException $exception) {
+                throw new GraphQlNoSuchEntityException(
+                    __('Could not create empty cart for customer'),
+                    $exception
+                );
+            }
+            $customerMaskedCartId = $this->quoteIdToMaskedQuoteId->execute(
+                (int) $cart->getId()
+            );
+        } else {
+            if (empty($args['destination_cart_id'])) {
+                throw new GraphQlInputException(__(
+                    'The parameter "destination_cart_id" cannot be empty'
+                ));
+            }
+        }
+        $guestMaskedCartId = $args['source_cart_id'];
+        $customerMaskedCartId = $customerMaskedCartId ?? $args['destination_cart_id'];
+        $storeId = (int) $context->getExtensionAttributes()->getStore()->getId();
+        try {
+            $guestCart = $this->getCartForUser->execute(
+                $guestMaskedCartId,
+                null,
+                $storeId
+            );
+            $customerCart = $this->getCartForUser->execute(
+                $customerMaskedCartId,
+                $currentUserId,
+                $storeId
+            );
+            if ($this->cartQuantityValidator->validateFinalCartQuantities($customerCart, $guestCart)) {
+                $guestCart = $this->getCartForUser->execute(
+                    $guestMaskedCartId,
+                    null,
+                    $storeId
+                );
+            }
 
-			if ($guestCart) {
-				if ($guestCart->getShippingAddress()) {
-					$customer = $this->customerFactory->create()->load($currentUserId);
-					$shippingAddressId = $customer->getDefaultShipping();
-					if ($shippingAddressId === null || $shippingAddressId === 0) {
-						$customerCart->getShippingAddress()
-							->setFirstname($guestCart->getShippingAddress()->getFirstname());
-						$customerCart->getShippingAddress()
-							->setLastname($guestCart->getShippingAddress()->getLastname());
-						$customerCart->getShippingAddress()
-							->setStreet($guestCart->getShippingAddress()->getStreet());
-						$customerCart->getShippingAddress()
-							->setCity($guestCart->getShippingAddress()->getCity());
-						$customerCart->getShippingAddress()
-							->setRegion($guestCart->getShippingAddress()->getRegion());
-						$customerCart->getShippingAddress()
-							->setRegionId($guestCart->getShippingAddress()->getRegionId());
-						$customerCart->getShippingAddress()
-							->setPostcode($guestCart->getShippingAddress()->getPostcode());
-						$customerCart->getShippingAddress()
-							->setCountryId($guestCart->getShippingAddress()->getCountryId());
-						$customerCart->getShippingAddress()
-							->setTelephone($guestCart->getShippingAddress()->getTelephone());
-						$customerCart->getShippingAddress()
-							->setCounty($guestCart->getShippingAddress()->getCounty());
-					}
-				}
-			}
-			try {
-				$this->cartRepository->save($customerCart);
-			} catch (\Exception $e) {
-				$this->logger->err($e->getMessage());
-			}
-		} catch (\Exception $e) {
-			$this->logger->err($e->getMessage());
-		}
-	}
+            if ($guestCart) {
+                if ($guestCart->getShippingAddress()) {
+                    $customer = $this->customerFactory->create()->load($currentUserId);
+                    $shippingAddressId = $customer->getDefaultShipping();
+                    if ($shippingAddressId === null || $shippingAddressId === 0) {
+                        $customerCart->getShippingAddress()
+                            ->setFirstname($guestCart->getShippingAddress()->getFirstname());
+                        $customerCart->getShippingAddress()
+                            ->setLastname($guestCart->getShippingAddress()->getLastname());
+                        $customerCart->getShippingAddress()
+                            ->setStreet($guestCart->getShippingAddress()->getStreet());
+                        $customerCart->getShippingAddress()
+                            ->setCity($guestCart->getShippingAddress()->getCity());
+                        $customerCart->getShippingAddress()
+                            ->setRegion($guestCart->getShippingAddress()->getRegion());
+                        $customerCart->getShippingAddress()
+                            ->setRegionId($guestCart->getShippingAddress()->getRegionId());
+                        $customerCart->getShippingAddress()
+                            ->setPostcode($guestCart->getShippingAddress()->getPostcode());
+                        $customerCart->getShippingAddress()
+                            ->setCountryId($guestCart->getShippingAddress()->getCountryId());
+                        $customerCart->getShippingAddress()
+                            ->setTelephone($guestCart->getShippingAddress()->getTelephone());
+                        $customerCart->getShippingAddress()
+                            ->setCounty($guestCart->getShippingAddress()->getCounty());
+                    }
+                }
+            }
+            try {
+                throw new GraphQlInputException(__("testing exeception"));
+                $this->cartRepository->save($customerCart);
+            } catch (\Exception $e) {
+                $this->logger->err($e->getMessage());
+                throw new GraphQlInputException(__($e->getMessage()));
+            }
+        } catch (\Exception $e) {
+            $this->logger->err($e->getMessage());
+            throw new GraphQlInputException(__($e->getMessage()));
+        }
+    }
 }
