@@ -1,4 +1,7 @@
 <?php
+
+declare (strict_types = 1);
+
 namespace HookahShisha\Customization\Model\Pdf;
 
 class Bundle extends \Magetrend\PdfTemplates\Model\Pdf\Element\Items\Renderer\Bundle
@@ -9,6 +12,7 @@ class Bundle extends \Magetrend\PdfTemplates\Model\Pdf\Element\Items\Renderer\Bu
      * @param \Magetrend\PdfTemplates\Model\Pdf\Element\Items\Renderer\Bundle $subject
      * @param array $result
      * @param array $item
+     * @return array
      */
     public function afterGetOrderItemOptions(
         \Magetrend\PdfTemplates\Model\Pdf\Element\Items\Renderer\Bundle $subject,
