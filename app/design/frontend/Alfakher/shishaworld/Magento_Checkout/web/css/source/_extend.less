@@ -8,12 +8,6 @@
     //  Shopping cart
     //  ---------------------------------------------
 
-    .checkout-cart-index,
-    .amasty_quote-cart-index {
-        div.page-title-wrapper {
-            justify-content: center;
-        }
-    }
     #shipping-new-address-form,
     #co-shipping-form {
         .field[name="shippingAddress.custom_attributes.county"],
@@ -22,6 +16,19 @@
         }
     }
     
+    //  Products table
+
+    .cart.table-wrapper {
+        th {
+            &.col {
+                .lib-css(padding-top, @indent__base);
+            }
+        }
+        .col {
+            padding-bottom: @indent__base !important;
+        }
+    }
+
     //
     //  Checkout payment method for mondu
     //  ----------------------------------------------
@@ -34,6 +41,18 @@
                 background-position-y: 2px;
                 padding-left: 100px;
                 padding-top: 0;
+            }
+        }
+    }
+}
+//  
+//  Desktop only
+//  __________________
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+    [lang="de"] .minicart-wrapper {
+        .action.showcart {
+            .counter.qty {
+                transform: translateX(20px);
             }
         }
     }
@@ -56,6 +75,24 @@
 //
 //  Mobile
 //  _____________________________________________
+& when (@media-target = 'mobile'), (@media-target = 'all') {
+    @media only screen and (max-width: 991px) {
+        .cart-container {
+            form.form-cart {
+                .lib-css(background, @color_white);
+            }
+            .cart-discount {
+                .lib-css(background, @color_white);
+                .lib-css(margin-bottom, 0);
+                .lib-css(margin-top, 0);
+                .lib-css(padding-top, @indent__xl);
+                .lib-css(position, relative);
+                .lib-css(width, 100%);
+                .lib-css(z-index, 9);
+            }
+        }
+    }
+}
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
     //

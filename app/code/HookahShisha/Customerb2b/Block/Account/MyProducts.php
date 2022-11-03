@@ -2,6 +2,8 @@
 
 namespace HookahShisha\Customerb2b\Block\Account;
 
+use \Magento\Catalog\Model\Product\Attribute\Source\Status;
+
 class MyProducts extends \Magento\Catalog\Block\Product\AbstractProduct
 {
 
@@ -91,7 +93,7 @@ class MyProducts extends \Magento\Catalog\Block\Product\AbstractProduct
             $pager = $this->getLayout()->createBlock(
                 \Magento\Theme\Block\Html\Pager::class,
                 'my.product.pricing.pager'
-            )->setAvailableLimit([5 => 5, 10 => 10, 15 => 15, 20 => 20])
+            )->setAvailableLimit([20 => 20, 40 => 40, 60 => 60, 80 => 80])
                 ->setShowPerPage(true)
                 ->setCollection($this->getSharedCatalogCollection());
             $this->setChild('pager', $pager);
@@ -116,7 +118,7 @@ class MyProducts extends \Magento\Catalog\Block\Product\AbstractProduct
         $collection = [];
         if ($customer = $this->getCurrentCustomer()) {
             $page = ($this->getRequest()->getParam('p')) ? $this->getRequest()->getParam('p') : 1;
-            $pageSize = ($this->getRequest()->getParam('limit')) ? $this->getRequest()->getParam('limit') : 5;
+            $pageSize = ($this->getRequest()->getParam('limit')) ? $this->getRequest()->getParam('limit') : 20;
             $collection = $this->productFactory->create()->getCollection();
 
             $joinAndConditions[] = "u.sku = e.sku";
@@ -140,11 +142,19 @@ class MyProducts extends \Magento\Catalog\Block\Product\AbstractProduct
             );
 
             $collection->addAttributeToSelect(['price', 'regular_price', 'final_price', 'name', 'small_image']);
-            $collection->addAttributeToFilter('status', \Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
+            $collection->addAttributeToFilter('status', Status::STATUS_ENABLED);
             $collection->addAttributeToFilter('type_id', 'simple');
             $collection->setPageSize($pageSize);
             $collection->setCurPage($page);
             $collection->getSelect()->group('entity_id');
+            /*For out of stock product display in last.*/
+            $collection->setOrder('name', 'ASC');
+            $collection->getSelect()->joinLeft(
+                ['_inventory_table' => 'cataloginventory_stock_item'],
+                "_inventory_table.product_id = e.entity_id",
+                ['is_in_stock']
+            );
+            $collection->getSelect()->order(['is_in_stock desc']);
         }
         return $collection;
     }

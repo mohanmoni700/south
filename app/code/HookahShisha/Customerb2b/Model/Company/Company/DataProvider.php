@@ -45,6 +45,8 @@ class DataProvider extends \Magento\Company\Model\Company\DataProvider
             'annual_turn_over' => $company->getAnnualTurnOver(),
             'number_of_emp' => $company->getNumberOfEmp(),
             'tin_number' => $company->getTinNumber(),
+            'fiscal_number' => $company->getFiscalNumber(),
+            'ust_id' => $company->getUstId(),
             'tobacco_permit_number' => $company->getTobaccoPermitNumber(),
             'hear_about_us' => $company->getHearAboutUs(),
             'questions' => $company->getQuestions(),

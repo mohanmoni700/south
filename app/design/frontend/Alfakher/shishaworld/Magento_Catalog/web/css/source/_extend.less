@@ -15,24 +15,66 @@
     //
     //  Category sList Page (C)
     //  ---------------------------------------------
-    .catalog-category-view,
-    .catalogsearch-result-index {
-        .page-main {
-            .pending-tooltip {
-                .lib-css(margin-bottom, @indent__base);
-            }
+    .shorting_slider {
+        .shorting_title {
+            a:hover {
+                text-decoration: underline !important;
+            }            
         }
     }
-    
     .pending-tooltip {
         .lib-css(margin-bottom, 0);
     }
-
+    .catalog-category-view .products-grid .product-item-details 
+    .catalog-category-view {
+        .products-grid {
+            .product-item-details {
+                display: flex;
+                flex-direction: column;
+                .blank-review {
+                    -ms-flex-order: 0;
+                    -webkit-order: 0;
+                    min-height: 35px;
+                    order: 0;
+                }
+                .product-reviews-summary {
+                    .lib-css(margin, 0 auto);
+                }
+                .product-item-name {
+                    -ms-flex-order: 1;
+                    -webkit-order: 1;
+                    .lib-css(margin-bottom, @indent__xs);
+                    order: 1;
+                }
+                .price-box {
+                    -ms-flex-order: 2;
+                    -webkit-order: 2;
+                    .lib-css(margin, 0);
+                    order: 2;
+                }
+                
+                .actions-primary {
+                    -ms-flex-order: 8;
+                    -webkit-order: 8;
+                    order: 8;
+                }
+                .product-item-inner {
+                    -ms-flex-order: 9;
+                    -webkit-order: 9;
+                    order: 9;
+                    .product-item-actions {
+                        .lib-css(margin, 0 0 @indent__s 0);
+                    }
+                }
+            }
+        }
+    }
     //
     //  Category view
     //  ---------------------------------------------
 
     .clp_faq_main {
+        .lib-css(background-color, unset);
         .clp_faq_toggle {
             .lib-css(color, @color_primary);
         }
@@ -49,6 +91,23 @@
     .catalog-product-view {
         #reviews {
             margin-bottom: @indent__base;
+        }
+        #customer-reviews {
+            .review-title {
+                .lib-css(letter-spacing, 2px);
+            }
+            .review-ratings {
+                .lib-css(margin-bottom, @indent__base);
+            }
+            .review-content {
+                .lib-css(clear, both);
+            }
+        }
+        
+        .block.review-list {
+            .review-details {
+                .lib-css(max-width, 100%);
+            }
         }
     }
     @supports (-moz-appearance:none) {
