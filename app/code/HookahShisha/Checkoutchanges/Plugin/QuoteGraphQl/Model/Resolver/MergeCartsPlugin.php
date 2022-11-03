@@ -102,6 +102,7 @@ class MergeCartsPlugin {
 		$this->customerFactory = $customerFactory;
 		$this->logger = $logger;
 	}
+
 	/**
 	 * [beforeResolve]
 	 *
