@@ -3,8 +3,9 @@
 namespace Alfakher\PaymentEdit\Model;
 
 use Magento\Payment\Gateway\Command\CommandException;
+use ParadoxLabs\FirstData\Model\Gateway as BaseGateway;
 
-class Gateway extends \ParadoxLabs\FirstData\Model\Gateway
+class Gateway extends BaseGateway
 {
     /**
      * Run an auth transaction for $amount with the given payment info

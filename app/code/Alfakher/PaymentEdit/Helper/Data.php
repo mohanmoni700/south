@@ -2,73 +2,98 @@
 
 namespace Alfakher\PaymentEdit\Helper;
 
+use ParadoxLabs\TokenBase\Helper\Data as BaseData;
+use Magento\Framework\App\Request\Http;
+use Magento\Sales\Model\OrderFactory;
+use Magento\Framework\App\Helper\Context;
+use Magento\Framework\View\LayoutFactory;
+use Magento\Payment\Model\Method\Factory;
+use Magento\Store\Model\App\Emulation;
+use Magento\Payment\Model\Config;
+use Magento\Framework\App\Config\Initial;
+use Magento\Framework\App\State;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\Registry;
+use Magento\Store\Model\WebsiteFactory;
+use Magento\Customer\Api\Data\CustomerInterfaceFactory;
+use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Quote\Model\Quote\PaymentFactory;
+use Magento\Backend\Model\Session\Quote;
+use Magento\Checkout\Model\Session as CheckoutSession;
+use Magento\Customer\Model\Session as CustomerSession;
+use Magento\Customer\Helper\Session\CurrentCustomer;
+use ParadoxLabs\TokenBase\Model\CardFactory;
+use ParadoxLabs\TokenBase\Model\ResourceModel\Card\CollectionFactory;
+use ParadoxLabs\TokenBase\Helper\Address;
+use ParadoxLabs\TokenBase\Helper\Operation;
+
 /**
  * Payment module helper
  * Class Data
  */
-class Data extends \ParadoxLabs\TokenBase\Helper\Data
+class Data extends BaseData
 {
     /**
-     * @var \Magento\Framework\App\Request\Http
+     * @var Http
      */
     protected $request;
 
     /**
-     * @var \Magento\Sales\Model\OrderFactory
+     * @var OrderFactory
      */
     protected $orderFactory;
 
     /**
      * Construct
      *
-     * @param \Magento\Framework\App\Helper\Context $context
-     * @param \Magento\Framework\View\LayoutFactory $layoutFactory
-     * @param \Magento\Payment\Model\Method\Factory $paymentMethodFactory
-     * @param \Magento\Store\Model\App\Emulation $appEmulation
-     * @param \Magento\Payment\Model\Config $paymentConfig
-     * @param \Magento\Framework\App\Config\Initial $initialConfig
-     * @param \Magento\Framework\App\State $appState
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Framework\Registry $registry
-     * @param \Magento\Store\Model\WebsiteFactory $websiteFactory
-     * @param \Magento\Customer\Api\Data\CustomerInterfaceFactory $customerFactory
-     * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
-     * @param \Magento\Quote\Model\Quote\PaymentFactory $paymentFactory
-     * @param \Magento\Backend\Model\Session\Quote $backendSession *Proxy
-     * @param \Magento\Checkout\Model\Session $checkoutSession *Proxy
-     * @param \Magento\Customer\Model\Session $customerSession *Proxy
-     * @param \Magento\Customer\Helper\Session\CurrentCustomer $currentCustomerSession *Proxy
-     * @param \ParadoxLabs\TokenBase\Model\CardFactory $cardFactory
-     * @param \ParadoxLabs\TokenBase\Model\ResourceModel\Card\CollectionFactory $cardCollectionFactory
-     * @param \ParadoxLabs\TokenBase\Helper\Address $addressHelper *Proxy
-     * @param \ParadoxLabs\TokenBase\Helper\Operation $operationHelper
-     * @param \Magento\Framework\App\Request\Http $request
-     * @param \Magento\Sales\Model\OrderFactory $orderFactory
+     * @param Context $context
+     * @param LayoutFactory $layoutFactory
+     * @param Factory $paymentMethodFactory
+     * @param Emulation $appEmulation
+     * @param Config $paymentConfig
+     * @param Initial $initialConfig
+     * @param State $appState
+     * @param StoreManagerInterface $storeManager
+     * @param Registry $registry
+     * @param WebsiteFactory $websiteFactory
+     * @param CustomerInterfaceFactory $customerFactory
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param PaymentFactory $paymentFactory
+     * @param Quote $backendSession *Proxy
+     * @param CheckoutSession $checkoutSession *Proxy
+     * @param CustomerSession $customerSession *Proxy
+     * @param CurrentCustomer $currentCustomerSession *Proxy
+     * @param CardFactory $cardFactory
+     * @param CollectionFactory $cardCollectionFactory
+     * @param Address $addressHelper *Proxy
+     * @param Operation $operationHelper
+     * @param Http $request
+     * @param OrderFactory $orderFactory
      */
     public function __construct(
-        \Magento\Framework\App\Helper\Context $context,
-        \Magento\Framework\View\LayoutFactory $layoutFactory,
-        \Magento\Payment\Model\Method\Factory $paymentMethodFactory,
-        \Magento\Store\Model\App\Emulation $appEmulation,
-        \Magento\Payment\Model\Config $paymentConfig,
-        \Magento\Framework\App\Config\Initial $initialConfig,
-        \Magento\Framework\App\State $appState,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\Registry $registry,
-        \Magento\Store\Model\WebsiteFactory $websiteFactory,
-        \Magento\Customer\Api\Data\CustomerInterfaceFactory $customerFactory,
-        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
-        \Magento\Quote\Model\Quote\PaymentFactory $paymentFactory,
-        \Magento\Backend\Model\Session\Quote $backendSession,
-        \Magento\Checkout\Model\Session $checkoutSession,
-        \Magento\Customer\Model\Session $customerSession,
-        \Magento\Customer\Helper\Session\CurrentCustomer $currentCustomerSession,
-        \ParadoxLabs\TokenBase\Model\CardFactory $cardFactory,
-        \ParadoxLabs\TokenBase\Model\ResourceModel\Card\CollectionFactory $cardCollectionFactory,
-        \ParadoxLabs\TokenBase\Helper\Address $addressHelper,
-        \ParadoxLabs\TokenBase\Helper\Operation $operationHelper,
-        \Magento\Framework\App\Request\Http $request,
-        \Magento\Sales\Model\OrderFactory $orderFactory
+        Context $context,
+        LayoutFactory $layoutFactory,
+        Factory $paymentMethodFactory,
+        Emulation $appEmulation,
+        Config $paymentConfig,
+        Initial $initialConfig,
+        State $appState,
+        StoreManagerInterface $storeManager,
+        Registry $registry,
+        WebsiteFactory $websiteFactory,
+        CustomerInterfaceFactory $customerFactory,
+        CustomerRepositoryInterface $customerRepository,
+        PaymentFactory $paymentFactory,
+        Quote $backendSession,
+        CheckoutSession $checkoutSession,
+        CustomerSession $customerSession,
+        CurrentCustomer $currentCustomerSession,
+        CardFactory $cardFactory,
+        CollectionFactory $cardCollectionFactory,
+        Address $addressHelper,
+        Operation $operationHelper,
+        Http $request,
+        OrderFactory $orderFactory
     ) {
 
         $this->request = $request;

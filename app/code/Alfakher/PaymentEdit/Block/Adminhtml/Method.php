@@ -5,8 +5,19 @@ use MageWorx\OrderEditor\Model\Order;
 use MageWorx\OrderEditor\Model\Quote;
 use Magento\Sales\Block\Adminhtml\Order\Create\Billing\Method\Form as PaymentMethodForm;
 use MageWorx\OrderEditor\Model\Ui\ConfigProvider;
+use MageWorx\OrderEditor\Block\Adminhtml\Sales\Order\Edit\Form\Payment\Method as BaseMethod;
+use MageWorx\OrderEditor\Block\Adminhtml\Sales\Order\Edit\Form\Payment;
+use Magento\Payment\Helper\Data;
+use MageWorx\OrderEditor\Helper\Data as HelperData;
+use Magento\Payment\Model\MethodList;
+use Magento\Framework\Module\ModuleListInterface;
+use Magento\Payment\Api\PaymentMethodListInterface;
+use Magento\Payment\Model\Method\InstanceFactory;
+use Magento\Framework\View\Element\Template\Context;
+use Magento\Payment\Model\Checks\SpecificationFactory;
+use Magento\Backend\Model\Session\Quote as SessionQuote;
 
-class Method extends \MageWorx\OrderEditor\Block\Adminhtml\Sales\Order\Edit\Form\Payment\Method
+class Method extends BaseMethod
 {
 
     /**
@@ -20,67 +31,67 @@ class Method extends \MageWorx\OrderEditor\Block\Adminhtml\Sales\Order\Edit\Form
     protected $order;
 
     /**
-     * @var \MageWorx\OrderEditor\Block\Adminhtml\Sales\Order\Edit\Form\Payment
+     * @var Payment
      */
     protected $payment;
 
     /**
-     * @var \Magento\Payment\Helper\Data
+     * @var Data
      */
     protected $paymentHelper;
 
     /**
-     * @var \MageWorx\OrderEditor\Helper\Data
+     * @var HelperData
      */
     protected $helperData;
 
     /**
-     * @var \Magento\Payment\Model\MethodList
+     * @var MethodList
      */
     private $methodList;
 
     /**
-     * @var \Magento\Framework\Module\ModuleListInterface
+     * @var ModuleListInterface
      */
     protected $moduleList;
 
     /**
-     * @var \Magento\Payment\Api\PaymentMethodListInterface
+     * @var PaymentMethodListInterface
      */
     public $paymentMethodList;
 
     /**
-     * @var \Magento\Payment\Model\Method\InstanceFactory
+     * @var InstanceFactory
      */
     public $paymentMethodInstanceFactory;
 
     /**
      * Method constructor.
      *
-     * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Magento\Payment\Helper\Data $paymentHelper
-     * @param \Magento\Payment\Model\Checks\SpecificationFactory $methodSpecificationFactory
-     * @param \Magento\Backend\Model\Session\Quote $sessionQuote
-     * @param \MageWorx\OrderEditor\Block\Adminhtml\Sales\Order\Edit\Form\Payment $payment
-     * @param \MageWorx\OrderEditor\Helper\Data $helperData
-     * @param \Magento\Payment\Model\MethodList $methodList
-     * @param \Magento\Framework\Module\ModuleListInterface $moduleList
-     * @param \Magento\Payment\Api\PaymentMethodListInterface $paymentMethodList
-     * @param \Magento\Payment\Model\Method\InstanceFactory $paymentMethodInstanceFactory
+     * @param Context $context
+     * @param Data $paymentHelper
+     * @param SpecificationFactory $methodSpecificationFactory
+     * @param SessionQuote $sessionQuote
+     * @param Payment $payment
+     * @param HelperData $helperData
+     * @param MethodList $methodList
+     * @param ModuleListInterface $moduleList
+     * @param PaymentMethodListInterface $paymentMethodList
+     * @param InstanceFactory $paymentMethodInstanceFactory
      * @param array $data
      * @param array $additionalChecks
      */
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Payment\Helper\Data $paymentHelper,
-        \Magento\Payment\Model\Checks\SpecificationFactory $methodSpecificationFactory,
-        \Magento\Backend\Model\Session\Quote $sessionQuote,
-        \MageWorx\OrderEditor\Block\Adminhtml\Sales\Order\Edit\Form\Payment $payment,
-        \MageWorx\OrderEditor\Helper\Data $helperData,
-        \Magento\Payment\Model\MethodList $methodList,
-        \Magento\Framework\Module\ModuleListInterface $moduleList,
-        \Magento\Payment\Api\PaymentMethodListInterface $paymentMethodList,
-        \Magento\Payment\Model\Method\InstanceFactory $paymentMethodInstanceFactory,
+        Context $context,
+        Data $paymentHelper,
+        SpecificationFactory $methodSpecificationFactory,
+        SessionQuote $sessionQuote,
+        Payment $payment,
+        HelperData $helperData,
+        MethodList $methodList,
+        ModuleListInterface $moduleList,
+        PaymentMethodListInterface $paymentMethodList,
+        InstanceFactory $paymentMethodInstanceFactory,
         array $data = [],
         array $additionalChecks = []
     ) {

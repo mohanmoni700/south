@@ -14,8 +14,18 @@ use MageWorx\OrderEditor\Api\ChangeLoggerInterface;
 use MageWorx\OrderEditor\Api\OrderRepositoryInterface;
 use MageWorx\OrderEditor\Api\QuoteRepositoryInterface;
 use Magento\Payment\Helper\Data as PaymentHelper;
+use MageWorx\OrderEditor\Model\Payment as BasePayment;
+use Magento\Framework\App\Request\Http;
+use ParadoxLabs\TokenBase\Api\CardRepositoryInterface;
+use ParadoxLabs\FirstData\Model\Method;
+use Alfakher\PaymentEdit\Model\Gateway;
+use Magento\Sales\Model\Order\Payment\Transaction\Builder;
+use Magento\Framework\Message\ManagerInterface;
+use ParadoxLabs\TokenBase\Helper\Address;
+use Magento\Customer\Api\CustomerRepositoryInterface;
+use ParadoxLabs\TokenBase\Model\CardFactory;
 
-class Payment extends \MageWorx\OrderEditor\Model\Payment
+class Payment extends BasePayment
 {
     /**
      * @var Order
@@ -103,15 +113,15 @@ class Payment extends \MageWorx\OrderEditor\Model\Payment
      * @param PaymentHelper $paymentHelper
      * @param AbstractResource|null $resource
      * @param AbstractDb|null $resourceCollection
-     * @param \Magento\Framework\App\Request\Http $request
-     * @param \ParadoxLabs\TokenBase\Api\CardRepositoryInterface $cardRepository
-     * @param \ParadoxLabs\FirstData\Model\Method $method
-     * @param \Alfakher\PaymentEdit\Model\Gateway $geteway
-     * @param \Magento\Sales\Model\Order\Payment\Transaction\Builder $transportBuilder
-     * @param \Magento\Framework\Message\ManagerInterface $messageManager
-     * @param \ParadoxLabs\TokenBase\Helper\Address $addressHelper
-     * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
-     * @param \ParadoxLabs\TokenBase\Model\CardFactory $cardFactory
+     * @param Http $request
+     * @param CardRepositoryInterface $cardRepository
+     * @param Method $method
+     * @param Gateway $geteway
+     * @param Builder $transportBuilder
+     * @param ManagerInterface $messageManager
+     * @param Address $addressHelper
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param CardFactory $cardFactory
      * @param array $data
      */
     public function __construct(
@@ -123,15 +133,15 @@ class Payment extends \MageWorx\OrderEditor\Model\Payment
         PaymentHelper $paymentHelper,
         AbstractResource $resource = null,
         AbstractDb $resourceCollection = null,
-        \Magento\Framework\App\Request\Http $request,
-        \ParadoxLabs\TokenBase\Api\CardRepositoryInterface $cardRepository,
-        \ParadoxLabs\FirstData\Model\Method $method,
-        \Alfakher\PaymentEdit\Model\Gateway $geteway,
-        \Magento\Sales\Model\Order\Payment\Transaction\Builder $transportBuilder,
-        \Magento\Framework\Message\ManagerInterface $messageManager,
-        \ParadoxLabs\TokenBase\Helper\Address $addressHelper,
-        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
-        \ParadoxLabs\TokenBase\Model\CardFactory $cardFactory,
+        Http $request,
+        CardRepositoryInterface $cardRepository,
+        Method $method,
+        Gateway $geteway,
+        Builder $transportBuilder,
+        ManagerInterface $messageManager,
+        Address $addressHelper,
+        CustomerRepositoryInterface $customerRepository,
+        CardFactory $cardFactory,
         array $data = []
     ) {
         $this->paymentHelper = $paymentHelper;

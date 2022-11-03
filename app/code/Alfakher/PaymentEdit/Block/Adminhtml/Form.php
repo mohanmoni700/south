@@ -2,49 +2,60 @@
 namespace Alfakher\PaymentEdit\Block\Adminhtml;
 
 use Magento\Framework\Pricing\PriceCurrencyInterface;
+use Magento\Sales\Block\Adminhtml\Order\Create\Form as SaleForm;
+use Magento\Framework\App\Request\Http;
+use Magento\Sales\Model\OrderFactory;
+use Magento\Backend\Block\Template\Context;
+use Magento\Backend\Model\Session\Quote;
+use Magento\Sales\Model\AdminOrder\Create;
+use Magento\Framework\Json\EncoderInterface;
+use Magento\Customer\Model\Metadata\FormFactory;
+use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Framework\Locale\CurrencyInterface;
+use Magento\Customer\Model\Address\Mapper;
 
-class Form extends \Magento\Sales\Block\Adminhtml\Order\Create\Form
+class Form extends SaleForm
 {
 
     /**
-     * @var \Magento\Framework\App\Request\Http
+     * @var Http
      */
     protected $request;
 
     /**
-     * @var \Magento\Sales\Model\OrderFactory
+     * @var OrderFactory
      */
     protected $orderFactory;
 
     /**
      * Initialize dependencies.
      *
-     * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Magento\Backend\Model\Session\Quote $sessionQuote
-     * @param \Magento\Sales\Model\AdminOrder\Create $orderCreate
+     * @param Context $context
+     * @param Quote $sessionQuote
+     * @param Create $orderCreate
      * @param PriceCurrencyInterface $priceCurrency
-     * @param \Magento\Framework\Json\EncoderInterface $jsonEncoder
-     * @param \Magento\Customer\Model\Metadata\FormFactory $customerFormFactory
-     * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
-     * @param \Magento\Framework\Locale\CurrencyInterface $localeCurrency
-     * @param \Magento\Customer\Model\Address\Mapper $addressMapper
-     * @param \Magento\Framework\App\Request\Http $request
-     * @param \Magento\Sales\Model\OrderFactory $orderFactory
+     * @param EncoderInterface $jsonEncoder
+     * @param FormFactory $customerFormFactory
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param CurrencyInterface $localeCurrency
+     * @param Address\Mapper $addressMapper
+     * @param Http $request
+     * @param OrderFactory $orderFactory
      * @param array $data
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        \Magento\Backend\Block\Template\Context $context,
-        \Magento\Backend\Model\Session\Quote $sessionQuote,
-        \Magento\Sales\Model\AdminOrder\Create $orderCreate,
+        Context $context,
+        Quote $sessionQuote,
+        Create $orderCreate,
         PriceCurrencyInterface $priceCurrency,
-        \Magento\Framework\Json\EncoderInterface $jsonEncoder,
-        \Magento\Customer\Model\Metadata\FormFactory $customerFormFactory,
-        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
-        \Magento\Framework\Locale\CurrencyInterface $localeCurrency,
-        \Magento\Customer\Model\Address\Mapper $addressMapper,
-        \Magento\Framework\App\Request\Http $request,
-        \Magento\Sales\Model\OrderFactory $orderFactory,
+        EncoderInterface $jsonEncoder,
+        FormFactory $customerFormFactory,
+        CustomerRepositoryInterface $customerRepository,
+        CurrencyInterface $localeCurrency,
+        Mapper $addressMapper,
+        Http $request,
+        OrderFactory $orderFactory,
         array $data = []
     ) {
         $this->request = $request;
