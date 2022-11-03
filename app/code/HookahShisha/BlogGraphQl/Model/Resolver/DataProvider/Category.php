@@ -1,5 +1,6 @@
 <?php
 declare (strict_types = 1);
+
 namespace HookahShisha\BlogGraphQl\Model\Resolver\DataProvider;
 
 use Magefan\Blog\Api\CategoryRepositoryInterface;

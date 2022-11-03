@@ -29,10 +29,12 @@ class Categories extends \Magefan\BlogGraphQl\Model\Resolver\Categories
      * @var DataProvider\Category
      */
     protected $categoryDataProvider;
+
     /**
      * @var FilterBuilder
      */
     protected $filterBuilder;
+
     /**
      * @var FilterGroupBuilder
      */
@@ -45,6 +47,7 @@ class Categories extends \Magefan\BlogGraphQl\Model\Resolver\Categories
 
     /**
      * Categories constructor.
+     *
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
      * @param CategoryRepositoryInterface $categoryRepositoryInterface
      * @param DataProvider\Category $categoryDataProvider
@@ -84,7 +87,7 @@ class Categories extends \Magefan\BlogGraphQl\Model\Resolver\Categories
      * @param ResolveInfo $info
      * @param array|null $value
      * @param array|null $args
-     * @return mixed
+     * @return array
      */
     public function resolve(
         Field $field,
