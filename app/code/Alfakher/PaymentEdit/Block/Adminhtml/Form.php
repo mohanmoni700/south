@@ -70,8 +70,6 @@ class Form extends \Magento\Sales\Block\Adminhtml\Order\Create\Form
      */
     public function getOrderViewDataJson()
     {
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $request = $objectManager->create(\Magento\Framework\App\Request\Http::class);
         $orderId = $this->request->getParam('order_id');
         $data = [];
         if ($orderId) {
