@@ -207,7 +207,6 @@ class MergeCartsPlugin
                 }
             }
             try {
-                throw new GraphQlInputException(__("testing exeception"));
                 $this->cartRepository->save($customerCart);
             } catch (\Exception $e) {
                 $this->logger->err($e->getMessage());
