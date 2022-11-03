@@ -36,7 +36,6 @@ class KlaviyoCustomCatalogFeedGenerate extends Command
     {
         $this->setName('klaviyo:customcatalog:sync');
         $this->setDescription('Generates & Syncs Klaviyo Custom Catalog Feed');
-
         parent::configure();
     }
 
