@@ -1,5 +1,5 @@
 <?php
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace Alfakher\KlaviyoCustomCatalog\Console;
 
@@ -17,7 +17,7 @@ class KlaviyoCustomCatalogFeedGenerate extends Command
     /**
      * KlaviyoCustomCatalogFeedGenerate constructor
      *
-     * @param State                $state
+     * @param State $state
      * @param KlaviyoCustomCatalog $klaviyoCustomCatalogModel
      */
     public function __construct(

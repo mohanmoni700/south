@@ -1,5 +1,5 @@
 <?php
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace Alfakher\KlaviyoCustomCatalog\Model;
 
@@ -34,17 +34,17 @@ class KlaviyoCustomCatalog extends AbstractModel
     /**
      * KlaviyoCustomCatalog constructor
      *
-     * @param State                      $state
-     * @param SearchCriteriaBuilder      $searchCriteriaBuilder
+     * @param State $state
+     * @param SearchCriteriaBuilder $searchCriteriaBuilder
      * @param ProductRepositoryInterface $productsInterface
-     * @param Grouped                    $groupedProduct
-     * @param Product                    $imageHelper
-     * @param File                       $file
-     * @param EncoderInterface           $jsonEncoder
-     * @param FileFactory                $fileFactory
-     * @param Filesystem                 $filesystem
-     * @param Emulation                  $emulation
-     * @param ScopeConfigInterface       $scopeConfig
+     * @param Grouped $groupedProduct
+     * @param Product $imageHelper
+     * @param File $file
+     * @param EncoderInterface $jsonEncoder
+     * @param FileFactory $fileFactory
+     * @param Filesystem $filesystem
+     * @param Emulation $emulation
+     * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         State $state,
@@ -80,30 +80,25 @@ class KlaviyoCustomCatalog extends AbstractModel
     public function generateKlaviyoCustomCatalogFeed()
     {
         $storeIdsConfig = $this->scopeConfig->getValue(self::KLAVIYO_CATALOG_STORES);
-
         $storeIds = explode(',', $storeIdsConfig);
 
         foreach ($storeIds as $storeId) {
             $productArray = [];
-
             $this->emulation->startEnvironmentEmulation($storeId, Area::AREA_FRONTEND);
-
+            
             $searchCriteria = $this->_searchCriteriaBuilder
                 ->addFilter('store_id', $storeId, 'eq')
                 ->addFilter('status', Status::STATUS_ENABLED, 'eq')
                 ->create();
-
             $list = $this->_productsInterface->getList($searchCriteria)->getItems();
 
             foreach ($list as $key => $pro) {
                 $productUrl = $pro->getUrlKey();
                 $parentProducts = $this->_groupedProduct->getParentIdsByChild($pro->getId());
-
                 if (count($parentProducts) > 0) {
                     try {
                         $groupProduct = $this->_productsInterface->getById($parentProducts[0]);
                         $productUrl = $groupProduct->getUrlKey();
-
                         if ($groupProduct->getSku() == self::ADMIN_PRODUCT && isset($parentProducts[1])) {
                             $groupProductNext = $this->_productsInterface->getById($parentProducts[0]);
                             $productUrl = $groupProductNext->getUrlKey();
@@ -112,7 +107,6 @@ class KlaviyoCustomCatalog extends AbstractModel
                         continue;
                     }
                 }
-
                 $productArray[] = [
                     "id" => $pro->getId(),
                     "title" => $pro->getName(),
@@ -131,8 +125,8 @@ class KlaviyoCustomCatalog extends AbstractModel
     /**
      * Generated klaviyo custom catalog's json file from given product array
      *
-     * @param  array $productArray
-     * @param  int $storeId
+     * @param array $productArray
+     * @param int $storeId
      * @return boolean
      */
     public function generateFeedJsonFile($productArray, $storeId)
@@ -140,8 +134,6 @@ class KlaviyoCustomCatalog extends AbstractModel
         $filePrefix = 'klaviyocustomcatalog';
         $extension = '.json';
         $fileName = $filePrefix . '_' . $storeId . $extension;
-
-        $result = false;
         try {
             $content = $this->_jsonEncoder->encode($productArray);
             $media = $this->_filesystem->getDirectoryWrite(DirectoryList::PUB);
