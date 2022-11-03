@@ -3,15 +3,17 @@ declare (strict_types = 1);
 
 namespace Alfakher\KlaviyoCustomCatalog\Cron;
 
+use Alfakher\KlaviyoCustomCatalog\Model\KlaviyoCustomCatalog;
+
 class KlaviyoCustomCatalogFeedSync
 {
     /**
      * KlaviyoCustomCatalogFeedSync constructor
      *
-     * @param \Alfakher\KlaviyoCustomCatalog\Model\KlaviyoCustomCatalog $klaviyoCustomCatalogModel
+     * @param KlaviyoCustomCatalog $klaviyoCustomCatalogModel [description]
      */
     public function __construct(
-        \Alfakher\KlaviyoCustomCatalog\Model\KlaviyoCustomCatalog $klaviyoCustomCatalogModel
+        KlaviyoCustomCatalog $klaviyoCustomCatalogModel
     ) {
         $this->_klaviyoCustomCatalogModel = $klaviyoCustomCatalogModel;
     }

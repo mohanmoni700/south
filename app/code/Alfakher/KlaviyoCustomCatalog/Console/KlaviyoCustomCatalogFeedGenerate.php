@@ -3,6 +3,8 @@ declare (strict_types = 1);
 
 namespace Alfakher\KlaviyoCustomCatalog\Console;
 
+use Alfakher\KlaviyoCustomCatalog\Model\KlaviyoCustomCatalog;
+use Magento\Framework\App\State;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -12,16 +14,15 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class KlaviyoCustomCatalogFeedGenerate extends Command
 {
-
     /**
      * KlaviyoCustomCatalogFeedGenerate constructor
      *
-     * @param \Magento\Framework\App\State                              $state
-     * @param \Alfakher\KlaviyoCustomCatalog\Model\KlaviyoCustomCatalog $klaviyoCustomCatalogModel
+     * @param State                $state
+     * @param KlaviyoCustomCatalog $klaviyoCustomCatalogModel
      */
     public function __construct(
-        \Magento\Framework\App\State $state,
-        \Alfakher\KlaviyoCustomCatalog\Model\KlaviyoCustomCatalog $klaviyoCustomCatalogModel
+        State $state,
+        KlaviyoCustomCatalog $klaviyoCustomCatalogModel
     ) {
         parent::__construct();
         $this->_state = $state;

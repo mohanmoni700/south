@@ -3,14 +3,27 @@ declare (strict_types = 1);
 
 namespace Alfakher\KlaviyoCustomCatalog\Model;
 
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Helper\Product;
 use Magento\Catalog\Model\Product\Attribute\Source\Status;
+use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\App\Area;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\App\Response\Http\FileFactory;
+use Magento\Framework\App\State;
+use Magento\Framework\Filesystem;
+use Magento\Framework\Filesystem\Io\File;
+use Magento\Framework\Json\EncoderInterface;
 use Magento\Framework\Model\AbstractModel;
+use Magento\GroupedProduct\Model\Product\Type\Grouped;
+use Magento\Store\Model\App\Emulation;
 
 class KlaviyoCustomCatalog extends AbstractModel
 {
-
+    /**
+     * Admin product sku
+     */
     public const ADMIN_PRODUCT = 'WS-BTO-AdminOnly';
 
     /**
@@ -21,30 +34,30 @@ class KlaviyoCustomCatalog extends AbstractModel
     /**
      * KlaviyoCustomCatalog constructor
      *
-     * @param \Magento\Framework\App\State                       $state
-     * @param \Magento\Framework\Api\SearchCriteriaBuilder       $searchCriteriaBuilder
-     * @param \Magento\Catalog\Api\ProductRepositoryInterface    $productsInterface
-     * @param \Magento\GroupedProduct\Model\Product\Type\Grouped $groupedProduct
-     * @param \Magento\Catalog\Helper\Product                    $imageHelper
-     * @param \Magento\Framework\Filesystem\Io\File              $file
-     * @param \Magento\Framework\Json\EncoderInterface           $jsonEncoder
-     * @param \Magento\Framework\App\Response\Http\FileFactory   $fileFactory
-     * @param \Magento\Framework\Filesystem                      $filesystem
-     * @param \Magento\Store\Model\App\Emulation                 $emulation
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param State                      $state
+     * @param SearchCriteriaBuilder      $searchCriteriaBuilder
+     * @param ProductRepositoryInterface $productsInterface
+     * @param Grouped                    $groupedProduct
+     * @param Product                    $imageHelper
+     * @param File                       $file
+     * @param EncoderInterface           $jsonEncoder
+     * @param FileFactory                $fileFactory
+     * @param Filesystem                 $filesystem
+     * @param Emulation                  $emulation
+     * @param ScopeConfigInterface       $scopeConfig
      */
     public function __construct(
-        \Magento\Framework\App\State $state,
-        \Magento\Framework\Api\SearchCriteriaBuilder $searchCriteriaBuilder,
-        \Magento\Catalog\Api\ProductRepositoryInterface $productsInterface,
-        \Magento\GroupedProduct\Model\Product\Type\Grouped $groupedProduct,
-        \Magento\Catalog\Helper\Product $imageHelper,
-        \Magento\Framework\Filesystem\Io\File $file,
-        \Magento\Framework\Json\EncoderInterface $jsonEncoder,
-        \Magento\Framework\App\Response\Http\FileFactory $fileFactory,
-        \Magento\Framework\Filesystem $filesystem,
-        \Magento\Store\Model\App\Emulation $emulation,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        State $state,
+        SearchCriteriaBuilder $searchCriteriaBuilder,
+        ProductRepositoryInterface $productsInterface,
+        Grouped $groupedProduct,
+        Product $imageHelper,
+        File $file,
+        EncoderInterface $jsonEncoder,
+        FileFactory $fileFactory,
+        Filesystem $filesystem,
+        Emulation $emulation,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->_state = $state;
         $this->_searchCriteriaBuilder = $searchCriteriaBuilder;
@@ -55,7 +68,6 @@ class KlaviyoCustomCatalog extends AbstractModel
         $this->_jsonEncoder = $jsonEncoder;
         $this->_fileFactory = $fileFactory;
         $this->_filesystem = $filesystem;
-        $this->directory = $filesystem->getDirectoryWrite(DirectoryList::PUB);
         $this->emulation = $emulation;
         $this->scopeConfig = $scopeConfig;
     }
