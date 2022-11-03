@@ -10,7 +10,7 @@ class KlaviyoCustomCatalogFeedSync
     /**
      * KlaviyoCustomCatalogFeedSync constructor
      *
-     * @param KlaviyoCustomCatalog $klaviyoCustomCatalogModel [description]
+     * @param KlaviyoCustomCatalog $klaviyoCustomCatalogModel
      */
     public function __construct(
         KlaviyoCustomCatalog $klaviyoCustomCatalogModel
