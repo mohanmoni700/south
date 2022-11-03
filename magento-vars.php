@@ -41,3 +41,9 @@ if (isHttpHost("hookahwholesalers.integration-5ojmyuq-hhdjar4f2w7cu.us-5.magento
     $_SERVER["MAGE_RUN_TYPE"] = "website";
     $_ENV["ACTIVE_STORE"] = "hookah_wholesalers_store_view";
 }
+
+if (isHttpHost("b2b.shisha-world.integration-5ojmyuq-hhdjar4f2w7cu.us-5.magentosite.cloud") || isHttpHost("mcstaging.b2b.shisha-world.com") || isHttpHost("mcstaging2.b2b.shisha-world.com") || isHttpHost("mcprod.b2b.shisha-world.com")) {
+    $_SERVER["MAGE_RUN_CODE"] = "shisha_world_b2b";
+    $_SERVER["MAGE_RUN_TYPE"] = "website";
+    $_ENV["ACTIVE_STORE"] = "shisha_world_b2b_store_view_de";
+}

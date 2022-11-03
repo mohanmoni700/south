@@ -21,7 +21,7 @@ return [
             'hookah' => [
                 'website_id' => '2',
                 'code' => 'hookah',
-                'name' => 'Hookah.com (B2C)',
+                'name' => 'Shisha-World.com (B2C)',
                 'sort_order' => '30',
                 'default_group_id' => '2',
                 'is_default' => '0'
@@ -65,6 +65,14 @@ return [
                 'sort_order' => '0',
                 'default_group_id' => '17',
                 'is_default' => '0'
+            ],
+            'shisha_world_b2b' => [
+                'website_id' => '18',
+                'code' => 'shisha_world_b2b',
+                'name' => 'Shisha-World.com (B2B)',
+                'sort_order' => '40',
+                'default_group_id' => '18',
+                'is_default' => '0'
             ]
         ],
         'groups' => [
@@ -87,7 +95,7 @@ return [
             2 => [
                 'group_id' => '2',
                 'website_id' => '2',
-                'name' => 'Hookah.com (B2C) Store',
+                'name' => 'Shisha-World.com (B2C) Store',
                 'root_category_id' => '650',
                 'default_store_id' => '2',
                 'code' => 'hookah_store'
@@ -131,6 +139,14 @@ return [
                 'root_category_id' => '1130',
                 'default_store_id' => '20',
                 'code' => 'ooka_store'
+            ],
+            18 => [
+                'group_id' => '18',
+                'website_id' => '18',
+                'name' => 'Shisha-World.com (B2B) Store',
+                'root_category_id' => '1182',
+                'default_store_id' => '27',
+                'code' => 'shisha_world_b2b_store'
             ]
         ],
         'stores' => [
@@ -157,8 +173,26 @@ return [
                 'code' => 'hookah_store_view',
                 'website_id' => '2',
                 'group_id' => '2',
-                'name' => 'Hookah.com (B2C) Store View',
-                'sort_order' => '0',
+                'name' => 'Shisha-World.com (B2C) Store View EN',
+                'sort_order' => '1',
+                'is_active' => '1'
+            ],
+            'hookah_store_view_de' => [
+                'store_id' => '21',
+                'code' => 'hookah_store_view_de',
+                'website_id' => '2',
+                'group_id' => '2',
+                'name' => 'Shisha-World.com (B2C) Store View DE',
+                'sort_order' => '1',
+                'is_active' => '1'
+            ],
+            'hookah_store_view_es' => [
+                'store_id' => '24',
+                'code' => 'hookah_store_view_es',
+                'website_id' => '2',
+                'group_id' => '2',
+                'name' => 'Shisha-World.com (B2C) Store View ES',
+                'sort_order' => '3',
                 'is_active' => '1'
             ],
             'hookah_company_store_view' => [
@@ -213,6 +247,33 @@ return [
                 'group_id' => '17',
                 'name' => 'Ooka.com Store View',
                 'sort_order' => '0',
+                'is_active' => '1'
+            ],
+            'shisha_world_b2b_store_view_de' => [
+                'store_id' => '27',
+                'code' => 'shisha_world_b2b_store_view_de',
+                'website_id' => '18',
+                'group_id' => '18',
+                'name' => 'DE',
+                'sort_order' => '1',
+                'is_active' => '1'
+            ],
+            'shisha_world_b2b_store_view_en' => [
+                'store_id' => '30',
+                'code' => 'shisha_world_b2b_store_view_en',
+                'website_id' => '18',
+                'group_id' => '18',
+                'name' => 'EN',
+                'sort_order' => '2',
+                'is_active' => '1'
+            ],
+            'shisha_world_b2b_store_view_es' => [
+                'store_id' => '33',
+                'code' => 'shisha_world_b2b_store_view_es',
+                'website_id' => '18',
+                'group_id' => '18',
+                'name' => 'ES',
+                'sort_order' => '3',
                 'is_active' => '1'
             ]
         ]
@@ -279,6 +340,20 @@ return [
                 'general' => [
                     'locale' => [
                         'code' => 'de_DE'
+                    ]
+                ]
+            ],
+            'shisha_world_b2b_store_view_de' => [
+                'general' => [
+                    'locale' => [
+                        'code' => 'de_DE'
+                    ]
+                ]
+            ],
+            'shisha_world_b2b_store_view_es' => [
+                'general' => [
+                    'locale' => [
+                        'code' => 'es_ES'
                     ]
                 ]
             ]
@@ -349,6 +424,20 @@ return [
                 'design' => [
                     'theme' => [
                         'theme_id' => 'frontend/Corra/ooka-de'
+                    ]
+                ]
+            ],
+            'shisha_world_b2b' => [
+                'currency' => [
+                    'options' => [
+                        'base' => 'EUR',
+                        'default' => 'EUR',
+                        'allow' => 'EUR'
+                    ]
+                ],
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Alfakher/shishaworld'
                     ]
                 ]
             ]
@@ -905,11 +994,13 @@ return [
         'HookahShisha_CatalogGraphQl' => 1,
         'HookahShisha_CatalogImportExport' => 1,
         'HookahShisha_ChangePassword' => 1,
+        'HookahShisha_Checkoutchanges' => 1,
         'HookahShisha_CustomerGraphQl' => 1,
         'HookahShisha_Customerb2b' => 1,
         'Magetrend_PdfTemplates' => 1,
         'HookahShisha_GraphQl' => 1,
         'HookahShisha_Import' => 1,
+        'HookahShisha_InternationalTelephoneInput' => 1,
         'HookahShisha_InvoiceCapture' => 1,
         'HookahShisha_LoginAsCustomer' => 1,
         'Magefan_Community' => 1,
@@ -919,6 +1010,7 @@ return [
         'HookahShisha_Quote' => 1,
         'HookahShisha_QuoteGraphQl' => 1,
         'HookahShisha_RelatedProductGraphQl' => 1,
+        'HookahShisha_Removefreegift' => 1,
         'HookahShisha_RmaGraphQl' => 1,
         'HookahShisha_Sales' => 1,
         'HookahShisha_SalesGraphQl' => 1,
@@ -1065,6 +1157,15 @@ return [
             'area' => 'frontend',
             'type' => '1',
             'code' => 'Corra/ooka-de'
+        ],
+        'frontend/Alfakher/shishaworld' => [
+            'parent_id' => 'Alfakher/hookahwholesalers',
+            'theme_path' => 'Alfakher/shishaworld',
+            'theme_title' => 'Shisha World B2B',
+            'is_featured' => '0',
+            'area' => 'frontend',
+            'type' => '0',
+            'code' => 'Alfakher/shishaworld'
         ]
     ],
     'i18n' => [
