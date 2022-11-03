@@ -136,7 +136,7 @@ class KlaviyoCustomCatalog extends AbstractModel
         $fileName = $filePrefix . '_' . $storeId . $extension;
         try {
             $content = $this->_jsonEncoder->encode($productArray);
-            $media = $this->_filesystem->getDirectoryWrite(DirectoryList::PUB);
+            $media = $this->_filesystem->getDirectoryWrite(DirectoryList::MEDIA);
             $media->writeFile($fileName, $content);
             $result = true;
         } catch (\Exception $e) {
