@@ -32,6 +32,16 @@ class Index extends Action
     protected $json;
 
     /**
+     * @var OrderRepositoryInterface
+     */
+    protected $orderRepository;
+    
+    /**
+     * @var Curl
+     */
+    protected $curl;
+
+    /**
      * New construct
      *
      * @param Context $context
@@ -60,7 +70,7 @@ class Index extends Action
     /**
      * Execute view action
      *
-     * @return ResultInterface
+     * @return mixed
      */
     public function execute()
     {
