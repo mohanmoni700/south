@@ -10,10 +10,12 @@ class Status implements OptionSourceInterface
      * Sync status code
      */
     public const STATUS_DONE = 1;
+
     /**
      * Pending status code
      */
     public const STATUS_PENDING = 2;
+    
     /**
      * Not Done status code
      */

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Alfakher\ExitB\Plugin\Model;
 
 use Magento\Sales\Model\Order\InvoiceDocumentFactory as Subject;
