@@ -1,15 +1,23 @@
 <?php
+declare(strict_types=1);
 
 namespace HookahShisha\Customization\Block;
 
-use Magento\Framework\View\Element\Template;
 use HookahShisha\Customization\Helper\UserData;
+use Magento\Framework\View\Element\Template;
 
 /**
  * Main contact form block
  */
 class ContactForm extends Template
 {
+
+    /**
+     * Customer data
+     *
+     * @var UserData $helper
+     */
+    protected $helper;
 
     /**
      * @param Template\Context $context
