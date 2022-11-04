@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">ordersync_form_grid.order_sync_collection</item>
+            <item name="deps" xsi:type="string">ordersync_form_grid.order_sync_collection</item>
+        </item>
+        <item name="spinner" xsi:type="string">exitb_columns</item>
+    </argument>
+    <dataSource name="order_sync_collection">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider</argument>
+            <argument name="name" xsi:type="string">order_sync_collection</argument>
+            <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
+            <argument name="requestFieldName" xsi:type="string">entity_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                </item>
+            </argument>
+        </argument>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <exportButton name="export_button"/>
+        <filters name="listing_filters">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="statefull" xsi:type="array">
+                        <item name="applied" xsi:type="boolean">false</item>
+                    </item>
+                    <item name="params" xsi:type="array">
+                        <item name="filters_modifier" xsi:type="array" />
+                    </item>
+                    <item name="observers" xsi:type="array">
+                        <item name="filters" xsi:type="object">Magento\Catalog\Ui\Component\Listing\Filters</item>
+                    </item>
+                </item>
+            </argument>
+        </filters>
+        <massaction name="listing_massaction">
+            <action name="order_sync">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">order_sync</item>
+                        <item name="label" xsi:type="string" translate="true">Magento To ExitB Order Sync</item>
+                        <item name="url" xsi:type="url" path="exitbordersync/order/massAction"/>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="exitb_columns" >
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="childDefaults" xsi:type="array">
+                    <item name="fieldAction" xsi:type="array">
+                        <item name="provider" xsi:type="string">ordersync_form_grid.ordersync_form_grid.order_sync_collection.actions</item>
+                        <item name="target" xsi:type="string">applyAction</item>
+                        <item name="params" xsi:type="array">
+                            <item name="0" xsi:type="string">view</item>
+                            <item name="1" xsi:type="string">${ $.$data.rowIndex }</item>
+                        </item>
+                    </item>
+                </item>
+            </item>
+        </argument>
+        <selectionsColumn name="ids" sortOrder="0">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                    <item name="preserveSelectionsOnFilter" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </selectionsColumn>
+        <column name="entity_id" sortOrder="10">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <!-- <item name="filter" xsi:type="string">textRange</item> -->
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                </item>
+            </argument>
+        </column>
+        <column name="order_id" sortOrder="20">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="label" xsi:type="string" translate="true">Order Id</item>
+                </item>
+            </argument>
+        </column>
+        <column name="customer_email" sortOrder="30">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Customer Email</item>
+                </item>
+            </argument>
+        </column>
+        <column name="increment_id" sortOrder="40">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">OrderIncrement Id</item>
+                </item>
+            </argument>
+        </column>
+        <column name="sync_status" sortOrder="50" class="Alfakher\ExitB\Ui\Component\Listing\Column\Status">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Alfakher\ExitB\Model\Status</item> 
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Status</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                </item>
+            </argument>
+        </column>
+        <column name="request_param" sortOrder="60">
+            <settings>
+                <sortable>false</sortable>
+                <label translate="true">Request Param</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="response_param" sortOrder="70">
+            <settings>
+                <sortable>false</sortable>
+                <label translate="true">Response Param</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="created_at" sortOrder="80" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Order Sync Date</label>
+            </settings>
+        </column>
+        <column name="updated_at" sortOrder="90" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Update Date</label>
+            </settings>
+        </column>
+    </columns>
+</listing>

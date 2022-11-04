@@ -1,0 +1,34 @@
+{
+    "exitb_ordersync": {
+        "column": {
+            "entity_id": true,
+            "order_id": true,
+            "customer_email": true,
+            "increment_id": true,
+            "sync_status": true,
+            "request_param": true,
+            "response_param": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "EXITB_ORDERSYNC_ORDER_ID_SALES_ORDER_ENTITY_ID": true
+        }
+    },
+    "exitb_token": {
+        "column": {
+            "entity_id": true,
+            "token": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "sales_invoice": {
+        "column": {
+            "exitb_invoice_numbers": true
+        }
+    }
+}

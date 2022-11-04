@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Alfakher_ExitB::exib_tab" title="ExitB" translate="title" module="Alfakher_ExitB" sortOrder="80" parent="Magento_Sales::sales" resource="Alfakher_ExitB::exib_tab" />
+        <add id="Alfakher_ExitB::ordersyncmenu"
+           title="ExitB Order Sync Status"
+           module="Alfakher_ExitB"
+           sortOrder="100"
+           parent="Alfakher_ExitB::exib_tab"
+           action="exitbordersync/index/index"
+           resource="Alfakher_ExitB::ordersyncmenu"/>   
+    </menu>
+</config>
