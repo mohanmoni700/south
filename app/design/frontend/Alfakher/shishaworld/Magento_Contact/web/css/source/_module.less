@@ -4,6 +4,7 @@
 
 & when (@media-common = true) {
     .contact-index-index,
+    .cms-contact-us,
     .cms-kontakt,
     .cms-contacto {
         
@@ -30,6 +31,7 @@
 
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
     .contact-index-index .form.contact,
+    .cms-contact-us .form.contact,
     .cms-kontakt .form.contact,
     .cms-contacto .form.contact {
         .field {
@@ -61,6 +63,7 @@
 //  Mobile
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .contact-index-index,
+    .cms-contact-us,
     .cms-kontakt,
     .cms-contacto {
         .column:not(.sidebar-main) {

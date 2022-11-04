@@ -10,7 +10,7 @@
                 .subchildmenu.mega-columns {
                     > .ui-menu-item.parent {
                         > a {
-                            .lib-css(padding-right, 13px);
+                            .lib-css(padding-right, @indent__base);
                             .lib-css(line-height, 32px);
                         }
                     }
@@ -19,6 +19,7 @@
                             li {
                                 a {
                                     .lib-css(line-height, normal);
+                                    .lib-css(padding-right, @indent__s);
                                 }
                             }
                         }
@@ -32,7 +33,7 @@
                         .ui-menu-item.level1{
                             a{
                                 &:hover{
-                                    color: @color_primary; //#961E70;
+                                    color: @color_primary;
                                 }
                             }
                         }
@@ -54,6 +55,9 @@
                                 }
                             }
                         }
+                    }
+                    .level1 .level2 ul.subchildmenu {
+                        display: none !important;
                     }
                 }
             }
