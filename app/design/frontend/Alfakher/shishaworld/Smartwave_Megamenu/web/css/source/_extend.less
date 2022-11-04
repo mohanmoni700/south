@@ -1,30 +1,26 @@
-// /**
-//  * Copyright © 2018 Porto. All rights reserved.
-//  */
-
 //m - L
 & when (@media-target = 'desktop'), (@media-target = 'all') {
-    @media only screen and (min-width: 1025px) {
+    @media only screen and (min-width: 1025px) {        
         .sw-megamenu.navigation {
             .level0.submenu{
                 scrollbar-color: @color_primary transparent;
                 ::-webkit-scrollbar-thumb {
                 background: @color_primary;
                 }
-            }
-            .level0.Zubehör {
-                .submenu {
-                    .subchildmenu {
-                        .lib-css(background, @color_white);
-                        display: inline-flex;
-                        height: 380px;
-                        overflow-x: hidden;
-                        overflow-y: scroll;
-                        > .subcat-show-all {
-                            .lib-css(position, unset);
+                .subchildmenu.mega-columns {
+                    > .ui-menu-item.parent {
+                        > a {
+                            .lib-css(padding-right, 13px);
+                            .lib-css(line-height, 32px);
                         }
-                        &.mega-columns:before {
-                            .lib-css(border-bottom, 0);
+                    }
+                    .subchildmenu {
+                        > ul {
+                            li {
+                                a {
+                                    .lib-css(line-height, normal);
+                                }
+                            }
                         }
                     }
                 }
@@ -67,6 +63,43 @@
                         &:before{
                             background: @color_primary;
                         }
+                    }
+                }
+                &.fullwidth,
+                &.staticwidth {
+                    .submenu {
+                        li.level1 {
+                            > a {
+                                .lib-css(text-transform, capitalize);
+                            }
+                        }
+                    }
+                }
+            }
+            .level0.Charcoal,
+            .level0.Zubehör {
+                .level0.submenu .subchildmenu.mega-columns { 
+                    .lib-css(background, @color_white);
+                    .lib-css(border-bottom, 1px solid @color_E0E0E0);
+                    .lib-css(border-left, 1px solid @color_E0E0E0);
+                    max-height: 380px;
+                    overflow-y: scroll;
+                    &:before {
+                        border: 0;
+                    }
+                    .level1 {
+                        .lib-css(border-right, 1px solid @color_E0E0E0);
+                        &:first-child {
+                            .lib-css(border-top, 1px solid @color_E0E0E0);
+                        }
+                        .subchildmenu {
+                            border: 0;
+                        }
+                    }
+                    > .subcat-show-all {
+                        .lib-css(border-right, 1px solid @color_E0E0E0);
+                        .lib-css(max-width,265px);
+                        .lib-css(position, unset);
                     }
                 }
             }

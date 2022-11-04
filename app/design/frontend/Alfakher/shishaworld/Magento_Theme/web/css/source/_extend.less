@@ -19,6 +19,12 @@
                             background-image: url('@{baseDir}images/whatsapp.png');
                         }
                     }
+                    .tiktok::before {
+                        .lib-css(height, 17px);
+                        .lib-css(width, 15px);
+                        background-image: url('@{baseDir}images/tiktok.svg');
+                        cursor: pointer;
+                    }
                 }
             }
         }
@@ -38,14 +44,16 @@
         .page-header{
             .header.content{
                 .left_section {
-                    flex-basis: 62%;
+                    @media only screen and (min-width: @screen__m) {
+                        flex-basis: 62%;
+                    }
                 }
                 .right_section.panel.wrapper {
                     .lib-css(align-items, center);
                     .lib-css(background, transparent);
                     .lib-css(border, 0);
                     .lib-css(color, @color-black);
-                    flex-basis: 40%;
+                    flex-basis: 38%;
                     .reorder-wrapper {
                         -ms-flex-order: 2;
                         -webkit-order: 2;
@@ -82,9 +90,6 @@
                         -ms-flex-order: 1;
                         -webkit-order: 1;
                         order: 1;
-                        @media only screen and (min-width: @screen__l) {
-                            .lib-css(width, 80px);
-                        }
                         @media only screen and (max-width: @screen__l) {
                             .lib-css(margin-top, @indent__xs);
                             align-self: auto;
@@ -149,16 +154,18 @@
                         -ms-flex-order: 4;
                         -webkit-order: 4;
                         order: 4;
-                        @media only screen and (min-width: @screen__l) {
-                            width: 100px;
+                        @media only screen and (min-width: 768px) and (max-width: 1024px) {
+                            .lib-css(margin-right, 15px);
                         }
                         span.sign-up {
                             .lib-css(text-align, center);
+                            .lib-css(text-transform, capitalize);
                         }
                     }
                 }
                 .sign-in{
                     ul.sign-up-ul.customer_logged_in {
+                        border: 1px solid @color_primary;
                         li a {
                             .lib-css(white-space, unset);
                         }
@@ -175,6 +182,17 @@
             } 
         } 
     }
+    .sign-up-ul.customer_logged_in {
+        li {
+            &.guest-heading,
+            &.logout {
+                &:before {
+                    .lib-css(background, @color_primary);
+                }
+            }
+        }
+    }
+
     [lang="de"] #html-body{
         .page-header{
             .header.content{
@@ -411,6 +429,23 @@
         body .page-header .header.content {
             .block-search {
                 padding-left: @indent__l;
+            }
+        }
+    }
+}
+
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    #html-body{
+        .page-header{
+            .header.content{
+                .left_section {
+                    flex-basis: 30%;
+                }
             }
         }
     }

@@ -61,6 +61,18 @@
 //  _____________________________________________
 
 & when (@media-common = true) {
+    .catalog-product-view {
+        .swatch {
+            &-attribute {
+                &.size,
+                &.manufacturer {
+                    .swatch-option {
+                        .lib-css(line-height, @indent__base);
+                    }
+                }
+            }
+        }
+    }    
     .swatch {
         &-attribute {
             &-label {
@@ -111,7 +123,8 @@
                 .swatch-option {
                     .lib-css(background, @attr-swatch-option__background);
                     .lib-css(color, @attr-swatch-option__color);
-
+                    .lib-css(line-height, 32px);
+                    
                     &.selected {
                         .lib-css(background, @attr-swatch-option__selected__background);
                         .lib-css(border, @attr-swatch-option__selected__border);
