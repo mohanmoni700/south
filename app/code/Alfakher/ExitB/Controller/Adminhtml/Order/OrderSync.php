@@ -28,6 +28,16 @@ class OrderSync extends AbstractMassAction
     protected $exitbsync;
 
     /**
+     * @var Filter
+     */
+    protected $filter;
+    
+    /**
+     * @var CollectionFactory
+     */
+    protected $collectionFactory;
+
+    /**
      * @param Context $context
      * @param Filter $filter
      * @param CollectionFactory $collectionFactory

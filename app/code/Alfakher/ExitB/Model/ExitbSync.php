@@ -55,6 +55,11 @@ class ExitbSync
     protected $messageManager;
 
     /**
+     * @var ExitbOrderFactory
+     */
+    protected $exitbmodelFactory;
+
+    /**
      * New construct
      *
      * @param Context $context
@@ -193,7 +198,7 @@ class ExitbSync
      * @param mixed $token
      * @param int $websiteId
      * @param mixed $orderData
-     * @return array
+     * @return ExitbOrderFactory
      */
     public function orderExist($data, $token, $websiteId, $orderData)
     {
