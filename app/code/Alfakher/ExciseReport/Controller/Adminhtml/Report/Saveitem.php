@@ -151,7 +151,7 @@ class Saveitem extends \Magento\Backend\App\Action
      * @param string $startdate
      * @param string $enddate
      * @param string $storeid
-     * @return
+     * @return array
      */
     public function withoutCostb2c($startdate, $enddate, $storeid)
     {
@@ -217,7 +217,7 @@ class Saveitem extends \Magento\Backend\App\Action
      * @param string $startdate
      * @param string $enddate
      * @param string $storeid
-     * @return
+     * @return array
      */
     public function withoutCostb2b($startdate, $enddate, $storeid)
     {
@@ -301,7 +301,7 @@ class Saveitem extends \Magento\Backend\App\Action
      * @param string $startdate
      * @param string $enddate
      * @param string $storeid
-     * @return
+     * @return array
      */
     public function b2bItems($startdate, $enddate, $storeid)
     {
@@ -375,7 +375,7 @@ class Saveitem extends \Magento\Backend\App\Action
      * @param string $startdate
      * @param string $enddate
      * @param string $storeid
-     * @return
+     * @return array
      */
     public function b2cItems($startdate, $enddate, $storeid)
     {
