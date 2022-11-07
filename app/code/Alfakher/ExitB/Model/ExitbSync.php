@@ -344,9 +344,8 @@ class ExitbSync
                 $productData[$key]['articleNumber'] = $articleNumber;
             }
             $productData[$key]['quantity'] = (int)$item->getQtyOrdered();
-            $price = $item->getPrice() * $item->getQtyOrdered();
-            $taxAmount = $item->getBaseTaxAmount();
-            $productData[$key]['price'] = $price + $taxAmount;
+            $productData[$key]['price'] = (float)$item->getPriceInclTax();
+            $productData[$key]['priceNet'] = (float)$item->getPrice();
             $productData[$key]['discount'] = (float)$item->getDiscountAmount();
         }
         return $productData;
