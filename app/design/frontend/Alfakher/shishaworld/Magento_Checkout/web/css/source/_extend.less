@@ -49,6 +49,38 @@
             }
         }
     }
+
+    [lang="es"] .minicart-wrapper {
+        .block-minicart::before, 
+        .block-minicart::after {
+            right: 140px !important;
+        }
+    }
+    [lang="de"] .minicart-wrapper {
+        .block-minicart::before, 
+        .block-minicart::after {
+            right: 155px !important;
+        }
+    }
+
+    @media only screen and (max-width: 1399px) and (min-width: 1025px) {
+        [lang="es"] .minicart-wrapper {
+            div.block-minicart {
+                &::before,
+                &::after {
+                    right: 100px !important;
+                }
+            }
+        }
+        [lang="de"] .minicart-wrapper {
+            div.block-minicart {
+                &::before,
+                &::after {
+                    right: 115px !important;
+                }
+            }
+        }
+    }
 }
 //  
 //  Desktop only
@@ -129,6 +161,13 @@
     .right_section .minicart-wrapper .block-minicart {
         width: 300px !important;
     }
+    [lang="de"] .minicart-wrapper,
+    [lang="es"] .minicart-wrapper {
+        .block-minicart::before, 
+        .block-minicart::after {
+            right: 45px !important;
+        }
+    }
 }
 
 
@@ -159,6 +198,16 @@
                     }
                 }
             }
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__l) {
+    [lang="de"] .minicart-wrapper,
+    [lang="es"] .minicart-wrapper {
+        .block-minicart::before, 
+        .block-minicart::after {
+            right: 45px !important;
         }
     }
 }
