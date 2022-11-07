@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Alfakher\PaymentEdit\Helper;
 
 use ParadoxLabs\TokenBase\Helper\Data as BaseData;

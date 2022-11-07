@@ -4,9 +4,6 @@
  * See LICENSE.txt for license details.
  */
 ?>
-<?= $block->getLayout()->createBlock(Magento\Sales\Block\Adminhtml\Order\Create\Form::class)
-->setTemplate("Alfakher_PaymentEdit::payment/form.phtml")->toHtml()
-?>
 <?php /** @var \MageWorx\OrderEditor\Block\Adminhtml\Sales\Order\Edit\Form\Payment\Method $block */ ?>
 <?php if ($block->hasMethods()): ?>
     <div id="order-payment-method-choose">

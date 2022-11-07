@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Alfakher\PaymentEdit\Block\Adminhtml;
 
 use Magento\Framework\Pricing\PriceCurrencyInterface;

@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace Alfakher\PaymentEdit\Block\Adminhtml;
 
 use MageWorx\OrderEditor\Model\Order;

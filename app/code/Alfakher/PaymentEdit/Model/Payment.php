@@ -1,5 +1,7 @@
 <?php 
 
+declare(strict_types=1);
+
 namespace Alfakher\PaymentEdit\Model;
 
 use Magento\Sales\Model\Order\Payment\Transaction;
