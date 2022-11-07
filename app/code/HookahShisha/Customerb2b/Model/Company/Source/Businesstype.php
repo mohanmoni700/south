@@ -85,6 +85,7 @@ class Businesstype implements \Magento\Framework\Data\OptionSourceInterface
             'hookah_lounge' => 'Hookah Lounge',
             'catering' => 'Catering',
             'bar_night_club' => 'Bar/Night Club',
+            'international' => 'International',
         ];
     }
 
@@ -107,3 +108,4 @@ class Businesstype implements \Magento\Framework\Data\OptionSourceInterface
         ];
     }
 }
+
