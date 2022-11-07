@@ -80,23 +80,12 @@ $_item = $block->getItem();
     <td class="col action" data-th="<?= $block->escapeHtml(__('Action')) ?>" data-product-id="<?= (float) $block->getItem()->getProductId() ?>">
         <?php
         $id = $block->getItem()->getProductId();
-         $cart = $this->helper(\Magento\Checkout\Helper\Cart::class);
-            $itens = $cart->getQuote()->getItems();
-           
-        $helper =  $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
-        $qty = $helper->getStockQty($id);
-        if (!empty($itens)) {
-            foreach ($itens as $item) {
-                if ($id == $item->getProduct_id()) {
-                    $cartqty = $item->getQty();
-                    $qty = $qty - $cartqty;
-                }
-            }
-        }
-        if ($qty!=0) { ?>
+        $helper =  $block->helper(Alfakher\Productpageb2b\Helper\Data::class);
+        $isAvail = $helper->getStockStatus($id);
+        if ($isAvail) { ?>
                     <a href="javascript:void(0)" data-post='<?=
-                    /* @noEscape */ $this->helper(\Magento\Framework\Data\Helper\PostHelper::class)
-                        ->getPostData($this->helper(HookahShisha\Customerb2b\Helper\Data::class)->getReorderUrl($block->getItem()->getItemId()))
+                    /* @noEscape */ $block->helper(\Magento\Framework\Data\Helper\PostHelper::class)
+                        ->getPostData($block->helper(HookahShisha\Customerb2b\Helper\Data::class)->getReorderUrl($block->getItem()->getItemId()))
                     ?>'><?= $block->escapeHtml(__('Reorder Item')) ?></a>
                 <?php } else { ?>
                     <?= $block->escapeHtml(__('Out Of Stock')) ?>

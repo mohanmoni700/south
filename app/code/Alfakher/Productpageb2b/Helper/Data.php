@@ -5,6 +5,8 @@ use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory;
 use Magento\Company\Api\CompanyManagementInterface;
 use \Magento\Customer\Model\Context as CustomerContext;
 use \Magento\Customer\Model\CustomerFactory;
+use \Magento\CatalogInventory\Api\StockRegistryInterface;
+use \Magento\CatalogInventory\Api\Data\StockItemInterface;
 
 class Data extends \Magento\Framework\App\Helper\AbstractHelper
 {
@@ -33,6 +35,11 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     protected $customerFactory;
 
     /**
+     * @var StockRegistryInterface|null
+     */
+    protected $stockRegistry;
+
+    /**
      * @param \Magento\Customer\Model\Session $session
      * @param CollectionFactory $collection
      * @param \Magento\Framework\App\Http\Context $httpContext
@@ -44,7 +51,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @param \Magento\CatalogInventory\Api\StockStateInterface $stockInterface
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Catalog\Api\ProductRepositoryInterface $proRepo
-     *
+     * @param StockRegistryInterface $stockRegistry
      */
     public function __construct(
         \Magento\Customer\Model\Session $session,
@@ -57,7 +64,8 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         CustomerFactory $customerFactory,
         \Magento\CatalogInventory\Api\StockStateInterface $stockInterface,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Catalog\Api\ProductRepositoryInterface $proRepo
+        \Magento\Catalog\Api\ProductRepositoryInterface $proRepo,
+        StockRegistryInterface $stockRegistry
     ) {
         $this->collection = $collection;
         $this->_customerSession = $session;
@@ -70,6 +78,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->_stockInterface = $stockInterface;
         $this->storeManager = $storeManager;
         $this->proRepo = $proRepo;
+        $this->stockRegistry = $stockRegistry;
     }
 
     /**
@@ -128,6 +137,10 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function getStockQty($productId)
     {
         $websiteId = $this->storeManager->getStore()->getWebsiteId();
+        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/custom.log');
+        $logger = new \Zend_Log();
+        $logger->addWriter($writer);
+        $logger->info('qty->'.$this->_stockInterface->getStockQty($productId, $websiteId));
         return $this->_stockInterface->getStockQty($productId, $websiteId);
     }
     /*bv-vy getAdminSession*/
@@ -168,5 +181,19 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function getGrossStatus($section, $websiteid)
     {
         return $this->scopeConfig->getValue($section, \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $websiteid);
+    }
+
+    /**
+     * Get stock status for given product
+     *
+     * @param int $productId
+     * @return bool
+     */
+    public function getStockStatus($productId)
+    {
+        /** @var StockItemInterface $stockItem */
+        $stockItem = $this->stockRegistry->getStockItem($productId);
+        $isInStock = $stockItem ? $stockItem->getIsInStock() : false;
+        return $isInStock;
     }
 }
