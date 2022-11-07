@@ -137,10 +137,6 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     public function getStockQty($productId)
     {
         $websiteId = $this->storeManager->getStore()->getWebsiteId();
-        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/custom.log');
-        $logger = new \Zend_Log();
-        $logger->addWriter($writer);
-        $logger->info('qty->'.$this->_stockInterface->getStockQty($productId, $websiteId));
         return $this->_stockInterface->getStockQty($productId, $websiteId);
     }
     /*bv-vy getAdminSession*/
