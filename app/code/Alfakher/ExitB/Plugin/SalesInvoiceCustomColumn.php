@@ -45,6 +45,9 @@ class SalesInvoiceCustomColumn
      * @param Subject $subject
      * @param \Closure $proceed
      * @param string $requestName
+     * 
+     * @return Collection
+     * @throws \Exception
      */
     public function aroundGetReport(
         Subject $subject,
