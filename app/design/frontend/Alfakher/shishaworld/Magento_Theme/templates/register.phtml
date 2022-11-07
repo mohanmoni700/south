@@ -92,7 +92,9 @@
      <div class="sign-in">
      <span class="sign-up"><?= $block->escapeHtml(__('Sign In / Register')) ?></span>
         <ul class="sign-up-ul" style="display: none;">
-            <li class="guest-heading"><span class="guest-content-heading">Welcome Guest!</span></li>
+            <li class="guest-heading">
+                <span class="guest-content-heading"><?= $block->escapeHtml(__('Welcome Guest!')) ?></span>
+            </li>
             <li class="guest-content">
                 <span class="content-main">
                     <span class="content-item content-link">
@@ -101,7 +103,7 @@
                             <?= $block->escapeHtml(__('Sign in'))?>
                         </a>
                     </span>
-                    <span class="content-item content-text">or</span>
+                    <span class="content-item content-text"><?= $block->escapeHtml(__('or')) ?></span>
                 <span class="content-item content-link">
                     <a class= "create_an_account_link" 
                         href="<?= $block->escapeUrl($block->getUrl("customer/account/create"));?>">
