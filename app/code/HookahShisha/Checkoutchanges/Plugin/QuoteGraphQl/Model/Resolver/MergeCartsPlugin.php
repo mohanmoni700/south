@@ -114,6 +114,7 @@ class MergeCartsPlugin
      * @param array|null $value
      * @param array|null $args
      * @return mixed
+     * @throws GraphQlInputException
      */
     public function beforeResolve(
         Subject $subject,
