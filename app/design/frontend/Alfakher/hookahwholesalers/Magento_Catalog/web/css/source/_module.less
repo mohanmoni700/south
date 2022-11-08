@@ -616,6 +616,7 @@
     }
     .block.upsell {
         margin-top: 70px;
+        clear: both;
         .products-upsell {
             .product-item-info {
                 padding: 0 15px;
@@ -2303,10 +2304,13 @@
                 }
             }
         }
-
+        .category-view {
+            margin-top: @indent__l;
+        }
         #maincontent {
             max-width: @list_page_container;
             padding: 0 (@indent__s + @indent__xs);
+            margin-top: @indent__l;
             .sidebar {
                 .block.filter {
                     .filter-options-title {
@@ -2375,7 +2379,6 @@
     }
     .shorting_main {
         background-color: @hookah_theme_color_light;
-        margin-bottom: 30px;
         min-height: 60px;
         padding: 18px 0 10px 0;
         text-align: center;
