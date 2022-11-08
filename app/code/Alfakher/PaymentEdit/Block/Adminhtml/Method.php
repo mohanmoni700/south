@@ -22,42 +22,6 @@ use Magento\Backend\Model\Session\Quote as SessionQuote;
 
 class Method extends BaseMethod
 {
-
-    /**
-     * @var Quote
-     */
-    protected $quote;
-
-    /**
-     * @var Order
-     */
-    protected $order;
-
-    /**
-     * @var Payment
-     */
-    protected $payment;
-
-    /**
-     * @var Data
-     */
-    protected $paymentHelper;
-
-    /**
-     * @var HelperData
-     */
-    protected $helperData;
-
-    /**
-     * @var MethodList
-     */
-    private $methodList;
-
-    /**
-     * @var ModuleListInterface
-     */
-    protected $moduleList;
-
     /**
      * @var PaymentMethodListInterface
      */
