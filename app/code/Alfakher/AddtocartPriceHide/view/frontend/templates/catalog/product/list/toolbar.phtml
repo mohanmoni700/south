@@ -18,19 +18,28 @@
         <?php $widget = $jsonHelper->jsonDecode($block->getWidgetOptionsJson()); ?>
         <?php $widgetOptions = $jsonHelper->jsonEncode($widget['productListToolbarForm']); ?>
         ?>
-        <div class="toolbar toolbar-products" data-mage-init='{"productListToolbarForm":<?= /* @noEscape */ $widgetOptions ?>}'>
+        <div class="toolbar toolbar-products" 
+                data-mage-init='{"productListToolbarForm":<?= /* @noEscape */ $widgetOptions ?>}'>
             <?php if ($block->isExpanded()):?>
-                <?= /* @noEscape */ $block->fetchView($block->getTemplateFile('Magento_Catalog::product/list/toolbar/viewmode.phtml')) ?>
+                <?= /* @noEscape */ $block->fetchView(
+                    $block->getTemplateFile('Magento_Catalog::product/list/toolbar/viewmode.phtml')
+                ) ?>
             <?php endif; ?>
 
-            <?= /* @noEscape */ $block->fetchView($block->getTemplateFile('Magento_Catalog::product/list/toolbar/amount.phtml')) ?>
+            <?= /* @noEscape */ $block->fetchView(
+                $block->getTemplateFile('Magento_Catalog::product/list/toolbar/amount.phtml')
+            ) ?>
 
             <?= $block->getPagerHtml() ?>
 
-            <?= /* @noEscape */ $block->fetchView($block->getTemplateFile('Magento_Catalog::product/list/toolbar/limiter.phtml')) ?>
+            <?= /* @noEscape */ $block->fetchView(
+                $block->getTemplateFile('Magento_Catalog::product/list/toolbar/limiter.phtml')
+            ) ?>
             
             <?php if ($block->isExpanded()):?>
-                <?= /* @noEscape */ $block->fetchView($block->getTemplateFile('Magento_Catalog::product/list/toolbar/sorter.phtml')) ?>
+                <?= /* @noEscape */ $block->fetchView(
+                    $block->getTemplateFile('Magento_Catalog::product/list/toolbar/sorter.phtml')
+                ) ?>
                  <div class="cate-filter"><a href="javascript:void(0)" class="filter_button" id="is_filter">
                     <span class="filter-text-span"><?= $block->escapeHtml(__("Hide Filter")) ?></span></a></div>
             <?php endif; ?>
