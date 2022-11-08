@@ -45,6 +45,7 @@
                 <?php endforeach; ?>
             </div>
         <?php endif; ?>
+        <?php if ($_helperB2b->isCustomerLoggedIn()):?>
         <div class="nested">
             <div class="field qty qty-holder">
                 <label class="label" for="bundle-option-<?= $block->escapeHtmlAttr($_option->getId()) ?>-qty-input">
@@ -64,6 +65,7 @@
                  <span id="select-stock-msg" style="color: red;"></span>
             </div>
         </div>
+    <?php endif; ?>
     </div>
 </div>
 <script>
