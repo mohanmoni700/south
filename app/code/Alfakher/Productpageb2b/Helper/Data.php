@@ -22,26 +22,37 @@ use \Magento\Framework\App\Helper\AbstractHelper;
 class Data extends AbstractHelper
 {
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var Session
      */
-    protected $scopeConfig;
-    /**
-     * @var \Magento\Customer\Model\Session
-     */
-    protected $_customerSession;
+    protected $session;
 
     /**
-     * @var \Magento\Framework\App\Http\Context
+     * @var CollectionFactory
+     */
+    protected $collection;
+
+    /**
+     * @var ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    /**
+     * @var Context
      */
     protected $httpContext;
 
     /**
-     * @var Magento\Framework\HTTP\Header
+     * @var CompanyManagementInterface
+     */
+    protected $companyRepository;
+
+    /**
+     * @var Header
      */
     protected $httpHeader;
 
     /**
-     * @var Magento\Customer\Model\CustomerFactory
+     * @var CustomerFactory
      */
     protected $customerFactory;
 
@@ -49,6 +60,26 @@ class Data extends AbstractHelper
      * @var StockRegistryInterface|null
      */
     protected $stockRegistry;
+
+    /**
+     * @var CustomerRepositoryInterface
+     */
+    protected $customerRepository;
+
+    /**
+     * @var StockStateInterface
+     */
+    protected $stockInterface;
+
+    /**
+     * @var StoreManagerInterface
+     */
+    protected $storeManager;
+
+    /**
+     * @var ProductRepositoryInterface
+     */
+    protected $proRepo;
 
     /**
      * Constructor for data
