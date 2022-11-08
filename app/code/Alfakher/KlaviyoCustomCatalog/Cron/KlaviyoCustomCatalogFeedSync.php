@@ -8,6 +8,11 @@ use Alfakher\KlaviyoCustomCatalog\Model\KlaviyoCustomCatalog;
 class KlaviyoCustomCatalogFeedSync
 {
     /**
+     * @var KlaviyoCustomCatalog
+     */
+    protected $klaviyoCustomCatalogModel;
+    
+    /**
      * KlaviyoCustomCatalogFeedSync constructor
      *
      * @param KlaviyoCustomCatalog $klaviyoCustomCatalogModel
@@ -15,7 +20,7 @@ class KlaviyoCustomCatalogFeedSync
     public function __construct(
         KlaviyoCustomCatalog $klaviyoCustomCatalogModel
     ) {
-        $this->_klaviyoCustomCatalogModel = $klaviyoCustomCatalogModel;
+        $this->klaviyoCustomCatalogModel = $klaviyoCustomCatalogModel;
     }
 
     /**
@@ -25,6 +30,6 @@ class KlaviyoCustomCatalogFeedSync
      */
     public function execute()
     {
-        $this->_klaviyoCustomCatalogModel->generateKlaviyoCustomCatalogFeed();
+        $this->klaviyoCustomCatalogModel->generateKlaviyoCustomCatalogFeed();
     }
 }

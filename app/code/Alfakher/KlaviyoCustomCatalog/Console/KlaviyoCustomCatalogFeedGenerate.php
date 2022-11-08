@@ -15,6 +15,16 @@ use Symfony\Component\Console\Output\OutputInterface;
 class KlaviyoCustomCatalogFeedGenerate extends Command
 {
     /**
+     * @var State
+     */
+    protected $state;
+
+    /**
+     * @var KlaviyoCustomCatalog
+     */
+    protected $klaviyoCustomCatalogModel;
+
+    /**
      * KlaviyoCustomCatalogFeedGenerate constructor
      *
      * @param State $state
@@ -25,8 +35,8 @@ class KlaviyoCustomCatalogFeedGenerate extends Command
         KlaviyoCustomCatalog $klaviyoCustomCatalogModel
     ) {
         parent::__construct();
-        $this->_state = $state;
-        $this->_klaviyoCustomCatalogModel = $klaviyoCustomCatalogModel;
+        $this->state = $state;
+        $this->klaviyoCustomCatalogModel = $klaviyoCustomCatalogModel;
     }
 
     /**
@@ -44,10 +54,10 @@ class KlaviyoCustomCatalogFeedGenerate extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->_state->setAreaCode(\Magento\Framework\App\Area::AREA_FRONTEND);
+        $this->state->setAreaCode(\Magento\Framework\App\Area::AREA_FRONTEND);
         $output->writeln("<info>Generating feed, Please wait...</info>");
         try {
-            $this->_klaviyoCustomCatalogModel->generateKlaviyoCustomCatalogFeed();
+            $this->klaviyoCustomCatalogModel->generateKlaviyoCustomCatalogFeed();
             $output->writeln("<info>Feed generated successfully</info>");
         } catch (\Exception $e) {
             $output->writeln("<error>Some error occured while Generating the feed</error>");

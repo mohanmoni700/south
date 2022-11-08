@@ -32,6 +32,61 @@ class KlaviyoCustomCatalog extends AbstractModel
     public const KLAVIYO_CATALOG_STORES = 'hookahshisha/kalviyo_customcatalog/store_ids';
 
     /**
+     * @var State
+     */
+    protected $state;
+
+    /**
+     * @var SearchCriteriaBuilder
+     */
+    protected $searchCriteriaBuilder;
+
+    /**
+     * @var ProductRepositoryInterface
+     */
+    protected $productsInterface;
+
+    /**
+     * @var Grouped
+     */
+    protected $groupedProduct;
+
+    /**
+     * @var Product
+     */
+    protected $imageHelper;
+
+    /**
+     * @var File
+     */
+    protected $file;
+
+    /**
+     * @var EncoderInterface
+     */
+    protected $jsonEncoder;
+
+    /**
+     * @var FileFactory
+     */
+    protected $fileFactory;
+
+    /**
+     * @var Filesystem
+     */
+    protected $filesystem;
+
+    /**
+     * @var Emulation
+     */
+    protected $emulation;
+
+    /**
+     * @var ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    /**
      * KlaviyoCustomCatalog constructor
      *
      * @param State $state
@@ -59,15 +114,15 @@ class KlaviyoCustomCatalog extends AbstractModel
         Emulation $emulation,
         ScopeConfigInterface $scopeConfig
     ) {
-        $this->_state = $state;
-        $this->_searchCriteriaBuilder = $searchCriteriaBuilder;
-        $this->_productsInterface = $productsInterface;
-        $this->_groupedProduct = $groupedProduct;
-        $this->_imageHelper = $imageHelper;
+        $this->state = $state;
+        $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->productsInterface = $productsInterface;
+        $this->groupedProduct = $groupedProduct;
+        $this->imageHelper = $imageHelper;
         $this->file = $file;
-        $this->_jsonEncoder = $jsonEncoder;
-        $this->_fileFactory = $fileFactory;
-        $this->_filesystem = $filesystem;
+        $this->jsonEncoder = $jsonEncoder;
+        $this->fileFactory = $fileFactory;
+        $this->filesystem = $filesystem;
         $this->emulation = $emulation;
         $this->scopeConfig = $scopeConfig;
     }
@@ -86,21 +141,21 @@ class KlaviyoCustomCatalog extends AbstractModel
             $productArray = [];
             $this->emulation->startEnvironmentEmulation($storeId, Area::AREA_FRONTEND);
             
-            $searchCriteria = $this->_searchCriteriaBuilder
+            $searchCriteria = $this->searchCriteriaBuilder
                 ->addFilter('store_id', $storeId, 'eq')
                 ->addFilter('status', Status::STATUS_ENABLED, 'eq')
                 ->create();
-            $list = $this->_productsInterface->getList($searchCriteria)->getItems();
+            $list = $this->productsInterface->getList($searchCriteria)->getItems();
 
             foreach ($list as $key => $pro) {
                 $productUrl = $pro->getUrlKey();
-                $parentProducts = $this->_groupedProduct->getParentIdsByChild($pro->getId());
+                $parentProducts = $this->groupedProduct->getParentIdsByChild($pro->getId());
                 if (count($parentProducts) > 0) {
                     try {
-                        $groupProduct = $this->_productsInterface->getById($parentProducts[0]);
+                        $groupProduct = $this->productsInterface->getById($parentProducts[0]);
                         $productUrl = $groupProduct->getUrlKey();
                         if ($groupProduct->getSku() == self::ADMIN_PRODUCT && isset($parentProducts[1])) {
-                            $groupProductNext = $this->_productsInterface->getById($parentProducts[0]);
+                            $groupProductNext = $this->productsInterface->getById($parentProducts[0]);
                             $productUrl = $groupProductNext->getUrlKey();
                         }
                     } catch (\Exception $e) {
@@ -112,7 +167,7 @@ class KlaviyoCustomCatalog extends AbstractModel
                     "title" => $pro->getName(),
                     "link" => $pro->getProductUrl(),
                     "description" => $pro->getShortDescription() ? $pro->getShortDescription() : "unavailable",
-                    "image_link" => $this->_imageHelper->getThumbnailUrl($pro) ?: "unavailable",
+                    "image_link" => $this->imageHelper->getThumbnailUrl($pro) ?: "unavailable",
                     "b2b_url_key" => $productUrl,
                 ];
             }
@@ -135,8 +190,8 @@ class KlaviyoCustomCatalog extends AbstractModel
         $extension = '.json';
         $fileName = $filePrefix . '_' . $storeId . $extension;
         try {
-            $content = $this->_jsonEncoder->encode($productArray);
-            $media = $this->_filesystem->getDirectoryWrite(DirectoryList::MEDIA);
+            $content = $this->jsonEncoder->encode($productArray);
+            $media = $this->filesystem->getDirectoryWrite(DirectoryList::MEDIA);
             $media->writeFile($fileName, $content);
             $result = true;
         } catch (\Exception $e) {
