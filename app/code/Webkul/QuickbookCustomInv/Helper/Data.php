@@ -318,4 +318,37 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
         ];
         return $productData;
     }
+
+    /**
+     *
+     */
+    public function getAppliedTaxOnOrder($order)
+    {
+        $orderData = $order->getData();
+        $taxTitleDetails = [
+            'sales_tax' => 'Sales Tax',
+            'excise_tax' => 'Excise Tax',
+            'shipping_tax_amount' => 'Shipping Tax'
+        ];
+        $taxApplied = [];
+        foreach ($orderData as $key => $value) {
+            if (in_array($key, ['sales_tax', 'excise_tax', 'shipping_tax_amount']) && $orderData[$key]) {
+                $taxApplied[] = [
+                    'Name' => $taxTitleDetails[$key],
+                    'UnitPrice' => $orderData[$key],
+                    'Qty' => 1,
+                    'Sku' => strtolower(str_replace(" ", "-", $taxTitleDetails[$key])),
+                    'isTaxablePro' => 0,
+                    'Taxable' => 0, // "" index for shipping tax
+                    'taxAmt' => 0,
+                    'discountAmt' => 0,
+                    'AmountTotal' => $orderData[$key],
+                    'Type' => 'Service',
+                    'TrackQtyOnHand' => 'false',
+                    'ItemId' => '' // '' for shipping itemid
+                ];
+            }
+        }
+        return $taxApplied;
+    }
 }
