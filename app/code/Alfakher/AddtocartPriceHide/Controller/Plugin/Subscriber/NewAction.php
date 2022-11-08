@@ -6,6 +6,7 @@ use Magento\Customer\Model\Session;
 use Magento\Customer\Model\Url as CustomerUrl;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Validator\EmailAddress as EmailValidator;
 use Magento\Newsletter\Model\Subscriber;
@@ -40,7 +41,7 @@ class NewAction extends \Magento\Newsletter\Controller\Subscriber\NewAction
      * @param CustomerAccountManagement $customerAccountManagement
      * @param SubscriptionManagerInterface $subscriptionManager
      * @param EmailValidator $emailValidator = null
-     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+     * @param JsonFactory $resultJsonFactory
      */
     public function __construct(
         Context $context,
@@ -51,7 +52,7 @@ class NewAction extends \Magento\Newsletter\Controller\Subscriber\NewAction
         CustomerAccountManagement $customerAccountManagement,
         SubscriptionManagerInterface $subscriptionManager,
         EmailValidator $emailValidator = null,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
+        JsonFactory $resultJsonFactory
     ) {
         $this->customerAccountManagement = $customerAccountManagement;
         $this->subscriptionManager = $subscriptionManager;

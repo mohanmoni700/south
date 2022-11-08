@@ -7,6 +7,7 @@
 namespace HookahShisha\Customerb2b\Model\Company;
 
 use HookahShisha\Customerb2b\Api\Company\Data\CompanyInterface;
+use Magento\Company\Api\Data\CompanyInterface as CompanyData;
 
 /**
  * Class that implements interface for data transfer object of company entity.
@@ -20,7 +21,7 @@ class Company extends \Magento\Company\Model\Company implements CompanyInterface
      * Set rejected at time.
      *
      * @param string $businessType
-     * @return \Magento\Company\Api\Data\CompanyInterface
+     * @return CompanyData
      */
     public function setBusinessType($businessType)
     {
@@ -41,7 +42,7 @@ class Company extends \Magento\Company\Model\Company implements CompanyInterface
      * Set rejected at time.
      *
      * @param string $annualTurnOver
-     * @return \Magento\Company\Api\Data\CompanyInterface
+     * @return CompanyData
      */
     public function setAnnualTurnOver($annualTurnOver)
     {
@@ -62,7 +63,7 @@ class Company extends \Magento\Company\Model\Company implements CompanyInterface
      * Set rejected at time.
      *
      * @param string $numberOfEmp
-     * @return \Magento\Company\Api\Data\CompanyInterface
+     * @return CompanyData
      */
     public function setNumberOfEmp($numberOfEmp)
     {
@@ -83,7 +84,7 @@ class Company extends \Magento\Company\Model\Company implements CompanyInterface
      * Set rejected at time.
      *
      * @param string $tinNumber
-     * @return \Magento\Company\Api\Data\CompanyInterface
+     * @return CompanyData
      */
     public function setTinNumber($tinNumber)
     {
@@ -104,7 +105,7 @@ class Company extends \Magento\Company\Model\Company implements CompanyInterface
      * Set rejected at time.
      *
      * @param string $tobaccoPermitNumber
-     * @return \Magento\Company\Api\Data\CompanyInterface
+     * @return CompanyData
      */
     public function setTobaccoPermitNumber($tobaccoPermitNumber)
     {
@@ -124,8 +125,50 @@ class Company extends \Magento\Company\Model\Company implements CompanyInterface
     /**
      * Set rejected at time.
      *
+     * @param string $ustID
+     * @return CompanyData
+     */
+    public function setUstId($ustID)
+    {
+        return $this->setData(self::UST_ID, $ustID);
+    }
+
+    /**
+     * Get rejected at time.
+     *
+     * @return string
+     */
+    public function getUstId()
+    {
+        return $this->getData(self::UST_ID);
+    }
+
+    /**
+     * Set rejected at time.
+     *
+     * @param string $fiscalNumber
+     * @return CompanyData
+     */
+    public function setFiscalNumber($fiscalNumber)
+    {
+        return $this->setData(self::FISCAL_NUMBER, $fiscalNumber);
+    }
+
+    /**
+     * Get rejected at time.
+     *
+     * @return string
+     */
+    public function getFiscalNumber()
+    {
+        return $this->getData(self::FISCAL_NUMBER);
+    }
+
+    /**
+     * Set rejected at time.
+     *
      * @param string $hearAboutUs
-     * @return \Magento\Company\Api\Data\CompanyInterface
+     * @return CompanyData
      */
     public function setHearAboutUs($hearAboutUs)
     {
@@ -146,7 +189,7 @@ class Company extends \Magento\Company\Model\Company implements CompanyInterface
      * Set rejected at time.
      *
      * @param string $questions
-     * @return \Magento\Company\Api\Data\CompanyInterface
+     * @return CompanyData
      */
     public function setQuestions($questions)
     {
@@ -167,7 +210,7 @@ class Company extends \Magento\Company\Model\Company implements CompanyInterface
      * Set rejected at time.
      *
      * @param int $comAccountVerified
-     * @return \Magento\Company\Api\Data\CompanyInterface
+     * @return CompanyData
      */
     public function setComAccountVerified($comAccountVerified)
     {
@@ -188,7 +231,7 @@ class Company extends \Magento\Company\Model\Company implements CompanyInterface
      * Set rejected at time.
      *
      * @param int $comDetailsChanged
-     * @return \Magento\Company\Api\Data\CompanyInterface
+     * @return CompanyData
      */
     public function setComDetailsChanged($comDetailsChanged)
     {
@@ -209,7 +252,7 @@ class Company extends \Magento\Company\Model\Company implements CompanyInterface
      * Set rejected at time.
      *
      * @param string $comVerificationMessage
-     * @return \Magento\Company\Api\Data\CompanyInterface
+     * @return CompanyData
      */
     public function setComVerificationMessage($comVerificationMessage)
     {
