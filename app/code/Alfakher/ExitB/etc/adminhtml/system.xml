@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+<system>
+    <section id="exitb" translate="label" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+        <class>separator-top-exitb</class>
+        <label>ExitB Configuration</label>
+        <tab>hookahshisha</tab>
+        <resource>Alfakher_ExitB::exitb_config</resource>
+        <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>General Configuration</label>
+            <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>ExitB(Order Sync) Enable</label>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            </field> 
+        </group>
+        <group id="exitb_auth" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Authentication Api Details</label>
+            <field id="auth_api" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0" >
+                <label>JWT Authentication Api</label>
+            </field>
+            <field id="auth_clientcode" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0" >
+                <label>Client Code</label>
+            </field>
+            <field id="auth_apikey" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0" >
+                <label>Api Key</label>
+            </field>
+        </group>
+        <group id="exitb_ordersync" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Order Sync Api Details</label>
+            <field id="order_api" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0" >
+                <label>Order Sync Api</label>
+            </field>
+            <field id="prefix_order" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0" >
+                <label>Order Number Prefix</label>
+            </field>         
+            <field id="order_isb2b" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Order is B2B</label>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            </field>       
+            <field id="ad_medium" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0" >
+                <label>Advertising Medium</label>
+            </field>
+            <field id="ship_code" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0" >
+                <label>Shipment Code</label>
+            </field>
+            <field id="payment_offline" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0" >
+                <label>Offline Payment Code</label>
+            </field>
+            <field id="payment_online" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" >
+                <label>Online Payment Code</label>
+            </field>
+        </group>
+    </section>
+</system>
+</config>

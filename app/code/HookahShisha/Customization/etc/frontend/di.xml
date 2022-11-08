@@ -10,6 +10,10 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Magento\Bundle\Helper\Catalog\Product\Configuration">
+        <plugin name="bundle_remove_price" type="HookahShisha\Customization\Helper\Catalog\Product\Configurations"/>
+    </type>
     
     <!-- add handeling fee in invoice pdf -->
     <type name="Magento\Tax\Model\Sales\Pdf\Shipping">
@@ -19,6 +23,11 @@
     <!--subtotal issue solve in invoice pdf -->
     <type name="Magento\Tax\Model\Sales\Pdf\Subtotal">
         <plugin name="subtotalAfterPlugin" type="HookahShisha\Customization\Model\Sales\Pdf\AfterSubtotal"/>
+    </type>
+
+    <!-- incl tax price for bundle product in invoice pdf -->
+    <type name="Magetrend\PdfTemplates\Model\Pdf\Element\Items\Renderer\Bundle">
+        <plugin name="incl_tax_bundle" type="HookahShisha\Customization\Model\Pdf\Bundle" />
     </type>
 
 </config>

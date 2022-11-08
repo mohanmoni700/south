@@ -1,0 +1,62 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Newsletter\Block\Subscribe $block */
+?>
+<div class="block newsletter">
+    <div class="title"><strong><?= $block->escapeHtml(__('Newsletter')) ?></strong></div>
+    <div class="content">
+        <form class="form subscribe"
+            novalidate
+            action="<?= $block->escapeUrl($block->getFormActionUrl()) ?>"
+            method="post"
+            data-mage-init='{"validation": {"errorClass": "mage-error"}}'
+            id="newsletter-validate-detail">
+            <div class="field newsletter">
+                <div class="control">
+                    <h3><?= $block->escapeHtml(__('Join Our Newsletter')) ?></h3>
+                    <p><?= $block->escapeHtml(__('Be the first to know about new arrivals, sales & promos!')) ?></p>
+                    <div id="newslettermsg"> </div>
+                    <div class="action_filde">
+                        <label for="newsletter">
+                            <input name="email" type="email" id="newsletter"
+                                   placeholder="<?= $block->escapeHtml(__('Email address')) ?>"
+                                   data-mage-init='{"mage/trim-input":{}}'
+                                   data-validate="{required:true, 'validate-email':true}"
+                            />
+                        </label>
+                        <div class="actions">
+                            <button class="action subscribe primary subscribe-enable"
+                                    title="<?= $block->escapeHtmlAttr(__('Subscribe')) ?>"
+                                    type="submit"
+                                    aria-label="Subscribe">
+                                <?= $block->escapeHtml(__('Subscribe')) ?>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>
+<a href="javascript:" class="top_scroll" id="top-return"><i class="icon-chevron-up"></i></a>
+<script type="text/x-magento-init"> 
+    {   
+        "*": {  
+            "Magento_Newsletter/js/newsletter_subscriber_ajax": { } 
+        }   
+    }   
+</script>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Customer/js/block-submit-on-send": {
+                "formId": "newsletter-validate-detail-popup"
+            }
+        }
+    }
+</script> 
