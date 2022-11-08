@@ -145,13 +145,12 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
         $this->logger = $logger;
         $this->encryptor = $encryptor;
         $this->accountRepository = $accountRepository;
+        $this->productRepository = $productRepository;
         /*
         $this->jsonHelperData = $jsonHelperData;
-        $this->productRepository = $productRepository;
         $this->linkFactory = $linkFactory;
         $this->filterManager = $filterManager;
         $this->itemTax = $itemTax;
-        $this->logger = $logger;
         */
     }
 
@@ -332,7 +331,7 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
         ];
         $taxApplied = [];
         foreach ($orderData as $key => $value) {
-            if (in_array($key, ['sales_tax', 'excise_tax', 'shipping_tax_amount']) && $orderData[$key]) {
+            if (in_array($key, ['sales_tax', 'excise_tax', 'shipping_tax_amount']) && $orderData[$key] > 0) {
                 $taxApplied[] = [
                     'Name' => $taxTitleDetails[$key],
                     'UnitPrice' => $orderData[$key],
