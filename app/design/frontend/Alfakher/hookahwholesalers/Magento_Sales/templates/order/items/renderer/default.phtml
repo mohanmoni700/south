@@ -1,8 +1,5 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+// phpcs:disable Magento2.Templates.ThisInTemplate
 
 /** @var  $block \Magento\Sales\Block\Order\Item\Renderer\DefaultRenderer */
 $_item = $block->getItem();
@@ -77,16 +74,18 @@ $_item = $block->getItem();
     <td class="col subtotal" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
         <?= $block->getItemRowTotalHtml() ?>
     </td>
-    <td class="col action" data-th="<?= $block->escapeHtml(__('Action')) ?>" data-product-id="<?= (float) $block->getItem()->getProductId() ?>">
+    <td class="col action" data-th="<?= $block->escapeHtml(__('Action')) ?>"
+        data-product-id="<?= (float) $block->getItem()->getProductId() ?>">
         <?php
         $id = $block->getItem()->getProductId();
-        $helper =  $block->helper(Alfakher\Productpageb2b\Helper\Data::class);
+        $helper =  $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
         $isAvail = $helper->getStockStatus($id);
         if ($isAvail) { ?>
-                    <a href="javascript:void(0)" data-post='<?=
-                    /* @noEscape */ $block->helper(\Magento\Framework\Data\Helper\PostHelper::class)
-                        ->getPostData($block->helper(HookahShisha\Customerb2b\Helper\Data::class)->getReorderUrl($block->getItem()->getItemId()))
-                    ?>'><?= $block->escapeHtml(__('Reorder Item')) ?></a>
+            <a href="javascript:void(0)" data-post='<?=
+                /* @noEscape */ $this->helper(\Magento\Framework\Data\Helper\PostHelper::class)
+                ->getPostData($this->helper(HookahShisha\Customerb2b\Helper\Data::class)
+                ->getReorderUrl($block->getItem()->getItemId()))?>'>
+                <?= $block->escapeHtml(__('Reorder Item')) ?></a>
                 <?php } else { ?>
                     <?= $block->escapeHtml(__('Out Of Stock')) ?>
                 <?php }  ?>
