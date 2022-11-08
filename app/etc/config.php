@@ -1052,6 +1052,7 @@ return [
         'Alfakher_Seamlesschex' => 1,
         'MagestyApps_WebImages' => 1,
         'HookahShisha_Customization' => 1,
+        'Mondu_Mondu' => 1,
         'OlegKoval_RegenerateUrlRewrites' => 1,
         'PCAPredict_Tag' => 1,
         'ParadoxLabs_TokenBase' => 1,
