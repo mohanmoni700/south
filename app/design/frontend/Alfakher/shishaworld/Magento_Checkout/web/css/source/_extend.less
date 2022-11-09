@@ -62,6 +62,12 @@
             right: 155px !important;
         }
     }
+    [lang="en"] .amquote-cart-wrapper.minicart-wrapper {
+        .block-quotecart.block-minicart::before, 
+        .block-quotecart.block-minicart::after {
+            right: 145px !important;
+        }
+    }
 
     @media only screen and (max-width: 1399px) and (min-width: 1025px) {
         [lang="es"] .minicart-wrapper {
@@ -82,54 +88,10 @@
         }
     }
 }
-//  
-//  Desktop only
-//  __________________
-.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
-    [lang="de"] .minicart-wrapper {
-        .action.showcart {
-            .counter.qty {
-                transform: translateX(20px);
-            }
-        }
-    }
-}
-//  
-//  Minimim Mobile
-//  __________________
-
-.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
-    //
-    //  Minicart
-    //  ----------------------------------------------
-    .right_section .minicart-wrapper {
-        .block-minicart {
-            width: 350px !important;
-        }
-    }
-}
-
 //
 //  Mobile
 //  _____________________________________________
-& when (@media-target = 'mobile'), (@media-target = 'all') {
-    @media only screen and (max-width: 991px) {
-        .cart-container {
-            form.form-cart {
-                .lib-css(background, @color_white);
-            }
-            .cart-discount {
-                .lib-css(background, @color_white);
-                .lib-css(margin-bottom, 0);
-                .lib-css(margin-top, 0);
-                .lib-css(padding-top, @indent__xl);
-                .lib-css(position, relative);
-                .lib-css(width, 100%);
-                .lib-css(z-index, 9);
-            }
-        }
-    }
-}
+
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
     //
@@ -161,15 +123,26 @@
     .right_section .minicart-wrapper .block-minicart {
         width: 300px !important;
     }
-    [lang="de"] .minicart-wrapper,
-    [lang="es"] .minicart-wrapper {
-        .block-minicart::before, 
-        .block-minicart::after {
-            right: 45px !important;
+    [lang="de"],
+    [lang="es"] {
+        .minicart-wrapper {
+            .block-minicart::before, 
+            .block-minicart::after {
+                right: 45px !important;
+            }
+        }
+    }
+    [lang="de"],
+    [lang="en"],
+    [lang="es"] {
+        .amquote-cart-wrapper.minicart-wrapper {
+            .block-quotecart.block-minicart::before,
+            .block-quotecart.block-minicart::after {
+                right: 120px !important;
+            }
         }
     }
 }
-
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .checkout-cart-index,
@@ -202,12 +175,60 @@
     }
 }
 
-.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__l) {
-    [lang="de"] .minicart-wrapper,
-    [lang="es"] .minicart-wrapper {
-        .block-minicart::before, 
-        .block-minicart::after {
-            right: 45px !important;
+& when (@media-target = 'mobile'), (@media-target = 'all') {
+    @media only screen and (max-width: 991px) {
+        .cart-container {
+            form.form-cart {
+                .lib-css(background, @color_white);
+            }
+            .cart-discount {
+                .lib-css(background, @color_white);
+                .lib-css(margin-bottom, 0);
+                .lib-css(margin-top, 0);
+                .lib-css(padding-top, @indent__xl);
+                .lib-css(position, relative);
+                .lib-css(width, 100%);
+                .lib-css(z-index, 9);
+            }
         }
     }
 }
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__l) {
+    [lang="de"],
+    [lang="en"],
+    [lang="es"] {
+        .minicart-wrapper {
+            .block-minicart {
+                &:before, 
+                &:after {
+                    right: 45px !important;
+                }
+            }
+        }
+
+    }
+}
+//  
+//  Desktop only
+//  __________________
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    //
+    //  Minicart
+    //  ----------------------------------------------
+    .right_section .minicart-wrapper {
+        .block-minicart {
+            width: 350px !important;
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+    [lang="de"] .minicart-wrapper {
+        .action.showcart {
+            .counter.qty {
+                transform: translateX(20px);
+            }
+        }
+    }
+}
+

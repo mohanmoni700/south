@@ -81,33 +81,35 @@
                     }
                 }
             }
-            .level0.Charcoal,
-            .level0.Zubehör {
-                .level0.submenu .subchildmenu.mega-columns { 
-                    .lib-css(background, @color_white);
-                    .lib-css(border-bottom, 1px solid @color_E0E0E0);
-                    .lib-css(border-left, 1px solid @color_E0E0E0);
-                    max-height: 380px;
-                    overflow-y: scroll;
-                    &:before {
+            .level0.submenu .subchildmenu.mega-columns { 
+                .lib-css(background, @color_white);
+                .lib-css(border-bottom, 1px solid @color_E0E0E0);
+                .lib-css(border-left, 1px solid @color_E0E0E0);
+                max-height: 380px;
+                overflow-y: scroll;
+                &:before {
+                    border: 0;
+                    .lib-css(border-right, 1px solid @color_E0E0E0);
+                }
+                .level1 {
+                    .lib-css(border-right, 1px solid @color_E0E0E0);
+                    &:first-child {
+                        .lib-css(border-top, 1px solid @color_E0E0E0);
+                    }
+                    .subchildmenu {
                         border: 0;
                     }
-                    .level1 {
-                        .lib-css(border-right, 1px solid @color_E0E0E0);
-                        &:first-child {
-                            .lib-css(border-top, 1px solid @color_E0E0E0);
-                        }
-                        .subchildmenu {
-                            border: 0;
-                        }
-                    }
-                    > .subcat-show-all {
-                        .lib-css(border-right, 1px solid @color_E0E0E0);
-                        .lib-css(max-width,265px);
-                        .lib-css(position, unset);
-                    }
+                }
+                >.level1 .subchildmenu {
+                    .lib-css(border-bottom, 0);
+                }
+                > .subcat-show-all {
+                    .lib-css(border-right, 1px solid @color_E0E0E0);
+                    .lib-css(max-width,265px);
+                    .lib-css(position, unset);
                 }
             }
+
         }
     }
 }
@@ -115,16 +117,8 @@
 @media only screen and (max-width: 1025px) {
     .sw-megamenu.navigation {
         &.active {
-            height: calc(~'100% - 200px');
-            top: 200px;
-        }
-    }
-}
-@media only screen and (max-width: 560px) {
-    .sw-megamenu.navigation {
-        &.active {
-            height: calc(~'100% - 223px');
-            top: 223px;
+            height: calc(~'100% - 155px');
+            top: 155px;
         }
     }
 }
