@@ -114,9 +114,11 @@ class SalesOrderInvoiceSaveAfterObserver implements ObserverInterface
                             $itemData = $this->quickBooksDataHelper
                                                 ->getArrangedItemDataForQuickbooks($orderItem, $taxPercent, $qty);
                             array_push($items, $itemData);
+                        } else {
+                            $this->logger->addError(__('invoice event type - %1 : qty - %2', $typeId, $qty);
                         }
                     }
-
+                    $this->logger->addError(__('invoice event items - %1 : ', json_decode($items));
                     $customerData = $this->quickBooksDataHelper->getCustomerDetailForQuickbooks($order);
 
                     if ($invoice->getShippingAmount()) {
