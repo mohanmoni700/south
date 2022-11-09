@@ -87,6 +87,19 @@
             }
         }
     }
+    //
+    //  Shipping Address
+    //  ---------------------------------------------
+    .opc-wrapper {
+        .edit-address-link {
+            .lib-css(margin, @indent__xs @indent__xs @indent__xs 0);
+            @media only screen and (max-width: @screen__s) {
+                .lib-css(bottom, @indent__base);
+                .lib-css(position, absolute);
+                .lib-css(right, 35px);
+            }
+        }        
+    }
 }
 //
 //  Mobile
@@ -192,12 +205,10 @@
             }
         }
     }
-}
-.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__l) {
-    [lang="de"],
-    [lang="en"],
-    [lang="es"] {
-        .minicart-wrapper {
+    @media only screen and (max-width: 1024px) {
+        [lang="de"] .minicart-wrapper,
+        [lang="en"] .minicart-wrapper,
+        [lang="es"] .minicart-wrapper {
             .block-minicart {
                 &:before, 
                 &:after {
@@ -205,9 +216,9 @@
                 }
             }
         }
-
     }
 }
+
 //  
 //  Desktop only
 //  __________________
@@ -218,6 +229,18 @@
     .right_section .minicart-wrapper {
         .block-minicart {
             width: 350px !important;
+        }
+    }
+    //
+    //  Shipping Address
+    //  ---------------------------------------------
+    .opc-wrapper {
+        .shipping-address-item {
+            .action.action-select-shipping-item {
+                .lib-css(bottom, @indent__base);
+                .lib-css(position, absolute);
+                .lib-css(right, 35px);
+            }
         }
     }
 }
