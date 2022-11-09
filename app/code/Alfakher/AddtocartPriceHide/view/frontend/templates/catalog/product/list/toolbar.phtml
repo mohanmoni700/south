@@ -17,7 +17,6 @@
         <?php $jsonHelper = $this->helper(\Magento\Framework\Json\Helper\Data::class); ?>
         <?php $widget = $jsonHelper->jsonDecode($block->getWidgetOptionsJson()); ?>
         <?php $widgetOptions = $jsonHelper->jsonEncode($widget['productListToolbarForm']); ?>
-        ?>
         <div class="toolbar toolbar-products" 
                 data-mage-init='{"productListToolbarForm":<?= /* @noEscape */ $widgetOptions ?>}'>
             <?php if ($block->isExpanded()):?>
