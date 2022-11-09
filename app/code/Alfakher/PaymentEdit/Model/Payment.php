@@ -369,7 +369,6 @@ class Payment extends BasePayment
      *
      * @param object $order
      * @param array $paymentData
-     * @throws LocalizedException
      */
     public function addTransactionToOrder($order, $paymentData = [])
     {

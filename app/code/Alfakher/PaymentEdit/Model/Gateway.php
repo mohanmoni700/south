@@ -17,7 +17,6 @@ class Gateway extends BaseGateway
      * @return \ParadoxLabs\TokenBase\Model\Gateway\Response
      * @throws CommandException
      */
-
     public function authorizeBackend($order, $amount)
     {
         $payment = $order->getPayment();
