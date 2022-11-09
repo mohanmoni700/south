@@ -1,12 +1,15 @@
 <?php
+declare(strict_types=1);
 
 namespace HookahShisha\Customerb2b\Model\Company\Source;
 
 use Magento\Company\Model\Company;
-use Magento\Framework\Data\OptionSourceInterface;
-use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\App\Area;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\State;
+use Magento\Framework\Data\OptionSourceInterface;
 use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 /**
  * Class HearAboutUs Config
@@ -35,17 +38,25 @@ class HearAboutUs implements OptionSourceInterface
     private $storeManager;
 
     /**
+     * @var State $state
+     */
+    protected $state;
+
+    /**
      * Construct
      *
      * @param StoreManagerInterface $storeManager
      * @param ScopeConfigInterface $scopeConfig
+     * @param State $state
      */
     public function __construct(
         StoreManagerInterface $storeManager,
-        ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig,
+        State $state
     ) {
         $this->storeManager = $storeManager;
         $this->scopeConfig = $scopeConfig;
+        $this->state = $state;
     }
 
     /**
@@ -55,7 +66,6 @@ class HearAboutUs implements OptionSourceInterface
      */
     public function toOptionArray()
     {
-
         $options = [];
         $storeScope = ScopeInterface::SCOPE_STORE;
         $website_code = $this->storeManager->getWebsite()->getCode();
@@ -64,6 +74,10 @@ class HearAboutUs implements OptionSourceInterface
 
         if (in_array($website_code, $websidecodes)) {
             foreach ($this->getOptionArrayHub() as $key => $value) {
+                $options[] = ['label' => __($value), 'value' => $key];
+            }
+        } elseif ($this->state->getAreaCode() == Area::AREA_ADMINHTML) {
+            foreach ($this->getOptionArrayAdmin() as $key => $value) {
                 $options[] = ['label' => __($value), 'value' => $key];
             }
         } else {
@@ -113,5 +127,15 @@ class HearAboutUs implements OptionSourceInterface
             'sales_representative_visit' => 'Sales Representative Visit',
             'instagram' => 'Instagram',
         ];
+    }
+
+    /**
+     * Get merged options array for admin
+     *
+     * @return array
+     */
+    public function getOptionArrayAdmin()
+    {
+        return array_merge($this->getOptionArrayHub(), $this->getOptionArray());
     }
 }

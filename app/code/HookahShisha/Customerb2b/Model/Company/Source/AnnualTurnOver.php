@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace HookahShisha\Customerb2b\Model\Company\Source;
 
@@ -93,10 +94,10 @@ class AnnualTurnOver implements \Magento\Framework\Data\OptionSourceInterface
     public function getOptionArrayHub()
     {
         return [
-            1 => '0-50000',
-            2 => '50000-200000',
-            3 => '200001-500000',
-            4 => '>500000',
+            4 => '0-50000',
+            5 => '50000-200000',
+            6 => '200001-500000',
+            7 => '>500000',
         ];
     }
 }
