@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+   <system>
+      <section id="hookahshisha">
+         <tab>hookahshisha</tab>
+         <resource>Alfakher_KlaviyoCustomCatalog::klaviyo_customcatalog</resource>
+         <group id="kalviyo_customcatalog" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Klaviyo Custom Catalog Source Configurations</label>
+            <field id="store_ids" translate="label" sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+               <label>Store IDs</label>
+               <comment>Use comma seperated values</comment>
+               <validate>required-entry</validate>
+            </field>
+         </group>
+      </section>
+   </system>
+</config>

@@ -117,6 +117,11 @@ class SalesOrderCreditmemoSaveAfterObserver implements ObserverInterface
                         array_push($items, $itemData);
                     }
 
+                    /** tax as item **/
+                    $appliedTax = $this->quickBooksDataHelper->getAppliedTaxOnOrder($creditmemo);
+                    $items = empty($appliedTax) ? $items : array_merge($items, $appliedTax);
+                    /** tax as item **/
+
                     $customerData = $this->quickBooksDataHelper->getCustomerDetailForQuickbooks($order);
                     $paymentMethod = $order->getPayment()->getMethodInstance()->getTitle();
                     $creditmemoReceiptData = [
