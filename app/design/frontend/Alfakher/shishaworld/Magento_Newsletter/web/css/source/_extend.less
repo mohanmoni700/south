@@ -111,13 +111,13 @@
     
     @media only screen and (min-width: 768px) and (max-width: 1024px) {
         [lang="de"] .footer_logo .address_info {
-            .lib-css(margin-bottom, (@indent__l + @indent__m));
+            .lib-css(margin-bottom, (@indent__l + @indent__s));
         }
         [lang="en"] .footer_logo .address_info {
-            .lib-css(margin-bottom,  @indent__xl);
+            .lib-css(margin-bottom,  @indent__l);
         }
         [lang="es"] .footer_logo .address_info { 
-            .lib-css(margin-bottom,  (@indent__base));
+            .lib-css(margin-bottom,  (@indent__xs));
         }
     }
 }
@@ -143,13 +143,13 @@
 }
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
     [lang="de"] .footer_logo .address_info {
-        .lib-css(margin-bottom, 105px);
+        .lib-css(margin-bottom, 78px);
     }
     [lang="en"] .footer_logo .address_info {
-        .lib-css(margin-bottom,  61px);
+        .lib-css(margin-bottom,  (@indent__l + 2));
     }
     [lang="es"] .footer_logo .address_info { 
-        .lib-css(margin-bottom,  (@indent__l - 2));
+        .lib-css(margin-bottom,  (@indent__s - 2));
     }
 }
 //

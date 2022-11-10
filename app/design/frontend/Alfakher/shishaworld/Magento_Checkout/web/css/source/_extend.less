@@ -94,7 +94,7 @@
         .edit-address-link {
             .lib-css(margin, @indent__xs @indent__xs @indent__xs 0);
             @media only screen and (max-width: @screen__s) {
-                .lib-css(bottom, @indent__base);
+                .lib-css(top, @indent__base);
                 .lib-css(position, absolute);
                 .lib-css(right, 35px);
             }
@@ -214,6 +214,12 @@
                 &:after {
                     right: 45px !important;
                 }
+            }
+        }
+        [lang="en"] .amquote-cart-wrapper.minicart-wrapper {
+            .block-quotecart.block-minicart::before, 
+            .block-quotecart.block-minicart::after {
+                right: 45px !important;
             }
         }
     }
