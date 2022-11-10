@@ -30,6 +30,17 @@ define([
                 },
                 $.mage.__("Please enter a valid number")
             );
+
+             $.validator.addMethod(
+                'shisha-validate-name',
+                function (value, params) {
+                     if(!value.match(/\d+/)){
+                        return true
+                     }
+                    return false;
+                },
+                $.mage.__("Number not allowed")
+            );
         }
         
     });

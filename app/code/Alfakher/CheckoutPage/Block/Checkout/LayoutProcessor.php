@@ -11,15 +11,23 @@ class LayoutProcessor
      * @var Data
      */
     protected $helper;
+    /**
+     * @var storeManager
+     */
+    protected $storeManager;
 
     /**
      * LayoutProcessor constructor.
      *
      * @param Data $helper
+     * @param StoreManagerInterface $storeManager
      */
-    public function __construct(Data $helper)
-    {
+    public function __construct(
+        Data $helper,
+        \Magento\Store\Model\StoreManagerInterface $storeManager
+    ) {
         $this->helper = $helper;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -33,6 +41,9 @@ class LayoutProcessor
         \Magento\Checkout\Block\Checkout\LayoutProcessor $subject,
         array $jsLayout
     ) {
+        $storeCode = $this->storeManager->getWebsite()->getCode();
+        $validationClass = $storeCode ===  'shisha_world_b2b' ? 'shisha-validate-name' : 'letters-only';
+   
         /*For shipping address form*/
         $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
         ['children']['shippingAddress']['children']['shipping-address-fieldset']
@@ -46,6 +57,13 @@ class LayoutProcessor
         ['children']['shippingAddress']['children']['shipping-address-fieldset']
         ['children']['company']['label'] = __('Company Name');
 
+        $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
+        ['children']['shippingAddress']['children']['shipping-address-fieldset']
+        ['children']['firstname']['validation'] = ['required-entry' => true, $validationClass => true];
+
+        $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
+        ['children']['shippingAddress']['children']['shipping-address-fieldset']
+        ['children']['lastname']['validation'] = ['required-entry' => true, $validationClass => true];
         /* Start 25April Country code Adding from the  HookahShisha_InternationalTelephoneInput extension */
         if (isset($jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
             ['children']['shippingAddress']['children']['shipping-address-fieldset']['children'])) {
@@ -90,12 +108,12 @@ class LayoutProcessor
                 if (isset($payment['children']['form-fields']['children']['firstname'])) {
                     $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
                     ['payment']['children']['payments-list']['children'][$key]['children']['form-fields']['children']
-                    ['firstname']['validation'] = ['required-entry' => true, 'letters-only' => true];
+                    ['firstname']['validation'] = ['required-entry' => true, $validationClass => true];
                 }
                 if (isset($payment['children']['form-fields']['children']['lastname'])) {
                     $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
                     ['payment']['children']['payments-list']['children'][$key]['children']['form-fields']['children']
-                    ['lastname']['validation'] = ['required-entry' => true, 'letters-only' => true];
+                    ['lastname']['validation'] = ['required-entry' => true, $validationClass => true];
                 }
 
                 if (isset($payment['children']['form-fields']['children']['telephone'])) {
