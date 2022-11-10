@@ -2,20 +2,6 @@
 
 /** @var \Magento\Customer\Block\Widget\Name $block */
 
-/*
-<?= $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Name')
-   ->setObject($block->getAddress())
-   ->toHtml() ?>
-
-For checkout/onepage/shipping.phtml:
-
-<?= $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Name')
-   ->setObject($block->getAddress())
-   ->setFieldIdFormat('shipping:%s')
-   ->setFieldNameFormat('shipping[%s]')
-   ->toHtml() ?>
-*/
-
 $prefix = $block->showPrefix();
 $middle = $block->showMiddlename();
 $suffix = $block->showSuffix();

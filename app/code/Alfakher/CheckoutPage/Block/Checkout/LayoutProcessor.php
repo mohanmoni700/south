@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace Alfakher\CheckoutPage\Block\Checkout;
 
 use HookahShisha\InternationalTelephoneInput\Helper\Data;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Store\Model\ScopeInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class LayoutProcessor
 {
@@ -16,18 +19,28 @@ class LayoutProcessor
      */
     protected $storeManager;
 
+    public const WEBSITE_CODE = 'hookahshisha/website_code_setting/website_code';
+
+        /**
+         * @var ScopeConfigInterface
+         */
+    protected $scopeConfig;
+
     /**
      * LayoutProcessor constructor.
      *
      * @param Data $helper
      * @param StoreManagerInterface $storeManager
+     * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         Data $helper,
-        \Magento\Store\Model\StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->helper = $helper;
         $this->storeManager = $storeManager;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -41,9 +54,13 @@ class LayoutProcessor
         \Magento\Checkout\Block\Checkout\LayoutProcessor $subject,
         array $jsLayout
     ) {
-        $storeCode = $this->storeManager->getWebsite()->getCode();
-        $validationClass = $storeCode ===  'shisha_world_b2b' ? 'shisha-validate-name' : 'letters-only';
-   
+        $storeScope = ScopeInterface::SCOPE_STORE;
+        $website_code = $this->storeManager->getWebsite()->getCode();
+        $config_website = $this->scopeConfig->getValue(self::WEBSITE_CODE, $storeScope);
+        $websidecodes = explode(',', $config_website);
+
+        $validationClass= in_array($website_code, $websidecodes) ? 'shisha-validate-name' : 'letters-only';
+        
         /*For shipping address form*/
         $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
         ['children']['shippingAddress']['children']['shipping-address-fieldset']
