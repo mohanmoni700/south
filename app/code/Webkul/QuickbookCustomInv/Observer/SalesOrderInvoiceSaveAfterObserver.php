@@ -105,18 +105,21 @@ class SalesOrderInvoiceSaveAfterObserver implements ObserverInterface
                         $typeId = $invItemData->getOrderItem()->getProduct()->getTypeId();
                         $itemId = $orderItem->getParentItemId() ?
                                         $orderItem->getParentItemId() : $orderItem->getItemId();
-                        $parentOrderedQty = $orderItem->getParentItem() ?
-                                        $orderItem->getParentItem()->getQtyOrdered() : 1;
                         $orderedQty = $orderItem->getQtyOrdered();
+                        $parentOrderedQty = $orderItem->getParentItem() ?
+                                        $orderItem->getParentItem()->getQtyOrdered() : $orderedQty;
                         $qty = isset($invoiceItems['items'][$itemId]) ? $invoiceItems['items'][$itemId] : 0;
                         if (in_array($typeId, ['simple', 'virtual', 'downloadable', 'etickets']) && $qty) {
                             $qty = $qty * ($orderedQty/$parentOrderedQty);
                             $itemData = $this->quickBooksDataHelper
                                                 ->getArrangedItemDataForQuickbooks($orderItem, $taxPercent, $qty);
                             array_push($items, $itemData);
+                        } else {
+                            $this->logger->addError(__('invoice event type - %1 : qty - %2', $typeId, $qty));
                         }
                     }
 
+                    $this->logger->addError(__('invoice event items - %1 : ', json_encode($items)));
                     $customerData = $this->quickBooksDataHelper->getCustomerDetailForQuickbooks($order);
 
                     if ($invoice->getShippingAmount()) {
