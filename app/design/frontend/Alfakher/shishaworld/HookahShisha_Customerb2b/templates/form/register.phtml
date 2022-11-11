@@ -547,27 +547,24 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                         <a class="fa fa-eye-slash" id="showlgpass" data-vis="0" title=""></a>
                     </div>
                 </div>
-                <?php if ($block->isNewsletterEnabled()): ?>
+                <?php $subscribed = 'Would you like to join our Monthly Mailing list for discounts and promotions?';?>
+                    <?php if ($block->isNewsletterEnabled()): ?>
                     <div class="field choice newsletter">
                         <input type="checkbox"
                                name="is_subscribed"
-                               title="<?= $block
-                                ->escapeHtmlAttr(__('Would you like to join our Monthly Mailing 
-                                list for discounts and promotions?')) ?>"
+                               title="<?= $block->escapeHtmlAttr(__($subscribed)) ?>"
                                value="1"
                                id="is_subscribed"
                                checked="checked"
                                class="checkbox"/>
                         <label for="is_subscribed" class="label">
                             <span>
-                                <?= $block
-                                ->escapeHtml(__('Would you like to join our Monthly 
-                                Mailing list for discounts and promotions?')) ?> 
+                                <?= $block->escapeHtml(__($subscribed)) ?>
                             </span>
                         </label>
                     </div>
-                    <?php /* Extensions placeholder */ ?>
-                    <?= $block->getChildHtml('customer.form.register.newsletter') ?>
+                        <?php /* Extensions placeholder */ ?>
+                        <?= $block->getChildHtml('customer.form.register.newsletter') ?>
                 <?php endif ?>
             </fieldset>
             <div class="actions-toolbar justify_btn">
