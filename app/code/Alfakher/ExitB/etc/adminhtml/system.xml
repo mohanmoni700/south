@@ -43,11 +43,10 @@
             <field id="ship_code" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0" >
                 <label>Shipment Code</label>
             </field>
-            <field id="payment_offline" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0" >
-                <label>Offline Payment Code</label>
-            </field>
-            <field id="payment_online" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" >
-                <label>Online Payment Code</label>
+            <field id="payment" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Select Payment Methods</label>
+                <frontend_model>Alfakher\ExitB\Block\Adminhtml\Form\Field\MethodRange</frontend_model>
+                <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
             </field>
         </group>
     </section>
