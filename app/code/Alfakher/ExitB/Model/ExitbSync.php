@@ -156,7 +156,7 @@ class ExitbSync
                 $paymentCode = $order->getPayment()->getMethod();
                 $orderData['orderData']['payment']['code'] = $this->paymentType($websiteId, $paymentCode);
                 $orderData['orderData']['payment']['token'] = $order->getMonduReferenceId();
-
+                
                 $shippingMethod = $order->getShippingMethod();
                 $orderData['orderData']['shipment']['code'] = $this->getConfigValue(self::SHIP_CODE, $websiteId);
 
@@ -303,10 +303,11 @@ class ExitbSync
      *
      * @param int $websiteId
      * @param string $paymentCode
-     * @return string
+     * @return mixed
      */
     public function paymentType($websiteId, $paymentCode)
-    {
+    {   
+        $exitBCode = '';
         $paymentconfig = $this->getConfigValue(self::PAYMENT, $websiteId);
         if ($paymentconfig) {
             $unserializeData = $this->json->unserialize($paymentconfig, true);
@@ -317,6 +318,7 @@ class ExitbSync
             }
             return (!empty($exitBCode)) ? $exitBCode : null;
         }
+        return '';
     }
     
     /**
