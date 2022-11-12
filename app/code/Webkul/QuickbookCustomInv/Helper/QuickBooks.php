@@ -106,7 +106,7 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
         try {
             $this->helperData->getAccessToken($accountId);
             $this->configData = $config = $this->helperData->getQuickbooksAccountConfig($accountId);
-            if (($config['app_integrates_with'] == 'oauth2') && $config['client_id']
+            if ($config && ($config['app_integrates_with'] == 'oauth2') && $config['client_id']
                 && $config['client_secret']) {
                 // Prep Data Services
                 $dataService = DataService::Configure([
@@ -125,11 +125,12 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
                 }
                 $this->dataService = $dataService;
             } else {
+                throw new LocalizedException(__("Save Quickbooks Consumer Key and Consumer Secret."));
                 $this->logger->info("Save Quickbooks Consumer Key and Consumer Secret.");
             }
         } catch (\Exception $e) {
             $this->logger->addError('QuickBooks helper -'.$e->getMessage());
-            throw new LocalizedException($e->getMessage().'hello');
+            throw new LocalizedException(__('%1', $e->getMessage()));
         }
     }
 
@@ -157,7 +158,7 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
             $totalAmt = $itemDataForQB['total_amt'];
             $customTax = $itemDataForQB['customTax'];
             $discountTotal = $itemDataForQB['discount_total'];
-            $totalTax = $itemDataForQB['total_tax'];
+            $totalTax = $itemDataForQB['total_tax'] = 0; // by customisation
             $splitedTax = $itemDataForQB['splited_tax'];
             $taxCodeRef = $itemDataForQB['tax_code_ref'];
             $taxLineList = [];
@@ -341,9 +342,8 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
     public function getAccounts($accountId, $conditions = '')
     {
         try {
-            $this->setDataServiceObject($accountId);
-
             $allAccounts = [];
+            $this->setDataServiceObject($accountId);
             if (isset($this->dataService)) {
                 $allAccounts = $this->dataService->Query("Select * From Account ".$conditions, 0, 2);
             }
@@ -376,7 +376,7 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
         ${'salesItemLineDetail'.$lineNum} = new IPPSalesItemLineDetail();
         $item = $this->quickBookItem->getItem($this->dataService, $orderItem, $accountId);
         ${'salesItemLineDetail'.$lineNum}->ItemRef = $item->Id;
-        if (!empty($taxDetails)) {
+        if (!empty($taxDetails) && 0) { // disable by customisation
             $taxCodeRef = $this->getTaxCode($taxDetails);
             foreach ($taxDetails as $key => $taxDetail) {
                 $taxRateIndex = array_keys($taxCodeRef['tax_rate_list'], $taxDetail['tax_percent']);
@@ -421,7 +421,7 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
             if ($orderItem && $orderItem['Name']) {
                 $taxDetails = $taxPercent[$orderItem['ItemId']] ?? [];
                 $arrangedItem = $this->arrangeItemDataForQB($orderItem, $lineNum, $taxDetails, $accountId);
-                if (!empty($arrangedItem['tax_code_ref'])) {
+                if (!empty($arrangedItem['tax_code_ref']) && 0) { // disable by customisation
                     $taxCodeRef = $arrangedItem['tax_code_ref'];
                     foreach ($taxCodeRef['tax_rate_list'] as $taxRateId => $taxRateValue) {
                         if (!isset($splitedTax[$taxRateId])) {
