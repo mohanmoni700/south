@@ -22,7 +22,6 @@ define([
 
     keyboardHandler.apply();
 
-
     $(document).ready(function(){
         $(window).scroll(function() {
             if ($(this).scrollTop() >= 50) {        
@@ -43,21 +42,19 @@ define([
         $(".ui-menu-item.parent.level1:first-child").addClass('current');
 
         //passvisible 
-        jQuery(document).on('click','#showlgpass',function(){
-            var vis = jQuery(this).data('vis');
-            if(vis == 0){
-                jQuery(this).closest('.control').find('input').attr('type','text');
-                jQuery(this).removeClass('fa-eye-slash').addClass('fa-eye');
-                jQuery(this).data('vis',1);
-            }else{
-                jQuery(this).closest('.control').find('input').attr('type','password');
-                jQuery(this).removeClass('fa-eye').addClass('fa-eye-slash');
-                jQuery(this).data('vis',0);
+        $("body").on('click','#showlgpass',function(){
+            if($(this).hasClass('fa-eye-slash')) {
+              $(this).removeClass('fa-eye-slash');
+              $(this).addClass('fa-eye');
+              $(this).parent('.control').find('input').attr('type','text');
+            } else {
+              $(this).removeClass('fa-eye');
+              $(this).addClass('fa-eye-slash');  
+              $(this).parent('.control').find('input').attr('type','password');
             }
         });
 
     });
-
 
     $(".login.primary").click(function() {
         $('html,body').animate({
@@ -66,6 +63,11 @@ define([
     });
     $('.block-collapsible-nav .block-collapsible-nav-title strong').html($('.block-collapsible-nav .block-collapsible-nav-content strong').html());
 
+    $(".clp_faq_toggle").click(function(){
+        $(".clp_faq_toggle").toggleClass('active');
+        $(".clp_faq_inner").toggle();
+    });
+    
     $(window).load(function() {
         $(".mobile_menu_icon").click(function(){  
             $(".mobile_menu_icon").toggleClass("change");
@@ -74,7 +76,6 @@ define([
                 scrollTop : 0
             }, 0);
         });
-
         // mobile menu custom toggle
         jQuery('.hamburger_icon').on('click', function () {
             jQuery('.sw-megamenu').toggleClass('active');
@@ -100,4 +101,21 @@ define([
             });
         }
     });       
+
+    function lazyLoadImages() {
+        var e = document.querySelectorAll("img[image-data-src]");
+        [].forEach.call(e, function(e) {
+            isElementInViewport(e) && (e.setAttribute("src", e.getAttribute("image-data-src")),
+             e.removeAttribute("image-data-src"))
+        }), 0 == e.length && (window.removeEventListener("DOMContentLoaded", lazyLoadImages), 
+        window.removeEventListener("load", lazyLoadImages), window.removeEventListener("resize", lazyLoadImages),
+        window.removeEventListener("scroll", lazyLoadImages))
+    }
+    function isElementInViewport(e) {
+        var t = e.getBoundingClientRect();
+        return t.top >= 0 && t.left >= 0 && t.bottom <= (window.innerHeight || document.documentElement.clientHeight) 
+            && t.right <= (window.innerWidth || document.documentElement.clientWidth)
+    }
+    window.addEventListener("DOMContentLoaded", lazyLoadImages), window.addEventListener("load", lazyLoadImages),
+    window.addEventListener("resize", lazyLoadImages), window.addEventListener("scroll", lazyLoadImages)
 });

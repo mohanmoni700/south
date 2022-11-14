@@ -4,6 +4,9 @@ namespace HookahShisha\Customerb2b\Model\Company\Source;
 
 use Magento\Company\Model\Company;
 use Magento\Framework\Data\OptionSourceInterface;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
 
 /**
  * Class HearAboutUs Config
@@ -13,17 +16,61 @@ class HearAboutUs implements OptionSourceInterface
 {
 
     /**
+     * Website Code
+     */
+    public const WEBSITE_CODE = 'hookahshisha/website_code_setting/website_code';
+
+    /**
+     * Scope Configuration
+     *
+     * @var ScopeConfigInterface $scopeConfig
+     */
+    protected $scopeConfig;
+
+    /**
+     * Store
+     *
+     * @var StoreManagerInterface $storeManager
+     */
+    private $storeManager;
+
+    /**
+     * Construct
+     *
+     * @param StoreManagerInterface $storeManager
+     * @param ScopeConfigInterface $scopeConfig
+     */
+    public function __construct(
+        StoreManagerInterface $storeManager,
+        ScopeConfigInterface $scopeConfig
+    ) {
+        $this->storeManager = $storeManager;
+        $this->scopeConfig = $scopeConfig;
+    }
+
+    /**
      * Get options
      *
      * @return array
      */
     public function toOptionArray()
     {
-        $options = [];
-        foreach ($this->getOptionArray() as $key => $value) {
-            $options[] = ['label' => __($value), 'value' => $key];
-        }
 
+        $options = [];
+        $storeScope = ScopeInterface::SCOPE_STORE;
+        $website_code = $this->storeManager->getWebsite()->getCode();
+        $config_website = $this->scopeConfig->getValue(self::WEBSITE_CODE, $storeScope);
+        $websidecodes = explode(',', $config_website);
+
+        if (in_array($website_code, $websidecodes)) {
+            foreach ($this->getOptionArrayHub() as $key => $value) {
+                $options[] = ['label' => __($value), 'value' => $key];
+            }
+        } else {
+            foreach ($this->getOptionArray() as $key => $value) {
+                $options[] = ['label' => __($value), 'value' => $key];
+            }
+        }
         return $options;
     }
 
@@ -45,6 +92,26 @@ class HearAboutUs implements OptionSourceInterface
             'other_search_engine' => 'Other Search Engine',
             'flyer' => 'Flyer',
             'friend_family_member' => 'Friend/Family member',
+        ];
+    }
+
+    /**
+     * Get options
+     *
+     * @return array
+     */
+    public function getOptionArrayHub()
+    {
+        return [
+            'returning_customer' => 'Returning Customer',
+            'shisha_com' => 'Shisha.com',
+            'chichaMaps' => 'ChichaMaps',
+            'events' => 'Events',
+            'google' => 'Google',
+            'flyer' => 'Flyer',
+            'friend_family_member' => 'Friend/Family member',
+            'sales_representative_visit' => 'Sales Representative Visit',
+            'instagram' => 'Instagram',
         ];
     }
 }
