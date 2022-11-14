@@ -86,8 +86,6 @@ class Gateway extends BaseGateway
      * @param number $ccCid
      * @param string $ccType
      * @param string $cardHolderName
-     * @return $this
-     * @throws CommandException
      */
     public function setParameterForBackend($ccNumber, $ccExpMonth, $ccExpYear, $ccCid, $ccType, $cardHolderName)
     {
