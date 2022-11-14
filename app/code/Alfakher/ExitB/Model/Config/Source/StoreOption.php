@@ -50,7 +50,6 @@ class StoreOption implements ArrayInterface
      */
     public function getWebsiteCollection()
     {
-        $collection = $this->_websiteCollectionFactory->create();
-        return $collection;
+        return $this->_websiteCollectionFactory->create();
     }
 }

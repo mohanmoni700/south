@@ -11,9 +11,9 @@ use Psr\Log\LoggerInterface;
 class CancelOrders
 {
 
-    public const WEBSITE_CODE = 'cancle_order/autocancel/Websiteid';
-    public const CANCEL_ENABLE = 'cancle_order/autocancel/enabled';
-    public const DAYS = 'cancle_order/autocancel/days';
+    public const WEBSITE_CODE = 'cancel_order/autocancel/Websiteid';
+    public const CANCEL_ENABLE = 'cancel_order/autocancel/enabled';
+    public const DAYS = 'cancel_order/autocancel/days';
 
     /**
      * @var ExitbSync
@@ -75,13 +75,13 @@ class CancelOrders
      */
     public function getStoreIds($websiteId)
     {
-        $storeId = [];
+        $storeIds = [];
         try {
-            $storeId = $this->storeWebsiteRelation->getStoreByWebsiteId($websiteId);
+            $storeIds = $this->storeWebsiteRelation->getStoreByWebsiteId($websiteId);
         } catch (Exception $exception) {
             $this->logger->error($exception->getMessage());
         }
-        return $storeId;
+        return $storeIds;
     }
 
     /**
@@ -91,8 +91,11 @@ class CancelOrders
      */
     public function execute()
     {
+        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/cancelOrder.log');
+        $logger = new \Zend_Log();
+        $logger->addWriter($writer);
         $websiteConfig = $this->exitbsync->getConfigValue(self::WEBSITE_CODE);
-        $websiteIds = $websiteConfig ? explode(',', $websiteConfig) : null;
+        $websiteIds = $websiteConfig ? explode(',', $websiteConfig) : [];
         try {
             foreach ($websiteIds as $websiteId) {
                 if ($this->isModuleEnabled($websiteId)) {
@@ -115,20 +118,17 @@ class CancelOrders
                             ['eq' => 'Sales Approved']
                         )->load();
                         if (!$history->toArray()['totalRecords']) {
-                                $order->cancel();
-                                $order->addStatusHistoryComment('Cancelorder Using Cron')->setIsCustomerNotified(false);
-                                $order->save();
-                                $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/cancelOrder.log');
-                                $logger = new \Zend_Log();
-                                $logger->addWriter($writer);
-                                $logger->info("Order Id -->". $order->getEntityId().
+                            $logger->info("Order Id -->". $order->getEntityId().
                                     "Created date -->". $order->getCreatedAt());
+                            $order->cancel();
+                            $order->addStatusHistoryComment('Cancelorder Using Cron')->setIsCustomerNotified(false);
+                            $order->save();
                         }
                     }
                 }
             }
         } catch (\Exception $e) {
-            return null;
+            return [];
         }
     }
 }

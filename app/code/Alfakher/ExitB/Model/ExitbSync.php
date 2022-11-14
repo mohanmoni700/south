@@ -306,7 +306,7 @@ class ExitbSync
      * @return mixed
      */
     public function paymentType($websiteId, $paymentCode)
-    {   
+    {
         $exitBCode = '';
         $paymentconfig = $this->getConfigValue(self::PAYMENT, $websiteId);
         if ($paymentconfig) {

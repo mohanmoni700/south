@@ -50,7 +50,7 @@
             </field>
         </group>
     </section>
-    <section id="cancle_order" translate="label" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="0">
+    <section id="cancel_order" translate="label" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="0">
          <label>Cancel Order</label>
          <tab>hookahshisha</tab>
          <resource>Alfakher_ExitB::exitb_config</resource>
@@ -66,7 +66,7 @@
             </field>
             <field id="days" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0" >
                 <label>Cancel order Days</label>
-                <depends><field id="cancle_order/autocancel/enabled">1</field></depends>
+                <depends><field id="cancel_order/autocancel/enabled">1</field></depends>
                 <comment><![CDATA[Add days after order has been canceled!!]]></comment>
                 <validate>required-entry</validate>
             </field>
