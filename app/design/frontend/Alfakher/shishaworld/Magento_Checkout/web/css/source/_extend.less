@@ -62,10 +62,12 @@
             right: 155px !important;
         }
     }
-    [lang="en"] .amquote-cart-wrapper.minicart-wrapper {
-        .block-quotecart.block-minicart::before, 
-        .block-quotecart.block-minicart::after {
-            right: 145px !important;
+    @media only screen and (min-width: 1399px) {
+        [lang="en"] .amquote-cart-wrapper.minicart-wrapper {
+            .block-quotecart.block-minicart::before, 
+            .block-quotecart.block-minicart::after {
+                right: 145px !important;
+            }
         }
     }
 
@@ -86,6 +88,12 @@
                 }
             }
         }
+        [lang="en"] .amquote-cart-wrapper.minicart-wrapper {
+            .block-quotecart.block-minicart::before, 
+            .block-quotecart.block-minicart::after {
+                right: 110px !important;
+            }
+        }
     }
     //
     //  Shipping Address
@@ -94,7 +102,7 @@
         .edit-address-link {
             .lib-css(margin, @indent__xs @indent__xs @indent__xs 0);
             @media only screen and (max-width: @screen__s) {
-                .lib-css(top, @indent__base);
+                .lib-css(top, @indent__base - @indent__xs);
                 .lib-css(position, absolute);
                 .lib-css(right, 35px);
             }
@@ -216,6 +224,9 @@
                 }
             }
         }
+        
+    }
+    @media only screen and (max-width: 1024px) and (min-width: 479px) {
         [lang="en"] .amquote-cart-wrapper.minicart-wrapper {
             .block-quotecart.block-minicart::before, 
             .block-quotecart.block-minicart::after {
