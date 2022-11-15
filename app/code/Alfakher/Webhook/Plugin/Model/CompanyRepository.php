@@ -25,6 +25,7 @@ class CompanyRepository
         $data->setExtensionAttributes($extensionAttributes);
         return $data;
     }
+    
     /**
      * @inheritdoc
      */
