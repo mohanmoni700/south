@@ -40,26 +40,6 @@ class Payment extends BasePayment
     protected $quote;
 
     /**
-     * @var OrderRepositoryInterface
-     */
-    protected $orderRepository;
-
-    /**
-     * @var QuoteRepositoryInterface
-     */
-    protected $quoteRepository;
-
-    /**
-     * @var OrderPaymentRepositoryInterface
-     */
-    protected $orderPaymentRepository;
-
-    /**
-     * @var PaymentHelper
-     */
-    private $paymentHelper;
-
-    /**
      * @var Request
      */
     protected $request;
