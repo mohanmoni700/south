@@ -1,0 +1,18 @@
+//
+//  Mobile
+//  -------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .order-items.table-wrapper {
+        border-bottom: 1px solid @color-black;
+        .table-order-items {
+            .col.action {
+                &:before {
+                    .lib-css(filter, none);
+                    .lib-css(width, 17px);
+                    background-image: url('@{baseDir}images/Union-account.svg');
+                }
+            }
+        }
+    }
+}
