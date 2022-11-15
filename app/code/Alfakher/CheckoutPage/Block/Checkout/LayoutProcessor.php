@@ -59,7 +59,7 @@ class LayoutProcessor
         $config_website = $this->scopeConfig->getValue(self::WEBSITE_CODE, $storeScope);
         $websidecodes = explode(',', $config_website);
 
-        $validationClass= in_array($website_code, $websidecodes) ? 'shisha-validate-name' : 'letters-only';
+        $validationClass= in_array($website_code, $websidecodes) ? 'validate-alphanum-with-spaces' : 'letters-only';
         
         /*For shipping address form*/
         $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']

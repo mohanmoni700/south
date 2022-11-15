@@ -57,7 +57,7 @@ $suffix = $block->showSuffix();
                        placeholder="<?= $block->escapeHtml(__('First Name')) ?>"
                        value="<?= $block->escapeHtmlAttr($block->getObject()->getFirstname()) ?>"
                        title="<?= $block->escapeHtmlAttr($block->getStoreLabel('firstname')) ?>"
-                       class="input-text shisha-validate-name" 
+                       class="input-text validate-alphanum-with-spaces" 
                        <?= ($block->getAttributeValidationClass('firstname') ==
                         'required-entry') ? ' data-validate="{required:true}"' : '' ?>>
             </div>
@@ -87,7 +87,7 @@ $suffix = $block->showSuffix();
                        placeholder="<?= $block->escapeHtml(__('Last Name')) ?>"
                        value="<?= $block->escapeHtmlAttr($block->getObject()->getLastname()) ?>"
                        title="<?= $block->escapeHtmlAttr($block->getStoreLabel('lastname')) ?>"
-                       class="input-text shisha-validate-name"
+                       class="input-text validate-alphanum-with-spaces"
                         <?= ($block->getAttributeValidationClass('lastname') ==
                         'required-entry') ? ' data-validate="{required:true}"' : '' ?>>
             </div>
