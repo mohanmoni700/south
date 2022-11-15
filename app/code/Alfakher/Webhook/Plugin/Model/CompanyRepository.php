@@ -8,11 +8,7 @@ class CompanyRepository
 {
 
     /**
-     * Function for set extension attribute value
-     *
-     * @param Subject $subject
-     * @param CompanyInterface $data
-     * @return CompanyInterface
+     * @inheritdoc
      */
     public function afterGet(
         Subject $subject,
@@ -30,11 +26,7 @@ class CompanyRepository
         return $data;
     }
     /**
-     * Function for save the custom attributes
-     *
-     * @param Subject $subject
-     * @param CompanyInterface $company
-     * @return CompanyInterface
+     * @inheritdoc
      */
     public function beforeSave(
         Subject $subject,
