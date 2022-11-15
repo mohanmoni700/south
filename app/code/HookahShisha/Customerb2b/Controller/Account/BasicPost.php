@@ -222,7 +222,6 @@ class BasicPost extends \Magento\Customer\Controller\Address implements HttpPost
                 $hub_mobile_number = $this->getRequest()->getParam('hub_mobile_number');
                 $currentCustomerDataObject->setCustomAttribute('hub_mobile_number', $hub_mobile_number);
             }
-            $currentCustomerDataObject->setData('ignore_validation_flag', true);
             $this->customerRepository->save($currentCustomerDataObject);
             /* ENd Change the Customer objct Name */
 
