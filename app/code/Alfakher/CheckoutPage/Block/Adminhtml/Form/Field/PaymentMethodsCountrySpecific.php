@@ -6,7 +6,6 @@ namespace Alfakher\CheckoutPage\Block\Adminhtml\Form\Field;
 use Alfakher\CheckoutPage\Block\Adminhtml\Form\Field\PaymentColumn;
 use Magento\Config\Block\System\Config\Form\Field\FieldArray\AbstractFieldArray;
 use Magento\Framework\DataObject;
-use Magento\Framework\Exception\LocalizedException;
 
 class PaymentMethodsCountrySpecific extends AbstractFieldArray
 {
@@ -34,10 +33,7 @@ class PaymentMethodsCountrySpecific extends AbstractFieldArray
     }
 
     /**
-     * Prepare existing row data object
-     *
-     * @param DataObject $row
-     * @throws LocalizedException
+     * @inheritDoc
      */
     protected function _prepareArrayRow(DataObject $row): void
     {
@@ -54,10 +50,7 @@ class PaymentMethodsCountrySpecific extends AbstractFieldArray
     }
 
     /**
-     * Payment method renderer
-     *
-     * @return PaymentMethodColumn
-     * @throws LocalizedException
+     * @inheritDoc
      */
     private function getPaymentMethodRenderer()
     {

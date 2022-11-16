@@ -112,14 +112,14 @@ class HidePaymentMethods
     /**
      * Get Config Value from given config path
      *
-     * @param string $config_path
+     * @param string $configPath
      * @return string
      */
-    public function getConfigValue($config_path)
+    public function getConfigValue($configPath)
     {
         return $this->scopeConfig->getValue(
-            $config_path,
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $configPath,
+            ScopeInterface::SCOPE_STORE,
             $this->storeManager->getStore()->getStoreId()
         );
     }
