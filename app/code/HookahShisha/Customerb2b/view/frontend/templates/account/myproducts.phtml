@@ -19,7 +19,7 @@ $priceHelper = $this->helper(\Magento\Framework\Pricing\Helper\Data::class);
                $IsFinanceVerified=$_helperB2b->getIsFinanceVerified();
         ?>
 <div class="block-title page-title">
-    <h1>My Product Pricing</h1>
+    <h1><?= $block->escapeHtmlAttr(__('My Product Pricing')) ?></h1>
 </div>
 
 <div class="table-wrapper myproduct-pricing">
