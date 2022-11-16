@@ -18,16 +18,15 @@ use Magento\Framework\Exception\LocalizedException;
 class ExitbSync
 {
     public const EXITB_ENABLE = 'exitb/general/enabled';
+    public const AUTH_API = 'exitb/exitb_auth/auth_api';
+    public const CLINT_CODE = 'exitb/exitb_auth/auth_clientcode';
+    public const API_KEY = 'exitb/exitb_auth/auth_apikey';
+    public const ORDER_API = 'exitb/exitb_ordersync/order_api';
     public const ORDER_PREFIX = 'exitb/exitb_ordersync/prefix_order';
     public const ORDER_ISB2B = 'exitb/exitb_ordersync/order_isb2b';
     public const ORDER_ADM = 'exitb/exitb_ordersync/ad_medium';
     public const SHIP_CODE = 'exitb/exitb_ordersync/ship_code';
-    public const ORDER_API = 'exitb/exitb_ordersync/order_api';
-    public const CLINT_CODE = 'exitb/exitb_auth/auth_clientcode';
-    public const API_KEY = 'exitb/exitb_auth/auth_apikey';
-    public const AUTH_API = 'exitb/exitb_auth/auth_api';
-    public const OFFLINE = 'exitb/exitb_ordersync/payment_offline';
-    public const ONLINE = 'exitb/exitb_ordersync/payment_online';
+    public const PAYMENT = 'exitb/exitb_ordersync/payment';
 
     /**
      * @var ScopeConfigInterface
@@ -154,13 +153,13 @@ class ExitbSync
                 $billingaddress = $order->getBillingAddress();
                 $orderData['orderData']['invoiceAddress'] = $this->invoiceAddress($billingaddress);
 
-                $isOffline = $order->getPayment()->getMethodInstance()->isOffline();
                 $paymentCode = $order->getPayment()->getMethod();
-                $orderData['orderData']['payment']['code'] = $this->paymentType($websiteId, $paymentCode, $isOffline);
+                $orderData['orderData']['payment']['code'] = $this->paymentType($websiteId, $paymentCode);
                 $orderData['orderData']['payment']['token'] = $order->getMonduReferenceId();
-
+                
                 $shippingMethod = $order->getShippingMethod();
                 $orderData['orderData']['shipment']['code'] = $this->getConfigValue(self::SHIP_CODE, $websiteId);
+                $orderData['orderData']['shipment']['total'] = (float)$order->getShippingAmount();
 
                 $items = $order->getAllItems();
                 $orderData['orderData']['items'] = $this->orderItems($items);
@@ -305,22 +304,22 @@ class ExitbSync
      *
      * @param int $websiteId
      * @param string $paymentCode
-     * @param mixed $isOffline
-     * @return string
+     * @return mixed
      */
-    public function paymentType($websiteId, $paymentCode, $isOffline)
+    public function paymentType($websiteId, $paymentCode)
     {
-        if ($isOffline === false) {
-            if ($paymentCode == "mondu") {
-                $online = "monduBill";
-            } elseif ($paymentCode == "mondusepa") {
-                $online = "monduSepa";
-            } else {
-                $online = $this->getConfigValue(self::ONLINE, $websiteId);
+        $exitBCode = '';
+        $paymentconfig = $this->getConfigValue(self::PAYMENT, $websiteId);
+        if ($paymentconfig) {
+            $unserializeData = $this->json->unserialize($paymentconfig, true);
+            foreach ($unserializeData as $key => $row) {
+                if ($row['payment_method'] == $paymentCode) {
+                    $exitBCode = $row['method_code'];
+                }
             }
+            return (!empty($exitBCode)) ? $exitBCode : '';
         }
-        $offline = $this->getConfigValue(self::OFFLINE, $websiteId);
-        return $isOffline ? $offline : $online;
+        return '';
     }
     
     /**
@@ -344,9 +343,8 @@ class ExitbSync
                 $productData[$key]['articleNumber'] = $articleNumber;
             }
             $productData[$key]['quantity'] = (int)$item->getQtyOrdered();
-            $price = $item->getPrice() * $item->getQtyOrdered();
-            $taxAmount = $item->getBaseTaxAmount();
-            $productData[$key]['price'] = $price + $taxAmount;
+            $productData[$key]['price'] = (float)$item->getPriceInclTax();
+            $productData[$key]['priceNet'] = (float)$item->getPrice();
             $productData[$key]['discount'] = (float)$item->getDiscountAmount();
         }
         return $productData;
