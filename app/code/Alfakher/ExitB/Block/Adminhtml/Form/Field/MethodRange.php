@@ -33,7 +33,6 @@ class MethodRange extends AbstractFieldArray
      * Prepare existing row data object
      *
      * @param DataObject $row
-     * @throws LocalizedException
      */
     protected function _prepareArrayRow(DataObject $row): void
     {
@@ -49,7 +48,6 @@ class MethodRange extends AbstractFieldArray
      * Render Data
      *
      * @return PaymentColumn
-     * @throws LocalizedException
      */
     private function getTaxRenderer()
     {

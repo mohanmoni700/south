@@ -6,11 +6,10 @@ use Alfakher\ExitB\Model\ExitbSync;
 use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Store\Api\StoreWebsiteRelationInterface;
-use Psr\Log\LoggerInterface;
+use Alfakher\ExitB\Logger\Logger;
 
 class CancelOrders
 {
-
     public const WEBSITE_CODE = 'cancel_order/autocancel/Websiteid';
     public const CANCEL_ENABLE = 'cancel_order/autocancel/enabled';
     public const DAYS = 'cancel_order/autocancel/days';
@@ -30,24 +29,29 @@ class CancelOrders
      */
     protected $date;
 
-     /**
-      * @var StoreWebsiteRelationInterface
-      */
-     private $storeWebsiteRelation;
+    /**
+     * @var StoreWebsiteRelationInterface
+     */
+    private $storeWebsiteRelation;
+
+    /**
+     * @var Logger
+     */
+    protected $logger;
 
     /**
      * @param ExitbSync $exitbsync
      * @param CollectionFactory $orderCollectionFactory
      * @param TimezoneInterface $date
      * @param StoreWebsiteRelationInterface $storeWebsiteRelation
-     * @param LoggerInterface $logger
+     * @param Logger $logger
      */
     public function __construct(
         ExitbSync $exitbsync,
         CollectionFactory $orderCollectionFactory,
         TimezoneInterface $date,
         StoreWebsiteRelationInterface $storeWebsiteRelation,
-        LoggerInterface $logger
+        Logger $logger
     ) {
         $this->exitbsync = $exitbsync;
         $this->orderCollectionFactory = $orderCollectionFactory;
@@ -91,9 +95,6 @@ class CancelOrders
      */
     public function execute()
     {
-        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/cancelOrder.log');
-        $logger = new \Zend_Log();
-        $logger->addWriter($writer);
         $websiteConfig = $this->exitbsync->getConfigValue(self::WEBSITE_CODE);
         $websiteIds = $websiteConfig ? explode(',', $websiteConfig) : [];
         try {
@@ -118,7 +119,7 @@ class CancelOrders
                             ['eq' => 'Sales Approved']
                         )->load();
                         if (!$history->toArray()['totalRecords']) {
-                            $logger->info("Order Id -->". $order->getEntityId().
+                            $this->logger->info("Order Id -->". $order->getEntityId().
                                     "Created date -->". $order->getCreatedAt());
                             $order->cancel();
                             $order->addStatusHistoryComment('Cancelorder Using Cron')->setIsCustomerNotified(false);

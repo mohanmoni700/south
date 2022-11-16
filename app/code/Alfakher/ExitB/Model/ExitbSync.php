@@ -317,7 +317,7 @@ class ExitbSync
                     $exitBCode = $row['method_code'];
                 }
             }
-            return (!empty($exitBCode)) ? $exitBCode : null;
+            return (!empty($exitBCode)) ? $exitBCode : '';
         }
         return '';
     }
