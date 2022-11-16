@@ -169,6 +169,7 @@ class Data extends AbstractHelper
     /**
      * Get configuration value
      *
+     * @param string $section
      * @return mixed
      */
     public function getConfigValue($section)
