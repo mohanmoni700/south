@@ -9,7 +9,16 @@
 //  _____________________________________________
 
 & when (@media-common = true) {
-
+    .migrate-customer-header {
+        margin: 0 auto @indent__m;
+    }
+    .block-content {
+        .register_link {
+            a {
+                .lib-css(margin-left, @indent__xs);
+            }
+        }
+    }
     //
     //  Password Strength Meter
     //  ---------------------------------------------

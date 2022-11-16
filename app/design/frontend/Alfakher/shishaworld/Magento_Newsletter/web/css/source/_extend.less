@@ -107,7 +107,20 @@
     }
 }
 
-
+& when (@media-target = 'mobile'), (@media-target = 'all') {
+    
+    @media only screen and (min-width: 768px) and (max-width: 1024px) {
+        [lang="de"] .footer_logo .address_info {
+            .lib-css(margin-bottom, (@indent__l + @indent__s));
+        }
+        [lang="en"] .footer_logo .address_info {
+            .lib-css(margin-bottom,  @indent__l);
+        }
+        [lang="es"] .footer_logo .address_info { 
+            .lib-css(margin-bottom,  (@indent__xs));
+        }
+    }
+}
 //
 //  Desktop
 //  _____________________________________________
@@ -128,7 +141,17 @@
         }
     }
 }
-
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l) {
+    [lang="de"] .footer_logo .address_info {
+        .lib-css(margin-bottom, 78px);
+    }
+    [lang="en"] .footer_logo .address_info {
+        .lib-css(margin-bottom,  (@indent__l + 2));
+    }
+    [lang="es"] .footer_logo .address_info { 
+        .lib-css(margin-bottom,  (@indent__s - 2));
+    }
+}
 //
 //  Mobile
 //
@@ -147,5 +170,14 @@
                 }
             }
         }
+    }
+    [lang="de"] .footer_logo .address_info {
+        .lib-css(margin-bottom, @indent__m);
+    }
+    [lang="en"] .footer_logo .address_info {
+        .lib-css(margin-bottom,  @indent__m);
+    }
+    [lang="es"] .footer_logo .address_info { 
+        .lib-css(margin-bottom,  (@indent__base));
     }
 }

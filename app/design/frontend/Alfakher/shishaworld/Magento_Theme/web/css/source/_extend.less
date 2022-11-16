@@ -138,8 +138,9 @@
                         }
                         .options ul.dropdown {
                             min-width: 80px;
+                            .lib-css(right, 3px);
                             @media only screen and (max-width: @screen__l) {
-                                .lib-css(right, @indent__s);
+                                .lib-css(right, 4px);
                             }
                             li {
                                 .lib-vendor-prefix-display(flex);
@@ -165,7 +166,10 @@
                 }
                 .sign-in{
                     ul.sign-up-ul.customer_logged_in {
-                        border: 1px solid @color_primary;
+                        .lib-css(right, -@indent__xs);
+                        @media only screen and (min-width: @screen__l) {
+                            .lib-css(right, @indent__xs);
+                        }
                         li a {
                             .lib-css(white-space, unset);
                         }
@@ -173,24 +177,9 @@
                             border-bottom: 12px solid @color_white;
                         }
                     }
-                    .sign-up-ul {
-                        &::before{
-                            border-bottom: 12px solid @color_primary;
-                        }
-                    }
                 }                 
             } 
         } 
-    }
-    .sign-up-ul.customer_logged_in {
-        li {
-            &.guest-heading,
-            &.logout {
-                &:before {
-                    .lib-css(background, @color_primary);
-                }
-            }
-        }
     }
 
     [lang="de"] #html-body{
@@ -214,6 +203,20 @@
                 .right_section.panel.wrapper  {
                     .reorder-wrapper {
                         text-align: center;
+                    }
+                }
+                .minicart-wrapper {
+                    .action.showcart {
+                        .counter.qty {
+                            @media only screen and (min-width: @screen__l) {
+                                .lib-css(left, @indent__base);
+                            }
+                        }
+                        &::before {
+                            @media only screen and (min-width: @screen__l) {
+                                transform: translateY(-40%) translateX(40%);
+                            }
+                        }
                     }
                 }
             }
@@ -429,6 +432,23 @@
         body .page-header .header.content {
             .block-search {
                 padding-left: @indent__l;
+            }
+        }
+    }
+    @media only screen and (max-width: 1024px) {
+        //
+        //  Megamenu Social link
+        //  _______________________
+
+        //  megamenu social link
+
+        .megamenu_social_link_desktop {
+            .header-links {
+                .tiktok {
+                    &::before {
+                        background-image: url('@{baseDir}images/tiktok_black.svg');
+                    }
+                }
             }
         }
     }
