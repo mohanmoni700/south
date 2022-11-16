@@ -16,7 +16,7 @@ class CompanyRepository
      */
     public function afterGet(
         Subject $subject,
-        \Magento\Company\Api\Data\CompanyInterface $data
+        CompanyInterface $data
     ) {
         $extensionAttributes = $data->getExtensionAttributes();
         $extensionAttributes->setBusinessType($data->getBusinessType());
