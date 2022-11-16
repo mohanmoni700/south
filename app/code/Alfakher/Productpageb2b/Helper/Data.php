@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Alfakher\Productpageb2b\Helper;
 
@@ -14,10 +14,11 @@ use \Magento\Customer\Model\Context as CustomerContext;
 use \Magento\Customer\Model\CustomerFactory;
 use \Magento\Customer\Model\Session;
 use \Magento\Framework\App\Config\ScopeConfigInterface;
+use \Magento\Framework\App\Helper\AbstractHelper;
 use \Magento\Framework\App\Http\Context;
 use \Magento\Framework\HTTP\Header;
+use \Magento\Store\Model\ScopeInterface;
 use \Magento\Store\Model\StoreManagerInterface;
-use \Magento\Framework\App\Helper\AbstractHelper;
 
 class Data extends AbstractHelper
 {
@@ -136,7 +137,9 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @inheritDoc
+     * Get Document status
+     *
+     * @return int
      */
     public function getDocMessageData()
     {
@@ -144,7 +147,9 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @inheritDoc
+     * Get Document is expired or not
+     *
+     * @return int
      */
     public function getExpiryMsg()
     {
@@ -152,7 +157,9 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @inheritDoc
+     * Get is Document uploaded or not
+     *
+     * @return int
      */
     public function getDocuments()
     {
@@ -160,15 +167,19 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @inheritDoc
+     * Get configuration value
+     *
+     * @return mixed
      */
     public function getConfigValue($section)
     {
-        return $this->scopeConfig->getValue($section, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue($section, ScopeInterface::SCOPE_STORE);
     }
 
     /**
-     * @inheritDoc
+     * Get is Document uploaded or not
+     *
+     * @return int
      */
     public function isMobileDevice()
     {
@@ -176,7 +187,10 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @inheritDoc
+     * Get GrossMargin value
+     *
+     * @param int $productId
+     * @return float
      */
     public function getStockQty($productId)
     {
@@ -185,25 +199,30 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @inheritDoc
+     * Get is Finance Verified value
+     *
+     * @return int
      */
     public function getAdminCustomer()
     {
-        $adminId = $this->_customerSession->getLoggedAsCustomerAdmindId();
-        return $adminId;
+        return $this->_customerSession->getLoggedAsCustomerAdmindId();
     }
 
     /**
-     * @inheritDoc
+     * Get GrossMargin value
+     *
+     * @param int $productId
+     * @return float
      */
     public function getGrossMargin($productId)
     {
-        $cost = $this->proRepo->getById($productId)->getCost();
-        return $cost;
+        return $this->proRepo->getById($productId)->getCost();
     }
 
     /**
-     * @inheritDoc
+     * Get is Finance Verified value
+     *
+     * @return int
      */
     public function getIsFinanceVerified()
     {
@@ -213,11 +232,15 @@ class Data extends AbstractHelper
     }
 
     /**
-     * @inheritDoc
+     * Get configuration value
+     *
+     * @param string $section
+     * @param int $websiteid
+     * @return mixed
      */
     public function getGrossStatus($section, $websiteid)
     {
-        return $this->scopeConfig->getValue($section, \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $websiteid);
+        return $this->scopeConfig->getValue($section, ScopeInterface::SCOPE_STORE, $websiteid);
     }
 
     /**
