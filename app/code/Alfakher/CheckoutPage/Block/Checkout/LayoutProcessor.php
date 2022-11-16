@@ -10,20 +10,21 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class LayoutProcessor
 {
+    public const WEBSITE_CODE = 'hookahshisha/website_code_setting/website_code';
+
     /**
      * @var Data
      */
     protected $helper;
+
     /**
      * @var storeManager
      */
     protected $storeManager;
 
-    public const WEBSITE_CODE = 'hookahshisha/website_code_setting/website_code';
-
-        /**
-         * @var ScopeConfigInterface
-         */
+    /**
+     * @var ScopeConfigInterface
+     */
     protected $scopeConfig;
 
     /**
