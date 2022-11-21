@@ -186,9 +186,13 @@ class Payment extends BasePayment
                         'VI' => 'visa',
                     ];
                     $ccType = $cardTypeMap[$sccType];
-                
-                    $billingAddressId = $this->order->getBillingAddress()->getId();
-                    $billingAddress = $this->addressHelper->repository()->getById($billingAddressId);
+                    
+                    $billingAddress = $this->addressHelper->buildAddressFromInput(
+                        $this->order->getBillingAddress()->getData(),
+                        [],
+                        true
+                    );
+                    
                     $cardHolderName = $this->order->getBillingAddress()->getFirstName() . ' ' .
                     $this->order->getBillingAddress()->getLastName();
                     $this->geteway->setParameterForBackend(
@@ -203,8 +207,8 @@ class Payment extends BasePayment
                     if ($response) {
                         $cardData['cc_type'] = $sccType;
                         $cardData['cc_last4'] = substr($ccNumber, -4);
-                        $cardData['cc_exp_month'] = $ccExpMonth;
                         $cardData['cc_exp_year'] = $ccExpYear;
+                        $cardData['cc_exp_month'] = $ccExpMonth;
 
                         $customer = $this->customerRepository->getById($this->order->getCustomerId());
                         $card = $this->cardFactory->create();
