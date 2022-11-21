@@ -1,17 +1,17 @@
 <?php
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace Alfakher\CheckoutPage\Block\Checkout;
 
 use HookahShisha\InternationalTelephoneInput\Helper\Data;
-use Magento\Store\Model\StoreManagerInterface;
-use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 class LayoutProcessor
 {
     public const WEBSITE_CODE = 'hookahshisha/website_code_setting/website_code';
-
+    
     /**
      * @var Data
      */
@@ -60,8 +60,8 @@ class LayoutProcessor
         $config_website = $this->scopeConfig->getValue(self::WEBSITE_CODE, $storeScope);
         $websidecodes = explode(',', $config_website);
 
-        $validationClass= in_array($website_code, $websidecodes) ? 'validate-alphanum-with-spaces' : 'letters-only';
-        
+        $validationClass = in_array($website_code, $websidecodes) ? 'validate-alphanum-with-spaces' : 'letters-only';
+
         /*For shipping address form*/
         $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
         ['children']['shippingAddress']['children']['shipping-address-fieldset']
@@ -87,8 +87,7 @@ class LayoutProcessor
             ['children']['shippingAddress']['children']['shipping-address-fieldset']['children'])) {
             $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
             ['children']['shippingAddress']['children']['shipping-address-fieldset']
-            ['children']['telephone']['validation'] = ['required-entry' => true,
-                'validate-country-code-number' => true];
+            ['children']['telephone']['validation'] = ['required-entry' => true];
             $jsLayout['components']['checkout']['children']['steps']['children']['shipping-step']
             ['children']['shippingAddress']['children']['shipping-address-fieldset']['children']
             ['telephone'] = $this->helper->telephoneFieldConfig("shippingAddress");
@@ -150,7 +149,7 @@ class LayoutProcessor
 
                     $jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
                     ['payment']['children']['payments-list']['children'][$key]['children']['form-fields']['children']
-                    ['telephone']['validation'] = ['required-entry' => true, 'validate-country-code-number' => true];
+                    ['telephone']['validation'] = ['required-entry' => true];
 
                     $jsLayout['components']['checkout']['children']['steps']['children']
                     ['billing-step']['children']['payment']['children']
