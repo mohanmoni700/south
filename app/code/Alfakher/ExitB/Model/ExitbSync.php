@@ -159,7 +159,7 @@ class ExitbSync
                 
                 $shippingMethod = $order->getShippingMethod();
                 $orderData['orderData']['shipment']['code'] = $this->getConfigValue(self::SHIP_CODE, $websiteId);
-                $orderData['orderData']['shipment']['total'] = (float)$order->getShippingAmount();
+                $orderData['orderData']['shipment']['total'] = (float)$order->getShippingInclTax();
 
                 $items = $order->getAllItems();
                 $orderData['orderData']['items'] = $this->orderItems($items);
