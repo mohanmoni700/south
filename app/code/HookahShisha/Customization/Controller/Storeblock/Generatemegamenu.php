@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace HookahShisha\Customization\Controller\Storeblock;
 
 use Magento\Cms\Model\BlockFactory;
@@ -70,7 +72,7 @@ class Generatemegamenu extends \Magento\Framework\App\Action\Action
         try {
             $resultPage = $this->_pageFactory->create();
             $content = $resultPage->getLayout()
-                ->createBlock(Smartwave\Megamenu\Block\Topmenu::class)
+                ->createBlock(\Smartwave\Megamenu\Block\Topmenu::class)
                 ->setTemplate('Smartwave_Megamenu::topmenu.phtml')->toHtml();
 
             $updateBlock = $this->_blockFactory->create();
