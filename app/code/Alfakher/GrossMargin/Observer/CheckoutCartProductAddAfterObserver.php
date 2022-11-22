@@ -29,7 +29,11 @@ class CheckoutCartProductAddAfterObserver implements \Magento\Framework\Event\Ob
     public function execute(Observer $observer)
     {
         $item = $observer->getQuoteItem();
-        $websiteId = $item->getQuote()->getStore()->getWebsiteId();
+        if ($item->getQuote()) {
+            $websiteId = $item->getQuote()->getStore()->getWebsiteId();
+        } else {
+            $websiteId = 0;
+        }
         $moduleEnable = $this->grossMarginViewModel->isModuleEnabled($websiteId);
         if ($moduleEnable) {
             $grossMargin = 0;
