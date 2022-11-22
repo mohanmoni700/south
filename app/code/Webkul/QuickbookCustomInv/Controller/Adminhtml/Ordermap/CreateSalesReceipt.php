@@ -96,7 +96,6 @@ class CreateSalesReceipt extends \Magento\Backend\App\Action
     {
         $data = $this->getRequest()->getParams();
         $accountId = $this->getRequest()->getParam('account_id');
-
         if ($data['order_id']) {
             $config = $this->quickBooksHelperData->getQuickbooksAccountConfig($accountId);
             if ($config['enable']) {
@@ -133,6 +132,10 @@ class CreateSalesReceipt extends \Magento\Backend\App\Action
                     ];
                     array_push($items, $itemData);
                 }
+                /** tax as item **/
+                $appliedTax = $this->quickBooksHelperData->getAppliedTaxOnOrder($order);
+                $items = empty($appliedTax) ? $items : array_merge($items, $appliedTax);
+                /** tax as item **/
 
                 $customerData = $this->quickBooksHelperData->getCustomerDetailForQuickbooks($order);
                 $paymentMethod = $order->getPayment()->getMethodInstance()->getTitle();
