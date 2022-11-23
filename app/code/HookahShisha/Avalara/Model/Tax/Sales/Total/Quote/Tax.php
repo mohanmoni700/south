@@ -158,7 +158,7 @@ class Tax extends \Avalara\Excise\Model\Tax\Sales\Total\Quote\Tax
             $loggerInterface
         );
     }
-    
+
     /**
      * Map an item to item data object with product ID
      *
@@ -242,9 +242,7 @@ class Tax extends \Avalara\Excise\Model\Tax\Sales\Total\Quote\Tax
         } else {
             $lineItemTaxs = $this->processTaxQuote->getResponseLineItem($itemId);
 
-            $extensionAttributes = $itemDataObject->getExtensionAttributes()
-                ? $itemDataObject->getExtensionAttributes()
-                : $this->extensionFactory->create();
+            $extensionAttributes = $itemDataObject->getExtensionAttributes() ?? $this->extensionFactory->create();
 
             if (is_array($lineItemTaxs) && count($lineItemTaxs)) {
                 $taxamount = $taxrate = $salesTax = $exciseTax = 0;
