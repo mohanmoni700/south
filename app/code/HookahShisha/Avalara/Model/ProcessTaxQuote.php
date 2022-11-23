@@ -286,6 +286,7 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
         ];
         return $lineitems;
     }
+    
     /**
      * Tax calculation for order
      *

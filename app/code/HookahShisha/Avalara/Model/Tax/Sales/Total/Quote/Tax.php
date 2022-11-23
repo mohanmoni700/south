@@ -196,9 +196,7 @@ class Tax extends \Avalara\Excise\Model\Tax\Sales\Total\Quote\Tax
                 )
             )
         ) {
-            $extensionAttributes = $itemDataObject->getExtensionAttributes()
-                ? $itemDataObject->getExtensionAttributes()
-                : $this->extensionFactory->create();
+            $extensionAttributes = $itemDataObject->getExtensionAttributes() ?? $this->extensionFactory->create();
 
             $taxamount = $taxrate = $salesTax = $exciseTax = 0;
 
