@@ -158,6 +158,7 @@ class Tax extends \Avalara\Excise\Model\Tax\Sales\Total\Quote\Tax
             $loggerInterface
         );
     }
+    
     /**
      * Map an item to item data object with product ID
      *
