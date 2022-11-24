@@ -67,7 +67,7 @@ class PaymentColumn extends Select
     /**
      * Render option
      *
-     * @return mixed
+     * @return array
      */
     private function getSourceOptions(): array
     {
