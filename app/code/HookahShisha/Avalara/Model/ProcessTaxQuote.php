@@ -512,18 +512,7 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
                 /** @var \Magento\Catalog\Model\Product $product */
                 $product = $item->getProduct();
 
-                /**
-                 * Avalara Original code
-                 */
-                /*
-                    if ($item->getProductType() == "bundle") {
-                        continue;
-                    }
-                */
-
-                /**
-                 * patch code
-                 */
+                /*patch code*/
                 if ($item->getProductType() == "bundle" || $item->getProductType() == "configurable") {
                     continue;
                 }
@@ -532,14 +521,6 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
                 $currencyCode = $this->storeManager->getStore()->getCurrentCurrency()->getCode();
 
                 if ($item->getParentItem()) {
-                    /**
-                     * Avalara original code
-                     */
-                    /*
-                        if ($item->getParentItem()->getProductType() == "configurable") {
-                            continue;
-                        }
-                    */
                     $itemQty = $item->getParentItem()->getQty();
                 } else {
                     $itemQty = $item->getQty();
