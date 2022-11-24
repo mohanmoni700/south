@@ -395,11 +395,60 @@
             h2 {
                 .lib-css(color, @color_white);
             }
+            .per_off_bg {
+                .lib-css(background, transparent);
+            }
             .per_off {
                 -webkit-text-fill-color: unset;
             }
         }
     }
+    [lang="en"] .limited_sale {
+        .limited_left {
+            h2 {
+                .lib-css(margin-bottom, 12px);
+            }
+            .per_off_bg {
+                .lib-css(background, transparent);
+            }
+        }
+    }
+    [lang="de"] {
+        .limited_sale {
+            .limited_left {
+                h2 {
+                    .lib-font-size(106);
+                }
+                .per_off_bg {
+                    .lib-css(background, transparent);
+                }
+                .per_off {
+                    .lib-font-size(40);
+                }
+            }
+        }
+        .collection_box {
+            .col_title {
+                .lib-font-size(25);
+            }
+        }
+    }
+    [lang="es"] {
+        .limited_sale {
+            .limited_left {
+                h2 {
+                    .lib-font-size(106);
+                }
+                .per_off_bg {
+                    .lib-css(background, transparent);
+                }
+                .per_off {
+                    .lib-font-size(30);
+                }
+            }
+        }
+    }
+
     body .page-header {
         .warning-section-wrapper .warning-section {
             .heading-section {
@@ -465,6 +514,111 @@
             .header.content{
                 .left_section {
                     flex-basis: 30%;
+                }
+            }
+        }
+    }    
+}
+//
+//  Desktop
+//  _____________________________________________
+
+& when (@media-target = 'desktop'), (@media-target = 'all') {
+    //
+    //  Responsive Tablet
+    //  ---------------------------------------------
+    @media only screen and (min-width: 1200px) {
+        [lang="de"] {
+            .limited_sale {
+                .limited_left {
+                    h2 {
+                        .lib-css(line-height, 1.33);
+                    }
+                }
+            }
+        }
+        [lang="de"] {
+            .limited_sale {
+                .limited_left {
+                    h2 {
+                        .lib-css(line-height, 1.06);
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 1199px) and (min-width: 991px) {
+        [lang="de"] {
+            .limited_sale {
+                .limited_left {
+                    h2 {
+                        .lib-font-size(86);
+                    }   
+                    .per_off {
+                        .lib-font-size(30);
+                    }               
+                }
+            }
+        }
+        [lang="es"] {
+            .limited_sale {
+                .limited_left {
+                    h2 {
+                        .lib-font-size(76);
+                    }   
+                    .per_off {
+                        .lib-font-size(25);
+                    }  
+                }
+            }
+        }
+    }
+    @media only screen and (min-width: 768px) {
+        [lang="es"] {
+            .limited_sale {
+                .ls_-content {
+                    p {
+                        display: -webkit-box;
+                        -webkit-line-clamp: 3;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                    }
+                }    
+            }
+        }
+    }
+}
+& when (@media-target = 'mobile'), (@media-target = 'all') {
+    //
+    //  Homepage Responsive
+    //  ----------------------------
+    @media only screen and (max-width: 639px) {
+        [lang="de"] {
+            .limited_sale {
+                .limited_left {
+                    h2 {
+                        .lib-font-size(62);
+                    }                   
+                    .per_off {
+                        .lib-font-size(20);
+                    }
+                }
+            }
+            .collection_box {
+                .col_title {
+                    .lib-font-size(26);
+                }
+            }
+        }
+        [lang="es"] {
+            .limited_sale {
+                .limited_left {
+                    h2 {
+                        .lib-font-size(72);
+                    }                  
+                    .per_off {
+                        .lib-font-size(20);
+                    }
                 }
             }
         }

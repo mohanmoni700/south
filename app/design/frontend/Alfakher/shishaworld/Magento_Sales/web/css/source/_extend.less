@@ -1,4 +1,24 @@
 //
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) { 
+    .table-wrapper.quotes-history .table-quote-items{
+        thead {
+            tr {
+                th {
+                    &.date {
+                        .lib-css(width, 100px);
+                    }
+                    &.actions {
+                        .lib-css(width, 130px);
+                    }
+                }
+            }
+        }
+    }
+}
+//
 //  Mobile
 //  -------------------------
 
