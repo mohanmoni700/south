@@ -23,6 +23,8 @@ use Magento\Tax\Api\Data\QuoteDetailsItemExtensionFactory;
 use Avalara\Excise\Model\Tax\TaxCalculation;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Avalara\Excise\Model\Logger;
+use Magento\Quote\Model\Quote\Item\AbstractItem;
+use Magento\Tax\Api\Data\QuoteDetailsItemInterface;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -35,37 +37,37 @@ class Tax extends \Avalara\Excise\Model\Tax\Sales\Total\Quote\Tax
     public const AVATAX_GET_TAX_REQUEST_ERROR = 'avatax_get_tax_request_error';
 
     /**
-     * @var Avalara\Excise\Model\ProcessTaxQuote
+     * @var ProcessTaxQuote
      */
     protected $processTaxQuote;
 
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface
      */
     protected $scopeConfig;
 
     /**
-     * @var \Magento\Framework\Pricing\PriceCurrencyInterface
+     * @var PriceCurrencyInterface
      */
     protected $priceCurrency;
 
     /**
-     * @var \Magento\Tax\Api\Data\QuoteDetailsItemExtensionFactory
+     * @var QuoteDetailsItemExtensionFactory
      */
     protected $extensionFactory;
 
     /**
-     * @var Avalara\Excise\Model\Tax\TaxCalculation
+     * @var TaxCalculation
      */
     protected $taxCalculation;
 
     /**
-     * @var \Magento\Catalog\Api\ProductRepositoryInterface
+     * @var ProductRepositoryInterface
      */
     protected $productRepository;
 
     /**
-     * @var Avalara\Excise\Model\Logger
+     * @var Logger
      */
     protected $logger;
 
@@ -162,18 +164,18 @@ class Tax extends \Avalara\Excise\Model\Tax\Sales\Total\Quote\Tax
     /**
      * Map an item to item data object with product ID
      *
-     * @param \Magento\Tax\Api\Data\QuoteDetailsItemInterfaceFactory $itemDataObjectFactory
-     * @param \Magento\Quote\Model\Quote\Item\AbstractItem $item
+     * @param QuoteDetailsItemInterfaceFactory $itemDataObjectFactory
+     * @param AbstractItem $item
      * @param bool $priceIncludesTax
      * @param bool $useBaseCurrency
      * @param string $parentCode
-     * @return \Magento\Tax\Api\Data\QuoteDetailsItemInterface
+     * @return QuoteDetailsItemInterface
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     public function mapItem(
-        \Magento\Tax\Api\Data\QuoteDetailsItemInterfaceFactory $itemDataObjectFactory,
-        \Magento\Quote\Model\Quote\Item\AbstractItem $item,
+        QuoteDetailsItemInterfaceFactory $itemDataObjectFactory,
+        AbstractItem $item,
         $priceIncludesTax,
         $useBaseCurrency,
         $parentCode = null

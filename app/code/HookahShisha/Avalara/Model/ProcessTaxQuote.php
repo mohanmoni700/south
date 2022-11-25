@@ -25,6 +25,11 @@ use Magento\Checkout\Model\Session;
 use Magento\Bundle\Model\Product\Price;
 use Magento\Quote\Model\Quote\ItemFactory;
 use Magento\Quote\Model\ResourceModel\Quote\Item\CollectionFactory;
+use Magento\Tax\Api\TaxClassRepositoryInterface;
+use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
+use Magento\Quote\Model\Quote;
+use Magento\Tax\Api\Data\QuoteDetailsInterface;
+use Magento\Quote\Api\Data\ShippingAssignmentInterface;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -57,7 +62,7 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
     public const APIFAIL = "false";
 
     /**
-     * @var \Magento\Checkout\Model\Session
+     * @var Session
      */
     protected $checkoutSession;
 
@@ -72,32 +77,32 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
     protected $exciseClientFactory;
 
     /**
-     * @var \Magento\Directory\Model\RegionFactory
+     * @var RegionFactory
      */
     protected $regionFactory;
 
     /**
-     * @var \Magento\Tax\Api\TaxClassRepositoryInterface
+     * @var TaxClassRepositoryInterface
      */
     protected $taxClassRepository;
 
     /**
-     * @var \Magento\Framework\App\ProductMetadataInterface
+     * @var ProductMetadataInterface
      */
     protected $productMetadata;
 
     /**
-     * @var \Magento\Tax\Helper\Data $taxData
+     * @var Data
      */
     protected $taxData;
 
     /**
-     * @var \Magento\Directory\Model\Country\Postcode\ConfigInterface
+     * @var ConfigInterface
      */
     protected $postCodesConfig;
 
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface
      */
     protected $scopeConfig;
 
@@ -117,17 +122,17 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
     protected $exciseTaxConfig;
 
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var StoreManagerInterface
      */
     protected $storeManager;
 
     /**
-     * @var \Magento\Catalog\Model\ProductRepository
+     * @var ProductRepository
      */
     protected $_productRepository;
 
     /**
-     * @var \Magento\Customer\Api\CustomerRepositoryInterface
+     * @var CustomerRepositoryInterface
      */
     protected $customerRepository;
 
@@ -137,12 +142,12 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
     protected $timestamp;
 
     /**
-     * @var \Magento\Framework\Stdlib\DateTime\TimezoneInterface
+     * @var TimezoneInterface
      */
     protected $dateTime;
 
     /**
-     * @var \Magento\Sales\Model\OrderRepository;
+     * @var OrderRepository;
      */
     protected $orderRepository;
     
@@ -290,9 +295,9 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
     /**
      * Tax calculation for order
      *
-     * @param \Magento\Quote\Model\Quote $quote
-     * @param \Magento\Tax\Api\Data\QuoteDetailsInterface $quoteTaxDetails
-     * @param \Magento\Quote\Api\Data\ShippingAssignmentInterface $shippingAssignment
+     * @param Quote $quote
+     * @param QuoteDetailsInterface $quoteTaxDetails
+     * @param ShippingAssignmentInterface $shippingAssignment
      * @return $this
      */
     public function getTaxForOrder(
@@ -453,7 +458,6 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
     private function _validatePostcode($postcode, $countryId)
     {
         $postCodes = $this->postCodesConfig->getPostCodes();
-
         if (isset($postCodes[$countryId]) && is_array($postCodes[$countryId])) {
             $patterns = $postCodes[$countryId];
 
@@ -465,23 +469,22 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
                 }
             }
         }
-
         return false;
     }
 
     /**
      * Get order line items
      *
-     * @param \Magento\Quote\Model\Quote $quote
-     * @param \Magento\Tax\Api\Data\QuoteDetailsInterface $quoteTaxDetails
+     * @param Quote $quote
+     * @param QuoteDetailsInterface $quoteTaxDetails
      * @param array $lineParam
      * @param array $customerData
      * @param mixed $address
      * @return array
      */
     private function _getLineItems(
-        \Magento\Quote\Model\Quote $quote,
-        \Magento\Tax\Api\Data\QuoteDetailsInterface $quoteTaxDetails,
+        Quote $quote,
+        QuoteDetailsInterface $quoteTaxDetails,
         $lineParam,
         $customerData,
         $address
