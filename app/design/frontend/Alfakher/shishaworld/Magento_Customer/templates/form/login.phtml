@@ -33,7 +33,7 @@ $helper = $this->helper(HookahShisha\ChangePassword\Helper\Data::class);
                         <input name="login[username]" value="<?= $block->escapeHtmlAttr($block->getUsername()) ?>"
                             <?php if ($block->isAutocompleteDisabled()): ?> autocomplete="off"<?php endif; ?>
                                id="email" type="email" class="input-text"
-                               placeholder="Email"
+                               placeholder="<?= $block->escapeHtml(__('Email')) ?>"
                                title="<?= $block->escapeHtmlAttr(__('Email')) ?>"
                                data-validate="{required:true, 'validate-email':true}" required>
                     </div>
