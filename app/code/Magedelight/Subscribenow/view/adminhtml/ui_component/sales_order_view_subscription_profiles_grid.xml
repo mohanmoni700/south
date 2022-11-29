@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">sales_order_view_subscription_profiles_grid.sales_order_view_subscription_profiles_grid_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>sales_order_shipment_columns</spinner>
+        <deps>
+            <dep>sales_order_view_subscription_profiles_grid.sales_order_view_subscription_profiles_grid_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="sales_order_view_subscription_profiles_grid_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">subscription_id</param>
+            </storageConfig>
+            <filterUrlParams>
+                <param name="order_id">*</param>
+            </filterUrlParams>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Magedelight_Subscribenow::root</aclResource>
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="sales_order_view_subscription_profiles_grid_data_source">
+            <settings>
+                <requestFieldName>subscription_id</requestFieldName>
+                <primaryFieldName>subscription_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters">
+        </filters>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="sales_order_shipment_columns">
+        <settings>
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">sales_order_view_subscription_profiles_grid.sales_order_view_subscription_profiles_grid.sales_order_shipment_columns.actions</item>
+                    <item name="target" xsi:type="string">applyAction</item>
+                    <item name="params" xsi:type="array">
+                        <item name="0" xsi:type="string">view</item>
+                        <item name="1" xsi:type="string">${ $.$data.rowIndex }</item>
+                    </item>
+                </param>
+            </childDefaults>
+        </settings>
+        <column name="profile_id">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Profile Reference ID</label>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+        <column name="subscription_status">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magedelight\Subscribenow\Model\Source\ProfileStatus</item>
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="editor" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Subscription Status</item>
+                </item>
+            </argument>
+        </column>
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">dateRange</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
+                    <item name="dataType" xsi:type="string">date</item>
+                    <item name="label" xsi:type="string" translate="true">Created At</item>
+                </item>
+            </argument>
+        </column>
+        <column name="next_occurrence_date" class="Magedelight\Subscribenow\Ui\Component\Listing\Column\ProductSubscription\NextOccurrenceDate">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sorting" xsi:type="string">desc</item>
+                    <item name="filter" xsi:type="string">dateRange</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
+                    <item name="dataType" xsi:type="string">date</item>
+                    <item name="label" xsi:type="string" translate="true">Next Occurence Date</item>
+                    <item name="dateFormat" xsi:type="string">MMM d, Y</item>
+                    <item name="align" xsi:type="string">left</item>
+                </item>
+            </argument>
+        </column>
+        <actionsColumn name="actions" class="Magedelight\Subscribenow\Ui\Component\Listing\Column\Sales\Order\View\SubscriptionProfilesViewAction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="viewUrlPath" xsi:type="string">subscribenow/productsubscribers/view</item>
+                    <item name="urlEntityParamName" xsi:type="string">id</item>
+                </item>
+            </argument>
+            <settings>
+                <indexField>subscription_id</indexField>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

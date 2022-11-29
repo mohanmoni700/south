@@ -1,0 +1,54 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+<table class="info-table">
+    <tbody>
+    <tr>
+        <th><span class="nobr"><?php echo __('Billing Price:'); ?></span></th>
+        <td><?php echo $block->getBillingAmount() ?></td>
+    </tr>
+    <?php if ($block->getSubscription()->getTrialBillingAmount() > 0): ?>
+        <tr>
+            <th><span class="nobr"><?php echo __('Trial Price:'); ?></span></th>
+            <td><?php echo $block->getTrialAmount() ?></td>
+        </tr>
+    <?php endif; ?>
+    <?php if ($block->getSubscription()->getInitialAmount() > 0): ?>
+        <tr>
+            <th><span class="nobr"><?php echo __('Initial Price:'); ?></span></th>
+            <td><?php echo $block->getInitialAmount() ?></td>
+        </tr>
+    <?php endif; ?>
+    <tr>
+        <th><span class="nobr"><?php echo __('Payment Method:'); ?></span></th>
+        <td><?php echo $block->getSubscription()->getPaymentTitle() ?></td>
+    </tr>
+    <?php if ($block->canDisplayCardInfo()): ?>
+        <tr>
+            <th><span class="nobr"><?php echo __('Card Details:'); ?></span></th>
+            <td>
+                <?php if ($block->isEditMode() && $block->getSaveCards()): ?>
+                    <select id="md_savecard" name="md_savecard">
+                        <?php foreach ($block->getSaveCards() as $key => $card): ?>
+                            <option value="<?php echo $key ?>" <?php echo ($card['is_current'] == true)?'selected="selected"':''; ?>>
+                                <?php echo $card['label'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php else: ?>
+                    <?php echo $block->getCardInfo() ?>
+                <?php endif; ?>
+            </td>
+        </tr>
+    <?php endif; ?>
+    </tbody>
+</table>
