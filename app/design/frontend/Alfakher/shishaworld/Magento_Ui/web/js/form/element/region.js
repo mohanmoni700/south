@@ -60,7 +60,6 @@ define([
             isRegionRequired = !this.skipValidation && !!option['is_region_required'];
 
             if (!isRegionRequired) {
-                alert("JKKKKKKK");
                 this.setVisible(false);
                 this.error(false);
             }
