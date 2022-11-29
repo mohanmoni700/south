@@ -8,8 +8,9 @@
             &:before {
                 background: url('@{baseDir}images/my-quote.svg') no-repeat;
             }
-        }
-        .amquote-showcart {
+            .counter.qty {
+                .lib-css(max-width, 36px);
+            }
             .text {
                 .lib-css(text-transform, capitalize);
             }
@@ -34,9 +35,8 @@
             .counter.qty {
                 font-size: 10px;
                 line-height: 18px;
-                max-width: 36px;
+                max-width: 33px;
                 min-width: 20px;
-                padding: 0;
                 top: -10px;
             }
         }

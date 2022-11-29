@@ -115,10 +115,10 @@
             .lib-css(margin-bottom, (@indent__l + @indent__s));
         }
         [lang="en"] .footer_logo .address_info {
-            .lib-css(margin-bottom,  @indent__l);
+            .lib-css(margin-bottom,  (@indent__l + @indent__s));
         }
         [lang="es"] .footer_logo .address_info { 
-            .lib-css(margin-bottom,  (@indent__xs));
+            .lib-css(margin-bottom,  (@indent__l + @indent__s));
         }
     }
 }
@@ -147,10 +147,10 @@
         .lib-css(margin-bottom, 78px);
     }
     [lang="en"] .footer_logo .address_info {
-        .lib-css(margin-bottom,  (@indent__l + 2));
+        .lib-css(margin-bottom,  78px);
     }
     [lang="es"] .footer_logo .address_info { 
-        .lib-css(margin-bottom,  (@indent__s - 2));
+        .lib-css(margin-bottom,  78px);
     }
 }
 //
@@ -179,6 +179,6 @@
         .lib-css(margin-bottom,  @indent__m);
     }
     [lang="es"] .footer_logo .address_info { 
-        .lib-css(margin-bottom,  (@indent__base));
+        .lib-css(margin-bottom,  @indent__m);
     }
 }
