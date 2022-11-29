@@ -39,7 +39,13 @@ class CartItemFactory extends SourceCartItemFactory
             isset($data['entered_options']) ? $this->createEnteredOptions($data['entered_options']) : [],
             $data['alfa_bundle'] ?? null,
             $data['parent_alfa_bundle'] ?? null,
-            $data['super_pack_price'] ?? null
+            $data['super_pack_price'] ?? null,
+            $data['is_subscription'] ?? null,
+            $data['billing_period'] ?? null,
+            $data['subscription_start_date'] ?? null,
+            $data['end_type'] ?? null,
+            $data['subscription_end_cycle'] ?? null,
+            $data['subscription_end_date'] ?? null,
         );
     }
 
