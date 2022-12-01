@@ -108,7 +108,7 @@ class CancelOrders
                     $actualDate = $this->date->date()->modify("-" . $daysBefore . " days")->format('Y-m-d');
 
                     $orders = $this->orderCollectionFactory->create();
-                    $orders->addFieldToFilter('store_id', ['in' => [$storeId]]);
+                    $orders->addFieldToFilter('store_id', ['in' => $storeId]);
                     $orders->addFieldToFilter('status', ['in' => 'pending']);
                     $orders->addFieldToFilter('created_at', ['gteq' => $actualDate." 00:00:00"]);
                     $orders->addFieldToFilter('created_at', ['lteq' => $actualDate." 23:59:59"]);
