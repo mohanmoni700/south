@@ -592,6 +592,24 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
                     'DestinationSpecialJurisdictionInd' => 'N',
                     'DestinationExciseWarehouse' => null,
                 ];
+
+                /* fix to resolve the line amount issue for the fixed price bundle products */
+                if (
+                    $item->getParentItem() != null &&
+                    $item->getParentItem()->getProductType() == 'configurable'
+                ) {
+                    $lineitems["LineAmount"] = $item->getParentItem()->getRowTotal() - $item->getDiscountAmount();
+                } elseif (
+                    $item->getParentItem() != null &&
+                    $item->getParentItem()->getProductType() == 'bundle' &&
+                    $item->getParentItem()->getProduct()->getPriceType() == Price::PRICE_TYPE_FIXED
+                ) {
+                    $lineitems["LineAmount"] = $itemUnitPrice * $itemQty;
+                } else {
+                    $lineitems["LineAmount"] = $item->getRowTotal() - $item->getDiscountAmount();
+                }
+                /* -- fix to resolve the line amount issue for the fixed price bundle products -- */
+
                 // To set common data elements
                 $transactionItem = array_merge($lineitems, $lineParam); //@codingStandardsIgnoreLine
                 array_push($lineItems, $transactionItem);
