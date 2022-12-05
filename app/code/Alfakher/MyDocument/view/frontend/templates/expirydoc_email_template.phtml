@@ -1,10 +1,8 @@
 <?php
 $rejection=$block->getDocumentarray();
-if (!empty($rejection)) {
-    $text = "It has been observed that few documents are expired. ";
-    $text .= "Please find a details of expired document as follows:"; ?>
+if (!empty($rejection)) { ?>
 <p>
-    <?= $block->escapeHtml(__($text))?>
+    <?= $block->escapeHtml(__('It has been observed that few documents are expired. Please find a details of expired document as follows:'))?>
 </p>
 <ul>
     <?php foreach ($rejection as $item): ?>
