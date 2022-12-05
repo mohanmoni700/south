@@ -1,0 +1,17 @@
+--- a/vendor/klarna/module-core/Model/Checkout/Orderline/Items.php	2022-12-05 10:25:15.000000000 +0530
++++ b/vendor/klarna/module-core/Model/Checkout/Orderline/Items.php	2022-12-05 10:24:13.000000000 +0530
+@@ -212,7 +212,13 @@
+     {
+         if ($checkout->getItems()) {
+             foreach ($checkout->getItems() as $item) {
+-                $checkout->addOrderLine($item);
++                // Adding the discount amount for free product
++                if (!$item['total_amount'] &&
++                    $item['unit_price'] !== $item['total_discount_amount']
++                ) {
++                    $item['total_discount_amount'] = $item['unit_price'];
++                }
++                    $checkout->addOrderLine($item);
+             }
+         }
+
