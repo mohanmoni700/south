@@ -1,0 +1,164 @@
+<?php
+/** @var \Magento\Contact\Block\ContactForm $block */
+/** @var \HookahShisha\Customization\ViewModel\UserDataProvider $viewModel */
+?> 
+
+<form class="form contact"
+      action="<?= $block->escapeUrl($block->getUrl('custom/contact/post')) ?>"
+      id="contact-form"
+      method="post"
+      data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>"
+      data-mage-init='{"validation":{}}'>
+    <fieldset class="fieldset">
+        <?= $block->getLayout()->createBlock(Magento\Cms\Block\Block::class)
+        ->setBlockId('contact-us-details')->toHtml(); ?>
+        <div class="form-column-2">
+            <div class="field first_name">
+                <label class="label" for="first_name"><span><?= $block->escapeHtml(__('First Name')) ?></span></label>
+                <div class="control">
+                    <input name="first_name"
+                        id="first_name"
+                        title="<?= $block->escapeHtmlAttr(__('First Name')) ?>"
+                        value="<?= $block->escapeHtmlAttr($block->getFirstName()) ?>"
+                        class="input-text"
+                        type="text"/>
+                </div>
+            </div>
+            <div class="field last_name">
+                <label class="label" for="last_name">
+                    <span><?= $block->escapeHtml(__('Last Name')) ?></span>
+                </label>
+                <div class="control">
+                    <input name="last_name"
+                        id="last_name"
+                        title="<?= $block->escapeHtmlAttr(__('Last Name')) ?>"
+                        value="<?= $block->escapeHtmlAttr($block->getLastName()) ?>"
+                        class="input-text"
+                        type="text" />
+                </div>
+            </div>
+        </div>
+        <div class="form-column-2">
+            <div class="field email required">
+                <label class="label" for="email"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
+                <div class="control">
+                    <input name="email"
+                        id="email"
+                        title="<?= $block->escapeHtmlAttr(__('Email')) ?>"
+                        value="<?= $block->escapeHtmlAttr($block->getUserEmail()) ?>"
+                        class="input-text"
+                        type="email"
+                        data-validate="{required:true, 'validate-email':true}"/>
+                </div>
+            </div>
+            <div class="field telephone">
+                <label class="label" for="telephone"><span>
+                <?= $block->escapeHtml(__('Phone Number')) ?></span></label>
+                <div class="control">
+                    <input name="telephone"
+                        id="telephone"
+                        title="<?= $block->escapeHtmlAttr(__('Phone Number')) ?>"
+                        value="<?= $block->escapeHtmlAttr($block->getUserTelephone()) ?>"
+                        class="input-text"
+                        type="tel" />
+                </div>
+            </div>
+        </div>
+        <div class="form-column-2">
+            <div class="field tax_id">
+                <label class="label" for="tax_id"><span>
+                <?= $block->escapeHtml(__('Fiscal Number')) ?></span></label>
+                <div class="control">
+                    <input name="tax_id"
+                        id="tax_id"
+                        title="<?= $block->escapeHtmlAttr(__('Fiscal Number')) ?>"
+                        value="<?= $block->escapeHtmlAttr($block->getTaxId()) ?>"
+                        class="input-text"
+                        type="text" />
+                </div>
+            </div>
+            <div class="field tobacco_permit_number">
+                <label class="label" for="tobacco_permit_number"><span>
+                <?= $block->escapeHtml(__('UST ID')) ?></span></label>
+                <div class="control">
+                    <input name="tobacco_permit_number"
+                        id="tobacco_permit_number"
+                        title="<?= $block->escapeHtmlAttr(__('UST ID')) ?>"
+                        value="<?= $block->escapeHtmlAttr($block->getTobaccoPermitNumber()) ?>"
+                        class="input-text"
+                        type="text" />
+                </div>
+            </div>
+        </div>
+        <div class="form-column-1">
+            <div class="field issue_type input-box required">
+                    <label class="label" for="issue_type"><span>
+                    <?= $block->escapeHtml(__('Issue Type')) ?></span></label>
+                <div class="control">
+                    <select name="issue_type" id="issue_type" data-validate="{required:true}">
+                        <option value="">Please Select</option>
+                        <option name="Order Status" value="Order Status">Order Status</option>
+                        <option name="Order Change" value="Order Change">Order Change</option>
+                        <option name="Order Cancellation" value="Order Cancellation">Order Cancellation</option>
+                        <option name="Out of Stock" value="Out of Stock">Out of Stock</option>
+                        <option name="Lost Order" value="Lost Order">Lost Order</option>
+                        <option name="Damaged Order" value="Damaged Order">Damaged Order</option>
+                        <option name="Wrong Item" value="Wrong Item">Wrong Item</option>
+                        <option name="Missing Item" value="Missing Item">Missing Item</option>
+                        <option name="Product Issue" value="Product Issue">Product Issue</option>
+                        <option name="Return" value="Return">Return</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="form-column-1">
+            <div class="field subject required">
+                <label class="label" for="subject"><span>
+                <?= $block->escapeHtml(__('Subject')) ?></span></label>
+                <div class="control">
+                    <input name="subject"
+                            id="subject"
+                            title="<?= $block->escapeHtmlAttr(__('Subject')) ?>"
+                            value="<?= $block->escapeHtmlAttr($block->getSubject()) ?>"
+                            class="input-text"
+                            type="text" data-validate="{required:true}"/>
+                </div>
+            </div>
+        </div>
+        <div class="form-column-1">
+            <div class="field comment required">
+                <label class="label" for="comment">
+                    <span><?= $block->escapeHtml(__('Comments/Questions')) ?></span>
+                </label>
+                <div class="control">
+                    <textarea name="comment"
+                            id="comment"
+                            title="<?= $block->escapeHtmlAttr(__('Comments/Questions')) ?>"
+                            class="input-text"
+                            cols="5"
+                            rows="3"
+                            data-validate="{required:true}"
+                    ><?= $block->escapeHtml($block->getUserComment()) ?></textarea>
+                </div>
+            </div>
+        </div>
+        <?= $block->getChildHtml('form.additional.info') ?>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <input type="hidden" name="hideit" id="hideit" value="" />
+            <button type="submit" title="<?= $block->escapeHtmlAttr(__('Submit')) ?>" class="action submit primary">
+                <span><?= $block->escapeHtml(__('Submit')) ?></span>
+            </button>
+        </div>
+    </div>
+</form>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Customer/js/block-submit-on-send": {
+                "formId": "contact-form"
+            }
+        }
+    }
+</script>

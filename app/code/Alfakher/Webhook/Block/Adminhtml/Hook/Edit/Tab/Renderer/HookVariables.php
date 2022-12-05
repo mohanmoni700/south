@@ -2,6 +2,7 @@
 
 namespace Alfakher\Webhook\Block\Adminhtml\Hook\Edit\Tab\Renderer;
 
+use Alfakher\MyDocument\Model\ResourceModel\MyDocument;
 use Magento\Backend\Block\Template\Context;
 use Magento\Catalog\Model\CategoryFactory;
 use Magento\Catalog\Model\ResourceModel\Eav\Attribute as CatalogEavAttr;
@@ -9,17 +10,19 @@ use Magento\Customer\Model\ResourceModel\Customer as CustomerResource;
 use Magento\Eav\Model\Entity\Attribute\Set as AttributeSet;
 use Magento\Newsletter\Model\ResourceModel\Subscriber;
 use Magento\Quote\Model\ResourceModel\Quote;
+use Magento\Rma\Model\ResourceModel\Item;
+use Magento\Rma\Model\ResourceModel\Rma;
+use Magento\Rma\Model\ResourceModel\Shipping;
 use Magento\Sales\Model\OrderFactory;
 use Magento\Sales\Model\ResourceModel\Order\Address;
 use Magento\Sales\Model\ResourceModel\Order\Creditmemo as CreditmemoResource;
 use Magento\Sales\Model\ResourceModel\Order\Invoice as InvoiceResource;
 use Magento\Sales\Model\ResourceModel\Order\Shipment as ShipmentResource;
 use Magento\Sales\Model\ResourceModel\Order\Status\History as OrderStatusResource;
+use Mageplaza\Webhook\Block\Adminhtml\Hook\Edit\Tab\Renderer\Body;
 use Mageplaza\Webhook\Block\Adminhtml\LiquidFilters;
 use Mageplaza\Webhook\Model\Config\Source\HookType;
 use Mageplaza\Webhook\Model\HookFactory;
-use Mageplaza\Webhook\Block\Adminhtml\Hook\Edit\Tab\Renderer\Body;
-use Alfakher\MyDocument\Model\ResourceModel\MyDocument;
 
 class HookVariables extends Body
 {
@@ -27,6 +30,18 @@ class HookVariables extends Body
      * @var MyDocument
      */
     protected $myDocResource;
+    /**
+     * @var Item
+     */
+    protected $rmaItemResource;
+    /**
+     * @var Rma
+     */
+    protected $rmaResource;
+    /**
+     * @var Shipping
+     */
+    protected $rmShippingResource;
 
     /**
      * Body constructor.
@@ -46,6 +61,9 @@ class HookVariables extends Body
      * @param Subscriber $subscriber
      * @param Address $addressResource
      * @param MyDocument $myDocResource
+     * @param Item $rmaItemResource
+     * @param Rma $rmaResource
+     * @param Shipping $rmShippingResource
      * @param array $data
      */
     public function __construct(
@@ -64,9 +82,15 @@ class HookVariables extends Body
         Subscriber $subscriber,
         Address $addressResource,
         MyDocument $myDocResource,
+        Item $rmaItemResource,
+        Rma $rmaResource,
+        Shipping $rmShippingResource,
         array $data = []
     ) {
         $this->myDocResource = $myDocResource;
+        $this->rmaItemResource = $rmaItemResource;
+        $this->rmaResource = $rmaResource;
+        $this->rmShippingResource = $rmShippingResource;
         parent::__construct(
             $context,
             $orderFactory,
@@ -86,11 +110,11 @@ class HookVariables extends Body
         );
     }
 
-     /**
-      * Get attributes collection according to the hook type
-      *
-      * @return array
-      */
+    /**
+     * Get attributes collection according to the hook type
+     *
+     * @return array
+     */
     public function getHookAttrCollection()
     {
         $hookType = $this->getHookType();
@@ -152,6 +176,17 @@ class HookVariables extends Body
                 $collectionData = $this->myDocResource->getConnection()
                     ->describeTable($this->myDocResource->getMainTable());
                 $attrCollection = $this->getAttrCollectionFromDb($collectionData);
+                break;
+            case "create_rma":
+            case "update_rma":
+                $rmaCollection = $this->rmaResource->getConnection()
+                    ->describeTable($this->rmaResource->getMainTable());
+                $rmaAttrCollection = $this->getAttrCollectionFromDb($rmaCollection);
+
+                $rmaShippingCollection = $this->rmShippingResource->getConnection()
+                    ->describeTable($this->rmShippingResource->getMainTable());
+                $rmaShippingAttrCollection = $this->getAttrCollectionFromDb($rmaShippingCollection);
+                $attrCollection = array_merge($rmaAttrCollection, $rmaShippingAttrCollection);
                 break;
             default:
                 $collectionData = $this->orderFactory->create()->getResource()->getConnection()

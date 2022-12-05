@@ -5,12 +5,14 @@ namespace Alfakher\Webhook\Helper;
 use Exception;
 use Magento\Backend\Model\UrlInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Eav\Model\Config;
 use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\State;
 use Magento\Framework\DataObject;
 use Magento\Framework\HTTP\Adapter\CurlFactory;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Framework\ObjectManagerInterface;
+use Magento\Rma\Api\RmaAttributesManagementInterface;
 use Magento\Store\Model\Store;
 use Magento\Store\Model\StoreManagerInterface;
 use Mageplaza\Webhook\Block\Adminhtml\LiquidFilters;
@@ -26,7 +28,10 @@ class Data extends \Mageplaza\Webhook\Helper\Data
      * @var \Magento\Framework\App\State
      */
     protected $state;
-
+    /**
+     * @var Config
+     */
+    protected $eavConfig;
     /**
      * Data constructor
      *
@@ -41,6 +46,7 @@ class Data extends \Mageplaza\Webhook\Helper\Data
      * @param HistoryFactory $historyFactory
      * @param CustomerRepositoryInterface $customer
      * @param State $state
+     * @param Config $eavConfig
      */
     public function __construct(
         Context $context,
@@ -53,9 +59,11 @@ class Data extends \Mageplaza\Webhook\Helper\Data
         HookFactory $hookFactory,
         HistoryFactory $historyFactory,
         CustomerRepositoryInterface $customer,
-        State $state
+        State $state,
+        Config $eavConfig
     ) {
         $this->state = $state;
+        $this->eavConfig = $eavConfig;
         parent::__construct(
             $context,
             $objectManager,
@@ -101,12 +109,29 @@ class Data extends \Mageplaza\Webhook\Helper\Data
             $history = $this->historyFactory->create();
             if ($hookType == "update_document" || $hookType == "new_document") {
                 $documentData = $this->AddFilePath($item, $hookType);
-                $itemData = new DataObject($documentData);
+                $docItems = $this->addDocumentStatus($documentData, $hookType);
+                $itemData = new DataObject($docItems);
             } elseif ($hookType == "delete_document") {
                 $documentData = $this->AddFilePath($item, $hookType);
                 $itemData = new DataObject($documentData['items']);
             } elseif ($hookType == "update_order") {
                 $itemData = $item['item'];
+            } elseif ($hookType == "create_rma" || $hookType == "update_rma") {
+                $rmaItem = $item['item'];
+                $rmaItemdata = [];
+                foreach ($rmaItem->getItems() as $item) {
+                    $rmaItemdataObj = new \Magento\Framework\DataObject();
+                    $itemData = [];
+                    $itemData = $item->getData();
+                    $itemData['condition'] = $this->getRmaAttributeLabel('condition', $item->getCondition());
+                    $itemData['reason'] = $this->getRmaAttributeLabel('reason', $item->getReason());
+                    $itemData['resolution'] = $this->getRmaAttributeLabel('resolution', $item->getResolution());
+                    $rmaItemdata[] = $rmaItemdataObj->setData($itemData);
+                }
+                $trackingNumbers = $rmaItem->getTrackingNumbers()->getData();
+                $rmaItem->setItems($rmaItemdata);
+                $rmaItem->setTrackingNumbers($trackingNumbers);
+                $itemData = $rmaItem;
             } else {
                 $itemData = $item;
             }
@@ -173,5 +198,55 @@ class Data extends \Mageplaza\Webhook\Helper\Data
             }
         }
         return $items;
+    }
+
+    /**
+     * Add document status
+     *
+     * @param array $docItems
+     * @param string $hookType
+     * @return array
+     */
+    public function addDocumentStatus($docItems, $hookType)
+    {
+        if ($hookType == "update_document") {
+            foreach ($docItems['items'] as $dockey => $docItem) {
+                $docItems['items'][$dockey]['pending_document'] = 0;
+                $docItems['items'][$dockey]['rejected_document'] = 0;
+                $docItems['items'][$dockey]['expired_document'] = 0;
+                $docItems['items'][$dockey]['approved_document'] = 0;
+                $todate = date("Y-m-d");
+                $expiryDate = $docItem['expiry_date'];
+
+                if (($expiryDate <= $todate && $expiryDate != "")) {
+                    $docItems['items'][$dockey]['expired_document'] = 1;
+                }
+                if ($docItem['status'] == 0 && $docItem['message'] == null) {
+                    $docItems['items'][$dockey]['pending_document'] = 1;
+                } else {
+                    if ($docItem['status'] == 0 && $docItem['message'] != null) {
+                        $docItems['items'][$dockey]['rejected_document'] = 1;
+                    } elseif ($docItem['status'] == 1 && $docItem['message'] == null) {
+                        $docItems['items'][$dockey]['approved_document'] = 1;
+                    }
+                }
+            }
+        }
+        return $docItems;
+    }
+
+    /**
+     * Get RMA attribute option label
+     *
+     * @param string $attributeCode
+     * @param string $value
+     */
+    public function getRmaAttributeLabel($attributeCode, $value)
+    {
+        $optionVal = '';
+        $attribute = $this->eavConfig->getAttribute(RmaAttributesManagementInterface::ENTITY_TYPE, $attributeCode);
+        $optionVal = $attribute->getSource()->getOptionText($value);
+
+        return $optionVal;
     }
 }

@@ -138,6 +138,10 @@ class SalesOrderInvoiceSaveAfterObserver implements ObserverInterface
                         ];
                         array_push($items, $itemData);
                     }
+                    /** tax as item **/
+                    $appliedTax = $this->quickBooksDataHelper->getAppliedTaxOnOrder($invoice);
+                    $items = empty($appliedTax) ? $items : array_merge($items, $appliedTax);
+                    /** tax as item **/
                     $salesReceiptData = [
                         'items' => $items,
                         'customerData' => $customerData,

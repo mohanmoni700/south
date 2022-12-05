@@ -1,0 +1,32 @@
+Index: vendor/magento/module-bundle/Model/Product/Type.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vendor/magento/module-bundle/Model/Product/Type.php b/vendor/magento/module-bundle/Model/Product/Type.php
+--- a/vendor/magento/module-bundle/Model/Product/Type.php	
++++ b/vendor/magento/module-bundle/Model/Product/Type.php	(date 1668725585045)
+@@ -376,7 +376,9 @@
+     {
+         if ($product->hasCustomOptions()) {
+             $customOption = $product->getCustomOption('bundle_selection_ids');
+-            $selectionIds = $this->serializer->unserialize($customOption->getValue());
++            if (null !== $customOption) {
++                $selectionIds = $this->serializer->unserialize($customOption->getValue());
++            }
+             $selections = $this->getSelectionsByIds($selectionIds, $product);
+             $virtualCount = 0;
+             foreach ($selections->getItems() as $selection) {
+@@ -1094,8 +1096,10 @@
+         parent::checkProductBuyState($product);
+         $productOptionIds = $this->getOptionsIds($product);
+         $productSelections = $this->getSelectionsCollection($productOptionIds, $product);
+-        $selectionIds = $product->getCustomOption('bundle_selection_ids');
+-        $selectionIds = $this->serializer->unserialize($selectionIds->getValue());
++        if (null !== $product->getCustomOption('bundle_selection_ids')) {
++            $selectionIds = $product->getCustomOption('bundle_selection_ids');
++            $selectionIds = $this->serializer->unserialize($selectionIds->getValue());
++        }
+         $buyRequest = $product->getCustomOption('info_buyRequest');
+         $buyRequest = new \Magento\Framework\DataObject($this->serializer->unserialize($buyRequest->getValue()));
+         $bundleOption = $buyRequest->getBundleOption();

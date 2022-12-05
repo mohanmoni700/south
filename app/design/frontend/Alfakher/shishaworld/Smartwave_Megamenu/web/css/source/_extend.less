@@ -1,0 +1,125 @@
+//m - L
+& when (@media-target = 'desktop'), (@media-target = 'all') {
+    @media only screen and (min-width: 1025px) {        
+        .sw-megamenu.navigation {
+            .level0.submenu{
+                scrollbar-color: @color_primary transparent;
+                ::-webkit-scrollbar-thumb {
+                background: @color_primary;
+                }
+                .subchildmenu.mega-columns {
+                    > .ui-menu-item.parent {
+                        > a {
+                            .lib-css(padding-right, 13px);
+                            .lib-css(line-height, 32px);
+                        }
+                    }
+                    .subchildmenu {
+                        > ul {
+                            li {
+                                a {
+                                    .lib-css(line-height, normal);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .Other.Hookah.Accessories{
+                .level0.submenu{
+                    scrollbar-color: @color_primary transparent;
+                    .subchildmenu{
+                        .ui-menu-item.level1{
+                            a{
+                                &:hover{
+                                    color: @color_primary; //#961E70;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .subchildmenu{
+                &.mega-columns{
+                    > .level1 { 
+                        z-index: 9;
+                    }
+                    .subchildmenu {
+                        > ul {
+                            li {
+                                a {
+                                    &:hover{
+                                        .lib-css(color, @color_primary);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            li.level0 {
+                &:hover{
+                >  a{
+                        &:before{
+                            background: @color_primary;
+                        }
+                    }
+                }
+                &.fullwidth,
+                &.staticwidth {
+                    .submenu {
+                        li.level1 {
+                            > a {
+                                .lib-css(text-transform, capitalize);
+                            }
+                        }
+                    }
+                }
+            }
+            .level0.Charcoal,
+            .level0.Zubehör {
+                .level0.submenu .subchildmenu.mega-columns { 
+                    .lib-css(background, @color_white);
+                    .lib-css(border-bottom, 1px solid @color_E0E0E0);
+                    .lib-css(border-left, 1px solid @color_E0E0E0);
+                    max-height: 380px;
+                    overflow-y: scroll;
+                    &:before {
+                        border: 0;
+                    }
+                    .level1 {
+                        .lib-css(border-right, 1px solid @color_E0E0E0);
+                        &:first-child {
+                            .lib-css(border-top, 1px solid @color_E0E0E0);
+                        }
+                        .subchildmenu {
+                            border: 0;
+                        }
+                    }
+                    > .subcat-show-all {
+                        .lib-css(border-right, 1px solid @color_E0E0E0);
+                        .lib-css(max-width,265px);
+                        .lib-css(position, unset);
+                    }
+                }
+            }
+        }
+    }
+}
+//  m - L
+@media only screen and (max-width: 1025px) {
+    .sw-megamenu.navigation {
+        &.active {
+            height: calc(~'100% - 200px');
+            top: 200px;
+        }
+    }
+}
+@media only screen and (max-width: 560px) {
+    .sw-megamenu.navigation {
+        &.active {
+            height: calc(~'100% - 223px');
+            top: 223px;
+        }
+    }
+}

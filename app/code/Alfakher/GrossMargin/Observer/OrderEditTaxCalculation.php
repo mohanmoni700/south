@@ -67,7 +67,18 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
                         $item->setSalesTax($quoteItem->getSalesTax());
                         $item->setExciseTax($quoteItem->getExciseTax());
                         $item->setTaxAmount($quoteItem->getSalesTax() + $quoteItem->getExciseTax());
+                        /* bv_mp; date : 06-09-22; resolving issue of grand total shipping edit; Start */
+                        $item->setBaseTaxAmount($quoteItem->getBaseTaxAmount());
+                        /* bv_mp; date : 06-09-22; resolving issue of grand total shipping edit; End */
                         $item->setTaxPercent($quoteItem->getTaxPercent());
+
+                        /* bv_op; date : 24-8-22; resolving issue of row subtotal; Start */
+                        $item->setPriceInclTax($quoteItem->getPriceInclTax());
+                        $item->setBasePriceInclTax($quoteItem->getBasePriceInclTax());
+
+                        $item->setRowTotalInclTax($quoteItem->getRowTotal() + $quoteItem->getSalesTax() + $quoteItem->getExciseTax());
+                        $item->setBaseRowTotalInclTax($quoteItem->getBaseRowTotal() + $quoteItem->getSalesTax() + $quoteItem->getExciseTax());
+                        /* bv_op; date : 24-8-22; resolving issue of row subtotal; End */
                     }
                 } else {
                     $this->clearItemTax($order);

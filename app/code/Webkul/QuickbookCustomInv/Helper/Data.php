@@ -151,7 +151,6 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
         $this->linkFactory = $linkFactory;
         $this->filterManager = $filterManager;
         $this->itemTax = $itemTax;
-        $this->logger = $logger;
         */
     }
 
@@ -317,5 +316,38 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
             'description' => $description
         ];
         return $productData;
+    }
+
+    /**
+     *
+     */
+    public function getAppliedTaxOnOrder($order)
+    {
+        $orderData = $order->getData();
+        $taxTitleDetails = [
+            'sales_tax' => 'Sales Tax',
+            'excise_tax' => 'Excise Tax',
+            'shipping_tax_amount' => 'Shipping Tax'
+        ];
+        $taxApplied = [];
+        foreach ($orderData as $key => $value) {
+            if (in_array($key, ['sales_tax', 'excise_tax', 'shipping_tax_amount']) && $orderData[$key] > 0) {
+                $taxApplied[] = [
+                    'Name' => $taxTitleDetails[$key],
+                    'UnitPrice' => $orderData[$key],
+                    'Qty' => 1,
+                    'Sku' => strtolower(str_replace(" ", "-", $taxTitleDetails[$key])),
+                    'isTaxablePro' => 0,
+                    'Taxable' => 0, // "" index for shipping tax
+                    'taxAmt' => 0,
+                    'discountAmt' => 0,
+                    'AmountTotal' => $orderData[$key],
+                    'Type' => 'Service',
+                    'TrackQtyOnHand' => 'false',
+                    'ItemId' => '' // '' for shipping itemid
+                ];
+            }
+        }
+        return $taxApplied;
     }
 }

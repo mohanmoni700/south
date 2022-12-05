@@ -1,5 +1,4 @@
 <?php
-
 namespace HookahShisha\Customerb2b\Block\Customer\Form;
 
 use Magento\Customer\Helper\Address;
@@ -7,13 +6,23 @@ use Magento\Customer\Model\AccountManagement;
 use Magento\Framework\App\ObjectManager;
 use Magento\Newsletter\Model\Config;
 use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\View\Element\Template\Context;
+use Magento\Directory\Helper\Data;
+use Magento\Framework\Json\EncoderInterface;
+use Magento\Directory\Model\ResourceModel\Region\CollectionFactory;
+use Magento\Directory\Model\ResourceModel\Country\CollectionFactory as Countrycollection;
+use Magento\Framework\Module\Manager;
+use Magento\Customer\Model\Session;
+use Magento\Customer\Model\Url;
+use HookahShisha\Customerb2b\Model\Company\Source\Businesstype;
+use HookahShisha\Customerb2b\Model\Company\Source\AnnualTurnOver;
+use HookahShisha\Customerb2b\Model\Company\Source\HearAboutUs;
+use HookahShisha\Customerb2b\Model\Company\Source\NumberOfEmp;
+use Magento\Customer\Model\Metadata\Form;
 
 /**
  * Customer register form block
- *
- * @api
- * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
- * @since 100.0.2
  */
 class Register extends \Magento\Directory\Block\Data
 {
@@ -33,47 +42,54 @@ class Register extends \Magento\Directory\Block\Data
     protected $_customerUrl;
 
     /**
-     * @var Config
+     * @var NewsletterConfig
      */
     private $newsLetterConfig;
 
     /**
+     * @var StoreManagerInterface
+     */
+    private $storeManager;
+
+    /**
      * Constructor
      *
-     * @param \Magento\Framework\View\Element\Template\Context $context
-     * @param \Magento\Directory\Helper\Data $directoryHelper
-     * @param \Magento\Framework\Json\EncoderInterface $jsonEncoder
-     * @param \Magento\Framework\App\Cache\Type\Config $configCacheType
-     * @param \Magento\Directory\Model\ResourceModel\Region\CollectionFactory $regionCollectionFactory
-     * @param \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $countryCollectionFactory
-     * @param \Magento\Framework\Module\Manager $moduleManager
-     * @param \Magento\Customer\Model\Session $customerSession
-     * @param \Magento\Customer\Model\Url $customerUrl
-     * @param \HookahShisha\Customerb2b\Model\Company\Source\Businesstype $businesstype
-     * @param \HookahShisha\Customerb2b\Model\Company\Source\AnnualTurnOver $annualTurnOver
-     * @param \HookahShisha\Customerb2b\Model\Company\Source\HearAboutUs $hearAboutUs
-     * @param \HookahShisha\Customerb2b\Model\Company\Source\NumberOfEmp $numberOfEmp
-     * @param Config $newsLetterConfig
+     * @param Context $context
+     * @param Data $directoryHelper
+     * @param EncoderInterface $jsonEncoder
+     * @param Config $configCacheType
+     * @param CollectionFactory $regionCollectionFactory
+     * @param CollectionFactory $countryCollectionFactory
+     * @param Manager $moduleManager
+     * @param Session $customerSession
+     * @param Url $customerUrl
+     * @param Businesstype $businesstype
+     * @param AnnualTurnOver $annualTurnOver
+     * @param HearAboutUs $hearAboutUs
+     * @param NumberOfEmp $numberOfEmp
+     * @param NewsletterConfig $newsLetterConfig
      * @param Address|null $addressHelper
+     * @param StoreManagerInterface $storeManager
      * @param array $data
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        \Magento\Framework\View\Element\Template\Context $context,
-        \Magento\Directory\Helper\Data $directoryHelper,
-        \Magento\Framework\Json\EncoderInterface $jsonEncoder,
+        Context $context,
+        Data $directoryHelper,
+        EncoderInterface $jsonEncoder,
         \Magento\Framework\App\Cache\Type\Config $configCacheType,
-        \Magento\Directory\Model\ResourceModel\Region\CollectionFactory $regionCollectionFactory,
-        \Magento\Directory\Model\ResourceModel\Country\CollectionFactory $countryCollectionFactory,
-        \Magento\Framework\Module\Manager $moduleManager,
-        \Magento\Customer\Model\Session $customerSession,
-        \Magento\Customer\Model\Url $customerUrl,
-        \HookahShisha\Customerb2b\Model\Company\Source\Businesstype $businesstype,
-        \HookahShisha\Customerb2b\Model\Company\Source\AnnualTurnOver $annualTurnOver,
-        \HookahShisha\Customerb2b\Model\Company\Source\HearAboutUs $hearAboutUs,
-        \HookahShisha\Customerb2b\Model\Company\Source\NumberOfEmp $numberOfEmp,
+        CollectionFactory $regionCollectionFactory,
+        Countrycollection $countryCollectionFactory,
+        Manager $moduleManager,
+        Session $customerSession,
+        Url $customerUrl,
+        Businesstype $businesstype,
+        AnnualTurnOver $annualTurnOver,
+        HearAboutUs $hearAboutUs,
+        NumberOfEmp $numberOfEmp,
         Config $newsLetterConfig = null,
         Address $addressHelper = null,
+        StoreManagerInterface $storeManager,
         array $data = []
     ) {
         $data['addressHelper'] = $addressHelper ?: ObjectManager::getInstance()->get(Address::class);
@@ -96,6 +112,7 @@ class Register extends \Magento\Directory\Block\Data
         $this->annualTurnOver = $annualTurnOver;
         $this->hearAboutUs = $hearAboutUs;
         $this->numberOfEmp = $numberOfEmp;
+        $this->storeManager = $storeManager;
     }
 
     /**
@@ -146,7 +163,7 @@ class Register extends \Magento\Directory\Block\Data
      */
     public function getConfig($path)
     {
-        return $this->_scopeConfig->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->_scopeConfig->getValue($path, ScopeInterface::SCOPE_STORE);
     }
 
     /**
@@ -246,7 +263,7 @@ class Register extends \Magento\Directory\Block\Data
      * @param string|null $scope
      * @return $this
      */
-    public function restoreSessionData(\Magento\Customer\Model\Metadata\Form $form, $scope = null)
+    public function restoreSessionData(Form $form, $scope = null)
     {
         if ($this->getFormData()->getCustomerData()) {
             $request = $form->prepareRequest($this->getFormData()->getData());
@@ -277,5 +294,15 @@ class Register extends \Magento\Directory\Block\Data
     public function getRequiredCharacterClassesNumber()
     {
         return $this->_scopeConfig->getValue(AccountManagement::XML_PATH_REQUIRED_CHARACTER_CLASSES_NUMBER);
+    }
+
+    /**
+     * Get website code
+     *
+     * @return string|null
+     */
+    public function getWebsiteCode():  ? string
+    {
+        return $this->storeManager->getWebsite()->getCode();
     }
 }
