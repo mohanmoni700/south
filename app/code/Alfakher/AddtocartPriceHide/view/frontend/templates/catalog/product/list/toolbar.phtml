@@ -8,10 +8,7 @@
  */
 
 ?>
-<?php
-    $size=[];
-    $size=$block->getCollection();
-?>
+<?php $size=$block->getCollection(); ?>
 <?php if (!empty($size)): ?>
     <?php if ($block->getCollection()->getSize()):?>
         <?php $jsonHelper = $this->helper(\Magento\Framework\Json\Helper\Data::class); ?>

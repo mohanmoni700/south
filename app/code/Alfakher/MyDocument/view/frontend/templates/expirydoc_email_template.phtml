@@ -1,13 +1,17 @@
 <?php
 $rejection=$block->getDocumentarray();
 if (!empty($rejection)) { ?>
-<p><?= $block->escapeHtml(__('It has been observed that few documents are expired. Please find a details of expired document as follows:')) ?></p>
+<p>
+    <?= $block->escapeHtml(__('It has been observed that few documents are expired. Please find a details of expired document as follows:'))?>
+</p>
 <ul>
     <?php foreach ($rejection as $item): ?>
     <li><?= /* @noEscape */ $item['docname'] ?></li>
     <?php endforeach; ?>
 </ul> 
-<p>To re-upload the documents, click here 
-    <a href="<?=  /* @noEscape */ $block->getUrl('mydocument/customer/index'); ?>">My Documents</a>.
+<p><?= $block->escapeHtml(__('To re-upload the documents, click here'))?> 
+    <a href="<?=  /* @noEscape */ $block->getUrl('mydocument/customer/index'); ?>">
+        <?= $block->escapeHtml(__('My Documents'))?> 
+    </a>.
 </p>
 <?php } ?>
