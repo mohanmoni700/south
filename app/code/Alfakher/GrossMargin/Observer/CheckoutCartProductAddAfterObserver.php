@@ -1,22 +1,20 @@
 <?php
 namespace Alfakher\GrossMargin\Observer;
-
-/**
- * @author af_bv_op
- */
 use Magento\Framework\Event\Observer;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Alfakher\GrossMargin\ViewModel\GrossMargin;
 
 class CheckoutCartProductAddAfterObserver implements \Magento\Framework\Event\ObserverInterface
 {
     /**
      * Constructor
      *
-     * @param \Magento\Catalog\Api\ProductRepositoryInterface $proRepo
-     * @param \Alfakher\GrossMargin\ViewModel\GrossMargin $grossMarginViewModel
+     * @param ProductRepositoryInterface $proRepo
+     * @param GrossMargin $grossMarginViewModel
      */
     public function __construct(
-        \Magento\Catalog\Api\ProductRepositoryInterface $proRepo,
-        \Alfakher\GrossMargin\ViewModel\GrossMargin $grossMarginViewModel
+        ProductRepositoryInterface $proRepo,
+        GrossMargin $grossMarginViewModel
     ) {
         $this->proRepo = $proRepo;
         $this->grossMarginViewModel = $grossMarginViewModel;
