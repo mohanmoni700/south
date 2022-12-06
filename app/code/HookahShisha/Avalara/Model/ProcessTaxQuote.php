@@ -516,7 +516,7 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
                 $product = $item->getProduct();
 
                 /*patch code*/
-                if ($item->getProductType() == "bundle" || $item->getProductType() == "configurable") {
+                if ($item->getProductType() == BundleProductType::TYPE_CODE || $item->getProductType() == Configurable::TYPE_CODE) {
                     continue;
                 }
 
@@ -530,9 +530,9 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
                 }
                 
                 $itemSku = $item->getSku();
-                if ($item->getParentItem() != null && $item->getParentItem()->getProductType() == 'configurable') {
+                if ($item->getParentItem() != null && $item->getParentItem()->getProductType() == Configurable::TYPE_CODE) {
                     $itemUnitPrice = $item->getParentItem()->getPrice();
-                } elseif ($item->getParentItem() != null && $item->getParentItem()->getProductType() == 'bundle') {
+                } elseif ($item->getParentItem() != null && $item->getParentItem()->getProductType() == BundleProductType::TYPE_CODE) {
                     /* fix for resolving the issue related to bundle product fix price issue; Start */
                     if ($item->getParentItem()->getProduct()->getPriceType() == Price::PRICE_TYPE_FIXED) {
                         $itemUnitPrice = $item->getPrice();
@@ -576,7 +576,7 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
                     'UnitPrice' => $itemUnitPrice,
                     'BilledUnits' => $itemQty,
                     'LineAmount' => ($item->getParentItem() != null && $item->getParentItem()
-                        ->getProductType() == 'configurable') ? ($item->getParentItem()
+                        ->getProductType() == Configurable::TYPE_CODE) ? ($item->getParentItem()
                         ->getRowTotal() - $item->getDiscountAmount()) : ($item->getRowTotal() - $item->getDiscountAmount()),
                     'AlternateUnitPrice' => $itemAlternateUnitPrice,
                     'AlternateLineAmount' => $itemAlternateUnitPrice * $itemQty,
@@ -596,12 +596,12 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
                 /* fix to resolve the line amount issue for the fixed price bundle products */
                 if (
                     $item->getParentItem() != null &&
-                    $item->getParentItem()->getProductType() == 'configurable'
+                    $item->getParentItem()->getProductType() == Configurable::TYPE_CODE
                 ) {
                     $lineitems["LineAmount"] = $item->getParentItem()->getRowTotal() - $item->getDiscountAmount();
                 } elseif (
                     $item->getParentItem() != null &&
-                    $item->getParentItem()->getProductType() == 'bundle' &&
+                    $item->getParentItem()->getProductType() == BundleProductType::TYPE_CODE &&
                     $item->getParentItem()->getProduct()->getPriceType() == Price::PRICE_TYPE_FIXED
                 ) {
                     $lineitems["LineAmount"] = $itemUnitPrice * $itemQty;
