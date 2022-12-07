@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
 <system>
-    <section id="exitb" translate="label" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+    <section id="exitb" translate="label" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="0">
         <class>separator-top-exitb</class>
         <label>ExitB Configuration</label>
         <tab>hookahshisha</tab>
@@ -43,11 +43,32 @@
             <field id="ship_code" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0" >
                 <label>Shipment Code</label>
             </field>
-            <field id="payment_offline" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0" >
-                <label>Offline Payment Code</label>
+            <field id="payment" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Select Payment Methods</label>
+                <frontend_model>Alfakher\ExitB\Block\Adminhtml\Form\Field\MethodRange</frontend_model>
+                <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
             </field>
-            <field id="payment_online" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" >
-                <label>Online Payment Code</label>
+        </group>
+    </section>
+    <section id="cancel_order" translate="label" sortOrder="160" showInDefault="1" showInWebsite="1" showInStore="0">
+         <label>Cancel Order</label>
+         <tab>hookahshisha</tab>
+         <resource>Alfakher_ExitB::exitb_config</resource>
+        <group id="autocancel" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>General Configuration</label>
+            <field id="Websiteid" translate="label" type="multiselect" sortOrder="10" showInDefault="1">
+                <label>Websites</label>
+                <source_model>Alfakher\ExitB\Model\Config\Source\StoreOption</source_model>
+            </field>
+            <field id="enabled" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Cancel Order Enable</label>
+                <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+            </field>
+            <field id="days" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0" >
+                <label>Cancel order Days</label>
+                <depends><field id="cancel_order/autocancel/enabled">1</field></depends>
+                <comment><![CDATA[Add days after order has been canceled!!]]></comment>
+                <validate>required-entry</validate>
             </field>
         </group>
     </section>

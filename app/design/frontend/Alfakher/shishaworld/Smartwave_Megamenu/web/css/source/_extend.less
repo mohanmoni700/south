@@ -7,23 +7,57 @@
                 ::-webkit-scrollbar-thumb {
                 background: @color_primary;
                 }
+                ::-webkit-scrollbar-track {
+                    -webkit-overflow-scrolling: touch;
+                    background-color: transparent;
+                    border-left: 1px solid transparent;
+                }
                 .subchildmenu.mega-columns {
-                    > .ui-menu-item.parent {
+                    > .ui-menu-item.parent {                        
                         > a {
-                            .lib-css(padding-right, 13px);
+                            .lib-css(padding-right, @indent__base);
                             .lib-css(line-height, 32px);
                         }
                     }
+                    > .ui-menu-item {
+                        &:hover {
+                            > a {
+                                .lib-css(color, @color_primary); 
+                            }
+                        }
+                    }   
                     .subchildmenu {
                         > ul {
                             li {
                                 a {
                                     .lib-css(line-height, normal);
+                                    .lib-css(padding-right, @indent__s);
+                                    .lib-css(word-break, break-all);
                                 }
                             }
                         }
                     }
                 }
+            }
+            
+            .level0.Zubehör .level0.submenu,
+            .level0.Kohle .level0.submenu,
+            .level0.Tabak .level0.submenu,
+            .level0.E-shisha .level0.submenu,
+            .level0.Obsolete .level0.submenu,            
+                 
+            .level0.Accessories .subchildmenu.mega-columns,
+            .level0.Coal .subchildmenu.mega-columns,
+            .level0.E-shisha .subchildmenu.mega-columns,
+                    
+            .level0.Accessorios .level0.submenu,
+            .level0.Carbon .level0.submenu,
+            .level0.E-shisha .level0.submenu {                          
+                .lib-css(background, @color_white);
+                .lib-css(border-right, 1px solid @color_E0E0E0);
+            }
+            .level0.Tabak .level0.submenu .mega-columns {
+                .lib-css(width, 855px);
             }
             .Other.Hookah.Accessories{
                 .level0.submenu{
@@ -32,7 +66,7 @@
                         .ui-menu-item.level1{
                             a{
                                 &:hover{
-                                    color: @color_primary; //#961E70;
+                                    color: @color_primary;
                                 }
                             }
                         }
@@ -55,6 +89,9 @@
                             }
                         }
                     }
+                    .level1 .level2 ul.subchildmenu {
+                        display: none !important;
+                    }
                 }
             }
             li.level0 {
@@ -76,33 +113,34 @@
                     }
                 }
             }
-            .level0.Charcoal,
-            .level0.Zubehör {
-                .level0.submenu .subchildmenu.mega-columns { 
-                    .lib-css(background, @color_white);
-                    .lib-css(border-bottom, 1px solid @color_E0E0E0);
-                    .lib-css(border-left, 1px solid @color_E0E0E0);
-                    max-height: 380px;
-                    overflow-y: scroll;
-                    &:before {
+            .level0.submenu .subchildmenu.mega-columns { 
+                .lib-css(border-bottom, 1px solid @color_E0E0E0);
+                .lib-css(border-left, 1px solid @color_E0E0E0);
+                height: 381px;
+                overflow-y: scroll;
+                &:before {
+                    border: 0;
+                    .lib-css(border-right, 1px solid @color_E0E0E0);
+                }
+                .level1 {
+                    .lib-css(border-right, 1px solid @color_E0E0E0);
+                    &:first-child {
+                        .lib-css(border-top, 1px solid @color_E0E0E0);
+                    }
+                    .subchildmenu {
                         border: 0;
                     }
-                    .level1 {
-                        .lib-css(border-right, 1px solid @color_E0E0E0);
-                        &:first-child {
-                            .lib-css(border-top, 1px solid @color_E0E0E0);
-                        }
-                        .subchildmenu {
-                            border: 0;
-                        }
-                    }
-                    > .subcat-show-all {
-                        .lib-css(border-right, 1px solid @color_E0E0E0);
-                        .lib-css(max-width,265px);
-                        .lib-css(position, unset);
-                    }
+                }
+                >.level1 .subchildmenu {
+                    .lib-css(border-bottom, 0);
+                }
+                > .subcat-show-all {
+                    .lib-css(border-right, 1px solid @color_E0E0E0);
+                    .lib-css(max-width,265px);
+                    .lib-css(position, unset);
                 }
             }
+
         }
     }
 }
@@ -110,16 +148,8 @@
 @media only screen and (max-width: 1025px) {
     .sw-megamenu.navigation {
         &.active {
-            height: calc(~'100% - 200px');
-            top: 200px;
-        }
-    }
-}
-@media only screen and (max-width: 560px) {
-    .sw-megamenu.navigation {
-        &.active {
-            height: calc(~'100% - 223px');
-            top: 223px;
+            height: calc(~'100% - 155px');
+            top: 155px;
         }
     }
 }

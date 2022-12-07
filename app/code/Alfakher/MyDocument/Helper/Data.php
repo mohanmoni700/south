@@ -117,17 +117,7 @@ class Data extends AbstractHelper
             $rejectedDoc[] = ['docmsg' => $docmsg, 'docname' => $docname];
         }
 
-        /** Get current storeId start[BS]*/
-        $storeManagerDataList = $this->storeManager->getStores();
-        $options = [];
-
-        foreach ($storeManagerDataList as $key => $value) {
-            $options[] = ['label' => $value['code'], 'value' => $key];
-            if ($value['code'] == "hookah_wholesalers_store_view") {
-                $storeId = $key;
-            }
-        }
-        /** Get current storeId end[BS]*/
+        $storeId = $customer->getData('store_id');
 
         $this->_inlineTranslation->suspend();
         $fromEmail = $this->_scopeConfig
@@ -187,17 +177,7 @@ class Data extends AbstractHelper
                 $rejectedDoc[] = ['docname' => $docname];
             }
 
-            /** Get current storeId start[BS]*/
-            $storeManagerDataList = $this->storeManager->getStores();
-            $options = [];
-
-            foreach ($storeManagerDataList as $key => $value) {
-                $options[] = ['label' => $value['code'], 'value' => $key];
-                if ($value['code'] == "hookah_wholesalers_store_view") {
-                    $storeId = $key;
-                }
-            }
-            /** Get current storeId end[BS]*/
+            $storeId = $customer->getData('store_id');
 
             $this->_inlineTranslation->suspend();
             $fromEmail = $this->_scopeConfig

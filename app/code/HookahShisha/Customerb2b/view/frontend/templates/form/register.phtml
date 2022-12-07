@@ -549,7 +549,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                 </div>
             </div>
             <div class="action_back">
-              <span>Do you have an account?
+              <span><?= $block->escapeHtml(__('Do you have an account?')); ?>
                 <a href="<?= /* @noEscape */ $block->getUrl("customer/account/login");?>">
                     <?= $block->escapeHtml(__('Log In')) ?>
                 </a>

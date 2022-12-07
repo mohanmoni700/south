@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 
 // phpcs:disable Generic.Files.LineLength.TooLong
 // phpcs:disable Magento2.Templates.ThisInTemplate
@@ -37,12 +33,12 @@ $helper = $this->helper(HookahShisha\ChangePassword\Helper\Data::class);
                         <input name="login[username]" value="<?= $block->escapeHtmlAttr($block->getUsername()) ?>"
                             <?php if ($block->isAutocompleteDisabled()): ?> autocomplete="off"<?php endif; ?>
                                id="email" type="email" class="input-text"
-                               placeholder="Email"
+                               placeholder="<?= $block->escapeHtml(__('Email')) ?>"
                                title="<?= $block->escapeHtmlAttr(__('Email')) ?>"
                                data-validate="{required:true, 'validate-email':true}" required>
                     </div>
                 </div>
-                <div class="field password required" style="display: none;">
+                <div class="field password required">
                     <div class="lable_n_link">
                         <label for="pass" class="label"><span><?= $block->escapeHtml(__('Password')) ?>*</span></label>
                         <div class="actions-toolbar">

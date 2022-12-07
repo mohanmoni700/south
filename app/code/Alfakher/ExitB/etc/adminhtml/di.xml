@@ -3,4 +3,7 @@
     <type name='Alfakher\SalesApprove\Controller\Adminhtml\Order\Approve'>
         <plugin name='ExitB_Order_Sync_MessageQueue' type='Alfakher\ExitB\Plugin\Order\SyncPlugin' disabled='false'/>
     </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <plugin name="sales_invoice_additional_columns" type="Alfakher\ExitB\Plugin\SalesInvoiceCustomColumn" disabled="false" sortOrder="4" />
+    </type>
 </config>
