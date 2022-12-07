@@ -970,6 +970,7 @@ return [
         'Alfakher_OrderComment' => 1,
         'Alfakher_OrderPdf' => 1,
         'Alfakher_OutOfStockProduct' => 1,
+        'Alfakher_PaymentEdit' => 1,
         'Signifyd_Connect' => 1,
         'Alfakher_Productpageb2b' => 1,
         'Alfakher_RmaCustomization' => 1,
