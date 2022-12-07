@@ -2,27 +2,21 @@
 use Magento\Checkout\Block\Cart;
 use Amasty\RequestQuote\Block\Cart as QuoteCart;
 
+/**
+* @var \Magento\Checkout\Block\Cart
+*/
+
+/**
+* @var \Amasty\RequestQuote\Block\Cart as QuoteCart
+*/
+
 $cart_title = __('Shopping Cart');
 $quote_title = __('Quote Cart');
 
-
-/**
- * @var $block \Magento\Theme\Block\Html\Title
- */
-
-/**
- * @var $cartblock \Magento\Checkout\Block\Cart
- */
-
-/* start check cart is empty or not YV */
 $cartblock = $block->getLayout()->createBlock(Cart::class);
 $cartitem = $cartblock->getItems();
-
-/*start check quote session [vy]*/
 $quoteblock = $block->getLayout()->createBlock(QuoteCart::class);
 $quoteitem = $quoteblock->getQuote()->getItems();
-
-/* End */
 
 $cssClass = $block->getCssClass() ? ' ' . $block->getCssClass() : '';
 $titleHtml = '';
@@ -35,18 +29,12 @@ if (trim($block->getPageHeading())) {
 }
 ?>
 <?php if ($titleHtml): ?>    
-
-    <!-- start if cart is empty add empty class YV --> 
     <?php if ($block->getPageHeading() == "$cart_title" && empty($cartitem)):?>    
         <div class="empty-cart-class">    
     <?php endif; ?>
-
     <?php if ($block->getPageHeading() == "$quote_title" && empty($quoteitem)):?>    
         <div class="empty-cart-class">    
     <?php endif; ?>
-
-    <!-- End -->
-
     <div class="page-title-wrapper<?= $block->escapeHtmlAttr($cssClass) ?>">
         <?php if ($cssClass == ' product'): ?>
             <h1 class="page-title"
@@ -67,12 +55,7 @@ if (trim($block->getPageHeading())) {
         <?php endif; ?>
         <?= $block->getChildHtml() ?>
     </div>
-
-
-    <!-- start if cart is empty add empty class YV -->
     <?php if ($block->getPageHeading() == 'Shopping Cart' && empty($cartitem)):?>    
         </div>    
     <?php endif; ?>
-    <!-- End -->
-
 <?php endif; ?>
