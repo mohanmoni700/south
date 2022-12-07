@@ -1,63 +1,116 @@
 <?php
+declare (strict_types = 1);
+
 namespace Alfakher\Productpageb2b\Helper;
 
 use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory;
 use Magento\Company\Api\CompanyManagementInterface;
+use \Magento\CatalogInventory\Api\Data\StockItemInterface;
+use \Magento\CatalogInventory\Api\StockRegistryInterface;
+use \Magento\CatalogInventory\Api\StockStateInterface;
+use \Magento\Catalog\Api\ProductRepositoryInterface;
+use \Magento\Customer\Api\CustomerRepositoryInterface;
 use \Magento\Customer\Model\Context as CustomerContext;
 use \Magento\Customer\Model\CustomerFactory;
+use \Magento\Customer\Model\Session;
+use \Magento\Framework\App\Config\ScopeConfigInterface;
+use \Magento\Framework\App\Helper\AbstractHelper;
+use \Magento\Framework\App\Http\Context;
+use \Magento\Framework\HTTP\Header;
+use \Magento\Store\Model\ScopeInterface;
+use \Magento\Store\Model\StoreManagerInterface;
 
-class Data extends \Magento\Framework\App\Helper\AbstractHelper
+class Data extends AbstractHelper
 {
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var Session
      */
-    protected $scopeConfig;
-    /**
-     * @var \Magento\Customer\Model\Session
-     */
-    protected $_customerSession;
+    protected $session;
 
     /**
-     * @var \Magento\Framework\App\Http\Context
+     * @var CollectionFactory
+     */
+    protected $collection;
+
+    /**
+     * @var ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    /**
+     * @var Context
      */
     protected $httpContext;
 
     /**
-     * @var Magento\Framework\HTTP\Header
+     * @var CompanyManagementInterface
+     */
+    protected $companyRepository;
+
+    /**
+     * @var Header
      */
     protected $httpHeader;
 
     /**
-     * @var Magento\Customer\Model\CustomerFactory
+     * @var CustomerFactory
      */
     protected $customerFactory;
 
     /**
-     * @param \Magento\Customer\Model\Session $session
-     * @param CollectionFactory $collection
-     * @param \Magento\Framework\App\Http\Context $httpContext
-     * @param CompanyManagementInterface $companyRepository
-     * @param \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Magento\Framework\HTTP\Header $httpHeader
-     * @param CustomerFactory $customerFactory
-     * @param \Magento\CatalogInventory\Api\StockStateInterface $stockInterface
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Catalog\Api\ProductRepositoryInterface $proRepo
+     * @var StockRegistryInterface|null
+     */
+    protected $stockRegistry;
+
+    /**
+     * @var CustomerRepositoryInterface
+     */
+    protected $customerRepository;
+
+    /**
+     * @var StockStateInterface
+     */
+    protected $stockInterface;
+
+    /**
+     * @var StoreManagerInterface
+     */
+    protected $storeManager;
+
+    /**
+     * @var ProductRepositoryInterface
+     */
+    protected $proRepo;
+
+    /**
+     * Constructor for data
      *
+     * @param Session $session
+     * @param CollectionFactory $collection
+     * @param Context $httpContext
+     * @param CompanyManagementInterface $companyRepository
+     * @param CustomerRepositoryInterface $customerRepository
+     * @param ScopeConfigInterface $scopeConfig
+     * @param Header $httpHeader
+     * @param CustomerFactory $customerFactory
+     * @param StockStateInterface $stockInterface
+     * @param StoreManagerInterface $storeManager
+     * @param ProductRepositoryInterface $proRepo
+     * @param StockRegistryInterface $stockRegistry
      */
     public function __construct(
-        \Magento\Customer\Model\Session $session,
+        Session $session,
         CollectionFactory $collection,
-        \Magento\Framework\App\Http\Context $httpContext,
+        Context $httpContext,
         CompanyManagementInterface $companyRepository,
-        \Magento\Customer\Api\CustomerRepositoryInterface $customerRepository,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Framework\HTTP\Header $httpHeader,
+        CustomerRepositoryInterface $customerRepository,
+        ScopeConfigInterface $scopeConfig,
+        Header $httpHeader,
         CustomerFactory $customerFactory,
-        \Magento\CatalogInventory\Api\StockStateInterface $stockInterface,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Catalog\Api\ProductRepositoryInterface $proRepo
+        StockStateInterface $stockInterface,
+        StoreManagerInterface $storeManager,
+        ProductRepositoryInterface $proRepo,
+        StockRegistryInterface $stockRegistry
     ) {
         $this->collection = $collection;
         $this->_customerSession = $session;
@@ -70,6 +123,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $this->_stockInterface = $stockInterface;
         $this->storeManager = $storeManager;
         $this->proRepo = $proRepo;
+        $this->stockRegistry = $stockRegistry;
     }
 
     /**
@@ -83,7 +137,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * @inheritDoc
+     * Get Document status
+     *
+     * @return int
      */
     public function getDocMessageData()
     {
@@ -91,7 +147,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * @inheritDoc
+     * Get Document is expired or not
+     *
+     * @return int
      */
     public function getExpiryMsg()
     {
@@ -99,7 +157,9 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * @inheritDoc
+     * Get is Document uploaded or not
+     *
+     * @return int
      */
     public function getDocuments()
     {
@@ -107,50 +167,63 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * @inheritDoc
+     * Get configuration value
+     *
+     * @param string $section
+     * @return mixed
      */
     public function getConfigValue($section)
     {
-        return $this->scopeConfig->getValue($section, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue($section, ScopeInterface::SCOPE_STORE);
     }
 
     /**
-     * @inheritDoc
+     * Get is Document uploaded or not
+     *
+     * @return int
      */
     public function isMobileDevice()
     {
         return $this->httpContext->getValue('is_mobiledevice');
     }
-    /*bv-hd getStockQty*/
+
     /**
-     * @inheritDoc
+     * Get GrossMargin value
+     *
+     * @param int $productId
+     * @return float
      */
     public function getStockQty($productId)
     {
         $websiteId = $this->storeManager->getStore()->getWebsiteId();
         return $this->_stockInterface->getStockQty($productId, $websiteId);
     }
-    /*bv-vy getAdminSession*/
+
     /**
-     * @inheritDoc
+     * Get is Finance Verified value
+     *
+     * @return int
      */
     public function getAdminCustomer()
     {
-        $adminId = $this->_customerSession->getLoggedAsCustomerAdmindId();
-        return $adminId;
+        return $this->_customerSession->getLoggedAsCustomerAdmindId();
     }
 
     /**
-     * @inheritDoc
+     * Get GrossMargin value
+     *
+     * @param int $productId
+     * @return float
      */
     public function getGrossMargin($productId)
     {
-        $cost = $this->proRepo->getById($productId)->getCost();
-        return $cost;
+        return $this->proRepo->getById($productId)->getCost();
     }
-    /*bv-vy getIsFinanceVerified*/
+
     /**
-     * @inheritDoc
+     * Get is Finance Verified value
+     *
+     * @return int
      */
     public function getIsFinanceVerified()
     {
@@ -158,15 +231,30 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         $customerData = $this->customerFactory->create()->load($customerId);
         return $customerData->getIsfinanceVerified();
     }
+
     /**
-     * Check if module is enable
+     * Get configuration value
      *
      * @param string $section
      * @param int $websiteid
+     * @return mixed
      */
-
     public function getGrossStatus($section, $websiteid)
     {
-        return $this->scopeConfig->getValue($section, \Magento\Store\Model\ScopeInterface::SCOPE_STORE, $websiteid);
+        return $this->scopeConfig->getValue($section, ScopeInterface::SCOPE_STORE, $websiteid);
+    }
+
+    /**
+     * Get stock status for given product
+     *
+     * @param int $productId
+     * @return bool
+     */
+    public function getStockStatus($productId)
+    {
+        /** @var StockItemInterface $stockItem */
+        $stockItem = $this->stockRegistry->getStockItem($productId);
+        $isInStock = $stockItem ? $stockItem->getIsInStock() : false;
+        return $isInStock;
     }
 }

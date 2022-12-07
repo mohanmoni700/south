@@ -1,0 +1,328 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Components -> Modals
+//  _____________________________________________
+
+//
+//  Variables
+//  ---------------------------------------------
+
+@modal-title__color: @text__color;
+@modal-title__border: 1px solid @color-gray-light5;
+
+@modal-popup-title__font-size: 26px;
+@modal-popup-title-mobile__font-size: 18px;
+
+@modal-slide__first__indent-left: 20px;
+@modal-slide-mobile__background-color: #fff;
+@modal-overlay__background-color: fade(@color-gray20, 55%);
+
+@modal-action-close__color: @primary__color;
+@modal-action-close__font-size: 32px;
+@modal-action-close__hover__color: darken(@primary__color, 10%);
+
+@modal-slide-action-close__padding: @modal-slide-header__padding-vertical - 1rem @modal-popup__padding - 1rem;
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .modal-custom,
+    .modal-popup,
+    .modal-slide {
+        .action-close {
+            .lib-button-reset();
+            .lib-button-icon(
+                @icon-remove,
+                @_icon-font-color: @minicart-icons-color,
+                @_icon-font-size: @modal-action-close__font-size,
+                @_icon-font-line-height: @modal-action-close__font-size,
+                @_icon-font-text-hide: true
+            );
+            position: absolute;
+            right: 0;
+            top: 0;
+
+            &:hover {
+                &:before {
+                    color: @modal-action-close__hover__color;
+                }
+            }
+        }
+        input:hover {
+            border-color: @color-black !important;
+        }
+    }
+
+    .modal-custom {
+        .action-close {
+            .lib-css(margin, @indent__m);
+        }
+    }
+
+    .checkout-index-index {
+        .modals-wrapper {
+            .modal-popup {
+                .modal-title {
+                    .lib-font-size(20);
+                    .lib-css(font-weight, @font-weight__bold);
+                }
+            }
+        }
+    }
+
+    .modal-popup {
+        pointer-events: none;
+
+        .modal-title {
+            .lib-css(border-bottom, @modal-title__border);
+            .lib-css(font-weight, @font-weight__light);
+            .lib-css(padding-bottom, @indent__s);
+            font-size: @modal-popup-title__font-size;
+            margin-bottom: 0;
+            min-height: 1em;
+            word-wrap: break-word;
+        }
+
+        .action-close {
+            padding: @indent__s;
+        }
+        &._inner-scroll {
+            .modal-content {
+                scrollbar-color: @button_color_secondary transparent;
+                scrollbar-width: thin;
+                &::-webkit-scrollbar {
+                    width: 5px;
+                    -webkit-overflow-scrolling: touch;
+                }
+                &::-webkit-scrollbar-thumb {
+                    -webkit-overflow-scrolling: touch;
+                    background: @button_color_secondary;
+                }
+                &::-webkit-scrollbar-track {
+                    -webkit-overflow-scrolling: touch;
+                    background-color: @color_ccc;
+                    border-left: 1px solid @color_ccc;
+                }
+            }
+        }
+    }
+
+    .modals-wrapper {
+        .modal-popup.register-action-error {
+            .modal-inner-wrap {
+                width: 600px;
+            }
+            .action-accept {
+                margin-bottom: 0;
+            }
+            .modal-title {
+                background: url('@{baseDir}images/warning_circle.svg') no-repeat center top;
+                border: none;
+                font-size: 20px;
+                font-weight: @font-weight__regular;
+                line-height: 1.3;
+                padding-bottom: 0;
+                padding-top: 110px;
+                text-align: center;
+            }
+            .modal-footer {
+                padding-top: 14px;
+                text-align: center;
+            }
+        }
+    }
+
+    .modal-slide {
+        .action-close {
+            padding: @modal-slide-action-close__padding;
+        }
+
+        .page-main-actions {
+            margin-bottom: @modal-slide-header__padding-vertical - (@indent__l/2);
+            margin-top: @modal-slide-header__padding-vertical;
+        }
+    }
+
+    .modals-overlay {
+        .lib-css(background-color, @modal-overlay__background-color);
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        right: 0;
+        top: 0;
+    }
+
+    body {
+        &._has-modal-custom {
+            .modal-custom-overlay {
+                height: 100vh;
+                left: 0;
+                position: fixed;
+                top: 0;
+                width: 100vw;
+                z-index: @overlay__z-index;
+            }
+            .page-wrapper {
+                nav.navigation.sw-megamenu {
+                    z-index: inherit;
+                }
+            }
+        }
+        &._has-modal {
+            .page-wrapper {
+                nav.navigation.sw-megamenu {
+                    z-index: inherit;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .custom-slide {
+        .lib-modal();
+        .lib-modal-slide();
+
+        &._show {
+            -webkit-overflow-scrolling: touch;
+            overflow-x: hidden;
+            overflow-y: auto;
+            z-index: 1111 !important;
+        }
+
+        .modal-inner-wrap {
+            .lib-css(background-color, @modal-slide-mobile__background-color);
+            box-sizing: border-box;
+            height: auto;
+            min-height: 100%;
+        }
+    }
+
+    body {
+        &._has-modal-custom {
+            height: 100vh;
+            overflow: hidden;
+            width: 100vw;
+
+            .modal-custom-overlay {
+                .lib-css(background-color, @modal-overlay__background-color);
+                z-index: 1110 !important;
+            }
+        }
+    }
+    .modal-popup {
+        pointer-events: auto;
+        &.modal-slide {
+            .lib-css(right, @modal-slide__first__indent-left);
+            .modal-inner-wrap[class] {
+                .lib-css(background-color, @modal-slide-mobile__background-color);
+            }
+
+            &._inner-scroll {
+                &._show {
+                    -webkit-overflow-scrolling: touch;
+                    overflow-y: auto;
+                }
+
+                .modal-inner-wrap {
+                    height: auto;
+                    margin: 50px 0 0;
+                }
+            }
+        }
+
+        .modal-title {
+            .lib-css(font-size, @modal-popup-title-mobile__font-size);
+            .lib-css(font-weight, @font-weight__regular);
+        }
+    }
+    .modals-wrapper {
+        .modal-popup {
+            &.register-action-error {
+                .modal-inner-wrap {
+                    width: 94%;
+                }
+                .modal-title {
+                    background-size: 66px auto;
+                    font-size: 16px;
+                    padding-top: 90px;
+                }
+            }
+            &.document-modal {
+                .modal-footer {
+                    .action-close {
+                        display: none;
+                    }
+                }
+            }
+        }
+    }
+    .checkout-index-index {
+        .modals-wrapper {
+            .modal-popup {
+                .modal-title {
+                    .lib-font-size(18);
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .modal-popup {
+        &.modal-slide {
+            .modal-footer {
+                .lib-css(border-top, @modal-title__border);
+                text-align: right;
+            }
+        }
+    }
+}
+
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .modal-popup,
+    .modal-custom {
+        .modal-header {
+            padding: 3rem 1.5rem 1.5rem 1.5rem;
+        }
+        .action-close {
+            margin : 0;
+            padding: 1.1rem 1rem;
+        }
+        .modal-content {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+        .modal-footer button {
+            width: 100%;
+        }
+    }
+    .modals-wrapper {
+        .modal-popup.confirm {
+            .modal-inner-wrap {
+                .lib-css(width, 100%);
+                .lib-css(height, auto);
+                .lib-css(margin, 50px 0 0);
+            }
+        }
+    }
+}

@@ -19,4 +19,25 @@
             }
         }
     }
+    .sales-order-view,
+    .sales-order-invoice,
+    .sales-order-shipment,
+    .sales-order-print,
+    .sales-order-printinvoice,
+    .sales-order-printshipment,
+    .magento_rma-returns-returns,
+    .amasty_quote-account-view {
+        &.account {
+            .page-title-wrapper {
+                .order-actions-toolbar {
+                    a.action.order {
+                        &:before {
+                            background-image: url('@{baseDir}images/Union-account.svg');
+                            .lib-css(filter, none);
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
