@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace HookahShisha\Customerb2b\Controller\Adminhtml\Company\Index;
 
@@ -24,7 +25,7 @@ class Save extends \Magento\Backend\App\Action implements HttpPostActionInterfac
      *
      * @see _isAllowed()
      */
-    const ADMIN_RESOURCE = 'Magento_Company::manage';
+    public const ADMIN_RESOURCE = 'Magento_Company::manage';
 
     /**
      * @var DataObjectProcessor
@@ -199,6 +200,8 @@ class Save extends \Magento\Backend\App\Action implements HttpPostActionInterfac
             'annual_turn_over',
             'number_of_emp',
             'tin_number',
+            'fiscal_number',
+            'ust_id',
             'tobacco_permit_number',
             'hear_about_us',
             'questions',

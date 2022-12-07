@@ -72,10 +72,7 @@ class OrderSync extends AbstractMassAction
             if (!$order->getEntityId()) {
                 continue;
             }
-            $history = $order->getStatusHistoryCollection()->addFieldToFilter('comment', ['eq' => 'Sales Approved'])->load();
-            if ($history->toArray()['totalRecords']) {
-                $orderSyncArray[$order->getStore()->getWebsiteId()][]=$order->getEntityId();
-            }
+            $orderSyncArray[$order->getStore()->getWebsiteId()][]=$order->getEntityId();
         }
         foreach ($orderSyncArray as $websiteId => $value) {
             $token_value = $this->exitbsync->tokenAuthentication($websiteId);

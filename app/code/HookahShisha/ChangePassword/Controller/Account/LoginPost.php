@@ -249,6 +249,7 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                         $email,
                         AccountManagement::EMAIL_RESET
                     );
+                    $this->messageManager->addSuccessMessage($this->getSuccessMessage($email));
                 } catch (NoSuchEntityException $exception) {
                     // Do nothing, we don't want anyone to use this action to
                     // determine which email accounts are registered.
@@ -260,7 +261,6 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                         __('We\'re unable to send the password reset email.')
                     );
                 }
-                $this->messageManager->addSuccessMessage($this->getSuccessMessage($email));
                 return $resultRedirect; //NOSONAR
             } elseif (!empty($login['username']) && !empty($login['password'])) {
                 try {
