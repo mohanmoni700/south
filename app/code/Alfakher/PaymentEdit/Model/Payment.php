@@ -230,7 +230,7 @@ class Payment extends BasePayment
                     }
                 }
                 $card = $card->getTypeInstance();
-                $grandTotal = $this->order->getBaseGrandTotal();
+                $grandTotal = $this->order->getGrandTotal();
 
                 if ($origPayment == 'paradoxlabs_firstdata') {
                     $oldCard = $this->cardRepository->load($payment->getTokenbaseId());
