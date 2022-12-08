@@ -1,0 +1,38 @@
+<div id="popup-mpdal">
+    <?php echo $block->getmessage() ?>
+</div>
+<script>
+    require(
+        [
+            'jquery',
+            'Magento_Ui/js/modal/modal'
+        ],
+        function(
+            $,
+            modal
+        ) {
+            var options = {
+                type: 'popup',
+                responsive: true,
+                innerScroll: true,
+                title: '<h1><?php echo $block->gettitle() ?><h1>',
+                buttons: [{
+                    text: $.mage.__('<?php echo $block->getbuttonlabel() ?>'),
+                    class: '',
+                    click: function () {
+                        this.closeModal();
+                    }
+                }]
+            };
+
+            var popup = modal(options, $('#popup-mpdal'));
+
+            $('#popup-mpdal').modal('openModal');
+        }
+    );
+
+
+
+    
+
+</script>

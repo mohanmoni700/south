@@ -1,0 +1,182 @@
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<div class="payment-method" data-bind="css: {'_active': (getCode() == isChecked())}">
+    <div class="payment-method-title field choice">
+        <input type="radio"
+               name="payment[method]"
+               class="radio"
+               data-bind="attr: {'id': getCode()}, value: getCode(), checked: isChecked, click: selectPaymentMethod, visible: isRadioButtonVisible(), enable: isDisabled()"/>
+        <!-- ko if: (getCode() == 'vrpayecommerce_ccsaved' || getCode() == 'vrpayecommerce_creditcard') -->
+            <!-- ko if: (getLogos().VISA.display == 'block') -->
+            <img data-bind="attr: {src: getLogos().VISA.url, alt: getTitle()}, style: {height: getLogos().VISA.height, 'vertical-align': 'middle'}" />
+            <!--/ko-->
+            <!-- ko if: (getLogos().MASTER.display == 'block') -->
+            <img data-bind="attr: {src: getLogos().MASTER.url, alt: getTitle()}, style: {height: getLogos().MASTER.height, 'vertical-align': 'middle'}" />
+            <!--/ko-->
+            <!-- ko if: (getLogos().AMEX.display == 'block') -->
+            <img data-bind="attr: {src: getLogos().AMEX.url, alt: getTitle()}, style: {height: getLogos().AMEX.height, 'vertical-align': 'middle'}" />
+            <!--/ko-->
+            <!-- ko if: (getLogos().DINERS.display == 'block') -->
+            <img data-bind="attr: {src: getLogos().DINERS.url, alt: getTitle()}, style: {height: getLogos().DINERS.height, 'vertical-align': 'middle'}" />
+            <!--/ko-->
+            <!-- ko if: (getLogos().JCB.display == 'block') -->
+            <img data-bind="attr: {src: getLogos().JCB.url, alt: getTitle()}, style: {height: getLogos().JCB.height, 'vertical-align': 'middle'}" />
+            <!--/ko-->
+        <!--/ko-->
+        <!-- ko else -->
+            <!-- ko if: (getCode() == 'vrpayecommerce_enterpay') -->
+            <label data-bind="text: getPaymentTitle()"></label>
+            <!--/ko-->
+            <!-- ko if: (getLogos().display == 'block') -->
+            <img data-bind="attr: {src: getLogos().url, alt: getTitle()}, style: {height: getLogos().height, 'vertical-align': 'middle'}" />
+            <!--/ko-->
+            <!-- ko if: (getCode() == 'vrpayecommerce_easycredit') -->
+                <div>
+                    <div id="vrpayecommerce_easycredit_errorDoB"> <p data-bind="text: getDetails().errorDoB"></p></div>
+                    <div id="vrpayecommerce_easycredit_errorAmount"> <p data-bind="text: getEasyCreditErrorAmount()"></p></div>
+                    <div id="vrpayecommerce_easycredit_errorGender"> <p data-bind="text: getDetails().errorGender">
+                        <div id="field_gender">
+                            <div class="control">
+                                <select id="gender" name="gender" title="Gender">
+                                        <option value="" selected="selected"> </option>
+                                        <option value="M" data-bind="text: getDetails().genderMale"></option>
+                                        <option value="F" data-bind="text: getDetails().genderFemale"></option>
+                                </select>
+                            </div>
+                        </div>
+                        </p>
+                    </div>
+                    <div class="fieldset" id="easycreditTerms" style="display: none;">
+                        <div class="field required" id="vrpayecommerce_easycredit_term_field">
+                            <label class="label">
+                                <input type="checkbox" id="vrpayecommerce_easycredit_term" name="vvrpayecommerce_easycredit_term"/>
+                                 <span id="vrpayecommerce_easycredit_term_error_text"></span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mage-error" id="vrpayecommerce_easycredit_term_error" style="display: none;" generated="true" data-bind="text: getDetails().easycreditTermError"></div>
+                    
+                </div>
+            <!--/ko-->
+            <!-- ko if: (getCode() == 'vrpayecommerce_enterpay') -->
+            <div class="fieldset" id="enterpayTerms" style="display: none;">
+                <div class="field" id="vrpayecommerce_enterpay_redirect">
+                    <label class="label">
+                        <span data-bind="text: getDetails().redirect, afterRender: enterPayTermInit"></span>
+                    </label>
+                </div>
+            </div>
+            <!--/ko-->
+        <!--/ko-->
+    </div>
+    <!-- ko if: (getCode() != 'vrpayecommerce_easycredit') -->
+        <div class="payment-method-content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <!-- ko if: (getCode() == 'vrpayecommerce_klarnapaylater') -->
+            <div class="mage-error" id="vrpayecommerce_klarnapaylater_address_error" style="display: none;" generated="true" data-bind="text: getDetails().addressError"></div>
+            <br>
+            <!--/ko-->
+            <!-- ko if: (getCode() == 'vrpayecommerce_klarnapaylater') -->
+            <label class="label" data-bind="attr: {'for': getCode()}">
+                <span data-bind="text: getDetails().title"></span>
+            </label>
+            <span id="klarna_invoice_terms" data-bind="template: { afterRender: renderKlarnaPaylaterTerms }"></span>
+            <br>
+            <div class="fieldset">
+                <div class="field required" id="vrpayecommerce_klarnapaylater_term_field">
+                    <label class="label">
+                        <input type="checkbox" id="vrpayecommerce_klarnapaylater_term" name="vrpayecommerce_klarnapaylater_term"/>
+                        <span data-bind="text: getDetails().term1"></span>
+                        <span id="klarna_invoice_consent" data-bind="template: { afterRender: renderKlarnaPaylaterConsent }"></span>
+                        <span data-bind="text: getDetails().term2"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="mage-error" id="vrpayecommerce_klarnapaylater_term_error" style="display: none;" generated="true" data-bind="text: getDetails().termError"></div>
+        <!--/ko-->
+        <!-- ko if: (getCode() == 'vrpayecommerce_klarnasliceit') -->
+            <div class="mage-error" id="vrpayecommerce_klarnasliceit_address_error" style="display: none;" generated="true" data-bind="text: getDetails().addressError"></div>
+            <br>
+            <div id="klarnasliceit_details">
+                <div><span data-bind="text: getDetails().flexible"></span></div>
+                <div><span data-bind="text: getDetails().interest"></span></div>
+                <div><span data-bind="text: getDetails().monthlyFee"></span></div>
+                <div><span data-bind="text: getDetails().monthlyPay"></span></div>
+            </div>
+            <br>
+            <!--/ko-->
+            <!-- ko if: (getCode() == 'vrpayecommerce_klarnasliceit') -->
+            <label class="label" data-bind="attr: {'for': getCode()}">
+                <span data-bind="text: getDetails().title"></span>
+            </label>
+            <span id="klarna_account_terms" data-bind="template: { afterRender: renderKlarnaSliceitTerms }"></span>
+            <br>
+            <div class="fieldset">
+                <div class="field required" id="vrpayecommerce_klarnasliceit_term_field">
+                    <label class="label">
+                        <input type="checkbox" id="vrpayecommerce_klarnasliceit_term" name="vrpayecommerce_klarnasliceit_term"/>
+                        <span data-bind="text: getDetails().term1"></span>
+                        <span id="klarna_account_consent" data-bind="template: { afterRender: renderKlarnaSliceItConsent }"></span>
+                        <span data-bind="text: getDetails().term2"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="mage-error" id="vrpayecommerce_klarnasliceit_term_error" style="display: none;" generated="true" data-bind="text: getDetails().termError"></div>
+        <!--/ko-->
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="click: placeOrderAction, enable: (getCode() == isChecked())"
+                        disabled>
+                        <span data-bind="i18n: 'Place Order'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--/ko-->
+    <!-- ko if: (getCode() == 'vrpayecommerce_easycredit') -->
+        <div class="payment-method-content" id="vrpayecommerce_easycredit_payment_content">
+        <!-- ko foreach: getRegion('messages') -->
+        <!-- ko template: getTemplate() --><!-- /ko -->
+        <!--/ko-->
+        <div class="payment-method-billing-address">
+            <!-- ko foreach: $parent.getRegion(getBillingAddressFormName()) -->
+            <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="mage-error" id="vrpayecommerce_easycredit_address_error" style="display: none;" generated="true" data-bind="text: getDetails().addressErrorEasyCredit"></div>
+        <div class="checkout-agreements-block">
+            <!-- ko foreach: $parent.getRegion('before-place-order') -->
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            <!--/ko-->
+        </div>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button class="action primary checkout"
+                        type="submit"
+                        data-bind="click: placeOrderAction, enable: (getCode() == isChecked()), afterRender: easyCreditTermInit"
+                        disabled>
+                        <span data-bind="text: getDetails().easycreditConfirm"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--/ko-->
+</div>

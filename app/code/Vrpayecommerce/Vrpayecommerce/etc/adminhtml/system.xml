@@ -1,0 +1,1027 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="vrpayecommerce" translate="label" type="text" sortOrder="500" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>VRPAYECOMMERCE_BACKEND_GENERAL_TITLE</label>
+            <tab>sales</tab>
+            <resource>Vrpayecommerce_Vrpayecommerce::payment</resource>
+            <group id="vrpayecommerce_general" translate="label" type="text" sortOrder="800" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>BACKEND_CH_GENERAL</label>
+                <field id="version" type="label" sortOrder="1" showInDefault="1">
+                    <label>v2.4.12</label>
+                    <frontend_model>Magento\Config\Block\System\Config\Form\Field\Heading</frontend_model>
+                    <config_path>payment/vrpayecommerce_general/version</config_path>
+                </field>
+                <field id="bearer" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_CH_BEARER</label>
+                    <config_path>payment/vrpayecommerce_general/bearer</config_path>
+                </field>
+                <field id="login" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_CH_LOGIN</label>
+                    <config_path>payment/vrpayecommerce_general/login</config_path>
+                </field>
+                <field id="password" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_CH_PASSWORD</label>
+                    <config_path>payment/vrpayecommerce_general/password</config_path>
+                </field>
+                <field id="recurring" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_CH_RECURRING</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/vrpayecommerce_general/recurring</config_path>
+                </field>
+                <field id="merchant_email" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_GENERAL_MERCHANTEMAIL</label>
+                    <config_path>payment/vrpayecommerce_general/merchant_email</config_path>
+                </field>
+                <field id="merchant_no" translate="label comment" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_GENERAL_MERCHANTNO</label>
+                    <comment>BACKEND_TT_MERCHANT_ID</comment>
+                    <config_path>payment/vrpayecommerce_general/merchant_no</config_path>
+                    <frontend_class>required-entry validate-alphanum</frontend_class>
+                </field>
+                <field id="shop_url" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_GENERAL_SHOPURL</label>
+                    <config_path>payment/vrpayecommerce_general/shop_url</config_path>
+                    <frontend_class>required-entry</frontend_class>
+                </field>
+                <field id="behind_proxy" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_GENERAL_BEHINDPROXY</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>payment/vrpayecommerce_general/behind_proxy</config_path>
+                </field>
+                <field id="proxy_url" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_GENERAL_PROXYURL</label>
+                    <config_path>payment/vrpayecommerce_general/proxy_url</config_path>
+                </field>
+                <field id="proxy_port" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_GENERAL_PROXYPORT</label>
+                    <config_path>payment/vrpayecommerce_general/proxy_port</config_path>
+                </field>
+                <field id="widget_style" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_GENERAL_WIDGETSTYLE</label>
+                    <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\WidgetStyle</source_model>
+                    <config_path>payment/vrpayecommerce_general/widget_style</config_path>
+                </field>
+                <field id="update_pclass" translate="label" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label></label>
+                        <frontend_model>Vrpayecommerce\Vrpayecommerce\Block\Adminhtml\System\Config\Form\ShowPopUp</frontend_model>
+                        <config_path>payment/vrpayecommerce_general/show_popup</config_path>
+                </field>
+                <field id="merchant_location" translate="label comment" type="text" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_GENERAL_MERCHANT_LOCATION</label>
+                    <comment>BACKEND_GENERAL_MERCHANT_LOCATION_DISCLAIMER</comment>
+                    <config_path>payment/vrpayecommerce_general/merchant_location</config_path>
+                    <frontend_class>required-entry</frontend_class>
+                </field>
+            </group>
+            <group id="vrpayecommerce_payments" translate="label" type="text" sortOrder="1000" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>BACKEND_GENERAL_PAYMENT_METHODS</label>
+                <group id="vrpayecommerce_ccsaved" translate="label" type="text" sortOrder="1001" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_PM_CC_SAVED</label>
+                    <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ACTIVE</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/vrpayecommerce_ccsaved/active</config_path>
+                    </field>
+                    <field id="server_mode" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_SERVER</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\ServerMode</source_model>
+                        <config_path>payment/vrpayecommerce_ccsaved/server_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="card_selection" translate="label" type="multiselect" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CARDS</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\CardType</source_model>
+                        <config_path>payment/vrpayecommerce_ccsaved/card_selection</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="transaction_mode" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_MODE</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\TransactionMode</source_model>
+                        <config_path>payment/vrpayecommerce_ccsaved/transaction_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="capture_order" translate="label" type="multiselect" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CAPTURE_ORDER</label>
+                        <source_model>Magento\Sales\Model\ResourceModel\Order\Status\Collection</source_model>
+                        <config_path>payment/vrpayecommerce_ccsaved/capture_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="register_amount" translate="label comment" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_AMOUNT</label>
+                        <comment>BACKEND_TT_REGISTRATION_AMOUNT</comment>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_ccsaved/register_amount</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="multichannel" translate="label comment" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_MULTICHANNEL</label>
+                        <comment>BACKEND_TT_MULTICHANNEL</comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/vrpayecommerce_ccsaved/multichannel</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="channel_id" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CHANNEL</label>
+                        <config_path>payment/vrpayecommerce_ccsaved/channel_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="channel_id_moto" translate="label comment" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_MOTO</label>
+                        <comment>BACKEND_TT_ENTITY_MOTO</comment>
+                        <config_path>payment/vrpayecommerce_ccsaved/channel_id_moto</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIES</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>payment/vrpayecommerce_ccsaved/allowspecific</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIESSPEC</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <config_path>payment/vrpayecommerce_ccsaved/specificcountry</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ORDER</label>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_ccsaved/sort_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                </group>
+                <group id="vrpayecommerce_creditcard" translate="label" type="text" sortOrder="1002" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_PM_CC</label>
+                    <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ACTIVE</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/vrpayecommerce_creditcard/active</config_path>
+                    </field>
+                    <field id="server_mode" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_SERVER</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\ServerMode</source_model>
+                        <config_path>payment/vrpayecommerce_creditcard/server_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="card_selection" translate="label" type="multiselect" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CARDS</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\CardType</source_model>
+                        <config_path>payment/vrpayecommerce_creditcard/card_selection</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="transaction_mode" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_MODE</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\TransactionMode</source_model>
+                        <config_path>payment/vrpayecommerce_creditcard/transaction_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="capture_order" translate="label" type="multiselect" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CAPTURE_ORDER</label>
+                        <source_model>Magento\Sales\Model\ResourceModel\Order\Status\Collection</source_model>
+                        <config_path>payment/vrpayecommerce_creditcard/capture_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="channel_id" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CHANNEL</label>
+                        <config_path>payment/vrpayecommerce_creditcard/channel_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIES</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>payment/vrpayecommerce_creditcard/allowspecific</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIESSPEC</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <config_path>payment/vrpayecommerce_creditcard/specificcountry</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ORDER</label>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_creditcard/sort_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                </group>
+                <group id="vrpayecommerce_ddsaved" translate="label" type="text" sortOrder="1003" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_PM_DD_SAVED</label>
+                    <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ACTIVE</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/vrpayecommerce_ddsaved/active</config_path>
+                    </field>
+                    <field id="server_mode" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_SERVER</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\ServerMode</source_model>
+                        <config_path>payment/vrpayecommerce_ddsaved/server_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="transaction_mode" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_MODE</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\TransactionMode</source_model>
+                        <config_path>payment/vrpayecommerce_ddsaved/transaction_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="capture_order" translate="label" type="multiselect" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CAPTURE_ORDER</label>
+                        <source_model>Magento\Sales\Model\ResourceModel\Order\Status\Collection</source_model>
+                        <config_path>payment/vrpayecommerce_ddsaved/capture_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="register_amount" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_AMOUNT</label>
+                        <comment>BACKEND_TT_REGISTRATION_AMOUNT</comment>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_ddsaved/register_amount</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="channel_id" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CHANNEL</label>
+                        <config_path>payment/vrpayecommerce_ddsaved/channel_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIES</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>payment/vrpayecommerce_ddsaved/allowspecific</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIESSPEC</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <config_path>payment/vrpayecommerce_ddsaved/specificcountry</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ORDER</label>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_ddsaved/sort_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                </group>
+                <group id="vrpayecommerce_directdebit" translate="label" type="text" sortOrder="1004" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_PM_DD</label>
+                    <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ACTIVE</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/vrpayecommerce_directdebit/active</config_path>
+                    </field>
+                    <field id="server_mode" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_SERVER</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\ServerMode</source_model>
+                        <config_path>payment/vrpayecommerce_directdebit/server_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="transaction_mode" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_MODE</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\TransactionMode</source_model>
+                        <config_path>payment/vrpayecommerce_directdebit/transaction_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="capture_order" translate="label" type="multiselect" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CAPTURE_ORDER</label>
+                        <source_model>Magento\Sales\Model\ResourceModel\Order\Status\Collection</source_model>
+                        <config_path>payment/vrpayecommerce_directdebit/capture_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="channel_id" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CHANNEL</label>
+                        <config_path>payment/vrpayecommerce_directdebit/channel_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIES</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>payment/vrpayecommerce_directdebit/allowspecific</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIESSPEC</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <config_path>payment/vrpayecommerce_directdebit/specificcountry</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ORDER</label>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_directdebit/sort_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                </group>
+                <group id="vrpayecommerce_giropay" translate="label" type="text" sortOrder="1005" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_PM_GIROPAY</label>
+                    <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ACTIVE</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/vrpayecommerce_giropay/active</config_path>
+                    </field>
+                    <field id="server_mode" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_SERVER</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\ServerMode</source_model>
+                        <config_path>payment/vrpayecommerce_giropay/server_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="channel_id" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CHANNEL</label>
+                        <config_path>payment/vrpayecommerce_giropay/channel_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIES</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>payment/vrpayecommerce_giropay/allowspecific</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIESSPEC</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <config_path>payment/vrpayecommerce_giropay/specificcountry</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ORDER</label>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_giropay/sort_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                </group>
+                <!-- <group id="vrpayecommerce_klarnapaylater" translate="label" type="text" sortOrder="1006" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_PM_KLARNA_PAYLATER</label>
+                    <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ACTIVE</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/vrpayecommerce_klarnapaylater/active</config_path>
+                    </field>
+                    <field id="server_mode" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_SERVER</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\ServerMode</source_model>
+                        <config_path>payment/vrpayecommerce_klarnapaylater/server_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="channel_id" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CHANNEL</label>
+                        <config_path>payment/vrpayecommerce_klarnapaylater/channel_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="merchant_id" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNAPAYLATER_MERCHANTID</label>
+                        <config_path>payment/vrpayecommerce_klarnapaylater/merchant_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIES</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>payment/vrpayecommerce_klarnapaylater/allowspecific</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIESSPEC</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <config_path>payment/vrpayecommerce_klarnapaylater/specificcountry</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ORDER</label>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_klarnapaylater/sort_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                </group> -->
+                <!-- <group id="vrpayecommerce_klarnasliceit" translate="label" type="text" sortOrder="1007" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_PM_KLARNA_SLICEIT</label>
+                    <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ACTIVE</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/active</config_path>
+                    </field>
+                    <field id="server_mode" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_SERVER</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\ServerMode</source_model>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/server_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="channel_id" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CHANNEL</label>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/channel_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="merchant_id" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNASLICEIT_MERCHANTID</label>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/merchant_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="shared_secret" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNA_SHARED_SECRET</label>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/shared_secret</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="currency" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNA_CURRENCY</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\KlarnaCurrency</source_model>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/currency</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="country" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNA_COUNTRY</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\KlarnaCountry</source_model>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/country</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="language" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNA_LANGUAGE</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\KlarnaLanguage</source_model>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/language</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="update_pclass" translate="label" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label></label>
+                        <frontend_model>Vrpayecommerce\Vrpayecommerce\Block\Adminhtml\System\Config\Form\UpdatePclass</frontend_model>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="pclass_id" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNA_PCLASS_ID</label>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/pclass_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="description" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNA_PCLASS_DESC</label>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/description</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="pclass_months" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNA_PCLASS_AMOUNTOFMONTHS</label>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/pclass_months</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="pclass_start_fee" translate="label" type="text" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNA_PCLASS_STARTFEE</label>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/pclass_start_fee</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="pclass_invoice_fee" translate="label" type="text" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNA_PCLASS_INVOICEFEE</label>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/pclass_invoice_fee</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="pclass_interest_rate" translate="label" type="text" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNA_PCLASS_INTERESTRATE</label>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/pclass_interest_rate</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="pclass_minimum_purchase" translate="label" type="text" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNA_PCLASS_MINPURCHASE</label>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/pclass_minimum_purchase</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="pclass_country" translate="label" type="text" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNA_PCLASS_COUNTRY</label>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/pclass_country</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="pclass_type" translate="label" type="text" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNA_PCLASS_TYPE</label>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/pclass_type</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="pclass_expiry_date" translate="label" type="text" sortOrder="19" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_KLARNA_PCLASS_EXPIRYDATE</label>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/pclass_expiry_date</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIES</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/allowspecific</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIESSPEC</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/specificcountry</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ORDER</label>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_klarnasliceit/sort_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                </group> -->
+                <group id="vrpayecommerce_paydirekt" translate="label" type="text" sortOrder="1008" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_PM_PAYDIREKT</label>
+                    <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ACTIVE</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/vrpayecommerce_paydirekt/active</config_path>
+                    </field>
+                    <field id="server_mode" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_SERVER</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\ServerMode</source_model>
+                        <config_path>payment/vrpayecommerce_paydirekt/server_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="transaction_mode" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_MODE</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\TransactionMode</source_model>
+                        <config_path>payment/vrpayecommerce_paydirekt/transaction_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="capture_order" translate="label" type="multiselect" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CAPTURE_ORDER</label>
+                        <source_model>Magento\Sales\Model\ResourceModel\Order\Status\Collection</source_model>
+                        <config_path>payment/vrpayecommerce_paydirekt/capture_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="channel_id" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CHANNEL</label>
+                        <config_path>payment/vrpayecommerce_paydirekt/channel_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="minimum_age" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_MINIMUM_AGE</label>
+                        <config_path>payment/vrpayecommerce_paydirekt/minimum_age</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="is_partial" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_PAYMENT_IS_PARTIAL</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/vrpayecommerce_paydirekt/is_partial</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIES</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>payment/vrpayecommerce_paydirekt/allowspecific</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIESSPEC</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <config_path>payment/vrpayecommerce_paydirekt/specificcountry</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ORDER</label>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_paydirekt/sort_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                </group>
+                <group id="vrpayecommerce_paypalsaved" translate="label" type="text" sortOrder="1009" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_PM_PAYPALSAVED</label>
+                    <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ACTIVE</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/vrpayecommerce_paypalsaved/active</config_path>
+                    </field>
+                    <field id="server_mode" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_SERVER</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\ServerMode</source_model>
+                        <config_path>payment/vrpayecommerce_paypalsaved/server_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+
+                    <field id="transaction_mode" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_MODE</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\TransactionMode</source_model>
+                        <config_path>payment/vrpayecommerce_paypalsaved/transaction_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+
+                    <field id="capture_order" translate="label" type="multiselect" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CAPTURE_ORDER</label>
+                        <source_model>Magento\Sales\Model\ResourceModel\Order\Status\Collection</source_model>
+                        <config_path>payment/vrpayecommerce_paypalsaved/capture_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+
+                    <field id="register_amount" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_AMOUNT</label>
+                        <comment>BACKEND_TT_REGISTRATION_AMOUNT</comment>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_paypalsaved/register_amount</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="channel_id" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CHANNEL</label>
+                        <config_path>payment/vrpayecommerce_paypalsaved/channel_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIES</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>payment/vrpayecommerce_paypalsaved/allowspecific</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIESSPEC</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <config_path>payment/vrpayecommerce_paypalsaved/specificcountry</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ORDER</label>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_paypalsaved/sort_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                </group>
+                <group id="vrpayecommerce_paypal" translate="label" type="text" sortOrder="1010" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_PM_PAYPAL</label>
+                    <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ACTIVE</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/vrpayecommerce_paypal/active</config_path>
+                    </field>
+                    <field id="server_mode" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_SERVER</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\ServerMode</source_model>
+                        <config_path>payment/vrpayecommerce_paypal/server_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="transaction_mode" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_MODE</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\TransactionMode</source_model>
+                        <config_path>payment/vrpayecommerce_paypal/transaction_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="capture_order" translate="label" type="multiselect" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CAPTURE_ORDER</label>
+                        <source_model>Magento\Sales\Model\ResourceModel\Order\Status\Collection</source_model>
+                        <config_path>payment/vrpayecommerce_paypal/capture_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="channel_id" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CHANNEL</label>
+                        <config_path>payment/vrpayecommerce_paypal/channel_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIES</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>payment/vrpayecommerce_paypal/allowspecific</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIESSPEC</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <config_path>payment/vrpayecommerce_paypal/specificcountry</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ORDER</label>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_paypal/sort_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                </group>
+                <group id="vrpayecommerce_klarnaobt" translate="label" type="text" sortOrder="1011" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_PM_SOFORTBANK</label>
+                    <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ACTIVE</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/vrpayecommerce_klarnaobt/active</config_path>
+                    </field>
+                    <field id="server_mode" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_SERVER</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\ServerMode</source_model>
+                        <config_path>payment/vrpayecommerce_klarnaobt/server_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="channel_id" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CHANNEL</label>
+                        <config_path>payment/vrpayecommerce_klarnaobt/channel_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIES</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>payment/vrpayecommerce_klarnaobt/allowspecific</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIESSPEC</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <config_path>payment/vrpayecommerce_klarnaobt/specificcountry</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ORDER</label>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_klarnaobt/sort_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                </group>
+                <group id="vrpayecommerce_easycredit" translate="label" type="text" sortOrder="1012" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_PM_EASYCREDIT</label>
+                    <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ACTIVE</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/vrpayecommerce_easycredit/active</config_path>
+                    </field>
+                    <field id="server_mode" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_SERVER</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\ServerMode</source_model>
+                        <config_path>payment/vrpayecommerce_easycredit/server_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="channel_id" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CHANNEL</label>
+                        <config_path>payment/vrpayecommerce_easycredit/channel_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="shop_name" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>EASYCREDIT_BACKEND_SHOPNAME</label>
+                        <validate>required-entry</validate>
+                        <config_path>payment/vrpayecommerce_easycredit/shop_name</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIES</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>payment/vrpayecommerce_easycredit/allowspecific</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIESSPEC</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <config_path>payment/vrpayecommerce_easycredit/specificcountry</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ORDER</label>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_easycredit/sort_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                </group>
+                <group id="vrpayecommerce_enterpay" translate="label" type="text" sortOrder="1012" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>BACKEND_PM_ENTERPAY</label>
+                    <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ACTIVE</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <config_path>payment/vrpayecommerce_enterpay/active</config_path>
+                    </field>
+                    <field id="server_mode" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_SERVER</label>
+                        <source_model>Vrpayecommerce\Vrpayecommerce\Model\Source\ServerMode</source_model>
+                        <config_path>payment/vrpayecommerce_enterpay/server_mode</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="capture_order" translate="label" type="multiselect" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CAPTURE_ORDER</label>
+                        <source_model>Magento\Sales\Model\ResourceModel\Order\Status\Collection</source_model>
+                        <config_path>payment/vrpayecommerce_enterpay/capture_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="channel_id" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_CHANNEL</label>
+                        <config_path>payment/vrpayecommerce_enterpay/channel_id</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="allowspecific" translate="label" type="allowspecific" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIES</label>
+                        <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+                        <config_path>payment/vrpayecommerce_enterpay/allowspecific</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="specificcountry" translate="label" type="multiselect" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_COUNTRIESSPEC</label>
+                        <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                        <config_path>payment/vrpayecommerce_enterpay/specificcountry</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                    <field id="sort_order" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>BACKEND_CH_ORDER</label>
+                        <frontend_class>validate-number</frontend_class>
+                        <config_path>payment/vrpayecommerce_enterpay/sort_order</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+                </group>
+            </group>
+        </section>
+    </system>
+</config>

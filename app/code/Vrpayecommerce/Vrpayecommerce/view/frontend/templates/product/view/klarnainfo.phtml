@@ -1,0 +1,13 @@
+<div class="product-info-klarna">
+	<?php if ($block->isKlarnasliceitActive()) { ?>
+		<div>
+			<?php echo __('FRONTEND_PM_KLARNASLICEIT'); ?>
+		</div>
+		<div>
+			<?php echo __('FRONTEND_TT_KLARNASLICEIT_INTEREST', $block->getInterestRate()); ?>
+		</div>
+		<div>
+			<?php echo __('FRONTEND_TT_KLARNASLICEIT_MONTHLY_FEE', $block->getInvoiceFee()); ?>
+		</div>
+	<?php } ?>
+</div>
