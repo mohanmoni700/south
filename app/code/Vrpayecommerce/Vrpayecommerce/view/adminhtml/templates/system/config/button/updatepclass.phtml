@@ -1,0 +1,68 @@
+<div class="pp-buttons-container">
+    <button id="<?php echo $block->getId() ?>" onclick="<?php echo $block->escapeHtml($block->getOnclick()); ?>">
+        <span><span><span><?php echo $block->escapeHtml($block->getButtonLabel()); ?></span></span></span>
+    </button>
+</div>
+
+<script type="text/javascript">
+
+function updatePclass()
+{
+	document.getElementById('update_pclass_button').disabled = true;
+	var merchantId = document.getElementById('vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_merchant_id').value;
+	var sharedSecret = document.getElementById('vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_shared_secret').value;
+	var currency = document.getElementById('vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_currency').value;
+	var country = document.getElementById('vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_country').value;
+	var language = document.getElementById('vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_language').value;
+	var serverMode = document.getElementById('vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_server_mode').value;
+	var behindProxy = document.getElementById('vrpayecommerce_vrpayecommerce_general_behind_proxy').value;
+	var proxyURL = document.getElementById('vrpayecommerce_vrpayecommerce_general_proxy_url').value;
+	var proxyPort = document.getElementById('vrpayecommerce_vrpayecommerce_general_proxy_port').value;
+
+	var xhttp;
+	xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function() {
+		if (xhttp.readyState == 4) {
+			if (xhttp.status == 200) {
+				if(JSON.parse(xhttp.responseText).success == 'ERROR_MERCHANT_SSL_CERTIFICATE'){
+					alert('<?php echo __('ERROR_MERCHANT_SSL_CERTIFICATE'); ?>');
+					document.getElementById('update_pclass_button').disabled = false;
+				}else{
+					var pclass = JSON.parse(xhttp.responseText);
+					document.getElementById("vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_pclass_id").value = pclass.id;
+					document.getElementById("vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_description").value = pclass.description;
+					document.getElementById("vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_pclass_months").value = pclass.months;
+					document.getElementById("vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_pclass_start_fee").value = pclass.start_fee;
+					document.getElementById("vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_pclass_invoice_fee").value = pclass.invoice_fee;
+					document.getElementById("vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_pclass_interest_rate").value = pclass.interest_rate;
+					document.getElementById("vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_pclass_minimum_purchase").value = pclass.minimum_purchase;
+					document.getElementById("vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_pclass_country").value = pclass.country;
+					document.getElementById("vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_pclass_type").value = pclass.type;
+					document.getElementById("vrpayecommerce_vrpayecommerce_payments_vrpayecommerce_klarnasliceit_pclass_expiry_date").value = pclass.expiry_date;
+					alert('<?php echo __('SUCCESS_UPDATE_PCLASS'); ?>');
+					document.getElementById('update_pclass_button').disabled = false;
+				}
+			} else {
+				alert('<?php echo __('ERROR_UPDATE_PCLASS'); ?>');
+				document.getElementById('update_pclass_button').disabled = false;
+			}
+		}
+	};
+
+	var url = '<?php echo $block->getAjaxUpdatePclassUrl(); ?>';
+	url = url + '?merchantId=' + merchantId +
+		'&sharedSecret=' + sharedSecret +
+		'&currency=' + currency +
+		'&country=' + country +
+		'&language=' + language +
+		'&serverMode=' + serverMode +
+		'&behindProxy=' + behindProxy +
+		'&proxyURL=' + proxyURL +
+		'&proxyPort=' + proxyPort;
+
+	xhttp.open("GET", url, true);
+	xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xhttp.send();
+}
+
+</script>
