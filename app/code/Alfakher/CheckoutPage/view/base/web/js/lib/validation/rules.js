@@ -13,6 +13,15 @@ define([
                     return /^[+]([[0-9 ]{1,})?([1-9 ][0-9])$/.test(value);
                 },
                 $.mage.__('Please add a valid number')
+            ],
+             'shisha-validate-name': [
+                function (value, params) {
+                     if(!value.match(/\d+/)){
+                        return true
+                     }
+                    return false;
+                },
+                $.mage.__("Number not allowed")
             ]
         };
 
@@ -24,5 +33,6 @@ define([
         });
 
         return $.extend(validator, validators);
+
     };
 });

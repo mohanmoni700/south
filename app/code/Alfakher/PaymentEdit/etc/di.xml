@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="ParadoxLabs\FirstData\Model\Gateway" type="Alfakher\PaymentEdit\Model\Gateway" />
+    <preference for="MageWorx\OrderEditor\Model\Payment" type="Alfakher\PaymentEdit\Model\Payment" />
+    <preference for="ParadoxLabs\TokenBase\Helper\Data" type="Alfakher\PaymentEdit\Helper\Data" />
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Form" type="Alfakher\PaymentEdit\Block\Adminhtml\Form" />
+    <preference for="MageWorx\OrderEditor\Block\Adminhtml\Sales\Order\Edit\Form\Payment\Method" type="Alfakher\PaymentEdit\Block\Adminhtml\Method" />
+    <preference for="Magento\Sales\Model\Order\Payment\Operations\ProcessInvoiceOperation" type="Alfakher\PaymentEdit\Model\ProcessInvoiceOperation" />
+    <type name="ParadoxLabs\TokenBase\Block\Form\Cc">
+        <arguments>
+            <argument name="data"  xsi:type="array">
+                <item name="template" xsi:type="string">Alfakher_PaymentEdit::form/cc.phtml</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

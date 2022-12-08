@@ -1,0 +1,17 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="hookahshisha">
+            <tab>hookahshisha</tab>
+            <resource>Alfakher_CheckoutPage::restricted_payment_methods</resource>
+            <group id="restricted_payment_methods" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Restrict Payment Methods Configurations</label>
+                <field id="hide_payments" translate="label" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Country Wise Payment Methods</label>
+                    <frontend_model>Alfakher\CheckoutPage\Block\Adminhtml\Form\Field\PaymentMethodsCountrySpecific</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                    <comment>Specified payment methods will be hidden on checkout if shipping country code is not in the specified country code</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

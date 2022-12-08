@@ -1,0 +1,33 @@
+{
+    "name": "vrpayecommerce/vrpayecommerce",
+    "description": "Vrpayecommerce module payment",
+    "type": "magento2-module",
+    "version": "2.4.12",
+    "license": [
+        "OSL-3.0"
+    ],
+    "require": {
+        "php": "~5.5.0|~5.6.0|~7.0.0",
+        "magento/module-config": "100.0.*",
+        "magento/module-store": "100.0.*",
+        "magento/module-sales": "100.0.*",
+        "magento/module-checkout": "100.0.*",
+        "magento/module-quote": "100.0.*",
+        "magento/module-directory": "100.0.*",
+        "magento/framework": "100.0.*"
+    },
+    "extra": {
+        "map": [
+            [
+                "*",
+                "Vrpayecommerce/Vrpayecommerce"
+            ]
+        ]
+    },
+    "autoload": {
+        "files": [ "registration.php" ],
+        "psr-4": {
+            "vrpayecommerce\\vrpayecommerce\\": ""
+        }
+    }
+}

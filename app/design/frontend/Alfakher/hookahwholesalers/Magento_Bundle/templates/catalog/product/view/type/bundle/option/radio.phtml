@@ -63,6 +63,7 @@
                 <?php endforeach; ?>
                 <div id="bundle-option-<?= $block->escapeHtmlAttr($_option->getId()) ?>-container"></div>
             <?php endif; ?>
+            <?php if ($_helperB2b->isCustomerLoggedIn()):?>
             <div class="field qty qty-holder">
                 <label class="label" for="bundle-option-<?= $block->escapeHtmlAttr($_option->getId()) ?>-qty-input">
                     <span><?= $block->escapeHtml(__('Quantity')) ?></span>
@@ -80,6 +81,7 @@
                             />
                 </div>
             </div>
+        <?php endif; ?>
         </div>
     </div>
 </div>
