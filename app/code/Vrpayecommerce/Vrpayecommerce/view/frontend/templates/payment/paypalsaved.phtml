@@ -1,0 +1,82 @@
+<script src="<?php echo $block->getViewFileUrl('jquery/jquery.min.js'); ?>" type="text/javascript"></script>
+<script type="text/javascript">
+    var wpwlOptions = {
+            locale: "<?php echo $block->getLang();?>",
+            style: "<?php echo $block->getWidgetStyle() == 'custom' ? 'plain' : $block->getWidgetStyle();?>",
+            onReady: function(){
+                var buttonCancel = '<a href="<?php echo $block->getCancelUrl(); ?>" class="wpwl-button btn_cancel" \><?php echo __('FRONTEND_BT_CANCEL'); ?></a>';
+                var clearFloat = "<div style='clear:both'></div>"
+                var btnPayNow = "<button type='submit' name='pay' class='wpwl-button wpwl-button-pay'><?php echo __('FRONTEND_BT_PAYNOW') ?></button>";
+                var headerWidget = "<h2 class=\"header_bottom\"><?php echo __('FRONTEND_RECURRING_WIDGET_HEADER2') ?></h2>";
+                $('form.wpwl-form').find('.wpwl-button').after(buttonCancel);
+                $('form.wpwl-form-virtualAccount-PAYPAL').find('.wpwl-button-brand').wrap( "<div class='payment-brand'></div>");
+                $('form.wpwl-form-virtualAccount-PAYPAL').find('.btn_cancel').after(btnPayNow);
+                $('form.wpwl-form-virtualAccount-PAYPAL').find('.wpwl-button-pay').after(clearFloat);
+                <?php if ($block->getTestMode()) { ?>
+                    var ttTestMode = '<div class="testmode"><?php echo __('FRONTEND_TT_TESTMODE'); ?></div>';
+                    $(".wpwl-container").wrap( "<div class='frametest'></div>").before(ttTestMode);
+                <?php } ?>
+                $('#wpwl-registrations').after(headerWidget);
+                <?php if ($block->getWidgetStyle() == 'custom') { ?>
+                        $('.wpwl-container').css('border','2px solid #ccc').css('padding','10px 20px');
+                <?php } elseif ($block->getWidgetStyle() == 'plain') { ?>
+                    <?php if ($block->getTestMode()) { ?>
+                        $('.wpwl-container').css('padding','10px 20px'); 
+                    <?php } ?>
+                <?php } elseif ($block->getWidgetStyle() == 'card') { ?>
+                    $('form.wpwl-form-virtualAccount-PAYPAL').css('border','1px solid #ccc').css('border-radius','4px').css('-webkit-box-shadow','2px 3px 5px 1px #999').css('box-shadow','2px 3px 5px 1px #999');
+                <?php } ?>
+            },
+            registrations: {
+                hideInitialPaymentForms: false,
+            }
+        }
+</script>
+<?php 
+    $registrations = $block->getRegistrations();
+    if ($registrations):?>
+    <script>
+        $(document).ready(function() {
+            $( "input[type=radio][name=registrationId]" ).on( "click", function() {
+                $(".wpwl-group-registration").removeClass("wpwl-selected");
+                $(".regid"+this.value).addClass("wpwl-selected");
+            });
+        });
+    </script>
+    <h2><?php echo __('FRONTEND_RECURRING_WIDGET_HEADER1') ?></h2>
+    <div id="wpwl-registrations">
+        <div class="wpwl-container wpwl-container-virtualAccount-PAYPAL wpwl-clearfix" style="display: block;">
+            <form class="wpwl-form wpwl-form-registrations wpwl-form-has-inputs wpwl-clearfix" action="<?php echo $block->getRepeatedPaypalResponseUrl(); ?>" method="POST" lang="en" accept-charset="UTF-8" data-action="submit-registration">
+            <?php 
+            foreach ($registrations as $registration) : ?>
+                <div class="regid<?php echo $registration['registrationId'] ?> wpwl-group wpwl-group-registration wpwl-clearfix wpwl-selected ">
+                <label class="wpwl-registration">
+                    <div class="wpwl-wrapper-registration wpwl-wrapper-registration-registrationId">
+                        <input type="radio" name="registration_id" value="<?php echo $registration['registrationId'] ?>" checked="checked" data-action="change-registration">
+                    </div>
+                    <div class="wpwl-wrapper-registration wpwl-wrapper-registration-details paypal-detail">
+                        <div class="wpwl-wrapper-registration wpwl-wrapper-registration-email"><?php echo $registration['email']?></div>
+                    </div>
+                    <div class="wpwl-wrapper-registration wpwl-wrapper-registration-cvv"></div>
+                </label>
+                </div>
+            <?php 
+            endforeach; ?>
+                <div class="wpwl-group wpwl-group-submit wpwl-clearfix">
+                    <div class="wpwl-wrapper wpwl-wrapper-submit">
+                    <button type="submit" name="pay" class="wpwl-button wpwl-button-pay"><?php echo __('FRONTEND_BT_PAYNOW') ?></button>
+                    </div>
+                </div>
+                <input type="hidden" name="form_key" value="<?php echo $block->getFormKey();?>"/>
+                <input type="hidden" name="orderId" value="<?php echo $block->getOrderId();?>"/>
+            </form>
+            <iframe name="registrations-target" class="wpwl-target" src="about:blank" frameborder="0"></iframe>
+        </div>
+    </div>
+<?php else:?>   
+    <h2><?php echo __('FRONTEND_MC_PAYANDSAFE') ?></h2>
+<?php endif;?>
+
+<input type="submit" value="Submit" style="display:none" />
+<script async src="<?php echo $block->getPaymentWidgetUrl()?>" type="text/javascript"></script>
+<form action="<?php echo $block->getResponseUrl(); ?>" class="paymentWidgets"><?php echo $block->getBrand();?></form>

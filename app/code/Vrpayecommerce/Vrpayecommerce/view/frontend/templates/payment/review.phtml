@@ -1,0 +1,110 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<div class="easycredit-review view">
+    <div class="block block-order-details-view">
+        <div class="block-content">
+            <?php if ($block->getShippingAddress()): ?>
+                <div class="box box-order-shipping-method">
+                    <strong class="box-title">
+                        <span><?php echo $block->escapeHtml(__('Shipping Method')) ?></span>
+                    </strong>
+                    <div class="box-content">
+                        <p>
+                            <?php /* @noEscape */ echo $block->renderShippingRateOption(
+                                $block->getCurrentShippingRate()
+                            ); ?>
+                        </p>
+                    </div>
+                </div>
+                <div class="box box-order-shipping-address">
+                    <strong class="box-title">
+                        <span><?php echo $block->escapeHtml(__('Shipping Address')); ?></span>
+                    </strong>
+                    <div class="box-content">
+                        <address>
+                            <?php echo $block->escapeHtml(
+                                $block->renderAddress($block->getShippingAddress()),
+                                ['br']
+                            );?>
+                        </address>
+                    </div>
+                </div>
+            <?php endif; ?>
+            <?php if ($block->getBillingAddress()): ?>
+	            <div class="box box-order-billing-address">
+	                <strong class="box-title">
+	                    <span><?php echo $block->escapeHtml(__('Billing Address')); ?></span>
+	                </strong>
+	                <div class="box-content">
+	                    <address>
+	                        <?php echo $block->escapeHtml(
+	                            $block->renderAddress($block->getBillingAddress()),
+	                            ['br']
+	                        );?>
+	                    </address>
+	                </div>
+	            </div>
+            <?php endif; ?>
+            <div class="box box-order-payment-method">
+                <strong class="box-title"><span><?php echo $block->escapeHtml(__('Payment Method')); ?></span></strong>
+                <div class="box-content">
+                    <?php echo $block->escapeHtml($block->getPaymentMethodTitle()); ?>
+                </div>
+            </div>
+            <div class="box box-order-payment-method-redemption-plan">
+                <div class="box-content">
+                    <?php $paymentAddtionalInformation = $block->getPaymentAdditionalInformation(); ?>
+                    <?php if (isset($paymentAddtionalInformation['redemption_plan'])): ?>
+		                <?php echo $block->escapeHtml($paymentAddtionalInformation['redemption_plan']); ?>
+                    <?php endif; ?>
+                    <br/>
+                    <?php if (isset($paymentAddtionalInformation['pre_contract_information_url'])): ?>
+		                <a href="<?php echo $block->escapeHtml($paymentAddtionalInformation['pre_contract_information_url']); ?>" target="_blank"><?php echo $block->escapeHtml(__('FRONTEND_EASYCREDIT_LINK')); ?></a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="easycredit-review-items">
+        <div class="easycredit-review-title">
+            <strong><?php echo $block->escapeHtml(__('Items in Your Shopping Cart')); ?></strong>
+            <a href="<?php echo $block->escapeUrl($block->getUrl('checkout/cart')); ?>" class="action edit">
+                <span><?php echo $block->escapeHtml(__('Edit Shopping Cart')); ?></span>
+            </a>
+        </div>
+
+        <?php echo $block->getChildHtml('details') ?>
+
+        <form method="post" id="order-review-form" action="<?php echo $block->escapeUrl($block->getPlaceOrderUrl()); ?>"
+              class="form order-review-form">
+            <?php echo $block->getChildHtml('agreements'); ?>
+            <div class="actions-toolbar" id="review-buttons-container">
+                <div class="primary">
+                    <button type="button" id="review-button" class="action checkout primary"
+                            value="Place Order">
+                        <span><?php echo $block->escapeHtml(__('FRONTEND_EASYCREDIT_ACCEPT')); ?></span>
+                    </button>
+                </div>
+                <span class="please-wait load indicator" id="review-please-wait" style="display: none;"
+                      data-text="<?php echo $block->escapeHtml(__('Submitting order information...')); ?>">
+                   <span><?php echo $block->escapeHtml(__('Submitting order information...')); ?></span>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "#order-review-form": {
+            "validation": {},
+            "orderReview": {
+                "isAjax": <?php /* @noEscape */ echo $block->getUseAjax() ? 'true' : 'false' ?>
+            }
+        }
+    }
+</script>

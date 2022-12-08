@@ -1,0 +1,115 @@
+<link href="<?php echo $block->getViewFileUrl('Vrpayecommerce_Vrpayecommerce/css/payment_backendorder.css')?>" rel="stylesheet" type="text/css">
+<script src="<?php echo $block->getViewFileUrl('Vrpayecommerce_Vrpayecommerce/js/payment_backendorder.js'); ?>" type="text/javascript"></script>
+<?php if ($block->hasMethods()): ?>
+<div id="order-billing_method_form">
+    <dl class="admin__payment-methods">
+    <?php
+        $_methods       = $block->getMethods();
+        $_methodsCount  = count($_methods);
+        $_counter = 0;
+    ?>
+    <?php foreach ($_methods as $_method):
+            $code = $_method->getCode();
+            $_isVrpayecommerceMethod = $block->isVrpayecommerceMethod($code);
+            $isBackendPaymentMethod = $block->isBackendPaymentMethod($code);
+            $_counter++;
+    ?>
+        <?php if ($_isVrpayecommerceMethod) : ?>
+            <?php
+                if ($isBackendPaymentMethod) :
+                    $paymentInformation = $block->getPaymentInformation($code);
+                    if ($paymentInformation) :
+                        $_group = strtolower($paymentInformation[0]['payment_group']);
+                        $paymentMethodSession = $block->getPaymentMethodSession();
+                        $registrationIdSession = $block->getRegistrationIdSession();
+            ?>
+                    <dt class="admin__field-option">
+                        <span class="no-display">
+                            <input id="<?php echo $_group ?>_default_reg_id" value="<?php if (isset($registrationIdSession) && $code == $paymentMethodSession) { echo $registrationIdSession; } else { echo $paymentInformation[0]['registration_id']; } ?>" type="radio" name="payment[reg_id]" />
+                        </span>
+                         <input type="radio" id="p_method_<?php echo $code ?>" name="payment[method]" value="<?php echo $code ?>" onclick="changeDefaultRegistrationId('<?php echo $_group ?>')" class="admin__control-radio" <?php if ($code == $paymentMethodSession) { echo 'checked="checked"'; } ?>/>
+
+                        <label class="admin__field-label" for="p_method_<?php /* @escapeNotVerified */ echo $code ?>"><?php echo $block->escapeHtml($_method->getTitle())?></label>
+                    </dt>
+                    <dd class="admin__payment-method-wapper">
+                            <div class="group-select">
+                                <?php
+                                    if (isset($registrationIdSession)) {
+                                        $registration = $block->getPaymentInformationSelection($registrationIdSession);
+                                        if ('vrpayecommerce_'.strtolower($registration[0]['payment_group']).'saved' == $code) {
+                                            $accountBrand = $registration[0]['brand'];
+                                            $accountDetail = $block->getAccountDetail($registration[0]);
+                                        } else {
+                                            $accountBrand = $paymentInformation[0]['brand'];
+                                            $accountDetail = $block->getAccountDetail($paymentInformation[0]);
+                                        }
+                                    } else {
+                                        $accountBrand = $paymentInformation[0]['brand'];
+                                        $accountDetail = $block->getAccountDetail($paymentInformation[0]);
+                                    }
+                                ?>
+                                <div class="group-img">
+                                    <img id="<?php echo $_group ?>_default_img" src="<?php echo $block->getViewFileUrl('Vrpayecommerce_Vrpayecommerce/images').'/'.strtolower($accountBrand).'.png';?>" class="brandImage" alt="<?php echo $paymentInformation[0]['brand']?>">
+                                </div>
+                                <span id="<?php echo $_group ?>_default_payment" class="group-info">
+                                    <?php echo $accountDetail; ?>
+                                </span>
+                                <div class="group-button">
+                                    <a class="action-secondary btnCustom" onclick="changePayment('<?php echo $code ?>', '<?php echo $_group ?>')"><?php echo __('FRONTEND_MC_BT_CHANGE') ?></a>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div id ="<?php echo $_group ?>_select_payment" class="select-payment">
+                                <div class="select-title"><?php echo __('FRONTEND_MC_'.$paymentInformation[0]['payment_group'].'SELECT') ?></div>
+                                <?php foreach ($paymentInformation as $payment) : ?>
+                                    <div class="group-list">
+                                        <input type="hidden" id="reg_id_<?php echo $payment['information_id']?>" value="<?php echo  $payment['registration_id'] ?>" />
+                                        <div class="group-img">
+                                            <img id="default_img_<?php echo $payment['information_id'] ?>" src="<?php echo $block->getViewFileUrl('Vrpayecommerce_Vrpayecommerce/images').'/'.strtolower($payment['brand']).'.png';?>" class="brandImage" alt="<?php echo $payment['brand']?>">
+                                        </div>
+                                        <span id="default_payment_<?php echo $payment['information_id'] ?>" class="group-info">
+                                            <?php echo $block->getAccountDetail($payment)?>
+                                        </span>
+                                        <div class="group-button">
+                                            <a class="action-secondary btnCustom" onclick="selectPayment('<?php echo $payment['information_id']?>', '<?php echo $_group ?>')"><?php echo __('FRONTEND_MC_BT_SELECT') ?></a>
+                                        </div>
+                                        <div class="clear"></div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
+                    </dd>
+                    <dd class="clear"></dd>
+                <?php endif; ?>
+        <?php else : ?>
+                <dt class="admin__field-option">
+                <?php if ($_methodsCount > 1): ?>
+                    <input id="p_method_<?php /* @escapeNotVerified */ echo $code ?>" value="<?php /* @escapeNotVerified */ echo $code ?>" type="radio" name="payment[method]"
+                           title="<?php echo $block->escapeHtml($_method->getTitle()) ?>"
+                           onclick="payment.switchMethod('<?php /* @escapeNotVerified */ echo $code ?>')"<?php if ($block->getSelectedMethodCode() == $code): ?> checked="checked"<?php endif; ?>
+                           class="admin__control-radio<?php if ($_counter == $_methodsCount) : ?> validate-one-required-by-name<?php endif; ?>"/>
+                <?php else :?>
+                    <span class="no-display">
+                        <input id="p_method_<?php /* @escapeNotVerified */ echo $code ?>" value="<?php /* @escapeNotVerified */ echo $code ?>" type="radio"
+                               name="payment[method]" class="admin__control-radio"
+                               checked="checked"/>
+                    </span>
+                <?php endif;?>
+
+                    <label class="admin__field-label" for="p_method_<?php /* @escapeNotVerified */ echo $code ?>"><?php echo $block->escapeHtml($_method->getTitle()) ?></label>
+                </dt>
+                <dd class="admin__payment-method-wapper">
+                    <?php /* @escapeNotVerified */ echo $block->getChildHtml('payment.method.' . $code) ?>
+                </dd>
+        <?php endif; ?>
+    <?php endforeach; ?>
+    </dl>
+</div>
+<script>
+    require(["Magento_Sales/order/create/form"], function(){
+        order.setPaymentMethod('<?php /* @escapeNotVerified */ echo $block->getSelectedMethodCode() ?>')
+    });
+</script>
+<?php else: ?>
+    <div class="admin__message-empty"><?php /* @escapeNotVerified */ echo __('No Payment Methods') ?></div>
+<?php endif; ?>

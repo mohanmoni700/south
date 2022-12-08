@@ -1,0 +1,143 @@
+<script src="<?php echo $block->getViewFileUrl('jquery/jquery.min.js'); ?>" type="text/javascript"></script>
+
+<?php if ($block->getBrand() == 'PAYPAL' || $block->getBrand() == 'PAYDIREKT') { ?>
+    <style>
+        body {
+            display:none;
+            background: white;
+        }
+        button.wpwl-button-brand {
+            display:none;
+        }
+    </style>
+    <script type="text/javascript">
+        var wpwlOptions = {
+            locale: "<?php echo $block->getLang();?>",
+            onReady: function(){
+                $(".wpwl-form").submit();
+            }
+        }
+    </script>
+<?php } else {  ?>
+    <script type="text/javascript">
+
+        function validateHolder(e){
+            var holder = jQuery('.wpwl-control-cardHolder').val();
+            if(holder.trim().length < 2)
+            {
+                jQuery('.wpwl-control-cardHolder').addClass('wpwl-has-error').after('<div class="wpwl-hint wpwl-hint-cardHolderError"><?php echo __("FRONTEND_INVALID_CARD_HOLDER");?></div>');
+                return false;
+            }
+            return true;
+        }
+
+        var wpwlOptions = {
+                locale: "<?php echo $block->getLang();?>",
+                style: "<?php echo $block->getWidgetStyle() == 'custom' ? 'plain' : $block->getWidgetStyle();?>",
+                brandDetection: true,
+                onReady: function(){
+                    jQuery('.wpwl-form-card').find('.wpwl-button-pay').on('click', function(e){
+                        validateHolder(e);
+                    });
+                    var buttonCancel = '<div class="btn_left_wrapper"><a href="<?php echo $block->getCancelUrl(); ?>" class="wpwl-button btn_cancel" \><?php echo __('FRONTEND_BT_CANCEL'); ?></a></div>';
+                    var merchantLocation = "<div class='merchant-location-description'><?php echo __('FRONTEND_MERCHANT_LOCATION_DESC').$block->getMerchantLocation();?></div>";
+                    $('form.wpwl-form').find('.wpwl-button').before(buttonCancel);
+                    $('.wpwl-button-pay').wrap( "<div class='btn_right_wrapper'></div>");
+                    <?php if($block->getMerchantLocation() && ($block->getPaymentCode() == 'vrpayecommerce_creditcard' || $block->getPaymentCode() == 'vrpayecommerce_ccsaved')){ ?>
+                        $('.wpwl-container').after(merchantLocation);
+                    <?php } ?>
+                    <?php if ($block->getTestMode()) { ?>
+                        var ttTestMode = '<div class="testmode"><?php echo __('FRONTEND_TT_TESTMODE'); ?></div>';
+                        $(".wpwl-container").wrap( "<div class='frametest'></div>").before(ttTestMode);
+                    <?php } ?>
+                    <?php if ($block->getIsRecurringPayment()) { ?>
+                        var headerWidget = "<h2><?php echo __('FRONTEND_RECURRING_WIDGET_HEADER2') ?></h2>";
+                        $('#wpwl-registrations').after(headerWidget);
+                        if ($('.merchant-location-description').length > 1){
+                            $('.merchant-location-description').eq(0).hide();
+                        }
+                    <?php } ?>
+                    <?php if ($block->getWidgetStyle() == 'custom') { ?>
+                        $('.wpwl-container').css('border','2px solid #ccc').css('padding','10px 20px');
+                        <?php if ($block->getPaymentCode() == 'vrpayecommerce_creditcard' || $block->getPaymentCode() == 'vrpayecommerce_ccsaved') { ?>
+                            var ttCVVHelp = '<div class="help"><span class="txtHelp"><?php echo __('FRONTEND_CC_HELP'); ?></span></div>';
+                            var mastercardSecure = "<div class=\"btn_center_wrapper\"><a href=\"https://www.mastercard.us/en-us/consumers/features-benefits/securecode.html\" target=\"_blank\" class=\"secure_image_wrapper\"><img src=\"<?php echo $block->getViewFileUrl('Vrpayecommerce_Vrpayecommerce/images/mastercard-secure.jpg')?>\" alt=\"secureCode\" class=\"secure_image\" /></a></div>";
+                            var verifiedVisa = "<a href=\"https://www.visaeurope.com/making-payments/verified-by-visa/\" target=\"_blank\" class=\"verified_image_wrapper\"><img src=\"<?php echo $block->getViewFileUrl('Vrpayecommerce_Vrpayecommerce/images/verified-visa.jpg')?>\" alt=\"verified\" class=\"verified_image\" /></a>";
+                            $('.wpwl-control-cvv').after(ttCVVHelp);
+                            $('form.wpwl-form').find('.wpwl-group-submit').after(mastercardSecure);
+                            $('form.wpwl-form').find('.secure_image_wrapper').before(verifiedVisa);
+                            $('.wpwl-brand-card').css('display','none');
+                            <?php
+                                $brands = explode(' ', $block->getBrand());
+                                krsort($brands);
+                                foreach ($brands as $brand) {
+                                    $lowerBrand = strtolower($brand);
+                            ?>
+                                    $(".wpwl-brand:last").after( $("<div style=\"opacity: 1;\" class=\"wpwl-brand-card wpwl-brand-custom wpwl-brand-<?php echo $brand?>\"><img src=\"<?php echo $block->getViewFileUrl('Vrpayecommerce_Vrpayecommerce/images/'.$lowerBrand.'.png')?>\" alt=\"<?php echo $brand?>\" class=\"brand-image\" /></div>"));
+                            <?php } ?>
+                            $(".help").click(function(e){
+                                e.preventDefault();
+                                $(".overlay").fadeIn();
+                            });
+                            $(".close-button").click(function(e){
+                                e.preventDefault();
+                                $(".overlay").fadeOut();
+                            });
+                        <?php } ?>
+                    <?php } elseif ($block->getWidgetStyle() == 'plain') { ?>
+                        <?php if ($block->getTestMode()) { ?>
+                            $('.wpwl-container').css('padding','10px 20px'); 
+                        <?php } ?>
+                    <?php } ?>
+
+                },
+                <?php if ($block->getWidgetStyle() == 'custom' && ($block->getPaymentCode() == 'vrpayecommerce_creditcard' || $block->getPaymentCode() == 'vrpayecommerce_ccsaved')) { ?>
+                onChangeBrand: function(e){
+                    $(".wpwl-brand-custom").css("opacity", "0.3");
+                    $(".wpwl-brand-" + e).css("opacity", "1");
+                },
+                <?php } ?>
+                registrations: {
+                    hideInitialPaymentForms: false,
+                    requireCvv: true
+                }
+
+            }
+    </script>
+<?php } ?>
+<?php if ($block->getIsRecurringPayment()) { ?>
+    <?php if ($block->getRegistrations()) { ?>
+        <h2><?php echo __('FRONTEND_RECURRING_WIDGET_HEADER1') ?></h2>
+    <?php } else { ?>
+        <h2><?php echo __('FRONTEND_MC_PAYANDSAFE') ?></h2>
+    <?php } ?>
+<?php } ?>
+<input type="submit" value="Submit" style="display:none" />
+<script async src="<?php echo $block->getPaymentWidgetUrl()?>" type="text/javascript"></script>
+<form action="<?php echo $block->getResponseUrl(); ?>" class="paymentWidgets"><?php echo $block->getBrand();?></form>
+
+<?php if (($block->getPaymentCode() == 'vrpayecommerce_creditcard' || $block->getPaymentCode() == 'vrpayecommerce_ccsaved') && $block->getWidgetStyle() == 'custom') { ?>
+<div class="overlay">
+    <div class="box-overlay">
+        <a href="#" class="close-button">x</a>
+        <table class="tbloverlay">
+            <tbody>
+                <tr class="trwhatcvc">
+                    <td class="tdWhatCvc" colspan="2" align="center">
+                        <span class="txtWhatCvc"><h4><?php echo __('FRONTEND_CC_CVCHELP')?></h4></span>
+                    </td>
+                </tr>
+                <tr class="trcards">
+                    <td class="tdCards" width="70%" align="left">
+                        <span class="txtDesCvc"><?php echo __('FRONTEND_TT_CVC')?></span><br /><br />
+                        <span class="txtDesCvcAmex"><?php echo __('FRONTEND_TT_CVCAMEX')?></span>
+                    </td>
+                    <td class="imgthreedigits">
+                        <img src="<?php echo $block->getViewFileUrl('Vrpayecommerce_Vrpayecommerce/images/cvv_card.png')?>">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<?php } ?>
