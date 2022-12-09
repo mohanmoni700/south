@@ -24,7 +24,7 @@ function isHttpHost(string $host)
 
 $_ENV["ACTIVE_STORE"] = "default";
 
-if (isHttpHost("hookah.integration-5ojmyuq-hhdjar4f2w7cu.us-5.magentosite.cloud") || isHttpHost("mcstaging.hookah.com") || isHttpHost("mcprod.hookah.com") || isHttpHost("www.hookah.com") || isHttpHost("hookah.com")) {
+if (isHttpHost("hookah.integration-5ojmyuq-hhdjar4f2w7cu.us-5.magentosite.cloud") || isHttpHost("mcstaging.hookah.com") || isHttpHost("mcprod.hookah.com") || isHttpHost("www.hookah.com") || isHttpHost("hookah.com") || isHttpHost("mcadmin.shisha-world.com") || isHttpHost("mcstaging.shisha-world.com")) {
     $_SERVER["MAGE_RUN_CODE"] = "hookah";
     $_SERVER["MAGE_RUN_TYPE"] = "website";
     $_ENV["ACTIVE_STORE"] = "hookah_store_view";
