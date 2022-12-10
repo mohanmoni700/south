@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="HookahShisha\Quote\Model\Cart\AddProductsToCart" type="HookahShisha\SubscribeGraphQl\Model\Cart\AddProductsToCart"/>
+    <preference for="Magento\ConfigurableProductGraphQl\Model\Resolver\ConfigurableCartItemOptions" type="HookahShisha\SubscribeGraphQl\Model\Resolver\ConfigurableCartItemOptions"/>
+
+    <type name="Magento\QuoteGraphQl\Model\Resolver\CartPrices">
+        <plugin name="Mageplaza_HelloWorld_Plugin" type="HookahShisha\SubscribeGraphQl\Model\Magento\QuoteGraphQl\Resolver\CartPrices" />
+    </type>
+</config>
+
+
