@@ -47,13 +47,10 @@ class CartPrices
         if (!isset($value['model'])) {
             throw new LocalizedException(__('"model" value should be specified'));
         }
-
         $quote = $value['model'];
         $cartTotals = $this->totalsCollector->collectQuoteTotals($quote);
         $currency = $quote->getQuoteCurrencyCode();
-
         $result['subscribenow_init_amount'] = ['value' => $cartTotals->getSubscribenowInitAmount() ?? 0, 'currency' => $currency];
-
         return $result;
     }
 }
