@@ -1,0 +1,22 @@
+<script src="<?php echo $block->getViewFileUrl('jquery/jquery.min.js'); ?>" type="text/javascript"></script>
+
+<style>
+    body {
+        display:none;
+        background: white;
+    }
+    button.wpwl-button-brand {
+        display:none;
+    }
+</style>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".paymentWidgets").submit();
+    });
+</script>
+<?php $initialPaymentResponse = $block->getInitialPaymentResponse(); ?>
+<form action="<?php echo $initialPaymentResponse['redirect']['url']; ?>" class="paymentWidgets" method="<?php echo $initialPaymentResponse['redirect']['method']; ?>">
+    <?php foreach ($initialPaymentResponse['redirect']['parameters'] as $redirectParameter) { ?>
+        <input type="hidden" name="<?php echo $redirectParameter['name']; ?>" value="<?php echo $redirectParameter['value']; ?>">
+    <?php } ?>
+</form>

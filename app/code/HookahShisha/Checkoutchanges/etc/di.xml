@@ -7,4 +7,7 @@
     <type name="Magento\QuoteGraphQl\Model\Resolver\SelectedPaymentMethod">
         <plugin name="Checkoutchanges::Setpaymentmethod" type="HookahShisha\Checkoutchanges\Plugin\QuoteGraphQl\Model\Resolver\SelectedPaymentMethodPlugin"/>
     </type>
+    <type name="Magento\QuoteGraphQl\Model\Resolver\MergeCarts">
+        <plugin name="Checkoutchanges::MergeCarts" type="HookahShisha\Checkoutchanges\Plugin\QuoteGraphQl\Model\Resolver\MergeCartsPlugin"/>
+    </type>
 </config>

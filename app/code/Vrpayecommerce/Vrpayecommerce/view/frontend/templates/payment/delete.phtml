@@ -1,0 +1,29 @@
+<p><?php echo __('FRONTEND_MC_DELETESURE'); ?></p>
+<div class="group-list">
+	<?php if ($block->getPaymentMethod() == 'vrpayecommerce_ccsaved') { ?>
+	<div class="group-img">
+		<img src="<?php echo $block->getViewFileUrl('Vrpayecommerce_Vrpayecommerce/images').'/'.strtolower($block->getDeleteInformation()[0]['brand']).'.png';?>" class="brandImage" alt="<?=$block->getDeleteInformation()[0]['brand']?>">
+	</div>
+	<span class="group-info"><?php echo __('FRONTEND_MC_ENDING').": ".$block->getDeleteInformation()[0]['last_4digits']."; ".__('FRONTEND_MC_VALIDITY').": ".$block->getDeleteInformation()[0]['expiry_month']."/".substr($block->getDeleteInformation()[0]['expiry_year'],-2);?></span>
+	<?php } ?>
+
+	<?php if ($block->getPaymentMethod() == 'vrpayecommerce_ddsaved') { ?>
+	<div class="group-img">
+		<img src="<?php echo $block->getViewFileUrl('Vrpayecommerce_Vrpayecommerce/images/sepa.png');?>" class="brandImage" alt="ELV">
+	</div>
+	<span class="group-info"><?php echo __('FRONTEND_MC_ACCOUNT').": **** ".$block->getDeleteInformation()[0]['last_4digits'];?></span>
+	<?php } ?>
+
+	<?php if ($block->getPaymentMethod() == 'vrpayecommerce_paypalsaved') { ?>
+		<div class="group-img">
+			<img src="<?php echo $block->getViewFileUrl('Vrpayecommerce_Vrpayecommerce/images/paypal.png');?>" class="brandImage" alt="PayPal">
+		</div>
+		<span class="group-info"><?php echo __('FRONTEND_MC_EMAIL').": ".$block->getDeleteInformation()[0]['email'];?></span>
+	<?php } ?>
+</div>
+<form action="<?php echo $block->getResponseUrl() ?>" method="post" class="btnDeleteCancel">
+	<input type="hidden" name="information_id" value="<?php echo $block->getInformationId(); ?>"/>
+	<input type="hidden" name="payment_method" value="<?php echo $block->getPaymentMethod(); ?>"/>
+	<button class="action primary" type="submit" name="action" value="confirm"><?php echo __('FRONTEND_BT_YES') ?></button>
+</form>
+<a class="action primary btnDeleteCancel" href="<?php echo $block->getCancelUrl() ?>"><?php echo __('FRONTEND_BT_NO') ?></a>

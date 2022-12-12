@@ -1,0 +1,300 @@
+*{
+	margin: 0; 
+	padding: 0;
+}
+.col-left{
+	float: none !important;
+	width: 0 !important;
+	display: none;
+}
+.col-main{
+	float: none !important;
+	width: 100% !important;	
+}
+.wpwl-button{
+	margin-top: 10px !important;
+	box-shadow: none !important;
+}
+.btn_cancel {
+	float: left;
+	color: #fff !important;
+	background-color: #aaa;
+	border-color: #999;
+	border-radius: 4px;
+}
+.btn_cancel: hover {
+	color: #fff;
+	background-color: #999;
+}
+.page-title h1{
+	text-align: center !important;
+}
+
+.payment-logo{
+	text-align: center;
+	margin: 0 auto;
+	padding: 10px 0 20px;
+}
+.wpwl-form{
+	margin: 0 auto 2px !important;
+}
+.frametest{
+	margin: 0 auto;
+	width: 100%;
+	border: 10px solid red;
+	max-width: 35em;
+	padding: 0;
+}
+.testmode{
+	margin: 0 auto !important;
+	padding: 3px 0 10px 0;
+	width: 100%;
+	font-size: 13px !important;
+	font-weight: bold;
+	color: #fff !important;
+	background-color: red;
+	text-align: center;
+}
+.powered{
+	font-size:15px;
+	font-weight: bold;
+	margin:10px auto;
+	width: 100%;
+	max-width: 30em;
+	padding:0 5px;
+	text-align: center;
+}
+.register-tooltip{
+	font-size:11px;
+	margin:10px auto;
+	width: 100%;
+	max-width: 30em;
+	padding:0 5px;
+	text-align: center;
+}
+
+.wpwl-container-card, .wpwl-container-directDebit{
+	width: 100%;
+	max-width: 35em !important;
+	margin: 0 auto !important;
+	border: 2px solid #ccc;
+	padding: 10px 20px;
+
+}
+.wpwl-label-brand, .wpwl-wrapper-brand{
+	display: none;
+}
+.wpwl-group-brand{
+	margin: 15px 0 30px;
+}
+.wpwl-brand-card {
+    background-position: 0;
+    width: auto !important;
+    height: 30px;
+    padding-right:5px;
+}
+.brand-image{
+	height: 30px;
+}
+.elv-image{
+	height: 40px;
+	margin: 10px 0 20px 0;
+}
+.wpwl-control-expiry {
+	width: 33% !important;
+}
+.wpwl-control-cvv{
+	float: left;
+	width: 33% !important;
+}
+.wpwl-wrapper>.wpwl-icon {
+    right: 69% !important;
+    top: 0.5em !important;
+}
+.verified_image_wrapper, .secure_image_wrapper{
+	float:left;
+	width: 50%;
+}
+.verified_image, .secure_image{
+	text-align: center;
+	width: 100%;
+}
+.wpwl-button-pay{
+	border-radius: 4px;
+}
+
+.btn_center_wrapper {
+	position: absolute;
+    bottom: 23px;
+    left: 34%;
+	width: 26% !important;
+	text-align: center;
+	margin: 0 auto;
+}
+
+.btn_left_wrapper {
+	float:left;
+	width: 31%;
+}
+
+.btn_right_wrapper {
+	float:right;
+	width: 31%;
+}
+
+.overlay {
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	background: rgba(0,0,0,.7);
+	z-index: 9999;
+	top: 0;
+	left: 0;
+	display: none;
+}
+.box-overlay {
+	width: 80%;
+	max-width: 450px;
+	background: white;
+	margin: 20% auto;
+	position: relative;
+	padding: 20px;
+	box-shadow: 0 0 0 0 rgba(0,0,0,.4);
+	text-align: center;
+}
+.close-button {
+	width: 20px;
+	height: 20px;
+	background: black;
+	border:2px solid white;
+	box-shadow: 0 0 3px rgba(0, 0, 0, .5);
+	display: block;
+	border-radius:50%;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	position: absolute;
+	top: -10px;
+	right: -10px;
+}
+
+.imgthreedigits {
+	text-align: right;
+}
+
+.help {
+	width: 35px;
+	padding: 5px 0 0 75px;
+	cursor: pointer;
+	color: #1979c3;
+	text-decoration: none;
+}
+
+.wpwl-wrapper-cvv>.help{
+	padding: 5px 0 0 85px;
+}
+
+.help:hover {
+	color: #006bb4;
+}
+
+.txtWhatCvc h4{
+	margin-top: 1rem !important;
+	margin-bottom: 1rem !important;
+}
+
+.txtDesCvc, .txtDesCvcAmex {
+	text-align: left;
+}
+
+@media (max-width: 520px){
+	.wpwl-wrapper-registration-cvv>.help{
+		padding: 5px 0 0 70px;
+	}
+}
+
+@media only screen (min-width: 480px) and (max-width: 503px){
+	.btn_center_wrapper{
+		width: 23% !important;
+	}
+}
+
+@media (min-width: 480px){
+	.wpwl-label {
+	    width: 45% !important;
+	}
+	.wpwl-wrapper {
+	    width: 55% !important;
+	}
+	.wpwl-wrapper-submit {
+	    width: 100% !important;
+	    margin-top: 10px;
+	}
+}
+
+@media (max-width: 479px){
+	.account .page.messages {
+		margin-bottom: 0 !important;	
+	}
+	.frametest{
+		width: 92%;
+	}
+	.page-title {
+		text-align: center;
+	    line-height: 36px;
+	}
+	.wpwl-brand-card {
+	    float: left !important;
+	    margin: 10px 0 0 0;
+	}
+	.wpwl-control-expiry {
+		width: 100% !important;
+	}
+	.wpwl-control-cvv{
+		float: left;
+		width: 75% !important;
+	}
+	.wpwl-wrapper>.wpwl-icon {
+	    right: .5625em !important;
+	    top: 0.5em !important;
+	}
+	.verified_image_wrapper, .secure_image_wrapper{
+	    margin: 5px 0 0 0 !important;
+	}
+	.wpwl-wrapper-registration-cvv {
+	    padding-top: 10px;
+	}
+	.wpwl-wrapper-registration-cvv>.help {
+		float: left;
+	    padding: 5px 0 0 10px;
+	}
+	.wpwl-wrapper-cvv>.help {
+		float: left;
+	    padding: 9px 0 0 10px;
+	}
+	.btn_left_wrapper {
+		float: none;
+		width: 100%;
+	}
+	.btn_center_wrapper{
+		float: none;
+		margin: 0 auto;
+		width: 45% !important;
+		bottom: 0;
+		left: 0;
+		position: relative;
+	}
+	.btn_right_wrapper {
+		float: none;
+		width: 100%;	
+	}
+	.btn_cancel {
+		width: 100%;
+	}
+	.wpwl-button-pay {
+		width: 100%;
+	}
+	.brand-image {
+	    height: 25px;
+	}
+}
