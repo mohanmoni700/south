@@ -1,0 +1,14 @@
+diff --git a/vendor/klarna/module-kp/Observer/AssignData.php b/vendor/klarna/module-kp/Observer/AssignData.php
+--- a/vendor/klarna/module-kp/Observer/AssignData.php
++++ b/vendor/klarna/module-kp/Observer/AssignData.php	(date 1645198528372)
+@@ -94,7 +94,9 @@
+         try {
+             /** @var QuoteInterface $klarnaQuote */
+             $klarnaQuote = $this->klarnaQuoteRepository->getActiveByQuote($quote);
+-            $klarnaQuote->setAuthorizationToken($additionalData->getData('authorization_token'));
++            if ($additionalData->getData('authorization_token')) {
++                $klarnaQuote->setAuthorizationToken($additionalData->getData('authorization_token'));
++            }
+             $payment->setAdditionalInformation('method_title', $additionalData->getData('method_title'));
+             $payment->setAdditionalInformation('logo', $additionalData->getData('logo'));
+             $payment->setAdditionalInformation('method_code', $payment->getMethodInstance()->getCode());
