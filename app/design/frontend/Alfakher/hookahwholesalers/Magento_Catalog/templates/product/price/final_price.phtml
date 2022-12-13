@@ -1,11 +1,4 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-?>
-
-<?php
 /** @var \Magento\Catalog\Pricing\Render\FinalPriceBox $block */
 
 /** ex: \Magento\Catalog\Pricing\Price\RegularPrice */
@@ -18,7 +11,7 @@ $finalPriceModel = $block->getPriceType('final_price');
 $idSuffix = $block->getIdSuffix() ? $block->getIdSuffix() : '';
 $schema = ($block->getZone() == 'item_view') ? true : false;
 ?>
-<?php $_helperB2b = $this->helper(\Alfakher\Productpageb2b\Helper\Data::class); ?>
+<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php $IsFinanceVerified = $_helperB2b->getIsFinanceVerified();?>
 
 <?php if ($IsFinanceVerified == 1): ?>
