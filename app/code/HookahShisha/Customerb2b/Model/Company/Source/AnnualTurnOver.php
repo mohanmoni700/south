@@ -122,6 +122,6 @@ class AnnualTurnOver implements \Magento\Framework\Data\OptionSourceInterface
      */
     public function getOptionArrayAdmin()
     {
-        return $this->getOptionArrayHub() + $this->getOptionArray();
+        return array_replace($this->getOptionArrayHub(), $this->getOptionArray());
     }
 }
