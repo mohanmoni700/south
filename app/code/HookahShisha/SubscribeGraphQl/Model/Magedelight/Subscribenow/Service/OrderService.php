@@ -1,5 +1,5 @@
 <?php
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace HookahShisha\SubscribeGraphQl\Model\Magedelight\Subscribenow\Service;
 
@@ -7,8 +7,7 @@ use Magedelight\Subscribenow\Model\Service\OrderService as SubOrderService;
 
 class OrderService extends SubOrderService
 {
-	
-	public function setOrderInfo($order, $item)
+    public function setOrderInfo($order, $item)
     {
         $this->getSubscriptionModel()->setSubscriptionStatus(1);
         $this->getSubscriptionModel()->setInitialOrderId($order->getIncrementId());
@@ -48,7 +47,7 @@ class OrderService extends SubOrderService
 
         /* add billing and shipping address info */
         $this->getSubscriptionModel()->setShippingAddressInfo(json_encode($order->getShippingAddress()->getData()));
-		$this->getSubscriptionModel()->setBillingAddressInfo(json_encode($order->getBillingAddress()->getData()));
+        $this->getSubscriptionModel()->setBillingAddressInfo(json_encode($order->getBillingAddress()->getData()));
         /* -- add billing and shipping address info -- */
 
         return $this;
