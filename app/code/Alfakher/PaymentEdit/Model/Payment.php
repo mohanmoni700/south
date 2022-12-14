@@ -228,7 +228,7 @@ class Payment extends BasePayment
                     }
                 }
                 $card = $card->getTypeInstance();
-                $grandTotal = $this->order->getBaseGrandTotal();
+                $grandTotal = $this->order->getGrandTotal();
 
                 $this->geteway->setCard($card);
                 try {
@@ -247,6 +247,7 @@ class Payment extends BasePayment
                 } catch (\Exception $e) {
                     $this->messageManager->addErrorMessage(__('Some error occured please check order comment'));
                     $this->order->addStatusHistoryComment(__('Payment Declined: <b>' . $e->getMessage() . '</b>'));
+                    $payment->setMethod($origPayment);
                     $this->order->save();
                     return;
                 }
