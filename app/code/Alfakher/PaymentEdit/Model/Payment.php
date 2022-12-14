@@ -1,30 +1,28 @@
-<?php 
-
+<?php
 declare(strict_types=1);
 
 namespace Alfakher\PaymentEdit\Model;
 
-use Magento\Sales\Model\Order\Payment\Transaction;
+use Alfakher\PaymentEdit\Model\Gateway;
+use Magento\Customer\Api\CustomerRepositoryInterface;
+use Magento\Framework\App\Request\Http;
 use Magento\Framework\Data\Collection\AbstractDb;
 use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Message\ManagerInterface;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Registry;
+use Magento\Payment\Helper\Data as PaymentHelper;
 use Magento\Sales\Api\OrderPaymentRepositoryInterface;
+use Magento\Sales\Model\Order\Payment\Transaction;
+use Magento\Sales\Model\Order\Payment\Transaction\Builder;
 use MageWorx\OrderEditor\Api\ChangeLoggerInterface;
 use MageWorx\OrderEditor\Api\OrderRepositoryInterface;
 use MageWorx\OrderEditor\Api\QuoteRepositoryInterface;
-use Magento\Payment\Helper\Data as PaymentHelper;
 use MageWorx\OrderEditor\Model\Payment as BasePayment;
-use Magento\Framework\App\Request\Http;
-use ParadoxLabs\TokenBase\Api\CardRepositoryInterface;
 use ParadoxLabs\FirstData\Model\Method;
-use Alfakher\PaymentEdit\Model\Gateway;
-use Magento\Sales\Model\Order\Payment\Transaction\Builder;
-use Magento\Framework\Message\ManagerInterface;
+use ParadoxLabs\TokenBase\Api\CardRepositoryInterface;
 use ParadoxLabs\TokenBase\Helper\Address;
-use Magento\Customer\Api\CustomerRepositoryInterface;
 use ParadoxLabs\TokenBase\Model\CardFactory;
 
 class Payment extends BasePayment
@@ -156,12 +154,11 @@ class Payment extends BasePayment
      */
     public function updatePaymentMethod()
     {
-        
         $this->loadOrder();
-        $payment     = $this->order->getPayment();
+        $payment = $this->order->getPayment();
         $origPayment = $payment->getMethod();
         $payment->setMethod($this->getPaymentMethod());
-        
+
         $tokenbaseId = '';
         if ($this->getPaymentMethod() == 'paradoxlabs_firstdata') {
             try {
@@ -186,13 +183,13 @@ class Payment extends BasePayment
                         'VI' => 'visa',
                     ];
                     $ccType = $cardTypeMap[$sccType];
-                    
+
                     $billingAddress = $this->addressHelper->buildAddressFromInput(
                         $this->order->getBillingAddress()->getData(),
                         [],
                         true
                     );
-                    
+
                     $cardHolderName = $this->order->getBillingAddress()->getFirstName() . ' ' .
                     $this->order->getBillingAddress()->getLastName();
                     $this->geteway->setParameterForBackend(
@@ -224,37 +221,42 @@ class Payment extends BasePayment
                         $card->setPaymentId($response);
                         $card = $this->cardRepository->save($card);
                     } else {
-                        $this->messageManager->addErrorMessage("Please check credit card number. 
-                            Payment method change is failed.");
+                        $this->messageManager->addErrorMessage(
+                            __('Please check credit card number.Payment method change is failed.')
+                        );
                         return;
                     }
                 }
                 $card = $card->getTypeInstance();
-                $grandTotal = $this->order->getGrandTotal();
-
-                if ($origPayment == 'paradoxlabs_firstdata') {
-                    $oldCard = $this->cardRepository->load($payment->getTokenbaseId());
-                    $oldCard = $oldCard->getTypeInstance();
-                    $orderState = $this->order->getState();
-                    $orderStatus = $this->order->getStatus();
-                    $this->geteway->setCard($oldCard);
-                    $void = $this->geteway->voidBackend($this->order);
-                    $this->order->getPayment()->void(new \Magento\Framework\DataObject());
-                    $this->order->setState($orderState)->setStatus($orderStatus);
-                    $this->order->save();
-                }
+                $grandTotal = $this->order->getBaseGrandTotal();
 
                 $this->geteway->setCard($card);
-                $type = 'authorize';
-                $params = [];
-                $response = $this->geteway->authorizeBackend($this->order, $grandTotal);
+                try {
+                    $response = $this->geteway->authorizeBackend($this->order, $grandTotal);
+                    if ($origPayment == 'paradoxlabs_firstdata') {
+                        $oldCard = $this->cardRepository->load($payment->getTokenbaseId());
+                        $oldCard = $oldCard->getTypeInstance();
+                        $orderState = $this->order->getState();
+                        $orderStatus = $this->order->getStatus();
+                        $this->geteway->setCard($oldCard);
+                        $this->geteway->voidBackend($this->order);
+                        $this->order->getPayment()->void(new \Magento\Framework\DataObject());
+                        $this->order->setState($orderState)->setStatus($orderStatus);
+                        $this->order->save();
+                    }
+                } catch (\Exception $e) {
+                    $this->messageManager->addErrorMessage(__('Some error occured please check order comment'));
+                    $this->order->addStatusHistoryComment(__('Payment Declined: <b>' . $e->getMessage() . '</b>'));
+                    $this->order->save();
+                    return;
+                }
                 $tokenbaseId = $card->getId();
             } catch (\Exception $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
                 return;
             }
         }
-        
+
         if ($origPayment != $this->getPaymentMethod()) {
             $oldTitle = $this->paymentHelper->getMethodInstance($origPayment)->getTitle();
             $newTitle = $this->paymentHelper->getMethodInstance($this->getPaymentMethod())->getTitle();
@@ -265,7 +267,7 @@ class Payment extends BasePayment
                         'Payment method has been changed from <b>%1</b> to <b>%2</b>',
                         $oldTitle,
                         $newTitle
-                    )
+                    ),
                 ]
             );
         }
@@ -278,7 +280,6 @@ class Payment extends BasePayment
             );
         }
         if ($this->getPaymentMethod() == 'paradoxlabs_firstdata') {
-
             $this->addTransactionToOrder($this->order, $response->getData());
             $payment->setTransactionAdditionalInfo(
                 \Magento\Sales\Model\Order\Payment\Transaction::RAW_DETAILS,
@@ -287,18 +288,18 @@ class Payment extends BasePayment
 
             if ($response->getData('is_fraud') === true) {
                 $payment->setIsTransactionPending(true)
-                        ->setIsFraudDetected(true)
-                        ->setTransactionAdditionalInfo('is_transaction_fraud', true);
+                    ->setIsFraudDetected(true)
+                    ->setTransactionAdditionalInfo('is_transaction_fraud', true);
             }
             $ccLast4 = substr($response->getData('payment_id'), -4);
-            
+
             $cardTypeMap = [
                 'american express' => 'AE',
-                'discover'         => 'DI',
-                'diners club'      => 'DC',
-                'jcb'              => 'JCB',
-                'mastercard'       => 'MC',
-                'visa'             => 'VI',
+                'discover' => 'DI',
+                'diners club' => 'DC',
+                'jcb' => 'JCB',
+                'mastercard' => 'MC',
+                'visa' => 'VI',
             ];
 
             $ccType = $cardTypeMap[$response->getCardType()];
@@ -317,7 +318,7 @@ class Payment extends BasePayment
         $this->orderRepository->save($this->order);
 
         /* change data in quote */
-        $quote   = $this->getQuote();
+        $quote = $this->getQuote();
         $payment = $quote->getPayment();
         $payment->setMethod($this->getPaymentMethod());
         if ($this->getPaymentTitle() !== null) {
@@ -338,12 +339,12 @@ class Payment extends BasePayment
         }
         $payment->save();
         $this->messageManager->addSuccessMessage("Payment method is changed successfully.");
-        
+
         $this->_eventManager->dispatch(
             'mageworx_save_logged_changes_for_order',
             [
-                'order_id'        => $this->order->getId(),
-                'notify_customer' => false
+                'order_id' => $this->order->getId(),
+                'notify_customer' => false,
             ]
         );
     }
@@ -364,26 +365,25 @@ class Payment extends BasePayment
             $payment->setTransactionId($paymentData['transaction_id']);
             $payment->setAdditionalInformation([Transaction::RAW_DETAILS => (array) $paymentData]);
             $payment->setIsTransactionClosed(0);
-        
+
             $formatedPrice = $order->getBaseCurrency()->formatTxt($order->getGrandTotal());
 
             $transaction = $this->transportBuilder->setPayment($payment)
-            ->setOrder($order)
-            ->setTransactionId($paymentData['transaction_id'])
-            ->setAdditionalInformation([Transaction::RAW_DETAILS => (array) $paymentData])
-            ->setFailSafe(true)
-            ->build(Transaction::TYPE_AUTH);
-            
+                ->setOrder($order)
+                ->setTransactionId($paymentData['transaction_id'])
+                ->setAdditionalInformation([Transaction::RAW_DETAILS => (array) $paymentData])
+                ->setFailSafe(true)
+                ->build(Transaction::TYPE_AUTH);
+
             // Add transaction to payment
             $payment->addTransactionCommentsToOrder($transaction, __('The authorized amount is %1.', $formatedPrice));
             $payment->setParentTransactionId(null);
-            
+
             // Save payment, transaction and order
             $payment->save();
             $order->save();
             $transaction->save();
-            return  $transaction->getTransactionId();
-
+            return $transaction->getTransactionId();
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
         }
