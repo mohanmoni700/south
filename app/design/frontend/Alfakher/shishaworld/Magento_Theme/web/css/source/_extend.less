@@ -11,7 +11,6 @@
     body {
       .homepage_slider_content {
         .pagebuilder-slide-wrapper {
-          background-size: cover !important;
           height: 37.5vw !important;
           min-height: 37.5vw !important;
         }
@@ -31,6 +30,11 @@
     }
 }
 
+@media only screen and (max-width: 991px) and (min-width: 768px)  {
+    .homepage_slider_content {
+        min-height: 300px !important;
+    }
+}
     body {
         .page-header {
             .header-links-wrapper {
