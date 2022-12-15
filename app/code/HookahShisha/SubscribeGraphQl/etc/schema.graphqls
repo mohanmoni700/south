@@ -1,4 +1,23 @@
 # Copyright © Magento, Inc. All rights reserved.
+type Query {
+    getSubscriptionRelatedOrders (
+        subscriptionId: Int @doc(description: "Id of Subscription")
+    ) : relatedOrderData @resolver( class: "HookahShisha\\SubscribeGraphQl\\Model\\Resolver\\RelatedOrders")
+}
+
+type relatedOrderData {
+    total_count:  Int @doc(description: "total_count")
+    items: [relatedOrders] @doc(description: "items")
+}
+
+type relatedOrders {
+    increment_id: String @doc(description: "Order increment id")
+    order_date: String @doc(description: "Order date")
+    grand_total: Money @doc(description: "Order grand total")
+    status: String @doc(description: "Order status")
+    firstname: String @doc(description: "Customer first name")
+    lastname: String @doc(description: "Customer last name")
+}
 
 interface ProductInterface  {
     is_subscription : Boolean @doc(description: "The Id of subscription") 
