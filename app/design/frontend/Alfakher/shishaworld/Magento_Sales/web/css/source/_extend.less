@@ -31,6 +31,7 @@
                     .lib-css(filter, none);
                     .lib-css(width, 17px);
                     background-image: url('@{baseDir}images/Union-account.svg');
+                    background-position: 0;
                 }
             }
         }
@@ -64,5 +65,18 @@
             }
         }
         
+    }
+    .sales-order-view {
+        .order-details-items {
+            .table-order-items {
+                .col {
+                    &.action {
+                        a {
+                            .lib-css(vertical-align, top);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

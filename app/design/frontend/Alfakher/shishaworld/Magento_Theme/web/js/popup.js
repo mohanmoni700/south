@@ -19,7 +19,7 @@ define([
 			$('#popup').html(" ");
 			}
 		}],
-
+		clickableOverlay: false,
 		opened: function($Event) {
 		$(".modal-footer").hide();
 		}
