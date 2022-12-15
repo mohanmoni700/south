@@ -47,6 +47,10 @@ class Negative
             [
                 'value' => 'refund',
                 'label' => 'Create credit memo'
+            ],
+            [
+                'value' => 'hold',
+                'label' => 'Leave on hold',
             ]
         ];
 
@@ -66,14 +70,7 @@ class Negative
             $scopeType = ScopeInterface::SCOPE_STORE;
             $scopeCode = $store;
         }
-
-        //if ($this->coreConfig->getValue($negativeConfigPath, $scopeType, $scopeCode) == 'hold') {
-            $options[] = [
-                'value' => 'hold',
-                'label' => 'Leave on hold',
-            ];
-        //}
-
+        
         return $options;
     }
 }
