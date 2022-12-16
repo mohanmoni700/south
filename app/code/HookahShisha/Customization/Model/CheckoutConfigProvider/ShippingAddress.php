@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace HookahShisha\Customization\Model\CheckoutConfigProvider;
@@ -42,12 +41,13 @@ class ShippingAddress
         $this->customerAddressDataFormatterFactory = $customerAddressDataFormatterFactory;
         $this->quoteRepository = $quoteRepository;
     }
+
     /**
      * AfterGetConfig
      *
      * @param AmastyShippingAddress $subject
      * @param array $result
-     * @return
+     * @return array
      */
     public function afterGetConfig(
         AmastyShippingAddress $subject,
@@ -64,7 +64,7 @@ class ShippingAddress
     /**
      * Get ShippingAddress
      *
-     * @return
+     * @return array
      */
     private function getShippingAddress(): array
     {
