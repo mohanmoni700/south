@@ -87,7 +87,7 @@ class RelatedOrders implements ResolverInterface
         $subscriptionId = $args['subscriptionId'];
         $data = [];
         try {
-            $orders = $this->getRelatedOrders($subscriptionId);
+            $orders = $this->getRelatedOrders($subscriptionId, $args);
             $items = [];
             if (count($orders)) {
                 foreach ($orders as $order) {
@@ -119,10 +119,11 @@ class RelatedOrders implements ResolverInterface
      * Fetch list of related orders
      *
      * @var Int $subscriptionId
+     * @var array $params
      * @return mixed
      * @throws \Exception
      */
-    public function getRelatedOrders($subscriptionId)
+    public function getRelatedOrders($subscriptionId, $params)
     {
         try {
             $filter = [
@@ -132,7 +133,7 @@ class RelatedOrders implements ResolverInterface
                     ->create(),
             ];
             $sortOrder = $this->sortOrderBuilder->setField('entity_id')->setDirection(SortOrder::SORT_DESC)->create();
-            $searchCriteria = $this->searchCriteriaBuilder->addFilters($filter)->setSortOrders([$sortOrder])->create();
+            $searchCriteria = $this->searchCriteriaBuilder->addFilters($filter)->setSortOrders([$sortOrder])->setCurrentPage($params['currentPage'])->setPageSize($params['pageSize'])->create();
             $orders = $this->orderRepository->getList($searchCriteria)->getItems();
         } catch (\Exception $exception) {
             throw new GraphQlAuthorizationException(__($exception->getMessage()));
