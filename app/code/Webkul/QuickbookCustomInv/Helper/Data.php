@@ -259,6 +259,7 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
                 'Name' => $this->validateStringLimit('Name', $orderItem->getName()),
                 'UnitPrice' => $proUnitPrice,
                 'MainPrice' => $price,
+                'PurchaseCost' => $product->getCost(),
                 'isTaxablePro' => $orderItem->getBaseTaxAmount() ? 1 : 0,
                 'Taxable' => isset($taxPercentDetail[$itemId][0]) ? 1 : 0,
                 'taxAmt' => $orderItem->getTaxAmount(),//$orderItem->getExciseTax() + $orderItem->getSalesTax(),

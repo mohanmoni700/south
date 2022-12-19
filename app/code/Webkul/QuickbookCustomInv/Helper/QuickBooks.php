@@ -20,6 +20,7 @@ use QuickBooksOnline\API\Data\IPPTxnTaxDetail;
 use QuickBooksOnline\API\Data\IPPDiscountLineDetail;
 use QuickBooksOnline\API\Data\IPPSalesItemLineDetail;
 use QuickBooksOnline\API\Exception\ServiceException;
+use QuickBooksOnline\API\Data\IPPCustomField;
 use Magento\Framework\Json\Helper\Data as JsonHelperData;
 use Webkul\MultiQuickbooksConnect\Helper\QuickBooks\Item as QuickBookItem;
 use Webkul\MultiQuickbooksConnect\Helper\QuickBooks\Customer as QuickBookCustomer;
@@ -178,31 +179,9 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
             if ($totalTax) {
                 if (1 || isset($taxCodeRef['tax_code']) && $taxCodeRef['tax_code']) {
                     $salesReceipt->TxnTaxDetail = new IPPTxnTaxDetail();
-                    //print_r($this->configData);
-                    //die;
                     $salesReceipt->TxnTaxDetail->TxnTaxCodeRef = $this->configData['default_tax_class'];//$taxCodeRef['tax_code'];
                     $salesReceipt->TxnTaxDetail->TotalTax = $customTax;
                     $salesReceipt->TxnTaxDetail->UseAutomatedSalesTax = false;
-                    /*$salesReceipt->TxnTaxDetail = new IPPTxnTaxDetail();
-                    $salesReceipt->TxnTaxDetail->TxnTaxCodeRef = $taxCodeRef['tax_code'];
-                    $salesReceipt->TxnTaxDetail->TotalTax = $totalTax;
-                    $salesReceipt->TxnTaxDetail->TaxLine = [];
-                    $taxLineNum = 1;
-                    foreach ($taxCodeRef['tax_rate_list'] as $taxRateId => $taxRateValue) {
-                        ${'taxLine'.$taxLineNum} =  new IPPLine();
-                        $taxLine = new IPPLine();
-                        ${'taxLine'.$taxLineNum}->Amount = $splitedTax[$taxRateId]['tax_amt'];
-                        ${'taxLine'.$taxLineNum}->DetailType = "TaxLineDetail";
-                        ${'taxLine'.$taxLineNum}->TaxLineDetail = new IPPTaxLineDetail();
-                        ${'taxLine'.$taxLineNum}->TaxLineDetail->TaxRateRef = $taxRateId;
-                        ${'taxLine'.$taxLineNum}->TaxLineDetail->PercentBased = 'true';
-                        ${'taxLine'.$taxLineNum}->TaxLineDetail->TaxPercent = $taxRateValue;
-                        ${'taxLine'.$taxLineNum}->TaxLineDetail->NetAmountTaxable =
-                                                    $splitedTax[$taxRateId]['taxabl_amt'];
-                        array_push($taxLineList, ${'taxLine'.$taxLineNum});
-                        $taxLineNum++;
-                    }
-                    $salesReceipt->TxnTaxDetail->TaxLine = $taxLineList;*/
                 } else {
                     $errorMsg = __('Tax class not created on quickbooks for applied tax rates on order. ');
                     $this->logger->addError(
@@ -226,6 +205,18 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
             $salesReceipt->PONumber = $billAddress['telephone'];
             $salesReceipt->ApplyTaxAfterDiscount = $taxApplyAfterDiscount ? 'true' : 'false';
             $salesReceipt->TotalAmt = $totalAmt;
+            /*****/
+            $customField2 = new IPPCustomField();
+            $customField2->DefinitionId = "3";
+            $customField2->Type = 'StringType';
+            $customField2->Name = 'Order ID';
+            $customField2->StringValue = $salesReceiptData['mageOrderId'] ?? '';
+
+            $salesReceipt->CustomField = [$customField2];
+            $salesReceipt->ShipDate = $salesReceiptData['shipDate'] ?? date('Y-m-d', time());
+            $salesReceipt->TrackingNum = $salesReceiptData['tracking_info'] ?? '';
+            $salesReceipt->ShipMethodRef = $salesReceiptData['ship_service'] ?? '';
+
             $resultingSalesReceiptObj = $this->dataService->Add($salesReceipt);
             $response = ['error' => 0, 'salesReceiptData' => $resultingSalesReceiptObj];
             return $response;
@@ -240,7 +231,97 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
     }
 
     /**
-     * getFilterErrorMsg
+     * updateSalesReceipt
+     *
+     * @param array $salesReceiptData
+     * @param int $accountId
+     * @return
+     */
+    public function updateSalesReceipt($salesReceiptData, $accountId)
+    {
+        try {
+            $this->setDataServiceObject($accountId);
+            $salesReceipt = new IPPSalesReceipt();
+            date_default_timezone_set('UTC');
+            $salesReceipt->TxnDate = date('Y-m-d', time());
+            $itemDataForQB = $this->getItemDataForQB(
+                $salesReceiptData['items'],
+                $salesReceiptData['tax_percent'],
+                $accountId
+            );
+            $lineNum = $itemDataForQB['line_num'];
+            $lineList = $itemDataForQB['line_list'];
+            $totalAmt = $itemDataForQB['total_amt'];
+            $customTax = $itemDataForQB['customTax'];
+            $discountTotal = $itemDataForQB['discount_total'];
+            $totalTax = $itemDataForQB['total_tax'] = 0; // by customisation
+            $splitedTax = $itemDataForQB['splited_tax'];
+            $taxCodeRef = $itemDataForQB['tax_code_ref'];
+            $taxLineList = [];
+
+            if ($salesReceiptData['discount_on_order']) {
+                ${'line'.$lineNum} = new IPPLine();
+                ${'line'.$lineNum}->LineNum = $lineNum;
+                ${'line'.$lineNum}->Amount = -$salesReceiptData['discount_on_order'];
+                ${'line'.$lineNum}->DetailType = 'DiscountLineDetail';
+                ${'line'.$lineNum}->DiscountLineDetail = new IPPDiscountLineDetail();
+                ${'line'.$lineNum}->DiscountLineDetail->PercentBased = 'false';
+                array_push($lineList, ${'line'.$lineNum});
+                $totalAmt = ($totalAmt + $totalTax) - $salesReceiptData['discount_on_order'];
+                $lineNum++;
+            }
+
+            if ($totalTax) {
+                if (1 || isset($taxCodeRef['tax_code']) && $taxCodeRef['tax_code']) {
+                    $salesReceipt->TxnTaxDetail = new IPPTxnTaxDetail();
+                    $salesReceipt->TxnTaxDetail->TxnTaxCodeRef = $this->configData['default_tax_class'];//$taxCodeRef['tax_code'];
+                    $salesReceipt->TxnTaxDetail->TotalTax = $customTax;
+                    $salesReceipt->TxnTaxDetail->UseAutomatedSalesTax = false;
+                }
+            }
+            $salesReceipt->Line = $lineList;
+            $customer = $this->quickBookCustomer->getCustomer($this->dataService, $salesReceiptData['customerData']);
+            $salesReceipt->CustomerRef = $customer->Id;
+            $billAddress = $salesReceiptData['customerData']['bill_address'];
+            $salesReceipt->BillAddr = $this->helperData->getPhysicalAddress($billAddress);
+            $paymentMethod = $this->quickBookPaymentMethod->getPaymentMethod(
+                $this->dataService,
+                substr($salesReceiptData['paymentMethod'], 0, 31)
+            );
+            $taxApplyAfterDiscount = $this->scopeConfig->getValue('tax/calculation/apply_after_discount');
+            $salesReceipt->PaymentMethodRef = $paymentMethod->Id;
+            $salesReceipt->PONumber = $billAddress['telephone'];
+            $salesReceipt->ApplyTaxAfterDiscount = $taxApplyAfterDiscount ? 'true' : 'false';
+            $salesReceipt->TotalAmt = $totalAmt;
+
+            $customField2 = new IPPCustomField();
+            $customField2->DefinitionId = "3";
+            $customField2->Type = 'StringType';
+            $customField2->Name = 'Order ID';
+            $salesReceiptData['mageOrderId'] = $salesReceiptData['mageOrderId'];
+            $customField2->StringValue = $salesReceiptData['mageOrderId'] ?? '';
+            $salesReceipt->CustomField = [$customField2];
+            $salesReceipt->ShipDate = date('Y-m-d', time());
+            $salesReceipt->TrackingNum = $salesReceiptData['tracking_info'] ?? '';
+            $salesReceipt->ShipMethodRef = $salesReceiptData['ship_service'] ?? '';
+            $salesReceipt->Id = $salesReceiptData['quickbook_sales_receipt_id'];
+            $salesReceipt->SyncToken = 0;
+            $resultingSalesReceiptObj = $this->dataService->Update($salesReceipt);
+            $response = ['error' => 0, 'salesReceiptData' => $resultingSalesReceiptObj];
+            return $response;
+        } catch (ServiceException $e) {
+            $this->logger->addError('UpdateSalesReceipt on ServiceException : '.$e->getMessage());
+            return $this->getFilterErrorMsg($e->getMessage());
+        } catch (\Exception $e) {
+            $response = ['error' => 1, 'msg' => $e->getMessage()];
+            $this->logger->addError('UpdateSalesReceipt on sales receipt : '.$e->getMessage());
+            return $response;
+        }
+    }
+
+    /**
+     * GetFilterErrorMsg
+     *
      * @param string $errorContent
      * @return array
      */

@@ -130,7 +130,8 @@ class SalesOrderCreditmemoSaveAfterObserver implements ObserverInterface
                         'discount_on_creditmemo' => $creditmemo->getBaseDiscountAmount(),
                         'tax_percent' => $taxPercent,
                         'paymentMethod' => $paymentMethod ? $paymentMethod : __('Magento Store Payment'),
-                        'docNumber' => 'cmemo-'.$creditmemo->getIncrementId()
+                        'docNumber' => 'cmemo-'.$creditmemo->getIncrementId(),
+                        'mageOrderId' => $order->getIncrementId()
                     ];
 
                     $creditmemoReceipt = $this->creditmemoMapFactory->create()->getCollection()
