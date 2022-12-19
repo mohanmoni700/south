@@ -1,14 +1,18 @@
 require(['jquery'],function(){
     function lazyLoadImages() {
-    var e = document.querySelectorAll("img[image-data-src]");
-    [].forEach.call(e, function(e) {
-        isElementInViewport(e) && (e.setAttribute("src", e.getAttribute("image-data-src")),
-            e.removeAttribute("image-data-src"))
-    }), 0 == e.length && (window.removeEventListener("DOMContentLoaded", lazyLoadImages), 
-    window.removeEventListener("load", lazyLoadImages), window.removeEventListener("resize", lazyLoadImages),
-    window.removeEventListener("scroll", lazyLoadImages))
+        var e = document.querySelectorAll("img[image-data-src]");
+        [].forEach.call(e, function(e) {
+            isElementInViewport(e) && (e.setAttribute("src", e.getAttribute("image-data-src")),
+                e.removeAttribute("image-data-src"))
+        }), 0 == e.length && (window.removeEventListener("DOMContentLoaded", lazyLoadImages), 
+        window.removeEventListener("load", lazyLoadImages), window.removeEventListener("resize", lazyLoadImages),
+        window.removeEventListener("scroll", lazyLoadImages))
     }
     function isElementInViewport(e) {
+        var t = e.getBoundingClientRect();
+        return true;
+    }
+    function isElementInViewports(e) {
         var t = e.getBoundingClientRect();
         return t.top >= 0 && t.left >= 0 && t.bottom <= (window.innerHeight 
         || document.documentElement.clientHeight) 
