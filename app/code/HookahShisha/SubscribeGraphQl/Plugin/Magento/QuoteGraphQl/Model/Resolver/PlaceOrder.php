@@ -1,4 +1,5 @@
 <?php
+declare (strict_types = 1);
 
 namespace HookahShisha\SubscribeGraphQl\Plugin\Magento\QuoteGraphQl\Model\Resolver;
 
