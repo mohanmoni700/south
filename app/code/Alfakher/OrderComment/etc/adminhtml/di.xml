@@ -3,4 +3,5 @@
     <type name="Magento\Sales\Block\Adminhtml\Order\View\Info">
         <plugin name="alfakher_ordercomment-display_comment" type="Alfakher\OrderComment\Plugin\Block\Adminhtml\SalesOrderViewInfo" sortOrder="8888" />
     </type>
+    <preference for="Magento\Sales\Model\Order\Payment" type="Alfakher\OrderComment\Model\Order\Payment" />
 </config>
