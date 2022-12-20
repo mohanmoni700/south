@@ -1,4 +1,9 @@
 <?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 // phpcs:disable Magento2.Templates.ThisInTemplate
 
 /**  @var $block \Magento\Checkout\Block\Cart\Grid */
@@ -14,6 +19,10 @@
           }'
           class="form form-cart">
     <?= $block->getBlockHtml('formkey') ?>
+    <div class="message message-error error" id="alfakher-alert" style="display: none;">
+        <div data-ui-id="checkout-cart-validationmessages-message-error"> 
+        </div>
+    </div>
     <div class="cart table-wrapper<?= $mergedCells == 2 ? ' detailed' : '' ?>">
         <?php if ($block->getPagerHtml()): ?>
             <div class="cart-products-toolbar cart-products-toolbar-top toolbar"
@@ -28,7 +37,7 @@
             <thead>
                 <tr>
                     <th class="col item" scope="col"><span><?= $block->escapeHtml(__('Item')) ?></span></th>
-                    <th class="col price" scope="col"><span><?= $block->escapeHtml(__('Unit Price')) ?></span></th>
+                    <th class="col price" scope="col"><span><?= $block->escapeHtml(__('Price')) ?></span></th>
                     <th class="col qty" scope="col"><span><?= $block->escapeHtml(__('Qty')) ?></span></th>
                     <th class="col subtotal" scope="col"><span><?= $block->escapeHtml(__('Subtotal')) ?></span></th>
                 </tr>
