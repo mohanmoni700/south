@@ -1,0 +1,61 @@
+<?php
+use Magento\Checkout\Block\Cart;
+use Amasty\RequestQuote\Block\Cart as QuoteCart;
+
+/**
+* @var \Magento\Checkout\Block\Cart
+*/
+
+/**
+* @var \Amasty\RequestQuote\Block\Cart as QuoteCart
+*/
+
+$cart_title = __('Shopping Cart');
+$quote_title = __('Quote Cart');
+
+$cartblock = $block->getLayout()->createBlock(Cart::class);
+$cartitem = $cartblock->getItems();
+$quoteblock = $block->getLayout()->createBlock(QuoteCart::class);
+$quoteitem = $quoteblock->getQuote()->getItems();
+
+$cssClass = $block->getCssClass() ? ' ' . $block->getCssClass() : '';
+$titleHtml = '';
+if (trim($block->getPageHeading())) {
+    $titleHtml = '<span class="base" data-ui-id="page-title-wrapper" '
+        . $block->getAddBaseAttribute()
+        . '>'
+        . $block->escapeHtml($block->getPageHeading())
+        . '</span>';
+}
+?>
+<?php if ($titleHtml): ?>    
+    <?php if ($block->getPageHeading() == "$cart_title" && empty($cartitem)):?>    
+        <div class="empty-cart-class">    
+    <?php endif; ?>
+    <?php if ($block->getPageHeading() == "$quote_title" && empty($quoteitem)):?>    
+        <div class="empty-cart-class">    
+    <?php endif; ?>
+    <div class="page-title-wrapper<?= $block->escapeHtmlAttr($cssClass) ?>">
+        <?php if ($cssClass == ' product'): ?>
+            <h1 class="page-title"
+                <?php if ($block->getId()): ?> id="<?= $block->escapeHtmlAttr($block->getId())?>" <?php endif; ?>
+                <?php if ($block->getAddBaseAttributeAria()):?>
+                    aria-labelledby="<?= $block->escapeHtmlAttr($block->getAddBaseAttributeAria()) ?>"
+                <?php endif; ?>>
+                <?= /* @noEscape */ $titleHtml ?>
+            </h1>
+        <?php else: ?>
+            <h2 class="page-title"
+                <?php if ($block->getId()): ?> id="<?= $block->escapeHtmlAttr($block->getId()) ?>" <?php endif; ?>
+                <?php if ($block->getAddBaseAttributeAria()):?>
+                    aria-labelledby="<?= $block->escapeHtmlAttr($block->getAddBaseAttributeAria()) ?>"
+                <?php endif; ?>>
+                <?= /* @noEscape */ $titleHtml ?>
+            </h2>
+        <?php endif; ?>
+        <?= $block->getChildHtml() ?>
+    </div>
+    <?php if ($block->getPageHeading() == 'Shopping Cart' && empty($cartitem)):?>    
+        </div>    
+    <?php endif; ?>
+<?php endif; ?>
