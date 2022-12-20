@@ -3,29 +3,29 @@ declare (strict_types = 1);
 
 namespace HookahShisha\SubscribeGraphQl\Plugin\Magento\QuoteGraphQl\Model\Resolver;
 
-use Magento\QuoteGraphQl\Model\Resolver\PlaceOrder as MagentoPlaceOrder;
+use Magedelight\Subscribenow\Model\ResourceModel\ProductAssociatedOrders\CollectionFactory as AssociatedOrders;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magedelight\Subscribenow\Model\ResourceModel\ProductAssociatedOrders\CollectionFactory as AssociatedOrders;
+use Magento\QuoteGraphQl\Model\Resolver\PlaceOrder as MagentoPlaceOrder;
 
 class PlaceOrder
 {
-	/**
-	* @var AssociatedOrders $associatedOrdersFactory
-	*/
-	protected $associatedOrdersFactory;
+    /**
+     * @var AssociatedOrders $associatedOrdersFactory
+     */
+    protected $associatedOrdersFactory;
 
-	/**
-	* @param AssociatedOrders $associatedOrdersFactory
-	*/
-	public function __construct(
-		AssociatedOrders $associatedOrdersFactory
-	){
-		$this->associatedOrdersFactory = $associatedOrdersFactory;
-	}
+    /**
+     * @param AssociatedOrders $associatedOrdersFactory
+     */
+    public function __construct(
+        AssociatedOrders $associatedOrdersFactory
+    ) {
+        $this->associatedOrdersFactory = $associatedOrdersFactory;
+    }
 
-	/**
+    /**
      * Set subscription details
      *
      * @param MagentoPlaceOrder $subject
@@ -37,7 +37,7 @@ class PlaceOrder
      * @param array|null $args
      * @return mixed
      */
-	public function afterResolve(
+    public function afterResolve(
         MagentoPlaceOrder $subject,
         $return,
         Field $field,
@@ -46,19 +46,19 @@ class PlaceOrder
         array $value = null,
         array $args = null
     ) {
-		$incrementId = $return['order']['order_number'] ?? '';
-		if ($incrementId) {
-			$profiles = $this->getSubscriptionProfiles($incrementId);
-			if ($profiles->getSize()) {
-				foreach ($profiles as $profile) {
-					$return['order']['orderSubscriptionDetails'][] = [
-						'profile_id' => $profile->getProfileId(),
-						'subscription_id' => $profile->getSubscriptionId(),
-					];
-				}
-			}
-		}
-		return $return;
+        $incrementId = $return['order']['order_number'] ?? '';
+        if ($incrementId) {
+            $profiles = $this->getSubscriptionProfiles($incrementId);
+            if ($profiles->getSize()) {
+                foreach ($profiles as $profile) {
+                    $return['order']['orderSubscriptionDetails'][] = [
+                        'profile_id' => $profile->getProfileId(),
+                        'subscription_id' => $profile->getSubscriptionId(),
+                    ];
+                }
+            }
+        }
+        return $return;
     }
 
     /**
@@ -67,15 +67,15 @@ class PlaceOrder
      */
     public function getSubscriptionProfiles($incrementId)
     {
-    	$orderId = $incrementId;
+        $orderId = $incrementId;
         $collection = $this->associatedOrdersFactory->create();
         $collection->addFieldToFilter('order_id', $orderId);
         $collection->getSelect()->join(
             ['subscriber' => $collection->getTable('md_subscribenow_product_subscribers')],
             'subscriber.subscription_id = main_table.subscription_id',
-            ['subscription_id','profile_id']
+            ['subscription_id', 'profile_id']
         );
-        
+
         return $collection;
     }
 }
