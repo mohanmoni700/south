@@ -1,9 +1,4 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
-
 // phpcs:disable Magento2.Templates.ThisInTemplate
 
 /**  @var $block \Magento\Checkout\Block\Cart\Grid */
@@ -20,7 +15,7 @@
           class="form form-cart">
     <?= $block->getBlockHtml('formkey') ?>
     <div class="message message-error error" id="alfakher-alert" style="display: none;">
-        <div data-ui-id="checkout-cart-validationmessages-message-error"> 
+        <div data-ui-id="checkout-cart-validationmessages-message-error">
         </div>
     </div>
     <div class="cart table-wrapper<?= $mergedCells == 2 ? ' detailed' : '' ?>">
@@ -78,7 +73,7 @@
                 class="action update">
             <span><?= $block->escapeHtml(__('Update Shopping Cart')) ?></span>
         </button>
-        <?php if ($block->hasError()) { ?>
+        <?php if ($block->hasError()): ?>
         <button type="button"
                 name="update_cart_action"
                 data-cart-item-update=""
@@ -87,7 +82,7 @@
                 class="action remove_outof_stock">
             <span><?= $block->escapeHtml(__('Remove Out of Stock')) ?></span>
         </button>
-        <?php } ?>
+        <?php endif; ?>
         <input type="hidden" value="" id="update_cart_action_container" data-cart-item-update=""/>
     </div>
 </form>

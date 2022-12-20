@@ -57,7 +57,7 @@ class RemoveOutofStock extends Action implements HttpPostActionInterface
                 if ($isInStock == false) {
                     $this->cart->removeItem($item->getItemId())->save();
                 }
-                $resultJson->setData(["message" => "success", "value" => "All out of stock item deleted successfully"]);
+                $resultJson->setData(["message" => "success", "value" => __('All out of stock item deleted successfully')]);
             }
         }
         return $resultJson;
