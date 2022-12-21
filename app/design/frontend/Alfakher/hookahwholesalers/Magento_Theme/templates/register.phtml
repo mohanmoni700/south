@@ -159,6 +159,13 @@ require(['jquery'], function($){
             scrollTop: scroll
         }, 100);
     });
+    $(document).on("click",".amscroll-load-button.-before",function() {
+        var scroll = $(window).scrollTop();
+        scroll = scroll - 30;
+        $('html, body').animate({
+            scrollTop: scroll
+        }, 100);
+    });
 });
 </script>
 
