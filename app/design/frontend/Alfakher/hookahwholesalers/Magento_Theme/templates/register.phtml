@@ -139,10 +139,26 @@ require(['jquery'], function($){
         $('.minicart-wrapper .action.showcart').click(function(event){
             $(".sign-up-ul").hide();
         });
+        $(".amscroll-load-button").click(function() {
+            alert('hello123');
+            var scroll = $(window).scrollTop();
+            scroll = scroll + 1000; //pixels to scroll
+            $('html, body').animate({
+                scrollTop: scroll
+            }, 100);
+        });
     });
     $(document).on("click", function () {
         $(".sign-up-ul").hide();
     });    
+
+    $(document).on("click",".amscroll-load-button",function() {
+        var scroll = $(window).scrollTop();
+        scroll = scroll + 30; //pixels to scroll
+        $('html, body').animate({
+            scrollTop: scroll
+        }, 100);
+    });
 });
 </script>
 

@@ -44,6 +44,8 @@ define([
         window.removeEventListener("load", lazyLoadImages), window.removeEventListener("resize", lazyLoadImages),
         window.removeEventListener("scroll", lazyLoadImages))
     }
+    window.addEventListener("DOMContentLoaded", lazyLoadImages), window.addEventListener("load", lazyLoadImages),
+    window.addEventListener("resize", lazyLoadImages), window.addEventListener("scroll", lazyLoadImages)
     function isElementInViewport(e) {
         var t = e.getBoundingClientRect();
         return true;
@@ -54,6 +56,8 @@ define([
         || document.documentElement.clientHeight) 
         && t.right <= (window.innerWidth || document.documentElement.clientWidth)
     }
-    window.addEventListener("DOMContentLoaded", lazyLoadImages), window.addEventListener("load", lazyLoadImages),
-    window.addEventListener("resize", lazyLoadImages), window.addEventListener("scroll", lazyLoadImages)
+    document.addEventListener('scroll', function () {
+        window.addEventListener("DOMContentLoaded", lazyLoadImages), window.addEventListener("load", lazyLoadImages),
+        window.addEventListener("resize", lazyLoadImages), window.addEventListener("scroll", lazyLoadImages)
+    });
 });
