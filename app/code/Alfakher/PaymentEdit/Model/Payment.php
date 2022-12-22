@@ -156,6 +156,7 @@ class Payment extends BasePayment
     {
         $this->loadOrder();
         $payment = $this->order->getPayment();
+        $lastTransId = $payment->getLastTransId();
         $origPayment = $payment->getMethod();
         $payment->setMethod($this->getPaymentMethod());
 
@@ -239,8 +240,10 @@ class Payment extends BasePayment
                         $orderState = $this->order->getState();
                         $orderStatus = $this->order->getStatus();
                         $this->geteway->setCard($oldCard);
-                        $this->geteway->voidBackend($this->order);
-                        $this->order->getPayment()->void(new \Magento\Framework\DataObject());
+                        if (isset($lastTransId) && $lastTransId != null) {
+                            $this->geteway->voidBackend($this->order);
+                            $this->order->getPayment()->void(new \Magento\Framework\DataObject());
+                        }
                         $this->order->setState($orderState)->setStatus($orderStatus);
                         $this->order->save();
                     }
