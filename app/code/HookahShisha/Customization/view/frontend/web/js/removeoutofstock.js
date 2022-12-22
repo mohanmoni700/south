@@ -5,11 +5,11 @@ define([
         "use strict";
         function main(config) {
 
-            var AjaxUrl = config.AjaxUrl;
+            var ajaxUrl = config.ajaxUrl;
             $(document).on('click','.remove_outof_stock',function() {
                 $.ajax({
                     showLoader: true,
-                    url: AjaxUrl,
+                    url: ajaxUrl,
                     type: "POST",
                     success: function (data) {
                         if(data.message == 'success') {

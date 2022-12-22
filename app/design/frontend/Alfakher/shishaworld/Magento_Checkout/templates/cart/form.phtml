@@ -78,9 +78,9 @@
                 name="update_cart_action"
                 data-cart-item-update=""
                 value="remove_outofstock"
-                title="<?= $block->escapeHtml(__('Remove Out of Stock')) ?>"
+                title="<?= $block->escapeHtml(__('Remove Out Of Stock Items')) ?>"
                 class="action remove_outof_stock">
-            <span><?= $block->escapeHtml(__('Remove Out of Stock')) ?></span>
+            <span><?= $block->escapeHtml(__('Remove Out Of Stock Items')) ?></span>
         </button>
         <?php endif; ?>
         <input type="hidden" value="" id="update_cart_action_container" data-cart-item-update=""/>
@@ -93,7 +93,7 @@
         {
             "*": {
                 "HookahShisha_Customization/js/removeoutofstock": {
-                    "AjaxUrl": "<?= $block->escapeUrl($block->getUrl('custom/checkout/RemoveOutofStock/')); ?>"
+                    "ajaxUrl": "<?= $block->escapeUrl($block->getUrl('custom/checkout/RemoveOutofStock/')); ?>"
                 }
             }
         }
