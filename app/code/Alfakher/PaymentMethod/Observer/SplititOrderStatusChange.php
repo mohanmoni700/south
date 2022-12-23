@@ -9,6 +9,7 @@ class SplititOrderStatusChange implements ObserverInterface
 {
 
     /**
+     * SplitIt Payment method order status change
      *
      * @param \Magento\Framework\Event\Observer $observer
      */
