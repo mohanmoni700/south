@@ -344,9 +344,7 @@ class ExitbSync
                 $productData[$key]['articleNumber'] = $articleNumber;
             }
             $productData[$key]['quantity'] = (int)$item->getQtyOrdered();
-            if ($isB2B == false) {
-                $productData[$key]['price'] = (float)$item->getPriceInclTax();
-            }
+            $productData[$key]['price'] = $isB2B ? 0 : (float)$item->getPriceInclTax();
             $productData[$key]['priceNet'] = (float)$item->getPrice();
             $productData[$key]['discount'] = (float)$item->getDiscountAmount();
         }
