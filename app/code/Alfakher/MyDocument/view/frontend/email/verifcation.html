@@ -9,7 +9,7 @@
 } @-->
 
 {{template config_path="design/email/header_template"}}
-<h3>Customer Name: {{var name}}</h3>
+<h3>{{trans "Customer Name:"}} {{var name}}</h3>
 
 {{block class='Magento\\Framework\\View\\Element\\Template' area='frontend' template='Alfakher_MyDocument::email_template.phtml' rejectedDoc=$rejected_doc}}
 

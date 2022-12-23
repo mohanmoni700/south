@@ -1,0 +1,82 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) { 
+    .table-wrapper.quotes-history .table-quote-items{
+        thead {
+            tr {
+                th {
+                    &.date {
+                        .lib-css(width, 100px);
+                    }
+                    &.actions {
+                        .lib-css(width, 130px);
+                    }
+                }
+            }
+        }
+    }
+}
+//
+//  Mobile
+//  -------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .order-items.table-wrapper {
+        border-bottom: 1px solid @color-black;
+        .table-order-items {
+            .col.action {
+                &:before {
+                    .lib-css(filter, none);
+                    .lib-css(width, 17px);
+                    background-image: url('@{baseDir}images/Union-account.svg');
+                    background-position: 0;
+                }
+            }
+        }
+    }
+    #my-orders-table {
+        thead {
+            border-bottom: @hookah_theme_border;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            .order-pager-wrapper-top {
+                .lib-css(border, 0);
+                .lib-css(display, block);
+                .lib-css(margin-bottom, @indent__xs);
+            }
+            .order-pager-wrapper-top .pages-items {
+                .pages-item-previous {
+                    .lib-css(margin-right, 8px);
+                }                
+            }
+        }
+        tfoot {
+            .order-pager-wrapper-bottom {
+                .lib-css(display, block);
+                .lib-css(width, 100%);
+            }
+            .order-pager-wrapper-bottom .pages-items {
+                .pages-item-previous {
+                    .lib-css(margin-right, 8px);
+                }                
+            }
+        }
+        
+    }
+    .sales-order-view {
+        .order-details-items {
+            .table-order-items {
+                .col {
+                    &.action {
+                        a {
+                            .lib-css(vertical-align, top);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

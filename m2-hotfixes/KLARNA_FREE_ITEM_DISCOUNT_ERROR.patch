@@ -1,0 +1,13 @@
+--- a/vendor/klarna/module-core/Model/Checkout/Orderline/Items.php	2022-12-05 18:26:56.000000000 +0530
++++ b/vendor/klarna/module-core/Model/Checkout/Orderline/Items.php	2022-12-05 19:08:59.000000000 +0530
+@@ -212,7 +212,9 @@
+     {
+         if ($checkout->getItems()) {
+             foreach ($checkout->getItems() as $item) {
+-                $checkout->addOrderLine($item);
++                if ($item['total_amount']) {
++                    $checkout->addOrderLine($item);
++                }
+             }
+         }
+

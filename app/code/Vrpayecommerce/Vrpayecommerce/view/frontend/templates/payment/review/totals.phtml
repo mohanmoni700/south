@@ -1,0 +1,43 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @see \Magento\Checkout\Block\Cart\Totals
+ */
+?>
+<?php if ($block->getTotals()): ?>
+    <?php $_colspan = 3; ?>
+    <?php /* @escapeNotVerified */ echo $block->renderTotals(null, $_colspan); ?>
+    <?php /* @escapeNotVerified */ echo $block->renderTotals('footer', $_colspan); ?>
+    <?php if ($block->needDisplayBaseGrandtotal()):?>
+    <tr class="totals charge">
+        <th class="mark" colspan="<?php /* @escapeNotVerified */ echo $_colspan; ?>" scope="row">
+            <?php /* @escapeNotVerified */ echo __('Your credit card will be charged for') ?>
+        </th>
+        <td class="amount" data-th="<?php echo $block->escapeHtml(__('Your credit card will be charged for')); ?>">
+            <?php /* @escapeNotVerified */ echo $block->displayBaseGrandtotal() ?>
+        </td>
+    </tr>
+    <?php endif?>
+    <tr class="easycredit_totals">
+    	<th style="" class="mark" colspan="3" scope="row">
+        	<strong><?php echo $block->escapeHtml(__('FRONTEND_EASYCREDIT_INTEREST')); ?></strong>
+    	</th>
+    	<td style="" class="amount" data-th="Sum of interest">
+        	<strong><span class="price"><?php /* @escapeNotVerified */ echo $this->helper('Magento\Checkout\Helper\Data')->formatPrice($block->getQuote()->getPayment()->getAdditionalInformation('easycredit_sum_of_interest')) ?></span></strong>
+    	</td>
+	</tr>
+    <tr class="easycredit_totals">
+    	<th style="" class="mark" colspan="3" scope="row">
+        	<strong><?php echo $block->escapeHtml(__('FRONTEND_EASYCREDIT_TOTAL')); ?></strong>
+    	</th>
+    	<td style="" class="amount" data-th="Sum of interest">
+        	<strong><span class="price"><?php /* @escapeNotVerified */ echo $this->helper('Magento\Checkout\Helper\Data')->formatPrice($block->getQuote()->getPayment()->getAdditionalInformation('easycredit_order_total')) ?></span></strong>
+    	</td>
+	</tr>
+<?php endif; ?>

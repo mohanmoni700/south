@@ -210,6 +210,28 @@
                 <label translate="true">Tin Number</label>
             </settings>
         </field>
+        <field name="fiscal_number" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">fiscal_number</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Fiscal Number</label>
+            </settings>
+        </field>
+        <field name="ust_id" formElement="input">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">ust_id</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">UST ID</label>
+            </settings>
+        </field>
         <field name="tobacco_permit_number" formElement="input">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">

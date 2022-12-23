@@ -8,19 +8,67 @@
     //  ----------------------------
 
     .homepage_slider_content {
+        .pagebuilder-slide-wrapper {
+            background-size: 100% auto !important;
+        }
         .pagebuilder-poster-content {
             h2 {
                 .lib-css(font-family, @font-family__base_secondary);
             }
+            .pagebuilder-button-primary {
+                &:hover {
+                    .lib-css(background, @color_primary);
+                    .lib-css(border-color, @color_primary);
+                    .lib-css(color, @color-white);
+                }                
+            }
         }
     }
-    
+
     //
     //  Homepage Accessories Wholesale
     //  ----------------------------
     .accordion_comman {
         .accordion_title {
             .lib-font-size(26);
+        }
+    }
+    .cms-page-view{
+        .page-title {
+            text-align: center;
+        }
+    }
+}
+
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .homepage_slider_content {
+        min-height: 60vh !important;
+        .pagebuilder-slide-wrapper {
+           min-height: inherit !important;
+            .pagebuilder-overlay {
+                &.pagebuilder-poster-overlay {
+                    min-height: inherit !important;
+                    margin-bottom: 40px;
+                }
+            }
+        }
+    }
+}
+@media only screen and (max-width: 480px) {
+    .homepage_slider_content {
+        .pagebuilder-slide-wrapper {
+            min-height: inherit !important;
+            .pagebuilder-overlay {
+                &.pagebuilder-poster-overlay {
+                   min-height: inherit !important;
+                    margin-bottom: 0;
+                }
+            }
         }
     }
 }

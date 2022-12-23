@@ -9,4 +9,7 @@
     <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
         <plugin name="Custom_Checkout" type="Alfakher\CheckoutPage\Block\Checkout\LayoutProcessor" sortOrder="100"/>
     </type>
+    <type name="Magento\Payment\Model\MethodList">
+        <plugin name="hide_payment_methods_based_on_country" type="Alfakher\CheckoutPage\Plugin\Frontend\Model\Payment\HidePaymentMethods" sortOrder="10" disabled="false"/>
+    </type>
 </config>

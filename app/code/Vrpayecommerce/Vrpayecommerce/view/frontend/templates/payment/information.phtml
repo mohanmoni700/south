@@ -1,0 +1,100 @@
+<?php if ($block->getIsRecurringActive()): ?>
+	<?php if ($block->getIsCCSavedActive()): ?>
+		<div class="group"><?php echo __('FRONTEND_MC_CC') ?></div>
+		<?php if ($block->getCustomerDataCC()): ?>
+			<?php foreach ($block->getCustomerDataCC() as $item) { ?>
+				<div class="group-list">
+					<div class="group-img">
+						<img src="<?php echo $block->getViewFileUrl('Vrpayecommerce_Vrpayecommerce/images').'/'.strtolower($item['brand']).'.png';?>" class="brandImage" alt="<?=$item['brand']?>">
+					</div>
+					<span class="group-info"><?php echo __('FRONTEND_MC_ENDING').": ".$item['last_4digits']."; ".__('FRONTEND_MC_VALIDITY').": ".$item['expiry_month']."/".substr($item['expiry_year'],-2);?></span>
+					<div class="group-button">
+						<form action="<?php echo $block->getChangePaymentUrl() ?>" method="post">
+							<input type="hidden" name="information_id" value="<?php echo $item['information_id']; ?>"/>
+							<input type="hidden" name="payment_method" value="vrpayecommerce_ccsaved"/>
+							<button class="action primary btnChange" type="submit" value="submit"><?php echo __('FRONTEND_MC_BT_CHANGE') ?></button>
+						</form>
+						<form action="<?php echo $block->getDeletePaymentUrl() ?>" method="post">
+							<input type="hidden" name="information_id" value="<?php echo $item['information_id']; ?>"/>
+							<input type="hidden" name="payment_method" value="vrpayecommerce_ccsaved"/>					
+							<button class="action primary btnDelete" type="submit" value="submit"><?php echo __('FRONTEND_MC_BT_DELETE') ?></button>
+						</form>
+					</div>
+					<div style="clear:both"></div>
+				</div>
+			<?php } ?>
+		<?php endif; ?>
+		<div class="group-add">
+			<form action="<?php echo $block->getRegisterPaymentUrl() ?>" method="post">
+				<input type="hidden" name="payment_method" value="vrpayecommerce_ccsaved"/>
+				<button class="action primary btnAdd" type="submit" value="submit"><?php echo __('FRONTEND_MC_BT_ADD') ?></button>
+			</form>
+		</div>
+	<?php endif; ?>
+
+	<?php if ($block->getIsDDSavedActive()): ?>
+		<div class="group"><?php echo __('FRONTEND_PM_DD') ?></div>
+		<?php if ($block->getCustomerDataDD()): ?>
+			<?php foreach ($block->getCustomerDataDD() as $item) { ?>
+				<div class="group-list">
+					<div class="group-img">
+						<img src="<?php echo $block->getViewFileUrl('Vrpayecommerce_Vrpayecommerce/images/sepa.png');?>" class="brandImage" alt="ELV">
+					</div>	
+					<span class="group-info"><?php echo __('FRONTEND_MC_ACCOUNT').": **** ".$item['last_4digits'];?></span>
+					<div class="group-button">
+						<form action="<?php echo $block->getChangePaymentUrl() ?>" method="post">
+							<input type="hidden" name="information_id" value="<?php echo $item['information_id']; ?>"/>
+							<input type="hidden" name="payment_method" value="vrpayecommerce_ddsaved"/>
+							<button class="action primary btnChange" type="submit" value="submit"><?php echo __('FRONTEND_MC_BT_CHANGE') ?></button>
+						</form>
+						<form action="<?php echo $block->getDeletePaymentUrl() ?>" method="post">
+							<input type="hidden" name="information_id" value="<?php echo $item['information_id']; ?>"/>
+							<input type="hidden" name="payment_method" value="vrpayecommerce_ddsaved"/>
+							<button class="action primary btnDelete" type="submit" value="submit"><?php echo __('FRONTEND_MC_BT_DELETE') ?></button>
+						</form>
+					</div>
+					<div style="clear:both"></div>
+				</div>
+			<?php } ?>
+		<?php endif; ?>
+		<div class="group-add">
+			<form action="<?php echo $block->getRegisterPaymentUrl() ?>" method="post">
+				<input type="hidden" name="payment_method" value="vrpayecommerce_ddsaved"/>
+				<button class="action primary btnAdd" type="submit" value="submit"><?php echo __('FRONTEND_MC_BT_ADD') ?></button>
+			</form>
+		</div>
+	<?php endif; ?>
+
+	<?php if ($block->getIsPaypalSavedActive()): ?>
+		<div class="group"><?php echo __('FRONTEND_PM_PAYPAL') ?></div>
+		<?php if ($block->getCustomerDataPaypal()): ?>
+			<?php foreach ($block->getCustomerDataPaypal() as $item) { ?>
+				<div class="group-list">
+					<div class="group-img">
+						<img src="<?php echo $block->getViewFileUrl('Vrpayecommerce_Vrpayecommerce/images/paypal.png');?>" class="brandImage" alt="PayPal">
+					</div>	
+					<span class="group-info"><?php echo __('FRONTEND_MC_EMAIL').": ".$item['email'];?></span>
+					<div class="group-button">
+						<form action="<?php echo $block->getChangePaymentUrl() ?>" method="post">
+							<input type="hidden" name="information_id" value="<?php echo $item['information_id']; ?>"/>
+							<input type="hidden" name="payment_method" value="vrpayecommerce_paypalsaved"/>
+							<button class="action primary btnChange" type="submit" value="submit"><?php echo __('FRONTEND_MC_BT_CHANGE') ?></button>
+						</form>
+						<form action="<?php echo $block->getDeletePaymentUrl() ?>" method="post">
+							<input type="hidden" name="information_id" value="<?php echo $item['information_id']; ?>"/>
+							<input type="hidden" name="payment_method" value="vrpayecommerce_paypalsaved"/>
+							<button class="action primary btnDelete" type="submit" value="submit"><?php echo __('FRONTEND_MC_BT_DELETE') ?></button>
+						</form>
+					</div>
+					<div style="clear:both"></div>
+				</div>
+			<?php } ?>
+		<?php endif; ?>
+		<div class="group-add">
+			<form action="<?php echo $block->getRegisterPaymentUrl() ?>" method="post">
+				<input type="hidden" name="payment_method" value="vrpayecommerce_paypalsaved"/>
+				<button class="action primary btnAdd" type="submit" value="submit"><?php echo __('FRONTEND_MC_BT_ADD') ?></button>
+			</form>
+		</div>
+	<?php endif; ?>
+<?php endif; ?>

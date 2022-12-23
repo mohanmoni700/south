@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-       <exitb>
+        <exitb>
             <general>
                 <enabled>0</enabled>
             </general>
@@ -9,5 +9,11 @@
                 <order_isb2b>0</order_isb2b>
             </exitb_ordersync>
         </exitb>
+        <cancel_order>
+            <autocancel>
+                <enabled>0</enabled>
+                <days>24</days>
+            </autocancel>
+        </cancel_order>
     </default>
 </config>
