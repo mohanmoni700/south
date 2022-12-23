@@ -13,6 +13,10 @@ class CancelOrders
     public const WEBSITE_CODE = 'cancel_order/autocancel/Websiteid';
     public const CANCEL_ENABLE = 'cancel_order/autocancel/enabled';
     public const DAYS = 'cancel_order/autocancel/days';
+    public const STATUS = 'pending';
+    public const START_TIME = '00:00:00';
+    public const END_TIME = '23:59:59';
+    public const COMMENT = 'Sales Approved';
 
     /**
      * @var ExitbSync
@@ -109,14 +113,14 @@ class CancelOrders
 
                     $orders = $this->orderCollectionFactory->create();
                     $orders->addFieldToFilter('store_id', ['in' => $storeId]);
-                    $orders->addFieldToFilter('status', ['in' => 'pending']);
-                    $orders->addFieldToFilter('created_at', ['gteq' => $actualDate." 00:00:00"]);
-                    $orders->addFieldToFilter('created_at', ['lteq' => $actualDate." 23:59:59"]);
+                    $orders->addFieldToFilter('status', ['in' => self::STATUS]);
+                    $orders->addFieldToFilter('created_at', ['gteq' => $actualDate." ".self::START_TIME]);
+                    $orders->addFieldToFilter('created_at', ['lteq' => $actualDate." ".self::END_TIME]);
 
                     foreach ($orders->getItems() as $order) {
                         $history = $order->getStatusHistoryCollection()->addFieldToFilter(
                             'comment',
-                            ['eq' => 'Sales Approved']
+                            ['eq' => self::COMMENT]
                         )->load();
                         if (!$history->toArray()['totalRecords']) {
                             $this->logger->info("Order Id -->". $order->getEntityId().
