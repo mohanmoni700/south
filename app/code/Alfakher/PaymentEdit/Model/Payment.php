@@ -230,7 +230,6 @@ class Payment extends BasePayment
                 }
                 $card = $card->getTypeInstance();
                 $grandTotal = $this->order->getGrandTotal();
-
                 $this->geteway->setCard($card);
                 try {
                     $response = $this->geteway->authorizeBackend($this->order, $grandTotal);
@@ -240,7 +239,7 @@ class Payment extends BasePayment
                         $orderState = $this->order->getState();
                         $orderStatus = $this->order->getStatus();
                         $this->geteway->setCard($oldCard);
-                        if (isset($lastTransId) && $lastTransId != null) {
+                        if (isset($lastTransId) && $lastTransId != "") {
                             $this->geteway->voidBackend($this->order);
                             $this->order->getPayment()->void(new \Magento\Framework\DataObject());
                         }
@@ -264,6 +263,19 @@ class Payment extends BasePayment
         if ($origPayment != $this->getPaymentMethod()) {
             $oldTitle = $this->paymentHelper->getMethodInstance($origPayment)->getTitle();
             $newTitle = $this->paymentHelper->getMethodInstance($this->getPaymentMethod())->getTitle();
+                try
+                {
+                    if (isset($lastTransId) && $lastTransId != "" && $origPayment = "paradoxlabs_firstdata") {
+                        $this->method->gateway();
+                        $oldCard = $this->cardRepository->load($payment->getTokenbaseId());
+                        $oldCard = $oldCard->getTypeInstance();
+                        $this->geteway->setCard($oldCard);
+                        $this->geteway->voidBackend($this->order);
+                    }
+                } catch (\Exception $e) {
+                    $this->messageManager->addErrorMessage($e->getMessage());
+                    return;
+                }
             $this->_eventManager->dispatch(
                 'mageworx_log_changes_on_order_edit',
                 [
@@ -393,3 +405,4 @@ class Payment extends BasePayment
         }
     }
 }
+
