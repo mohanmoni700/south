@@ -63,3 +63,74 @@ index 27894d32..89b3cfec 100644
              type: 'post',
              dataType: "json",
              showLoader: true,
+diff --git a/vendor/splitit/module-payment-gateway/Block/Payment.php b/vendor/splitit/module-payment-gateway/Block/Payment.php
+index eb786d7c..5b72a31f 100644
+--- a/vendor/splitit/module-payment-gateway/Block/Payment.php
++++ b/vendor/splitit/module-payment-gateway/Block/Payment.php
+@@ -6,6 +6,8 @@ use Magento\Checkout\Model\ConfigProviderInterface;
+ use Magento\Framework\View\Element\Template;
+ use Magento\Framework\View\Element\Template\Context;
+ use Splitit\PaymentGateway\Block\AdminPaymentForm\FlexFieldsBlock;
++use Magento\Framework\App\Config\ScopeConfigInterface;
++use Magento\Store\Model\ScopeInterface;
+ 
+ class Payment extends Template
+ {
+@@ -19,23 +21,31 @@ class Payment extends Template
+      */
+     protected $flexfield;
+ 
++    /**
++     * @var ScopeConfigInterface
++     */
++    protected $scopeConfig;
++
+     /**
+      * Constructor
+      *
+      * @param Context $context
+      * @param ConfigProviderInterface $config
+      * @param FlexFieldsBlock $flexfield
++     * @param ScopeConfigInterface $scopeConfig
+      * @param array $data
+      */
+     public function __construct(
+         Context $context,
+         ConfigProviderInterface $config,
+         FlexFieldsBlock $flexfield,
++        ScopeConfigInterface $scopeConfig,
+         array $data = []
+     ) {
+         parent::__construct($context, $data);
+         $this->config = $config;
+         $this->flexfield = $flexfield;
++        $this->scopeConfig = $scopeConfig;
+     }
+ 
+     /**
+@@ -50,13 +60,24 @@ class Payment extends Template
+         $config = $payment[$this->getCode()];
+         $config['code'] = $this->getCode();
+         $config += [
+-            'ajaxUrl' => $this->flexfield->getAjaxUrl(),
++            'ajaxUrl' => $this->getAdminAjaxUrl(),
+             'totalsAjaxUrl' => $this->flexfield->getTotalsUpdateAjaxUrl(),
+             'getQuoteIdAjaxUrl' => $this->flexfield->getCurrentQuoteIdUrl()
+         ];
+         return json_encode($config, JSON_UNESCAPED_SLASHES);
+     }
+ 
++    /**
++     * getWebUrl
++     *
++     * @return string
++     */
++    public function getAdminAjaxUrl()
++    {
++        $baseUrl = $this->scopeConfig->getValue('web/secure/base_url', ScopeInterface::SCOPE_STORE, 0);
++        return $baseUrl . FlexFieldsBlock::FLEXFIELDS_CONTROLLER_ROUTE;
++    }
++
+     /**
+      * Get payment code
+      *
