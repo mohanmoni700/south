@@ -1,10 +1,9 @@
 define([
-    "jquery",
-    "jquery/ui"
-    ], function($){
+    'jquery',
+    'Magento_Customer/js/customer-data'
+    ], function($,customerData){
         "use strict";
         function main(config) {
-
             var ajaxUrl = config.ajaxUrl;
             $(document).on('click','.remove_outof_stock',function() {
                 $.ajax({
@@ -13,8 +12,13 @@ define([
                     type: "POST",
                     success: function (data) {
                         if(data.message == 'success') {
-                            $('#alfakher-alert').append(data.value);
-                            $('#alfakher-alert').show();
+                            $('.checkout-cart-index .message-error').hide();
+                            customerData.set('messages', {
+                                messages: [{
+                                    text: data.value,
+                                    type: 'success'
+                                }]
+                            });
                             window.location.reload();
                         }
                     }

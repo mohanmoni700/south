@@ -14,10 +14,6 @@
           }'
           class="form form-cart">
     <?= $block->getBlockHtml('formkey') ?>
-    <div class="message message-error error" id="alfakher-alert" style="display: none;">
-        <div data-ui-id="checkout-cart-validationmessages-message-error">
-        </div>
-    </div>
     <div class="cart table-wrapper<?= $mergedCells == 2 ? ' detailed' : '' ?>">
         <?php if ($block->getPagerHtml()): ?>
             <div class="cart-products-toolbar cart-products-toolbar-top toolbar"
