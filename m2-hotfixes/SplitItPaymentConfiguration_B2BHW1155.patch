@@ -1,0 +1,65 @@
+diff --git a/vendor/splitit/module-payment-gateway/Block/System/Config/LoginAuth.php b/vendor/splitit/module-payment-gateway/Block/System/Config/LoginAuth.php
+index 73584284..a2d73258 100644
+--- a/vendor/splitit/module-payment-gateway/Block/System/Config/LoginAuth.php
++++ b/vendor/splitit/module-payment-gateway/Block/System/Config/LoginAuth.php
+@@ -4,6 +4,9 @@ namespace Splitit\PaymentGateway\Block\System\Config;
+ 
+ use Magento\Config\Block\System\Config\Form\Field;
+ use Magento\Framework\Data\Form\Element\AbstractElement;
++use Magento\Backend\Block\Template\Context;
++use Magento\Framework\App\Config\ScopeConfigInterface;
++use Magento\Store\Model\ScopeInterface;
+ 
+ class LoginAuth extends Field
+ {
+@@ -14,6 +17,37 @@ class LoginAuth extends Field
+      */
+     protected $_template = 'Splitit_PaymentGateway::system/config/loginauth-button.phtml';
+ 
++    /**
++     * @var ScopeConfigInterface
++     */
++    protected $scopeConfig;
++
++    /**
++     * @param Context $context
++     * @param ScopeConfigInterface $scopeConfig
++     * @param array $data
++     */
++
++    public function __construct(
++        Context $context,
++        ScopeConfigInterface $scopeConfig,
++        array $data = []
++    ) {
++        parent::__construct($context, $data);
++        $this->scopeConfig = $scopeConfig;
++    }
++
++    /**
++     * getWebUrl
++     *
++     * @return string
++     */
++    public function getWebUrl()
++    {
++        $baseUrl = $this->scopeConfig->getValue('web/secure/base_url', ScopeInterface::SCOPE_STORE, 0);
++        return $baseUrl . self::TEST_CREDS_ROUTE;
++    }
++
+     /**
+      * @inheritDoc
+      */
+diff --git a/vendor/splitit/module-payment-gateway/view/adminhtml/templates/system/config/loginauth-button.phtml b/vendor/splitit/module-payment-gateway/view/adminhtml/templates/system/config/loginauth-button.phtml
+index 27894d32..89b3cfec 100644
+--- a/vendor/splitit/module-payment-gateway/view/adminhtml/templates/system/config/loginauth-button.phtml
++++ b/vendor/splitit/module-payment-gateway/view/adminhtml/templates/system/config/loginauth-button.phtml
+@@ -9,7 +9,7 @@ require([
+ ], function($) {
+     function getCredsAuthentication() {
+         $.ajax({
+-            url: '<?= $block->escapeUrl($block->getAjaxUrl()) ?>',
++            url: '<?= $block->escapeUrl($block->getWebUrl()) ?>',
+             type: 'post',
+             dataType: "json",
+             showLoader: true,
