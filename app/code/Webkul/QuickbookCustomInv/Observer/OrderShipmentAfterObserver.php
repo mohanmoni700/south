@@ -169,8 +169,8 @@ class OrderShipmentAfterObserver implements ObserverInterface
                         'paymentMethod' => $order->getPayment()->getMethodInstance()->getTitle(),
                         'docNumber' => 'order-'.$order->getIncrementId(),
                         'mageOrderId' => $order->getIncrementId(),
-                        'tracking_info' => substr(implode(",",$trackingList), 0, 31),
-                        'ship_service' => substr(implode(",",$shipServiceList), 0, 31),
+                        'tracking_info' => substr(implode(",", $trackingList), 0, 31),
+                        'ship_service' => substr(implode(",", $shipServiceList), 0, 31),
                         'shipDate' => $shipDate
                     ];
                     $salesReceipt = $this->orderMapFactory->create()->getCollection()
@@ -193,11 +193,11 @@ class OrderShipmentAfterObserver implements ObserverInterface
                             $mapObj->setData($data);
                             $mapObj->save();
                         }
-                    } elseif($salesReceipt->getEntityId()) {
+                    } elseif ($salesReceipt->getEntityId()) {
                         $salesReceiptData['quickbook_sales_receipt_id'] = $salesReceipt->getQuickbookSalesReceiptId();
                         $salesReceipt = $this->quickBooksHelper->updateSalesReceipt($salesReceiptData, $accountId);
                         if ($salesReceipt['error'] == 0) {
-                            $this->logger->addError(__('QB order updated : %1',$salesReceiptData['quickbook_sales_receipt_id']));
+                            $this->logger->addError(__('QB order updated : %1', $salesReceiptData['quickbook_sales_receipt_id']));
                         }
                     }
                 }

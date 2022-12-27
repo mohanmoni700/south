@@ -126,8 +126,8 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
                 }
                 $this->dataService = $dataService;
             } else {
-                throw new LocalizedException(__("Save Quickbooks Consumer Key and Consumer Secret."));
                 $this->logger->info("Save Quickbooks Consumer Key and Consumer Secret.");
+                throw new LocalizedException(__("Save Quickbooks Consumer Key and Consumer Secret."));
             }
         } catch (\Exception $e) {
             $this->logger->addError('QuickBooks helper -'.$e->getMessage());
@@ -179,7 +179,7 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
             if ($totalTax) {
                 if (1 || isset($taxCodeRef['tax_code']) && $taxCodeRef['tax_code']) {
                     $salesReceipt->TxnTaxDetail = new IPPTxnTaxDetail();
-                    $salesReceipt->TxnTaxDetail->TxnTaxCodeRef = $this->configData['default_tax_class'];//$taxCodeRef['tax_code'];
+                    $salesReceipt->TxnTaxDetail->TxnTaxCodeRef = $this->configData['default_tax_class'];
                     $salesReceipt->TxnTaxDetail->TotalTax = $customTax;
                     $salesReceipt->TxnTaxDetail->UseAutomatedSalesTax = false;
                 } else {
@@ -332,9 +332,9 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
             return $response;
         }
     }
-    
+
     /**
-     * updateSalesReceipt
+     * UpdateSalesReceipt
      *
      * @param array $salesReceiptData
      * @param int $accountId
@@ -377,7 +377,7 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
             if ($totalTax) {
                 if (1 || isset($taxCodeRef['tax_code']) && $taxCodeRef['tax_code']) {
                     $salesReceipt->TxnTaxDetail = new IPPTxnTaxDetail();
-                    $salesReceipt->TxnTaxDetail->TxnTaxCodeRef = $this->configData['default_tax_class'];//$taxCodeRef['tax_code'];
+                    $salesReceipt->TxnTaxDetail->TxnTaxCodeRef = $this->configData['default_tax_class'];
                     $salesReceipt->TxnTaxDetail->TotalTax = $customTax;
                     $salesReceipt->TxnTaxDetail->UseAutomatedSalesTax = false;
                 }

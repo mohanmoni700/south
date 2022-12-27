@@ -162,8 +162,8 @@ class SalesOrderSaveCommitAfterObserver implements ObserverInterface
             'paymentMethod' => $order->getPayment()->getMethodInstance()->getTitle(),
             'docNumber' => 'order-'.$order->getIncrementId(),
             'mageOrderId' => $order->getIncrementId(),
-            'tracking_info' => substr(implode(",",$trackingList), 0, 31),
-            'ship_service' => substr(implode(",",$shipServiceList), 0, 31),
+            'tracking_info' => substr(implode(",", $trackingList), 0, 31),
+            'ship_service' => substr(implode(",", $shipServiceList), 0, 31),
             'shipDate' => $shipDate
         ];
         $salesReceipt = $this->orderMapFactory->create()->getCollection()

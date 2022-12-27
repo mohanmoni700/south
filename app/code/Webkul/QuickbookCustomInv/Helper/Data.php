@@ -278,7 +278,7 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
             return $itemData;
         } catch (\Exception $e) {
             $this->logger->addError('getArrangedItemDataForQuickbooks -'.$e->getMessage());
-            throw new \Exception($e->getMessage(), 1);
+            throw new LocalizedException($e->getMessage());
         }
     }
 

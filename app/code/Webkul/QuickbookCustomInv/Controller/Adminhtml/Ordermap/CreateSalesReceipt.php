@@ -160,8 +160,8 @@ class CreateSalesReceipt extends \Magento\Backend\App\Action
                     'paymentMethod' => $paymentMethod ? $paymentMethod : __('Magento Store Payment'),
                     'docNumber' => 'order-'.$order->getIncrementId(),
                     'mageOrderId' => $order->getIncrementId(),
-                    'tracking_info' => substr(implode(",",$trackingList), 0, 31),
-                    'ship_service' => substr(implode(",",$shipServiceList), 0, 31),
+                    'tracking_info' => substr(implode(",", $trackingList), 0, 31),
+                    'ship_service' => substr(implode(",", $shipServiceList), 0, 31),
                     'shipDate' => $shipDate
                 ];
                 $salesReceipt = $this->orderMapFactory->create()->getCollection()
