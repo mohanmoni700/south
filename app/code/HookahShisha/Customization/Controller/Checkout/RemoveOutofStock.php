@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace HookahShisha\Customization\Controller\Checkout;
 
 use Magento\Framework\App\Action\Action;
