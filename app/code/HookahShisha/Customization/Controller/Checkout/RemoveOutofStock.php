@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace HookahShisha\Customization\Controller\Checkout;
 
+use Magento\CatalogInventory\Api\StockRegistryInterface;
+use Magento\Checkout\Model\Cart as CustomerCart;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpPostActionInterface;
-use Magento\Checkout\Model\Cart as CustomerCart;
-use Magento\CatalogInventory\Api\StockRegistryInterface;
 use Magento\Framework\Controller\ResultFactory;
 
 /**
@@ -59,7 +59,10 @@ class RemoveOutofStock extends Action implements HttpPostActionInterface
                 if ($isInStock == false) {
                     $this->cart->removeItem($item->getItemId())->save();
                 }
-                $resultJson->setData(["message" => "success", "value" => __('All out of stock item deleted successfully')]);
+                $resultJson->setData([
+                    "message" => "success",
+                    "value" => __('All out of stock item deleted successfully'),
+                ]);
             }
         }
         return $resultJson;
