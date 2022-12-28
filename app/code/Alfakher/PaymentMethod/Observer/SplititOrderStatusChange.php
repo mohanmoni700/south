@@ -1,7 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\PaymentMethod\Observer;
 
+use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Splitit\PaymentGateway\Gateway\Response\TxnIdHandler;
 
@@ -11,9 +13,9 @@ class SplititOrderStatusChange implements ObserverInterface
     /**
      * SplitIt Payment method order status change
      *
-     * @param \Magento\Framework\Event\Observer $observer
+     * @param Observer $observer
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    public function execute(Observer $observer)
     {
         $order = $observer->getEvent()->getOrder();
         $paymentOrder = $order->getPayment();
