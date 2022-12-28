@@ -136,26 +136,15 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
             $logger,
             $accountRepository
         );
-        /*$this->cacheTypeList = $cacheTypeList;
-        $this->cacheFrontendPool = $cacheFrontendPool;
-        $this->countryFactory = $countryFactory;
-        $this->curl = $curl;
-        $this->configWriter = $configWriter;*/
         $this->dateTime = $dateTime;
         $this->logger = $logger;
         $this->encryptor = $encryptor;
         $this->accountRepository = $accountRepository;
         $this->productRepository = $productRepository;
-        /*
-        $this->jsonHelperData = $jsonHelperData;
-        $this->linkFactory = $linkFactory;
-        $this->filterManager = $filterManager;
-        $this->itemTax = $itemTax;
-        */
     }
 
     /**
-     * getQuickbooksAccountConfig
+     * GetQuickbooksAccountConfig
      *
      * @param string $accountId
      * @return array
@@ -187,16 +176,17 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
                 'asset_account' => $accountData['asset_account'],
                 'income_account' => $accountData['income_account'],
                 'expense_account' => $accountData['expense_account'],
-                'default_tax_class' => $accountData['default_tax_class']
+                'default_tax_class' => $accountData['default_tax_class'],
+                'location' => $accountData['business']
             ];
-            //$accountConfig = array_merge($accountConfig, $accountData);
             return $accountConfig;
         }
         return $configData;
     }
 
     /**
-     * getArrangedItemDataForQuickbooks
+     * GetArrangedItemDataForQuickbooks
+     *
      * @param Magento/Sales/Model/Order/Item $orderItem
      * @param Array $taxPercentDetail
      * @param int $qty
@@ -283,7 +273,8 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
     }
 
     /**
-     * getProductData
+     * GetProductData
+     *
      * @param Magento/Sales/Model/Order/Item $orderItem
      * @param float $ratePrice
      * @param array $bundleQty
@@ -320,7 +311,9 @@ class Data extends \Webkul\MultiQuickbooksConnect\Helper\Data
     }
 
     /**
+     * GetAppliedTaxOnOrder
      *
+     * @param Magento\Sales\Model\Order $order
      */
     public function getAppliedTaxOnOrder($order)
     {

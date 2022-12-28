@@ -12,7 +12,7 @@ namespace Webkul\QuickbookCustomInv\Model\Config\Source;
 
 use Magento\Framework\Data\OptionSourceInterface;
 
-class TaxClass implements OptionSourceInterface
+class Location implements OptionSourceInterface
 {
     /**
      * @var \Magento\Framework\Json\Helper\Data $jsonHelper
@@ -66,10 +66,10 @@ class TaxClass implements OptionSourceInterface
     public function getOptions($accountId)
     {
         try {
-            $taxCodes = $this->quickBooks->getTaxClassList($accountId);
+            $taxCodes = $this->quickBooks->getDepartmentList($accountId);
             $taxCodeList = [['value' => 'temp', 'label' => __('Get list after authenticate from Quickbooks')]];
             if ($taxCodes) {
-                $taxCodeList = [['value' => '', 'label' => __('Select Tax Class')]];
+                $taxCodeList = [['value' => '', 'label' => __('Select Business')]];
                 $taxCodes = $this->jsonHelper->jsonDecode($this->jsonHelper->jsonEncode($taxCodes));
                 foreach ($taxCodes as $key => $taxCode) {
                     $taxCodeList[] = ['value' => $taxCode['Id'], 'label' => $taxCode['Name']];
@@ -77,7 +77,7 @@ class TaxClass implements OptionSourceInterface
             }
             return $taxCodeList;
         } catch (\Exception $e) {
-            $this->logger->addError('Asset toOptionArray : '.$e->getMessage());
+            $this->logger->addError('Business toOptionArray : '.$e->getMessage());
             return [['value' => '', 'label' => __('Get list after authenticate from Quickbooks')]];
         }
     }
@@ -95,7 +95,6 @@ class TaxClass implements OptionSourceInterface
         foreach ($optionList as $option) {
             $optionArray[$option['value']] = $option['label'];
         }
-        // $optionArray = ['0' => 'test'];
         return $optionArray;
     }
 }

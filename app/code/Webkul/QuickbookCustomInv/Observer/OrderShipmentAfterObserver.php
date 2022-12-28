@@ -55,11 +55,12 @@ class OrderShipmentAfterObserver implements ObserverInterface
     private $logger;
 
     /**
-     * @param RequestInterface $requestInterface,
-     * @param OrderRepositoryInterface $orderRepository,
-     * @param QuickBooksHelper $quickBooksHelper,
-     * @param OrderMapFactory $orderMapFactory,
-     * @param QuickBooksDataHelper $quickBooksDataHelper,
+     * @param RequestInterface $requestInterface
+     * @param OrderRepositoryInterface $orderRepository
+     * @param QuickBooksHelper $quickBooksHelper
+     * @param OrderMapFactory $orderMapFactory
+     * @param QuickBooksDataHelper $quickBooksDataHelper
+     * @param AccountRepositoryInterface $accountRepository
      * @param Logger $logger
      */
     public function __construct(
@@ -197,7 +198,9 @@ class OrderShipmentAfterObserver implements ObserverInterface
                         $salesReceiptData['quickbook_sales_receipt_id'] = $salesReceipt->getQuickbookSalesReceiptId();
                         $salesReceipt = $this->quickBooksHelper->updateSalesReceipt($salesReceiptData, $accountId);
                         if ($salesReceipt['error'] == 0) {
-                            $this->logger->addError(__('QB order updated : %1', $salesReceiptData['quickbook_sales_receipt_id']));
+                            $this->logger->addError(
+                                __('QB order updated : %1', $salesReceiptData['quickbook_sales_receipt_id'])
+                            );
                         }
                     }
                 }

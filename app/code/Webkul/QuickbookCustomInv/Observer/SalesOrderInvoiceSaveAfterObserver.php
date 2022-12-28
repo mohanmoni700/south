@@ -55,11 +55,12 @@ class SalesOrderInvoiceSaveAfterObserver implements ObserverInterface
     private $logger;
 
     /**
-     * @param RequestInterface $requestInterface,
-     * @param OrderRepositoryInterface $orderRepository,
-     * @param QuickBooksHelper $quickBooksHelper,
-     * @param OrderMapFactory $orderMapFactory,
-     * @param QuickBooksDataHelper $quickBooksDataHelper,
+     * @param RequestInterface $requestInterface
+     * @param OrderRepositoryInterface $orderRepository
+     * @param QuickBooksHelper $quickBooksHelper
+     * @param OrderMapFactory $orderMapFactory
+     * @param QuickBooksDataHelper $quickBooksDataHelper
+     * @param AccountRepositoryInterface $accountRepository
      * @param Logger $logger
      */
     public function __construct(
@@ -141,7 +142,7 @@ class SalesOrderInvoiceSaveAfterObserver implements ObserverInterface
                             'Taxable' => $taxAmount || (isset($taxPercent[''][0]) ?
                                                         true : false ) ? 1 : 0, // "" index for shipping tax
                             'taxAmt' => $taxAmount,
-                            'Sku' => str_replace(" ", "", $order->getShippingDescription()),
+                            'Sku' => str_replace(" ", "", $order->getShippingDescription() ?? ''),
                             'isTaxablePro' => 0,
                             'Qty' => 1,
                             'AmountTotal' => $invoice->getBaseShippingAmount(),

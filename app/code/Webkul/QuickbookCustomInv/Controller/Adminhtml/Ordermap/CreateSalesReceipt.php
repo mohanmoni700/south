@@ -90,6 +90,8 @@ class CreateSalesReceipt extends \Magento\Backend\App\Action
     }
 
     /**
+     * Execute
+     *
      * @return \Magento\Backend\Model\View\Result\Page
      */
     public function execute()

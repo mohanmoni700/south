@@ -48,9 +48,10 @@ class SalesOrderSaveCommitAfterObserver implements ObserverInterface
     private $logger;
 
     /**
-     * @param QuickBooksHelper $quickBooksHelper,
-     * @param QuickBooksDataHelper $quickBooksDataHelper,
-     * @param OrderMapFactory $orderMapFactory,
+     * @param QuickBooksHelper $quickBooksHelper
+     * @param QuickBooksDataHelper $quickBooksDataHelper
+     * @param OrderMapFactory $orderMapFactory
+     * @param AccountRepositoryInterface $accountRepository
      * @param Logger $logger
      */
     public function __construct(

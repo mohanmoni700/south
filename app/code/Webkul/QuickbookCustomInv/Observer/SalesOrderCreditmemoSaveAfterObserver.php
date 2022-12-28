@@ -49,9 +49,10 @@ class SalesOrderCreditmemoSaveAfterObserver implements ObserverInterface
     private $logger;
 
     /**
-     * @param QuickBooksHelper $quickBooksHelper,
-     * @param QuickBooksDataHelper $quickBooksDataHelper,
-     * @param CreditmemoMapFactory $creditmemoMapFactory,
+     * @param QuickBooksHelper $quickBooksHelper
+     * @param QuickBooksDataHelper $quickBooksDataHelper
+     * @param CreditmemoMapFactory $creditmemoMapFactory
+     * @param AccountRepositoryInterface $accountRepository
      * @param Logger $logger
      */
     public function __construct(

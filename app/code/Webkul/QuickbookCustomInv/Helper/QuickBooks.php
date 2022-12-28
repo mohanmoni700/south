@@ -64,6 +64,8 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
     private $logger;
 
     /**
+     * Construct
+     *
      * @param \Magento\Framework\App\Helper\Context $context
      * @param \Magento\Framework\Message\ManagerInterface $messageManager
      * @param JsonHelperData $jsonHelperData
@@ -102,6 +104,11 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
         $this->jsonHelperData = $jsonHelperData;
     }
 
+    /**
+     * SetDataServiceObject
+     *
+     * @param int $accountId
+     */
     public function setDataServiceObject($accountId)
     {
         try {
@@ -136,15 +143,16 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
     }
 
     /**
-     * createSalesReceipt
+     * CreateSalesReceipt
+     *
      * @param array $salesReceiptData
+     * @param int $accountId
      * @return
      */
     public function createSalesReceipt($salesReceiptData, $accountId)
     {
         try {
             $this->setDataServiceObject($accountId);
-
             $salesReceipt = new IPPSalesReceipt();
             $salesReceipt->DocNumber = $salesReceiptData['docNumber'];
             date_default_timezone_set('UTC');
@@ -217,6 +225,7 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
             $salesReceipt->TrackingNum = $salesReceiptData['tracking_info'] ?? '';
             $salesReceipt->ShipMethodRef = $salesReceiptData['ship_service'] ?? '';
 
+            $salesReceipt->DepartmentRef = $this->configData['location'] ?? '';
             $resultingSalesReceiptObj = $this->dataService->Add($salesReceipt);
             $response = ['error' => 0, 'salesReceiptData' => $resultingSalesReceiptObj];
             return $response;
@@ -311,15 +320,11 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
             $creditmemoReceipt->CustomerRef = $customer->Id;
             $billAddress = $creditmemoReceiptData['customerData']['bill_address'];
             $creditmemoReceipt->BillAddr = $this->helperData->getPhysicalAddress($billAddress);
-            // $paymentMethod = $this->quickBookPaymentMethod->getPaymentMethod(
-            //     $this->dataService,
-            //     substr($creditmemoReceiptData['paymentMethod'], 0, 31)
-            // );
             $taxApplyAfterDiscount = $this->scopeConfig->getValue('tax/calculation/apply_after_discount');
-            // $creditmemoReceipt->PaymentMethodRef = $paymentMethod->Id;
             $creditmemoReceipt->PONumber = $billAddress['telephone'];
             $creditmemoReceipt->ApplyTaxAfterDiscount = $taxApplyAfterDiscount ? 'true' : 'false';
             $creditmemoReceipt->TotalAmt = $totalAmt;
+            $creditmemoReceipt->DepartmentRef = $this->configData['location'] ?? '';
             $resultingCreditmemoObj = $this->dataService->Add($creditmemoReceipt);
             $response = ['error' => 0, 'creditmemoReceiptData' => $resultingCreditmemoObj];
             return $response;
@@ -457,6 +462,8 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
     }
 
     /**
+     * GetTaxCode
+     *
      * @param array $taxPercentageList
      * @return int
      */
@@ -491,9 +498,11 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
     }
 
     /**
-     * arrangedTaxCode
+     * ArrangedTaxCode
+     *
      * @param array $allTaxCodes
      * @param array $rateIds
+     * @param array $appliedTaxRates
      * @return array
      */
     private function arrangedTaxCode($allTaxCodes, $rateIds, $appliedTaxRates)
@@ -519,7 +528,9 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
     }
 
     /**
-     * getAccounts
+     * GetAccounts
+     *
+     * @param int $accountId
      * @param string $conditions
      * @return array
      */
@@ -540,10 +551,12 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
     }
 
     /**
-     * arrangeItemDataForQB
+     * ArrangeItemDataForQB
+     *
      * @param array $orderItem
      * @param int $lineNum
      * @param array $taxDetails
+     * @param int $accountId
      * @return array
      */
     private function arrangeItemDataForQB($orderItem, $lineNum, $taxDetails, $accountId)
@@ -586,9 +599,11 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
     }
 
     /**
-     * getItemDataForQB
+     * GetItemDataForQB
+     *
      * @param array $orderItemList
      * @param array $taxPercent
+     * @param int $accountId
      * @return array
      */
     private function getItemDataForQB($orderItemList, $taxPercent, $accountId)
@@ -637,8 +652,8 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
 
     /**
      * Get TaxClassList
-     * @param array $orderItemList
-     * @param array $taxPercent
+     *
+     * @param int $accountId
      * @return array
      */
     public function getTaxClassList($accountId)
@@ -655,6 +670,28 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
             $this->logger->addError('QuickBooks helper getTaxClassList -'.$e->getMessage());
             $response = $this->getFilterErrorMsg($e->getMessage());
             return $allTaxClass;
+        }
+    }
+
+    /**
+     * Get DepartmentList
+     *
+     * @param int $accountId
+     * @return array
+     */
+    public function getDepartmentList($accountId)
+    {
+        try {
+            $this->setDataServiceObject($accountId);
+            $departmentList = [];
+            if (isset($this->dataService)) {
+                $departmentList = $this->dataService->Query("Select * From Department", 0, 50);
+            }
+            return $departmentList;
+        } catch (\Exception $e) {
+            $this->logger->addError('QuickBooks helper GetDepartmentList -'.$e->getMessage());
+            $response = $this->getFilterErrorMsg($e->getMessage());
+            return $departmentList;
         }
     }
 }
