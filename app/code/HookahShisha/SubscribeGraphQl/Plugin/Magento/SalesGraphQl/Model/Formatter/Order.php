@@ -3,22 +3,22 @@ declare (strict_types = 1);
 
 namespace HookahShisha\SubscribeGraphQl\Plugin\Magento\SalesGraphQl\Model\Formatter;
 
+use Magedelight\Subscribenow\Model\ResourceModel\ProductAssociatedOrders\CollectionFactory as AssociateOrders;
 use Magento\SalesGraphQl\Model\Formatter\Order as OrderFormatter;
 use Magento\Sales\Api\Data\OrderInterface;
-use Magedelight\Subscribenow\Model\ResourceModel\ProductAssociatedOrders\CollectionFactory as AssociateOrders;
 
 class Order
 {
-	/**
+    /**
      * @param AssociateOrders $associateOrders
      */
-	public function __construct(
-		AssociateOrders $associateOrders
-	){
-		$this->associateOrders = $associateOrders;
-	}
+    public function __construct(
+        AssociateOrders $associateOrders
+    ) {
+        $this->associateOrders = $associateOrders;
+    }
 
-	/**
+    /**
      * Set subscription id with the customer's order data
      *
      * @param OrderFormatter $subject
@@ -26,24 +26,24 @@ class Order
      * @param OrderInterface $orderModel
      * @return mixed
      */
-	public function afterFormat(
-		OrderFormatter $subject,
-		$return,
-		OrderInterface $orderModel
-	){
-		$profiles = $this->getAssociateSubscription($orderModel->getIncrementId());
-		if (count($profiles)) {
-			foreach ($profiles as $profileIds) {
-				$return["orderSubscriptionDetails"][] = [
-					"profile_id" => $profileIds['profile_id'],
-					"subscription_id" => $profileIds['subscription_id']
-				];
-			}
-		}
-		return $return;
-	}
+    public function afterFormat(
+        OrderFormatter $subject,
+        $return,
+        OrderInterface $orderModel
+    ) {
+        $profiles = $this->getAssociateSubscription($orderModel->getIncrementId());
+        if (count($profiles)) {
+            foreach ($profiles as $profileIds) {
+                $return["orderSubscriptionDetails"][] = [
+                    "profile_id" => $profileIds['profile_id'],
+                    "subscription_id" => $profileIds['subscription_id'],
+                ];
+            }
+        }
+        return $return;
+    }
 
-	/**
+    /**
      * Get subscription ids
      *
      * @param String $orderNumber
@@ -54,7 +54,7 @@ class Order
         $collection = $this->associateOrders->create()
             ->addFieldToFilter('order_id', $orderNumber);
         $collection->getSelect()->joinLeft(
-        	['prof' => $collection->getTable('md_subscribenow_product_subscribers')],
+            ['prof' => $collection->getTable('md_subscribenow_product_subscribers')],
             'main_table.subscription_id = prof.subscription_id',
             ['prof.subscription_id', 'prof.profile_id']
         );
