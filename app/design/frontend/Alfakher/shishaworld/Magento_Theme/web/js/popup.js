@@ -22,8 +22,29 @@ define([
 		clickableOverlay: false,
 		opened: function($Event) {
 		$(".modal-footer").hide();
+		},
+		closed: function (){
+			$.cookie('popuplogintext', 'open', { path: '/' });
 		}
 	};
+	function showSubscriptionPopup() {
+		$('#popup').modal({
+			closed: function (){
+				var popup = modal(options, $('#popup'));
+				if ($.cookie('popuplogintext') != 'open') {
+					$("#popup").modal('openModal');
+				}
+			}
+		});
+	}
+	$(document).keydown(function(e){
+			if (e.keyCode == 27) {
+				showSubscriptionPopup();
+			}
+			if(e.keyCode ==13){
+				showSubscriptionPopup();
+			}
+	});
 	form.submit(function(e) {
             if(form.validation('isValid')){
                 var email = $("#newsletter").val();
@@ -73,11 +94,6 @@ define([
 		var popup = modal(options, $('#popup'));
 		if ($.cookie('popuplogintext') != 'open') {
 			$("#popup").modal('openModal');
-			if( "#newsletter-popup" ){
-				$( ".action-close" ).click(function() {
-					$.cookie('popuplogintext', 'open', { path: '/' });
-				});
-			} 
 		}
 	});
 });

@@ -204,7 +204,7 @@
 
             });
             /*bv-hd for desktop checkqty*/
-            $("[id^='qtytext_']").keyup(function(e){
+            $("[id^='qtytext_']").on("keydown keyup",function(e){
                 var currentId= $(this).attr('id');
                 
                 var regex = new RegExp("^[0-9]+$");
