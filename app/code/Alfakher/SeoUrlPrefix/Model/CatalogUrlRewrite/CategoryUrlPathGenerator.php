@@ -70,6 +70,7 @@ class CategoryUrlPathGenerator extends \Magento\CatalogUrlRewrite\Model\Category
      */
     public function getUrlPath($category, $parentCategory = null)
     {
+        $rootId = "";
         $storeManagerDataList = $this->storeManager->getStores();
         foreach ($storeManagerDataList as $key => $value) {
             $storeid = $key;
