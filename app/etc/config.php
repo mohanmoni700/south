@@ -1105,7 +1105,7 @@ return [
         'Alfakher_CustomerCourierAccount' => 1,
         'Alfakher_PaymentMethod' => 1,
         'Smartwave_Megamenu' => 1,
-        'Splitit_PaymentGateway' => 1,
+        'Splitit_PaymentGateway' => 0,
         'Temando_ShippingRemover' => 1,
         'Veratad_AgeVerification' => 0,
         'Vertex_Tax' => 1,
