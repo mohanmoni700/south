@@ -1,0 +1,681 @@
+<?php
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+/** @var \Magento\Framework\Escaper $escaper */
+?>
+<?php
+/**
+ * Create account form template
+ *
+ * @var $block \Magento\Customer\Block\Form\Register
+ */
+?>
+<?= $block->getChildHtml('form_fields_before') ?>
+<?php /* Extensions placeholder */ ?>
+<?= $block->getChildHtml('customer.form.register.extra') ?>
+<?php
+/** @var \Magento\Customer\Helper\Address $addressHelper */
+$addressHelper = $block->getData('addressHelper');
+/** @var \Magento\Directory\Helper\Data $directoryHelper */
+$directoryHelper = $block->getData('directoryHelper');
+$formData = $block->getFormData();
+/* Start Change the region_id Label if the Country is US for State and Other for the State */
+$regionStateLabel = $block->escapeHtml(__('State'));
+$regionProvinceLabel = $block->escapeHtml(__('Province'));
+$regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel;
+/* End Change the region_id Label if the Country is US for State and Other for the State */?>
+
+
+<form class="form create account form-create-account"
+      method="post"
+      id="form-validate"
+      enctype="multipart/form-data"
+      autocomplete="off"
+      style="width: 100%;">
+    <?= /* @noEscape */ $block->getChildHtml('form_fields_before_in_form') ?>
+    <?= /* @noEscape */ $block->getBlockHtml('formkey'); ?>    
+
+    <ul class="register_nav">
+        <li class="basic_details active">
+            <p><label class="step_list"><?= $block->escapeHtml(__('Step 1')) ?></label></p>
+            <legend class="legend"><span><?= $block->escapeHtml(__('Basic Details')) ?></span></legend>
+            <span class="user_icon basic"></span>
+        </li>
+        <li class="business_details">
+            <p><label class="step_list"><?= $block->escapeHtml(__('Step 2')) ?></label></p>
+            <legend class="legend"><span><?= $block->escapeHtml(__('Business Details')) ?></span></legend>
+            <span class="user_icon business"></span>
+        </li>
+       <!--  <li class="document_upload">
+            <p><label class="step_list"><?= $block->escapeHtml(__('Step 3')) ?></label></p>
+            <legend class="legend"><span><?= $block->escapeHtml(__('Document Upload')) ?></span></legend>
+            <span class="user_icon docs"></span>
+        </li> -->
+    </ul>
+    <div id="basic_details" class="show">
+        <fieldset class="fieldset create info">
+            <legend></legend>
+            <input type="hidden" name="success_url" value="<?= $block->escapeUrl($block->getSuccessUrl()) ?>"/>
+            <input type="hidden" name="error_url" value="<?= $block->escapeUrl($block->getErrorUrl()) ?>"/>
+            <?= $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Name::class)
+                ->setObject($formData)
+                ->setForceUseCustomerAttributes(true)
+                ->toHtml()
+            ?>
+            <?php $_dob = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Dob::class) ?>
+            <?php if ($_dob->isEnabled()): ?>
+                <?= $_dob->setDate($formData->getDob())->toHtml() ?>
+            <?php endif ?>
+
+            <?php $_taxvat = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Taxvat::class) ?>
+            <?php if ($_taxvat->isEnabled()): ?>
+                <?= $_taxvat->setTaxvat($formData->getTaxvat())->toHtml() ?>
+            <?php endif ?>
+
+            <?php $_gender = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Gender::class) ?>
+            <?php if ($_gender->isEnabled()): ?>
+                <?= $_gender->setGender($formData->getGender())->toHtml() ?>
+            <?php endif ?>
+
+            <?php $customerAttributes = $block->getChildBlock('customer_form_user_attributes');?>
+            <?php if ($customerAttributes): ?>
+                <?php $customerAttributes->setObject($formData)
+                    ->setEntityType('customer')
+                    ->setShowContainer(false);?>
+                <?php $block->restoreSessionData($customerAttributes->getMetadataForm());?>
+                <?= $customerAttributes->toHtml() ?>
+            <?php endif;?>
+
+            <?= $block->getChildHtml('fieldset_create_info_additional') ?>
+        </fieldset>
+
+        <?php if ($block->getShowAddressFields()): ?>
+            <fieldset class="fieldset address">
+                <legend></legend>
+                <input type="hidden" name="create_address" value="1"/>
+                              
+                <?php /* data-validate="{required:true, 'validate-email':true, 'remote':'
+                <?php echo $this->getUrl('customerb2b/customer/emailcheck', ['_secure' => true]); ?>'}" */ ?>
+                <div class="field required">
+                    <?php $emailLabel = __('Email'); ?>
+                    <label for="email_address" class="label"><span><?= $block->escapeHtml($emailLabel) ?></span></label>
+                    <div class="control">
+                        <input  type="email" 
+                                name="email" 
+                                id="email_address" 
+                                placeholder="<?= $block->escapeHtml($emailLabel) ?>"
+                                autocomplete="off" 
+                                value="<?= $block->escapeHtml($formData->getEmail()) ?>" 
+                                title="<?= $block->escapeHtml($emailLabel) ?>"
+                                class="input-text"
+                                data-role="email"
+                                data-async-is-valid="true"
+                                data-mage-init='{"Magento_Company/js/form/element/async-validation": {
+                                    "name": "customer_email",
+                                    "validateUrl": "<?=
+                                    $block->escapeUrl($block->getUrl('customerb2b/validate/validate')) ?>"
+                                }}'
+                                data-validate="{required:true, 
+                                'validate-email': true, 'validate-async-customer-email': true}"
+                                />
+
+                    </div>
+                </div>
+                <?php $_telephone = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Telephone::class) ?>
+                <?php if ($_telephone->isEnabled()): ?>
+                    <?= $_telephone->setTelephone($formData->getTelephone())->toHtml() ?>
+                <?php endif ?>
+                <?php $_fax = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Fax::class) ?>
+                <?php if ($_fax->isEnabled()): ?>
+                    <?= $_fax->setFax($formData->getFax())->toHtml() ?>
+                <?php endif ?>
+
+                <?php $_streetValidationClass = $addressHelper->getAttributeValidationClass('street'); ?>
+                <?php $_streetLabel = $block->getAttributeData()->getFrontendLabel('street'); ?>
+                <div class="field country required">
+                    <label for="country" class="label">
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>
+                    </label>
+                    <div class="control">
+                        <?= $block->getCountryHtmlSelect() ?>
+                    </div>
+                </div>
+                    <div class="field">
+                        <label for="hub_mobile_number" class="label">
+                            <span><?= $block->escapeHtml(__('Mobile Number')) ?>
+                            </span>
+                        </label>
+                        <div class="control">
+                            <input type="text" 
+                                    name="hub_mobile_number" 
+                                    id="hub_mobile_number" 
+                                    placeholder="<?= $block->escapeHtml(__('Mobile Number')) ?>"
+                                    value="" 
+                                    title="<?php /* @noEscape */ __('Mobile Number') ?>" 
+                                    class="input-text" />
+                        </div>
+                    </div>
+                <div class="field street required">
+                    <label for="street_1" class="label">
+                        <span><?= $block->escapeHtml(__($_streetLabel . ' 1')) ?></span>
+                    </label>
+                    <div class="control">
+                        <input type="text"
+                               name="street[]"
+                               placeholder="<?= $block->escapeHtml(__($_streetLabel . ' 1')) ?>"
+                               value="<?= $block->escapeHtml($formData->getStreetLine(1)) ?>"
+                               title="<?= $block->escapeHtml(__($_streetLabel . ' 1')) ?>"
+                               id="street_1"
+                               class="input-text <?= /* @noEscape */ $_streetValidationClass ?>"/>
+                        <div class="nested">
+                        <?php $_streetValidationClass =trim(str_replace('required-entry', '', $_streetValidationClass));
+                        ?>
+                        <?php for ($_i = 2, $_n = $addressHelper->getStreetLines(); $_i <= $_n; $_i++): ?>
+                            <div class="field additional">
+                                <label class="label" for="street_<?= /* @noEscape */ $_i ?>">
+                                    <span><?= $block->escapeHtml(__($_streetLabel." ".$_i)) ?></span>
+                                </label>
+                                <div class="control">
+                                    <input type="text"
+                                           placeholder="<?= $block->escapeHtml(__($_streetLabel." ".$_i)) ?>"
+                                           name="street[]"
+                                           value="<?= $block->escapeHtml($formData->getStreetLine($_i - 1)) ?>"
+                                           title="<?= $block->escapeHtml(__($_streetLabel." ".$_i)) ?>"
+                                           id="street_<?= /* @noEscape */ $_i ?>"
+                                           class="input-text <?= /* @noEscape */ $_streetValidationClass ?>"/>
+                                </div>
+                            </div>
+                        <?php endfor; ?>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field required">
+                    <label for="city" class="label">
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?></span>
+                    </label>
+                    <div class="control">
+                        <input type="text"
+                               name="city"
+                               placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>"
+                               value="<?= $block->escapeHtmlAttr($formData->getCity()) ?>"
+                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('city') ?>"
+                               class="input-text <?= /* @noEscape */
+                                $addressHelper->getAttributeValidationClass('city') ?>"
+                               id="city"/>
+                    </div>
+                </div>
+
+                <?= /* @noEscape */
+                $secureRenderer->renderTag(
+                    'style',
+                    [],
+                    '#region_id { display:none; }
+                        #region { display:none; }
+                    ',
+                    true
+                );
+                ?>
+
+                <div class="field zip required">
+                    <label for="zip" class="label">
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?>
+                        </span>
+                    </label>
+                    <div class="control">
+                        <?php $zipValidationClass = $addressHelper->getAttributeValidationClass('postcode'); ?>
+                        <input type="text"
+                               name="postcode"
+                               placeholder="<?= /* @noEscape */
+                                $block->getAttributeData()->getFrontendLabel('postcode') ?>"
+                               value="<?= $block->escapeHtml($formData->getPostcode()) ?>"
+                               title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('postcode') ?>"
+                               id="zip"
+                               class="input-text validate-zip-international <?= /* @noEscape */ $zipValidationClass ?>"
+                               data-validate="{'required':true, 'validate-zip-international':true}"/>
+                    </div>
+                </div>
+                
+                <div class="field region required">
+                    <label for="region_id" class="label">
+                        <label for="region_id" class="label" id="region_id_label">
+                        <?php /* $block->getAttributeData()->getFrontendLabel('region') */ ?>
+                        <span><?= /* @noEscape */ $regionLabel ?></span>
+                    </label>
+                    </label>
+                    <div class="control">
+                        <select id="region_id"
+                                name="region_id"
+                                title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('region') ?>"
+                                class="validate-select region_id">
+                            <option value="">
+                                <?= $block->escapeHtml(__('Please select a region, state or province.')) ?>
+                            </option>
+                        </select>
+                    </div>
+                </div> 
+
+                <?php if ($addressHelper->isVatAttributeVisible()): ?>
+                    <?php $_vatidValidationClass = $addressHelper->getAttributeValidationClass('vat_id'); ?>
+                    <div class="field taxvat">
+                        <label class="label" for="vat_id">
+                            <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('vat_id') ?></span>
+                        </label>
+                        <div class="control">
+                            <input type="text"
+                                   name="vat_id"
+                                   value="<?= $escaper->escapeHtmlAttr($formData->getVatId()) ?>"
+                                   placeholder="<?= /* @noEscape */
+                                    $block->getAttributeData()->getFrontendLabel('vat_id') ?>"
+                                   title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('vat_id') ?>"
+                                   class="input-text <?= $escaper->escapeHtmlAttr($_vatidValidationClass) ?>"
+                                   id="vat_id">
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                    <?php $addressAttributes = $block->getChildBlock('customer_form_address_user_attributes');?>
+                    <?php if ($addressAttributes): ?>
+                        <?php $addressAttributes->setEntityType('customer_address'); ?>
+                        <?php $addressAttributes->setFieldIdFormat('address:%1$s')
+                         ->setFieldNameFormat('address[%1$s]');?>
+                        <?php $block->restoreSessionData($addressAttributes->getMetadataForm(), 'address');?>
+                        <?= $addressAttributes->setShowContainer(false)->toHtml() ?>
+                    <?php endif;?>
+                <input type="hidden" name="default_billing" value="1"/>
+                <input type="hidden" name="default_shipping" value="1"/>
+            </fieldset>
+        <?php endif; ?>
+
+        <fieldset class="fieldset additional_info">
+            <legend></legend>
+            <?= $block->getChildHtml('form_additional_info') ?>
+        </fieldset>
+
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button type="button"
+                        class="action next primary"
+                        id="next"
+                        title="<?= $block->escapeHtmlAttr(__('Next')) ?>">
+                    <span><?= $block->escapeHtml(__('Next')) ?></span>
+                </button>
+            </div>
+
+            <div class="secondary">
+                <a class="action back"
+                   href="<?= $block->escapeUrl($block->getBackUrl()) ?>">
+                    <span><?= $block->escapeHtml(__('Back')) ?></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="business_details" style="display: none;" class="business_details_tab">
+        <fieldset class="fieldset" data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+            <fieldset class="fieldset create account" 
+            data-hasrequired="<?= $block->escapeHtmlAttr(__('* Required Fields')) ?>">
+                <legend></legend>
+                <!-- start Adding the Company field refrence from 
+                    vendor/magento/module-company/view/frontend/templates/company/account/create.phtml-->
+                <input type="hidden" name="company[status]" value="1"/>
+                <input type="hidden" name="company[company_email]" id="company_email"/>
+                <input type="hidden" name="company[com_account_verified]" value="0"/>
+                <input type="hidden" name="company[com_details_changed]" value="1"/>
+
+                <div class="field company-name _required">
+                    <?php $businessNameLabel = __('Business Name'); ?>
+                    <label class="label" for="company_name">
+                        <span><?= $block->escapeHtml($businessNameLabel) ?></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" name="company[company_name]" id="company_name"
+                               value=""
+                               placeholder="<?= $block->escapeHtmlAttr($businessNameLabel) ?>"
+                               title="<?= $block->escapeHtmlAttr($businessNameLabel) ?>"
+                               class="input-text" data-validate="{required:true}">
+                    </div>
+                </div>
+                <div class="field business-type required">
+                    <label class="label" for="business_type">
+                        <span><?= $block->escapeHtml(__('Business Type')) ?></span>
+                    </label>
+                    <div class="control">
+                        <select id="business_type"
+                                name="company[business_type]"
+                                title="<?= /* @noEscape */
+                                 $block->getAttributeData()->getFrontendLabel('Business Type') ?>"
+                                class="validate-select business_type">
+                            <option value="">
+                                <?= $block->escapeHtml(__('Please select business type.')) ?>
+                            </option>
+                            <?php foreach ($block->getBusinessType() as $key => $value): ?>
+                                <option value="<?= /* @noEscape */ $value['value']?>">
+                                    <?= /* @noEscape */ $value['label']?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="field annual-turn-over required">
+                    <label class="label" for="annual_turn_over">
+                        <span><?= $block->escapeHtml(__('What is your Annual Turn Over')) ?></span>
+                    </label>
+                    <div class="control">
+                        <select id="annual_turn_over"
+                                name="company[annual_turn_over]"
+                                title="<?= /* @noEscape */
+                                 $block->getAttributeData()->getFrontendLabel('What is your Annual Turn Over') ?>"
+                                class="validate-select annual_turn_over">
+                            <option value="">
+                                <?= $block->escapeHtml(__('Please select your annual turn over.')) ?>
+                            </option>
+                            <?php foreach ($block->getAnnualTurnOver() as $kAto => $valAto): ?>
+                                <option value="<?= /* @noEscape */ $valAto['value']?>">
+                                    <?= /* @noEscape */ $valAto['label']?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="field number-of-emp required">
+                    <label class="label" for="number_of_emp">
+                        <span><?= $block->escapeHtml(__('Number of Employees')) ?></span>
+                    </label>
+                    <div class="control">
+                        <select id="number_of_emp"
+                                name="company[number_of_emp]"
+                                title="<?= /* @noEscape */
+                                 $block->getAttributeData()->getFrontendLabel('Number of Employees') ?>"
+                                class="validate-select number_of_emp">
+                            <option value="">
+                                <?= $block->escapeHtml(__('Please select number of employees')) ?>
+                            </option>
+                            <?php foreach ($block->getNumberOfEmp() as $knoe => $valnoe): ?>
+                                <option value="<?= /* @noEscape */ $valnoe['value']?>">
+                                    <?= /* @noEscape */ $valnoe['label']?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="field fiscal-number">
+                    <?php $fiscalNumber = __('Fiscal Number'); ?>
+                    <label class="label" for="fiscal_number">
+                        <span><?= $block->escapeHtml($fiscalNumber) ?></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" name="company[fiscal_number]" id="fiscal_number"
+                               value=""
+                               placeholder="<?= $block->escapeHtmlAttr($fiscalNumber) ?>"
+                               title="<?= $block->escapeHtmlAttr($fiscalNumber) ?>"
+                               class="input-text validate-alphanum-with-spaces">
+                    </div>
+                </div>
+                <div class="field ust-id">
+                    <?php $UstId = __('UST ID'); ?>
+                    <label class="label" for="ust_id">
+                        <span><?= $block->escapeHtml($UstId) ?></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" name="company[ust_id]" id="ust_id"
+                               value=""
+                               placeholder="<?= $block->escapeHtmlAttr($UstId) ?>"
+                               title="<?= $block->escapeHtmlAttr($UstId) ?>"
+                               class="input-text validate-alphanum-with-spaces">
+                    </div>
+                </div>
+                <div class="field vat-tax-id">
+                    <?php $salesTaxID = __('State Sales Tax ID'); ?>
+                    <label class="label" for="vat_tax_id">
+                        <span class="tax_tooltip">
+                        <span><?= /* @noEscape */ $block->escapeHtml($salesTaxID) ?></span>
+                        <?php $tooltipSalesTaxEnable = $block
+                        ->getConfig('hookahshisha/business_details/enable_business'); ?>
+                        <?php if ($tooltipSalesTaxEnable): ?>
+                            <?php $tooltipSalesTaxId = $block
+                            ->getConfig('hookahshisha/business_details/tooltip_sales_tax_id'); ?>
+                            <span class="sales-tax-tooltip">
+                                <a href="javascript::void(0);" class="tooltip-toggle">?</a>
+                                <span class="tooltip-content"><?= $block->escapeHtml($tooltipSalesTaxId) ?></span>
+                            </span>
+                        <?php endif; ?>
+                        </span>
+                    </label>
+                    <div class="control">
+                        <input type="text" name="company[vat_tax_id]" id="vat_tax_id"
+                               value=""
+                               placeholder="<?= /* @noEscape */ $block->escapeHtmlAttr($salesTaxID) ?>"
+                               title="<?= /* @noEscape */ $block->escapeHtmlAttr($salesTaxID) ?>"
+                               class="input-text validate-alphanum-with-spaces">
+                    </div>
+                </div>
+                <div class="field tin-number">
+                    <?php $tinNumberLabel = __('TIN Number'); ?>
+                    <label class="label" for="tin_number">
+                        <span><?= $block->escapeHtml($tinNumberLabel) ?></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" name="company[tin_number]" id="tin_number"
+                               value=""
+                               placeholder="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
+                               title="<?= $block->escapeHtmlAttr($tinNumberLabel) ?>"
+                               class="input-text validate-alphanum-with-spaces">
+                    </div>
+                </div>
+                <div class="field tobacco-permit-number">
+                    <?php $tobaccoPermitNumber = __('Tobacco Permit Number'); ?>
+                    <label class="label" for="tobacco_permit_number">
+                        <span><?= /* @noEscape */ $block->escapeHtml($tobaccoPermitNumber) ?></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" name="company[tobacco_permit_number]" id="tobacco_permit_number"
+                               value=""
+                               placeholder="<?= /* @noEscape */ $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
+                               title="<?= /* @noEscape */ $block->escapeHtmlAttr($tobaccoPermitNumber) ?>"
+                               class="input-text validate-alphanum-with-spaces">
+                    </div>
+                </div>
+                <div class="field hear-about-us required">
+                    <label class="label" for="hear_about_us">
+                        <span><?= $block->escapeHtml(__('How did you hear about us?')) ?></span>
+                    </label>
+                    <div class="control">
+                        <select id="hear_about_us"
+                                name="company[hear_about_us]"
+                                title="<?= /* @noEscape */
+                                 $block->getAttributeData()->getFrontendLabel('How did you hear about us ?') ?>"
+                                class="validate-select hear_about_us">
+                            <option value="">
+                                <?= $block->escapeHtml(__('Please select you hear about us')) ?>
+                            </option>
+                            <?php foreach ($block->getHearAboutUs() as $khau => $valhau): ?>
+                                <option value="<?= /* @noEscape */ $valhau['value']?>">
+                                    <?= /* @noEscape */ $valhau['label']?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="field hear-about-us message">
+                    <?php $questionLabel = __('Questions?'); ?>
+                    <label class="label" for="questions">
+                        <span><?= $block->escapeHtml($questionLabel) ?></span>
+                    </label>
+                    <div class="control">
+                        <textarea name="company[questions]" id="questions"
+                               value=""
+                               placeholder="<?= $block->escapeHtmlAttr($questionLabel) ?>"
+                               title="<?= $block->escapeHtmlAttr($questionLabel) ?>"
+                               class="input-text"></textarea>
+                    </div>
+                </div>
+                <!-- End Adding the Company field -->
+
+
+                <div class="field password required">
+                    <?php $passwordLabel = __('Password'); ?>
+                    <label for="password" class="label"><span><?= $block->escapeHtml($passwordLabel) ?></span></label>
+                    <div class="control">
+                        <?php $requiredCharacterClassesNumber = $block->escapeHtmlAttr(
+                            $block->getRequiredCharacterClassesNumber()
+                        ); ?>
+                        <input type="password" name="password" id="password"
+                               title="<?= $block->escapeHtmlAttr($passwordLabel) ?>"
+                               class="input-text"
+                               placeholder="<?= $block->escapeHtmlAttr($passwordLabel) ?>"
+                               data-password-min-length="<?= $block
+                                ->escapeHtmlAttr($block->getMinimumPasswordLength()) ?>"
+                               data-password-min-character-sets="<?= /* @noEscape */ $requiredCharacterClassesNumber ?>"
+                               data-validate="{required:true, 'validate-customer-password':true}"
+                               autocomplete="off">
+                        <a class="fa fa-eye-slash" id="showlgpass" data-vis="0" title=""></a>
+                    </div>
+                </div>
+                <div class="field confirmation password required">
+                    <?php $confirmPasswordLabel = __('Confirm Password'); ?>
+                    <label for="password-confirmation" class="label">
+                        <span><?= /* @noEscape */ $block->escapeHtml($confirmPasswordLabel) ?></span>
+                    </label>
+                    <div class="control">
+                        <input type="password"
+                               name="password_confirmation"
+                               title="<?= /* @noEscape */ $block->escapeHtmlAttr($confirmPasswordLabel) ?>"
+                               id="password-confirmation"
+                               placeholder="<?= /* @noEscape */ $block->escapeHtmlAttr($confirmPasswordLabel) ?>"
+                               class="input-text"
+                               data-validate="{required:true, equalTo:'#password'}"/>
+                        <a class="fa fa-eye-slash" id="showlgpass" data-vis="0" title=""></a>
+                    </div>
+                </div>
+                <?php $subscribed = 'Would you like to join our Monthly Mailing list for discounts and promotions?';?>
+                    <?php if ($block->isNewsletterEnabled()): ?>
+                    <div class="field choice newsletter">
+                        <input type="checkbox"
+                               name="is_subscribed"
+                               title="<?= $block->escapeHtmlAttr(__($subscribed)) ?>"
+                               value="1"
+                               id="is_subscribed"
+                               checked="checked"
+                               class="checkbox"/>
+                        <label for="is_subscribed" class="label">
+                            <span>
+                                <?= $block->escapeHtml(__($subscribed)) ?>
+                            </span>
+                        </label>
+                    </div>
+                        <?php /* Extensions placeholder */ ?>
+                        <?= $block->getChildHtml('customer.form.register.newsletter') ?>
+                <?php endif ?>
+            </fieldset>
+            <div class="actions-toolbar justify_btn">
+                <div class="primary prev">
+                    <button type="button"
+                            class="action previou primary"
+                            id="previous"
+                            title="<?= $block->escapeHtmlAttr(__('PREVIOUS')) ?>">
+                        <span><?= $block->escapeHtml(__('PREVIOUS')) ?></span>
+                    </button>
+                </div>
+
+                <div class="primary regis">
+                    <button type="submit"
+                            class="action register submit primary width-auto"
+                            title="<?= $block->escapeHtmlAttr(__('Register and Continue')) ?>">
+                        <span><?= $block->escapeHtml(__('Register and Continue')) ?></span>
+                    </button>
+                </div>
+            </div>
+            <div class="action_back">
+              <span><?= $block->escapeHtmlAttr(__('Do you have an account?')) ?>
+                <a href="<?= /* @noEscape */ $block->getUrl("customer/account/login");?>">
+                    <?= $block->escapeHtml(__('Log In')) ?>
+                </a>
+            </span> 
+            </div>
+        </fieldset>
+    </div>
+</form>
+<div id="document_upload" style="display: none;" class="document_upload_tab">
+    <?= $block->getChildHtml('register_doc'); ?>
+</div>
+<div id="register-success-popup" style="display:none">
+    <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/success_union.svg')); ?>"
+        alt="success_union"
+        width="60"
+        height="60"
+        loading="lazy" />
+    <h1 class="success_msg"><?= $block->escapeHtml(__('Registration Successful')); ?></h1>
+    <h5><?= $block
+    ->escapeHtml(__('Thanks for Registering with us, one of our customer
+     service team will be in-touch with you for document verification.')); ?></h5>
+</div>
+<div id="popup-modal-non-usa" style="display:none">
+    <img src="<?= $block->escapeUrl($block->getViewFileUrl('images/success_union.svg')); ?>"
+    alt="success_union" width="60" height="60" loading="lazy" />
+    <h1 class="success_msg"><?= $block->escapeHtml(__('Documents are uploaded successfully')); ?></h1>
+    <h5><?= $block->escapeHtml(__('Once it is approved by Admin, Product price would be visible to you.')); ?></h5>
+    <button type="button" id="signinredirect" class="action submit primary">
+        <span><?= $block->escapeHtml(__('Continue')); ?></span>
+    </button>
+</div>
+<?php if ($block->getShowAddressFields()): ?>
+    <?php
+    $displayAllRegions = $block->getConfig("general/region/display_all") ? "true" : "false";
+    ?>
+<script type="text/x-magento-init">
+    {
+        "#country": {
+            "regionUpdater": {
+                "optionalRegionAllowed": <?= /* @noEscape */ $displayAllRegions ?>,
+                "regionListId": "#region_id",
+                "regionInputId": "#region",
+                "postcodeId": "#zip",
+                "form": "#form-validate",
+                "regionJson": <?= /* @noEscape */ $directoryHelper->getRegionJson() ?>,
+                "defaultRegion": "<?= /* @noEscape */ $formData->getRegionId() ?>",
+                "countriesWithOptionalZip": <?= /* @noEscape */ $directoryHelper->getCountriesWithOptionalZip(true) ?>
+            }
+        }
+    }
+</script>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_CustomerCustomAttributes/validation": {
+                "ignore": <?= (int) ($_dob->isEnabled() || $customerAttributes->hasUserDefinedAttributes()) ?>,
+                "hasUserDefinedAttributes": <?= (int) $customerAttributes->hasUserDefinedAttributes() ?>,
+                "isDobEnabled": <?= (int) $_dob->isEnabled() ?>,
+                "disableAutoComplete": true,
+                "mixins": [
+                    "Magento_CustomerCustomAttributes/error-placement",
+                    "Magento_CustomerCustomAttributes/validation-ignore"
+                ]
+            },
+            "Magento_Customer/js/block-submit-on-send": {
+                "formId": "form-validate"
+            },
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "showPassword": {
+                        "component": "Magento_Customer/js/show-password",
+                        "passwordSelector": "#password,#password-confirmation"
+                    }
+                }
+            },
+            "HookahShisha_Customerb2b/js/register": {
+                "regionStateLabel": "<?= $block->escapeHtml($regionStateLabel); ?>",
+                "regionProvinceLabel": "<?= $block->escapeHtml($regionProvinceLabel); ?>",
+                "createPostUrl": "<?= $block->escapeUrl($block->getUrl('customerb2b/account/createPost')); ?>",
+                "signInUrl": "<?= $block->escapeUrl($block->getUrl('mydocument/customer/index/')); ?>",
+                "homeUrl": "<?= $block->escapeUrl($block->getUrl('')); ?>"
+
+            }
+        },
+        ".field.password": {
+            "passwordStrengthIndicator": {
+                "formSelector": "form.form-create-account"
+            }
+        }
+    }
+</script>
