@@ -134,3 +134,16 @@ index eb786d7c..5b72a31f 100644
      /**
       * Get payment code
       *
+diff --git a/vendor/splitit/module-payment-gateway/etc/events.xml b/vendor/splitit/module-payment-gateway/etc/events.xml
+index 79b5bb02..6aa1640c 100644
+--- a/vendor/splitit/module-payment-gateway/etc/events.xml
++++ b/vendor/splitit/module-payment-gateway/etc/events.xml
+@@ -1,7 +1,7 @@
+ <?xml version="1.0"?>
+ 
+ <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+-    <event name="payment_method_assign_data">
++    <event name="payment_method_assign_data_splitit_payment">
+         <observer name="splitit_payment_gateway_data_assign" instance="Splitit\PaymentGateway\Observer\DataAssignObserver" />
+     </event>
+ </config>
