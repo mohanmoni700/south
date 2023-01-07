@@ -414,6 +414,7 @@ class QuickBooks extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks
             $salesReceipt->ShipMethodRef = $salesReceiptData['ship_service'] ?? '';
             $salesReceipt->Id = $salesReceiptData['quickbook_sales_receipt_id'];
             $salesReceipt->SyncToken = 0;
+            $salesReceipt->DepartmentRef = $this->configData['location'] ?? '';
             $resultingSalesReceiptObj = $this->dataService->Update($salesReceipt);
             $response = ['error' => 0, 'salesReceiptData' => $resultingSalesReceiptObj];
             return $response;
