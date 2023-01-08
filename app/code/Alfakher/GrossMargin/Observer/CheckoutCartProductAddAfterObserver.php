@@ -5,32 +5,44 @@ namespace Alfakher\GrossMargin\Observer;
  * @author af_bv_op
  */
 use Magento\Framework\Event\Observer;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Alfakher\GrossMargin\ViewModel\GrossMargin;
+use Magento\Framework\Exception\LocalizedException;
 
 class CheckoutCartProductAddAfterObserver implements \Magento\Framework\Event\ObserverInterface
 {
     /**
-     * Constructor
-     *
-     * @param \Magento\Catalog\Api\ProductRepositoryInterface $proRepo
-     * @param \Alfakher\GrossMargin\ViewModel\GrossMargin $grossMarginViewModel
+     * @var ProductRepositoryInterface
+     */
+    private ProductRepositoryInterface $proRepo;
+    /**
+     * @var GrossMargin
+     */
+    private GrossMargin $grossMarginViewModel;
+
+    /**
+     * @param ProductRepositoryInterface $proRepo
+     * @param GrossMargin $grossMarginViewModel
      */
     public function __construct(
-        \Magento\Catalog\Api\ProductRepositoryInterface $proRepo,
-        \Alfakher\GrossMargin\ViewModel\GrossMargin $grossMarginViewModel
+        ProductRepositoryInterface $proRepo,
+        GrossMargin $grossMarginViewModel
     ) {
         $this->proRepo = $proRepo;
         $this->grossMarginViewModel = $grossMarginViewModel;
     }
+
     /**
      * Execute
      *
      * @param Observer $observer
+     * @throws LocalizedException
      */
     public function execute(Observer $observer)
     {
         $item = $observer->getQuoteItem();
-        $websiteId = $item->getQuote()->getStore()->getWebsiteId();
-        $moduleEnable = $this->grossMarginViewModel->isModuleEnabled($websiteId);
+        $storeId = $observer->getEvent()->getQuoteItem()->getStoreId();
+        $moduleEnable = $this->grossMarginViewModel->isModuleEnabled($storeId);
         if ($moduleEnable) {
             $grossMargin = 0;
             try {
@@ -39,7 +51,9 @@ class CheckoutCartProductAddAfterObserver implements \Magento\Framework\Event\Ob
                     $grossMargin = ($item->getPrice() - $cost) / $item->getPrice() * 100;
                 }
             } catch (\Exception $e) {
-                $grossMargin = 0;
+                throw new LocalizedException(
+                    __('Error with gross margin module')
+                );
             }
             $item->setGrossMargin($grossMargin);
         }
