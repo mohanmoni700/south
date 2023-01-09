@@ -299,7 +299,7 @@
     }
 
     .clp_faq_main {
-        background-color: @hookah_primary_light;
+        
         color: @font-gray;
         .lib-font-size(16);
         .clp_faq_inner {
@@ -731,6 +731,11 @@
     .category-description {
         margin-bottom: @indent__base;
     }
+    .category-description {
+        background: lighten(@color_primary, 60%);
+        margin: 0;
+        order: 5;
+    }
 
     //
     //  Product images general container
@@ -805,7 +810,7 @@
             margin-top: @indent__s;
         }
         select[multiple]:focus option:checked {
-            background: #961e70 linear-gradient(0deg, #961e70 0%, #961e70 100%);
+            background: @hookah_theme_color linear-gradient(0deg, @hookah_theme_color 0%, @hookah_theme_color 100%);
         }
         
     }

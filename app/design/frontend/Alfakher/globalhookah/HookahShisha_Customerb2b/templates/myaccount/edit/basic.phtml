@@ -1,9 +1,9 @@
 <?php
+// phpcs:disable Magento2.Templates.ThisInTemplate
 /** @var \HookahShisha\Customerb2b\Block\Myaccount\Basicdetail $block */
 /** @var \Magento\Customer\ViewModel\Address $viewModel */
 /** @var \Magento\Framework\Escaper $escaper */
 /** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
-// phpcs:disable Magento2.Templates.ThisInTemplate
 $viewModel = $block->getViewModel();
 $actionURL = "#";
 $formDisable = 1;
@@ -36,12 +36,11 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
 ?>
 <?php $messageData = $block->getMessagedata(); ?>
 <?php if ($messageData['cstAccountVerified'] == 0 && $messageData['cstDetailsChanged'] == 0): ?>
-    <?php $actionURL = $this->getUrl('customerb2b/account/basicPost'); ?>
     <?php $formDisable = 0; ?>
 <?php endif; ?>
 
 <form class="form-address-edit"
-      action="<?= $block->escapeUrl($this->getUrl('customerb2b/account/basicPost')) ?>"
+      action="<?= $block->escapeUrl($block->getUrl('customerb2b/account/basicPost')) ?>"
       method="post"
       id="form-validate"
       enctype="multipart/form-data"
@@ -79,14 +78,14 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
         <?php if ($_fax->isEnabled()): ?>
             <?= $_fax->setFax($block->getAddress()->getFax())->toHtml() ?>
         <?php endif ?>
-        <div class="field country required">
+          <div class="field country required">
             <label class="label" for="country">
                 <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('country_id') ?></span>
             </label>
             <div class="control">
                 <?= $block->getCountryHtmlSelect() ?>
             </div>
-        </div>  
+        </div> 
         <div class="field">
             <label for="hub_mobile_number" class="label">
                 <span><?= $block->escapeHtml(__('Mobile Number')) ?>                    
@@ -102,7 +101,8 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                         title="<?php /* @noEscape */ __('Mobile Number') ?>" 
                         class="input-text" />
             </div>
-        </div> 
+        </div>
+        
     </fieldset>
     <fieldset class="fieldset">
         <legend></legend>
@@ -148,9 +148,32 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                        value="<?= $escaper->escapeHtmlAttr($block->getAddress()->getCity()) ?>"
                        title="<?= $escaper->escapeHtmlAttr(__('City')) ?>"
                        placeholder="<?= $escaper->escapeHtmlAttr(__('City')) ?>"
-                       class="input-text wholesalers-validate-text
-                        <?= $escaper->escapeHtmlAttr($_cityValidationClass) ?>"
+                       class="input-text <?= $escaper->escapeHtmlAttr($_cityValidationClass) ?>"
                        id="city">
+            </div>
+        </div>
+
+        <div class="field region required">
+            <label class="label" for="region_id" id="region_id_label">
+                <span><?= /* @noEscape */ $_region ?></span>
+            </label>
+            <div class="control">
+                <select id="region_id" name="region_id"
+                        title="<?= /* @noEscape */ $_region ?>"
+                        placeholder="<?= /* @noEscape */ $_region ?>"
+                        class="validate-select region_id"
+                        <?= /* @noEscape */ !$_displayAll ? ' disabled="disabled"' : '' ?>>
+                    <option value=""><?= $escaper->escapeHtml(__($_selectRegion)) ?></option>
+                </select>
+                <input type="text"
+                       id="region"
+                       name="region"
+                       value="<?= $escaper->escapeHtmlAttr($block->getRegion()) ?>"
+                       title="<?= /* @noEscape */ $_region ?>"
+                       placeholder="<?= /* @noEscape */ $_region ?>"
+                       class="input-text validate-not-number-first
+                        <?= $escaper->escapeHtmlAttr($_regionValidationClass) ?>"
+                        <?= !$_displayAll ? ' disabled="disabled"' : '' ?>/>
             </div>
         </div>
 
@@ -174,20 +197,21 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
             </div>
         </div>
 
-        <div class="field region required">
-            <label class="label" for="region_id" id="region_id_label">
-                <span><?= /* @noEscape */ $_region ?></span>
-            </label>
-            <div class="control">
-                <select id="region_id" name="region_id"
-                        title="<?= /* @noEscape */ $_region ?>"
-                        placeholder="<?= /* @noEscape */ $_region ?>"
-                        class="validate-select region_id"
-                        <?= /* @noEscape */ !$_displayAll ? ' disabled="disabled"' : '' ?>>
-                    <option value=""><?= $escaper->escapeHtml(__($_selectRegion)) ?></option>
-                </select>
-            </div>
-        </div>
+        <div class="field county">
+                    <label for="county" class="label">
+                        <span><?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?></span>
+                    </label>
+                        <input type="text"
+                            name="county"
+                            placeholder="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
+                            value="<?= $block->escapeHtmlAttr(!empty($block->getAddress()
+                               ->getCustomAttribute('county')) ? $block
+                                         ->getAddress()->getCustomAttribute('county')->getValue() : ''); ?>"
+                            title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
+                            id="county"
+                            class="input-text <?= $escaper->escapeHtmlAttr($_county) ?>"/>
+        </div> 
+
 
         <?php if ($viewModel->addressIsVatAttributeVisible()): ?>
             <div class="field taxvat">
@@ -206,19 +230,21 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
             </div>
         <?php endif; ?>
 
-        <?php $subscribedTitle = 'Would you like to join our Monthly Mailing list for discounts and promotions?';?>
+    
         <div class="field choice newsletter">
             <input type="checkbox"
                    name="is_subscribed"
-                   title="<?= $block->escapeHtmlAttr(__($subscribedTitle)) ?>"
+                   title="<?= $block
+                    ->escapeHtmlAttr(__('Would you like to join our 
+                    Monthly Mailing list for discounts and promotions?')) ?>"
                    value="1"
                    id="is_subscribed"
                    <?php if ($block->getIsSubscribed()): ?> checked="checked"<?php endif; ?>
                    class="checkbox"/>
             <label for="is_subscribed" class="label">
-                <span>
-                    <?= $block->escapeHtml(__($subscribedTitle)) ?>
-                </span>
+                <span><?= $block->
+                escapeHtml(__('Would you like to join our Monthly 
+                Mailing list for discounts and promotions?')) ?></span>
             </label>
         </div>
     </fieldset>
@@ -234,6 +260,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
         </div>
     </div>
 </form>
+<?php // phpcs:disable ?>
 <script type="text/x-magento-init">
     {
         "#form-validate": {
