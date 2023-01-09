@@ -162,7 +162,7 @@ class ExitbSync
                 $orderData['orderData']['shipment']['total'] = (float)$order->getShippingInclTax();
 
                 $items = $order->getAllItems();
-                $orderData['orderData']['items'] = $this->orderItems($items);
+                $orderData['orderData']['items'] = $this->orderItems($items, $orderData['orderData']['isB2B']);
 
                 $exitBModel = $this->exitbmodelFactory->create();
                 $exitBorderSync = $exitBModel->load($orderId, 'order_id');
@@ -326,9 +326,10 @@ class ExitbSync
      * Get order items
      *
      * @param mixed $items
+     * @param string $isB2B
      * @return array
      */
-    public function orderItems($items)
+    public function orderItems($items, $isB2B)
     {
         foreach ($items as $key => $item) {
             $productData[$key]['externalNumber'] = $item->getItemId();
@@ -343,7 +344,7 @@ class ExitbSync
                 $productData[$key]['articleNumber'] = $articleNumber;
             }
             $productData[$key]['quantity'] = (int)$item->getQtyOrdered();
-            $productData[$key]['price'] = (float)$item->getPriceInclTax();
+            $productData[$key]['price'] = $isB2B ? 0 : (float)$item->getPriceInclTax();
             $productData[$key]['priceNet'] = (float)$item->getPrice();
             $productData[$key]['discount'] = (float)$item->getDiscountAmount();
         }
