@@ -40,7 +40,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
 <?php endif; ?>
 
 <form class="form-address-edit"
-      action="<?= $block->escapeUrl($block->getUrl('customerb2b/account/basicPost')) ?>"
+      action="<?= $block->escapeUrl($this->getUrl('customerb2b/account/basicPost')) ?>"
       method="post"
       id="form-validate"
       enctype="multipart/form-data"
@@ -102,7 +102,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                         class="input-text" />
             </div>
         </div>
-        
+
     </fieldset>
     <fieldset class="fieldset">
         <legend></legend>
