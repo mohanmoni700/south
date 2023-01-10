@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<section id="vrpayecommerce">
+			<group id="vrpayecommerce_payments">
+				<group id="vrpayecommerce_creditcard">
+					<field id="title" translate="label" type="text" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+                       <label>Title</label>
+                       <config_path>payment/vrpayecommerce_creditcard/title</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+				</group>
+				<group id="vrpayecommerce_directdebit">
+					<field id="title" translate="label" type="text" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Title</label>
+                        <config_path>payment/vrpayecommerce_directdebit/title</config_path>
+                        <depends>
+                            <field id="*/*/*/active">1</field>
+                        </depends>
+                    </field>
+				</group>
+			</group>
+		</section>
+	</system>
+</config>
