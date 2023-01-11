@@ -31,8 +31,8 @@ class GrossMarginToOrder implements \Magento\Framework\Event\ObserverInterface
     public function execute(Observer $observer)
     {
         $order = $observer->getOrder();
-        $websiteId = $order->getStore()->getWebsiteId();
-        $moduleEnable = $this->grossMarginViewModel->isModuleEnabled($websiteId);
+        $storeId = $order->getStore()->getStoreId();
+        $moduleEnable = $this->grossMarginViewModel->isModuleEnabled($storeId);
 
         if ($moduleEnable) {
             $grossMargin = 0;
