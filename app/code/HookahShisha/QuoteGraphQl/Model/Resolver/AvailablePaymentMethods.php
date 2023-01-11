@@ -11,6 +11,7 @@ use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Quote\Api\Data\CartInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
 
 class AvailablePaymentMethods extends \Magento\QuoteGraphQl\Model\Resolver\AvailablePaymentMethods
 {
@@ -61,7 +62,7 @@ class AvailablePaymentMethods extends \Magento\QuoteGraphQl\Model\Resolver\Avail
                 $paymentMethod->getCode()=="vrpayecommerce_directdebit") {
                 $valueFromConfig = $this->scopeConfig->getValue(
                     'payment/'.$paymentMethod->getCode().'/title',
-                    \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+                    ScopeInterface::SCOPE_STORE
                 );
                 if ($valueFromConfig) {
                     $paymentMethodsData[] = [
