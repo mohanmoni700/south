@@ -1,55 +1,68 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+declare(strict_types=1);
 namespace Alfakher\SeoUrlPrefix\Model;
 
 use Magento\CmsUrlRewrite\Model\CmsPageUrlPathGenerator;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\UrlRewrite\Service\V1\Data\UrlRewriteFactory;
+use Magento\CmsUrlRewrite\Model\CmsPageUrlRewriteGenerator as CmsPageRewriteGenerator;
+use Magento\Cms\Model\Page;
+use Magento\UrlRewrite\Service\V1\Data\UrlRewrite;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 
-class CmsPageUrlRewriteGenerator extends \Magento\CmsUrlRewrite\Model\CmsPageUrlRewriteGenerator
+class CmsPageUrlRewriteGenerator extends CmsPageRewriteGenerator
 {
+    /**
+     * Prefix stores
+     */
+    public const PREFIX_STORES = 'hookahshisha/prefix_add_seo/seo_stores';
+    
     /**
      * Entity type code
      */
     public const ENTITY_TYPE = 'cms-page';
 
     /**
-     * @var \Magento\UrlRewrite\Service\V1\Data\UrlRewriteFactory
+     * @var UrlRewriteFactory
      */
     protected $urlRewriteFactory;
 
     /**
-     * @var \Magento\CmsUrlRewrite\Model\CmsPageUrlPathGenerator
+     * @var CmsPageUrlPathGenerator
      */
     protected $cmsPageUrlPathGenerator;
 
     /**
-     *
      * @var StoreManagerInterface
      */
     protected $storeManager;
 
     /**
-     * @var \Magento\Cms\Model\Page
+     * @var Page
      */
     protected $cmsPage;
 
     /**
-     * @param \Magento\UrlRewrite\Service\V1\Data\UrlRewriteFactory $urlRewriteFactory
-     * @param \Magento\CmsUrlRewrite\Model\CmsPageUrlPathGenerator $cmsPageUrlPathGenerator
+     * @var ScopeConfigInterface
+     */
+    protected $scopeConfig;
+
+    /**
+     * @param UrlRewriteFactory $urlRewriteFactory
+     * @param CmsPageUrlPathGenerator $cmsPageUrlPathGenerator
      * @param StoreManagerInterface $storeManager
+     * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         UrlRewriteFactory $urlRewriteFactory,
         CmsPageUrlPathGenerator $cmsPageUrlPathGenerator,
-        StoreManagerInterface $storeManager
+        StoreManagerInterface $storeManager,
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->urlRewriteFactory = $urlRewriteFactory;
         $this->storeManager = $storeManager;
         $this->cmsPageUrlPathGenerator = $cmsPageUrlPathGenerator;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -57,15 +70,17 @@ class CmsPageUrlRewriteGenerator extends \Magento\CmsUrlRewrite\Model\CmsPageUrl
      *
      * @param int $storeId
      * @param int $redirectType
-     * @return \Magento\UrlRewrite\Service\V1\Data\UrlRewrite
+     * @return UrlRewrite
      */
     protected function createUrlRewrite($storeId, $redirectType = 0)
     {
-        //$storeid = $this->storeManager->getStore()->getId();
+        $storeDetails = $this->scopeConfig->getValue(self::PREFIX_STORES);
+        $storeIds = $storeDetails ? explode(',', $storeDetails) : [];
+        
+        $storeid ="";
         $storeManagerDataList = $this->storeManager->getStores();
         foreach ($storeManagerDataList as $key => $value) {
-            $storeid = $key;
-            if ($value['code'] == "hookah_wholesalers_store_view") {
+            if (in_array($key, $storeIds)) {
                 $storeid = $key;
             }
         }

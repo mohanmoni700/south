@@ -1,23 +1,36 @@
 <?php
+declare(strict_types=1);
 namespace Alfakher\SeoUrlPrefix\Model\CatalogUrlRewrite;
 
-class ProductUrlPathGenerator extends \Magento\CatalogUrlRewrite\Model\ProductUrlPathGenerator
+use Magento\CatalogUrlRewrite\Model\ProductUrlPathGenerator as ProductPathGenerator;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Model\Product;
+use Magento\Catalog\Model\Category;
+
+class ProductUrlPathGenerator extends ProductPathGenerator
 {
+    /**
+     * Prefix stores
+     */
+    public const PREFIX_STORES = 'hookahshisha/prefix_add_seo/seo_stores';
 
     // CHANGE THESE FOR CUSTOM STATIC PREFIX ROUTE of PRODUCT and PRODUCT CATEGORY
     public const PRODUCT_PREFIX_ROUTE = 'p';
 
     /**
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator $categoryUrlPathGenerator
-     * @param \Magento\Catalog\Api\ProductRepositoryInterface $productRepository
+     * @param StoreManagerInterface $storeManager
+     * @param ScopeConfigInterface $scopeConfig
+     * @param CategoryUrlPathGenerator $categoryUrlPathGenerator
+     * @param ProductRepositoryInterface $productRepository
      */
     public function __construct(
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator $categoryUrlPathGenerator,
-        \Magento\Catalog\Api\ProductRepositoryInterface $productRepository
+        StoreManagerInterface $storeManager,
+        ScopeConfigInterface $scopeConfig,
+        CategoryUrlPathGenerator $categoryUrlPathGenerator,
+        ProductRepositoryInterface $productRepository
     ) {
         $this->storeManager = $storeManager;
         parent::__construct($storeManager, $scopeConfig, $categoryUrlPathGenerator, $productRepository);
@@ -26,18 +39,19 @@ class ProductUrlPathGenerator extends \Magento\CatalogUrlRewrite\Model\ProductUr
     /**
      * Retrieve Product Url path (with category if exists)
      *
-     * @param \Magento\Catalog\Model\Product $product
-     * @param \Magento\Catalog\Model\Category $category
-     *
+     * @param Product $product
+     * @param Category $category
      * @return string
      */
     public function getUrlPath($product, $category = null)
     {
-
+        $storeDetails = $this->scopeConfig->getValue(self::PREFIX_STORES);
+        $storeIds = $storeDetails ? explode(',', $storeDetails) : [];
+        
+        $storeid ="";
         $storeManagerDataList = $this->storeManager->getStores();
-
         foreach ($storeManagerDataList as $key => $value) {
-            if ($value['code'] == "hookah_wholesalers_store_view") {
+            if (in_array($key, $storeIds)) {
                 $storeid = $key;
             }
         }
