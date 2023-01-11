@@ -35,6 +35,7 @@ class ToOrderItem
 
         $storeId = $item->getQuote()->getStore()->getStoreId();
         $moduleEnable = $this->grossMarginViewModel->isModuleEnabled($storeId);
+
         if ($moduleEnable) {
             $orderItem->setGrossMargin($item->getGrossMargin());
         }
