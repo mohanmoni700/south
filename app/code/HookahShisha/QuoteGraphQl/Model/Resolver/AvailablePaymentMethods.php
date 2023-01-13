@@ -7,13 +7,13 @@ namespace HookahShisha\QuoteGraphQl\Model\Resolver;
 use Magento\Checkout\Api\PaymentInformationManagementInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
-use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Quote\Api\Data\CartInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Store\Model\ScopeInterface;
+use Magento\QuoteGraphQl\Model\Resolver\AvailablePaymentMethods as AvailablePaymentMethodsResolver;
 
-class AvailablePaymentMethods extends \Magento\QuoteGraphQl\Model\Resolver\AvailablePaymentMethods
+class AvailablePaymentMethods extends AvailablePaymentMethodsResolver
 {
     /**
      * @var PaymentInformationManagementInterface
