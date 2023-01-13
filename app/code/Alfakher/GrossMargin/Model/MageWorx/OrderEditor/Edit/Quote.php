@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\GrossMargin\Model\MageWorx\OrderEditor\Edit;
 
@@ -144,8 +145,11 @@ class Quote extends \MageWorx\OrderEditor\Model\Edit\Quote
     }
 
     /**
+     * Convert Order Item To QuoteItem
+     *
      * @param OriginalOrderItem $orderItem
      * @param string[] $params
+     * @param bool $skipItemErrors
      * @return OrderEditorQuoteItem
      * @throws LocalizedException
      */

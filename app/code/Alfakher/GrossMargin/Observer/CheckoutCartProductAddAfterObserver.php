@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Alfakher\GrossMargin\Observer;
 
 /**
@@ -36,6 +38,7 @@ class CheckoutCartProductAddAfterObserver implements \Magento\Framework\Event\Ob
      * Execute
      *
      * @param Observer $observer
+     * @return void
      * @throws LocalizedException
      */
     public function execute(Observer $observer)

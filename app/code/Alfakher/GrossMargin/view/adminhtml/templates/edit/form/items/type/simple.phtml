@@ -1,10 +1,4 @@
 <?php
-/**
- * Copyright © MageWorx. All rights reserved.
- * See LICENSE.txt for license details.
- */
-?>
-<?php
 /** @var \MageWorx\OrderEditor\Block\Adminhtml\Sales\Order\Edit\Form\Items\Type\AbstractType $block */
 $item          = $block->getOrderItem();
 $itemType      = $block->getEditedItemType();
@@ -348,8 +342,8 @@ $canDeleteItem = $block->getCanDeleteItem();
 
     <?php if ($moduleEnable): ?>
       <!-- gross margin -->
-      <?php $validGrossMargin = $viewModel->validateGrossMargin($item); ?>
-      <?php $finalGrossMargin = $item->getGrossMargin() > 0 ? $item->getGrossMargin() : $validGrossMargin; ?>
+        <?php $validGrossMargin = $viewModel->validateGrossMargin($item); ?>
+        <?php $finalGrossMargin = $item->getGrossMargin() > 0 ? $item->getGrossMargin() : $validGrossMargin; ?>
       <td class="col-gross-margin last">
           <input
               type="text"

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\GrossMargin\ViewModel;
 
@@ -7,6 +8,10 @@ namespace Alfakher\GrossMargin\ViewModel;
  *
  * @author af_bv_op
  */
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\ScopeInterface;
+use Magento\Sales\Model\Order\Item;
+
 class GrossMargin implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
     public const MODULE_ENABLE = "hookahshisha/gross_margin_group/gross_margin_enable";
@@ -14,10 +19,10 @@ class GrossMargin implements \Magento\Framework\View\Element\Block\ArgumentInter
     /**
      * Constructor
      *
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->scopeConfig = $scopeConfig;
     }
@@ -26,17 +31,19 @@ class GrossMargin implements \Magento\Framework\View\Element\Block\ArgumentInter
      * Check if module is enable
      *
      * @param int $websiteId
+     * @return bool
      */
     public function isModuleEnabled($websiteId)
     {
-        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+        $storeScope = ScopeInterface::SCOPE_STORE;
         return $this->scopeConfig->getValue(self::MODULE_ENABLE, $storeScope, $websiteId);
     }
 
     /**
      * Validate gross margin
      *
-     * @param \Magento\Sales\Model\Order\Item $item
+     * @param Item $item
+     * @return mixed
      */
     public function validateGrossMargin($item)
     {
