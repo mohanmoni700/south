@@ -305,10 +305,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
             </fieldset>
         <?php endif; ?>
 
-        <fieldset class="fieldset additional_info">
-            <legend></legend>
-            <?= $block->getChildHtml('form_additional_info') ?>
-        </fieldset>
+        
 
         <div class="actions-toolbar">
             <div class="primary">
@@ -544,6 +541,10 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                             <span><?= $block->escapeHtml(__('Would you like to join our Monthly Mailing list for discounts and promotions?')) ?></span>
                         </label>
                     </div>
+                    <fieldset class="fieldset additional_info">
+                        <legend></legend>
+                        <?= $block->getChildHtml('form_additional_info') ?>
+                    </fieldset>
                     <?php /* Extensions placeholder */ ?>
                     <?= $block->getChildHtml('customer.form.register.newsletter') ?>
                 <?php endif ?>
