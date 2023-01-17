@@ -1,7 +1,7 @@
 <?php if ($_item = $block->getItem()): ?>
     <?php
         $viewModel = $block->getViewModel();
-        $moduleEnable = $viewModel->isModuleEnabled($_item->getOrder()->getStore()->getWebsiteId());
+        $moduleEnable = $viewModel->isModuleEnabled($_item->getOrder()->getStore()->getStoreId());
     ?>
     <?php if ($moduleEnable): ?>
         <?php $validGrossMargin = $viewModel->validateGrossMargin($_item); ?>

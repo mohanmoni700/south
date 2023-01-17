@@ -5,7 +5,7 @@
 
 <?php /* af_bv_op; Start */ ?>
 <?php $viewModel = $block->getViewModel() ?>
-<?php $moduleEnable = $viewModel->isModuleEnabled($_order->getStore()->getWebsiteId()) ?>
+<?php $moduleEnable = $viewModel->isModuleEnabled($_order->getStore()->getStoreId()) ?>
 <?php /* af_bv_op; End */ ?>
 
 <div class="admin__table-wrapper order-items-block">

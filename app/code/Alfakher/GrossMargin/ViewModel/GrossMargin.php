@@ -30,13 +30,13 @@ class GrossMargin implements \Magento\Framework\View\Element\Block\ArgumentInter
     /**
      * Check if module is enable
      *
-     * @param int $websiteId
+     * @param int $storeId
      * @return bool
      */
-    public function isModuleEnabled($websiteId)
+    public function isModuleEnabled($storeId)
     {
         $storeScope = ScopeInterface::SCOPE_STORE;
-        return $this->scopeConfig->getValue(self::MODULE_ENABLE, $storeScope, $websiteId);
+        return $this->scopeConfig->getValue(self::MODULE_ENABLE, $storeScope, $storeId);
     }
 
     /**
