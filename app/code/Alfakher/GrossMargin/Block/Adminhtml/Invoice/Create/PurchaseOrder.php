@@ -21,6 +21,11 @@ class PurchaseOrder extends Template
     protected $orderRepository;
 
     /**
+     * @var \Magento\Sales\Api\Data\OrderInterface
+     */
+    protected $order;
+
+    /**
      * @param Context $context
      * @param OrderRepositoryInterface $orderRepository
      * @param array $data [optional]
