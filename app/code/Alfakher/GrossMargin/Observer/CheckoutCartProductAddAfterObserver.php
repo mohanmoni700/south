@@ -1,12 +1,14 @@
 <?php
+declare(strict_types=1);
+
 namespace Alfakher\GrossMargin\Observer;
 
 /**
  * @author af_bv_op
  */
-use Magento\Framework\Event\Observer;
-use Magento\Catalog\Api\ProductRepositoryInterface;
 use Alfakher\GrossMargin\ViewModel\GrossMargin;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Framework\Event\Observer;
 use Magento\Framework\Exception\LocalizedException;
 
 class CheckoutCartProductAddAfterObserver implements \Magento\Framework\Event\ObserverInterface
@@ -14,11 +16,11 @@ class CheckoutCartProductAddAfterObserver implements \Magento\Framework\Event\Ob
     /**
      * @var ProductRepositoryInterface
      */
-    private ProductRepositoryInterface $proRepo;
+    private $proRepo;
     /**
      * @var GrossMargin
      */
-    private GrossMargin $grossMarginViewModel;
+    private $grossMarginViewModel;
 
     /**
      * @param ProductRepositoryInterface $proRepo
@@ -36,6 +38,7 @@ class CheckoutCartProductAddAfterObserver implements \Magento\Framework\Event\Ob
      * Execute
      *
      * @param Observer $observer
+     * @return void
      * @throws LocalizedException
      */
     public function execute(Observer $observer)
@@ -51,9 +54,7 @@ class CheckoutCartProductAddAfterObserver implements \Magento\Framework\Event\Ob
                     $grossMargin = ($item->getPrice() - $cost) / $item->getPrice() * 100;
                 }
             } catch (\Exception $e) {
-                throw new LocalizedException(
-                    __('Error with gross margin module')
-                );
+                $grossMargin = 0;
             }
             $item->setGrossMargin($grossMargin);
         }
