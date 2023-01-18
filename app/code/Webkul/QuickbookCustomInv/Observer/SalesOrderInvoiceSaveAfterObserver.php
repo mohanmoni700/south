@@ -55,11 +55,12 @@ class SalesOrderInvoiceSaveAfterObserver implements ObserverInterface
     private $logger;
 
     /**
-     * @param RequestInterface $requestInterface,
-     * @param OrderRepositoryInterface $orderRepository,
-     * @param QuickBooksHelper $quickBooksHelper,
-     * @param OrderMapFactory $orderMapFactory,
-     * @param QuickBooksDataHelper $quickBooksDataHelper,
+     * @param RequestInterface $requestInterface
+     * @param OrderRepositoryInterface $orderRepository
+     * @param QuickBooksHelper $quickBooksHelper
+     * @param OrderMapFactory $orderMapFactory
+     * @param QuickBooksDataHelper $quickBooksDataHelper
+     * @param AccountRepositoryInterface $accountRepository
      * @param Logger $logger
      */
     public function __construct(
@@ -90,6 +91,17 @@ class SalesOrderInvoiceSaveAfterObserver implements ObserverInterface
         try {
             $invoice = $observer->getInvoice();
             $order = $this->orderRepository->get($invoice->getOrderId());
+            $tracksCollection = $order->getTracksCollection()->getItems();
+            $trackingList = [];
+            $shipServiceList = [];
+            $shipDate = date('Y-m-d', time());
+            foreach ($tracksCollection as $trackingData) {
+                if ($trackingData->getTrackNumber()) {
+                    $trackingList[] = $trackingData->getTrackNumber();
+                    $shipServiceList[] = $trackingData->getTitle();
+                    $shipDate = date('Y-m-d', strtotime($trackingData->getCreatedAt()));
+                }
+            }
             $qbAccount = $this->accountRepository->getByStoreId($order->getStoreId());
             if ($qbAccount) {
                 $accountId = $qbAccount->getId();
@@ -105,18 +117,21 @@ class SalesOrderInvoiceSaveAfterObserver implements ObserverInterface
                         $typeId = $invItemData->getOrderItem()->getProduct()->getTypeId();
                         $itemId = $orderItem->getParentItemId() ?
                                         $orderItem->getParentItemId() : $orderItem->getItemId();
-                        $parentOrderedQty = $orderItem->getParentItem() ?
-                                        $orderItem->getParentItem()->getQtyOrdered() : 1;
                         $orderedQty = $orderItem->getQtyOrdered();
+                        $parentOrderedQty = $orderItem->getParentItem() ?
+                                        $orderItem->getParentItem()->getQtyOrdered() : $orderedQty;
                         $qty = isset($invoiceItems['items'][$itemId]) ? $invoiceItems['items'][$itemId] : 0;
                         if (in_array($typeId, ['simple', 'virtual', 'downloadable', 'etickets']) && $qty) {
                             $qty = $qty * ($orderedQty/$parentOrderedQty);
                             $itemData = $this->quickBooksDataHelper
                                                 ->getArrangedItemDataForQuickbooks($orderItem, $taxPercent, $qty);
                             array_push($items, $itemData);
+                        } else {
+                            $this->logger->addError(__('invoice event type - %1 : qty - %2', $typeId, $qty));
                         }
                     }
 
+                    //$this->logger->addError(__('invoice event items - %1 : ', json_encode($items)));
                     $customerData = $this->quickBooksDataHelper->getCustomerDetailForQuickbooks($order);
 
                     if ($invoice->getShippingAmount()) {
@@ -127,7 +142,7 @@ class SalesOrderInvoiceSaveAfterObserver implements ObserverInterface
                             'Taxable' => $taxAmount || (isset($taxPercent[''][0]) ?
                                                         true : false ) ? 1 : 0, // "" index for shipping tax
                             'taxAmt' => $taxAmount,
-                            'Sku' => str_replace(" ", "", $order->getShippingDescription()),
+                            'Sku' => str_replace(" ", "", $order->getShippingDescription() ?? ''),
                             'isTaxablePro' => 0,
                             'Qty' => 1,
                             'AmountTotal' => $invoice->getBaseShippingAmount(),
@@ -148,7 +163,11 @@ class SalesOrderInvoiceSaveAfterObserver implements ObserverInterface
                         'discount_on_order' => $invoice->getBaseDiscountAmount(),
                         'tax_percent' => $taxPercent,
                         'paymentMethod' => $order->getPayment()->getMethodInstance()->getTitle(),
-                        'docNumber' => 'invoice-'.$invoice->getIncrementId()
+                        'docNumber' => 'invoice-'.$invoice->getIncrementId(),
+                        'mageOrderId' => $order->getIncrementId(),
+                        'tracking_info' => substr(implode(",", $trackingList), 0, 31),
+                        'ship_service' => substr(implode(",", $shipServiceList), 0, 31),
+                        'shipDate' => $shipDate
                     ];
                     $salesReceipt = $this->orderMapFactory->create()->getCollection()
                                             ->addFieldToFilter(
