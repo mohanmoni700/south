@@ -33,8 +33,9 @@ class ToOrderItem
     ) {
         $orderItem = $proceed($item, $additional);
 
-        $websiteId = $item->getQuote()->getStore()->getWebsiteId();
-        $moduleEnable = $this->grossMarginViewModel->isModuleEnabled($websiteId);
+        $storeId = $item->getQuote()->getStore()->getStoreId();
+        $moduleEnable = $this->grossMarginViewModel->isModuleEnabled($storeId);
+
         if ($moduleEnable) {
             $orderItem->setGrossMargin($item->getGrossMargin());
         }

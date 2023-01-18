@@ -143,6 +143,15 @@ require(['jquery'], function($){
     $(document).on("click", function () {
         $(".sign-up-ul").hide();
     });    
+
+   $(document).on("click",".amscroll-load-button",function() {
+        var scroll = $(window).scrollTop();
+        scroll = scroll + 10; //pixels to scroll
+        $('html, body').animate({
+            scrollTop: scroll
+        }, 10);
+    });
+
 });
 </script>
 
