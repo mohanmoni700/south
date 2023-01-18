@@ -49,9 +49,10 @@ class SalesOrderCreditmemoSaveAfterObserver implements ObserverInterface
     private $logger;
 
     /**
-     * @param QuickBooksHelper $quickBooksHelper,
-     * @param QuickBooksDataHelper $quickBooksDataHelper,
-     * @param CreditmemoMapFactory $creditmemoMapFactory,
+     * @param QuickBooksHelper $quickBooksHelper
+     * @param QuickBooksDataHelper $quickBooksDataHelper
+     * @param CreditmemoMapFactory $creditmemoMapFactory
+     * @param AccountRepositoryInterface $accountRepository
      * @param Logger $logger
      */
     public function __construct(
@@ -130,7 +131,8 @@ class SalesOrderCreditmemoSaveAfterObserver implements ObserverInterface
                         'discount_on_creditmemo' => $creditmemo->getBaseDiscountAmount(),
                         'tax_percent' => $taxPercent,
                         'paymentMethod' => $paymentMethod ? $paymentMethod : __('Magento Store Payment'),
-                        'docNumber' => 'cmemo-'.$creditmemo->getIncrementId()
+                        'docNumber' => 'cmemo-'.$creditmemo->getIncrementId(),
+                        'mageOrderId' => $order->getIncrementId()
                     ];
 
                     $creditmemoReceipt = $this->creditmemoMapFactory->create()->getCollection()

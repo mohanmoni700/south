@@ -10,8 +10,9 @@
  */
 namespace Webkul\QuickbookCustomInv\Observer;
 
+use Magento\Framework\App\RequestInterface;
 use Magento\Framework\Event\ObserverInterface;
-use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
+use Magento\Sales\Api\OrderRepositoryInterface;
 use Webkul\MultiQuickbooksConnect\Helper\QuickBooks as QuickBooksHelper;
 use Webkul\MultiQuickbooksConnect\Helper\Data as QuickBooksDataHelper;
 use Webkul\MultiQuickbooksConnect\Model\OrderMapFactory;
@@ -19,24 +20,29 @@ use Webkul\MultiQuickbooksConnect\Api\AccountRepositoryInterface;
 use Webkul\MultiQuickbooksConnect\Logger\Logger;
 
 /**
- * Webkul MultiQuickbooksConnect SalesOrderCompleteAfterObserver Observer Model.
+ * Webkul MultiQuickbooksConnect SalesOrderInvoiceSaveAfterObserver Model.
  */
-class SalesOrderCompleteAfterObserver implements ObserverInterface
+class OrderShipmentAfterObserver implements ObserverInterface
 {
+    /**
+     * @var Magento\Sales\Api\OrderRepositoryInterface
+     */
+    private $orderRepository;
+
     /**
      * @var Webkul\MultiQuickbooksConnect\Helper\QuickBooks
      */
     private $quickBooksHelper;
 
     /**
-     * @var Webkul\MultiQuickbooksConnect\Helper\Data
-     */
-    private $quickBooksDataHelper;
-
-    /**
      * @var Webkul\MultiQuickbooksConnect\Model\OrderMapFactory
      */
     private $orderMapFactory;
+
+    /**
+     * @var Webkul\MultiQuickbooksConnect\Helper\Data
+     */
+    private $quickBooksDataHelper;
 
     /**
      * @var \Webkul\MultiQuickbooksConnect\Api\AccountRepositoryInterface
@@ -49,22 +55,28 @@ class SalesOrderCompleteAfterObserver implements ObserverInterface
     private $logger;
 
     /**
+     * @param RequestInterface $requestInterface
+     * @param OrderRepositoryInterface $orderRepository
      * @param QuickBooksHelper $quickBooksHelper
-     * @param QuickBooksDataHelper $quickBooksDataHelper
      * @param OrderMapFactory $orderMapFactory
+     * @param QuickBooksDataHelper $quickBooksDataHelper
      * @param AccountRepositoryInterface $accountRepository
      * @param Logger $logger
      */
     public function __construct(
+        RequestInterface $requestInterface,
+        OrderRepositoryInterface $orderRepository,
         QuickBooksHelper $quickBooksHelper,
-        QuickBooksDataHelper $quickBooksDataHelper,
         OrderMapFactory $orderMapFactory,
+        QuickBooksDataHelper $quickBooksDataHelper,
         AccountRepositoryInterface $accountRepository,
         Logger $logger
     ) {
+        $this->requestInterface = $requestInterface;
+        $this->orderRepository = $orderRepository;
         $this->quickBooksHelper = $quickBooksHelper;
-        $this->quickBooksDataHelper = $quickBooksDataHelper;
         $this->orderMapFactory = $orderMapFactory;
+        $this->quickBooksDataHelper = $quickBooksDataHelper;
         $this->accountRepository = $accountRepository;
         $this->logger = $logger;
     }
@@ -77,44 +89,60 @@ class SalesOrderCompleteAfterObserver implements ObserverInterface
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
         try {
-            $order = $observer->getOrder();
+            $shipment = $observer->getEvent()->getShipment();
+            $tracksCollection = $shipment->getTracksCollection()->getItems();
+            $trackingList = [];
+            $shipServiceList = [];
+            $shipDate = date('Y-m-d', time());
+            foreach ($tracksCollection as $trackingData) {
+                if ($trackingData->getTrackNumber()) {
+                    $trackingList[] = $trackingData->getTrackNumber();
+                    $shipServiceList[] = $trackingData->getTitle();
+                    $date = $trackingData->getCreatedAt() ? $trackingData->getCreatedAt() : '';
+                    $shipDate = date('Y-m-d', strtotime($date));
+                }
+            }
+            /*if ($shipment->getOrigData('entity_id')) {
+                return;
+            }*/
+            //$invoice = $observer->getInvoice();
+            $order = $this->orderRepository->get($shipment->getOrderId());
             $qbAccount = $this->accountRepository->getByStoreId($order->getStoreId());
             if ($qbAccount) {
                 $accountId = $qbAccount->getId();
                 $config = $this->quickBooksDataHelper->getQuickbooksAccountConfig($accountId);
                 $accessToken = $this->quickBooksDataHelper->getAccessToken($accountId);
-                if ($config['enable'] && $config['sales_receipt_create_on']=='order_complete'
-                    && $order->getState() == 'complete' && $accessToken) {
-                    /** for export shipping info **/
-                    $tracksCollection = $order->getTracksCollection()->getItems();
-                    $trackingList = [];
-                    $shipServiceList = [];
-                    $shipDate = date('Y-m-d', time());
-                    foreach ($tracksCollection as $trackingData) {
-                        if ($trackingData->getTrackNumber()) {
-                            $trackingList[] = $trackingData->getTrackNumber();
-                            $shipServiceList[] = $trackingData->getTitle();
-                            $shipDate = date('Y-m-d', strtotime($trackingData->getCreatedAt()));
-                        }
-                    }
-                    /** for export shipping info **/
-
+                if ($config['enable'] && $accessToken) {
                     $taxPercent = $this->quickBooksDataHelper->getOrderTaxPercent($order->getEntityId());
                     $allItems = $order->getAllItems();
                     $items = [];
+                    //$invoiceItems = $this->requestInterface->getParam('invoice');
                     foreach ($allItems as $orderItem) {
-                        $quantityAndStockStatus = $orderItem->getProduct()->getQuantityAndStockStatus();
                         $typeId = $orderItem->getProduct()->getTypeId();
-                        if (in_array($typeId, ['simple', 'virtual', 'downloadable', 'etickets'])) {
+                        $itemId = $orderItem->getParentItemId() ?
+                                        $orderItem->getParentItemId() : $orderItem->getItemId();
+                        $orderedQty = $orderItem->getQtyOrdered();
+                        $parentOrderedQty = $orderItem->getParentItem() ?
+                                        $orderItem->getParentItem()->getQtyOrdered() : $orderedQty;
+                        //$qty = isset($invoiceItems['items'][$itemId]) ? $invoiceItems['items'][$itemId] : 0;
+                        $qty = $orderedQty;
+                        if (in_array($typeId, ['simple', 'virtual', 'downloadable', 'etickets']) && $qty) {
+                            $qty = $qty * ($orderedQty/$parentOrderedQty);
                             $itemData = $this->quickBooksDataHelper
-                                                ->getArrangedItemDataForQuickbooks($orderItem, $taxPercent);
+                                                ->getArrangedItemDataForQuickbooks($orderItem, $taxPercent, $qty);
                             array_push($items, $itemData);
+                        } else {
+                            $this->logger->addError(__('invoice event type - %1 : qty - %2', $typeId, $qty));
                         }
                     }
-                    if ($order->getShippingMethod()) {
+
+                    $this->logger->addError(__('invoice event items - %1 : ', json_encode($items)));
+                    $customerData = $this->quickBooksDataHelper->getCustomerDetailForQuickbooks($order);
+
+                    if ($order->getShippingAmount()) {
                         $taxAmount = $order->getBaseShippingTaxAmount() ? $order->getBaseShippingTaxAmount() : 0;
                         $itemData = [
-                            'Name' => $order->getShippingDescription(). ' ('.__('Shipping data').')',
+                            'Name' => $order->getShippingDescription(). ' ('.__('Shipping').')',
                             'UnitPrice' => $order->getBaseShippingAmount(),
                             'Taxable' => $taxAmount || (isset($taxPercent[''][0]) ?
                                                         true : false ) ? 1 : 0, // "" index for shipping tax
@@ -122,22 +150,18 @@ class SalesOrderCompleteAfterObserver implements ObserverInterface
                             'Sku' => str_replace(" ", "", $order->getShippingDescription()),
                             'isTaxablePro' => 0,
                             'Qty' => 1,
-                            'discountAmt' => 0,
                             'AmountTotal' => $order->getBaseShippingAmount(),
+                            'discountAmt' => 0,
                             'Type' => 'Service',
                             'TrackQtyOnHand' => 'false',
                             'ItemId' => '' // '' for shipping itemid
                         ];
                         array_push($items, $itemData);
                     }
-
                     /** tax as item **/
                     $appliedTax = $this->quickBooksDataHelper->getAppliedTaxOnOrder($order);
                     $items = empty($appliedTax) ? $items : array_merge($items, $appliedTax);
                     /** tax as item **/
-
-                    $customerData = $this->quickBooksDataHelper->getCustomerDetailForQuickbooks($order);
-
                     $salesReceiptData = [
                         'items' => $items,
                         'customerData' => $customerData,
@@ -150,13 +174,12 @@ class SalesOrderCompleteAfterObserver implements ObserverInterface
                         'ship_service' => substr(implode(",", $shipServiceList), 0, 31),
                         'shipDate' => $shipDate
                     ];
-
                     $salesReceipt = $this->orderMapFactory->create()->getCollection()
                                             ->addFieldToFilter(
-                                                'quickbook_sales_doc_number',
-                                                $salesReceiptData['docNumber']
+                                                'mage_order_id',
+                                                $order->getEntityId()
                                             )->setPageSize(1)->getFirstItem();
-                    if (!$salesReceipt->getEntityId()) {
+                    if (!$salesReceipt->getEntityId() && 0) {
                         $salesReceipt = $this->quickBooksHelper->createSalesReceipt($salesReceiptData, $accountId);
                         if ($salesReceipt['error'] == 0) {
                             $salesReceipt = $salesReceipt['salesReceiptData'];
@@ -171,11 +194,19 @@ class SalesOrderCompleteAfterObserver implements ObserverInterface
                             $mapObj->setData($data);
                             $mapObj->save();
                         }
+                    } elseif ($salesReceipt->getEntityId()) {
+                        $salesReceiptData['quickbook_sales_receipt_id'] = $salesReceipt->getQuickbookSalesReceiptId();
+                        $salesReceipt = $this->quickBooksHelper->updateSalesReceipt($salesReceiptData, $accountId);
+                        if ($salesReceipt['error'] == 0) {
+                            $this->logger->addError(
+                                __('QB order updated : %1', $salesReceiptData['quickbook_sales_receipt_id'])
+                            );
+                        }
                     }
                 }
             }
         } catch (\Exception $e) {
-            $this->logger->addError('SalesOrderCompleteAfterObserver : '.$e->getMessage());
+            $this->logger->addError('OrderShipmentAfterObserver : '.$e->getMessage());
         }
     }
 }
