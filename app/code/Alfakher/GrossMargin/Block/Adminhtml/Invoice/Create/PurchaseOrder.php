@@ -1,16 +1,22 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\GrossMargin\Block\Adminhtml\Invoice\Create;
 
 /**
  * @author af_bv_op
  */
+use Magento\Backend\Block\Template;
+use Magento\Backend\Block\Template\Context;
+use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Sales\Api\Data\OrderInterface;
+use Magento\Framework\Exception\NoSuchEntityException;
 
-class PurchaseOrder extends \Magento\Backend\Block\Template
+class PurchaseOrder extends Template
 {
 
     /**
-     * @var \Magento\Sales\Api\OrderRepositoryInterface
+     * @var OrderRepositoryInterface
      */
     protected $orderRepository;
 
@@ -20,13 +26,13 @@ class PurchaseOrder extends \Magento\Backend\Block\Template
     protected $order;
 
     /**
-     * @param \Magento\Backend\Block\Template\Context $context
-     * @param \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
+     * @param Context $context
+     * @param OrderRepositoryInterface $orderRepository
      * @param array $data [optional]
      */
     public function __construct(
-        \Magento\Backend\Block\Template\Context $context,
-        \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
+        Context $context,
+        OrderRepositoryInterface $orderRepository,
         array $data = []
     ) {
         parent::__construct($context, $data);
@@ -36,8 +42,8 @@ class PurchaseOrder extends \Magento\Backend\Block\Template
     /**
      * Get order from request.
      *
-     * @return \Magento\Sales\Api\Data\OrderInterface
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @return OrderInterface
+     * @throws NoSuchEntityException
      */
     public function getOrder()
     {

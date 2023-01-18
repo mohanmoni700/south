@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\GrossMargin\Plugin;
 
@@ -13,8 +14,8 @@ use Magento\Sales\Api\OrderRepositoryInterface;
 class OrderRepositoryPlugin
 {
 
-    const SALES_TAX = 'sales_tax';
-    const EXCISE_TAX = 'excise_tax';
+    public const SALES_TAX = 'sales_tax';
+    public const EXCISE_TAX = 'excise_tax';
 
     /**
      * @var $extensionFactory
@@ -36,6 +37,7 @@ class OrderRepositoryPlugin
      *
      * @param OrderRepositoryInterface $subject
      * @param OrderInterface $order
+     * @return OrderInterface
      */
     public function afterGet(OrderRepositoryInterface $subject, OrderInterface $order)
     {
@@ -61,6 +63,7 @@ class OrderRepositoryPlugin
      *
      * @param OrderRepositoryInterface $subject
      * @param OrderSearchResultInterface $searchResult
+     * @return OrderSearchResultInterface
      */
     public function afterGetList(OrderRepositoryInterface $subject, OrderSearchResultInterface $searchResult)
     {
@@ -81,7 +84,6 @@ class OrderRepositoryPlugin
 
             $order->setExtensionAttributes($extensionAttributes);
         }
-
         return $searchResult;
     }
 }
