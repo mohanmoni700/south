@@ -29,7 +29,7 @@ use Magento\Tax\Api\Data\QuoteDetailsItemInterface;
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class Tax extends \Avalara\Excise\Model\Tax\Sales\Total\Quote\Tax
+class Tax extends \Magento\Tax\Model\Sales\Total\Quote\Tax
 {
     /**
      * Registry key to track whether AvaTax GetTaxRequest was successful
@@ -147,18 +147,163 @@ class Tax extends \Avalara\Excise\Model\Tax\Sales\Total\Quote\Tax
             $taxClassKeyDataObjectFactory,
             $customerAddressFactory,
             $customerAddressRegionFactory,
-            $taxData,
-            $processTaxQuote,
-            $scopeConfig,
-            $priceCurrency,
-            $extensionFactory,
-            $taxCalculation,
-            $productRepository,
-            $exciseTaxConfig,
-            $logger,
-            $dataObject,
-            $loggerInterface
+            $taxData
         );
+    }
+
+    /**
+     * @param \Magento\Quote\Model\Quote $quote
+     * @param \Magento\Quote\Api\Data\ShippingAssignmentInterface $shippingAssignment
+     * @param \Magento\Quote\Model\Quote\Address\Total $total
+     * @return $this
+     */
+    public function collect(
+        \Magento\Quote\Model\Quote $quote,
+        \Magento\Quote\Api\Data\ShippingAssignmentInterface $shippingAssignment,
+        \Magento\Quote\Model\Quote\Address\Total $total
+    ) {
+        $this->clearValues($total);
+        if (!$shippingAssignment->getItems()) {
+            return $this;
+        }
+
+        $storeId = $quote->getStoreId();
+        $isEnabled = $this->exciseTaxConfig->isModuleEnabled($storeId);
+        
+        // If quote is virtual, getShipping will return billing address, so no need to check if quote is virtual
+        $address = $shippingAssignment->getShipping()->getAddress();
+        $storeId = $quote->getStoreId();
+        $isAddressTaxable = $this->exciseTaxConfig->isAddressTaxable($address, $storeId);
+        if (!$isEnabled || !$isAddressTaxable) {
+            return parent::collect($quote, $shippingAssignment, $total);
+        }
+
+        $baseTaxDetails = $this->getQuoteTaxDetailsInterface($shippingAssignment, $total, true);
+        //$taxDetails = $this->getQuoteTaxDetails($shippingAssignment, $total, false);
+
+        $this->processTaxQuote->getTaxForOrder($quote, $baseTaxDetails, $shippingAssignment);
+
+        if ($this->processTaxQuote->isValidResponse()) {
+            $quoteTax = $this->getQuoteTax($quote, $shippingAssignment, $total);
+
+            //Populate address and items with tax calculation results
+            $itemsByType = $this->organizeItemTaxDetailsByType($quoteTax['tax_details'], $quoteTax['base_tax_details']);
+
+            if (isset($itemsByType[self::ITEM_TYPE_PRODUCT])) {
+                $this->processProductItems($shippingAssignment, $itemsByType[self::ITEM_TYPE_PRODUCT], $total);
+            }
+
+            if (isset($itemsByType[self::ITEM_TYPE_SHIPPING])) {
+                $shippingTaxDetails = $itemsByType[self::ITEM_TYPE_SHIPPING][self::ITEM_CODE_SHIPPING][self::KEY_ITEM];
+                $baseShippingTaxDetails =
+                    $itemsByType[self::ITEM_TYPE_SHIPPING][self::ITEM_CODE_SHIPPING][self::KEY_BASE_ITEM];
+                $this->processShippingTaxInfo(
+                    $shippingAssignment,
+                    $total,
+                    $shippingTaxDetails,
+                    $baseShippingTaxDetails
+                );
+            }
+
+            //Process taxable items that are not product or shipping
+            $this->processExtraTaxables($total, $itemsByType);
+
+            //Save applied taxes for each item and the quote in aggregation
+            $this->processAppliedTaxes($total, $shippingAssignment, $itemsByType);
+
+            if ($this->includeExtraTax()) {
+                $total->addTotalAmount('extra_tax', $total->getExtraTaxAmount());
+                $total->addBaseTotalAmount('extra_tax', $total->getBaseExtraTaxAmount());
+            }
+        } else {
+            return parent::collect($quote, $shippingAssignment, $total);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get quote tax details
+     *
+     * @param \Magento\Quote\Model\Quote $quote
+     * @param \Magento\Quote\Api\Data\ShippingAssignmentInterface $shippingAssignment
+     * @param \Magento\Quote\Model\Quote\Address\Total $total
+     * @return array
+     */
+    protected function getQuoteTax(
+        \Magento\Quote\Model\Quote $quote,
+        \Magento\Quote\Api\Data\ShippingAssignmentInterface $shippingAssignment,
+        \Magento\Quote\Model\Quote\Address\Total $total
+    ) {
+        $baseTaxDetailsInterface = $this->getQuoteTaxDetailsInterface($shippingAssignment, $total, true);
+        $taxDetailsInterface = $this->getQuoteTaxDetailsInterface($shippingAssignment, $total, false);
+
+        $baseTaxDetails = $this->getQuoteTaxDetailsOverride($quote, $baseTaxDetailsInterface, true);
+        $taxDetails = $this->getQuoteTaxDetailsOverride($quote, $taxDetailsInterface, false);
+
+        return [
+            'base_tax_details' => $baseTaxDetails,
+            'tax_details' => $taxDetails
+        ];
+    }
+
+    /**
+     * Get tax details interface based on the quote and items
+     *
+     * @param ShippingAssignmentInterface $shippingAssignment
+     * @param \Magento\Quote\Model\Quote\Address\Total $total
+     * @param bool $useBaseCurrency
+     * @return \Magento\Tax\Api\Data\QuoteDetailsInterface
+     */
+    protected function getQuoteTaxDetailsInterface($shippingAssignment, $total, $useBaseCurrency)
+    {
+        $address = $shippingAssignment->getShipping()->getAddress();
+        //Setup taxable items
+        $priceIncludesTax = $this->_config->priceIncludesTax($address->getQuote()->getStore());
+        $address->getQuote()->setExciseTax(0);
+        $address->getQuote()->setSalesTax(0);
+        $itemDataObjects = $this->mapItems($shippingAssignment, $priceIncludesTax, $useBaseCurrency);
+        //$address->getQuote()->save();
+
+        //Add shipping
+        $shippingDataObject = $this->getShippingDataObject($shippingAssignment, $total, $useBaseCurrency);
+        if ($shippingDataObject != null) {
+            $shippingDataObject = $this->extendShippingItem($shippingDataObject);
+            $itemDataObjects[] = $shippingDataObject;
+        }
+
+        //process extra taxable items associated only with quote
+        $quoteExtraTaxables = $this->mapQuoteExtraTaxables(
+            $this->quoteDetailsItemDataObjectFactory,
+            $address,
+            $useBaseCurrency
+        );
+        if (!empty($quoteExtraTaxables)) {
+            $itemDataObjects = array_merge($itemDataObjects, $quoteExtraTaxables);
+        }
+
+        //Preparation for calling taxCalculationService
+        $quoteDetails = $this->prepareQuoteDetails($shippingAssignment, $itemDataObjects);
+
+        return $quoteDetails;
+    }
+
+    /**
+     * Get quote tax details for calculation
+     *
+     * @param \Magento\Quote\Model\Quote $quote
+     * @param \Magento\Tax\Api\Data\QuoteDetailsInterface $taxDetails
+     * @param bool $useBaseCurrency
+     * @return array
+     */
+    public function getQuoteTaxDetailsOverride(
+        \Magento\Quote\Model\Quote $quote,
+        \Magento\Tax\Api\Data\QuoteDetailsInterface $taxDetails,
+        $useBaseCurrency
+    ) {
+        $store = $quote->getStore();
+        $taxDetails = $this->taxCalculation->calculateTaxDetails($taxDetails, $useBaseCurrency, $store);
+        return $taxDetails;
     }
 
     /**
@@ -285,5 +430,45 @@ class Tax extends \Avalara\Excise\Model\Tax\Sales\Total\Quote\Tax
         }
         
         return $itemDataObject;
+    }
+
+    /**
+     * @param \Magento\Tax\Api\Data\QuoteDetailsItemInterface $shippingDataObject
+     * @return \Magento\Tax\Api\Data\QuoteDetailsItemInterface
+     */
+    protected function extendShippingItem(
+        \Magento\Tax\Api\Data\QuoteDetailsItemInterface $shippingDataObject
+    ) {
+        /** @var \Magento\Tax\Api\Data\QuoteDetailsItemExtensionInterface $extensionAttributes */
+        $extensionAttributes = $shippingDataObject->getExtensionAttributes()
+            ? $shippingDataObject->getExtensionAttributes()
+            : $this->extensionFactory->create();
+
+        $shippingTax = $this->processTaxQuote->getResponseShipping();
+
+        if (is_array($shippingTax) && count($shippingTax)) {
+            $taxamount = $taxrate = 0;
+            foreach ($shippingTax as $lineItemTax) {
+                $taxamount += $lineItemTax['TaxAmount'];
+                $taxrate += $lineItemTax['TaxRate'];
+            }
+
+            $taxCollectable = $this->priceCurrency->convertAndRound(
+                $taxamount
+            );
+
+            $extensionAttributes->setTaxCollectable($taxCollectable);
+            $extensionAttributes->setCombinedTaxRate(($taxrate * 100));
+            $extensionAttributes->setJurisdictionTaxRates([
+                'shipping' => [
+                    'id' => 'shipping',
+                    'rate' => $taxrate * 100,
+                    'amount' => $taxCollectable
+                ]
+            ]);
+
+            $shippingDataObject->setExtensionAttributes($extensionAttributes);
+        }
+        return $shippingDataObject;
     }
 }
