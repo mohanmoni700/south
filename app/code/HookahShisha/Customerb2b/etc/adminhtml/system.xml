@@ -54,6 +54,13 @@
                     <comment><![CDATA[add multiple website code using comma separated.]]></comment>
                 </field>
             </group>
+            <group id="company_assign" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Select websites for send email when company assigned/changed</label>
+                <field id="company_websites" translate="label" type="multiselect" sortOrder="10" showInDefault="1">
+                    <label>Websites</label>
+                    <source_model>Alfakher\ExitB\Model\Config\Source\StoreOption</source_model>
+                </field>
+            </group>
         </section>
     </system>
 </config>
