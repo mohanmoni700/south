@@ -55,6 +55,7 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
                         $order->setExciseTax($quote->getExciseTax());
                         $order->setSalesTax($quote->getSalesTax());
                         $order->setTaxAmount($quote->getSalesTax() + $quote->getExciseTax() + $order->getShippingTaxAmount());
+                        $order->setBaseTaxAmount($quote->getSalesTax() + $quote->getExciseTax() + $order->getBaseShippingTaxAmount());
                     } else {
                         $taxSummary = $this->getTaxSummary($order);
                         $order->setExciseTax($taxSummary[1]);
