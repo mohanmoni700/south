@@ -1444,3 +1444,44 @@
         }
     }
 }
+
+//
+//  custom mixins
+//  ---------------------------------------------
+
+
+.cart_btn {
+        padding: 8px 20px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: @color-black;
+        .lib-font-size(12);
+        text-align: center;
+        background: @color-white;
+        border: 1px solid @color-black;
+        border-radius: 30px;
+        &:hover {
+            color: @color-white;
+            background: @hookah_theme_gradient;
+            border-color: transparent;
+            border-left-color: @border_left_gradient;
+            border-right-color: @border_right_gradient;
+        }
+    }
+    .title1 {
+        font-family: @DMSerifDisplay;
+        .lib-font-size(28);
+        line-height: 38px;
+        color: @color_primary;
+        margin-bottom: 0;
+        position: relative;
+    }
+
+    .title-primary {
+        .lib-font-size(18);
+        color: @font-gray;
+        font-weight: @font-weight__bold;
+        line-height: 28px;
+        margin-bottom: 0;
+    }
