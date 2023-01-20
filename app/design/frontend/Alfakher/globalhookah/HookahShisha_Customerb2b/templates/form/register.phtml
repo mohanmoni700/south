@@ -1,12 +1,12 @@
 <?php
-/**
-* Create account form template
-*
-* @var \Magento\Customer\Block\Form\Register $block
-* @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
-* @var \Magento\Framework\Escaper $escaper
-*/
 // phpcs:disable Magento2.Files.LineLength, Generic.Files.LineLength
+/**
+ * Create account form template
+ *
+ * @var \Magento\Customer\Block\Form\Register $block
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ * @var \Magento\Framework\Escaper $escaper
+ */
 ?>
 <?= $block->getChildHtml('form_fields_before') ?>
 <?php /* Extensions placeholder */ ?>
@@ -180,16 +180,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                             id="city"/>
                     </div>
                 </div>
-                <?= /* @noEscape */
-                $secureRenderer->renderTag(
-                'style',
-                [],
-                '#region_id { display:none; }
-                #region { display:none; }
-                ',
-                true
-                );
-                ?>
+                <?= /* @noEscape */ $secureRenderer->renderTag('style', [], '#region_id { display:none; }#region { display:none; }', true); ?>
                 <div class="field region required">
                     <label for="region_id" class="label">
                         <label for="region_id" class="label" id="region_id_label">
@@ -349,7 +340,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                         </select>
                     </div>
                 </div>
-                <div class="field number-of-emp required">
+                <div class="field number-of-emp">
                     <label class="label" for="number_of_emp">
                         <span><?= $block->escapeHtml(__('Number of Employees')) ?></span>
                     </label>
@@ -357,7 +348,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                         <select id="number_of_emp"
                             name="company[number_of_emp]"
                             title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('Number of Employees') ?>"
-                            class="validate-select number_of_emp">
+                            class="number_of_emp">
                             <option value="">
                                 <?= $block->escapeHtml(__('Please select number of employees')) ?>
                             </option>
@@ -456,9 +447,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                     <?php $passwordLabel = __('Password'); ?>
                     <label for="password" class="label"><span><?= $block->escapeHtml($passwordLabel) ?></span></label>
                     <div class="control">
-                        <?php $requiredCharacterClassesNumber = $block->escapeHtmlAttr(
-                        $block->getRequiredCharacterClassesNumber()
-                        ); ?>
+                        <?php $requiredCharacterClassesNumber = $block->escapeHtmlAttr($block->getRequiredCharacterClassesNumber()); ?>
                         <input type="password" name="password" id="password"
                             title="<?= $block->escapeHtmlAttr($passwordLabel) ?>"
                             class="input-text"
