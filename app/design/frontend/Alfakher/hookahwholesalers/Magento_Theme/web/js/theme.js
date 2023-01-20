@@ -54,4 +54,24 @@ define([
         window.addEventListener("DOMContentLoaded", lazyLoadImages), window.addEventListener("load", lazyLoadImages),
         window.addEventListener("resize", lazyLoadImages), window.addEventListener("scroll", lazyLoadImages)
     });
+
+    jQuery(".sign-in").click(function(){
+        jQuery("#switcher-language .switcher-options, #switcher-language .switcher-options .switcher-trigger").removeClass("active");
+        jQuery(".amquote-cart-wrapper.minicart-wrapper").removeClass("-active");
+        jQuery(".amquote-cart-wrapper.minicart-wrapper .mage-dropdown-dialog").css("display", "none");
+      });
+    jQuery(".amquote-cart-wrapper .amquote-showcart").click(function(){
+        jQuery("#switcher-language .switcher-options, #switcher-language .switcher-options .switcher-trigger").removeClass("active");
+        jQuery(".sign-in .customer_logged_in").css("display", "none");
+    });
+    jQuery(".minicart-wrapper .showcart").click(function(){
+        jQuery("#switcher-language .switcher-options, #switcher-language .switcher-options .switcher-trigger").removeClass("active");
+        jQuery(".sign-in .customer_logged_in").css("display", "none");
+    });
+    jQuery("#switcher-language #switcher-language-trigger").click(function(){
+        jQuery(".sign-in .customer_logged_in").css("display", "none");
+        jQuery(".minicart-wrapper .mage-dropdown-dialog").css("display", "none");
+        jQuery(".amquote-cart-wrapper.minicart-wrapper").removeClass("-active");
+        jQuery(".amquote-cart-wrapper.minicart-wrapper .mage-dropdown-dialog").css("display", "none");
+    });
 });
