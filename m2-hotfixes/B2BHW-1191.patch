@@ -1,0 +1,16 @@
+diff --git a/vendor/magento/module-sales/Model/Order/Payment.php b/vendor/magento/module-sales/Model/Order/Payment.php
+index d1a34b49..cd821020 100755
+--- a/vendor/magento/module-sales/Model/Order/Payment.php
++++ b/vendor/magento/module-sales/Model/Order/Payment.php
+@@ -1191,6 +1191,11 @@ class Payment extends Info implements OrderPaymentInterface
+             $message .= ' ' . __('Amount: %1.', $this->formatPrice($amount));
+         }
+         $message = $this->_appendTransactionToMessage($transaction, $message);
++        if ($order->getPayment()->getMethodInstance()->getCode() == 'paradoxlabs_firstdata') {
++            $this->getOrder()->addStatusHistoryComment($message);
++            $order->setDataChanges(true);
++            return $this;
++        }
+         $this->setOrderStateProcessing($message);
+         $order->setDataChanges(true);
+ 

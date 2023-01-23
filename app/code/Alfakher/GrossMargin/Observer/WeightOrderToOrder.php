@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\GrossMargin\Observer;
 
@@ -14,6 +15,8 @@ class WeightOrderToOrder implements \Magento\Framework\Event\ObserverInterface
      * Execute
      *
      * @param Observer $observer
+     * @return void
+     * @throws LocalizedException
      */
     public function execute(Observer $observer)
     {
@@ -25,6 +28,11 @@ class WeightOrderToOrder implements \Magento\Framework\Event\ObserverInterface
                 $totalWeight += $item->getProduct()->getWeight() * $item->getQtyOrdered();
             }
             $order->setTotalOrderWeight($totalWeight)->save();
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+            throw new LocalizedException(
+                __('Error with gross margin module'),
+                $e
+            );
+        }
     }
 }
