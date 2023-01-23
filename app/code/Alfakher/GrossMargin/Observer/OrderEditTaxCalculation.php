@@ -61,6 +61,7 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
                         $order->setExciseTax($taxSummary[1]);
                         $order->setSalesTax($taxSummary[0]);
                     }
+                    
                     foreach ($order->getAllItems() as $item) {
                         $quoteItemId = $item->getQuoteItemId();
                         $quoteItem = $quote->getItemById($quoteItemId);
