@@ -1,17 +1,17 @@
 <?php
 
-declare(strict_types=1);
+declare (strict_types = 1);
 
 namespace HookahShisha\QuoteGraphQl\Model\Resolver;
 
 use Magento\Checkout\Api\PaymentInformationManagementInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\Quote\Api\Data\CartInterface;
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Store\Model\ScopeInterface;
 use Magento\QuoteGraphQl\Model\Resolver\AvailablePaymentMethods as AvailablePaymentMethodsResolver;
+use Magento\Quote\Api\Data\CartInterface;
+use Magento\Store\Model\ScopeInterface;
 
 class AvailablePaymentMethods extends AvailablePaymentMethodsResolver
 {
@@ -29,7 +29,7 @@ class AvailablePaymentMethods extends AvailablePaymentMethodsResolver
         ScopeConfigInterface $scopeConfig
     ) {
         $this->informationManagement = $informationManagement;
-        $this->scopeConfig=$scopeConfig;
+        $this->scopeConfig = $scopeConfig;
     }
 
     /**
@@ -59,26 +59,28 @@ class AvailablePaymentMethods extends AvailablePaymentMethodsResolver
         $paymentMethodsData = [];
         foreach ($paymentMethods as $paymentMethod) {
             if ($paymentMethod->getCode() == "vrpayecommerce_creditcard" ||
-                $paymentMethod->getCode()=="vrpayecommerce_directdebit") {
+                $paymentMethod->getCode() == "vrpayecommerce_directdebit" ||
+                $paymentMethod->getCode() == "vrpayecommerce_ccsaved" ||
+                $paymentMethod->getCode() == "vrpayecommerce_ddsaved") {
                 $valueFromConfig = $this->scopeConfig->getValue(
-                    'payment/'.$paymentMethod->getCode().'/title',
+                    'payment/' . $paymentMethod->getCode() . '/title',
                     ScopeInterface::SCOPE_STORE
                 );
                 if ($valueFromConfig) {
                     $paymentMethodsData[] = [
-                    'title' => $valueFromConfig,
-                    'code' => $paymentMethod->getCode(),
+                        'title' => $valueFromConfig,
+                        'code' => $paymentMethod->getCode(),
                     ];
                 } else {
                     $paymentMethodsData[] = [
-                    'title' => $paymentMethod->getTitle(),
-                    'code' => $paymentMethod->getCode(),
+                        'title' => $paymentMethod->getTitle(),
+                        'code' => $paymentMethod->getCode(),
                     ];
                 }
             } else {
                 $paymentMethodsData[] = [
-                'title' => $paymentMethod->getTitle(),
-                'code' => $paymentMethod->getCode(),
+                    'title' => $paymentMethod->getTitle(),
+                    'code' => $paymentMethod->getCode(),
                 ];
             }
         }
