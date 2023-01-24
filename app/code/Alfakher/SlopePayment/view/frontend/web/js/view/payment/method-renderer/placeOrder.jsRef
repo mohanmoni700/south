@@ -1,0 +1,36 @@
+define([
+    'jquery',
+    'Magento_Checkout/js/view/payment/default',
+    'Magento_Checkout/js/action/place-order',
+    'Magento_Checkout/js/action/select-payment-method',
+    'Magento_Customer/js/model/customer',
+    'Magento_Checkout/js/checkout-data',
+    'Magento_Checkout/js/model/payment/additional-validators',
+    'mage/url'
+], function (
+    $,
+    Component,
+    placeOrderAction,
+    selectPaymentMethodAction,
+    customer,
+    checkoutData,
+    additionalValidators,
+    url
+) {
+    'use strict';
+
+    return Component.extend({
+        defaults: {
+            template: 'Namespace_Module/payment/custom'
+        },
+
+        placeOrder: function (data, event) {
+            // custom code here
+            // ...
+            // trigger the original place order function
+            placeOrderAction(this.getData(), event);
+        },
+
+        // other custom functions
+    });
+});

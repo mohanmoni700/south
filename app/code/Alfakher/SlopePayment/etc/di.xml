@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Checkout\Model\PaymentInformationManagement"
+    type="Alfakher\SlopePayment\Plugin\Magento\Checkout\Model\PaymentInformationManagement"/>
+
+    <!-- <type name="Magento\Quote\Model\Quote\Payment">
+        <plugin name="save_slope_info_additional_data_to_quote" type="Alfkaher\SlopePayment\Plugin\Magento\Quote\Model\Payment\SaveSlopeAdditionalInfo"/>
+    </type> -->
+</config>
