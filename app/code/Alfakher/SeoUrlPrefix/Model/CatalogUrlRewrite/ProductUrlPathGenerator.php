@@ -17,9 +17,11 @@ class ProductUrlPathGenerator extends ProductPathGenerator
      */
     public const PREFIX_STORES = 'hookahshisha/prefix_add_seo/seo_stores';
 
-    // CHANGE THESE FOR CUSTOM STATIC PREFIX ROUTE of PRODUCT and PRODUCT CATEGORY
-    public const PRODUCT_PREFIX_ROUTE = 'p';
-
+    /**
+     * Prefix product route
+     */
+    public const PRODUCT_PREFIX = 'p/';
+    
     /**
      * @param StoreManagerInterface $storeManager
      * @param ScopeConfigInterface $scopeConfig
@@ -41,43 +43,40 @@ class ProductUrlPathGenerator extends ProductPathGenerator
      *
      * @param Product $product
      * @param Category $category
+     * @param int $storeId
      * @return string
      */
-    public function getUrlPath($product, $category = null)
+    public function getUrlPath($product, $category = null, $storeId = null)
     {
         $storeDetails = $this->scopeConfig->getValue(self::PREFIX_STORES);
         $storeIds = $storeDetails ? explode(',', $storeDetails) : [];
-        
-        $storeid ="";
-        $storeManagerDataList = $this->storeManager->getStores();
-        foreach ($storeManagerDataList as $key => $value) {
-            if (in_array($key, $storeIds)) {
-                $storeid = $key;
-            }
-        }
-        $productwebsite = $product->getWebsiteIds();
-
-        foreach ($productwebsite as $value) {
-            if ($product->getTypeId() == 'grouped') {
-                $prifix = 'p/';
-            } else {
-                $prifix = '';
-            }
-        }
 
         $path = $product->getData('url_path');
+
+        $prefix = in_array($storeId, $storeIds) ? self::PRODUCT_PREFIX : '';
+
         if ($path === null) {
             $path = $product->getUrlKey()
-            ? $this->prepareProductUrlKey($product)
-            : $this->prepareProductDefaultUrlKey($product);
+                ? $this->prepareProductUrlKey($product)
+                : $this->prepareProductDefaultUrlKey($product);
         }
-
-        if ($product->getTypeId() == 'grouped' && strpos($path, 'p/') === false) {
-            $path = $prifix . $path;
-        }
+        $path = $prefix.$path;
 
         return $category === null
-        ? $path
-        : $this->categoryUrlPathGenerator->getUrlPath($category) . '/' . $path;
+            ? $path
+            : $this->categoryUrlPathGenerator->getUrlPath($category) . '/' . $path;
+    }
+
+    /**
+     * Retrieve Product Url path with suffix
+     *
+     * @param Product $product
+     * @param int $storeId
+     * @param Category $category
+     * @return string
+     */
+    public function getUrlPathWithSuffix($product, $storeId, $category = null)
+    {
+        return $this->getUrlPath($product, $category, $storeId) . $this->getProductUrlSuffix($storeId);
     }
 }
