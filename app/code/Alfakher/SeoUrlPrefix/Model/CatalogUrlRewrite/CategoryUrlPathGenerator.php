@@ -20,6 +20,12 @@ class CategoryUrlPathGenerator extends CategoryPathGenerator
      * Prefix stores
      */
     public const PREFIX_STORES = 'hookahshisha/prefix_add_seo/seo_stores';
+
+    /**
+     * Prefix category route
+     */
+    public const CATEGORY_PREFIX = 'c/';
+
     /**
      * Minimal category level that can be considered for generate path
      */
@@ -94,7 +100,7 @@ class CategoryUrlPathGenerator extends CategoryPathGenerator
         $All_Id = $category->getParentIds();
 
         $storeId = $category->getStoreId();
-        $prifix = $storeId == $storeid ? 'c/' : '';
+        $prifix = $storeId == $storeid ? self::CATEGORY_PREFIX : '';
 
         if (in_array($category->getParentId(), [Category::ROOT_CATEGORY_ID, Category::TREE_ROOT_ID])) {
             return '';
@@ -125,7 +131,7 @@ class CategoryUrlPathGenerator extends CategoryPathGenerator
         }
 
         if (in_array($rootId, $All_Id)) {
-            return 'c/' . $path;
+            return self::CATEGORY_PREFIX . $path;
         } else {
             return $path;
         }
