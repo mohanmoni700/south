@@ -1,17 +1,11 @@
 <?php
-/**
- * Copyright © MageWorx. All rights reserved.
- * See LICENSE.txt for license details.
- */
-?>
-<?php
 /** @var \Magento\Sales\Block\Adminhtml\Order\View\Items $block */
 ?>
 <?php $_order = $block->getOrder() ?>
 
 <?php /* af_bv_op; Start */ ?>
 <?php $viewModel = $block->getViewModel() ?>
-<?php $moduleEnable = $viewModel->isModuleEnabled($_order->getStore()->getWebsiteId()) ?>
+<?php $moduleEnable = $viewModel->isModuleEnabled($_order->getStore()->getStoreId()) ?>
 <?php /* af_bv_op; End */ ?>
 
 <div class="admin__table-wrapper order-items-block">

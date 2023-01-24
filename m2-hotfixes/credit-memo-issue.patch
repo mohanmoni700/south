@@ -1,0 +1,17 @@
+diff --git a/vendor/mondu/magento2-payment/Block/Memo.php b/vendor/mondu/magento2-payment/Block/Memo.php
+index 360e2b2e74dd..1563a680db99 1006444
+--- a/vendor/mondu/magento2-payment/Block/Memo.php
++++ b/vendor/mondu/magento2-payment/Block/Memo.php
+@@ -48,6 +48,11 @@
+         $monduId = $this->getOrderMonduId();
+         $log = $this->_monduLogger->getTransactionByOrderUid($monduId);
+ 
+-        return $log['addons'] ? (json_decode($log['addons'], true) ?? []) : [];
++        $result = '';
++        if(isset($log['addons'])){
++            $result = $log['addons'] ? (json_decode($log['addons'], true) ?? []) : [];
++        }
++
++        return $result;
+     }
+ }

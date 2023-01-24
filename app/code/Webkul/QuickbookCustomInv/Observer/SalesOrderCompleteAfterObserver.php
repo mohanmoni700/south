@@ -49,9 +49,10 @@ class SalesOrderCompleteAfterObserver implements ObserverInterface
     private $logger;
 
     /**
-     * @param QuickBooksHelper $quickBooksHelper,
-     * @param QuickBooksDataHelper $quickBooksDataHelper,
-     * @param OrderMapFactory $orderMapFactory,
+     * @param QuickBooksHelper $quickBooksHelper
+     * @param QuickBooksDataHelper $quickBooksDataHelper
+     * @param OrderMapFactory $orderMapFactory
+     * @param AccountRepositoryInterface $accountRepository
      * @param Logger $logger
      */
     public function __construct(
@@ -84,6 +85,20 @@ class SalesOrderCompleteAfterObserver implements ObserverInterface
                 $accessToken = $this->quickBooksDataHelper->getAccessToken($accountId);
                 if ($config['enable'] && $config['sales_receipt_create_on']=='order_complete'
                     && $order->getState() == 'complete' && $accessToken) {
+                    /** for export shipping info **/
+                    $tracksCollection = $order->getTracksCollection()->getItems();
+                    $trackingList = [];
+                    $shipServiceList = [];
+                    $shipDate = date('Y-m-d', time());
+                    foreach ($tracksCollection as $trackingData) {
+                        if ($trackingData->getTrackNumber()) {
+                            $trackingList[] = $trackingData->getTrackNumber();
+                            $shipServiceList[] = $trackingData->getTitle();
+                            $shipDate = date('Y-m-d', strtotime($trackingData->getCreatedAt()));
+                        }
+                    }
+                    /** for export shipping info **/
+
                     $taxPercent = $this->quickBooksDataHelper->getOrderTaxPercent($order->getEntityId());
                     $allItems = $order->getAllItems();
                     $items = [];
@@ -129,7 +144,11 @@ class SalesOrderCompleteAfterObserver implements ObserverInterface
                         'discount_on_order' => $order->getBaseDiscountAmount(),
                         'tax_percent' => $taxPercent,
                         'paymentMethod' => $order->getPayment()->getMethodInstance()->getTitle(),
-                        'docNumber' => 'order-'.$order->getIncrementId()
+                        'docNumber' => 'order-'.$order->getIncrementId(),
+                        'mageOrderId' => $order->getIncrementId(),
+                        'tracking_info' => substr(implode(",", $trackingList), 0, 31),
+                        'ship_service' => substr(implode(",", $shipServiceList), 0, 31),
+                        'shipDate' => $shipDate
                     ];
 
                     $salesReceipt = $this->orderMapFactory->create()->getCollection()

@@ -18,8 +18,11 @@ use QuickBooksOnline\API\DataService\DataService;
 class Item extends \Webkul\MultiQuickbooksConnect\Helper\QuickBooks\Item
 {
     /**
+     * GetItem
+     *
      * @param DataService $dataService
      * @param array $itemData
+     * @param int $accountId
      * @return IPPItem
      */
     public function getItem(DataService $dataService, $itemData, $accountId)
