@@ -34,6 +34,12 @@ pipelines:
         deployment: STAGING
         script:
           - bash -xe deploy-scripts/custom_dev_deploy.sh environment/staging
+    deploy_preprod:
+    - step:
+        name: Deploy to Preprod Instance
+        deployment: PREPROD
+        script:
+          - bash -xe deploy-scripts/custom_dev_deploy.sh environment/preprod
     deploy_prod:
     - step:
         name: Deploy to Production Instance
