@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\SlopePayment\Block\Adminhtml\Form\Field;
 

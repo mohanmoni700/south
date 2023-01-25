@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Alfakher\SlopePayment\Model;
 
 use Alfakher\SlopePayment\Model\Payment\SlopePayment;
@@ -7,6 +9,7 @@ use Magento\Framework\Escaper;
 use Magento\Payment\Helper\Data as PaymentHelper;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Quote\Api\CartItemRepositoryInterface as QuoteItemRepository;
+use Magento\Payment\Model\Method\AbstractMethod;
 
 class InstructionsConfigProvider implements ConfigProviderInterface
 {
@@ -18,7 +21,7 @@ class InstructionsConfigProvider implements ConfigProviderInterface
     ];
 
     /**
-     * @var \Magento\Payment\Model\Method\AbstractMethod[]
+     * @var AbstractMethod[]
      */
     protected $methods = [];
 
@@ -28,8 +31,8 @@ class InstructionsConfigProvider implements ConfigProviderInterface
     protected $escaper;
 
      /**
-     * @var CheckoutSession
-     */
+      * @var CheckoutSession
+      */
     private $checkoutSession;
 
     /**
@@ -84,13 +87,11 @@ class InstructionsConfigProvider implements ConfigProviderInterface
                 $config['slope']['customer']['phone'] = $this->getSlopeFormattedPhone($billPhone, $billCountryCode);
                 $config['slope']['customer']['businessName'] = $billingAddress->getCompany() ?: 'NA';
                 $config['slope']['customer']['address'] = $address;
-                //comment below for test
-                //$config['slope']['customer']['externalId'] = $quote->getCustomerId();
+                $config['slope']['customer']['externalId'] = $quote->getCustomerId();
                 $config['slope']['order']['total'] = $quote->getGrandTotal() * 100;
                 $config['slope']['order']['currency'] =  strtolower($quote->getQuoteCurrencyCode());
                 $config['slope']['order']['billingAddress'] = $address;
-                //comment below for test
-                //$config['slope']['order']['externalId'] = $quote->getId();
+                $config['slope']['order']['externalId'] = $quote->getId();
                 $config['slope']['order']['items'] = $this->getQuoteItemsforSlope();
                 $config['slope']['order']['customerId'] = $quote->getCustomerId();
 
@@ -131,6 +132,7 @@ class InstructionsConfigProvider implements ConfigProviderInterface
     private function getQuoteItemsforSlope()
     {
         $quoteItemData = [];
+        $items = [];
         $quoteId = $this->checkoutSession->getQuote()->getId();
         if ($quoteId) {
             $quoteItems = $this->quoteItemRepository->getList($quoteId);
@@ -139,18 +141,19 @@ class InstructionsConfigProvider implements ConfigProviderInterface
                 $quoteItemData['id'] = $quoteItem->getItemId();
                 $quoteItemData['externalId'] = $product->getId();
                 $quoteItemData['sku'] = $product->getSku();
-                $quoteItemData['orderId'] = '';
+                $quoteItemData['orderId'] = $quoteId;
                 $quoteItemData['name'] = $product->getName();
                 $quoteItemData['description'] = $product->getDescription();
                 $quoteItemData['quantity'] = $quoteItem->getTotalQty();
-                $quoteItemData['unitPrice'] = $product->getPrice();
-                $quoteItemData['price'] = $quoteItem->getCalculationPrice();
+                $quoteItemData['unitPrice'] = $product->getPrice() * 100;
+                $quoteItemData['price'] = $quoteItem->getCalculationPrice() * 100;
                 $quoteItemData['url'] = $product->getProductUrl();
                 $quoteItemData['createdAt'] = $product->getCreatedAt();
                 $quoteItemData['updatedAt'] = $product->getUpdatedAt();
+                $items[] = $quoteItemData;
             }
         }
-        return $quoteItemData;
+        return $items;
     }
 
 

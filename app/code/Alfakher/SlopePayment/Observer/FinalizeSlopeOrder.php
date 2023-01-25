@@ -38,8 +38,7 @@ class FinalizeSlopeOrder implements ObserverInterface
     public function execute(Observer $observer)
     {
         $shipment = $observer->getEvent()->getShipment();
-        /** @var Order $order */
-        $order = $shipment->getOrder();
+        $order=    $shipment->getOrder();
         $paymentMethodCode = $order->getPayment()->getMethod();
         if ($paymentMethodCode == SlopePayment::PAYMENT_METHOD_SLOPEPAYMENT_CODE) {
             try {
@@ -47,8 +46,8 @@ class FinalizeSlopeOrder implements ObserverInterface
                 $resp = $this->finalizeSlopeOrder($quoteId);
                 if (isset($resp)) {
                     if (isset($resp['statusCode'])) {
-                        $order->addCommentToStatusHistory(__('Slope Payment Error (%1) : %2', $resp['code'], implode(',',$resp['messages'])), true, false);
-                        $this->messageManager->addErrorMessage(__('Slope Payment Error (%1) : %2', $resp['code'], implode(',',$resp['messages'])));
+                        $order->addCommentToStatusHistory(__('Slope Payment Error (%1) : %2', $resp['code'], implode(',', $resp['messages'])), true, false);
+                        $this->messageManager->addErrorMessage(__('Slope Payment Error (%1) : %2', $resp['code'], implode(',', $resp['messages'])));
                     } else {
                         $order->addCommentToStatusHistory(__('Slope order %1 finalized successfully.', $resp['id']), true, false);
                         $this->messageManager->addSuccessMessage(__('Slope order %1 finalized successfully.', $resp['id']));

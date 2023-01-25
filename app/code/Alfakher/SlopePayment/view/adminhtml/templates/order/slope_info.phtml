@@ -1,0 +1,46 @@
+<?php
+// phpcs:disable Magento2.Security.InsecureFunction.FoundWithAlternative
+$_order = $block->getOrder();
+$slopeInfo = $_order->getSlopeInformation();
+if ($slopeInfo != null) {
+    $slopeInfo = unserialize($slopeInfo);
+    $slopeInfo = json_decode($slopeInfo['slope_information'], true);
+    ?>
+    <br>
+    <div class="slope slope-order-info">
+       <table class="data-table admin__table-secondary">
+            <tr>
+                <th><?= $block->escapeHtml(__('Order Number')) ?>:</th>
+                <td><?= $block->escapeHtml($slopeInfo['order']['id']) ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('Customer ID')) ?>:</th>
+                <td><?= $block->escapeHtml($slopeInfo['order']['customerId']) ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('External Ref. ID')) ?>:</th>
+                <td><?= $block->escapeHtml($slopeInfo['order']['externalId']) ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('Order Status')) ?>:</th>
+                <td><?= $block->escapeHtml(strtoupper($slopeInfo['order']['status'])) ?></td>
+            </tr>
+                <?php
+                if ($slopeInfo['order']['finalizedAt'] != null) {
+                    ?>
+             <tr>
+                <th><?= $block->escapeHtml(__('Finalized At')) ?>:</th>
+                <td><?= $block->escapeHtml($slopeInfo['order']['finalizedAt']) ?></td>
+            </tr>
+                <?php } ?>
+            <tr>
+                <th><?= $block->escapeHtml(__('Payment Terms')) ?>:</th>
+                <td><?= $block->escapeHtml($slopeInfo['order']['paymentTerms']['name'].' - '.strtoupper(implode(',', $slopeInfo['order']['paymentTerms']['paymentMethods']))) ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('Payout Account / ID')) ?>:</th>
+                <td><?= $block->escapeHtml($slopeInfo['order']['payoutAccountId'].' - '.$slopeInfo['order']['payoutId']) ?></td>
+            </tr>
+        </table>
+    </div>
+<?php } ?>

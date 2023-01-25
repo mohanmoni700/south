@@ -11,9 +11,6 @@ use Alfakher\SlopePayment\Model\System\Config\Backend\Environment;
 
 class Config extends AbstractHelper
 {
-
-    /* $secret = $this->encryptor->decrypt($secret); */
-
     /**
      * @var EncryptorInterface
      */

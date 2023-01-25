@@ -13,7 +13,6 @@ use Alfakher\SlopePayment\Model\System\Config\Backend\Environment;
 use Magento\Framework\HTTP\Client\Curl;
 use Alfakher\SlopePayment\Model\Gateway\Request as GatewayRequest;
 
-
 class InitiateFlow extends Action
 {
     const CREATE_ORDER = '/orders';
@@ -31,7 +30,6 @@ class InitiateFlow extends Action
         Json $json,
         SlopeConfigHelper $slopeConfig,
         GatewayRequest $gatewayRequest
-
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->checkoutSession = $checkoutSession;
@@ -45,12 +43,11 @@ class InitiateFlow extends Action
     public function execute()
     {
         $result = $this->resultJsonFactory->create();
-        $mgtOrder = $this->getMgtOrderForSlope();
 
-        //check if order exists
+        $mgtOrder = $this->getMgtOrderForSlope();
         $mgtQuoteId =  $this->checkoutSession->getQuote()->getId();
         $slopeOrder = $this->findSlopeOrder($mgtQuoteId);
-        //print_r($slopeOrder);die;
+
         $statusCode =  isset($slopeOrder['statusCode']) ? $slopeOrder['statusCode'] : null;
         if (isset($slopeOrder) && $statusCode == 404) {
             $slopeOrder = $this->createNewSlopeOrder($mgtOrder);
@@ -70,7 +67,6 @@ class InitiateFlow extends Action
         }
         
         if (isset($slopePopup['secret']) && $slopePopup['secret'] != '') {
-            /* We can prepare required data and return this response to intialize the popup */
             $result->setData(['success' => 'true', 'secret' => $slopePopup['secret'], 'messages' => 'All Ok']);
         } else {
             $result->setData(['success' => 'false', 'secret' => '', 'messages' => 'Error Occured']);
@@ -91,7 +87,6 @@ class InitiateFlow extends Action
         $countryCode = $this->getCountryCode($countryCode);
         return $countryCode . preg_replace('/\W/', '', $phone);
     }
-
 
     /**
      * Retrieve quote item data
@@ -372,7 +367,6 @@ class InitiateFlow extends Action
         return '';
     }
 
-
     public function createNewSlopeOrder($order)
     {
         $apiEndpointUrl = $this->config->getEndpointUrl();
@@ -389,7 +383,7 @@ class InitiateFlow extends Action
         $order = $this->getMgtOrderForSlope();
         $url = $apiEndpointUrl.self::UPDATE_ORDER;
         $url = str_replace("id", $slopeOrderId, $url);
-        $response = $this->gatewayRequest->post($url,$order);
+        $response = $this->gatewayRequest->post($url, $order);
         $response = $this->json->unserialize($response);
         return $response;
     }
@@ -407,12 +401,8 @@ class InitiateFlow extends Action
     {
         $apiEndpointUrl = $this->config->getEndpointUrl();
 
-
         /* NOTE : Update order data with latest quote before opening popup every time to keep data uptodate*/
-        $resp = $this->updateSlopeOrder($slopeOrderId);
-        /* echo $slopeOrderId;
-        print_r($resp);
-        die; */
+        $this->updateSlopeOrder($slopeOrderId);
 
         $url = $apiEndpointUrl.self::GET_ORDER_INTENT;
         $url = str_replace("id", $slopeOrderId, $url);
@@ -455,6 +445,6 @@ class InitiateFlow extends Action
         $orderData['customer']['externalId'] = $quote->getCustomerId();
         /* Actual product data to be sent to slope -- ends */
 
-       return $this->json->serialize($orderData);
+        return $this->json->serialize($orderData);
     }
 }

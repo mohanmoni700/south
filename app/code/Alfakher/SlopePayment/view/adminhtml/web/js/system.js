@@ -36,7 +36,7 @@ require(['jquery', 'Magento_Ui/js/modal/alert', 'mage/translate', 'domReady!'], 
         if (errors.length > 0) {
             alert({
                 title: $t('Slope Credential Validation Failed'),
-                content:  errors.join('<br />')
+                content:  errors.join('<br/>')
             });
             return false;
         }

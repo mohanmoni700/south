@@ -28,6 +28,5 @@ class SaveSlopeInformationToOrder implements ObserverInterface
             $order->setData('slope_information', $slopeInformation);
             $order->save();
         }
-        
     }
 }

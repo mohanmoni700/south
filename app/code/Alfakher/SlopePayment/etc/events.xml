@@ -1,10 +1,4 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
-    <!-- save final slope API response before order is placed -->
-    <!-- <event name="sales_model_service_quote_submit_before">
-        <observer name="save_slope_information_to_quote" 
-        instance="Alfakher\SlopePayment\Observer\SaveSlopeInformationToQuote" />
-    </event> -->
-    
     <!-- save slope payment information in order -->
     <event name="sales_order_place_after">
 		  <observer name="save_slope_information_to_order" instance="Alfakher\SlopePayment\Observer\SaveSlopeInformationToOrder"/>
@@ -13,8 +7,4 @@
     <event name="sales_order_shipment_save_after">
 		  <observer name="slope_payment_finalize_order_after_shippment" instance="Alfakher\SlopePayment\Observer\FinalizeSlopeOrder"/>
 	  </event>
-
-   <!--  <event name="sales_model_service_quote_submit_before">
-		  <observer name="save_slope_information_to_quote" instance="Alfakher\SlopePayment\Observer\SaveSlopeInformationToQuote"/>
-	  </event> -->
 </config>

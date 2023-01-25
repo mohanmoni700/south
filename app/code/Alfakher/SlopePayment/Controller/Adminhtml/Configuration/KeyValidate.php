@@ -1,46 +1,49 @@
 <?php
+declare(strict_types=1);
+
 namespace Alfakher\SlopePayment\Controller\Adminhtml\Configuration;
 
 use Exception;
 use Magento\Backend\App\Action;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
-use Magento\Framework\HTTP\Client\Curl;
 use Alfakher\SlopePayment\Model\System\Config\Backend\Environment;
 use Alfakher\SlopePayment\Helper\Config as SlopeConfigHelper;
 use Magento\Framework\Serialize\Serializer\Json;
+use Alfakher\SlopePayment\Model\Gateway\Request as GatewayRequest;
 
 class KeyValidate extends Action
 {
     const TEST_API_ENDPOINT = '/customers/test';
 
     /**
-    * @var Curl
-    */
-    protected $curl;
-
-    /**
-    * @var Json
-    */
+     * @var Json
+     */
     protected $json;
-
+    
     /**
      * Validate constructor.
+     *
      * @param Action\Context $context
+     * @param SlopeConfigHelper $slopeConfig
+     * @param Json $json
+     * @param GatewayRequest $gatewayRequest
      */
     public function __construct(
         Action\Context $context,
         SlopeConfigHelper $slopeConfig,
-        Curl $curl,
-        Json $json
+        Json $json,
+        GatewayRequest $gatewayRequest
     ) {
         $this->config = $slopeConfig;
-        $this->curl = $curl;
         $this->json = $json;
+        $this->gatewayRequest = $gatewayRequest;
         parent::__construct($context);
     }
 
     /**
+     * Validate Credentials
+     *
      * @return ResultInterface
      */
     public function execute(): ResultInterface
@@ -65,9 +68,9 @@ class KeyValidate extends Action
 
         if (false !== strpos($privateKey, '*')) {
             if ($environment === Environment::ENVIRONMENT_SANDBOX) {
-            $privateKey = $this->config->getSandboxPrivateKey();
+                $privateKey = $this->config->getSandboxPrivateKey();
             } else {
-            $privateKey = $this->config->getProductionPrivateKey();
+                $privateKey = $this->config->getProductionPrivateKey();
             }
         }
 
@@ -77,28 +80,18 @@ class KeyValidate extends Action
             /* test endpoint to test connection */
             $url = $testEndpoint . self::TEST_API_ENDPOINT;
 
-            /* prepare curl header,Credentials,options */
-            $this->curl->addHeader("Content-Type", "application/json");
-            $this->curl->setCredentials($publicKey, $privateKey);
-            $this->curl->setOption(CURLOPT_RETURNTRANSFER, true);
-
-            /* call api using curl request */
-            //get method
-            $this->curl->get($url);
-            //post method for reference
-            //$this->curl->post($url, $params);
-            $response = $this->curl->getBody();
+            $response = $this->gatewayRequest->get($url);
             $response = $this->json->unserialize($response);
 
             $reStatusCode = $response['statusCode'];
             if ($reStatusCode != '401') {
-                $result->setData(['success' => 'true', 'message' => 'Connected Successfully !!']);
+                $result->setData(['success' => 'true']);
             } else {
-                $result->setData(['success' => 'false', 'message' => 'Connection is not valid !!']);
+                $result->setData(['success' => 'false']);
             }
 
         } catch (Exception $e) {
-            $result->setData(['success' => 'false', 'message' => $e->getMessage()]);
+            $result->setData(['success' => 'false']);
         }
 
         return $result;

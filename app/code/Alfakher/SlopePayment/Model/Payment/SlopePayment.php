@@ -3,7 +3,12 @@ declare(strict_types=1);
 
 namespace Alfakher\SlopePayment\Model\Payment;
 
-class SlopePayment extends \Magento\Payment\Model\Method\AbstractMethod
+use Magento\Payment\Model\Method\AbstractMethod;
+use Alfakher\SlopePayment\Block\Form\SlopePayment as SlopePaymentFormType;
+use Magento\Payment\Block\Info\Instructions;
+use Magento\Quote\Api\Data\CartInterface;
+
+class SlopePayment extends AbstractMethod
 {
     public const PAYMENT_METHOD_SLOPEPAYMENT_CODE = 'slope_payment';
 
@@ -19,17 +24,17 @@ class SlopePayment extends \Magento\Payment\Model\Method\AbstractMethod
      *
      * @var string
      */
-    protected $_formBlockType = \Alfakher\SlopePayment\Block\Form\SlopePayment::class;
+    protected $_formBlockType = SlopePaymentFormType::class;
 
     /**
      * Info instructions block path
      *
      * @var string
      */
-    protected $_infoBlockType = \Magento\Payment\Block\Info\Instructions::class;
+    protected $_infoBlockType = Instructions::class;
 
     public function isAvailable(
-        \Magento\Quote\Api\Data\CartInterface $quote = null
+        CartInterface $quote = null
     ) {
         return parent::isAvailable($quote);
     }
@@ -45,4 +50,3 @@ class SlopePayment extends \Magento\Payment\Model\Method\AbstractMethod
         return $instructions !== null ? trim($instructions) : '';
     }
 }
-

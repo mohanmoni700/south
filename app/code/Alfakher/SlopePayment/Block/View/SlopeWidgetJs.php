@@ -16,7 +16,6 @@ class SlopeWidgetJs extends Template
         parent::__construct($context);
     }
 
-
     /**
      * Get JS URL for slope widget on checkout page
      *
@@ -26,6 +25,4 @@ class SlopeWidgetJs extends Template
     {
         return $this->slopeConfigHelper->getJsSrcForCheckoutPage();
     }
-
-    
 }

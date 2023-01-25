@@ -42,7 +42,6 @@ define(
                 var self = this;
                 this.messageContainer = new Messages();
                 var apiUrl = url.build("slope/payment/initiateFlow");
-                const endpointUrl = this.apiUrl;
 
                 $.ajax({
                     showLoader: true,
@@ -83,36 +82,26 @@ define(
                     * Called when flow reaches completion. See "Event callbacks page"
                     */
                     onSuccess: function (payload) {
-                        console.dir(payload);
-                        console.log(quote)
-                        self.placeMagentoOrder(quote,payload);
+                        self.placeMagentoOrder(payload);
                     },
 
                     /**
                     * Called when user reaches an terminal error page. See "Event callbacks page"
                     */
                     onFailure: function (payload) {
-                        alert(JSON.stringify(payload.errorMessage));
+                        alert(JSON.stringify(payload));
                     },
 
                     /**
                     * Called when a tracking event occurs. See "Event callbacks page"
                     */
                     onEvent: function (payload) {
-                        console.log('event:' + JSON.stringify(payload));
+                        console.log(JSON.stringify(payload));
                     }
                 });
                 window.Slope.open();
             },
-            placeMagentoOrder: function (quote,payload) {
-                console.log(quote);
-                /*this.getData().additional_data.jigar = 'test';*/
-                var customData = {
-                    'custom_field_1': 'value 1',
-                    'custom_field_2': 'value 2'
-                };
-                //var paymentMethod = quote.paymentMethod();
-                //paymentMethod.setAdditionalInformation('custom_data', customData);
+            placeMagentoOrder: function (payload) {
                 placeOrderAction(this.getData(payload), this.messageContainer)
                     .done(
                         function () {
