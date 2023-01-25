@@ -1,6 +1,6 @@
 <?php
 
-declare (strict_types = 1);
+declare(strict_types=1);
 
 namespace HookahShisha\QuoteGraphQl\Plugin\Model\Resolver;
 
@@ -15,9 +15,9 @@ class SelectedPaymentMethod
 {
 
     /**
-     * [Constructs a new instance.]
+     * [Constructor]
      *
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig
