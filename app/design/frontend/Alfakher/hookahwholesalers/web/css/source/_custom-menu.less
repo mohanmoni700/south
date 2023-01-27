@@ -233,6 +233,11 @@
                     &.ui-tabs-active::before {
                         display: none;
                     }
+                    &.empty-tab-no-child {
+                        .tab-title span:after {
+                            display: none;
+                        }
+                    }
                 }
             }
             .tabs-content {
@@ -338,9 +343,13 @@
                             &:after {
                                 display: none;
                             }
+
                             .tab-title {
                                 padding-right: 2rem;
                             }
+                        }
+                        &.empty-tab-no-child a.tab-title:before {
+                            display: none;
                         }
                     }
                     li.tab-header.ui-tabs-active {
@@ -380,8 +389,7 @@
             .submenu {
                 &.level0 {
                     .container {
-                        max-height: 380px;
-                        min-height: 380px;
+                        max-height: 420px;
                         overflow-x: hidden;
                         overflow-y: auto;
                     }
