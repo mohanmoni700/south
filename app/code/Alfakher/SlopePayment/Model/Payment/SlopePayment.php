@@ -3,10 +3,9 @@ declare(strict_types=1);
 
 namespace Alfakher\SlopePayment\Model\Payment;
 
-use Magento\Payment\Model\Method\AbstractMethod;
 use Alfakher\SlopePayment\Block\Form\SlopePayment as SlopePaymentFormType;
 use Magento\Payment\Block\Info\Instructions;
-use Magento\Quote\Api\Data\CartInterface;
+use Magento\Payment\Model\Method\AbstractMethod;
 
 class SlopePayment extends AbstractMethod
 {
@@ -32,12 +31,6 @@ class SlopePayment extends AbstractMethod
      * @var string
      */
     protected $_infoBlockType = Instructions::class;
-
-    public function isAvailable(
-        CartInterface $quote = null
-    ) {
-        return parent::isAvailable($quote);
-    }
 
     /**
      * Get instructions text from config

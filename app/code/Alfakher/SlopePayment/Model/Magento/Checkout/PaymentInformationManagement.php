@@ -3,43 +3,82 @@ declare(strict_types=1);
 
 namespace Alfakher\SlopePayment\Model\Magento\Checkout;
 
-use Magento\Checkout\Model\PaymentInformationManagement as BasePaymentInformationManagement;
-use Magento\Quote\Api\Data\PaymentInterface;
-use Magento\Quote\Api\Data\AddressInterface;
 use Magento\Checkout\Api\PaymentProcessingRateLimiterInterface;
-use Magento\Framework\App\ObjectManager;
-use Magento\Quote\Api\CartRepositoryInterface;
-use Magento\Quote\Api\BillingAddressManagementInterface;
-use Magento\Quote\Api\PaymentMethodManagementInterface;
-use Magento\Quote\Api\CartManagementInterface;
 use Magento\Checkout\Model\PaymentDetailsFactory;
+use Magento\Checkout\Model\PaymentInformationManagement as BasePaymentInformationManagement;
+use Magento\Framework\App\ObjectManager;
+use Magento\Quote\Api\BillingAddressManagementInterface;
+use Magento\Quote\Api\CartManagementInterface;
+use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Api\CartTotalRepositoryInterface;
+use Magento\Quote\Api\Data\AddressInterface;
+use Magento\Quote\Api\Data\PaymentInterface;
+use Magento\Quote\Api\PaymentMethodManagementInterface;
 use Magento\Quote\Model\Quote;
 
 class PaymentInformationManagement extends BasePaymentInformationManagement
 {
+    /**
+     * @var BillingAddressManagementInterface
+     */
+    protected $billingAddressManagement;
+
+    /**
+     * @var PaymentMethodManagementInterface
+     */
+    protected $paymentMethodManagement;
+
+    /**
+     * @var CartManagementInterface
+     */
+    protected $cartManagement;
+
+    /**
+     * @var PaymentDetailsFactory
+     */
+    protected $paymentDetailsFactory;
+
+    /**
+     * @var CartTotalRepositoryInterface
+     */
+    protected $cartTotalsRepository;
 
     /**
      * @var CartRepositoryInterface
      */
     private $cartRepository;
-    
+
+    /**
+     * @var PaymentProcessingRateLimiterInterface
+     */
+    private $paymentRateLimiter;
+
+    /**
+     * Constructor
+     *
+     * @param BillingAddressManagementInterface $billingAddressManagement
+     * @param PaymentMethodManagementInterface $paymentMethodManagement
+     * @param CartManagementInterface $cartManagement
+     * @param PaymentDetailsFactory $paymentDetailsFactory
+     * @param CartTotalRepositoryInterface $cartTotalsRepository
+     * @param PaymentProcessingRateLimiterInterface|null $paymentRateLimiter
+     */
     public function __construct(
         BillingAddressManagementInterface $billingAddressManagement,
         PaymentMethodManagementInterface $paymentMethodManagement,
         CartManagementInterface $cartManagement,
         PaymentDetailsFactory $paymentDetailsFactory,
         CartTotalRepositoryInterface $cartTotalsRepository,
-        ?PaymentProcessingRateLimiterInterface $paymentRateLimiter = null
+        ? PaymentProcessingRateLimiterInterface $paymentRateLimiter = null
     ) {
-        
+
         $this->billingAddressManagement = $billingAddressManagement;
         $this->paymentMethodManagement = $paymentMethodManagement;
         $this->cartManagement = $cartManagement;
         $this->paymentDetailsFactory = $paymentDetailsFactory;
         $this->cartTotalsRepository = $cartTotalsRepository;
-        $this->paymentRateLimiter = $paymentRateLimiter
-            ?? ObjectManager::getInstance()->get(PaymentProcessingRateLimiterInterface::class);
+        $this->paymentRateLimiter =
+        $paymentRateLimiter ?? ObjectManager::getInstance()->get(PaymentProcessingRateLimiterInterface::class);
         parent::__construct(
             $billingAddressManagement,
             $paymentMethodManagement,
@@ -52,7 +91,6 @@ class PaymentInformationManagement extends BasePaymentInformationManagement
 
     /**
      * @inheritdoc
-     *
      */
     public function savePaymentInformation(
         $cartId,
@@ -66,10 +104,10 @@ class PaymentInformationManagement extends BasePaymentInformationManagement
             /** @var Quote $quote */
             $quote = $quoteRepository->getActive($cartId);
             $slopeInformation = $paymentMethod->getAdditionalData('slope_information');
-            $quote->setData('slope_information', serialize($slopeInformation));
-            
+            $quote->setData('slope_information', serialize($slopeInformation)); // phpcs:ignore
+
             $customerId = $quote->getBillingAddress()
-            ->getCustomerId();
+                ->getCustomerId();
             if (!$billingAddress->getCustomerId() && $customerId) {
                 //It's necessary to verify the price rules with the customer data
                 $billingAddress->setCustomerId($customerId);

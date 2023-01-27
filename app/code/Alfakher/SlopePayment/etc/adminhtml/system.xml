@@ -25,7 +25,6 @@
 					<field id="title" type="text" sortOrder="20" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 						<label>Title</label>
 						<config_path>payment/slope_payment/title</config_path>
-
 					</field>
 					<field id="order_status" type="select" sortOrder="30" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 						<label>New Order Status</label>
@@ -56,16 +55,11 @@
                             Please see <a href="https://developers.slope.so/" target="_blank" rel="noopener noreferrer">documentation</a> for more information.
                             ]]>
                         </comment>
-
-	                    <!-- select env starts -->
 	                    <field id="environment" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
 	                        <label>Environment</label>
 	                        <source_model>Alfakher\SlopePayment\Model\System\Config\Backend\Environment</source_model>
 	                        <config_path>payment/slope_payment/environment</config_path>
 	                    </field>
-	                    <!-- select env ends -->
-
-	                    <!-- production env starts -->
 	                    <field id="publickey_production" translate="label" type="obscure" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
 	                        <label>Public Key - Production</label>
 	                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
@@ -96,9 +90,6 @@
 	                            <field id="*/*/*/environment">production</field>
 	                        </depends>
 	                    </field>
-	                    <!-- production env ends -->
-
-	                    <!-- sandbox env starts -->
 	                    <field id="publickey_sandbox" translate="label" type="obscure" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
 	                        <label>Public Key - Sandbox</label>
 	                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
@@ -129,14 +120,10 @@
 	                            <field id="*/*/*/environment">sandbox</field>
 	                        </depends>
 	                    </field>
-	                    <!-- sandbox env ends-->
-
-	                    <!-- test api credentials starts -->
 	                    <field id="key_validation" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
                             <label></label>
                             <frontend_model>Alfakher\SlopePayment\Block\Adminhtml\Form\Field\KeyValidation</frontend_model>
                         </field>
-	                    <!-- test api credentials ends -->
 	                </group>
 	                <group id="slopeadvanced" sortOrder="3" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 	                	<label>Advanced Slope Settings</label>

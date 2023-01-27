@@ -5,11 +5,11 @@ namespace Alfakher\SlopePayment\Model;
 
 use Alfakher\SlopePayment\Model\Payment\SlopePayment;
 use Magento\Checkout\Model\ConfigProviderInterface;
+use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Framework\Escaper;
 use Magento\Payment\Helper\Data as PaymentHelper;
-use Magento\Checkout\Model\Session as CheckoutSession;
-use Magento\Quote\Api\CartItemRepositoryInterface as QuoteItemRepository;
 use Magento\Payment\Model\Method\AbstractMethod;
+use Magento\Quote\Api\CartItemRepositoryInterface as QuoteItemRepository;
 
 class InstructionsConfigProvider implements ConfigProviderInterface
 {
@@ -30,9 +30,9 @@ class InstructionsConfigProvider implements ConfigProviderInterface
      */
     protected $escaper;
 
-     /**
-      * @var CheckoutSession
-      */
+    /**
+     * @var CheckoutSession
+     */
     private $checkoutSession;
 
     /**
@@ -61,7 +61,7 @@ class InstructionsConfigProvider implements ConfigProviderInterface
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritdoc
      */
     public function getConfig()
     {
@@ -74,7 +74,7 @@ class InstructionsConfigProvider implements ConfigProviderInterface
             "city" => $billingAddress->getCity(),
             "state" => $billingAddress->getRegionCode(),
             "postalCode" => $billingAddress->getPostcode(),
-            "country" => $billingAddress->getCountry()
+            "country" => $billingAddress->getCountry(),
         ];
 
         $config = [];
@@ -89,7 +89,7 @@ class InstructionsConfigProvider implements ConfigProviderInterface
                 $config['slope']['customer']['address'] = $address;
                 $config['slope']['customer']['externalId'] = $quote->getCustomerId();
                 $config['slope']['order']['total'] = $quote->getGrandTotal() * 100;
-                $config['slope']['order']['currency'] =  strtolower($quote->getQuoteCurrencyCode());
+                $config['slope']['order']['currency'] = strtolower($quote->getQuoteCurrencyCode());
                 $config['slope']['order']['billingAddress'] = $address;
                 $config['slope']['order']['externalId'] = $quote->getId();
                 $config['slope']['order']['items'] = $this->getQuoteItemsforSlope();
@@ -155,7 +155,6 @@ class InstructionsConfigProvider implements ConfigProviderInterface
         }
         return $items;
     }
-
 
     /**
      * Get country code

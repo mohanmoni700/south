@@ -36,7 +36,7 @@ require(['jquery', 'Magento_Ui/js/modal/alert', 'mage/translate', 'domReady!'], 
         if (errors.length > 0) {
             alert({
                 title: $t('Slope Credential Validation Failed'),
-                content:  errors.join('<br/>')
+                content:  errors.join('<br>')
             });
             return false;
         }
@@ -59,7 +59,7 @@ require(['jquery', 'Magento_Ui/js/modal/alert', 'mage/translate', 'domReady!'], 
                 } else {
                     alert({
                         title: $t('Slope Credential Validation Failed'),
-                        content: $t('Your Slope API Credentials could not be validated.<br/>Please ensure you have selected the correct environment and entered a valid Public Key and Private Key')
+                        content: $t('Your Slope API Credentials could not be validated.<br>Please ensure you have selected the correct environment and entered a valid Public Key and Private Key')
                     });
                 }
             }

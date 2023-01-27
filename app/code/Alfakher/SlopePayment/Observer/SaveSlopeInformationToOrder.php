@@ -1,22 +1,38 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\SlopePayment\Observer;
 
+use Alfakher\SlopePayment\Model\Payment\SlopePayment;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-use Magento\Quote\Api\Data\PaymentInterface;
-use Alfakher\SlopePayment\Model\Payment\SlopePayment;
 use Magento\Quote\Model\QuoteRepository;
 
 class SaveSlopeInformationToOrder implements ObserverInterface
 {
+    /**
+     * Quotes repository
+     *
+     * @var QuoteRepository
+     */
     protected $quoteRepository;
 
+    /**
+     * Class constructor
+     *
+     * @param QuoteRepository $quoteRepository
+     */
     public function __construct(QuoteRepository $quoteRepository)
     {
         $this->quoteRepository = $quoteRepository;
     }
 
+    /**
+     * Save slope information to order
+     *
+     * @param Observer $observer
+     * @return void
+     */
     public function execute(Observer $observer)
     {
         $order = $observer->getEvent()->getOrder();

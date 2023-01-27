@@ -1,9 +1,8 @@
 <?php
-// phpcs:disable Magento2.Security.InsecureFunction.FoundWithAlternative
 $_order = $block->getOrder();
 $slopeInfo = $_order->getSlopeInformation();
-if ($slopeInfo != null) {
-    $slopeInfo = unserialize($slopeInfo);
+if ($slopeInfo != null):
+    $slopeInfo = unserialize($slopeInfo);// phpcs:ignore
     $slopeInfo = json_decode($slopeInfo['slope_information'], true);
     ?>
     <br>
@@ -25,22 +24,29 @@ if ($slopeInfo != null) {
                 <th><?= $block->escapeHtml(__('Order Status')) ?>:</th>
                 <td><?= $block->escapeHtml(strtoupper($slopeInfo['order']['status'])) ?></td>
             </tr>
-                <?php
-                if ($slopeInfo['order']['finalizedAt'] != null) {
-                    ?>
+                <?php if ($slopeInfo['order']['finalizedAt'] != null): ?>
              <tr>
                 <th><?= $block->escapeHtml(__('Finalized At')) ?>:</th>
                 <td><?= $block->escapeHtml($slopeInfo['order']['finalizedAt']) ?></td>
             </tr>
-                <?php } ?>
+                <?php endif; ?>
             <tr>
                 <th><?= $block->escapeHtml(__('Payment Terms')) ?>:</th>
-                <td><?= $block->escapeHtml($slopeInfo['order']['paymentTerms']['name'].' - '.strtoupper(implode(',', $slopeInfo['order']['paymentTerms']['paymentMethods']))) ?></td>
+                <td>
+                    <?= $block->escapeHtml(
+                        $slopeInfo['order']['paymentTerms']['name'].' - '.
+                        strtoupper(implode(',', $slopeInfo['order']['paymentTerms']['paymentMethods']))
+                    ) ?>
+                </td>
             </tr>
             <tr>
                 <th><?= $block->escapeHtml(__('Payout Account / ID')) ?>:</th>
-                <td><?= $block->escapeHtml($slopeInfo['order']['payoutAccountId'].' - '.$slopeInfo['order']['payoutId']) ?></td>
+                <td>
+                    <?= $block->escapeHtml(
+                        $slopeInfo['order']['payoutAccountId'].' - '.$slopeInfo['order']['payoutId']
+                    ) ?>
+                </td>
             </tr>
         </table>
     </div>
-<?php } ?>
+<?php endif; ?>

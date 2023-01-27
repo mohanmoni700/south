@@ -1,27 +1,67 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\SlopePayment\Controller\Payment;
 
+use Alfakher\SlopePayment\Helper\Config as SlopeConfigHelper;
+use Alfakher\SlopePayment\Model\Gateway\Request as GatewayRequest;
+use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\Result\JsonFactory;
-use Magento\Checkout\Model\Session as CheckoutSession;
-use Magento\Quote\Api\CartItemRepositoryInterface as QuoteItemRepository;
 use Magento\Framework\Serialize\Serializer\Json;
-use Alfakher\SlopePayment\Helper\Config as SlopeConfigHelper;
-use Alfakher\SlopePayment\Model\System\Config\Backend\Environment;
-use Magento\Framework\HTTP\Client\Curl;
-use Alfakher\SlopePayment\Model\Gateway\Request as GatewayRequest;
+use Magento\Quote\Api\CartItemRepositoryInterface as QuoteItemRepository;
 
 class InitiateFlow extends Action
 {
-    const CREATE_ORDER = '/orders';
-    const FIND_ORDER = '/orders/';
-    const UPDATE_ORDER = '/orders/id/';
-    const GET_ORDER_INTENT = '/orders/id/intent?timeoutMs=36000000';
-    
+    public const CREATE_ORDER = '/orders';
+    public const FIND_ORDER = '/orders/';
+    public const UPDATE_ORDER = '/orders/id/';
+    public const GET_ORDER_INTENT = '/orders/id/intent?timeoutMs=36000000';
+
+    /**
+     * JsonFactory
+     *
+     * @var JsonFactory
+     */
     protected $resultJsonFactory;
 
+    /**
+     * @var CheckoutSession
+     */
+    protected $checkoutSession;
+
+    /**
+     * @var QuoteItemRepository
+     */
+    protected $quoteItemRepository;
+
+    /**
+     * @var Json
+     */
+    protected $json;
+
+    /**
+     * @var SlopeConfigHelper
+     */
+    protected $slopeConfig;
+
+    /**
+     * @var GatewayRequest
+     */
+    protected $gatewayRequest;
+
+    /**
+     * Class constructor
+     *
+     * @param Context $context
+     * @param JsonFactory $resultJsonFactory
+     * @param CheckoutSession $checkoutSession
+     * @param QuoteItemRepository $quoteItemRepository
+     * @param Json $json
+     * @param SlopeConfigHelper $slopeConfig
+     * @param GatewayRequest $gatewayRequest
+     */
     public function __construct(
         Context $context,
         JsonFactory $resultJsonFactory,
@@ -40,18 +80,23 @@ class InitiateFlow extends Action
         parent::__construct($context);
     }
 
+    /**
+     * Initiate checkout flow
+     *
+     * @return JsonFactory
+     */
     public function execute()
     {
         $result = $this->resultJsonFactory->create();
 
         $mgtOrder = $this->getMgtOrderForSlope();
-        $mgtQuoteId =  $this->checkoutSession->getQuote()->getId();
+        $mgtQuoteId = $this->checkoutSession->getQuote()->getId();
         $slopeOrder = $this->findSlopeOrder($mgtQuoteId);
 
-        $statusCode =  isset($slopeOrder['statusCode']) ? $slopeOrder['statusCode'] : null;
+        $statusCode = isset($slopeOrder['statusCode']) ? $slopeOrder['statusCode'] : null;
         if (isset($slopeOrder) && $statusCode == 404) {
             $slopeOrder = $this->createNewSlopeOrder($mgtOrder);
-            $statusCode =  isset($slopeOrder['statusCode']) ? $slopeOrder['statusCode'] : null;
+            $statusCode = isset($slopeOrder['statusCode']) ? $slopeOrder['statusCode'] : null;
             if (isset($statusCode) && $statusCode === 200) {
                 $slopeOrderId = $slopeOrder['id'];
 
@@ -65,7 +110,7 @@ class InitiateFlow extends Action
             $slopeOrderId = $slopeOrder['id'];
             $slopePopup = $this->getSlopeOrderIntent($slopeOrderId);
         }
-        
+
         if (isset($slopePopup['secret']) && $slopePopup['secret'] != '') {
             $result->setData(['success' => 'true', 'secret' => $slopePopup['secret'], 'messages' => 'All Ok']);
         } else {
@@ -367,36 +412,60 @@ class InitiateFlow extends Action
         return '';
     }
 
+    /**
+     * Create new slope order
+     *
+     * @param array $order
+     * @return array
+     */
     public function createNewSlopeOrder($order)
     {
         $apiEndpointUrl = $this->config->getEndpointUrl();
 
-        $url = $apiEndpointUrl.self::CREATE_ORDER;
+        $url = $apiEndpointUrl . self::CREATE_ORDER;
         $response = $this->gatewayRequest->post($url, $order);
         $response = $this->json->unserialize($response);
         return $response;
     }
 
+    /**
+     * Update slope order
+     *
+     * @param int $slopeOrderId
+     * @return array
+     */
     public function updateSlopeOrder($slopeOrderId)
     {
         $apiEndpointUrl = $this->config->getEndpointUrl();
         $order = $this->getMgtOrderForSlope();
-        $url = $apiEndpointUrl.self::UPDATE_ORDER;
+        $url = $apiEndpointUrl . self::UPDATE_ORDER;
         $url = str_replace("id", $slopeOrderId, $url);
         $response = $this->gatewayRequest->post($url, $order);
         $response = $this->json->unserialize($response);
         return $response;
     }
 
+    /**
+     * Find slope order by externalId
+     *
+     * @param int $externalId
+     * @return array
+     */
     public function findSlopeOrder($externalId)
     {
         $apiEndpointUrl = $this->config->getEndpointUrl();
-        $url = $apiEndpointUrl.self::FIND_ORDER.$externalId;
+        $url = $apiEndpointUrl . self::FIND_ORDER . $externalId;
         $response = $this->gatewayRequest->post($url);
         $response = $this->json->unserialize($response);
         return $response;
     }
 
+    /**
+     * Get slope order intent secret
+     *
+     * @param int $slopeOrderId
+     * @return array
+     */
     public function getSlopeOrderIntent($slopeOrderId)
     {
         $apiEndpointUrl = $this->config->getEndpointUrl();
@@ -404,35 +473,36 @@ class InitiateFlow extends Action
         /* NOTE : Update order data with latest quote before opening popup every time to keep data uptodate*/
         $this->updateSlopeOrder($slopeOrderId);
 
-        $url = $apiEndpointUrl.self::GET_ORDER_INTENT;
+        $url = $apiEndpointUrl . self::GET_ORDER_INTENT;
         $url = str_replace("id", $slopeOrderId, $url);
         $response = $this->gatewayRequest->post($url);
         $response = $this->json->unserialize($response);
         return $response;
     }
 
+    /**
+     * Prepare order data for slope api
+     *
+     * @return array
+     */
     public function getMgtOrderForSlope()
     {
         $orderData = [];
-
-        /* prepare order data -- starts */
 
         $quote = $this->checkoutSession->getQuote();
         $billingAddress = $quote->getBillingAddress();
         $billPhone = $billingAddress->getTelephone();
         $billCountryCode = $billingAddress->getCountry();
-        
+
         $address =
             [
             "line1" => $billingAddress->getStreet()[0],
             "city" => $billingAddress->getCity(),
             "state" => $billingAddress->getRegionCode(),
             "postalCode" => $billingAddress->getPostcode(),
-            "country" => $billingAddress->getCountry()
+            "country" => $billingAddress->getCountry(),
         ];
-        /* prepare order data -- ends */
 
-        /* Actual product data to be sent to slope -- starts */
         $orderData['total'] = $quote->getGrandTotal() * 100;
         $orderData['currency'] = strtolower($quote->getQuoteCurrencyCode());
         $orderData['billingAddress'] = $address;
@@ -443,7 +513,6 @@ class InitiateFlow extends Action
         $orderData['customer']['businessName'] = $billingAddress->getCompany() ?: 'NA';
         $orderData['customer']['address'] = $address;
         $orderData['customer']['externalId'] = $quote->getCustomerId();
-        /* Actual product data to be sent to slope -- ends */
 
         return $this->json->serialize($orderData);
     }

@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Alfakher\SlopePayment\Model\System\Config\Backend;
 
 use Magento\Framework\App\Cache\TypeListInterface;
@@ -16,13 +18,25 @@ use Magento\Framework\Registry;
  */
 class Version extends Value
 {
-    const MODULE = 'Alfakher_SlopePayment';
+    public const MODULE = 'Alfakher_SlopePayment';
 
     /**
      * @var ResourceInterface
      */
     private $moduleResource;
 
+    /**
+     * Version class constructor
+     *
+     * @param Context $context
+     * @param Registry $registry
+     * @param ScopeConfigInterface $config
+     * @param TypeListInterface $cacheTypeList
+     * @param ResourceInterface $moduleResource
+     * @param AbstractResource|null $resource
+     * @param AbstractDb|null $resourceCollection
+     * @param array $data
+     */
     public function __construct(
         Context $context,
         Registry $registry,

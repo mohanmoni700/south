@@ -3,24 +3,36 @@ declare(strict_types=1);
 
 namespace Alfakher\SlopePayment\Controller\Adminhtml\Configuration;
 
+use Alfakher\SlopePayment\Helper\Config as SlopeConfigHelper;
+use Alfakher\SlopePayment\Model\Gateway\Request as GatewayRequest;
+use Alfakher\SlopePayment\Model\System\Config\Backend\Environment;
 use Exception;
 use Magento\Backend\App\Action;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Controller\ResultInterface;
-use Alfakher\SlopePayment\Model\System\Config\Backend\Environment;
-use Alfakher\SlopePayment\Helper\Config as SlopeConfigHelper;
 use Magento\Framework\Serialize\Serializer\Json;
-use Alfakher\SlopePayment\Model\Gateway\Request as GatewayRequest;
 
 class KeyValidate extends Action
 {
-    const TEST_API_ENDPOINT = '/customers/test';
+    public const TEST_API_ENDPOINT = '/customers/test';
 
     /**
      * @var Json
      */
     protected $json;
-    
+
+    /**
+     * SlopeConfigHelper
+     *
+     * @var SlopeConfigHelper
+     */
+    protected $slopeConfig;
+
+    /**
+     * @var GatewayRequest
+     */
+    protected $gatewayRequest;
+
     /**
      * Validate constructor.
      *
@@ -75,9 +87,8 @@ class KeyValidate extends Action
         }
 
         $result = $this->resultFactory->create(ResultFactory::TYPE_JSON);
-        
+
         try {
-            /* test endpoint to test connection */
             $url = $testEndpoint . self::TEST_API_ENDPOINT;
 
             $response = $this->gatewayRequest->get($url);

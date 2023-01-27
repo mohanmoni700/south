@@ -5,31 +5,37 @@ namespace Alfakher\SlopePayment\Block\Adminhtml\System\Config\Fieldset;
 
 use Magento\Backend\Block\Context;
 use Magento\Backend\Model\Auth\Session;
-use Magento\Config\Block\System\Config\Form\Fieldset;
+use Magento\Config\Block\System\Config\Form\Fieldset as BaseFieldset;
 use Magento\Config\Model\Config;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Framework\View\Helper\Js;
 use Magento\Framework\View\Helper\SecureHtmlRenderer;
 
-class Payment extends Fieldset
+class Payment extends BaseFieldset
 {
-  /**
-   * @var Config
-   */
+    /**
+     * @var Config
+     */
     private $config;
-  /**
-   * @var SecureHtmlRenderer
-   */
+
+    /**
+     * @var SecureHtmlRenderer
+     */
     private $secureRenderer;
 
-  /**
-   * @param Context            $context
-   * @param Session            $authSession
-   * @param Js                 $jsHelper
-   * @param Config             $config
-   * @param array              $data
-   * @param SecureHtmlRenderer $secureRenderer
-   */
+    /**
+     * @var Js
+     */
+    protected $jsHelper;
+
+    /**
+     * @param Context $context
+     * @param Session $authSession
+     * @param Js $jsHelper
+     * @param Config $config
+     * @param SecureHtmlRenderer $secureRenderer
+     * @param array $data
+     */
     public function __construct(
         Context $context,
         Session $authSession,
@@ -45,27 +51,27 @@ class Payment extends Fieldset
             $data,
             $secureRenderer
         );
-        $this->config         = $config;
+        $this->config = $config;
         $this->secureRenderer = $secureRenderer;
     }
 
-  /**
-   * Add custom css class
-   *
-   * @param AbstractElement $element
-   * @return string
-   */
+    /**
+     * Add custom css class
+     *
+     * @param AbstractElement $element
+     * @return string
+     */
     protected function _getFrontendClass($element)
     {
         return parent::_getFrontendClass($element) . ' with-button';
     }
 
-  /**
-   * Return header title part of html for payment solution
-   *
-   * @param AbstractElement $element
-   * @return string
-   */
+    /**
+     * Return header title part of html for payment solution
+     *
+     * @param AbstractElement $element
+     * @return string
+     */
     protected function _getHeaderTitleHtml($element)
     {
         $html = '<div class="config-heading" >';
@@ -81,7 +87,7 @@ class Payment extends Fieldset
             'Close'
         ) . '</span></button>';
 
-        $html .= /* @noEscape */ $this->secureRenderer->renderEventListenerAsTag(
+        $html .= /* @noEscape */$this->secureRenderer->renderEventListenerAsTag(
             'onclick',
             "slopeToggleSolution.call(this, '" . $htmlId . "', '" . $this->getUrl('adminhtml/*/state') .
             "');event.preventDefault();",
@@ -99,37 +105,37 @@ class Payment extends Fieldset
         return $html;
     }
 
-  /**
-   * Return header comment part of html for payment solution
-   *
-   * @param AbstractElement $element
-   * @return string
-   * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-   */
+    /**
+     * Return header comment part of html for payment solution
+     *
+     * @param AbstractElement $element
+     * @return string
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     protected function _getHeaderCommentHtml($element)
     {
         return '';
     }
 
-  /**
-   * Get collapsed state on-load
-   *
-   * @param AbstractElement $element
-   * @return false
-   * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-   */
+    /**
+     * Get collapsed state on-load
+     *
+     * @param AbstractElement $element
+     * @return false
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     protected function _isCollapseState($element)
     {
         return false;
     }
 
-  /**
-   * Return extra Js.
-   *
-   * @param AbstractElement $element
-   * @return string
-   * @SuppressWarnings(PHPMD.UnusedFormalParameter)
-   */
+    /**
+     * Return extra Js.
+     *
+     * @param AbstractElement $element
+     * @return string
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     protected function _getExtraJs($element)
     {
         $script = "require(['jquery', 'prototype'], function(jQuery){

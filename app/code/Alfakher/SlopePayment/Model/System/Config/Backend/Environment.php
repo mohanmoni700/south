@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace Alfakher\SlopePayment\Model\System\Config\Backend;
 
 use Magento\Framework\Data\OptionSourceInterface;

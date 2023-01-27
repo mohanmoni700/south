@@ -3,13 +3,25 @@ declare(strict_types=1);
 
 namespace Alfakher\SlopePayment\Block\View;
 
+use Alfakher\SlopePayment\Helper\Config as SlopeConfig;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
-use Alfakher\SlopePayment\Helper\Config as SlopeConfig;
 
 class SlopeWidgetJs extends Template
 {
+    /**
+     * Slope config helper
+     *
+     * @var SlopeConfig
+     */
+    protected $slopeConfig;
 
+    /**
+     * Class Constructor
+     *
+     * @param Context $context
+     * @param SlopeConfig $slopeConfig
+     */
     public function __construct(Context $context, SlopeConfig $slopeConfig)
     {
         $this->slopeConfigHelper = $slopeConfig;
