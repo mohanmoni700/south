@@ -230,6 +230,119 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
     }
 
     /**
+     * Get order line items
+     *
+     * @return array
+     */
+    private function _getQuoteObjectLineItems($queueObject, $lineParam, $entityType, $customerData)
+    {
+        $lineItems = [];
+
+        $orderItems = $queueObject->getOrder()->getAllItems();
+        $orderItemsArray = [];
+        foreach ($orderItems as $orderItem) {
+            $orderItemsArray[$orderItem->getItemId()] = $orderItem;
+        }
+
+        $items = $queueObject->getItems();
+
+        if (count($items) > 0) {
+            $lineCount = 0;
+            foreach ($items as $item) {
+                $saleType = self::SALE_INVOICE_TYPE;
+                $product = $this->_productRepository->getById($item->getProductId());
+
+                if ($product->getTypeId() == "bundle") {
+                    continue;
+                }
+
+                $invoiceOrderItem = $orderItemsArray[$item->getOrderItemId()];
+                if ($invoiceOrderItem->getParentItem()) {
+                    if ($invoiceOrderItem->getParentItem()->getProductType() == "configurable") {
+                        continue;
+                    }
+                }
+
+                $lineCount++;
+
+                $itemAlternativeFuelContent = $product->getExciseAltProdContent();
+                $currencyCode = $this->storeManager->getStore()->getCurrentCurrency()->getCode();
+                $itemQty = $item->getQty();
+                $itemSku = $item->getSku();
+                $itemName = $item->getName();
+                $itemUnitPrice = $item->getPrice();
+                $lineAmount = ($itemUnitPrice * $itemQty) - $item->getDiscountAmount();
+                if ($entityType == "creditmemo") {
+                    $saleType = self::SALE_REFUND_TYPE;
+                    $itemQty = $itemQty * -1;
+                    $lineAmount = $lineAmount * -1;
+                }
+                $itemAlternateUnitPrice = $product->getExcisePurchaseUnitPrice();
+                $itemAlternateUnitPrice1 = $product->hasData('excise_alternate_price_1') ? (float)$product->getData('excise_alternate_price_1') : '';
+                $itemAlternateUnitPrice2 = $product->hasData('excise_alternate_price_2') ? (float)$product->getData('excise_alternate_price_2') : '';
+                $itemAlternateUnitPrice3 = $product->hasData('excise_alternate_price_3') ? (float)$product->getData('excise_alternate_price_3') : '';
+                $itemUnitOfMeasure = ($product->getAttributeText('excise_unit_of_measure')) ? $product->getAttributeText('excise_unit_of_measure') : "PAK";
+                if (in_array(
+                    $item->getProductType(),
+                    [BundleProductType::TYPE_CODE, Configurable::TYPE_CODE]
+                )) {
+                    $itemSku = $product->getData('sku');
+                    $itemName = $product->getData('name');
+                }
+                $productCode = $itemSku;
+                $lineitems = [
+                    'InvoiceLine' => $lineCount,
+                    'ProductCode' => $productCode,
+                    'UnitPrice' => $itemUnitPrice,
+                    'BilledUnits' => $itemQty,
+                    'LineAmount' => $lineAmount,
+                    'AlternateUnitPrice' => $itemAlternateUnitPrice,
+                    'AlternateLineAmount' => $itemAlternateUnitPrice * $itemQty,
+                    'Currency' => $currencyCode,
+                    'UnitOfMeasure' => $itemUnitOfMeasure,
+                    'TaxIncluded' => $this->exciseTaxConfig->getPriceIncludesTax($queueObject->getStoreId()),
+                    'AlternativeFuelContent' => $itemAlternativeFuelContent,
+                    'UserData' => '',
+                    'CustomString1' => $itemSku . "-" . $itemName,
+                    'CustomString2' => $queueObject->getOrder()->getIncrementId(),
+                    'CustomString3' => $queueObject->getIncrementId(),
+                    'DestinationType' => '',
+                    'Destination' => '',
+                    'DestinationOutCityLimitInd' => 'N',
+                    'DestinationSpecialJurisdictionInd' => 'N',
+                    'DestinationExciseWarehouse' => null,
+                    'SaleType' => $saleType
+                ];
+                if ($itemAlternateUnitPrice1 != '') {
+                    $lineitems['CustomNumeric1'] = $itemAlternateUnitPrice1;
+                }
+                if ($itemAlternateUnitPrice2 != '') {
+                    $lineitems['CustomNumeric2'] = $itemAlternateUnitPrice2;
+                }
+                if ($itemAlternateUnitPrice3 != '') {
+                    $lineitems['CustomNumeric3'] = $itemAlternateUnitPrice3;
+                }
+                // To set common data elements
+                $transactionItem = array_merge($lineitems, $lineParam); //@codingStandardsIgnoreLine
+                array_push($lineItems, $transactionItem);
+            }
+            $shippingAmount = $queueObject->getShippingAmount();
+            $shippingLineItems = $this->_getShippingLineItems(
+                $lineitems,
+                $queueObject,
+                $lineCount,
+                $customerData,
+                $shippingAmount,
+                false,
+                $entityType
+            );
+            $shippingLineItems = array_merge($shippingLineItems, $lineParam);
+            array_push($lineItems, $shippingLineItems);
+        }
+        return $lineItems;
+    }
+
+    /**
      * _getShippingLineItems
      *
      * @param mixed $lineitems
@@ -609,6 +722,19 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
                     $lineitems["LineAmount"] = $item->getRowTotal() - $item->getDiscountAmount();
                 }
                 /* -- fix to resolve the line amount issue for the fixed price bundle products -- */
+
+                $itemAlternateUnitPrice1 = $item->getProduct()->hasData('excise_alternate_price_1') ? (float)$item->getProduct()->getData('excise_alternate_price_1') : '';
+                $itemAlternateUnitPrice2 = $item->getProduct()->hasData('excise_alternate_price_2') ? (float)$item->getProduct()->getData('excise_alternate_price_2') : '';
+                $itemAlternateUnitPrice3 = $item->getProduct()->hasData('excise_alternate_price_3') ? (float)$item->getProduct()->getData('excise_alternate_price_3') : '';
+                if ($itemAlternateUnitPrice1 != '') {
+                    $lineitems['CustomNumeric1'] = $itemAlternateUnitPrice1;
+                }
+                if ($itemAlternateUnitPrice2 != '') {
+                    $lineitems['CustomNumeric2'] = $itemAlternateUnitPrice2;
+                }
+                if ($itemAlternateUnitPrice3 != '') {
+                    $lineitems['CustomNumeric3'] = $itemAlternateUnitPrice3;
+                }
 
                 // To set common data elements
                 $transactionItem = array_merge($lineitems, $lineParam); //@codingStandardsIgnoreLine
