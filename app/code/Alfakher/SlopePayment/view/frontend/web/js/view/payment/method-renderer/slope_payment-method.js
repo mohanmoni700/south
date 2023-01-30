@@ -49,7 +49,6 @@ define(
                     type: 'GET',
                     dataType: 'json'
                 }).done(function (data) {
-                    console.log(data);
                     if (typeof data.secret !== 'undefined')
                         var intentSecret = data.secret;
                     self.initializeScope(intentSecret, quote);
@@ -70,7 +69,6 @@ define(
 
                     quote: quote,
 
-
                     /**
                     * Called when the user has closed the popup. See "Event callbacks page"
                     */
@@ -89,7 +87,7 @@ define(
                     * Called when user reaches an terminal error page. See "Event callbacks page"
                     */
                     onFailure: function (payload) {
-                        alert(JSON.stringify(payload));
+                        console.log(JSON.stringify(payload));
                     },
 
                     /**
