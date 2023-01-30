@@ -11,6 +11,7 @@ use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\Message\ManagerInterface;
 use Alfakher\ExitB\Model\ExitbOrderFactory;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Company\Api\CompanyRepositoryInterface;
 
 /**
  * ExitB order sync
@@ -59,6 +60,11 @@ class ExitbSync
     protected $exitbmodelFactory;
 
     /**
+     * @var CompanyRepositoryInterface
+     */
+    protected $companyRepository;
+
+    /**
      * New construct
      *
      * @param Context $context
@@ -68,6 +74,7 @@ class ExitbSync
      * @param Json $json
      * @param ManagerInterface $messageManager
      * @param ExitbOrderFactory $exitbmodelFactory
+     * @param CompanyRepositoryInterface $companyRepository
      */
     public function __construct(
         Context $context,
@@ -76,7 +83,8 @@ class ExitbSync
         Curl $curl,
         Json $json,
         ManagerInterface $messageManager,
-        ExitbOrderFactory $exitbmodelFactory
+        ExitbOrderFactory $exitbmodelFactory,
+        CompanyRepositoryInterface $companyRepository
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->order = $orderRepository;
@@ -84,6 +92,7 @@ class ExitbSync
         $this->json = $json;
         $this->messageManager = $messageManager;
         $this->exitbmodelFactory = $exitbmodelFactory;
+        $this->companyRepository = $companyRepository;
     }
 
     /**
@@ -147,11 +156,20 @@ class ExitbSync
                 if ($customerId) {
                     $orderData['orderData']['customer']['number'] = $order->getCustomerId();
                     $orderData['orderData']['customer']['email'] = $order->getCustomerEmail();
+                    $orderData['orderData']['customer']['phone'] = $order->getShippingAddress()->getTelephone();
                 }
+                $companydata = $order->getExtensionAttributes()->getCompanyOrderAttributes();
+                $companyName = '';
+                if (!empty($companydata)) {
+                    $company = $this->companyRepository->get($companydata->getCompanyId());
+                    $orderData['orderData']['customer']['taxIdNumber'] = $company->getData('ust_id');
+                    $companyName = $companydata->getCompanyName();
+                }
+
                 $shippingaddress = $order->getShippingAddress();
-                $orderData['orderData']['deliveryAddress'] = $this->deliveryAddress($shippingaddress);
+                $orderData['orderData']['deliveryAddress'] = $this->deliveryAddress($shippingaddress, $companyName);
                 $billingaddress = $order->getBillingAddress();
-                $orderData['orderData']['invoiceAddress'] = $this->invoiceAddress($billingaddress);
+                $orderData['orderData']['invoiceAddress'] = $this->invoiceAddress($billingaddress, $companyName);
 
                 $paymentCode = $order->getPayment()->getMethod();
                 $orderData['orderData']['payment']['code'] = $this->paymentType($websiteId, $paymentCode);
@@ -160,10 +178,9 @@ class ExitbSync
                 $shippingMethod = $order->getShippingMethod();
                 $orderData['orderData']['shipment']['code'] = $this->getConfigValue(self::SHIP_CODE, $websiteId);
                 $orderData['orderData']['shipment']['total'] = (float)$order->getShippingInclTax();
-
                 $items = $order->getAllItems();
                 $orderData['orderData']['items'] = $this->orderItems($items, $orderData['orderData']['isB2B']);
-
+                
                 $exitBModel = $this->exitbmodelFactory->create();
                 $exitBorderSync = $exitBModel->load($orderId, 'order_id');
 
@@ -263,15 +280,18 @@ class ExitbSync
      * Get delivery address
      *
      * @param array $shippingaddress
+     * @param string|null $companyName
      * @return array
      */
-    public function deliveryAddress($shippingaddress)
+    public function deliveryAddress($shippingaddress, $companyName)
     {
         if ($shippingaddress) {
             return [
                 'firstName' => $shippingaddress->getFirstname(),
                 'lastName' => $shippingaddress->getLastname(),
-                'street' => implode($shippingaddress->getStreet()),
+                'company' => $companyName,
+                'street' => $shippingaddress->getStreetLine(1),
+                'houseNumber' => $shippingaddress->getStreetLine(2),
                 'zip' => $shippingaddress->getPostcode(),
                 'city' => $shippingaddress->getCity(),
                 'countryCode' => $shippingaddress->getCountryId(),
@@ -283,15 +303,18 @@ class ExitbSync
      * Get invoice address
      *
      * @param array $billingaddress
+     * @param string|null $companyName
      * @return array
      */
-    public function invoiceAddress($billingaddress)
+    public function invoiceAddress($billingaddress, $companyName)
     {
         if ($billingaddress) {
             return [
                 'firstName' => $billingaddress->getFirstname(),
                 'lastName' => $billingaddress->getLastname(),
-                'street' => implode($billingaddress->getStreet()),
+                'company' => $companyName,
+                'street' => $billingaddress->getStreetLine(1),
+                'houseNumber' => $billingaddress->getStreetLine(2),
                 'zip' => $billingaddress->getPostcode(),
                 'city' => $billingaddress->getCity(),
                 'countryCode' => $billingaddress->getCountryId(),
