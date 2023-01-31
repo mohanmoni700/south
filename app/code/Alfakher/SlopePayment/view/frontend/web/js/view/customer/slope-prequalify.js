@@ -18,12 +18,6 @@ define([
                         intentSecret: data.secret,
                     });
                     window.Slope.open();
-                },
-                error: function (xhr, status, error) {
-                    //console.error(error);
-                },
-                complete: function (xhr, status) {
-                    //console.log(status);
                 }
             });
         });

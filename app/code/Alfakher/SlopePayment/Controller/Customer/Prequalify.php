@@ -13,9 +13,9 @@ use Magento\Framework\Serialize\Serializer\Json;
 
 class Prequalify extends Action
 {
-    public const CREATE_CUSTOMER = '/customers'; //POST
-    public const GET_CUSTOMER = '/customers/id/'; //GET
-    public const GET_CUSTOMER_INTENT = '/customers/id/intent'; //POST
+    public const CREATE_CUSTOMER = '/customers';
+    public const GET_CUSTOMER = '/customers/id/';
+    public const GET_CUSTOMER_INTENT = '/customers/id/intent';
 
     /**
      * JsonFactory
