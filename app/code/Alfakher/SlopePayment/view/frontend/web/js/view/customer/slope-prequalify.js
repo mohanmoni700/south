@@ -12,7 +12,6 @@ define([
                 type: 'GET',
                 showLoader: true,
                 success: function (data) {
-                    console.log(data);
                     window.initializeSlope({
                         flow: 'pre_qualify',
                         intentSecret: data.secret,
