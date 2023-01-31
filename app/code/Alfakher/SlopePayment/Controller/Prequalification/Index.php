@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace Alfakher\SlopePayment\Controller\Prequalification;
 
-use Magento\Framework\App\Action\Context;
+use Magento\Framework\App\Action;
 use Magento\Framework\View\Result\PageFactory;
 
-class Index extends \Magento\Framework\App\Action\Action
+class Index extends Action\Action
 {
     /**
      * Result Page
@@ -17,11 +17,11 @@ class Index extends \Magento\Framework\App\Action\Action
 
     /**
      * Index constructor.
-     * @param Context $context
+     * @param Action\Context $context
      * @param PageFactory $resultPageFactory
      */
     public function __construct(
-        Context $context,
+        Action\Context $context,
         PageFactory $resultPageFactory
     ) {
         $this->resultPageFactory = $resultPageFactory;
@@ -35,6 +35,8 @@ class Index extends \Magento\Framework\App\Action\Action
      */
     public function execute()
     {
-        return $this->resultPageFactory->create();
+        $resultPage = $this->resultPageFactory->create();
+        $resultPage->getConfig()->getTitle()->set(__('Slope Pre-Qualification'));
+        return $resultPage;
     }
 }
