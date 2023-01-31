@@ -283,7 +283,7 @@ class ExitbSync
      * @param string|null $companyName
      * @return array
      */
-    public function deliveryAddress($shippingaddress, $companyName)
+    public function deliveryAddress($shippingaddress, $companyName = null)
     {
         if ($shippingaddress) {
             return [
@@ -306,7 +306,7 @@ class ExitbSync
      * @param string|null $companyName
      * @return array
      */
-    public function invoiceAddress($billingaddress, $companyName)
+    public function invoiceAddress($billingaddress, $companyName = null)
     {
         if ($billingaddress) {
             return [
