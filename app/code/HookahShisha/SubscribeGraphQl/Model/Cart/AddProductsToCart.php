@@ -624,7 +624,7 @@ class AddProductsToCart extends SourceAddProductsToCart
         if ($product->getAllowSubscriptionEndDate() && isset($request['end_type'])) {
             $finalCycle = $this->endCycleCalculation($request, $product);
             return ($finalCycle) ?
-                __('Repeat %1 time(s)', $finalCycle) :
+                __($finalCycle) :
                 __('Repeats until failed or canceled');
         } else {
             return ($product->getBillingMaxCycles()) ?
