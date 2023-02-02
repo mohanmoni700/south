@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\GrossMargin\Observer;
 
@@ -14,6 +15,7 @@ class PurchaseOrderToOrder implements \Magento\Framework\Event\ObserverInterface
      * Execute
      *
      * @param Observer $observer
+     * @return void
      */
     public function execute(Observer $observer)
     {

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Magedelight
+ * Copyright (C) 2017 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2017 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="md_subscribenow_email_new_subscription_template" label="New Subscription" file="new_subscription.html" type="html" module="Magedelight_Subscribenow" area="frontend"/>    
+    <template id="md_subscribenow_email_subscription_update_template" label="Subscription Profile Update" file="subscription_update.html" type="html" module="Magedelight_Subscribenow" area="frontend"/>
+    <template id="md_subscribenow_email_payment_fail_template" label="Payment Failed" file="subscription_order_fail.html" type="html" module="Magedelight_Subscribenow" area="frontend"/>
+    <template id="md_subscribenow_email_subscription_reminder_template" label="Subscription Reminder" file="subscription_reminder.html" type="html" module="Magedelight_Subscribenow" area="frontend"/>
+    <template id="md_subscribenow_email_subscription_ewallet_topup_reminder_template" label="Ewallet Topup Reminder" file="topup_reminder.html" type="html" module="Magedelight_Subscribenow" area="frontend"/>             
+</config>

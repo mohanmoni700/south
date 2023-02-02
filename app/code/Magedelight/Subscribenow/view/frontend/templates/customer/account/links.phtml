@@ -1,0 +1,27 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+<?php $urlInfo = $block->getUrlInfo(); ?>
+<div class="block block-addresses-default">
+    <div class="block-title">
+        <span style="font-size: 16px"> <?php echo __('About This Profile:') ?>  </span>
+        <?php foreach ($block->getLinks() as $page => $link): ?>
+            <?php if ($this->isCurrentPage($page)): ?>
+                <span style="font-size: 16px;margin-left: 3%"><?php echo __($link['title']); ?></span>
+            <?php else: ?>
+                <a href="<?php echo $link['url'] ?>">
+                    <span style="font-size: 16px;margin-left: 3%"><?php echo __($link['title']); ?></span>
+                </a>
+            <?php endif; ?>
+        <?php endforeach;?>
+    </div>
+</div>

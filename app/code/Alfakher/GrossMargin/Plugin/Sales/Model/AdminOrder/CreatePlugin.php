@@ -1,20 +1,25 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\GrossMargin\Plugin\Sales\Model\AdminOrder;
 
 /**
  * @author af_bv_op
  */
+use Magento\Sales\Model\AdminOrder\Create;
+use Magento\Sales\Model\Order;
+
 class CreatePlugin
 {
     /**
      * Around Import Post Data
      *
-     * @param \Magento\Sales\Model\AdminOrder\Create $subject
+     * @param Create $subject
      * @param callable $proceed
      * @param array $data
+     * @return mixed
      */
-    public function aroundImportPostData(\Magento\Sales\Model\AdminOrder\Create $subject, callable $proceed, $data)
+    public function aroundImportPostData(Create $subject, callable $proceed, $data)
     {
         $result = $proceed($data);
 
@@ -27,11 +32,12 @@ class CreatePlugin
     /**
      * Around Init From Order
      *
-     * @param \Magento\Sales\Model\AdminOrder\Create $subject
+     * @param Create $subject
      * @param callable $proceed
-     * @param \Magento\Sales\Model\Order $order
+     * @param Order $order
+     * @return mixed
      */
-    public function aroundInitFromOrder(\Magento\Sales\Model\AdminOrder\Create $subject, callable $proceed, \Magento\Sales\Model\Order $order)
+    public function aroundInitFromOrder(Create $subject, callable $proceed, Order $order)
     {
         $result = $proceed($order);
 
