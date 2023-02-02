@@ -13,5 +13,6 @@
 <schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
     <table name="multi_quickbook_accounts" resource="default" engine="innodb" comment="Quickbook Accounts">
         <column xsi:type="varchar" name="default_tax_class" length="255" comment="Default Tax Class"/>
+        <column xsi:type="varchar" name="business" length="255" comment="Business (Location on QBO)"/>
     </table>
 </schema>

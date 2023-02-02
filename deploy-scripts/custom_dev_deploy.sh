@@ -40,6 +40,12 @@ REMOTE_BRANCH=${REMOTE_BRANCH_STAGE}
 REMOTE_REPO=${REMOTE_REPO_STAGE}
 INSTANCE="Stage"
 ;;
+"environment/preprod")
+echo "Setting Preprod details"
+REMOTE_BRANCH=${REMOTE_BRANCH_PREPROD}
+REMOTE_REPO=${REMOTE_REPO_PREPROD}
+INSTANCE="Preprod"
+;;
 "production")
 echo "Setting Prod details"
 REMOTE_BRANCH=${REMOTE_BRANCH_PROD}

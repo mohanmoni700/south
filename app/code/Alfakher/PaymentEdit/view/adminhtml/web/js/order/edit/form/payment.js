@@ -1,7 +1,3 @@
-/**
- * Copyright © MageWorx. All rights reserved.
- * See LICENSE.txt for license details.
- */
 define(
     [
         'jquery',

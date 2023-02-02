@@ -63,22 +63,14 @@ class DefaultRendererPlugin
         } elseif ($column == 'tax-percent') {
             $itemTotal = (($item->getPrice() * $item->getQtyOrdered()) - $item->getDiscountAmount());
             $orderTaxRate = number_format($itemTotal ? ($item->getTaxAmount() * 100) / $itemTotal : 0, 2);
-            $html = $orderTaxRate . "%";
+            $html = $defaultRenderer->displayTaxPercent($item);
 
             if (!empty($item->getExciseTax())) {
-                $exciseTaxRate = number_format(
-                    $itemTotal ? ($item->getExciseTax() * 100) / $itemTotal : 0,
-                    2
-                );
-                $html .= "<br/>Excise Tax - " . $exciseTaxRate . "%";
+                $html .= "<br/>Excise Tax - " . $defaultRenderer->displayTaxPercent($item);
             }
 
             if (!empty($item->getSalesTax())) {
-                $salesTaxRate = number_format(
-                    $itemTotal ?($item->getSalesTax() * 100) / $itemTotal : 0,
-                    2
-                );
-                $html .= "<br/>Sales Tax - " . $salesTaxRate . "%";
+                $html .= "<br/>Sales Tax - " . $defaultRenderer->displayTaxPercent($item);
             }
 
             $result = $html;
