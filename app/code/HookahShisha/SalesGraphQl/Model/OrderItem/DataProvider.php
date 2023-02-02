@@ -164,6 +164,12 @@ class DataProvider extends SourceDataProvider
             $charcaolPrice = $charcoalItem ? $charcoalItem->getPrice() : 0;
             $superPackPrice = $superPack ? $this->getSuperPackItemPrice($orderItems, $superPackItems) : 0;
 
+            $alfaBundlCharcoal = '';
+            if ($charcoalItem && is_object($charcoalItem) && null !== $charcoalItem->getProduct()) {
+                $charcoalPName = $charcoalItem->getProduct()->getName() ?? '';
+                $charcoalPDetail = $charcoalItem->getProduct()->getCharcoalShortDetail() ?? '';
+                $alfaBundlCharcoal = $charcoalPName . ': ' . $charcoalPDetail;
+            }
             $this->orderItemList[$orderItem->getItemId()] = [
                 'id' => base64_encode($orderItem->getItemId()),
                 'associatedProduct' => $associatedProduct,
@@ -189,10 +195,7 @@ class DataProvider extends SourceDataProvider
                 'shisha_title' => $shishaTitle,
                 'charcoal_title' => $charcoalTitle,
                 'alfa_bundle_flavour' => $shishaItem ? $shishaItem->getProduct()->getAttributeText('flavour') : '',
-                'alfa_bundle_charcoal' => $charcoalItem
-                    ? $charcoalItem->getProduct()->getName()
-                    . ': '
-                    . $charcoalItem->getProduct()->getCharcoalShortDetail() : '',
+                'alfa_bundle_charcoal' => $alfaBundlCharcoal ?? '',
                 'super_pack_flavour' => is_array($superPack) ? $superPack : []
             ];
         }
