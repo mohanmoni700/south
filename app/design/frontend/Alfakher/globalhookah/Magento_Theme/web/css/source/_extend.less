@@ -1,0 +1,57 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    body {
+        .page-header {
+            .warning-section-wrapper {
+                .warning-section {
+                    .heading-section {
+                        h3 {
+                             .lib-css(font-family, @font-family__base);
+                        }
+                    }
+                }
+            }
+            .header-links-wrapper {
+                .header-links {
+                    .tiktok {
+                        &::before {
+                            background-image: url('@{baseDir}images/tiktok.svg');
+                            cursor: pointer;
+                        }
+                    }
+                    .whatsapp {
+                        &::before {
+                            background-image: url('@{baseDir}images/whatsapp.svg');
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+            .header.content {
+                padding: @indent__s 0;
+
+                .logo {
+                     width: 230px;
+                     height: auto;
+                }
+                .block-search {
+                    margin-top: 20px;
+                    .control { 
+                        input {
+                            height: 35px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

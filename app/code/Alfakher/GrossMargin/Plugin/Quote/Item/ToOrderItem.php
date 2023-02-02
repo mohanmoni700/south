@@ -1,18 +1,21 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\GrossMargin\Plugin\Quote\Item;
 
 /**
  * @author af_bv_op
  */
+use Alfakher\GrossMargin\ViewModel\GrossMargin;
+
 class ToOrderItem
 {
     /**
      * Constructor
-     * @param \Alfakher\GrossMargin\ViewModel\GrossMargin $grossMarginViewModel
+     * @param GrossMargin $grossMarginViewModel
      */
     public function __construct(
-        \Alfakher\GrossMargin\ViewModel\GrossMargin $grossMarginViewModel
+        GrossMargin $grossMarginViewModel
     ) {
         $this->grossMarginViewModel = $grossMarginViewModel;
     }
@@ -33,8 +36,9 @@ class ToOrderItem
     ) {
         $orderItem = $proceed($item, $additional);
 
-        $websiteId = $item->getQuote()->getStore()->getWebsiteId();
-        $moduleEnable = $this->grossMarginViewModel->isModuleEnabled($websiteId);
+        $storeId = $item->getQuote()->getStore()->getStoreId();
+        $moduleEnable = $this->grossMarginViewModel->isModuleEnabled($storeId);
+
         if ($moduleEnable) {
             $orderItem->setGrossMargin($item->getGrossMargin());
         }

@@ -1,0 +1,17 @@
+diff --git a/app/code/Magedelight/Subscribenow/Plugin/Checkout/Model/ShippingInformationManagement.php b/app/code/Magedelight/Subscribenow/Plugin/Checkout/Model/ShippingInformationManagement.php
+Index: ../app/code/Magedelight/Subscribenow/Plugin/Checkout/Model/ShippingInformationManagement.php
+--- ../app/code/Magedelight/Subscribenow/Plugin/Checkout/Model/ShippingInformationManagement.php	2022-12-13 12:52:49.157031275 +0530
++++ ../app/code/Magedelight/Subscribenow/Plugin/Checkout/Model/ShippingInformationManagement.php	2022-12-13 12:54:05.281690524 +0530
+@@ -60,10 +60,10 @@
+         $quote = $this->quoteRepository->getActive($cartId);
+ 
+         if ($this->helper->hasSubscriptionProduct($quote)) {
+-            if (!$addressInformation->getShippingAddress()->getCustomerAddressId()) {
++            if ($addressInformation->getShippingAddress() && !$addressInformation->getShippingAddress()->getCustomerAddressId()) {
+                 $addressInformation->getShippingAddress()->setSaveInAddressBook(1);
+             }
+-            if (!$addressInformation->getBillingAddress()->getCustomerAddressId()) {
++            if ($addressInformation->getBillingAddress() && !$addressInformation->getBillingAddress()->getCustomerAddressId()) {
+                 $addressInformation->getBillingAddress()->setSaveInAddressBook(1);
+             }
+         }

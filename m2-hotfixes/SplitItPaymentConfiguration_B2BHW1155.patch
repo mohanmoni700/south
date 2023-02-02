@@ -1,0 +1,149 @@
+diff --git a/vendor/splitit/module-payment-gateway/Block/System/Config/LoginAuth.php b/vendor/splitit/module-payment-gateway/Block/System/Config/LoginAuth.php
+index 73584284..a2d73258 100644
+--- a/vendor/splitit/module-payment-gateway/Block/System/Config/LoginAuth.php
++++ b/vendor/splitit/module-payment-gateway/Block/System/Config/LoginAuth.php
+@@ -4,6 +4,9 @@ namespace Splitit\PaymentGateway\Block\System\Config;
+ 
+ use Magento\Config\Block\System\Config\Form\Field;
+ use Magento\Framework\Data\Form\Element\AbstractElement;
++use Magento\Backend\Block\Template\Context;
++use Magento\Framework\App\Config\ScopeConfigInterface;
++use Magento\Store\Model\ScopeInterface;
+ 
+ class LoginAuth extends Field
+ {
+@@ -14,6 +17,37 @@ class LoginAuth extends Field
+      */
+     protected $_template = 'Splitit_PaymentGateway::system/config/loginauth-button.phtml';
+ 
++    /**
++     * @var ScopeConfigInterface
++     */
++    protected $scopeConfig;
++
++    /**
++     * @param Context $context
++     * @param ScopeConfigInterface $scopeConfig
++     * @param array $data
++     */
++
++    public function __construct(
++        Context $context,
++        ScopeConfigInterface $scopeConfig,
++        array $data = []
++    ) {
++        parent::__construct($context, $data);
++        $this->scopeConfig = $scopeConfig;
++    }
++
++    /**
++     * getWebUrl
++     *
++     * @return string
++     */
++    public function getWebUrl()
++    {
++        $baseUrl = $this->scopeConfig->getValue('web/secure/base_url', ScopeInterface::SCOPE_STORE, 0);
++        return $baseUrl . self::TEST_CREDS_ROUTE;
++    }
++
+     /**
+      * @inheritDoc
+      */
+diff --git a/vendor/splitit/module-payment-gateway/view/adminhtml/templates/system/config/loginauth-button.phtml b/vendor/splitit/module-payment-gateway/view/adminhtml/templates/system/config/loginauth-button.phtml
+index 27894d32..89b3cfec 100644
+--- a/vendor/splitit/module-payment-gateway/view/adminhtml/templates/system/config/loginauth-button.phtml
++++ b/vendor/splitit/module-payment-gateway/view/adminhtml/templates/system/config/loginauth-button.phtml
+@@ -9,7 +9,7 @@ require([
+ ], function($) {
+     function getCredsAuthentication() {
+         $.ajax({
+-            url: '<?= $block->escapeUrl($block->getAjaxUrl()) ?>',
++            url: '<?= $block->escapeUrl($block->getWebUrl()) ?>',
+             type: 'post',
+             dataType: "json",
+             showLoader: true,
+diff --git a/vendor/splitit/module-payment-gateway/Block/Payment.php b/vendor/splitit/module-payment-gateway/Block/Payment.php
+index eb786d7c..5b72a31f 100644
+--- a/vendor/splitit/module-payment-gateway/Block/Payment.php
++++ b/vendor/splitit/module-payment-gateway/Block/Payment.php
+@@ -6,6 +6,8 @@ use Magento\Checkout\Model\ConfigProviderInterface;
+ use Magento\Framework\View\Element\Template;
+ use Magento\Framework\View\Element\Template\Context;
+ use Splitit\PaymentGateway\Block\AdminPaymentForm\FlexFieldsBlock;
++use Magento\Framework\App\Config\ScopeConfigInterface;
++use Magento\Store\Model\ScopeInterface;
+ 
+ class Payment extends Template
+ {
+@@ -19,23 +21,31 @@ class Payment extends Template
+      */
+     protected $flexfield;
+ 
++    /**
++     * @var ScopeConfigInterface
++     */
++    protected $scopeConfig;
++
+     /**
+      * Constructor
+      *
+      * @param Context $context
+      * @param ConfigProviderInterface $config
+      * @param FlexFieldsBlock $flexfield
++     * @param ScopeConfigInterface $scopeConfig
+      * @param array $data
+      */
+     public function __construct(
+         Context $context,
+         ConfigProviderInterface $config,
+         FlexFieldsBlock $flexfield,
++        ScopeConfigInterface $scopeConfig,
+         array $data = []
+     ) {
+         parent::__construct($context, $data);
+         $this->config = $config;
+         $this->flexfield = $flexfield;
++        $this->scopeConfig = $scopeConfig;
+     }
+ 
+     /**
+@@ -50,13 +60,24 @@ class Payment extends Template
+         $config = $payment[$this->getCode()];
+         $config['code'] = $this->getCode();
+         $config += [
+-            'ajaxUrl' => $this->flexfield->getAjaxUrl(),
++            'ajaxUrl' => $this->getAdminAjaxUrl(),
+             'totalsAjaxUrl' => $this->flexfield->getTotalsUpdateAjaxUrl(),
+             'getQuoteIdAjaxUrl' => $this->flexfield->getCurrentQuoteIdUrl()
+         ];
+         return json_encode($config, JSON_UNESCAPED_SLASHES);
+     }
+ 
++    /**
++     * getWebUrl
++     *
++     * @return string
++     */
++    public function getAdminAjaxUrl()
++    {
++        $baseUrl = $this->scopeConfig->getValue('web/secure/base_url', ScopeInterface::SCOPE_STORE, 0);
++        return $baseUrl . FlexFieldsBlock::FLEXFIELDS_CONTROLLER_ROUTE;
++    }
++
+     /**
+      * Get payment code
+      *
+diff --git a/vendor/splitit/module-payment-gateway/etc/events.xml b/vendor/splitit/module-payment-gateway/etc/events.xml
+index 79b5bb02..6aa1640c 100644
+--- a/vendor/splitit/module-payment-gateway/etc/events.xml
++++ b/vendor/splitit/module-payment-gateway/etc/events.xml
+@@ -1,7 +1,7 @@
+ <?xml version="1.0"?>
+ 
+ <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+-    <event name="payment_method_assign_data">
++    <event name="payment_method_assign_data_splitit_payment">
+         <observer name="splitit_payment_gateway_data_assign" instance="Splitit\PaymentGateway\Observer\DataAssignObserver" />
+     </event>
+ </config>

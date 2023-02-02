@@ -1,0 +1,69 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Blank theme overrides
+//  _____________________________________________
+
+//  Theme file should contain declarations (overrides) ONLY OF EXISTING variables
+//  Otherwise this theme won't be available for parent nesting
+//  All new variables should be placed in local theme lib or local theme files
+
+@font-family-name__base: 'montserrat';
+@font-family__base: @font-family-name__base, @font-family__sans-serif;
+@font-family-name__secondary : 'Bebas Neue';
+@font-family__base_secondary: @font-family-name__secondary;
+@h1__font-size-desktop: 52px;
+@DMSerifDisplay: @font-family-name__secondary;
+@color_primary: #0065B3;
+@header_background: #0065B3;
+@hookah_theme_color: #0065B3;
+@button_color_secondary: #0065B3;
+@button_color_secondary_border: #0065B3;
+@color_primary_hover: #0065B3;
+@hookah_theme_gradient: linear-gradient(275deg, #0065B3 5%, #56b5ff 100%);
+@border_left_gradient: #56b5ff;
+@border_right_gradient: #0065B3;
+@hookah_primary_light: #e4eff7;
+@amshopby__primary__color: #000;
+@hookah_yellow: #FF9800;
+@theme_color:#0065B3;
+@layout_container:1280px;
+
+
+// Buttons
+@button-primary__background: #000;
+@button-primary__border: 1px solid #000;
+@button__padding: 7px 25px;
+
+
+//
+//  Form elements inputs default variables
+//  ---------------------------------------------
+
+@form-element-input-type: ''; // [input-text|select|textarea|input-radio|input-checkbox]
+@form-element-input__background: @color-white;
+@form-element-input__border-color: @color-black;
+@form-element-input__border: 2px solid @form-element-input__border-color;
+@form-element-input__border-radius: 10px;
+@form-element-input__height: 50px;
+@form-element-input__width: 100%;
+@form-field-type-label-inline__width: 100%;
+@form-field-type-label-inline__align: left;
+
+//  Error message
+@message-error__color: @color-white;
+@message-error__background: @error__color;
+@message-error__border-color: @error__color;
+@message__font-weight: @font-weight__semibold;
+@message-error-icon__color-inner: @color-white;
+@message-error-icon__color-lateral: @color-white;
+
+//  Success message
+@message-success__color: @color-white;
+@message-success__background: @color_primary;
+@message-success__border-color: @color_primary;
+@message-success-icon: @icon-checkmark;
+@message-success-icon__color-inner: @color-white;

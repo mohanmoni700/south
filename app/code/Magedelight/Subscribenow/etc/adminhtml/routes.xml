@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * Category  Magedelight
+ * Package   Magedelight_Subscribenow
+ * Copyright Copyright (c) 2019 MageDelight (http://www.magedelight.com/)
+ * License   http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * Author    Magedelight <info@magedelight.com>
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <router id="admin">
+        <route id="subscribenow" frontName="subscribenow">
+            <module name="Magedelight_Subscribenow" before="Magento_Adminhtml" />
+        </route>
+    </router>
+</config>

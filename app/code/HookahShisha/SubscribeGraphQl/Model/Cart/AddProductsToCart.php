@@ -200,7 +200,7 @@ class AddProductsToCart extends SourceAddProductsToCart
         } else {
             // Save cart only when all items are added to cart and no errors occurred
             // restrict avalara tax request using flag for add to cart
-            // $this->avalaraConfig->setAddressTaxable(false);
+            $this->avalaraConfig->setAddressTaxable(false);
             $this->cartRepository->save($cart);
         }
 
