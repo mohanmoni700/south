@@ -82,3 +82,7 @@ type orderSubscriptionData {
     profile_id: String @doc(description: "Subscription profile id")
     subscription_id: Int @doc(description: "Subscription id")
 }
+
+type CustomerOrder {
+    orderSubscriptionDetails:[orderSubscriptionData] @doc(description: "Order subscription data")
+}
