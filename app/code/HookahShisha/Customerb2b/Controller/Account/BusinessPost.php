@@ -80,7 +80,7 @@ class BusinessPost extends \Magento\Company\Controller\AbstractAction implements
                     if ($company && $company->getId()) {
                         $postData = $request->getParams();
                         $this->companyProfile->populate($company, $postData);
-                        $this->companyRepository->save($company);
+                        $company->save();
                         $this->messageManager->addSuccess(
                             __('You saved the business details.')
                         );

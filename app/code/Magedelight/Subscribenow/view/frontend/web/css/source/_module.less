@@ -1,0 +1,719 @@
+// /**
+//  * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .bundle-product-options-subscrbenow {
+        clear: both;
+    }
+    .subscribenow-account-view {
+        .col-1-sub{
+            width: 48%;
+            float: left;
+        }
+        .col-2-sub{
+            width: 48%;
+            float: left;
+        }
+        .sub-info-box-2{
+            margin-top: 4%;
+        }
+        .col2-set{
+            overflow: hidden;
+        }
+        .col2-set.sub-info-box-2 {
+            padding-bottom: 4%;
+        }
+        .block.block-order-details-view{
+            border-bottom: 1px solid #c6c6c6;
+            padding-bottom: 3%;
+            .col-1-sub{
+                display: block;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+        .back-subscription.go-back{
+            float: right;
+            margin-top: 5px;
+        }
+        .info-table{
+            td.date-picker{
+                position: relative;
+                .lib-icon-font(
+                @icon-calendar,
+                @_icon-font-size: 17px,
+                @_icon-font-color: @header-icons-color,
+                @_icon-font-color-hover: @header-icons-color-hover
+                );
+                &:before{
+                    position: absolute;
+                    right: 15px;
+                    bottom: 15px;
+                } 
+            }
+        }
+        .item-options{
+            margin: 1rem 0 0;
+            dt{
+                clear: left;
+                float: left;
+                margin: 0 0.5rem 0.5rem 0;
+            }
+            dd{
+                display: inline-block;
+                float: left;
+                margin: 0 0 0.5rem;
+            }
+        }
+        .subscription-disclaimer {
+            clear: both;
+            span {
+                display: block;
+                float: right;
+            }
+        }
+        .susbcription-button-right{
+            float:right;
+            clear: both;
+        }
+    }
+    .account {
+        .toolbar {
+            .pager {
+                .pages {
+                    position: static;
+                    float: right;
+                    text-align: right;
+                    display: inline-block;
+                    width: auto;
+                }
+                .limiter{
+                    display: block;
+                    clear: both;
+                    text-align: center;
+                }
+            }
+        } 
+        .page-title-wrapper{
+            h1.page-title{
+                margin-bottom: 20px;
+                width: 100%;
+            }
+            .block.block-addresses-default {
+                margin-top: 20px; 
+            }
+        }
+    }
+    .catalog-product-view {
+        .bundle-options-container {
+            #md_subscription_content{
+                .product-options-wrapper{
+                    float: none;
+                    width: 100%;
+                    margin-bottom: 0;
+                }
+            }
+        }
+        &.page-product-downloadable {
+            #md_subscription_content{
+                .product-options-wrapper{
+                    float: none;
+                    margin-bottom: 0;
+                }
+            }
+        }
+        
+        #md_subscription_content{
+            .product-options-wrapper {
+                h4{margin-bottom: 0.5rem;}
+                #product-subscription-admin{margin:1rem 0;}
+
+                .field {
+                    #billing_period {
+                        margin-bottom:1rem;
+                    }
+                    .control {
+                        position: relative;
+                        .ui-datepicker-trigger{
+                            background: transparent;
+                            border: none;
+                            padding: 0;
+                            position: absolute;
+                            top: 0;
+                            right: 10px;
+                            bottom: 0;
+                            .lib-icon-font(
+                                @icon-calendar,
+                                @_icon-font-size: 2.2rem,
+                                @_icon-font-color: @header-icons-color,
+                                @_icon-font-color-hover: @header-icons-color-hover
+                            );
+                            &:before{
+                                line-height: 30px;
+                            }
+                            button.ui-datepicker-trigger{
+                                &:before{
+                                    content: none;
+                                }
+                            }
+                        }
+                    }
+                }
+                #plan-attribute-specs-table {
+                    tr th {
+                        border-right: 1px solid silver;border-bottom: 1px solid silver;
+                    }
+                    margin:1rem 0;
+                    border:1px solid silver;
+                }
+            }
+        }          
+    }
+    
+    .checkout-onepage-success .subscription-success {
+        margin: 3% 0 1.5% 0;
+    }
+
+    .subscribe-control-option{
+        border: solid 2px @color-black;
+        border-radius: 50px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-evenly;
+        margin: 0 0 @indent__base;
+        .purchase-option-left,
+        .purchase-option-right{
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            padding: 1px;
+            label{
+                width: 100%;
+                display: block;
+                color: @color-black;
+                text-transform: uppercase;
+                font-weight: @font-weight__semibold;
+                font-size: 14px;
+                padding: @indent__s @indent__s + @indent__xs;
+                cursor: pointer;
+            }
+            .dot{
+                height: 20px;
+                width: 20px;
+                background: #d9d9d9;
+                border-radius: 50%;
+                position: relative;
+                display: inline-block;
+                vertical-align: middle;
+                margin-right: @indent__xs;
+                margin-top: -2px;
+                &:before{
+                    position: absolute;
+                    content: "";
+                    top: 4px;
+                    left: 4px;
+                    width: 12px;
+                    height: 12px;
+                    background: #0069d9;
+                    border-radius: 50%;
+                    opacity: 0;
+                    transform: scale(1.5);
+                    transition: all 0.3s ease;
+                }                
+            }
+            input[type="radio"]{
+                display: none;
+            }
+            input[type="radio"]:checked + label {
+                border-color: #006bb4;
+                background: #006bb4;
+                color: @color-white;
+                -webkit-border-radius: 50px;
+                -moz-border-radius: 50px;
+                border-radius: 50px;
+                .dot{
+                    background: @color-white;
+                    &:before{
+                        opacity: 1;
+                        transform: scale(1);
+                    }
+                }
+            }
+        }
+    }
+
+    .md-subscription-content{
+        .md-subscription-wrapper{
+            background: #f0f0f0;
+            padding: @indent__base;
+            margin-bottom: @indent__base;
+            h4{
+                font-size: 22px;
+                font-weight: @font-weight__semibold;
+                margin: 0 0 @indent__base;
+            }
+            .field{
+                margin: 0 0 @indent__s;
+                .label{
+                    font-weight: @font-weight__bold;
+                    font-size: 14px;
+                    margin-bottom: @indent__xs;
+                    display: block;
+                }
+                .control{
+                    select{
+                        width: 100%;
+                        height: 42px;
+                        border-radius: 3px;
+                    }
+                }
+            }
+            .md-subscription-end{
+                .field{
+                    display: flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    .label,
+                    .control{
+                        display: flex;
+                        align-items: center;
+                    }
+                    .label{
+                        font-size: 12px;
+                        background: @color-white;
+                        border-radius: 5px;
+                        padding: @indent__s + 5 @indent__s;
+                        box-shadow: 5px 5px 30px rgba(0,0,0,0.2);
+                        margin-right: @indent__s;
+                    }
+                    .control{
+                        input[type="text"]{
+                            height: 47px;
+                            border-radius: 3px;
+                        }
+                    }
+                    .dot{
+                        height: 20px;
+                        width: 20px;
+                        background: #d9d9d9;
+                        border-radius: 50%;
+                        position: relative;
+                        display: inline-block;
+                        vertical-align: middle;
+                        margin-right: @indent__xs;
+                        &:before{
+                            position: absolute;
+                            content: "";
+                            top: 4px;
+                            left: 4px;
+                            width: 12px;
+                            height: 12px;
+                            background: #0069d9;
+                            border-radius: 50%;
+                            opacity: 0;
+                            transform: scale(1.5);
+                            transition: all 0.3s ease;
+                        }
+                    }
+                    input[type="radio"]{
+                        display: none;
+                    }
+                    input[type="radio"]:checked + label {
+                        .dot{
+                            background: #d9d9d9;
+                            &:before{
+                                opacity: 1;
+                                transform: scale(1);
+                            }
+                        }
+                    }
+                }
+            }
+            .subscription-end{
+                .md_end_type{
+                    display: flex;
+                    align-items: center;
+                    flex-grow: 1;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                    margin-bottom: 10px;
+                    .label{
+                        display: flex;
+                        align-items: center;
+                        width: 100%;
+                        min-width: 175px;
+                        font-size: 14px;
+                        font-weight: 600;
+                        background: @color-white;
+                        border-radius: 5px;
+                        padding: @indent__s + 5 @indent__s;
+                        margin-bottom: 10px;
+                        cursor: pointer;
+                        position: relative;
+                    }
+                    .control{
+                        position: relative;
+                        #md_subscription_cycle-error{
+                            position: absolute;
+                            bottom: -40px;
+                        }
+                    }
+                    .dot{
+                        height: 16px;
+                        width: 16px;
+                        background: #d9d9d9;
+                        border-radius: 50%;
+                        position: relative;
+                        display: inline-block;
+                        vertical-align: middle;
+                        margin-right: @indent__s;
+                        &:before{
+                            position: absolute;
+                            content: "";
+                            top: 4px;
+                            left: 4px;
+                            width: 8px;
+                            height: 8px;
+                            background: #ffffff;
+                            border-radius: 50%;
+                            opacity: 0;
+                            transform: scale(1.5);
+                            transition: all 0.3s ease;
+                        }
+                    }
+                    input[type="radio"]{
+                        display: none;
+                    }
+                    input[type="radio"]:checked + label {
+                        border: solid 1px #0069d9;
+                        font-weight: 700;
+                        .dot{
+                            background: #0069d9;
+                            &:before{
+                                opacity: 1;
+                                transform: scale(1);
+                            }
+                        }
+                    }
+                    &.last{
+                        > .end_type_content{
+                            display: flex;
+                            align-items: center;
+                            .input-text{
+                                margin-right: 12px;
+                                width: 80px;
+                                text-align: center;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .product-add-form{
+        .product-options-wrapper{
+            &.subscription-field{
+                .field{
+                    .control{
+                        width: 100%;
+                        input[type="text"]{
+                            height: 42px;
+                            border-radius: 3px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .md-subscription-info{
+        background: #f0f0f0;
+        padding: @indent__base;
+        margin-bottom: @indent__base;
+        .product-order-items{
+            .plan-attribute{
+                padding: @indent__s;
+                .md-label{
+                    font-weight: @font-weight__bold;
+                    margin-right: @indent__s;
+                }
+                &:nth-child(even){
+                    background-color: @color-white;
+                }
+            }
+        }
+    }
+
+    .md-subscription-content{
+        .md-subscription-wrapper{
+            #product-subscription-customer,
+            #product-subscription-admin,
+            #md_subscription_content_start{
+                .field{
+                    display: flex;
+                    align-items: center;
+                    flex-grow: 1;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                }
+            }
+        }
+    }
+
+    .field-tooltip-action{
+        .lib-tooltip(right);
+        margin-left: 20px;
+        position: absolute;
+        right: 15px;
+        .tooltip-toggle{
+            cursor: pointer;
+        }
+        .tooltip-toggle{
+            font-size: 0;
+            &:before{
+                font-size: 21px;
+                line-height: inherit;
+                color: #bbb;
+                content: '\e623';
+                font-family: 'luma-icons';
+                vertical-align: middle;
+                display: inline-block;
+                text-align: center;
+            }
+        }
+        .tooltip-content{
+            font-size: 10px;
+        }
+    }
+
+    .product-admin-options{
+        margin-bottom: @indent__s;
+    }
+
+    .subscription-message{
+        margin-bottom: @indent__s;
+    }
+
+}
+
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m){
+
+    .subscribe-control-option{
+        display: block;
+        border: none;
+    }
+
+    .md-subscription-content{
+        .md-subscription-wrapper{
+            .md-subscription-end{
+                .field{
+                    .label,
+                    .control{
+                        width: 45%;
+                    }
+                }
+            }
+        }
+    }
+
+    .md-subscription-content{
+        .md-subscription-wrapper{
+            .subscription-end{
+                .md_end_type.last{
+                    > .end_type_content{
+                        flex-basis: 100%;
+                        padding-bottom: @indent__s;
+                    }
+                }
+                .md_end_type{
+                    .control{
+                        #md_subscription_cycle-error{
+                            bottom: -15px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m){
+    .account .page-main .page-title-wrapper .order-date{
+        margin: 10px 0 18px;
+    }
+    .subscribenow-account-view {
+        .subscription-disclaimer > span {
+            margin-top: -4%;
+        }
+    }
+
+    .md-subscription-content{
+        .md-subscription-wrapper{
+            .md-subscription-end{
+                .field{
+                	.control{
+                        width: 100%;
+                        margin-right: 0;
+                        display: block;
+                    }
+                    .label{
+                    	display: block;
+                    	margin-right: 0;
+                    }
+                }
+                .field{
+                	display: block;
+                }
+            }
+            .field{
+            	.control{
+            		select{
+            			width: 100%;
+            		}
+            	}
+            }
+        }
+    }
+
+	.catalog-product-view{
+		#md_subscription_content{
+			.product-options-wrapper{
+				.field{
+					.control{
+						width: 100%;
+					}
+				}
+			}
+		}
+	}
+
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l){
+
+
+    .md-subscription-content{
+        .md-subscription-wrapper{
+            .md-subscription-end{
+                .field{
+                    display: flex;
+                    .label,
+                    .control{
+                    	display: flex;
+                        width: 45%;
+                        margin-right: 10px;
+                    }
+                }
+            }
+        }
+    }
+
+    .md-subscription-content{
+        .md-subscription-wrapper{
+            .subscription-end{
+                .md_end_type{
+                    .label{
+                        flex-basis: 40%;
+                        margin-bottom: 0;
+                    }
+                    .end_type_content{
+                        flex-basis: 50%;
+                    }
+                }
+            }
+        }
+    }
+
+    .md-subscription-content{
+        .md-subscription-wrapper{
+            #product-subscription-customer,
+            #product-subscription-admin,
+            #md_subscription_content_start{
+                .field{
+                    .label{
+                        flex-basis: 50%;
+                        flex-shrink: 0;
+                    }
+                    .control{
+                        flex-grow: 1;
+                        width: auto;
+                        
+                    }
+                }
+            }
+        }
+    }
+
+    .md-subscription-info{
+        .product-order-items{
+            .plan-attribute{
+                display: flex;
+                flex-grow: 1;
+                flex-wrap: wrap;
+                .md-label{
+                    flex-basis: 50%;
+                    flex-shrink: 0;
+                }
+                .md-value{
+                    width: auto;
+                    flex-grow: 1;
+                }
+            }
+        }
+    }
+
+}
+
+@media only screen and (max-width: 667px) {
+
+    .md-subscription-content{
+        .md-subscription-wrapper{
+            .md-subscription-end{
+                .field{
+                    .label{
+                        width: 50%;
+                    }
+                    .control{
+                        width: 48%;
+                        margin-left: 10px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+@media only screen and (max-width: 479px) {
+
+    .md-subscription-content{
+        .md-subscription-wrapper{
+            .md-subscription-end{
+                .field{
+                    .label,
+                    .control{
+                        width: 100%;
+                        margin-right: 0;
+                    }
+                }
+            }
+            .field{
+                .control{
+                    select{
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+
+}

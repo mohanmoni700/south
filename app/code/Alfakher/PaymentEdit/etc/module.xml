@@ -3,6 +3,7 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
     <module name="Alfakher_PaymentEdit">
         <sequence>
+            <module name="Magento_Payment"/>
             <module name="Magento_Catalog"/>
             <module name="Magento_Elasticsearch7"/>
         </sequence>

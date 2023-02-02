@@ -1,0 +1,33 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+
+// @codingStandardsIgnoreFile
+/** @var \Magedelight\Subscribenow\Block\Checkout\Onepage\Success$block */
+?>
+
+<?php if($block->showBlock() && $block->getSubscriptionProfilesIds()->getSize()) : ?>
+    <div class="subscription-success">
+        <p><?= __('Your subscription payment profiles:') ?></p>
+        <?php foreach ($block->getSubscriptionProfilesIds() as $profile) : ?>
+            <p>
+                <?php
+                    echo __('Your subscription profile number is: %1.', 
+                        sprintf('<a href="%s" class="subscription-number"><strong>%s</strong></a>', 
+                                $block->escapeHtml($block->getSubscriptionUrl($profile->getSubscriptionId())), 
+                                $block->escapeHtml($profile->getProfileId())
+                        )
+                    );
+                ?>
+            </p>
+        <?php endforeach; ?>
+    </div>
+<?php endif;

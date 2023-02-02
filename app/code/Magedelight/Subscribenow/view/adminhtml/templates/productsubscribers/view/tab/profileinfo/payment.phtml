@@ -1,0 +1,68 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+
+// @codingStandardsIgnoreFile
+/** @var \Magedelight\Subscribenow\Block\Adminhtml\ProductSubscribers\View\Tab\ProfileInfo\Payment $block */
+?>
+
+<div class="admin__page-section-item-title">
+    <span class="title">
+        <?php echo __('Payment Details') ?>
+    </span>
+</div>
+<div class="admin__page-section-item-content">
+    <div class="order-payment-method-title">
+        <table class="admin__table-secondary">
+            <tbody>
+                <tr>
+                    <th><?php /* @escapeNotVerified */ echo __('Billing Price') ?></th>
+                    <td><?php /* @escapeNotVerified */ echo $block->getBillingAmount(); ?></td>
+                </tr>
+                <?php if ($block->getSubscription()->getInitialAmount() > 0) : ?>
+                <tr>
+                    <th><?php /* @escapeNotVerified */ echo $block->getInitialAmountTitle(); ?></th>
+                    <td><?php /* @escapeNotVerified */ echo $block->getInitialAmount(); ?></td>
+                </tr>
+                <?php endif; ?>
+                <?php if ($block->getSubscription()->getTrialBillingAmount() > 0) : ?>
+                <tr>
+                    <th><?php /* @escapeNotVerified */ echo $block->getTrialAmountTitle(); ?></th>
+                    <td><?php /* @escapeNotVerified */ echo $block->getTrialAmount(); ?></td>
+                </tr>
+                <?php endif; ?>
+                <tr>
+                    <th><?php /* @escapeNotVerified */ echo __('Payment Method') ?></th>
+                    <td><?php /* @escapeNotVerified */ echo $block->getSubscription()->getPaymentTitle(); ?></td>
+                </tr>
+                <?php if ($block->canDisplayCardInfo()) : ?>
+                <tr>
+                    <th><?php /* @escapeNotVerified */ echo __('Card Details') ?></th>
+                    <td>
+                        <?php /* @escapeNotVerified */ 
+                        if($block->isEditMode() && $block->getSaveCards()): ?>
+                        <select id="md_savecard" name="md_savecard">
+                            <?php foreach ($block->getSaveCards() as $key => $card): ?>
+                                <option value="<?php echo $block->escapeHtmlAttr($key) ?>" <?php echo ($card['is_current'] == true)?'selected="selected"':''; ?>>
+                                    <?php echo $block->escapeHtml($card['label']) ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                        <?php else: ?>
+                            <?php echo $block->escapeHtml($block->getCardInfo()); ?>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <?php endif; ?>
+            </tbody>
+        </table>
+    </div>
+</div>

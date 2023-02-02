@@ -9,7 +9,7 @@
 
     .homepage_slider_content {
         .pagebuilder-slide-wrapper {
-            background-size: 100% 100% !important;
+            background-size: 100% auto !important;
         }
         .pagebuilder-poster-content {
             h2 {
@@ -38,6 +38,11 @@
             text-align: center;
         }
     }
+    body.cms-index-index {
+        .column.main img {
+            width: auto;
+        }
+    }
 }
 
 
@@ -47,11 +52,12 @@
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .homepage_slider_content {
+        min-height: 60vh !important;
         .pagebuilder-slide-wrapper {
-            min-height: 500px !important;
+           min-height: inherit !important;
             .pagebuilder-overlay {
                 &.pagebuilder-poster-overlay {
-                    min-height: 500px !important;
+                    min-height: inherit !important;
                     margin-bottom: 40px;
                 }
             }
@@ -60,12 +66,11 @@
 }
 @media only screen and (max-width: 480px) {
     .homepage_slider_content {
-        min-height: 390px !important;
         .pagebuilder-slide-wrapper {
-            min-height: 350px !important;
+            min-height: inherit !important;
             .pagebuilder-overlay {
                 &.pagebuilder-poster-overlay {
-                    min-height: 350px !important;
+                   min-height: inherit !important;
                     margin-bottom: 0;
                 }
             }

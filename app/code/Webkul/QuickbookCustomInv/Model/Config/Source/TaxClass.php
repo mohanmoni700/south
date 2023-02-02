@@ -30,8 +30,11 @@ class TaxClass implements OptionSourceInterface
     private $logger;
 
     /**
-     * @param \Webkul\MultiQuickbooksConnect\Helper\QuickBooks $quickBooks,
-     * @param Webkul\MultiQuickbooksConnect\Logger\Logger $logger
+     * Construct
+     *
+     * @param \Magento\Framework\Json\Helper\Data $jsonHelper
+     * @param \Webkul\MultiQuickbooksConnect\Helper\QuickBooks $quickBooks
+     * @param \Webkul\MultiQuickbooksConnect\Logger\Logger $logger
      */
     public function __construct(
         \Magento\Framework\Json\Helper\Data $jsonHelper,
@@ -43,10 +46,14 @@ class TaxClass implements OptionSourceInterface
         $this->logger = $logger;
     }
 
+    /**
+     * ToOptionArray
+     *
+     * @return array
+     */
     public function toOptionArray()
     {
         $options = [];
-        //
         return $options;
     }
 
@@ -78,6 +85,7 @@ class TaxClass implements OptionSourceInterface
     /**
      * Get options in "key-value" format
      *
+     * @param int $accountId
      * @return array
      */
     public function toArray($accountId)

@@ -1,18 +1,12 @@
-<?php
-/**
- * Copyright © MageWorx. All rights reserved.
- * See LICENSE.txt for license details.
- */
-?>
+<?php // phpcs:disable Magento2.Templates.ThisInTemplate ?>
 <?php /** @var \MageWorx\OrderEditor\Block\Adminhtml\Sales\Order\Edit\Form\Items\Grid $block */ ?>
 
 <?php $_items = $block->getItems() ?>
 
-
 <?php /* af_bv_op; Start */ ?>
 <?php $helper = $this->helper(\MageWorx\OrderEditor\Helper\Data::class); ?>
 <?php $viewModel = $block->getViewModel() ?>
-<?php $moduleEnable = $viewModel->isModuleEnabled($helper->getOrder()->getStore()->getWebsiteId()) ?>
+<?php $moduleEnable = $viewModel->isModuleEnabled($helper->getOrder()->getStore()->getStoreId()) ?>
 <?php /* af_bv_op; End */ ?>
 
 <div class="admin__table-wrapper" id="order-items_grid">
@@ -76,7 +70,7 @@
         </table>
 </div>
 
-<script type="text/javascript">
+<script>
     // <![CDATA[
     require([
             'MageWorx_OrderEditor/js/order/edit/form/items/form',

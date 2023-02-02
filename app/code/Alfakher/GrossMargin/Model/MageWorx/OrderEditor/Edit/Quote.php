@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\GrossMargin\Model\MageWorx\OrderEditor\Edit;
 
@@ -65,7 +66,7 @@ class Quote extends \MageWorx\OrderEditor\Model\Edit\Quote
                         $quoteItem->setHasError(true);
                         $quoteItem->setMessage(
                             __(
-                                'Not all selected products were added to the order as some products are currently unavailable.'
+                                'Not all selected products were added some products are currently unavailable.'
                             )
                         );
                     }
@@ -144,8 +145,11 @@ class Quote extends \MageWorx\OrderEditor\Model\Edit\Quote
     }
 
     /**
+     * Convert Order Item To QuoteItem
+     *
      * @param OriginalOrderItem $orderItem
      * @param string[] $params
+     * @param bool $skipItemErrors
      * @return OrderEditorQuoteItem
      * @throws LocalizedException
      */
@@ -155,7 +159,7 @@ class Quote extends \MageWorx\OrderEditor\Model\Edit\Quote
         bool $skipItemErrors = false
     ): OrderEditorQuoteItem {
 
-        $quoteItemId = $orderItem->getQuoteItemId();
+        $quoteItemId = (int)$orderItem->getQuoteItemId();
 
         $quoteItem = $this->oeQuoteItemRepository->getById($quoteItemId);
         $quote     = $this->getQuoteByQuoteItem($quoteItem);
@@ -175,7 +179,7 @@ class Quote extends \MageWorx\OrderEditor\Model\Edit\Quote
         $quote->collectTotals();
         $ExciseTaxResponseOrder = $quote->getExciseTaxResponseOrder();
 
-        $quote = $this->quoteRepository->getById($quote->getId());
+        $quote = $this->quoteRepository->getById((int)$quote->getId());
         $quote->setExciseTaxResponseOrder($ExciseTaxResponseOrder);
         $this->quoteRepository->save($quote);
         return $quoteItem;

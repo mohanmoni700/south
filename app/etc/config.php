@@ -81,7 +81,15 @@ return [
                 'sort_order' => '0',
                 'default_group_id' => '21',
                 'is_default' => '0'
-            ]
+            ],
+            'global_hookah' => [
+                'website_id' => '23',
+                'code' => 'global_hookah',
+                'name' => 'Global Hookah (B2B)',
+                'sort_order' => '50',
+                'default_group_id' => '23',
+                'is_default' => '0'
+             ]
         ],
         'groups' => [
             0 => [
@@ -163,7 +171,15 @@ return [
                 'root_category_id' => '2640',
                 'default_store_id' => '36',
                 'code' => 'ooka_uae_store'
-            ]
+            ],
+            23 => [
+                'group_id' => '23',
+                'website_id' => '23',
+                'name' => 'Global Hookah (B2B) Store',
+                'root_category_id' => '3362',
+                'default_store_id' => '41',
+                'code' => 'global_hookah_store'
+             ]
         ],
         'stores' => [
             'admin' => [
@@ -309,7 +325,16 @@ return [
                 'name' => 'Ooka UAE (AR) Store View',
                 'sort_order' => '1',
                 'is_active' => '1'
-            ]
+            ],
+            'global_hookah_store_view' => [
+                'store_id' => '41',
+                'code' => 'global_hookah_store_view',
+                'website_id' => '23',
+                'group_id' => '23',
+                'name' => 'Global Hookah (B2B) Store View',
+                'sort_order' => '1',
+                'is_active' => '1'
+             ]
         ]
     ],
     'system' => [
@@ -472,6 +497,13 @@ return [
                 'design' => [
                     'theme' => [
                         'theme_id' => 'frontend/Alfakher/shishaworld'
+                    ]
+                ]
+            ],
+            'global_hookah' => [
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Alfakher/globalhookah'
                     ]
                 ]
             ]
@@ -787,6 +819,7 @@ return [
         'Magento_MsrpStaging' => 1,
         'Magento_MultipleWishlist' => 1,
         'Magento_SalesGraphQl' => 1,
+        'HookahShisha_SubscribeGraphQl' => 1,
         'Magento_InventoryInStorePickupMultishipping' => 0,
         'Magento_MysqlMq' => 1,
         'Magento_CheckoutAddressSearchNegotiableQuote' => 1,
@@ -1067,6 +1100,9 @@ return [
         'Mageplaza_Webhook' => 1,
         'MageWorx_OrderEditorCustom' => 1,
         'Alfakher_HandlingFee' => 1,
+        'Magedelight_Base' => 1,
+        'Magedelight_Subscribenow' => 1,
+        'Magedelight_SubscribenowGraphQl' => 1,
         'Magefan_AdminUserGuide' => 1,
         'Magefan_BlogGraphQl' => 1,
         'Magefan_BlogAuthor' => 1,
@@ -1105,6 +1141,7 @@ return [
         'Alfakher_CustomerCourierAccount' => 1,
         'Alfakher_PaymentMethod' => 1,
         'Smartwave_Megamenu' => 1,
+        'Splitit_PaymentGateway' => 1,
         'Temando_ShippingRemover' => 1,
         'Veratad_AgeVerification' => 0,
         'Vertex_Tax' => 1,
@@ -1205,7 +1242,16 @@ return [
             'area' => 'frontend',
             'type' => '0',
             'code' => 'Alfakher/shishaworld'
-        ]
+        ],
+        'frontend/Alfakher/globalhookah' => [
+            'parent_id' => 'Alfakher/hookahwholesalers',
+            'theme_path' => 'Alfakher/globalhookah',
+            'theme_title' => 'Global Hookah B2B',
+            'is_featured' => '0',
+            'area' => 'frontend',
+            'type' => '0',
+            'code' => 'Alfakher/globalhookah'
+         ]
     ],
     'i18n' => [
 

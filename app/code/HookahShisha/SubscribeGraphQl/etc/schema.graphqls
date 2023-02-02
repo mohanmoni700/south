@@ -73,3 +73,12 @@ type subscriptionData {
     billing_address_info: String
     shipping_address_info: String
 }
+
+type Order {
+    orderSubscriptionDetails:[orderSubscriptionData] @doc(description: "Order subscription data")
+}
+
+type orderSubscriptionData {
+    profile_id: String @doc(description: "Subscription profile id")
+    subscription_id: Int @doc(description: "Subscription id")
+}
