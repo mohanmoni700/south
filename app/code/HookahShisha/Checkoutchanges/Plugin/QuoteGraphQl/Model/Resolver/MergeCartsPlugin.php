@@ -215,7 +215,6 @@ class MergeCartsPlugin
             }
         } catch (\Exception $e) {
             $this->logger->err($e->getMessage());
-            throw new GraphQlInputException(__($e->getMessage()));
         }
     }
 }
