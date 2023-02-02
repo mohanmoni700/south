@@ -1,10 +1,11 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Alfakher\GrossMargin\Observer;
 
+use Magento\Tax\Model\Config;
 use Avalara\Excise\Helper\Config as ExciseTaxConfig;
+use Magento\Framework\Event\Observer;
 
 class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterface
 {
@@ -20,11 +21,11 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
     
     /**
      * @param ExciseTaxConfig $exciseTaxConfig
-     * @param \Magento\Tax\Model\Config $taxConfig
+     * @param Config $taxConfig
      */
     public function __construct(
         ExciseTaxConfig $exciseTaxConfig,
-        \Magento\Tax\Model\Config $taxConfig
+        Config $taxConfig
     ) {
         $this->exciseTaxConfig = $exciseTaxConfig;
         $this->taxConfig  = $taxConfig;
@@ -33,11 +34,11 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
     /**
      * Execute observer
      *
-     * @param \Magento\Framework\Event\Observer $observer
+     * @param Observer $observer
      * @return void
      */
     public function execute(
-        \Magento\Framework\Event\Observer $observer
+        Observer $observer
     ) {
         try {
             $order = $observer->getEvent()->getOrder();
@@ -49,7 +50,7 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
                 $storeId = $quote->getStoreId();
                 $isAddressTaxable = $this->exciseTaxConfig->isAddressTaxable($shippingAddress, $storeId);
 
-                if ($isAddressTaxable) { 
+                if ($isAddressTaxable) {
                     $order->setExciseTaxResponseOrder($quote->getExciseTaxResponseOrder());
                     if (!$quote->getIsMultiShipping()) {
                         $order->setExciseTax($quote->getExciseTax());
@@ -95,7 +96,7 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
     /**
      * Get Tax amounts
      *
-     * @param $order
+     * @param mixed $order
      * @return array
      */
     private function getTaxSummary($order)
@@ -111,7 +112,7 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
     /**
      * Clear Excise Tax amounts
      *
-     * @param $order
+     * @param mixed $order
      * @return void
      */
     private function clearItemTax($order)
@@ -125,7 +126,7 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
     /**
      * Calculate order GrandTotal
      *
-     * @param $order
+     * @param mixed $order
      * @return void
      */
     protected function calculateGrandTotal($order)
@@ -169,6 +170,8 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
     }
 
     /**
+     * Check Tax Configuration
+     *
      * @return bool
      */
     public function checkTaxConfiguration(): bool

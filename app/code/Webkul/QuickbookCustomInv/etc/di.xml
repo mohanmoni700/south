@@ -19,6 +19,10 @@
     <preference for="Webkul\MultiQuickbooksConnect\Helper\Data" type="Webkul\QuickbookCustomInv\Helper\Data" />
     <preference for="Webkul\MultiQuickbooksConnect\Helper\QuickBooks" type="Webkul\QuickbookCustomInv\Helper\QuickBooks" />
     <preference for="Webkul\MultiQuickbooksConnect\Helper\QuickBooks\Item" type="Webkul\QuickbookCustomInv\Helper\QuickBooks\Item" />
+    <type name="Webkul\QuickbookCustomInv\Helper\QuickBooks\Item">
+        <plugin name="filter_ebaypayment" type="Webkul\QuickbookCustomInv\Plugin\Helper\QuickBooks\Item" sortOrder="30" />
+    </type>
+
     <type name="Webkul\QuickbookCustomInv\Logger\Handler">
         <arguments>
             <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>

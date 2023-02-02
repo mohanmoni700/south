@@ -40,17 +40,20 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
      * @param \Magento\Backend\Block\Template\Context $context
      * @param \Magento\Framework\Registry $registry
      * @param \Magento\Framework\Data\FormFactory $formFactory
+     * @param \Webkul\QuickbookCustomInv\Model\Config\Source\TaxClass $taxClass
+     * @param \Webkul\QuickbookCustomInv\Model\Config\Source\Location $location
      * @param Source\SalesReceiptCreateOn $salesReceiptCreateOn
      * @param Source\Accounts\Asset $assetAccount
      * @param Source\Accounts\Income $incomeAccount
      * @param Source\Accounts\Expense $expenseAccount
-     * @param array $data
+     * @param array $data = []
      */
     public function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Data\FormFactory $formFactory,
         \Webkul\QuickbookCustomInv\Model\Config\Source\TaxClass $taxClass,
+        \Webkul\QuickbookCustomInv\Model\Config\Source\Location $location,
         Source\SalesReceiptCreateOn $salesReceiptCreateOn,
         Source\Accounts\Asset $assetAccount,
         Source\Accounts\Income $incomeAccount,
@@ -58,6 +61,7 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
         array $data = []
     ) {
         $this->taxClass = $taxClass;
+        $this->location = $location;
         $this->salesReceiptCreateOn = $salesReceiptCreateOn;
         $this->assetAccount = $assetAccount;
         $this->incomeAccount = $incomeAccount;
@@ -174,9 +178,20 @@ class GeneralConfiguration extends \Webkul\MultiQuickbooksConnect\Block\Adminhtm
                 'note' => __('Fill tax class wich set on exported orders.')
             ]
         );
+        $fieldset->addField(
+            'business',
+            'select',
+            [
+                'name' => 'business',
+                'label' => __('Business'),
+                'title' => __('Business'),
+                'required' => true,
+                'options' => $this->location->toArray($model->getId()),
+                'note' => __('Select business location exported order account.')
+            ]
+        );
         $form->setValues($model->getData());
         $this->setForm($form);
         return $this;
-        //parent::_prepareForm();
     }
 }

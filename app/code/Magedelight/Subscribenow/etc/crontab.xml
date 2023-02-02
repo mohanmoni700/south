@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="md_subscription_place_order" instance="Magedelight\Subscribenow\Cron\Generate" method="execute">
+            <config_path>crontab/default/jobs/md_subscription/product/cron_expr</config_path>
+        </job>
+        <job name="md_subscription_reminder_email" instance="Magedelight\Subscribenow\Cron\EmailReminder" method="execute">
+            <config_path>crontab/default/jobs/md_subscription/product/cron_expr</config_path>
+        </job>
+        <job name="md_subscription_reminder_ewallet_email" instance="Magedelight\Subscribenow\Cron\EwalletTopupNotification" method="execute">
+            <config_path>crontab/default/jobs/md_subscription/product/cron_expr</config_path>
+        </job>
+    </group>
+</config>

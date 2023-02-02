@@ -90,6 +90,8 @@ class CreateSalesReceipt extends \Magento\Backend\App\Action
     }
 
     /**
+     * Execute
+     *
      * @return \Magento\Backend\Model\View\Result\Page
      */
     public function execute()
@@ -100,6 +102,19 @@ class CreateSalesReceipt extends \Magento\Backend\App\Action
             $config = $this->quickBooksHelperData->getQuickbooksAccountConfig($accountId);
             if ($config['enable']) {
                 $order = $this->orderRepository->get($data['order_id']);
+                /** for export shipping info **/
+                $tracksCollection = $order->getTracksCollection()->getItems();
+                $trackingList = [];
+                $shipServiceList = [];
+                $shipDate = date('Y-m-d', time());
+                foreach ($tracksCollection as $trackingData) {
+                    if ($trackingData->getTrackNumber()) {
+                        $trackingList[] = $trackingData->getTrackNumber();
+                        $shipServiceList[] = $trackingData->getTitle();
+                        $shipDate = date('Y-m-d', strtotime($trackingData->getCreatedAt()));
+                    }
+                }
+                /** for export shipping info **/
                 $taxPercent = $this->quickBooksHelperData->getOrderTaxPercent($order->getEntityId());
                 $result = [];
                 $allItems = $order->getAllItems();
@@ -145,7 +160,11 @@ class CreateSalesReceipt extends \Magento\Backend\App\Action
                     'discount_on_order' => $order->getBaseDiscountAmount(),
                     'tax_percent' => $taxPercent,
                     'paymentMethod' => $paymentMethod ? $paymentMethod : __('Magento Store Payment'),
-                    'docNumber' => 'order-'.$order->getIncrementId()
+                    'docNumber' => 'order-'.$order->getIncrementId(),
+                    'mageOrderId' => $order->getIncrementId(),
+                    'tracking_info' => substr(implode(",", $trackingList), 0, 31),
+                    'ship_service' => substr(implode(",", $shipServiceList), 0, 31),
+                    'shipDate' => $shipDate
                 ];
                 $salesReceipt = $this->orderMapFactory->create()->getCollection()
                                         ->addFieldToFilter('quickbook_sales_doc_number', $salesReceiptData['docNumber'])
