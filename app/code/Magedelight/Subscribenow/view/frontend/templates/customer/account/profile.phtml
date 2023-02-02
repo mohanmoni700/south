@@ -1,0 +1,51 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+<?php $subscriptions = $block->getSubscription(); ?>
+<?php if ($subscriptions && $subscriptions->getSize() > 0): ?>
+    <div class="table-wrapper orders-history">
+        <table class="data table table-order-items history" id="my-orders-table">
+            <caption class="table-caption"><?php /* @escapeNotVerified */ echo __('Product Subscription') ?></caption>
+            <thead>
+                <tr>
+                    <th scope="col" class="col id"><?php /* @escapeNotVerified */ echo __('Subscription ID #') ?></th>
+                    <th scope="col" class="col date"><?php /* @escapeNotVerified */ echo __('Profile Status') ?></th>
+                    <th scope="col" class="col shipping"><?php /* @escapeNotVerified */ echo __('Created At') ?></th>
+                    <th scope="col" class="col total"><?php /* @escapeNotVerified */ echo __('Next Occurrence Date') ?></th>
+                    <th scope="col" class="col status"><?php /* @escapeNotVerified */ echo __('Payment Method') ?></th>
+                    <th scope="col" class="col actions"><?php /* @escapeNotVerified */ echo __('Action') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($subscriptions as $subscription): ?>                              
+                    <tr>
+                        <td data-th="<?php echo $block->escapeHtml(__('Subscription ID #')) ?>" class="col id"><?php /* @escapeNotVerified */ echo $subscription->getProfileId() ?></td>
+                        <td data-th="<?php echo $block->escapeHtml(__('Profile Status')) ?>" class="col status"><?php /* @escapeNotVerified */ echo $block->getSubscriptionStatus($subscription->getSubscriptionStatus()) ?></td>
+                        <td data-th="<?php echo $block->escapeHtml(__('Created At')) ?>" class="col created"><?php echo $block->formatDate($subscription->getCreatedAt(), 1) ?></td>
+                        <td data-th="<?php echo $block->escapeHtml(__('Next Occurence Date')) ?>" class="col updated"><?php /* @escapeNotVerified */ echo $block->getNextOccurrenceDate($subscription) ?></td>
+                        <td data-th="<?php echo $block->escapeHtml(__('Payment Method')) ?>" class="col method"><?php /* @escapeNotVerified */ echo $subscription->getPaymentTitle() ?></td>
+                        <td data-th="<?php echo $block->escapeHtml(__('Actions')) ?>" class="col actions">
+                            <a href="<?php /* @escapeNotVerified */ echo $block->getViewUrl($subscription->getSubscriptionId()) ?>" class="action view">
+                                <span><?php /* @escapeNotVerified */ echo __('View Subscription') ?></span>
+                            </a>                            
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+    <?php endif ?>
+<?php else: ?>
+    <div class="message info empty"><span><?php /* @escapeNotVerified */ echo __('You have not subscribe any products.'); ?></span></div>
+<?php endif;

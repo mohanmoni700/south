@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * Category Magedelight
+ * Package Magedelight_Subscribenow
+ * Copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * License http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * Author Magedelight <info@magedelight.com>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_account_navigation">
+            <block class="Magedelight\Subscribenow\Block\Customer\Account\MyAccount" name="customer-account-navigation-subscription-profile-link" ifconfig="md_subscribenow/general/enabled">
+                <arguments>
+                    <argument name="path" xsi:type="string">subscribenow/account/profile</argument>
+                    <argument name="label" xsi:type="string">My Subscription Profiles</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>
