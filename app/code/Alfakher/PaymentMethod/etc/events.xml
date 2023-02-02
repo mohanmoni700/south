@@ -4,5 +4,9 @@
     <event name="sales_model_service_quote_submit_before">
         <observer name="papypal_email_save_infos" instance="Alfakher\PaymentMethod\Observer\OrderPaymentSaveBefore" />
     </event>
-    
+
+    <event name="sales_order_place_after">
+        <observer name="splitit_payment_order_status_change" instance="Alfakher\PaymentMethod\Observer\SplititOrderStatusChange" />
+    </event>
+
 </config>

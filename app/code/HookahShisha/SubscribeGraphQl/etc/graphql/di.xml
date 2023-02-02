@@ -10,4 +10,8 @@
     <type name="Magento\SalesGraphQl\Model\Formatter\Order">
         <plugin name="alfa_customer_orders_after" type="HookahShisha\SubscribeGraphQl\Plugin\Magento\SalesGraphQl\Model\Formatter\Order" />
     </type>
+
+    <type name="Magento\QuoteGraphQl\Model\Resolver\PlaceOrder">
+        <plugin name="alfa_subscription_palceorder_after" type="HookahShisha\SubscribeGraphQl\Plugin\Magento\QuoteGraphQl\Model\Resolver\PlaceOrder" />
+    </type>
 </config>

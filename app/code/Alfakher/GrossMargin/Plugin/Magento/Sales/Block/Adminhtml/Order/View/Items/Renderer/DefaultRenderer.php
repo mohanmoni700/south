@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\GrossMargin\Plugin\Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer;
 

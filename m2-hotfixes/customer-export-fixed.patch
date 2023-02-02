@@ -1,0 +1,13 @@
+diff --git a/vendor/magento/module-customer/Ui/Component/Listing/Columns.php b/vendor/magento/module-customer/Ui/Component/Listing/Columns.php
+index a2910a87..28f684cb 1006445
+--- a/vendor/magento/module-customer/Ui/Component/Listing/Columns.php
++++ b/vendor/magento/module-customer/Ui/Component/Listing/Columns.php
+@@ -158,7 +158,7 @@
+                     $component->getData('config'),
+                     [
+                         'name' => $newAttributeCode,
+-                        'dataType' => $attributeData[AttributeMetadata::BACKEND_TYPE],
++                        'dataType' => $attributeData[AttributeMetadata::FRONTEND_INPUT],
+                         'visible' => (bool)$attributeData[AttributeMetadata::IS_VISIBLE_IN_GRID]
+                     ]
+                 );

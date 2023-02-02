@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3048d1dac40bba7799b2d1151f6c92e1",
+    "content-hash": "212bfb67ea39a9917d72ffcc4e3e97f0",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -2018,11 +2018,11 @@
         },
         {
             "name": "corra/module-cms-sitemap-graph-ql",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "dist": {
                 "type": "zip",
-                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-cms-sitemap-graph-ql/1.0.0.0/71bb2167038ce766ef0571afc806aad35e3f94f7.zip",
-                "reference": "71bb2167038ce766ef0571afc806aad35e3f94f7",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-cms-sitemap-graph-ql/1.0.1.0/72933fc15797c71c8cd58033cbcc55ef762805fe.zip",
+                "reference": "72933fc15797c71c8cd58033cbcc55ef762805fe",
                 "mirrors": [
                     {
                         "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
@@ -2056,10 +2056,10 @@
             "homepage": "https://bitbucket.org/corratech/cmssitemapgraphql",
             "support": {
                 "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/3789848577/CmsSitemapGraphQl",
-                "source": "https://bitbucket.org/corratech/cmssitemapgraphql/src/71bb2167038ce766ef0571afc806aad35e3f94f7/?at=1.0.0",
+                "source": "https://bitbucket.org/corratech/cmssitemapgraphql/src/72933fc15797c71c8cd58033cbcc55ef762805fe/?at=1.0.1",
                 "issues": "https://bitbucket.org/corratech/cmssitemapgraphql/issues"
             },
-            "time": "2022-05-05T07:27:23+00:00"
+            "time": "2023-01-27T04:59:26+00:00"
         },
         {
             "name": "corra/module-link-guest-order-graph-ql",
@@ -29644,6 +29644,87 @@
                 "source": "https://github.com/signifyd/php/tree/3.1.3"
             },
             "time": "2022-01-31T21:01:45+00:00"
+        },
+        {
+            "name": "splitit/module-payment-gateway",
+            "version": "2.9.0",
+            "dist": {
+                "type": "zip",
+                "url": "https://repo.magento.com/archives/splitit/module-payment-gateway/splitit-module-payment-gateway-2.9.0.0.zip",
+                "shasum": "fc0274ca56560be0b251b82ee23fad4bed74edcc"
+            },
+            "require": {
+                "splitit/sdk": "^1.8.0"
+            },
+            "type": "magento2-module",
+            "autoload": {
+                "files": [
+                    "registration.php"
+                ],
+                "psr-4": {
+                    "Splitit\\PaymentGateway\\": ""
+                }
+            },
+            "license": [
+                "OSL-3.0",
+                "AFL-3.0"
+            ],
+            "description": "Integration with Splitit Payment Gateway"
+        },
+        {
+            "name": "splitit/sdk",
+            "version": "1.8.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Splitit/Splitit.SDKs.php.git",
+                "reference": "31e97e3934db713d4d7bc8171240f4b4fdb1cca9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Splitit/Splitit.SDKs.php/zipball/31e97e3934db713d4d7bc8171240f4b4fdb1cca9",
+                "reference": "31e97e3934db713d4d7bc8171240f4b4fdb1cca9",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "guzzlehttp/guzzle": "^6.2|^7.4",
+                "php": ">=5.5"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~2.12",
+                "phpunit/phpunit": "^4.8",
+                "squizlabs/php_codesniffer": "~2.6"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SplititSdkClient\\": "Splitit/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "proprietary"
+            ],
+            "authors": [
+                {
+                    "name": "SplititSDK",
+                    "homepage": "https://github.com/Splitit/Splitit.SDKs.php"
+                }
+            ],
+            "description": "Splitit Web API SDK for PHP",
+            "homepage": "https://www.splitit.com/developers/overview/",
+            "keywords": [
+                "api",
+                "sdk",
+                "splitit"
+            ],
+            "support": {
+                "issues": "https://github.com/Splitit/Splitit.SDKs.php/issues",
+                "source": "https://github.com/Splitit/Splitit.SDKs.php/tree/v1.8.0"
+            },
+            "time": "2022-08-30T07:46:30+00:00"
         },
         {
             "name": "spomky-labs/aes-key-wrap",

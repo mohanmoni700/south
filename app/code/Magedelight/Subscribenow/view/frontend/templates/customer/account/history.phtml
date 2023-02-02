@@ -1,0 +1,41 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+<?php $history = $block->getSubscriptionHistory(); ?>
+<h2><?php echo __('Profile history based on this profile') ?></h2>
+<?php if ($history->getSize()): ?>
+    <div class="table-wrapper orders-history">
+        <table class="data table table-order-items history" id="my-orders-table">
+            <caption class="table-caption"><?php echo __('Profile History') ?></caption>
+            <thead>
+                <tr>
+                    <th scope="col" class="col id"><?php echo __('Modify By') ?></th>
+                    <th scope="col" class="col shipping"><?php echo __('Comment') ?></th>
+                    <th scope="col" class="col shipping"><?php echo __('Modify On') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+            <?php foreach ($history as $item): ?>
+                <tr>
+                    <td data-th="<?php echo $block->escapeHtml(__('Modify By')) ?>" class="col id"><?php echo $block->getModifiedLabel($item->getModifyBy()) ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Comment')) ?>" class="col status"><?php echo $item->getComment(); ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Modify On')) ?>" class="col created"><?php echo $block->getFormattedDate($item->getCreatedAt()); ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="order-products-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+<?php else: ?>
+    <div class="message info empty"><span><?php echo __('You have not subscribe any products.'); ?></span></div>
+<?php endif ?>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_QuickbookCustomInv
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited(https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="sales_order_shipment_save_after">
+        <observer name="webkul_quickbooks_sales_order_shipment_save_after_observer" instance="Webkul\QuickbookCustomInv\Observer\OrderShipmentAfterObserver" />
+    </event>
+</config>
