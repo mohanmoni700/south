@@ -170,6 +170,12 @@ class DataProvider extends SourceDataProvider
                 $charcoalPDetail = $charcoalItem->getProduct()->getCharcoalShortDetail() ?? '';
                 $alfaBundlCharcoal = $charcoalPName . ': ' . $charcoalPDetail;
             }
+
+            $alfaBundleFlavour ='';
+            if ($shishaItem && is_object($shishaItem) && null !== $shishaItem->getProduct()) {
+                $alfaBundleFlavour = $shishaItem->getProduct()->getAttributeText('flavour');
+            }
+            
             $this->orderItemList[$orderItem->getItemId()] = [
                 'id' => base64_encode($orderItem->getItemId()),
                 'associatedProduct' => $associatedProduct,
@@ -194,7 +200,7 @@ class DataProvider extends SourceDataProvider
                 'quantity_returned' => $orderItem->getQtyReturned(),
                 'shisha_title' => $shishaTitle,
                 'charcoal_title' => $charcoalTitle,
-                'alfa_bundle_flavour' => $shishaItem ? $shishaItem->getProduct()->getAttributeText('flavour') : '',
+                'alfa_bundle_flavour' => $alfaBundleFlavour ?? '',
                 'alfa_bundle_charcoal' => $alfaBundlCharcoal ?? '',
                 'super_pack_flavour' => is_array($superPack) ? $superPack : []
             ];
