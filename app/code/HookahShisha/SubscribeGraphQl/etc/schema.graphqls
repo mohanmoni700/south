@@ -1,4 +1,25 @@
 # Copyright © Magento, Inc. All rights reserved.
+type Query {
+    getSubscriptionRelatedOrders (
+        subscriptionId: Int @doc(description: "Id of Subscription")
+        currentPage: Int @doc(description: "Current Page")
+        pageSize: Int @doc(description: "Page Size")
+    ) : relatedOrderData @resolver( class: "HookahShisha\\SubscribeGraphQl\\Model\\Resolver\\RelatedOrders")
+}
+
+type relatedOrderData {
+    total_count:  Int @doc(description: "total_count")
+    items: [relatedOrders] @doc(description: "items")
+}
+
+type relatedOrders {
+    increment_id: String @doc(description: "getIncrementId")
+    order_date: String @doc(description: "getCreatedAt")
+    grand_total: Money @doc(description: "getGrandTotal,setOrderCurrencyCode")
+    status: String @doc(description: "getStatusLabel")
+    firstname: String @doc(description: "getShippingAddress->getFirstname")
+    lastname: String @doc(description: "getShippingAddress->getLastname")
+}
 
 interface ProductInterface  {
     is_subscription : Boolean @doc(description: "The Id of subscription") 
@@ -40,4 +61,24 @@ interface CartItemInterface {
     subscription_end_date: String @doc(description: "Subscription End Date")
     end_type: String @doc(description: "Subscription End Type")
     subscription_end_cycle: String @doc(description: "Subscription End Cycle")
+}
+
+type CartPrices {
+    subscribenow_init_amount: Money @doc(description:"Subscription initial fee")
+}
+
+type subscriptionData {
+    profile_id: String
+    billing_amount : Float
+    billing_address_info: String
+    shipping_address_info: String
+}
+
+type Order {
+    orderSubscriptionDetails:[orderSubscriptionData] @doc(description: "Order subscription data")
+}
+
+type orderSubscriptionData {
+    profile_id: String @doc(description: "Subscription profile id")
+    subscription_id: Int @doc(description: "Subscription id")
 }
