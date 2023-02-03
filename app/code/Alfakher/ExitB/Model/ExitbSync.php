@@ -162,7 +162,7 @@ class ExitbSync
                 $companyName = '';
                 if (!empty($companydata)) {
                     $company = $this->companyRepository->get($companydata->getCompanyId());
-                    $orderData['orderData']['customer']['taxIdNumber'] = $company->getData('ust_id');
+                    $orderData['orderData']['customer']['taxIdNumber'] = $company->getData('fiscal_number');
                     $companyName = $companydata->getCompanyName();
                 }
 
