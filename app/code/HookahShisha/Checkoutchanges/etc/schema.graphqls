@@ -1,0 +1,3 @@
+type Country {
+    default_country_code: String @resolver(class: "\\HookahShisha\\Checkoutchanges\\Model\\Resolver\\DefaultCountryResolver")
+}
