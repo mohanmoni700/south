@@ -10,6 +10,8 @@ use Magento\Store\Model\ScopeInterface;
 
 class PreQualification extends Template
 {
+    public const XML_PATH_PREQUALIFY_CONTENT = 'payment/slope_payment/prequalifycontent';
+
     /**
      * @var ScopeConfigInterface
      */
@@ -37,7 +39,7 @@ class PreQualification extends Template
     public function getSlopePreQualificationContent()
     {
         $blockIdentifier = $this->scopeConfig->getValue(
-            'payment/slope_payment/prequalifycontent',
+            self::XML_PATH_PREQUALIFY_CONTENT,
             ScopeInterface::SCOPE_STORE
         );
         $block = $this->getLayout()->createBlock(CmsBlock::class)->setBlockId($blockIdentifier);
