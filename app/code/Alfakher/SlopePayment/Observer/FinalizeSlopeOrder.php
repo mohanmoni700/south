@@ -72,8 +72,8 @@ class FinalizeSlopeOrder implements ObserverInterface
         $paymentMethodCode = $order->getPayment()->getMethod();
         if ($paymentMethodCode == SlopePayment::PAYMENT_METHOD_SLOPEPAYMENT_CODE) {
             try {
-                $quoteId = $order->getQuoteId();
-                $resp = $this->finalizeSlopeOrder($quoteId);
+                $externalId = $order->getIncrementId();
+                $resp = $this->finalizeSlopeOrder($externalId);
                 if (isset($resp)) {
                     if (isset($resp['statusCode'])) {
                         $order->addCommentToStatusHistory(
@@ -85,6 +85,7 @@ class FinalizeSlopeOrder implements ObserverInterface
                             __('Slope Payment Error (%1) : %2', $resp['code'], implode(',', $resp['messages']))
                         );
                     } else {
+                        $order->setSlopeInformation(serialize($resp));// phpcs:disable
                         $order->addCommentToStatusHistory(
                             __('Slope order %1 finalized successfully.', $resp['id']),
                             true,
