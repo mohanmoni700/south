@@ -33,10 +33,7 @@
 @import 'module/_listings.less';
 @import 'module/_toolbar.less';
 
-@list_page_container: 1310px;
-@border_color: @input-border_color;
-@background_tire-price:#ececec;
-@discription_bg:rgba(227, 216, 250, .2);
+
 
 //
 //  Common
@@ -223,7 +220,7 @@
         }
         .product.attribute.description {
             .description {
-                background: @discription_bg;
+                background: @hookah_theme_color_extra_light;
                 padding: 40px 0;
                 .description_info {
                     margin: 0 auto;
@@ -299,7 +296,7 @@
     }
 
     .clp_faq_main {
-        background-color: @hookah_primary_light;
+        
         color: @font-gray;
         .lib-font-size(16);
         .clp_faq_inner {
@@ -731,6 +728,11 @@
     .category-description {
         margin-bottom: @indent__base;
     }
+    .category-description {
+        background: @hookah_theme_color_extra_light;
+        margin: 0;
+        order: 5;
+    }
 
     //
     //  Product images general container
@@ -805,7 +807,7 @@
             margin-top: @indent__s;
         }
         select[multiple]:focus option:checked {
-            background: #961e70 linear-gradient(0deg, #961e70 0%, #961e70 100%);
+            background: @hookah_theme_color linear-gradient(0deg, @hookah_theme_color 0%, @hookah_theme_color 100%);
         }
         
     }
@@ -2578,6 +2580,7 @@
                 }
             }
             .category-cms {
+                z-index: 1;
                 .amscroll-load-button {
                     display: none !important;
                 }

@@ -81,7 +81,15 @@ return [
                 'sort_order' => '0',
                 'default_group_id' => '21',
                 'is_default' => '0'
-            ]
+            ],
+            'global_hookah' => [
+                'website_id' => '23',
+                'code' => 'global_hookah',
+                'name' => 'Global Hookah (B2B)',
+                'sort_order' => '50',
+                'default_group_id' => '23',
+                'is_default' => '0'
+             ]
         ],
         'groups' => [
             0 => [
@@ -163,7 +171,15 @@ return [
                 'root_category_id' => '2640',
                 'default_store_id' => '36',
                 'code' => 'ooka_uae_store'
-            ]
+            ],
+            23 => [
+                'group_id' => '23',
+                'website_id' => '23',
+                'name' => 'Global Hookah (B2B) Store',
+                'root_category_id' => '3362',
+                'default_store_id' => '41',
+                'code' => 'global_hookah_store'
+             ]
         ],
         'stores' => [
             'admin' => [
@@ -309,7 +325,16 @@ return [
                 'name' => 'Ooka UAE (AR) Store View',
                 'sort_order' => '1',
                 'is_active' => '1'
-            ]
+            ],
+            'global_hookah_store_view' => [
+                'store_id' => '41',
+                'code' => 'global_hookah_store_view',
+                'website_id' => '23',
+                'group_id' => '23',
+                'name' => 'Global Hookah (B2B) Store View',
+                'sort_order' => '1',
+                'is_active' => '1'
+             ]
         ]
     ],
     'system' => [
@@ -472,6 +497,13 @@ return [
                 'design' => [
                     'theme' => [
                         'theme_id' => 'frontend/Alfakher/shishaworld'
+                    ]
+                ]
+            ],
+            'global_hookah' => [
+                'design' => [
+                    'theme' => [
+                        'theme_id' => 'frontend/Alfakher/globalhookah'
                     ]
                 ]
             ]
@@ -1207,7 +1239,16 @@ return [
             'area' => 'frontend',
             'type' => '0',
             'code' => 'Alfakher/shishaworld'
-        ]
+        ],
+        'frontend/Alfakher/globalhookah' => [
+            'parent_id' => 'Alfakher/hookahwholesalers',
+            'theme_path' => 'Alfakher/globalhookah',
+            'theme_title' => 'Global Hookah B2B',
+            'is_featured' => '0',
+            'area' => 'frontend',
+            'type' => '0',
+            'code' => 'Alfakher/globalhookah'
+         ]
     ],
     'i18n' => [
 
