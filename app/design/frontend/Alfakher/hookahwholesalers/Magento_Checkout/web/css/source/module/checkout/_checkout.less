@@ -23,6 +23,42 @@
 
 & when (@media-common = true) {
 
+    .billing-address-details {
+        border: 1px solid @color-black;
+        line-height: 30px;
+        margin: 30px 30px 30px 0;
+        padding: 20px 35px 20px 20px;
+        transition: 0.3s border-color;
+        border-radius: 10px;
+        display: inline-block;
+        font-size: 14px;
+        position: relative;
+        vertical-align: top;
+        word-wrap: break-word;
+        width: calc((100% - 30px) / 2);
+
+        .action.action-edit-address {
+            font-size: 12px;
+            letter-spacing: 1px;
+            margin-top: 0;
+            min-height: 35px;
+            padding: 7px 20px;
+            background: transparent;
+            border: 1px solid @color-black;
+            border-radius: 50px;
+            color: @color-black;
+            cursor: pointer;
+            font-weight: 700;
+            text-transform: uppercase;
+            float: right;
+        }
+    }
+    .checkout-billing-address {
+        .shipping-address-same-as-billing-block {
+            margin-bottom: 13px;
+        }
+    }
+
     .checkout-index-index {
         .page-title-wrapper {
             &:extend(.abs-visually-hidden all);
