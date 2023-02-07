@@ -16,9 +16,17 @@ define([
                 success: function (data) {
                     if(data.success === false)
                     {
+                        const messages = data.messages[0];
+                        var errorContent = "<ul>\n";
+                        messages.forEach(function(message) {
+                        console.log(message);
+                          errorContent += "<li>" + $t(message) + "</li>\n";
+                        });
+
+                        errorContent += "</ul>";
                         alert({
                             title: $t('Slope Pre-Qualification'),
-                            content: data.messages.join('\n'),
+                            content: errorContent,
                         });
                         return false;
                     }
