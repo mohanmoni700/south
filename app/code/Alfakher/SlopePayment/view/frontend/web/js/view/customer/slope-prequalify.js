@@ -24,7 +24,7 @@ define([
                         });
                         errorContent += "</ul>";
                         alert({
-                            title: $t('Slope Pre-Qualification'),
+                            title: $t('Slope Pre-Qualification Error'),
                             content: errorContent,
                         });
                         return false;

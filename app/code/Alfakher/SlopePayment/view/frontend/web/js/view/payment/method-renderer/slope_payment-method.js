@@ -59,7 +59,7 @@ define(
                             });
                             errorContent += "</ul>";
                             alert({
-                                title: $t('Slope Payment'),
+                                title: $t('Slope Payment Error'),
                                 content: errorContent,
                             });
                             return false;
