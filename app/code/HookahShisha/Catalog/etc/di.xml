@@ -40,7 +40,6 @@
         </arguments>
     </type>
 
-    <!-- Increased Query complexity from 525 to 550 for product subscription pdp -->
     <!-- Increased Query complexity from 500 to 525 for bundle pdp gallery and few other attribute -->
     <!-- Increased Query complexity from 425 to 500 for bundle pdp -->
     <!-- Increased Query complexity from 300 to 425 for superpack -->
@@ -49,7 +48,7 @@
     <type name="Magento\Framework\GraphQl\Query\QueryComplexityLimiter">
         <arguments>
             <argument name="queryDepth" xsi:type="number">20</argument>
-            <argument name="queryComplexity" xsi:type="number">550</argument>
+            <argument name="queryComplexity" xsi:type="number">525</argument>
         </arguments>
     </type>
 </config>

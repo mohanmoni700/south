@@ -91,42 +91,9 @@ class CartItems extends SourceCartItems
         $cartProductsData = $this->getCartProductsData($cart);
         $allCartItems = $cart->getAllVisibleItems();
         $cartItems = $this->filterOutAlfaBundleProducts($allCartItems);
-        
+
         /** @var QuoteItem $cartItem */
         foreach ($cartItems as $cartItem) {
-            $enddate = $cartItem['subscription_end_date'];
-            $additionalOptions = $cartItem->getOptionByCode('additional_options');
-            $isSubscription = "";
-            $billingPeriodTitle = "";
-            $billingCycleTitle = "";
-            $mdSubStartDate = "";
-            $mdSubEndDate = "";
-            $endType = "";
-            if (isset($additionalOptions)) {
-                $optionvalue = $additionalOptions->getValue();
-                $subscripinfo = $this->serializer->unserialize($optionvalue);
-                foreach ($subscripinfo as $optionInfo) {
-                    if ($optionInfo['code']=="is_subscription") {
-                        $isSubscription = $optionInfo['value'];
-                    }
-                    if ($optionInfo['code']=="billing_period_title") {
-                        $billingPeriodTitle = $optionInfo['value'];
-                    }
-                    if ($optionInfo['code']=="billing_cycle_title") {
-                        $billingCycleTitle = $optionInfo['value'];
-                    }
-                    if ($optionInfo['code']=="md_sub_start_date") {
-                        $mdSubStartDate = $optionInfo['value'];
-                    }
-                    if ($optionInfo['code']=="md_sub_end_date") {
-                        $mdSubEndDate = $optionInfo['value'];
-                    }
-                    if ($optionInfo['code']=="end_type") {
-                        $endType = $optionInfo['value'];
-                    }
-                }
-            }
-
             $productId = $cartItem->getProduct()->getId();
             $alfaBundle = $cartItem->getAlfaBundle();
             $shishaSku = '';
@@ -173,13 +140,7 @@ class CartItems extends SourceCartItems
                 'alfa_bundle_flavour' => $flavour,
                 'alfa_bundle_charcoal' => $charcoalDescription,
                 'super_pack_flavour' => $superPackFlavourList,
-                'super_pack_models' => $superPack ? $this->getSuperPackModels($allCartItems, $cartItem) : '',
-                'is_subscription' => $isSubscription,
-                'billing_period' => $billingPeriodTitle,
-                'subscription_start_date' => $mdSubStartDate,
-                'end_type' => $endType,
-                'subscription_end_cycle' => $billingCycleTitle,
-                'subscription_end_date' => $mdSubEndDate
+                'super_pack_models' => $superPack ? $this->getSuperPackModels($allCartItems, $cartItem) : ''
             ];
         }
 
@@ -284,6 +245,7 @@ class CartItems extends SourceCartItems
             return $product->getCharcoalShortDetail()
                 ? $product->getName() . ': ' . $product->getCharcoalShortDetail() : '';
         }
+
         return $product->getAttributeText('flavour') ?? '';
     }
 
@@ -302,6 +264,7 @@ class CartItems extends SourceCartItems
             $productsData[$product->getId()]['model'] = $product;
             $productsData[$product->getId()]['uid'] = $this->uidEncoder->encode((string) $product->getId());
         }
+
         return $productsData;
     }
 }
