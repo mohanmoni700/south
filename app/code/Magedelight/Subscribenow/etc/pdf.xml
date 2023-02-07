@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Magedelight
+ * Copyright (C) 2017 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2017 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Sales:etc/pdf_file.xsd">
+    <totals>
+        <total name="initial_fee">
+            <title translate="true">Initial Fee</title>
+            <source_field>subscribenow_init_amount</source_field>
+            <model>Magedelight\Subscribenow\Model\Sales\Pdf\Initalfee</model>
+            <font_size>7</font_size>
+            <display_zero>true</display_zero>
+            <sort_order>161</sort_order>
+        </total>
+        <total name="trial_fee">
+            <title translate="true">Trial Fee</title>
+            <source_field>subscribenow_trial_amount</source_field>
+            <model>Magedelight\Subscribenow\Model\Sales\Pdf\Trialfee</model>
+            <font_size>7</font_size>
+            <display_zero>true</display_zero>
+            <sort_order>162</sort_order>
+        </total>
+    </totals>
+</config>
