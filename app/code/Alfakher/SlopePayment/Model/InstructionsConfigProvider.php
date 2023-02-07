@@ -90,11 +90,10 @@ class InstructionsConfigProvider implements ConfigProviderInterface
         foreach ($this->methodCodes as $code) {
             if ($this->methods[$code]->isAvailable()) {
                 $billPhone = $billingAddress->getTelephone();
-                $billCountryCode = $billingAddress->getCountry();
                 $config['payment']['instructions'][$code] = $this->getInstructions($code);
                 $config['slope']['customer']['email'] = $quote->getCustomerEmail();
                 $config['slope']['customer']['phone'] =
-                $this->config->getSlopeFormattedPhone($billPhone, $billCountryCode);
+                $this->config->getSlopeFormattedPhone($billPhone);
                 $config['slope']['customer']['businessName'] = $billingAddress->getCompany() ?: 'NA';
                 $config['slope']['customer']['address'] = $address;
                 $config['slope']['customer']['externalId'] = $quote->getCustomerId();

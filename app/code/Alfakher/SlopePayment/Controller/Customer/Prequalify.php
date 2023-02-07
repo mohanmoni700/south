@@ -77,6 +77,8 @@ class Prequalify extends Action
      */
     public function execute()
     {
+        $messages = [];
+
         $result = $this->resultJsonFactory->create();
 
         $mgtCustomer = $this->getMgtCustomerForSlope();
@@ -89,10 +91,10 @@ class Prequalify extends Action
             $statusCode = isset($slopeCustomer['statusCode']) ? $slopeCustomer['statusCode'] : null;
             if (isset($statusCode) && $statusCode === 200) {
                 $slopeCustId = $slopeCustomer['id'];
-
-                /* create customer intent from slope customer id to initialize slope pre-qualification popup */
                 $slopePopup = $this->getSlopeCustomerIntent($slopeCustId);
-
+            } elseif (isset($statusCode) && $statusCode === 400) {
+                $messages = $slopeCustomer['messages'];
+                return $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
             }
         }
 
@@ -102,9 +104,10 @@ class Prequalify extends Action
         }
 
         if (isset($slopePopup['secret']) && $slopePopup['secret'] != '') {
-            $result->setData(['success' => 'true', 'secret' => $slopePopup['secret'], 'messages' => 'All Ok']);
+            $result->setData(['success' => true, 'secret' => $slopePopup['secret'], 'messages' => '']);
         } else {
-            $result->setData(['success' => 'false', 'secret' => '', 'messages' => 'Error Occured']);
+            $messages = ['Some error occured, Please try again later'];
+            $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
         }
 
         return $result;
@@ -170,9 +173,9 @@ class Prequalify extends Action
 
         $customer = $this->customerSession->getCustomer();
         $address = $customer->getDefaultBillingAddress();
-
         $addressPhone = $address->getTelephone();
-        $addressCountryCode = $address->getCountry();
+
+        $company = $this->config->getCustomerCompany($customer->getId());
         
         $addressData =
         [
@@ -184,8 +187,8 @@ class Prequalify extends Action
         ];
         
         $customerData['email'] = $customer->getEmail();
-        $customerData['phone'] = $this->config->getSlopeFormattedPhone($addressPhone, $addressCountryCode);
-        $customerData['businessName'] = $address->getCompany() ?: 'NA';
+        $customerData['phone'] = $this->config->getSlopeFormattedPhone($addressPhone);
+        $customerData['businessName'] = $company->getCompanyName() ?: 'NA';
         $customerData['address'] = $addressData;
         $customerData['externalId'] = $customer->getId();
 

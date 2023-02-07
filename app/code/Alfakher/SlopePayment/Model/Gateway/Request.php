@@ -6,6 +6,7 @@ namespace Alfakher\SlopePayment\Model\Gateway;
 use Alfakher\SlopePayment\Helper\Config as SlopeConfigHelper;
 use Alfakher\SlopePayment\Model\System\Config\Backend\Environment;
 use Magento\Framework\HTTP\Client\Curl;
+use Alfakher\SlopePayment\Logger\Logger;
 
 class Request
 {
@@ -26,17 +27,25 @@ class Request
     protected $slopeConfig;
 
     /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
      * Class constructor
      *
      * @param Curl $curl
      * @param SlopeConfigHelper $slopeConfig
+     * @param Logger $logger
      */
     public function __construct(
         Curl $curl,
-        SlopeConfigHelper $slopeConfig
+        SlopeConfigHelper $slopeConfig,
+        Logger $logger
     ) {
         $this->curl = $curl;
         $this->config = $slopeConfig;
+        $this->logger = $logger;
     }
 
     /**
@@ -71,6 +80,10 @@ class Request
     {
         $this->init();
         $this->curl->get($url);
+        if ($this->config->isDebugEnabled()) {
+            $this->logger->info('GET URL: '.$url);
+            $this->logger->info('GET Response: '.json_encode($this->curl->getBody()));
+        }
         return $this->curl->getBody();
     }
 
@@ -85,6 +98,11 @@ class Request
     {
         $this->init();
         $this->curl->post($url, $data);
+        if ($this->config->isDebugEnabled()) {
+            $this->logger->info('POST URL: '.$url);
+            $this->logger->info('POST DATA: '.json_encode($data));
+            $this->logger->info('Post Response: '.json_encode($this->curl->getBody()));
+        }
         return $this->curl->getBody();
     }
 }

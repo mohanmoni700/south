@@ -87,6 +87,8 @@ class InitiateFlow extends Action
      */
     public function execute()
     {
+        $messages = [];
+
         $result = $this->resultJsonFactory->create();
 
         $mgtOrder = $this->getMgtOrderForSlope();
@@ -99,10 +101,11 @@ class InitiateFlow extends Action
             $statusCode = isset($slopeOrder['statusCode']) ? $slopeOrder['statusCode'] : null;
             if (isset($statusCode) && $statusCode === 200) {
                 $slopeOrderId = $slopeOrder['id'];
-
-                /* create Order intent from slope order id to initialize slope checkout popup */
                 $slopePopup = $this->getSlopeOrderIntent($slopeOrderId);
 
+            } elseif (isset($slopeOrder['code']) && $slopeOrder['code'] !== '') {
+                $messages = $slopeOrder['messages'];
+                return $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
             }
         }
 
@@ -112,9 +115,10 @@ class InitiateFlow extends Action
         }
 
         if (isset($slopePopup['secret']) && $slopePopup['secret'] != '') {
-            $result->setData(['success' => 'true', 'secret' => $slopePopup['secret'], 'messages' => 'All Ok']);
+            $result->setData(['success' => true, 'secret' => $slopePopup['secret'], 'messages' => '']);
         } else {
-            $result->setData(['success' => 'false', 'secret' => '', 'messages' => 'Error Occured']);
+            $messages = ['Some error occured, Please try again later'];
+            $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
         }
 
         return $result;
@@ -232,7 +236,8 @@ class InitiateFlow extends Action
         $quote = $this->checkoutSession->getQuote();
         $billingAddress = $quote->getBillingAddress();
         $billPhone = $billingAddress->getTelephone();
-        $billCountryCode = $billingAddress->getCountry();
+
+        $company = $this->config->getCustomerCompany($quote->getCustomerId());
 
         $address =
             [
@@ -249,8 +254,8 @@ class InitiateFlow extends Action
         $orderData['externalId'] = $quote->getId();
         $orderData['items'] = $this->getQuoteItemsforSlope();
         $orderData['customer']['email'] = $quote->getCustomerEmail();
-        $orderData['customer']['phone'] = $this->config->getSlopeFormattedPhone($billPhone, $billCountryCode);
-        $orderData['customer']['businessName'] = $billingAddress->getCompany() ?: 'NA';
+        $orderData['customer']['phone'] = $this->config->getSlopeFormattedPhone($billPhone);
+        $orderData['customer']['businessName'] = $company->getCompanyName() ?: 'NA';
         $orderData['customer']['address'] = $address;
         $orderData['customer']['externalId'] = $quote->getCustomerId();
 

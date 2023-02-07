@@ -4,28 +4,26 @@ define(
         'Magento_Checkout/js/view/payment/default',
         'Magento_Checkout/js/model/quote',
         'mage/url',
-        'Magento_Customer/js/model/customer',
-        'underscore',
         'Magento_Checkout/js/action/place-order',
-        'Magento_Checkout/js/checkout-data',
         'Magento_Checkout/js/model/full-screen-loader',
         'Magento_Checkout/js/model/payment/additional-validators',
         'Magento_Ui/js/model/messages',
-        'Magento_Checkout/js/action/redirect-on-success'
+        'Magento_Checkout/js/action/redirect-on-success',
+        'Magento_Ui/js/modal/alert',
+        'mage/translate'
     ],
     function (
         $,
         Component,
         quote,
         url,
-        customer,
-        _,
         placeOrderAction,
-        checkoutData,
         fullScreenLoader,
         additionalValidators,
         Messages,
-        redirectOnSuccessAction
+        redirectOnSuccessAction,
+        alert,
+        $t
     ) {
         'use strict';
         return Component.extend({
@@ -50,8 +48,18 @@ define(
                     dataType: 'json'
                 }).done(function (data) {
                     if (typeof data.secret !== 'undefined')
+                    {
+                        if(data.success === false)
+                        {
+                            alert({
+                                title: $t('Slope Payment'),
+                                content: data.messages.join('\n'),
+                            });
+                            return false;
+                        }
                         var intentSecret = data.secret;
-                    self.initializeScope(intentSecret, quote);
+                        self.initializeScope(intentSecret, quote);
+                    }
                 });
             },
             initializeScope: function (intentSecret, quote) {
