@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Alfakher\SlopePayment\Controller\Customer;
 
 use Alfakher\SlopePayment\Helper\Config as SlopeConfigHelper;
+use Alfakher\SlopePayment\Logger\Logger;
 use Alfakher\SlopePayment\Model\Gateway\Request as GatewayRequest;
 use Magento\Customer\Model\Session as CustomerSession;
 use Magento\Framework\App\Action\Action;
@@ -45,6 +46,11 @@ class Prequalify extends Action
     protected $gatewayRequest;
 
     /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
      * Class constructor
      *
      * @param Context $context
@@ -53,6 +59,7 @@ class Prequalify extends Action
      * @param Json $json
      * @param SlopeConfigHelper $slopeConfig
      * @param GatewayRequest $gatewayRequest
+     * @param Logger $logger
      */
     public function __construct(
         Context $context,
@@ -60,13 +67,15 @@ class Prequalify extends Action
         CustomerSession $customerSession,
         Json $json,
         SlopeConfigHelper $slopeConfig,
-        GatewayRequest $gatewayRequest
+        GatewayRequest $gatewayRequest,
+        Logger $logger
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->customerSession = $customerSession;
         $this->json = $json;
         $this->config = $slopeConfig;
         $this->gatewayRequest = $gatewayRequest;
+        $this->logger = $logger;
         parent::__construct($context);
     }
 
@@ -74,40 +83,49 @@ class Prequalify extends Action
      * Initiate checkout flow
      *
      * @return JsonFactory
+     * @throws Exception
      */
     public function execute()
     {
-        $messages = [];
-
         $result = $this->resultJsonFactory->create();
 
-        $mgtCustomer = $this->getMgtCustomerForSlope();
-        $mgtCustId = $this->customerSession->getId();
-        $slopeCustomer = $this->findSlopeCustomer($mgtCustId);
-
-        $statusCode = isset($slopeCustomer['statusCode']) ? $slopeCustomer['statusCode'] : null;
-        if (isset($slopeCustomer) && $statusCode == 404) {
-            $slopeCustomer = $this->createNewSlopeCustomer($mgtCustomer);
-            $statusCode = isset($slopeCustomer['statusCode']) ? $slopeCustomer['statusCode'] : null;
-            if (isset($statusCode) && $statusCode === 200) {
-                $slopeCustId = $slopeCustomer['id'];
-                $slopePopup = $this->getSlopeCustomerIntent($slopeCustId);
-            } elseif (isset($statusCode) && $statusCode === 400) {
-                $messages = $slopeCustomer['messages'];
-                return $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
-            }
-        }
-
-        if (isset($slopeCustomer) && isset($slopeCustomer['id']) && $slopeCustomer['id'] != '') {
-            $slopeCustomerId = $slopeCustomer['id'];
-            $slopePopup = $this->getSlopeCustomerIntent($slopeCustomerId);
-        }
-
-        if (isset($slopePopup['secret']) && $slopePopup['secret'] != '') {
-            $result->setData(['success' => true, 'secret' => $slopePopup['secret'], 'messages' => '']);
-        } else {
+        try {
             $messages = ['Some error occured, Please try again later'];
             $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
+
+            $mgtCustomer = $this->getMgtCustomerForSlope();
+            $mgtCustId = $this->customerSession->getId();
+            $slopeCustomer = $this->findSlopeCustomer($mgtCustId);
+
+            $statusCode = isset($slopeCustomer['statusCode']) ? $slopeCustomer['statusCode'] : null;
+            if (isset($slopeCustomer) && $statusCode === 404) {
+                $slopeCustomer = $this->createNewSlopeCustomer($mgtCustomer);
+                $statusCode = isset($slopeCustomer['statusCode']) ? $slopeCustomer['statusCode'] : null;
+                if (isset($statusCode) && $statusCode === 200) {
+                    $slopeCustId = $slopeCustomer['id'];
+                    $slopePopup = $this->getSlopeCustomerIntent($slopeCustId);
+                } else {
+                    if (isset($statusCode) && $statusCode === 400) {
+                        $messages = $slopeCustomer['messages'][0];
+                    }
+                    return $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
+                }
+            }
+
+            if (isset($slopeCustomer) && isset($slopeCustomer['id']) && $slopeCustomer['id'] != '') {
+                $slopeCustomerId = $slopeCustomer['id'];
+                $slopePopup = $this->getSlopeCustomerIntent($slopeCustomerId);
+            }
+
+            if (isset($slopePopup['secret']) && $slopePopup['secret'] != '') {
+                $result->setData(['success' => true, 'secret' => $slopePopup['secret'], 'messages' => '']);
+            }
+
+        } catch (\Exception $e) {
+            if ($this->config->isDebugEnabled()) {
+                $this->logger->info('Pre-Qualification Error:' . $e->getMessage());
+            }
+            return $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
         }
 
         return $result;
@@ -176,16 +194,16 @@ class Prequalify extends Action
         $addressPhone = $address->getTelephone();
 
         $company = $this->config->getCustomerCompany($customer->getId());
-        
+
         $addressData =
-        [
+            [
             "line1" => $address->getStreetLine(1),
             "city" => $address->getCity(),
             "state" => $address->getRegionCode(),
             "postalCode" => $address->getPostcode(),
             "country" => $address->getCountry(),
         ];
-        
+
         $customerData['email'] = $customer->getEmail();
         $customerData['phone'] = $this->config->getSlopeFormattedPhone($addressPhone);
         $customerData['businessName'] = $company->getCompanyName() ?: 'NA';

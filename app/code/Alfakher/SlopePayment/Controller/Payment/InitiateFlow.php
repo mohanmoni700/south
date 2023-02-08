@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Alfakher\SlopePayment\Controller\Payment;
 
 use Alfakher\SlopePayment\Helper\Config as SlopeConfigHelper;
+use Alfakher\SlopePayment\Logger\Logger;
 use Alfakher\SlopePayment\Model\Gateway\Request as GatewayRequest;
 use Magento\Checkout\Model\Session as CheckoutSession;
 use Magento\Framework\App\Action\Action;
@@ -52,6 +53,11 @@ class InitiateFlow extends Action
     protected $gatewayRequest;
 
     /**
+     * @var Logger
+     */
+    protected $logger;
+
+    /**
      * Class constructor
      *
      * @param Context $context
@@ -61,6 +67,7 @@ class InitiateFlow extends Action
      * @param Json $json
      * @param SlopeConfigHelper $slopeConfig
      * @param GatewayRequest $gatewayRequest
+     * @param Logger $logger
      */
     public function __construct(
         Context $context,
@@ -69,7 +76,8 @@ class InitiateFlow extends Action
         QuoteItemRepository $quoteItemRepository,
         Json $json,
         SlopeConfigHelper $slopeConfig,
-        GatewayRequest $gatewayRequest
+        GatewayRequest $gatewayRequest,
+        Logger $logger
     ) {
         $this->resultJsonFactory = $resultJsonFactory;
         $this->checkoutSession = $checkoutSession;
@@ -77,6 +85,7 @@ class InitiateFlow extends Action
         $this->json = $json;
         $this->config = $slopeConfig;
         $this->gatewayRequest = $gatewayRequest;
+        $this->logger = $logger;
         parent::__construct($context);
     }
 
@@ -84,41 +93,51 @@ class InitiateFlow extends Action
      * Initiate checkout flow
      *
      * @return JsonFactory
+     * @throws Exception
      */
     public function execute()
     {
-        $messages = [];
-
         $result = $this->resultJsonFactory->create();
 
-        $mgtOrder = $this->getMgtOrderForSlope();
-        $mgtQuoteId = $this->checkoutSession->getQuote()->getId();
-        $slopeOrder = $this->findSlopeOrder($mgtQuoteId);
-
-        $statusCode = isset($slopeOrder['statusCode']) ? $slopeOrder['statusCode'] : null;
-        if (isset($slopeOrder) && $statusCode == 404) {
-            $slopeOrder = $this->createNewSlopeOrder($mgtOrder);
-            $statusCode = isset($slopeOrder['statusCode']) ? $slopeOrder['statusCode'] : null;
-            if (isset($statusCode) && $statusCode === 200) {
-                $slopeOrderId = $slopeOrder['id'];
-                $slopePopup = $this->getSlopeOrderIntent($slopeOrderId);
-
-            } elseif (isset($slopeOrder['code']) && $slopeOrder['code'] !== '') {
-                $messages = $slopeOrder['messages'];
-                return $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
-            }
-        }
-
-        if (isset($slopeOrder) && isset($slopeOrder['id']) && $slopeOrder['id'] != '') {
-            $slopeOrderId = $slopeOrder['id'];
-            $slopePopup = $this->getSlopeOrderIntent($slopeOrderId);
-        }
-
-        if (isset($slopePopup['secret']) && $slopePopup['secret'] != '') {
-            $result->setData(['success' => true, 'secret' => $slopePopup['secret'], 'messages' => '']);
-        } else {
+        try {
             $messages = ['Some error occured, Please try again later'];
             $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
+
+            $mgtOrder = $this->getMgtOrderForSlope();
+            $mgtQuoteId = $this->checkoutSession->getQuote()->getId();
+            $slopeOrder = $this->findSlopeOrder($mgtQuoteId);
+
+            $statusCode = isset($slopeOrder['statusCode']) ? $slopeOrder['statusCode'] : null;
+            if (isset($slopeOrder) && $statusCode === 404) {
+                $slopeOrder = $this->createNewSlopeOrder($mgtOrder);
+                $statusCode = isset($slopeOrder['statusCode']) ? $slopeOrder['statusCode'] : null;
+                if (isset($statusCode) && $statusCode === 200) {
+                    $slopeOrderId = $slopeOrder['id'];
+                    $slopePopup = $this->getSlopeOrderIntent($slopeOrderId);
+                } else {
+                    if (isset($statusCode) && $statusCode === 400) {
+                        $messages = $slopeCustomer['messages'][0];
+                    }
+                    return $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
+                }
+            }
+
+            if (isset($slopeOrder) && isset($slopeOrder['id']) && $slopeOrder['id'] != '') {
+                $slopeOrderId = $slopeOrder['id'];
+                $slopePopup = $this->getSlopeOrderIntent($slopeOrderId);
+            }
+
+            if (isset($slopePopup['secret']) && $slopePopup['secret'] != '') {
+                $result->setData(['success' => true, 'secret' => $slopePopup['secret'], 'messages' => '']);
+            } else {
+                $messages = ['Some error occured, Please try again later'];
+                $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
+            }
+        } catch (\Exception $e) {
+            if ($this->config->isDebugEnabled()) {
+                $this->logger->info('Slope Checkout Error:' . $e->getMessage());
+            }
+            return $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
         }
 
         return $result;

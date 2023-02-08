@@ -16,7 +16,7 @@ define([
                 success: function (data) {
                     if(data.success === false)
                     {
-                        const messages = data.messages[0];
+                        const messages = data.messages;
                         var errorContent = $t("<p><strong>Note: </strong><br>Please correct as per below for Pre-Qualification</p>");
                         errorContent += "<ul>\n";
                         messages.forEach(function(message) {
