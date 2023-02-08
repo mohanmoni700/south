@@ -115,8 +115,8 @@ class InitiateFlow extends Action
                     $slopeOrderId = $slopeOrder['id'];
                     $slopePopup = $this->getSlopeOrderIntent($slopeOrderId);
                 } else {
-                    if (isset($statusCode) && $statusCode === 400) {
-                        $messages = $slopeCustomer['messages'][0];
+                    if (isset($slopeOrder['code']) && $slopeOrder['code'] !== '') {
+                        $messages = $slopeOrder['messages'];
                     }
                     return $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
                 }
