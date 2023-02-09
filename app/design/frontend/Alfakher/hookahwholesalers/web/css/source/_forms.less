@@ -57,11 +57,12 @@
             }
             &:not(.choice) {
                 >.label {
-                    display:flex;
+                    display:flex !important;
+                    &:after {
+                        margin-left: 3px;
+                    }
                 }
-                &:after {
-                    margin-left: 3px;
-                }
+                
             }
         }
     }
