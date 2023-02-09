@@ -1,0 +1,3 @@
+type Cart {
+    last_payment_method: String @resolver(class: "\\HookahShisha\\Checkoutchanges\\Model\\Resolver\\GetCustomerLastPaymentMethod") @doc(description: "Get last used payment method for logged in customer")
+}
