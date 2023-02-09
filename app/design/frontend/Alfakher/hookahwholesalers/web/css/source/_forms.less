@@ -55,6 +55,14 @@
             input[type=file] {
                 margin: @indent__xs 0;
             }
+            &:not(.choice) {
+                >.label {
+                    display:flex;
+                }
+                &:after {
+                    margin-left: 3px;
+                }
+            }
         }
     }
 
