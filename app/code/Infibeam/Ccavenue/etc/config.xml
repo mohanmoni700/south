@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <ccavenue>
+                <model>Infibeam\Ccavenue\Model\Ccavenue</model>
+                <title>CCAvenue</title>
+                <production_url>https://secure.ccavenue.ae/transaction/transaction.do?command=initiateTransaction</production_url>
+                <sandbox_url>https://secure.ccavenue.ae/transaction/transaction.do?command=initiateTransaction</sandbox_url>
+                <new_order_status>pending</new_order_status>
+                <payment_success_order_status>processing</payment_success_order_status>
+                <payment_auto_invoice>0</payment_auto_invoice>
+                <integration_type>redirect</integration_type>
+                <environment>sandbox</environment>
+                <redirect_url>ccavenue/standard/redirect</redirect_url>
+                <!-- <return_url>ccavenue/standard/response</return_url> -->
+                <!-- <cancel_url>ccavenue/standard/response</cancel_url> -->
+                <return_url>ccavenue/transparent/redirect</return_url>
+                <cancel_url>ccavenue/transparent/redirect</cancel_url>
+                <encryption_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+            </ccavenue>
+        </payment>
+    </default>
+</config>
