@@ -74,6 +74,11 @@
             }
         }
     }
+    .document-title {
+        .title {
+            font-family: @font-family-name__secondary;
+        }
+    }
 }
 
 
@@ -88,6 +93,19 @@
         }
         &:after {
             right: 0px !important;
+        }
+    }
+
+    .amasty_quote-account-view.account {
+        .page-title-wrapper {
+            .order-actions-toolbar {
+                a.action.order {
+                    &:before {
+                        filter: unset;
+                        background-image: url(../images/Union_quote.svg);
+                    }
+                }
+            }
         }
     }
 }
