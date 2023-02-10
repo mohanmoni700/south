@@ -28,6 +28,15 @@
         min-height: 37.5vw !important;
       }
     }
+    .custom.navigation {
+        div[data-content-type='tabs'] {
+            .tabs-navigation {
+                li.tab-header a.tab-title:hover {
+                    color: @color_primary;
+                }
+            }
+        }
+    }
 }
 
 @media only screen and (max-width: 991px) and (min-width: 768px)  {
@@ -534,6 +543,9 @@
                     }
                 }
             }
+        }
+        .active-menu .custom.navigation {
+            max-height: ~'calc(100vh - 155px)';
         }
     }
 }
