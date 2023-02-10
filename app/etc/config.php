@@ -89,7 +89,7 @@ return [
                 'sort_order' => '50',
                 'default_group_id' => '23',
                 'is_default' => '0'
-             ]
+            ]
         ],
         'groups' => [
             0 => [
@@ -179,7 +179,7 @@ return [
                 'root_category_id' => '3362',
                 'default_store_id' => '41',
                 'code' => 'global_hookah_store'
-             ]
+            ]
         ],
         'stores' => [
             'admin' => [
@@ -334,7 +334,7 @@ return [
                 'name' => 'Global Hookah (B2B) Store View',
                 'sort_order' => '1',
                 'is_active' => '1'
-             ]
+            ]
         ]
     ],
     'system' => [
@@ -1071,6 +1071,7 @@ return [
         'HookahShisha_Import' => 1,
         'HookahShisha_InternationalTelephoneInput' => 1,
         'HookahShisha_InvoiceCapture' => 1,
+        'Klarna_Ordermanagement' => 1,
         'HookahShisha_LoginAsCustomer' => 1,
         'Magefan_Blog' => 1,
         'HookahShisha_Migration' => 1,
@@ -1087,10 +1088,10 @@ return [
         'HookahShisha_SwatchData' => 1,
         'HookahShisha_SwatchesGraphQl' => 1,
         'Alfakher_PaymentMethod' => 1,
-        'Klarna_Ordermanagement' => 1,
         'Klarna_Kp' => 1,
-        'Klarna_Onsitemessaging' => 1,
         'Klarna_KpGraphQl' => 1,
+        'Klarna_Onsitemessaging' => 1,
+        'HookahShisha_Klarna' => 1,
         'Klaviyo_Reclaim' => 1,
         'MSP_Common' => 1,
         'MSP_CmsImportExport' => 1,
@@ -1248,7 +1249,7 @@ return [
             'area' => 'frontend',
             'type' => '0',
             'code' => 'Alfakher/globalhookah'
-         ]
+        ]
     ],
     'i18n' => [
 
