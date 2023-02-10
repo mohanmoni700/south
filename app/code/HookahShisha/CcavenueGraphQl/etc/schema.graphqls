@@ -1,0 +1,40 @@
+##
+# @category    HookahShisha
+# @package     HookahShisha_CcavenueGraphQl
+# @author      Faishal <faishal.c@codilar.com>
+##
+
+type Order {
+    ccavenue_iframe_url: String @doc(description: "iframe url for ccanvenue")
+}
+
+type Query {
+    CcavenueOrderPaymentStatus (
+        orderId: String! @doc(description: "Id of the Sales Order")
+    ): CcavenueOrderPaymentStatusResponse @resolver(class: "HookahShisha\\CcavenueGraphQl\\Model\\Resolver\\CcavenueOrderPaymentStatus") @doc(description: "The Sales Order query returns information about a Sales order status")
+}
+
+type Mutation {
+    UpdateOrderStatus(orderId: String!): CcavenueUpdateStatus
+    @resolver(class: "\\HookahShisha\\CcavenueGraphQl\\Model\\Resolver\\UpdateOrderStatus")
+    @doc(description: "Update the ccavenue order status")
+}
+
+type CcavenueOrderPaymentStatusResponse @doc(description: "Sales Order graphql gather Data of specific order status") {
+    status: String @doc(description: "status of Sales Order")
+}
+
+type CcavenueOrder {
+    merchant_id: String @doc(description: "Ccavenue merchant id")
+    merchant_data: String @doc(description: "Ccavenue order related information")
+    integration_type: String @doc(description: "Ccavenue order related information")
+    access_code: String @doc(description: "Ccavenue access code")
+    encryption_key: String @doc(description: "Ccavenue encryption key")
+    encRequest: String @doc(description: "Ccavenue Encrypted Request key")
+}
+
+type CcavenueUpdateStatus {
+    return_url: String @doc(description: "Return Url")
+    success_message: String @doc(description: "Ccavenue order status success message")
+    order_status: String @doc(description: "Ccavenue order status")
+}
