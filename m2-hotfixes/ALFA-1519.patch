@@ -6,19 +6,19 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetE
 diff --git a/vendor/avalara/excise/Model/Tax/TaxCalculation.php b/vendor/avalara/excise/Model/Tax/TaxCalculation.php
 --- a/vendor/avalara/excise/Model/Tax/TaxCalculation.php
 +++ b/vendor/avalara/excise/Model/Tax/TaxCalculation.php
-@@ -223,8 +223,7 @@
+@@ -222,8 +222,7 @@
       */
      protected function getAppliedTaxes($lineItem, $scope, $useBaseCurrency = false)
      {     
 -        $extensionAttributes = $lineItem->getExtensionAttributes();
--        $exciseResponse = $this->processExciseResponseData($extensionAttributes->getExciseResponse());
+-        $exciseResponse = $this->processExciseResponseData($extensionAttributes->getTaxBreakdown());
 +        $exciseResponse = $this->processExciseResponseData($lineItem);
  
          return $exciseResponse;
      }
-@@ -247,14 +246,24 @@
+@@ -246,8 +245,13 @@
       /**
-      * 
+      * @codeCoverageIgnore
       */
 -    private function processExciseResponseData($response)
 +    private function processExciseResponseData($lineItem)
@@ -28,18 +28,19 @@ diff --git a/vendor/avalara/excise/Model/Tax/TaxCalculation.php b/vendor/avalara
 +        $itemCode = $lineItem->getCode();
 +        $itemSequenceId = substr($itemCode, strrpos($itemCode, '-' ) + 1);
 +
-         $response = json_decode($response, true);
-         if (empty($response['Status']) || $response['Status'] != 'Success') {
-             return [];
-         }
+         $responseData = json_decode((string)$response, true);
          $taxArray = [];
-         foreach ($response['TransactionTaxes'] as $transactionTaxes) {
-+
+         
+@@ -255,7 +259,10 @@
+             return $taxArray;
+         }
+ 
+-        foreach ($responseData as $transactionTaxes) {
++        foreach ($responseData['TransactionTaxes'] as $transactionTaxes) {
 +            if($itemSequenceId != $transactionTaxes['TransactionLine']) {
 +                continue;
 +            }
-+
-             $arrayKey = $transactionTaxes['InvoiceLine'] . '_' . $transactionTaxes['RateDescription'];
+             $arrayKey = $transactionTaxes['TaxType']."_".$transactionTaxes['RateDescription'];
              $jurisdictionCode = $transactionTaxes['Jurisdiction'];
              $taxType = $transactionTaxes['TaxType'];
 Index: vendor/mageworx/module-ordereditorbase/Model/Order/Item.php
