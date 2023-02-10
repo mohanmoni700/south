@@ -1,14 +1,28 @@
 <?php
+declare(strict_types=1);
+
 namespace Alfakher\GrossMargin\Observer;
-use Magento\Framework\Event\Observer;
-use Magento\Catalog\Api\ProductRepositoryInterface;
+
+/**
+ * @author af_bv_op
+ */
 use Alfakher\GrossMargin\ViewModel\GrossMargin;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Framework\Event\Observer;
+use Magento\Framework\Exception\LocalizedException;
 
 class CheckoutCartProductAddAfterObserver implements \Magento\Framework\Event\ObserverInterface
 {
     /**
-     * Constructor
-     *
+     * @var ProductRepositoryInterface
+     */
+    private $proRepo;
+    /**
+     * @var GrossMargin
+     */
+    private $grossMarginViewModel;
+
+    /**
      * @param ProductRepositoryInterface $proRepo
      * @param GrossMargin $grossMarginViewModel
      */
@@ -19,19 +33,19 @@ class CheckoutCartProductAddAfterObserver implements \Magento\Framework\Event\Ob
         $this->proRepo = $proRepo;
         $this->grossMarginViewModel = $grossMarginViewModel;
     }
+
     /**
      * Execute
      *
      * @param Observer $observer
+     * @return void
+     * @throws LocalizedException
      */
     public function execute(Observer $observer)
     {
         $item = $observer->getQuoteItem();
-        $websiteId = 0;
-        if ($item->getQuote()) {
-            $websiteId = $item->getQuote()->getStore()->getWebsiteId();
-        }
-        $moduleEnable = $this->grossMarginViewModel->isModuleEnabled($websiteId);
+        $storeId = $observer->getEvent()->getQuoteItem()->getStoreId();
+        $moduleEnable = $this->grossMarginViewModel->isModuleEnabled($storeId);
         if ($moduleEnable) {
             $grossMargin = 0;
             try {

@@ -105,7 +105,6 @@ class Data extends AbstractHelper
             'sortOrder' => 3,
             'validation' => [
                 "required-entry" => true,
-                "validate-country-code-number" => true,
                 "max_text_length" => 255,
                 "min_text_length" => 1,
             ],

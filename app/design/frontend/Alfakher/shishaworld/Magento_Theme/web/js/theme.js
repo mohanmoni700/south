@@ -111,11 +111,39 @@ define([
         window.removeEventListener("load", lazyLoadImages), window.removeEventListener("resize", lazyLoadImages),
         window.removeEventListener("scroll", lazyLoadImages))
     }
+    window.addEventListener("DOMContentLoaded", lazyLoadImages), window.addEventListener("load", lazyLoadImages),
+    window.addEventListener("resize", lazyLoadImages), window.addEventListener("scroll", lazyLoadImages)
     function isElementInViewport(e) {
+        var t = e.getBoundingClientRect();
+        return true;
+    }
+    function isElementInViewports(e) {
         var t = e.getBoundingClientRect();
         return t.top >= 0 && t.left >= 0 && t.bottom <= (window.innerHeight || document.documentElement.clientHeight) 
             && t.right <= (window.innerWidth || document.documentElement.clientWidth)
     }
-    window.addEventListener("DOMContentLoaded", lazyLoadImages), window.addEventListener("load", lazyLoadImages),
-    window.addEventListener("resize", lazyLoadImages), window.addEventListener("scroll", lazyLoadImages)
+    document.addEventListener('scroll', function () {
+        window.addEventListener("DOMContentLoaded", lazyLoadImages), window.addEventListener("load", lazyLoadImages),
+        window.addEventListener("resize", lazyLoadImages), window.addEventListener("scroll", lazyLoadImages)    
+    });
+
+    jQuery(".sign-in").click(function(){
+        jQuery("#switcher-language .switcher-options, #switcher-language .switcher-options .switcher-trigger").removeClass("active");
+        jQuery(".amquote-cart-wrapper.minicart-wrapper").removeClass("-active");
+        jQuery(".amquote-cart-wrapper.minicart-wrapper .mage-dropdown-dialog").css("display", "none");
+      });
+    jQuery(".amquote-cart-wrapper .amquote-showcart").click(function(){
+        jQuery("#switcher-language .switcher-options, #switcher-language .switcher-options .switcher-trigger").removeClass("active");
+        jQuery(".sign-in .customer_logged_in").css("display", "none");
+    });
+    jQuery(".minicart-wrapper .showcart").click(function(){
+        jQuery("#switcher-language .switcher-options, #switcher-language .switcher-options .switcher-trigger").removeClass("active");
+        jQuery(".sign-in .customer_logged_in").css("display", "none");
+    });
+    jQuery("#switcher-language #switcher-language-trigger").click(function(){
+        jQuery(".sign-in .customer_logged_in").css("display", "none");
+        jQuery(".minicart-wrapper .mage-dropdown-dialog").css("display", "none");
+        jQuery(".amquote-cart-wrapper.minicart-wrapper").removeClass("-active");
+        jQuery(".amquote-cart-wrapper.minicart-wrapper .mage-dropdown-dialog").css("display", "none");
+    });
 });

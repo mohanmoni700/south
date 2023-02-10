@@ -1,0 +1,35 @@
+<?php $additionalInformation = $block->getArrayAdditionalInformation(); ?>
+
+<?php if (isset($additionalInformation['TRANSACTION_ID'])) : ?>
+    <div class="additional-information-item">
+        <?php echo __('BACKEND_TT_TRANSACTION_ID') .' : ' . $additionalInformation['TRANSACTION_ID']; ?>
+    </div>
+<?php endif; ?>
+
+<?php if (isset($additionalInformation['RISK_SCORE'])) : ?>
+    <div class="additional-information-item">
+        <?php echo __('BACKEND_GENERAL_RISKS_SCORE') .' : ' . $additionalInformation['RISK_SCORE']; ?>
+    </div>
+<?php endif; ?>
+
+<?php if (isset($additionalInformation['RESULT_CODE'])) : ?>
+    <div class="additional-information-item">
+        <?php echo __('BACKEND_GENERAL_RESULT_CODE') .' : ' . $additionalInformation['RESULT_CODE']; ?>
+    </div>
+<?php endif; ?>
+
+<?php if (isset($additionalInformation['RESULT_DESCRIPTION'])) : ?>
+    <div class="additional-information-item">
+        <?php echo __('BACKEND_GENERAL_RESULT_DESCRIPTION') .' : ' . $additionalInformation['RESULT_DESCRIPTION']; ?>
+    </div>
+<?php endif; ?>
+
+<?php if (isset($additionalInformation['ORDER_STATUS_CODE'])) : ?>
+    <?php if ($additionalInformation['ORDER_STATUS_CODE'] == 'IR') : ?>
+        <div style="margin-top: 30px"></div>
+        <a href="<?php echo $block->getUpdateOrderUrl() ?>"
+            class="action-default scalable action-save action-secondary">
+            <?php echo __('BACKEND_BT_UPDATE_ORDER') ?>
+        </a>
+    <?php endif; ?>
+<?php endif; ?>

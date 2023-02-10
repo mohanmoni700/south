@@ -1,0 +1,12 @@
+<?php
+/**
+ * @var \Magento\Sales\Block\Adminhtml\Order\Invoice\View\Items $block
+ */
+$exitbNumber = $block->getInvoice()->getExitbInvoiceNumbers();
+
+if ($exitbNumber) { ?>
+    <section class="admin__page-section order-view-account-information">
+        <th><strong><?= $block->escapeHtml(__('ExitB Invoice Number')) ?></strong></th>
+        <td><?= $block->escapeHtml($exitbNumber) ?></td>
+    </section>
+<?php } ?>

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\GrossMargin\Plugin;
 
@@ -7,6 +8,8 @@ namespace Alfakher\GrossMargin\Plugin;
  */
 use Magento\Framework\Message\ManagerInterface as MessageManager;
 use Magento\Sales\Model\ResourceModel\Order\Grid\Collection as SalesOrderGridCollection;
+use Magento\Framework\App\Request\Http;
+use Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory;
 
 class OrderGridPurchaseOrder
 {
@@ -21,14 +24,19 @@ class OrderGridPurchaseOrder
     private $collection;
 
     /**
+     * @var Http $request
+     */
+    private $request;
+
+    /**
      * @param MessageManager $messageManager
      * @param SalesOrderGridCollection $collection
-     * @param \Magento\Framework\App\Request\Http $request
+     * @param Http $request
      */
     public function __construct(
         MessageManager $messageManager,
         SalesOrderGridCollection $collection,
-        \Magento\Framework\App\Request\Http $request
+        Http $request
     ) {
         $this->messageManager = $messageManager;
         $this->collection = $collection;
@@ -38,12 +46,13 @@ class OrderGridPurchaseOrder
     /**
      * Around Get Report
      *
-     * @param \Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory $subject
+     * @param CollectionFactory $subject
      * @param \Closure $proceed
      * @param string $requestName
+     * @return mixed
      */
     public function aroundGetReport(
-        \Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory $subject,
+        CollectionFactory $subject,
         \Closure $proceed,
         $requestName
     ) {

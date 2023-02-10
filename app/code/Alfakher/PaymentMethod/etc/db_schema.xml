@@ -14,4 +14,7 @@
         <column xsi:type="text" name="routing_number" nullable="true" comment="Routing Number"/>
         <column xsi:type="text" name="address" nullable="true" comment="Address"/>
     </table>
+    <table name="klarna_logs" resource="default" engine="innodb" comment="Klarna Logs">
+        <column xsi:type="int" name="log_id" unsigned="false" nullable="false" identity="true" comment="Log Id"/>
+    </table>
 </schema>

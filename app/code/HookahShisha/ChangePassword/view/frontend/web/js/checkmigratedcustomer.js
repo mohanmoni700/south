@@ -1,11 +1,11 @@
-define(["jquery", "jquery/ui", 'mage/url'], function($, ui, urlBuilder) {
+define(["jquery", "jquery/ui", 'mage/url','mage/translate'], function($, ui, urlBuilder, $t) {
     "use strict";
 
-    function main(config, element) {
+    function main(config, element,$t) {
         $(document).ready(function() {
             $(config.passwordSelector).show();
             $(config.email).focus();
-            $(config.submitButton).text("sign in");
+            $(config.submitButton).text($.mage.__('Sign In'));
             $(config.submitButton).prop("disabled", false);
         });
 

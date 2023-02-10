@@ -1,0 +1,44 @@
+type Order {
+    vr_widget_url: String @doc(description: "Vr widget url")
+    vr_brand: String @doc(description: "Vr widget brand")
+}
+
+type Query {
+    getVrPaymentStatus(input: getVrPaymentStatusInput): getVrPaymentStatusOutput
+    @resolver(class: "\\Vrpayecommerce\\VrpayecommerceGraphql\\Model\\Resolver\\GetPaymentStatus")
+    @doc(description: "Get Payment Status for VR Payment")
+    getVrSavedCardsInformation:  getVrSavedCardsInformationOutput
+    @resolver(class: "\\Vrpayecommerce\\VrpayecommerceGraphql\\Model\\Resolver\\GetVrSavedCardsInformation")
+    @doc(description: "Get VR cards")
+}
+
+type Mutation {
+    deleteVrSavedCard(paymentMethodType: String, informationId: String):  getVrSavedCardsInformationOutput
+    @resolver(class: "\\Vrpayecommerce\\VrpayecommerceGraphql\\Model\\Resolver\\DeleteVrSavedCard")
+    @doc(description: "Delete VR card")
+}
+
+type getVrSavedCardsInformationOutput {
+    CCSaved: [VRSavedParams],
+    DDSaved: [VRSavedParams]
+}
+
+type VRSavedParams {
+    cardInfo: String
+    image: String
+    brand: String
+    formId: String
+    expiry: String
+    cardType: String
+}
+
+input getVrPaymentStatusInput {
+    checkoutId: String!
+    paymentMethod: String!
+    orderIncrementId: String!
+}
+
+type getVrPaymentStatusOutput {
+    returnCode:String
+    transactionResult:String!
+}

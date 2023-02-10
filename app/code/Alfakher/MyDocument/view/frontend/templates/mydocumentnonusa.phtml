@@ -53,7 +53,8 @@
                             <?php endif; ?>
                             <div class="doc-actions">
                                 <!-- added condiition here[BS] -->
-                                <?php if ($val['status'] == 0 && $val['message'] != null || (($expiry_date <= $today && $expiry_date != ""))): ?>
+                                <?php if ($val['status'] == 0 && $val['message'] != null ||
+                                (($expiry_date <= $today && $expiry_date != ""))): ?>
                                     <a  class="view-doc-link" href="<?= $block->escapeUrl($fileName); ?>"
                                         target="_blank"></a>
                                     <a class="deletedocument" name="deletedocument" href="#"

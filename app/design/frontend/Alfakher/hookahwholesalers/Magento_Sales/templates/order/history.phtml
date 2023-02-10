@@ -53,7 +53,7 @@
                                 $this->helper(\Magento\Framework\Data\Helper\PostHelper::class)
                                     ->getPostData($block->getReorderUrl($_order))
                                 ?>' class="action order">
-                                    <span>Reorder (All Items)</span>
+                                    <span><?= $block->escapeHtml(__('Reorder (All Items)')) ?></span>
                                 </a>
                             </div>
                             <?php endif ?>

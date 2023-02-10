@@ -1,0 +1,17 @@
+Index: vendor/mageplaza/magento-2-seo-extension/Block/Adminhtml/SeoChecker/CheckForm.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vendor/mageplaza/magento-2-seo-extension/Block/Adminhtml/SeoChecker/CheckForm.php b/vendor/mageplaza/magento-2-seo-extension/Block/Adminhtml/SeoChecker/CheckForm.php
+--- a/vendor/mageplaza/magento-2-seo-extension/Block/Adminhtml/SeoChecker/CheckForm.php	
++++ b/vendor/mageplaza/magento-2-seo-extension/Block/Adminhtml/SeoChecker/CheckForm.php	(date 1671468115961)
+@@ -137,7 +137,7 @@
+         $storeId    = $this->_request->getParam('store');
+         $actionName = $this->_request->getFullActionName();
+         if ($storeId === 0 || $storeId === null) {
+-            $defaultStore = $this->_storeManager->getDefaultStoreView();
++            $defaultStore = $this->_storeManager->getStore();
+             $storeId      = $defaultStore->getId();
+             $storeCode    = $defaultStore->getCode();
+         }

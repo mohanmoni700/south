@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="checkout_onepage_review_item_renderers"/>
+    <head>
+        <css src="Vrpayecommerce_Vrpayecommerce/css/payment_review.css"/>
+    </head>
+    <body>
+        <referenceContainer name="content">
+	    	<block class="Vrpayecommerce\Vrpayecommerce\Block\Payment\Review" name="vrpayecommerce.easycredit.review" template="Vrpayecommerce_Vrpayecommerce::payment/review.phtml">
+                <block class="Vrpayecommerce\Vrpayecommerce\Block\Payment\Review\Details" name="vrpayecommerce.easycredit.review.details" as="details" template="Vrpayecommerce_Vrpayecommerce::payment/review/details.phtml">
+                    <block class="Magento\Framework\View\Element\RendererList" name="checkout.onepage.review.item.renderers" as="renderer.list"/>
+                    <block class="Magento\Checkout\Block\Cart\Totals" name="vrpayecommerce.easycredit.review.details.totals" as="totals" template="Vrpayecommerce_Vrpayecommerce::payment/review/totals.phtml"/>
+                </block>
+                <block class="Magento\CheckoutAgreements\Block\Agreements" name="vrpayecommerce.easycredit.review.details.agreements" as="agreements" template="Magento_CheckoutAgreements::additional_agreements.phtml"/>
+            </block>
+        </referenceContainer>
+        <block class="Magento\Framework\View\Element\Template" name="additional.product.info" template="Magento_Theme::template.phtml"/>
+    </body>
+</page>

@@ -7,7 +7,7 @@
 } @-->
 
 {{template config_path="design/email/header_template"}}
-<p>Hello {{var name}},</p>
+<p>{{trans "Hello"}} {{var name}},</p>
 
 {{block class='Magento\\Framework\\View\\Element\\Template' area='frontend' template='Alfakher_MyDocument::expirydoc_email_template.phtml' documentarray=$documentarray}}
 
