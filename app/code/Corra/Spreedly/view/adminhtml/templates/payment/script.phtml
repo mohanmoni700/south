@@ -1,0 +1,27 @@
+<?php
+/**
+ * @author  CORRA
+ */
+
+/** @var Corra\Spreedly\Block\Payment $block */
+
+$code = $block->escapeHtml($block->getCode());
+
+?>
+<script>
+    //<![CDATA[
+    require(
+        [
+            'Corra_Spreedly/js/spreedly',
+            'jquery',
+            'domReady!'
+        ], function(Spreedly, $) {
+            var config = <?= /* @noEscape */ $block->getPaymentConfig() ?>,
+                payment,
+                form = $('#payment_form_<?= /* @noEscape */ $code ?>');
+
+            config.active = form.length > 0 && !form.is(':hidden');
+            payment = new Spreedly(config);
+        });
+    //]]>
+</script>
