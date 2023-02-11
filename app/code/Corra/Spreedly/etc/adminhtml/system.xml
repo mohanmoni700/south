@@ -65,6 +65,44 @@
                     <comment>Please enter the Numeric value on Distribution</comment>
                 </field>
 
+                <!-- @ref OOKA-50 -->
+                <field id="gateway_specific_fields_active" translate="label" type="select" sortOrder="62" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[Gateway Specific Fields - (Y/N)]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <tooltip>
+                            <![CDATA[ If "enabled", this will add <b>gateway_specific_fields</b> to all transaction requests.]]>
+                        </tooltip>
+                        <comment>
+                            <![CDATA[Refer the documentations for
+                            <a href="https://docs.spreedly.com/payment-gateways/first-data-e4-v27/#gateway-specific-fields">
+                                more details.
+                            </a>]]>
+                        </comment>
+                </field>
+                <field id="gateway_specific_fields_json" translate="label" type="textarea" sortOrder="63" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[Gateway Specific Fields - JSON]]></label>
+                    <tooltip>
+                        <![CDATA[
+                            <ul>
+                            <li>These paramaters will be added for all transactions requests</li>
+                            <li>The paramaters setup here will be fixed for this scope (website/store)</li>
+                            <li>Eg. the final request will look like below example</li>
+<pre>{"transaction": {"retain_on_success": false,"payment_method_token": "4Gk9jqznu7Zs4cNn3fFSFFid0ru","amount": 50055,"currency_code": "AED","order_id": "59000000176", "gateway_specific_fields": { "checkout_v2": { "processing_channel_id": "pc_fc2zo2b2t42unmgrmesfvi4jgq" } } } }</pre>
+                            <li>Below is an example of expected input for this field.</li>
+<pre>{ "checkout_v2": { "processing_channel_id": "pc_fc2zo2b2t42unmgrmesfvi4jgq" } }</pre>
+                            </ul>
+                            ]]>
+                    </tooltip>
+                        <depends>
+                            <field id="gateway_specific_fields_active">1</field>
+                        </depends>
+                    <comment>
+                        <![CDATA[<b>INPUT should be in JSON format</b>, without spaces and slashes. <br />
+                        <strong class="colorRed"><b>Warning !:</b> If error in JSON format, this will be considered disabled.</strong>]]>
+                    </comment>
+                </field>
+                <!-- @ref OOKA-50 -->
+
                 <field id="allowspecific" translate="label" type="allowspecific" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
                     <label><![CDATA[Payment from Applicable Countries]]></label>
                     <source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
