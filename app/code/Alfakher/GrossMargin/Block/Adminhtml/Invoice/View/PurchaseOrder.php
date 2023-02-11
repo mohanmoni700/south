@@ -20,6 +20,11 @@ class PurchaseOrder extends \Magento\Backend\Block\Template
     private $invoiceRepository;
 
     /**
+     * @var \Magento\Sales\Api\Data\OrderInterface
+     */
+    protected $order;
+
+    /**
      * @param Context $context
      * @param InvoiceRepositoryInterface $invoiceRepository
      * @param array $data [optional]
