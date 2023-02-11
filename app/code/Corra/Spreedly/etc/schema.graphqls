@@ -1,0 +1,21 @@
+# the below information are using for setPaymentMethodOnCart with extra parameters
+input PaymentMethodInput {
+    additional_data: PaymentMethodAdditionalData
+    spreedly_cc_vault: SpreedlyCcVaultInput
+}
+
+input PaymentMethodAdditionalData {
+    save_cc: Boolean @doc(description: "Specify whether the card should be saved")
+    payment_method_token: String @doc(description:"Generated payment method token")
+    cc_number: String @doc(description:"Full Creditcard Number")
+    cc_type: String @doc(description:"Credit Card Type")
+    cc_exp_month:String @doc(description:"Credit Card Expiry Month")
+    cc_exp_year:Int @doc(description:"Credit Card Expiry Year")
+    cc_last4:String @doc(description:"Credit Card Last four Digit")
+    cc_cid:String @doc(description:"Credit Card CVV")
+    is_active_payment_token_enabler: Boolean @doc(description:"Specify whether the card should be saved")
+}
+
+input SpreedlyCcVaultInput {
+    public_hash: String! @doc(description:"Public hash of the saved Spreedly CC")
+}
