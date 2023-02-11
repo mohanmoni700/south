@@ -4,7 +4,6 @@
  */
 namespace Corra\Spreedly\Gateway\Config;
 
-use Corra\Spreedly\Model\OrderDataProvider;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\InputException;
@@ -12,6 +11,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use PayPal\Braintree\Model\StoreConfigResolver;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Payment\Gateway\Config\Config as SourceConfig;
+use Magento\Payment\Model\Method\Logger;
 
 /**
  *  Spreedly implementation of Payment Gateway Config.
@@ -37,33 +37,45 @@ class Config extends SourceConfig
     private const KEY_PAYEEZY_GATEWAY_DISTRIBUTION = 'payeezy_gateway_distribution';
     private const KEY_CC_TYPES_SPREEDLY_MAPPER = 'cctypes_spreedly_mapper';
     private const KEY_IS_CRON_ENABLED_REMOVE_REDACTED_SAVEDCC = 'cron_enabled';
-
+    /**
+     * @ref https://alfakher.atlassian.net/browse/OOKA-50
+     * @configkey "payment/spreedly/*"
+     */
+    private const KEY_GATEWAY_SPECIFIC_FIELDS_ACTIVE = 'gateway_specific_fields_active';
+    private const KEY_GATEWAY_SPECIFIC_FIELDS = 'gateway_specific_fields_json';
     /**
      * @var Json
      */
     private $serializer;
-
+    /**
+     * @var Logger
+     */
+    protected $customLogger;
     /**
      * @var StoreConfigResolver
      */
     private $storeConfigResolver;
 
     /**
+     * Type constructer
+     *
      * @param StoreConfigResolver $storeConfigResolver
      * @param ScopeConfigInterface $scopeConfig
-     * @param string|null $methodCode
+     * @param Logger $customLogger
+     * @param string $methodCode
      * @param string $pathPattern
-     * @param Json|null $serializer
+     * @param Json $serializer
      */
     public function __construct(
         StoreConfigResolver  $storeConfigResolver,
         ScopeConfigInterface $scopeConfig,
+        Logger $customLogger,
         $methodCode = null,
         string $pathPattern = self::DEFAULT_PATH_PATTERN,
         Json $serializer = null
     ) {
         parent::__construct($scopeConfig, $methodCode, $pathPattern);
-
+        $this->customLogger = $customLogger;
         $this->storeConfigResolver = $storeConfigResolver;
         $this->serializer = $serializer ?: ObjectManager::getInstance()
             ->get(Json::class);
@@ -227,6 +239,8 @@ class Config extends SourceConfig
     }
 
     /**
+     * Get configurations to enable/disable redacted CC cronjob
+     *
      * @return mixed|null
      */
     public function isRemoveCCRedactedCronEnabled()
@@ -251,5 +265,52 @@ class Config extends SourceConfig
         );
 
         return is_array($result) ? $result : [];
+    }
+
+    /**
+     * Get "GATEWAY_SPECIFIC_FIELDS" related configurations from Magento.
+     * Checks the scope of active flag for store/website.
+     * Validating the input format, if NOT JSON format @returns false
+     *
+     * @ref https://alfakher.atlassian.net/browse/OOKA-50
+     * @return bool|array
+     * @throws InputException
+     * @throws NoSuchEntityException
+     */
+    public function getGatewaySpecificFieldsJsonData()
+    {
+        /** @var $gatewayFieldsActive - GET 'payment/spreedly/gateway_specific_fields_active' **/
+        $gatewayFieldsActive = $this->getValue(
+            self::KEY_GATEWAY_SPECIFIC_FIELDS_ACTIVE,
+            $this->storeConfigResolver->getStoreId()
+        );
+
+        /**
+         * In admin configurations 'gateway_specific_fields_active' is active
+         * If disabled @returns false
+         */
+        if (!empty($gatewayFieldsActive)) {
+            /**
+             * Get 'gateway_specific_fields_json' data from admin configurations
+             * If disabled @returns false
+             */
+            $gatewayFieldsJsonData =$this->getValue(
+                self::KEY_GATEWAY_SPECIFIC_FIELDS,
+                $this->storeConfigResolver->getStoreId()
+            );
+            /**
+             * Checking if correct JSON was updated in admin configurations
+             */
+            try {
+                /** @returns array **/
+                return $this->serializer->unserialize($gatewayFieldsJsonData);
+            } catch (\Exception $e) {
+                $this->customLogger->debug(
+                    (array)'Warning: JSON error on spreedly configuration for gateway_specific_fields. '
+                );
+                return false;
+            }
+        }
+        return false;
     }
 }
