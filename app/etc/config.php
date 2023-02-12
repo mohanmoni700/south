@@ -89,7 +89,7 @@ return [
                 'sort_order' => '50',
                 'default_group_id' => '23',
                 'is_default' => '0'
-             ]
+            ]
         ],
         'groups' => [
             0 => [
@@ -179,7 +179,7 @@ return [
                 'root_category_id' => '3362',
                 'default_store_id' => '41',
                 'code' => 'global_hookah_store'
-             ]
+            ]
         ],
         'stores' => [
             'admin' => [
@@ -206,6 +206,15 @@ return [
                 'website_id' => '2',
                 'group_id' => '2',
                 'name' => 'Shisha-World.com (B2C) Store View EN',
+                'sort_order' => '1',
+                'is_active' => '1'
+            ],
+            'hookah_store_view_en' => [
+                'store_id' => '71',
+                'code' => 'hookah_store_view_en',
+                'website_id' => '2',
+                'group_id' => '2',
+                'name' => 'Shisha-World.com (B2C) Store View EN-default',
                 'sort_order' => '1',
                 'is_active' => '1'
             ],
@@ -334,7 +343,7 @@ return [
                 'name' => 'Global Hookah (B2B) Store View',
                 'sort_order' => '1',
                 'is_active' => '1'
-             ]
+            ]
         ]
     ],
     'system' => [
@@ -413,6 +422,20 @@ return [
                 'general' => [
                     'locale' => [
                         'code' => 'es_ES'
+                    ]
+                ]
+            ],
+            'hookah_store_view_es' => [
+                'general' => [
+                    'locale' => [
+                        'code' => 'es_ES'
+                    ]
+                ]
+            ],
+            'hookah_store_view_de' => [
+                'general' => [
+                    'locale' => [
+                        'code' => 'de_DE'
                     ]
                 ]
             ]
@@ -1071,6 +1094,7 @@ return [
         'HookahShisha_Import' => 1,
         'HookahShisha_InternationalTelephoneInput' => 1,
         'HookahShisha_InvoiceCapture' => 1,
+        'Klarna_Ordermanagement' => 1,
         'HookahShisha_LoginAsCustomer' => 1,
         'Magefan_Blog' => 1,
         'HookahShisha_Migration' => 1,
@@ -1087,10 +1111,10 @@ return [
         'HookahShisha_SwatchData' => 1,
         'HookahShisha_SwatchesGraphQl' => 1,
         'Alfakher_PaymentMethod' => 1,
-        'Klarna_Ordermanagement' => 1,
         'Klarna_Kp' => 1,
-        'Klarna_Onsitemessaging' => 1,
         'Klarna_KpGraphQl' => 1,
+        'Klarna_Onsitemessaging' => 1,
+        'HookahShisha_Klarna' => 1,
         'Klaviyo_Reclaim' => 1,
         'MSP_Common' => 1,
         'MSP_CmsImportExport' => 1,
@@ -1219,7 +1243,7 @@ return [
             'theme_title' => 'Ooka',
             'is_featured' => '0',
             'area' => 'frontend',
-            'type' => '0',
+            'type' => '1',
             'code' => 'Corra/ooka'
         ],
         'frontend/Corra/ooka-de' => [
@@ -1228,7 +1252,7 @@ return [
             'theme_title' => 'Ooka DE',
             'is_featured' => '0',
             'area' => 'frontend',
-            'type' => '0',
+            'type' => '1',
             'code' => 'Corra/ooka-de'
         ],
         'frontend/Alfakher/shishaworld' => [
@@ -1248,7 +1272,7 @@ return [
             'area' => 'frontend',
             'type' => '0',
             'code' => 'Alfakher/globalhookah'
-         ]
+        ]
     ],
     'i18n' => [
 
