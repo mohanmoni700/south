@@ -1,13 +1,11 @@
 <?php
 /**
  * @author  CORRA
- * @note - Configurations updated to store scope for JIRA::OOKA-50 to share new keys
  */
-
 namespace Corra\Spreedly\Gateway\Config;
 
-use Exception;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use PayPal\Braintree\Model\StoreConfigResolver;
@@ -27,10 +25,12 @@ class Config extends SourceConfig
     private const KEY_PAYEEZY_GATEWAY_TOKEN = 'payeezy_gateway_token';
     private const KEY_TITLE = 'title';
     private const KEY_PAYMENT_ACTION = 'payment_action';
+    private const KEY_ALLOWSPECIFIC = 'allowspecific';
+    private const KEY_SPECIFICCOUNTRY = 'specificcountry';
     private const KEY_CCTYPES = 'cctypes';
-    private const KEY_SERVICE_URL = 'service_url';
-    private const KEY_TEST_MODE = 'test_mode';
-    private const KEY_TEST_GATEWAY_TOKEN = 'test_gateway_token';
+    private const KEY_SERVICE_URL = "service_url";
+    private const KEY_TEST_MODE = "test_mode";
+    private const KEY_TEST_GATEWAY_TOKEN = "test_gateway_token";
     private const KEY_AUTHORIZENET_GATEWAY_ACTIVE = 'authorizenet_gateway_active';
     private const KEY_AUTHORIZENET_GATEWAY_DISTRIBUTION = 'authorizenet_gateway_distribution';
     private const KEY_PAYEEZY_GATEWAY_ACTIVE = 'payeezy_gateway_active';
@@ -39,45 +39,46 @@ class Config extends SourceConfig
     private const KEY_IS_CRON_ENABLED_REMOVE_REDACTED_SAVEDCC = 'cron_enabled';
     /**
      * @ref https://alfakher.atlassian.net/browse/OOKA-50
-     * @configkey "payment/spreedly/(*_active || *_json)"
+     * @configkey "payment/spreedly/*"
      */
     private const KEY_GATEWAY_SPECIFIC_FIELDS_ACTIVE = 'gateway_specific_fields_active';
     private const KEY_GATEWAY_SPECIFIC_FIELDS = 'gateway_specific_fields_json';
     /**
+     * @var Json
+     */
+    private $serializer;
+    /**
      * @var Logger
      */
-    protected Logger $customLogger;
-    /**
-     * @var Json|null
-     */
-    private ?Json $serializer;
+    protected $customLogger;
     /**
      * @var StoreConfigResolver
      */
-    private StoreConfigResolver $storeConfigResolver;
+    private $storeConfigResolver;
 
     /**
-     * Type constructor
+     * Type constructer
      *
      * @param StoreConfigResolver $storeConfigResolver
      * @param ScopeConfigInterface $scopeConfig
      * @param Logger $customLogger
-     * @param string|null $methodCode
+     * @param string $methodCode
      * @param string $pathPattern
-     * @param Json|null $serializer
+     * @param Json $serializer
      */
     public function __construct(
         StoreConfigResolver  $storeConfigResolver,
         ScopeConfigInterface $scopeConfig,
-        Logger               $customLogger,
-        string               $methodCode = null,
-        string               $pathPattern = self::DEFAULT_PATH_PATTERN,
-        Json                 $serializer = null
+        Logger $customLogger,
+        $methodCode = null,
+        string $pathPattern = self::DEFAULT_PATH_PATTERN,
+        Json $serializer = null
     ) {
         parent::__construct($scopeConfig, $methodCode, $pathPattern);
         $this->customLogger = $customLogger;
         $this->storeConfigResolver = $storeConfigResolver;
-        $this->serializer = $serializer;
+        $this->serializer = $serializer ?: ObjectManager::getInstance()
+            ->get(Json::class);
     }
 
     /**
@@ -87,7 +88,7 @@ class Config extends SourceConfig
      * @throws InputException
      * @throws NoSuchEntityException
      */
-    public function isActive(): bool
+    public function isActive()
     {
         return (bool)$this->getValue(
             self::KEY_ACTIVE,
@@ -98,7 +99,7 @@ class Config extends SourceConfig
     /**
      * Get Spreedly Environment Key
      *
-     * @return mixed|null
+     * @return string
      * @throws InputException
      * @throws NoSuchEntityException
      */
@@ -113,7 +114,7 @@ class Config extends SourceConfig
     /**
      * Get Spreedly Environment Secret
      *
-     * @return mixed|null
+     * @return string
      * @throws InputException
      * @throws NoSuchEntityException
      */
@@ -128,7 +129,7 @@ class Config extends SourceConfig
     /**
      * Get AuthorizeNet Gateway Token
      *
-     * @return mixed|null
+     * @return string
      * @throws InputException
      * @throws NoSuchEntityException
      */
@@ -143,7 +144,7 @@ class Config extends SourceConfig
     /**
      * Get Payeezy Gateway Token
      *
-     * @return mixed|null
+     * @return string
      * @throws InputException
      * @throws NoSuchEntityException
      */
@@ -158,7 +159,7 @@ class Config extends SourceConfig
     /**
      * Get Payment Method Title
      *
-     * @return mixed|null
+     * @return string
      * @throws InputException
      * @throws NoSuchEntityException
      */
@@ -222,7 +223,7 @@ class Config extends SourceConfig
      * @throws InputException
      * @throws NoSuchEntityException
      */
-    public function getTestMode():bool
+    public function getTestMode()
     {
         return (bool)$this->getValue(
             self::KEY_TEST_MODE,
@@ -233,7 +234,7 @@ class Config extends SourceConfig
     /**
      * Get TestGatewayToken value from system config
      *
-     * @return mixed|null
+     * @return string
      * @throws InputException
      * @throws NoSuchEntityException
      */
@@ -346,7 +347,7 @@ class Config extends SourceConfig
      */
     public function getGatewaySpecificFieldsJsonData()
     {
-        /** @var $gatewayFieldsActive - GET 'payment/spreedly/gateway_specific_fields_active' * */
+        /** @var $gatewayFieldsActive - GET 'payment/spreedly/gateway_specific_fields_active' **/
         $gatewayFieldsActive = $this->getValue(
             self::KEY_GATEWAY_SPECIFIC_FIELDS_ACTIVE,
             $this->storeConfigResolver->getStoreId()
@@ -361,7 +362,7 @@ class Config extends SourceConfig
              * Get 'gateway_specific_fields_json' data from admin configurations
              * If disabled @returns false
              */
-            $gatewayFieldsJsonData = $this->getValue(
+            $gatewayFieldsJsonData =$this->getValue(
                 self::KEY_GATEWAY_SPECIFIC_FIELDS,
                 $this->storeConfigResolver->getStoreId()
             );
@@ -369,9 +370,9 @@ class Config extends SourceConfig
              * Checking if correct JSON was updated in admin configurations
              */
             try {
-                /** @returns array * */
+                /** @returns array **/
                 return $this->serializer->unserialize($gatewayFieldsJsonData);
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 $this->customLogger->debug(
                     (array)'Warning: JSON error on spreedly configuration for gateway_specific_fields. '
                 );
