@@ -19,6 +19,13 @@ use Psr\Log\LoggerInterface;
 class HTTPClient implements ClientInterface
 {
     private const MASK_KEY = '*';
+
+    /**
+     * @ref https://alfakher.atlassian.net/browse/OOKA-50
+     * List of gateway specific fields that can be specified in supported gateway transactions.
+     */
+    private const GATEWAY_SPECIFIC_FIELDS = 'gateway_specific_fields';
+
     /**
      * @var ZendClientFactory
      */
@@ -55,26 +62,30 @@ class HTTPClient implements ClientInterface
      * @param LoggerInterface $logger
      * @param Json $json
      * @param Logger $customLogger
+     * @param Config $config
      */
     public function __construct(
         ZendClientFactory $httpClientFactory,
         LoggerInterface $logger,
         Json $json,
-        Logger $customLogger
+        Logger $customLogger,
+        Config $config
     ) {
         $this->httpClientFactory = $httpClientFactory;
         $this->logger = $logger;
         $this->json = $json;
         $this->customLogger = $customLogger;
+        $this->config = $config;
         $this->createClient();
     }
 
     /**
      * Places request to gateway.
      *
+     * @ref https://alfakher.atlassian.net/browse/OOKA-50
      * @param TransferInterface $transferObject
-     * @return \Zend_Http_Response|array
-     * @throws \Exception
+     * @return Zend_Http_Response|array
+     * @throws Exception
      * @throws CommandException
      */
     public function placeRequest(TransferInterface $transferObject)
@@ -82,8 +93,19 @@ class HTTPClient implements ClientInterface
         $response = [];
         $this->client->setUri($transferObject->getUri());
         $this->client->setHeaders($transferObject->getHeaders());
+
         if (!empty($transferObject->getBody()) && $transferObject->getBody()) {
             $data = $transferObject->getBody();
+
+            /** Getting gateway_specific_fields for active store **/
+            $gatewaySpecificFields = ($this->config->getGatewaySpecificFieldsJsonData()) ?
+                $this->config->getGatewaySpecificFieldsJsonData() : false;
+
+            if ($gatewaySpecificFields) {
+                /** Merging "gateway_specific_fields" on the original request **/
+                $data['transaction'][self::GATEWAY_SPECIFIC_FIELDS] = $gatewaySpecificFields;
+            }
+
             $dataString = $this->json->serialize($data);
             $this->client->setRawData($dataString, 'application/json');
             $logQuery = $this->maskLogData($data);
@@ -96,7 +118,7 @@ class HTTPClient implements ClientInterface
             $response = $this->client->request($transferObject->getMethod());
             $rawResponse = $response->getRawBody();
             $response = $this->json->unserialize($rawResponse);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->critical($e->getMessage());
             throw new ClientException($e->getMessage());
         } finally {
