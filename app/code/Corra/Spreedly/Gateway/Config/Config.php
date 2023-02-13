@@ -85,157 +85,225 @@ class Config extends SourceConfig
      * Get PaymentMethod Active Status
      *
      * @return bool
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     public function isActive()
     {
-        return (bool)$this->getValue(self::KEY_ACTIVE);
+        return (bool)$this->getValue(
+            self::KEY_ACTIVE,
+            $this->storeConfigResolver->getStoreId()
+        );
     }
+
     /**
      * Get Spreedly Environment Key
      *
      * @return string
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     public function getEnvironmentKey()
     {
-        return $this->getValue(self::KEY_ENVIRONMENT);
+        return $this->getValue(
+            self::KEY_ENVIRONMENT,
+            $this->storeConfigResolver->getStoreId()
+        );
     }
+
     /**
      * Get Spreedly Environment Secret
      *
      * @return string
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     public function getEnvironmentSecretKey()
     {
-        return $this->getValue(self::KEY_ENVIRONMENT_ACCESS_SECRET);
+        return $this->getValue(
+            self::KEY_ENVIRONMENT_ACCESS_SECRET,
+            $this->storeConfigResolver->getStoreId()
+        );
     }
+
     /**
      * Get AuthorizeNet Gateway Token
      *
      * @return string
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     public function getAuthorizeNetGatewayToken()
     {
-        return $this->getValue(self::KEY_AUTHORIZENET_GATEWAY_TOKEN);
+        return $this->getValue(
+            self::KEY_AUTHORIZENET_GATEWAY_TOKEN,
+            $this->storeConfigResolver->getStoreId()
+        );
     }
+
     /**
      * Get Payeezy Gateway Token
      *
      * @return string
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     public function getPayeezyGatewayToken()
     {
-        return $this->getValue(self::KEY_PAYEEZY_GATEWAY_TOKEN);
+        return $this->getValue(
+            self::KEY_PAYEEZY_GATEWAY_TOKEN,
+            $this->storeConfigResolver->getStoreId()
+        );
     }
+
     /**
      * Get Payment Method Title
      *
      * @return string
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     public function getTitle()
     {
-        return $this->getValue(self::KEY_TITLE);
+        return $this->getValue(
+            self::KEY_TITLE,
+            $this->storeConfigResolver->getStoreId()
+        );
     }
+
     /**
      * Get Payment Action value (Pending /Processing)
      *
      * @return mixed|null
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     public function getPaymentAction()
     {
-        return $this->getValue(self::KEY_PAYMENT_ACTION);
+        return $this->getValue(
+            self::KEY_PAYMENT_ACTION,
+            $this->storeConfigResolver->getStoreId()
+        );
     }
-    /**
-     * Get Allow Specific country selection
-     *
-     * @return mixed|null
-     */
-    public function getAllowspecific()
-    {
-        return $this->getValue(self::KEY_ALLOWSPECIFIC);
-    }
-    /**
-     * Get Specific country selection
-     *
-     * @return mixed|null
-     */
-    public function getSpecificcountry()
-    {
-        return $this->getValue(self::KEY_SPECIFICCOUNTRY);
-    }
+
     /**
      * Get CreditCard Types
      *
      * @return mixed|null
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     public function getCcTypes()
     {
-        return $this->getValue(self::KEY_CCTYPES);
+        return $this->getValue(
+            self::KEY_CCTYPES,
+            $this->storeConfigResolver->getStoreId()
+        );
     }
+
     /**
      * Get API Endpoint Url
      *
      * @return mixed|null
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     public function getServiceUrl()
     {
-        return $this->getValue(self::KEY_SERVICE_URL);
+        return $this->getValue(
+            self::KEY_SERVICE_URL,
+            $this->storeConfigResolver->getStoreId()
+        );
     }
+
     /**
      * Get TestMode value from system config
      *
      * @return bool
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     public function getTestMode()
     {
-        return (bool)$this->getValue(self::KEY_TEST_MODE);
+        return (bool)$this->getValue(
+            self::KEY_TEST_MODE,
+            $this->storeConfigResolver->getStoreId()
+        );
     }
+
     /**
      * Get TestGatewayToken value from system config
      *
      * @return string
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     public function getTestGatewayToken()
     {
-        return $this->getValue(self::KEY_TEST_GATEWAY_TOKEN);
+        return $this->getValue(
+            self::KEY_TEST_GATEWAY_TOKEN,
+            $this->storeConfigResolver->getStoreId()
+        );
     }
 
     /**
      * Get Authorizenet Gateway Active or not
      *
      * @return mixed|null
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     public function getAuthorizenetGatewayActive()
     {
-        return $this->getValue(self::KEY_AUTHORIZENET_GATEWAY_ACTIVE);
+        return $this->getValue(
+            self::KEY_AUTHORIZENET_GATEWAY_ACTIVE,
+            $this->storeConfigResolver->getStoreId()
+        );
     }
 
     /**
      * Get Payeezy Gateway Active or not
      *
      * @return mixed|null
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     public function getPayeezyGatewayActive()
     {
-        return $this->getValue(self::KEY_PAYEEZY_GATEWAY_ACTIVE);
+        return $this->getValue(
+            self::KEY_PAYEEZY_GATEWAY_ACTIVE,
+            $this->storeConfigResolver->getStoreId()
+        );
     }
+
     /**
      * Get Authorizenet Gateway Distribution
      *
      * @return mixed|null
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     public function getAuthorizenetGatewayDistribution()
     {
-        return $this->getValue(self::KEY_AUTHORIZENET_GATEWAY_DISTRIBUTION);
+        return $this->getValue(
+            self::KEY_AUTHORIZENET_GATEWAY_DISTRIBUTION,
+            $this->storeConfigResolver->getStoreId()
+        );
     }
 
     /**
      * Get Payeezy Gateway Distribution
      *
      * @return mixed|null
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     public function getPayeezyGatewayDistribution()
     {
-        return $this->getValue(self::KEY_PAYEEZY_GATEWAY_DISTRIBUTION);
+        return $this->getValue(
+            self::KEY_PAYEEZY_GATEWAY_DISTRIBUTION,
+            $this->storeConfigResolver->getStoreId()
+        );
     }
 
     /**
