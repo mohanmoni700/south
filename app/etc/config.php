@@ -943,7 +943,7 @@ return [
         'Magento_ScalableInventory' => 1,
         'Magento_PaypalPurchaseOrder' => 1,
         'Magento_ScheduledImportExport' => 1,
-        'Magento_CatalogPermissionsGraphQl' => 1,
+        'Magento_CatalogPermissionsGraphQl' => 0,
         'Magento_SearchStaging' => 1,
         'Magento_CompanyCredit' => 1,
         'Magento_Securitytxt' => 1,
