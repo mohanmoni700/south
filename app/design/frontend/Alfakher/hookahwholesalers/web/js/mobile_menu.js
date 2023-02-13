@@ -32,11 +32,11 @@ require(['jquery',
             // Switch to Mobile Version
             exit: function () {
                 $('.custom.navigation .level0.submenu').removeClass('opened');
-                $('.custom.navigation .level0 .level-top').off("touchstart").on("touchstart", function() {
+                $('.custom.navigation .level0 .level-top').off("click").on("click", function(e) {
+                    e.preventDefault();
                     $(this).toggleClass('active');
                 });
-                $('.custom.navigation .tab-header a').off('touchstart').on('touchstart', function(e) {
-                    e.preventDefault();
+                $('.custom.navigation .tab-header').off('click').on('click', function() {
                     $(this).parents('.ui-menu-item').find('.level0.submenu').toggleClass('opened');
                 });
             }

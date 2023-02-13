@@ -1,8 +1,9 @@
 <?php
 /** @var \Magento\Customer\Block\Address\Book $block */
+// phpcs:disable Magento2.Templates.ThisInTemplate
 ?>
 <div class="block block-addresses-default">
-    <div class="block-title"><strong><?= $block->escapeHtml(__('Manage Addresses')) ?></strong></div>
+    <div class="block-title h1"><strong><?= $block->escapeHtml(__('Manage Addresses')) ?></strong></div>
     <div class="block-content">
         <?php if ($_pAddsses = $block->getDefaultBilling()): ?>
             <div class="box box-address-billing">
