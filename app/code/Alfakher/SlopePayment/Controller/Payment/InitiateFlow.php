@@ -98,11 +98,9 @@ class InitiateFlow extends Action
     public function execute()
     {
         $result = $this->resultJsonFactory->create();
-
         try {
             $messages = ['Some error occured, Please try again later'];
             $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
-
             $mgtOrder = $this->getMgtOrderForSlope();
             $mgtQuoteId = $this->checkoutSession->getQuote()->getId();
             $slopeOrder = $this->findSlopeOrder($mgtQuoteId);
@@ -110,14 +108,8 @@ class InitiateFlow extends Action
             $statusCode = isset($slopeOrder['statusCode']) ? $slopeOrder['statusCode'] : null;
             if (isset($slopeOrder) && $statusCode === 404) {
                 $slopeOrder = $this->createNewSlopeOrder($mgtOrder);
-                $statusCode = isset($slopeOrder['statusCode']) ? $slopeOrder['statusCode'] : null;
-                if (isset($statusCode) && $statusCode === 200) {
-                    $slopeOrderId = $slopeOrder['id'];
-                    $slopePopup = $this->getSlopeOrderIntent($slopeOrderId);
-                } else {
-                    if (isset($slopeOrder['code']) && $slopeOrder['code'] !== '') {
-                        $messages = $slopeOrder['messages'];
-                    }
+                if (isset($slopeOrder['code']) && $slopeOrder['code'] !== '') {
+                    $messages = $slopeOrder['messages'];
                     return $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
                 }
             }
@@ -139,7 +131,6 @@ class InitiateFlow extends Action
             }
             return $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
         }
-
         return $result;
     }
 
@@ -157,7 +148,6 @@ class InitiateFlow extends Action
             $quoteItems = $this->quoteItemRepository->getList($quoteId);
             foreach ($quoteItems as $quoteItem) {
                 $product = $quoteItem->getProduct();
-                $quoteItemData['id'] = $quoteItem->getItemId();
                 $quoteItemData['externalId'] = $product->getId();
                 $quoteItemData['sku'] = $product->getSku();
                 $quoteItemData['orderId'] = $quoteId;
