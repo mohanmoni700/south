@@ -53,6 +53,13 @@
             float: right;
         }
     }
+
+    .fieldset {
+        .field.field-select-billing {
+            margin-top: 22px;
+        }
+    }
+
     .checkout-billing-address {
         .shipping-address-same-as-billing-block {
             margin-bottom: 13px;
@@ -144,16 +151,15 @@
 //  _____________________________________________
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
+    .billing-address-details {
+        width: 100%;
+    }
     .opc-wrapper {
         .step-title {
             .lib-css(font-size, @checkout-step-title-mobile__font-size);
             padding-bottom: 20px;
         }
-        .checkout-shipping-address {
-            .step-title {
-                border-bottom: none;
-            }
-        }
+        
     }
     .checkout-index-index {
         .checkout-container {
