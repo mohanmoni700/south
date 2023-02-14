@@ -32,7 +32,7 @@ require(['jquery',
             // Switch to Mobile Version
             exit: function () {
                 $('.custom.navigation .level0.submenu').removeClass('opened');
-                $('.custom.navigation .level0 .level-top').off("click").on("click", function(e) {
+                $('.custom.navigation .level0.parent .level-top').off("click").on("click", function(e) {
                     e.preventDefault();
                     $(this).toggleClass('active');
                 });
