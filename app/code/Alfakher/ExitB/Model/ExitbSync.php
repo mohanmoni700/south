@@ -155,8 +155,13 @@ class ExitbSync
 
                 $paymentCode = $order->getPayment()->getMethod();
                 $orderData['orderData']['payment']['code'] = $this->paymentType($websiteId, $paymentCode);
-                $orderData['orderData']['payment']['token'] = $order->getMonduReferenceId();
-                
+                if ($orderData['orderData']['isB2B']) {
+                    $orderData['orderData']['payment']['token'] = $order->getMonduReferenceId();
+                } else {
+                    $klarnaToken = $order->getPayment()->getAdditionalInformation('klarna_order_id');
+                    $vrToken     = $order->getPayment()->getAdditionalInformation('REFERENCE_ID');
+                    $orderData['orderData']['payment']['token'] = $klarnaToken ? $klarnaToken : $vrToken;
+                }
                 if ($order->hasInvoices()) {
                     $orderData['orderData']['payment']['isPayed'] = true;
                     $orderData['orderData']['payment']['amountPayed'] = $order->getPayment()->getAmountPaid();
@@ -350,7 +355,9 @@ class ExitbSync
             }
             $productData[$key]['quantity'] = (int)$item->getQtyOrdered();
             $productData[$key]['price'] = $isB2B ? 0 : (float)$item->getPriceInclTax();
-            $productData[$key]['priceNet'] = (float)$item->getPrice();
+            if ($isB2B) {
+                $productData[$key]['priceNet'] = (float)$item->getPrice();
+            }
             $productData[$key]['discount'] = (float)$item->getDiscountAmount();
         }
         return $productData;
