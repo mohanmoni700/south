@@ -164,7 +164,7 @@ class ExitbSync
                 }
                 if ($order->hasInvoices()) {
                     $orderData['orderData']['payment']['isPayed'] = true;
-                    $orderData['orderData']['payment']['amountPayed'] = $order->getPayment()->getAmountPaid();
+                    $orderData['orderData']['payment']['amountPayed'] = (float)$order->getPayment()->getAmountPaid();
                 }
                 
                 $shippingMethod = $order->getShippingMethod();
