@@ -157,6 +157,11 @@ class ExitbSync
                 $orderData['orderData']['payment']['code'] = $this->paymentType($websiteId, $paymentCode);
                 $orderData['orderData']['payment']['token'] = $order->getMonduReferenceId();
                 
+                if ($order->hasInvoices()) {
+                    $orderData['orderData']['payment']['isPayed'] = true;
+                    $orderData['orderData']['payment']['amountPayed'] = $order->getPayment()->getAmountPaid();
+                }
+                
                 $shippingMethod = $order->getShippingMethod();
                 $orderData['orderData']['shipment']['code'] = $this->getConfigValue(self::SHIP_CODE, $websiteId);
                 $orderData['orderData']['shipment']['total'] = (float)$order->getShippingInclTax();
