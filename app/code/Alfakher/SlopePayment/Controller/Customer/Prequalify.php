@@ -100,14 +100,8 @@ class Prequalify extends Action
             $statusCode = isset($slopeCustomer['statusCode']) ? $slopeCustomer['statusCode'] : null;
             if (isset($slopeCustomer) && $statusCode === 404) {
                 $slopeCustomer = $this->createNewSlopeCustomer($mgtCustomer);
-                $statusCode = isset($slopeCustomer['statusCode']) ? $slopeCustomer['statusCode'] : null;
-                if (isset($statusCode) && $statusCode === 200) {
-                    $slopeCustId = $slopeCustomer['id'];
-                    $slopePopup = $this->getSlopeCustomerIntent($slopeCustId);
-                } else {
-                    if (isset($statusCode) && $statusCode === 400) {
-                        $messages = $slopeCustomer['messages'][0];
-                    }
+                if (isset($slopeCustomer['statusCode']) && $slopeCustomer['statusCode'] !== '') {
+                    $messages = $slopeCustomer['messages'][0];
                     return $result->setData(['success' => false, 'secret' => null, 'messages' => $messages]);
                 }
             }

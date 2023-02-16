@@ -6,11 +6,15 @@ namespace Alfakher\SlopePayment\Observer;
 use Alfakher\SlopePayment\Helper\Config as SlopeConfigHelper;
 use Alfakher\SlopePayment\Model\Gateway\Request as GatewayRequest;
 use Alfakher\SlopePayment\Model\Payment\SlopePayment;
+use Magento\Framework\DB\Transaction;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Message\ManagerInterface;
 use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Sales\Model\Order;
+use Magento\Sales\Model\Order\Email\Sender\InvoiceSender;
+use Magento\Sales\Model\Service\InvoiceService;
 
 class FinalizeSlopeOrder implements ObserverInterface
 {
@@ -39,23 +43,55 @@ class FinalizeSlopeOrder implements ObserverInterface
     protected $messageManager;
 
     /**
+     * @var OrderRepositoryInterface
+     */
+    protected $orderRepository;
+
+    /**
+     * @var InvoiceService
+     */
+    protected $invoiceService;
+
+    /**
+     * @var Transaction
+     */
+    protected $transaction;
+
+    /**
+     * @var InvoiceSender
+     */
+    protected $invoiceSender;
+
+    /**
      * Class constructor
      *
      * @param SlopeConfigHelper $slopeConfig
      * @param Json $json
      * @param GatewayRequest $gatewayRequest
      * @param ManagerInterface $messageManager
+     * @param OrderRepositoryInterface $orderRepository
+     * @param InvoiceService $invoiceService
+     * @param InvoiceSender $invoiceSender
+     * @param Transaction $transaction
      */
     public function __construct(
         SlopeConfigHelper $slopeConfig,
         Json $json,
         GatewayRequest $gatewayRequest,
-        ManagerInterface $messageManager
+        ManagerInterface $messageManager,
+        OrderRepositoryInterface $orderRepository,
+        InvoiceService $invoiceService,
+        InvoiceSender $invoiceSender,
+        Transaction $transaction
     ) {
         $this->config = $slopeConfig;
         $this->json = $json;
         $this->gatewayRequest = $gatewayRequest;
         $this->messageManager = $messageManager;
+        $this->orderRepository = $orderRepository;
+        $this->invoiceService = $invoiceService;
+        $this->transaction = $transaction;
+        $this->invoiceSender = $invoiceSender;
     }
 
     /**
@@ -85,7 +121,7 @@ class FinalizeSlopeOrder implements ObserverInterface
                             __('Slope Payment Error (%1) : %2', $resp['code'], implode(',', $resp['messages']))
                         );
                     } else {
-                        $order->setSlopeInformation(serialize($resp));// phpcs:disable
+                        $order->setSlopeInformation(serialize($resp)); // phpcs:disable
                         $order->addCommentToStatusHistory(
                             __('Slope order %1 finalized successfully.', $resp['id']),
                             true,
@@ -94,6 +130,7 @@ class FinalizeSlopeOrder implements ObserverInterface
                         $this->messageManager->addSuccessMessage(
                             __('Slope order %1 finalized successfully.', $resp['id'])
                         );
+                        $this->generateSlopeOrderInvoice($order->getId());
                     }
                 }
             } catch (\Exception $e) {
@@ -116,5 +153,33 @@ class FinalizeSlopeOrder implements ObserverInterface
         $response = $this->gatewayRequest->post($url);
         $response = $this->json->unserialize($response);
         return $response;
+    }
+
+    /**
+     * Generate slope order invoice once order is finalized
+     *
+     * @param  int $orderId
+     * @return void
+     */
+    public function generateSlopeOrderInvoice($orderId)
+    {
+        $order = $this->orderRepository->get($orderId);
+
+        if ($order->canInvoice()) {
+            $invoice = $this->invoiceService->prepareInvoice($order);
+            $invoice->register();
+            $invoice->save();
+
+            $transactionSave =
+            $this->transaction
+                ->addObject($invoice)
+                ->addObject($invoice->getOrder());
+            $transactionSave->save();
+            $this->invoiceSender->send($invoice);
+
+            $order->addCommentToStatusHistory(
+                __('Notified customer about invoice creation #%1.', $invoice->getId())
+            )->setIsCustomerNotified(true)->save();
+        }
     }
 }

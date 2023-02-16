@@ -51,6 +51,11 @@
 						<source_model>Magento\Cms\Model\Config\Source\Block</source_model>
 						<config_path>payment/slope_payment/prequalifycontent</config_path>
 					</field>
+					<field id="sort_order" type="text" sortOrder="80" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+						<label>Sort Order</label>
+						<frontend_class>validate-number</frontend_class>
+						<config_path>payment/slope_payment/sort_order</config_path>
+					</field>
 				</group>
 				<group id="slopeapi" sortOrder="2" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
 	                    <label>API Credentials Related Settings</label>

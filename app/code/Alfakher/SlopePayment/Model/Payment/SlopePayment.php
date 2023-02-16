@@ -33,6 +33,20 @@ class SlopePayment extends AbstractMethod
     protected $_infoBlockType = Instructions::class;
 
     /**
+     * Restrict payment method for backend order creation
+     *
+     * @var boolean
+     */
+    protected $_canUseInternal = false;
+
+    /**
+     * Availability option for refund
+     *
+     * @var bool
+     */
+    protected $_canRefund = false;
+
+    /**
      * Get instructions text from config
      *
      * @return string

@@ -18,7 +18,9 @@ class InitiateFlow extends Action
     public const CREATE_ORDER = '/orders';
     public const FIND_ORDER = '/orders/';
     public const UPDATE_ORDER = '/orders/id/';
+    public const RESET_ORDER = '/orders/id/reset';
     public const GET_ORDER_INTENT = '/orders/id/intent?timeoutMs=36000000';
+    public const INVALID_ORDER_TOTAL = 'invalid-order-total';
 
     /**
      * JsonFactory
@@ -199,6 +201,23 @@ class InitiateFlow extends Action
     }
 
     /**
+     * Reset slope order
+     *
+     * @param int $slopeOrderId
+     * @return array
+     */
+    public function resetSlopeOrder($slopeOrderId)
+    {
+        $apiEndpointUrl = $this->config->getEndpointUrl();
+        $order = $this->getMgtOrderForSlope();
+        $url = $apiEndpointUrl . self::RESET_ORDER;
+        $url = str_replace("id", $slopeOrderId, $url);
+        $response = $this->gatewayRequest->post($url, $order);
+        $response = $this->json->unserialize($response);
+        return $response;
+    }
+
+    /**
      * Find slope order by externalId
      *
      * @param int $externalId
@@ -224,7 +243,12 @@ class InitiateFlow extends Action
         $apiEndpointUrl = $this->config->getEndpointUrl();
 
         /* NOTE : Update order data with latest quote before opening popup every time to keep data uptodate*/
-        $this->updateSlopeOrder($slopeOrderId);
+        $updateOrder = $this->updateSlopeOrder($slopeOrderId);
+
+        if (isset($updateOrder['code']) && $updateOrder['code'] === self::INVALID_ORDER_TOTAL) {
+            $this->resetSlopeOrder($slopeOrderId);
+            $this->updateSlopeOrder($slopeOrderId);
+        }
 
         $url = $apiEndpointUrl . self::GET_ORDER_INTENT;
         $url = str_replace("id", $slopeOrderId, $url);
@@ -261,7 +285,6 @@ class InitiateFlow extends Action
         $orderData['currency'] = strtolower($quote->getQuoteCurrencyCode());
         $orderData['billingAddress'] = $address;
         $orderData['externalId'] = $quote->getId();
-        $orderData['items'] = $this->getQuoteItemsforSlope();
         $orderData['customer']['email'] = $quote->getCustomerEmail();
         $orderData['customer']['phone'] = $this->config->getSlopeFormattedPhone($billPhone);
         $orderData['customer']['businessName'] = $company->getCompanyName() ?: 'NA';
