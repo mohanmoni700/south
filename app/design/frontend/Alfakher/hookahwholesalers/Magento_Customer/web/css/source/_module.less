@@ -34,7 +34,7 @@
 @return_block_bg: #fbfbfb;
 @table_link_color: #404040;
 @password_text_color: #7f7f7f;
-@theme_color: #961e70;
+@theme_color: @hookah_theme_color;
 
 //
 //  Common
@@ -214,6 +214,10 @@
                 margin-bottom: 15px;
                 padding: 20px;
                 width: calc(~'50% - 26px');
+                &.expired {
+                    background: rgba(242, 184, 7, 0.4);
+                    opacity: 1;
+                }
             }
         }
         .customer_actions {
@@ -333,7 +337,7 @@
                 &:hover {
                     background-color: @hookah_theme_color;
                     &::before {
-                        color: @color_white !important;
+                        color: @color-white !important;
                     }
                 }
                 &.previous {
@@ -507,6 +511,10 @@
                 border-radius: 10px;
                 padding: 20px;
                 width: 100%;
+                &.expired {
+                    background: rgba(242, 184, 7, 0.4);
+                    opacity: 1;
+                }
             }
             .box-content {
                 address {
@@ -613,11 +621,11 @@
                         &:checked {
                             + label {
                                 &:before {
-                                    background: @color_black;
-                                    border-color: @color_black;
+                                    background: @color-black;
+                                    border-color: @color-black;
                                 }
                                 &::after {
-                                    background-color: @color_black;
+                                    background-color: @color-black;
                                 }
                             }
                         }
@@ -1052,6 +1060,21 @@
                         }
                     }
                 }
+                &.applyforfinancing {
+                    a,
+                    strong {
+                        &:before {
+                            background: url('@{baseDir}images/slope_icon.svg') no-repeat;
+                            background-position: center center;
+                            background-size: 16px auto;
+                        }
+                    }
+                    strong {
+                        &:before {
+                            filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+                        }
+                    }
+                }
                 &.logout {
                     a {
                         &:before {
@@ -1228,7 +1251,7 @@
         background-position: calc(~'100% - 20px');
         background-repeat: no-repeat;
         background-size: 15px;
-        color: @color_black;
+        color: @color-black;
         padding-right: 45px;
         text-indent: 1px;
         text-overflow: '';
@@ -1616,7 +1639,7 @@
     }
     .field.street {
         .field .label {
-            color: @color_black;
+            color: @color-black;
             display: block;
             font-size: 1.2rem;
             font-weight: @font-weight__bold;
@@ -2640,7 +2663,7 @@
         &.sales-order-history {
             .columns {
                 .sidebar-main {
-                    border-bottom: solid 1px @color_black;
+                    border-bottom: solid 1px @color-black;
                     padding-bottom: 40px;
                 }
             }
@@ -2656,7 +2679,7 @@
         &.magento_rma-returns-returns {
             .columns {
                 .sidebar-main {
-                    border-bottom: solid 1px @color_black;
+                    border-bottom: solid 1px @color-black;
                 }
             }
         }
@@ -3213,7 +3236,7 @@
                 }
             }
             .block.block-addresses-list {
-                border-color: @color_black;
+                border-color: @color-black;
                 margin-bottom: 30px;
             }
             .form-address-edit {
@@ -3281,14 +3304,14 @@
         }
         .block.block-addresses-default {
             .block-title {
-                border-color: @color_black;
+                border-color: @color-black;
                 text-align: center;
             }
         }
         .form-address-edit {
             .fieldset {
                 legend.legend {
-                    border-color: @color_black;
+                    border-color: @color-black;
                     text-align: center;
                 }
             }
