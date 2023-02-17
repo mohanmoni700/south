@@ -1,18 +1,31 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
+declare(strict_types=1);
 namespace Alfakher\SeoUrlPrefix\Model\CatalogUrlRewrite;
 
 use Magento\Catalog\Api\CategoryRepositoryInterface;
 use Magento\Catalog\Model\Category;
+use Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator as CategoryPathGenerator ;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Catalog\Api\Data\CategoryInterface;
+use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 /**
  * Class for generation category url_path
  */
-class CategoryUrlPathGenerator extends \Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator
+class CategoryUrlPathGenerator extends CategoryPathGenerator
 {
+    /**
+     * Prefix stores
+     */
+    public const PREFIX_STORES = 'hookahshisha/prefix_add_seo/seo_stores';
+
+    /**
+     * Prefix category route
+     */
+    public const CATEGORY_PREFIX = 'c/';
+
     /**
      * Minimal category level that can be considered for generate path
      */
@@ -31,12 +44,12 @@ class CategoryUrlPathGenerator extends \Magento\CatalogUrlRewrite\Model\Category
     protected $categoryUrlSuffix = [];
 
     /**
-     * @var \Magento\Framework\App\Config\ScopeConfigInterface
+     * @var ScopeConfigInterface
      */
     protected $scopeConfig;
 
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var StoreManagerInterface
      */
     protected $storeManager;
 
@@ -46,13 +59,13 @@ class CategoryUrlPathGenerator extends \Magento\CatalogUrlRewrite\Model\Category
     protected $categoryRepository;
 
     /**
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param StoreManagerInterface $storeManager
+     * @param ScopeConfigInterface $scopeConfig
      * @param CategoryRepositoryInterface $categoryRepository
      */
     public function __construct(
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        StoreManagerInterface $storeManager,
+        ScopeConfigInterface $scopeConfig,
         CategoryRepositoryInterface $categoryRepository
     ) {
         $this->storeManager = $storeManager;
@@ -63,18 +76,21 @@ class CategoryUrlPathGenerator extends \Magento\CatalogUrlRewrite\Model\Category
     /**
      * Build category URL path
      *
-     * @param \Magento\Catalog\Api\Data\CategoryInterface|\Magento\Framework\Model\AbstractModel $category
-     * @param null|\Magento\Catalog\Api\Data\CategoryInterface|\Magento\Framework\Model\AbstractModel $parentCategory
+     * @param CategoryInterface|AbstractModel $category
+     * @param null|CategoryInterface|AbstractModel $parentCategory
      * @return string
-     * @throws \Magento\Framework\Exception\NoSuchEntityException
+     * @throws NoSuchEntityException
      */
     public function getUrlPath($category, $parentCategory = null)
     {
         $rootId = "";
+        $storeDetails = $this->scopeConfig->getValue(self::PREFIX_STORES);
+        $storeIds = $storeDetails ? explode(',', $storeDetails) : [];
+        
+        $storeid ="";
         $storeManagerDataList = $this->storeManager->getStores();
         foreach ($storeManagerDataList as $key => $value) {
-            $storeid = $key;
-            if ($value['code'] == "hookah_wholesalers_store_view") {
+            if (in_array($key, $storeIds)) {
                 $storeid = $key;
                 $rootId = $this->storeManager->getStore($storeid)->getRootCategoryId();
             }
@@ -84,7 +100,7 @@ class CategoryUrlPathGenerator extends \Magento\CatalogUrlRewrite\Model\Category
         $All_Id = $category->getParentIds();
 
         $storeId = $category->getStoreId();
-        $prifix = $storeId == $storeid ? 'c/' : '';
+        $prifix = $storeId == $storeid ? self::CATEGORY_PREFIX : '';
 
         if (in_array($category->getParentId(), [Category::ROOT_CATEGORY_ID, Category::TREE_ROOT_ID])) {
             return '';
@@ -115,7 +131,7 @@ class CategoryUrlPathGenerator extends \Magento\CatalogUrlRewrite\Model\Category
         }
 
         if (in_array($rootId, $All_Id)) {
-            return 'c/' . $path;
+            return self::CATEGORY_PREFIX . $path;
         } else {
             return $path;
         }
@@ -124,7 +140,7 @@ class CategoryUrlPathGenerator extends \Magento\CatalogUrlRewrite\Model\Category
     /**
      * Define whether we should generate URL path for parent
      *
-     * @param \Magento\Catalog\Model\Category $category
+     * @param Category $category
      * @return bool
      */
     protected function isNeedToGenerateUrlPathForParent($category)
