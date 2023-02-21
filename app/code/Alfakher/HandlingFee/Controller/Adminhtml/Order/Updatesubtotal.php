@@ -43,9 +43,9 @@ class Updatesubtotal extends \Magento\Backend\App\Action
                 if ($post['type'] == 'percent') {
                     $subtotal = $order->getSubtotal();
                     $discountAmount = $subtotal * ($post['amount'] / 100);
-
+                    $errMsg = "Maximum discount on subtotal can’t be more than $";
                     if ($discountAmount > $order->getSubtotal() && $discountAmount != 0) {
-                        $this->messageManager->addErrorMessage(__("Maximum discount on subtotal can’t be more than $" . $order->getSubtotal()));
+                        $this->messageManager->addErrorMessage(__($errMsg . $order->getSubtotal()));
                         $result = $this->_resultJsonFactory->create();
                         $result->setData(['status' => false]);
                         return $result;
@@ -71,9 +71,9 @@ class Updatesubtotal extends \Magento\Backend\App\Action
                 } else {
                     $subtotal = $order->getSubtotal();
                     $discountAmount = $post['amount'];
-
+                    $errMsg = "Maximum discount on subtotal can’t be more than $";
                     if ($discountAmount > $order->getSubtotal() && $discountAmount != 0) {
-                        $this->messageManager->addErrorMessage(__("Maximum discount on subtotal can’t be more than $" . $order->getSubtotal()));
+                        $this->messageManager->addErrorMessage(__($errMsg . $order->getSubtotal()));
                         $result = $this->_resultJsonFactory->create();
                         $result->setData(['status' => false]);
                         return $result;
@@ -123,7 +123,9 @@ class Updatesubtotal extends \Magento\Backend\App\Action
 
                 /*af_bv_op; add order comment; Start */
                 $adminUser = $this->getAdminDetail();
-                $order->addStatusHistoryComment("Discount applied on subtotal by -> \"" . $adminUser->getUsername() . "\" : " . $post['amount'] . "(" . $post['type'] . ")");
+                $order->addStatusHistoryComment("Discount applied on subtotal by -> \""
+                        . $adminUser->getUsername() . "\" : " . $post['amount']
+                        . "(" . $post['type'] . ")");
                 /*af_bv_op; add order comment; End */
 
                 $this->_orderRepository->save($order);

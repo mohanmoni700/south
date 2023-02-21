@@ -43,9 +43,9 @@ class Updateshippingfee extends \Magento\Backend\App\Action
                 if ($post['type'] == 'percent') {
                     $shippingAmount = $order->getShippingAmount();
                     $discountAmount = $shippingAmount * ($post['amount'] / 100);
-
+                    $errMsg = "Maximum discount on shipping fee can’t be more than $";
                     if ($discountAmount > $order->getShippingAmount() && $discountAmount != 0) {
-                        $this->messageManager->addErrorMessage(__("Maximum discount on shipping fee can’t be more than $" . $order->getShippingAmount()));
+                        $this->messageManager->addErrorMessage(__($errMsg . $order->getShippingAmount()));
                         $result = $this->_resultJsonFactory->create();
                         $result->setData(['status' => false]);
                         return $result;
@@ -71,9 +71,9 @@ class Updateshippingfee extends \Magento\Backend\App\Action
                 } else {
                     $shippingAmount = $order->getShippingAmount();
                     $discountAmount = $post['amount'];
-
+                    $errMsg = "Maximum discount on shipping fee can’t be more than $";
                     if ($discountAmount > $order->getShippingAmount() && $discountAmount != 0) {
-                        $this->messageManager->addErrorMessage(__("Maximum discount on shipping fee can’t be more than $" . $order->getShippingAmount()));
+                        $this->messageManager->addErrorMessage(__($errMsg . $order->getShippingAmount()));
                         $result = $this->_resultJsonFactory->create();
                         $result->setData(['status' => false]);
                         return $result;
@@ -118,7 +118,9 @@ class Updateshippingfee extends \Magento\Backend\App\Action
 
                 /*af_bv_op; add order comment; Start */
                 $adminUser = $this->getAdminDetail();
-                $order->addStatusHistoryComment("Discount applied on shipping fee by -> \"" . $adminUser->getUsername() . "\" : " . $post['amount'] . "(" . $post['type'] . ")");
+                $order->addStatusHistoryComment("Discount applied on shipping fee by -> \""
+                    . $adminUser->getUsername() . "\" : "
+                    . $post['amount'] . "(" . $post['type'] . ")");
                 /*af_bv_op; add order comment; End */
 
                 $this->_orderRepository->save($order);
