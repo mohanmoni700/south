@@ -47,14 +47,15 @@ class Updateshippingfee extends Action
         if (isset($post['order_id']) && $post['order_id']) {
             try {
                 $order = $this->_orderRepository->get($post['order_id']);
-                $currencySymbol = $this->priceCurrency->getCurrencySymbol($order->getStoreId());
+                $formattedShipping = $this->priceCurrency
+                    ->format($order->getShippingAmount(), false, 2, $order->getStoreId());
 
                 if ($post['type'] == 'percent') {
                     $shippingAmount = $order->getShippingAmount();
                     $discountAmount = $shippingAmount * ($post['amount'] / 100);
-                    $errMsg = "Maximum discount on shipping fee can’t be more than ".$currencySymbol;
+                    $errMsg = "Maximum discount on shipping fee can’t be more than ";
                     if ($discountAmount > $order->getShippingAmount() && $discountAmount != 0) {
-                        $this->messageManager->addErrorMessage(__($errMsg . $order->getShippingAmount()));
+                        $this->messageManager->addErrorMessage(__($errMsg . $formattedShipping));
                         $result = $this->_resultJsonFactory->create();
                         $result->setData(['status' => false]);
                         return $result;
@@ -80,9 +81,9 @@ class Updateshippingfee extends Action
                 } else {
                     $shippingAmount = $order->getShippingAmount();
                     $discountAmount = $post['amount'];
-                    $errMsg = "Maximum discount on shipping fee can’t be more than ".$currencySymbol;
+                    $errMsg = "Maximum discount on shipping fee can’t be more than ";
                     if ($discountAmount > $order->getShippingAmount() && $discountAmount != 0) {
-                        $this->messageManager->addErrorMessage(__($errMsg . $order->getShippingAmount()));
+                        $this->messageManager->addErrorMessage(__($errMsg . $formattedShipping));
                         $result = $this->_resultJsonFactory->create();
                         $result->setData(['status' => false]);
                         return $result;
@@ -118,6 +119,7 @@ class Updateshippingfee extends Action
                         $order->setOriginalBaseShippingInclTax(0);
                         $order->setTotalShippingFeeDiscount(0);
                     } else {
+                        $currencySymbol = $this->priceCurrency->getCurrencySymbol($order->getStoreId());
                         $invalidAmount = "Please enter a valid amount greater than ".$currencySymbol."0.";
                         $this->messageManager->addErrorMessage(__($invalidAmount));
                         $result = $this->_resultJsonFactory->create();

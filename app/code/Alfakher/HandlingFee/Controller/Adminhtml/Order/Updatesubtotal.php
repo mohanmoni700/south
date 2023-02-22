@@ -48,13 +48,15 @@ class Updatesubtotal extends Action
         if (isset($post['order_id']) && $post['order_id']) {
             try {
                 $order = $this->_orderRepository->get($post['order_id']);
-                $currencySymbol = $this->priceCurrency->getCurrencySymbol($order->getStoreId());
+                $formattedSubtotal = $this->priceCurrency
+                    ->format($order->getSubtotal(), false, 2, $order->getStoreId());
+
                 if ($post['type'] == 'percent') {
                     $subtotal = $order->getSubtotal();
                     $discountAmount = $subtotal * ($post['amount'] / 100);
-                    $errMsg = "Maximum discount on subtotal can’t be more than ".$currencySymbol;
+                    $errMsg = "Maximum discount on subtotal can’t be more than ";
                     if ($discountAmount > $order->getSubtotal() && $discountAmount != 0) {
-                        $this->messageManager->addErrorMessage(__($errMsg . $order->getSubtotal()));
+                        $this->messageManager->addErrorMessage(__($errMsg . $formattedSubtotal));
                         $result = $this->_resultJsonFactory->create();
                         $result->setData(['status' => false]);
                         return $result;
@@ -80,9 +82,9 @@ class Updatesubtotal extends Action
                 } else {
                     $subtotal = $order->getSubtotal();
                     $discountAmount = $post['amount'];
-                    $errMsg = "Maximum discount on subtotal can’t be more than ".$currencySymbol;
+                    $errMsg = "Maximum discount on subtotal can’t be more than ";
                     if ($discountAmount > $order->getSubtotal() && $discountAmount != 0) {
-                        $this->messageManager->addErrorMessage(__($errMsg . $order->getSubtotal()));
+                        $this->messageManager->addErrorMessage(__($errMsg . $formattedSubtotal));
                         $result = $this->_resultJsonFactory->create();
                         $result->setData(['status' => false]);
                         return $result;
@@ -123,6 +125,7 @@ class Updatesubtotal extends Action
                         $order->setOriginalBaseSubtotalInclTax(0);
                         $order->setTotalSubtotalDiscount(0);
                     } else {
+                        $currencySymbol = $this->priceCurrency->getCurrencySymbol($order->getStoreId());
                         $invalidAmount = "Please enter a valid amount greater than ".$currencySymbol."0.";
                         $this->messageManager->addErrorMessage(__($invalidAmount));
                         $result = $this->_resultJsonFactory->create();
