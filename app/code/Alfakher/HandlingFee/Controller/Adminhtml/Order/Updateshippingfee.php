@@ -3,25 +3,33 @@
 namespace Alfakher\HandlingFee\Controller\Adminhtml\Order;
 
 use Magento\Sales\Model\Order;
+use Magento\Backend\App\Action;
+use Magento\Backend\App\Action\Context;
+use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Backend\Model\Auth\Session;
+use Magento\Framework\Pricing\PriceCurrencyInterface;
 
-class Updateshippingfee extends \Magento\Backend\App\Action
+class Updateshippingfee extends Action
 {
-
     /**
-     * @param \Magento\Backend\App\Action\Context $context
-     * @param \Magento\Sales\Api\OrderRepositoryInterface $orderRepository
-     * @param \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory
-     * @param \Magento\Backend\Model\Auth\Session $authSession
+     * @param Context $context
+     * @param OrderRepositoryInterface $orderRepository
+     * @param JsonFactory $resultJsonFactory
+     * @param Session $authSession
+     * @param PriceCurrencyInterface $priceCurrency
      */
     public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
-        \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-        \Magento\Backend\Model\Auth\Session $authSession
+        Context $context,
+        OrderRepositoryInterface $orderRepository,
+        JsonFactory $resultJsonFactory,
+        Session $authSession,
+        PriceCurrencyInterface $priceCurrency
     ) {
         $this->_orderRepository = $orderRepository;
         $this->_resultJsonFactory = $resultJsonFactory;
         $this->authSession = $authSession;
+        $this->priceCurrency = $priceCurrency;
 
         parent::__construct($context);
     }
@@ -39,11 +47,12 @@ class Updateshippingfee extends \Magento\Backend\App\Action
         if (isset($post['order_id']) && $post['order_id']) {
             try {
                 $order = $this->_orderRepository->get($post['order_id']);
+                $currencySymbol = $this->priceCurrency->getCurrencySymbol($order->getStoreId());
 
                 if ($post['type'] == 'percent') {
                     $shippingAmount = $order->getShippingAmount();
                     $discountAmount = $shippingAmount * ($post['amount'] / 100);
-                    $errMsg = "Maximum discount on shipping fee can’t be more than $";
+                    $errMsg = "Maximum discount on shipping fee can’t be more than ".$currencySymbol;
                     if ($discountAmount > $order->getShippingAmount() && $discountAmount != 0) {
                         $this->messageManager->addErrorMessage(__($errMsg . $order->getShippingAmount()));
                         $result = $this->_resultJsonFactory->create();
@@ -71,7 +80,7 @@ class Updateshippingfee extends \Magento\Backend\App\Action
                 } else {
                     $shippingAmount = $order->getShippingAmount();
                     $discountAmount = $post['amount'];
-                    $errMsg = "Maximum discount on shipping fee can’t be more than $";
+                    $errMsg = "Maximum discount on shipping fee can’t be more than ".$currencySymbol;
                     if ($discountAmount > $order->getShippingAmount() && $discountAmount != 0) {
                         $this->messageManager->addErrorMessage(__($errMsg . $order->getShippingAmount()));
                         $result = $this->_resultJsonFactory->create();
@@ -109,7 +118,8 @@ class Updateshippingfee extends \Magento\Backend\App\Action
                         $order->setOriginalBaseShippingInclTax(0);
                         $order->setTotalShippingFeeDiscount(0);
                     } else {
-                        $this->messageManager->addErrorMessage(__("Please enter a valid amount greater than $0."));
+                        $invalidAmount = "Please enter a valid amount greater than ".$currencySymbol."0.";
+                        $this->messageManager->addErrorMessage(__($invalidAmount));
                         $result = $this->_resultJsonFactory->create();
                         $result->setData(['status' => false]);
                         return $result;
