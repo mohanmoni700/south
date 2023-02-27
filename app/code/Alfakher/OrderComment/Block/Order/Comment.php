@@ -24,7 +24,6 @@ class Comment extends \Magento\Framework\View\Element\Template
         array $data = []
     ) {
         $this->coreRegistry = $registry;
-        $this->_isScopePrivate = true;
         $this->_template = 'order/view/comment.phtml';
         parent::__construct($context, $data);
     }
