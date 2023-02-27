@@ -1,0 +1,24 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<payment>
+			<slope_payment>
+				<active>1</active>
+				<model>Alfakher\SlopePayment\Model\Payment\SlopePayment</model>
+				<order_status>pending</order_status>
+				<title>Slope - Buy Now Pay Later</title>
+				<allowspecific>0</allowspecific>
+				<group>offline</group>
+				<is_offline>0</is_offline>
+				<instructions>Offers Buy Now, Pay Later to your business buyers without the headache.</instructions>
+				<sort_order>1</sort_order>
+				<environment>sandbox</environment>
+				<endpoint_production>https://api.slope.so/v3</endpoint_production>
+				<endpoint_sandbox>https://api.sandbox.slope.so/v3</endpoint_sandbox>
+				<slopejs_production>https://checkout.slope.so/slope.min.js</slopejs_production>
+				<slopejs_sandbox>https://checkout.sandbox.slope.so/slope.min.js</slopejs_sandbox>
+				<debug>0</debug>
+			</slope_payment>
+		</payment>
+	</default>
+</config>

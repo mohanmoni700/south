@@ -1,0 +1,9 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"> 
+<update handle="customer_account"/> 
+<body> 
+    <referenceContainer name="content">
+        <block class="Alfakher\SlopePayment\Block\Customer\PreQualification" name="slope_prequalification" template="Alfakher_SlopePayment::customer/pre_qualification.phtml">
+        </block> 
+    </referenceContainer> 
+</body>
+</page>
