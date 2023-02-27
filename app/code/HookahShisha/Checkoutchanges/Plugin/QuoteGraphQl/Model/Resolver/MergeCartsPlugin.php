@@ -3,8 +3,7 @@ declare (strict_types = 1);
 
 namespace HookahShisha\Checkoutchanges\Plugin\QuoteGraphQl\Model\Resolver;
 
-use Magento\CatalogInventory\Api\StockRegistryInterface;
-use Magento\Customer\Model\CustomerFactory;
+use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\GraphQl\Config\Element\Field;
@@ -16,7 +15,6 @@ use Magento\GraphQl\Model\Query\ContextInterface;
 use Magento\QuoteGraphQl\Model\Cart\GetCartForUser;
 use Magento\QuoteGraphQl\Model\Cart\MergeCarts\CartQuantityValidatorInterface;
 use Magento\QuoteGraphQl\Model\Resolver\MergeCarts as Subject;
-use Magento\Quote\Api\CartItemRepositoryInterface;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\Cart\CustomerCartResolver;
 use Magento\Quote\Model\QuoteIdToMaskedQuoteIdInterface;
@@ -50,16 +48,6 @@ class MergeCartsPlugin
     private $quoteIdToMaskedQuoteId;
 
     /**
-     * @var CartItemRepositoryInterface
-     */
-    private $cartItemRepository;
-
-    /**
-     * @var StockRegistryInterface
-     */
-    private $stockRegistry;
-
-    /**
      * @var CartQuantityValidatorInterface
      */
     private $cartQuantityValidator;
@@ -71,22 +59,18 @@ class MergeCartsPlugin
      * @param CartRepositoryInterface $cartRepository
      * @param CustomerCartResolver|null $customerCartResolver
      * @param QuoteIdToMaskedQuoteIdInterface|null $quoteIdToMaskedQuoteId
-     * @param CartItemRepositoryInterface|null $cartItemRepository
-     * @param StockRegistryInterface|null $stockRegistry
      * @param CartQuantityValidatorInterface|null $cartQuantityValidator
-     * @param CustomerFactory $customerFactory
      * @param LoggerInterface $logger
+     * @param CustomerRepositoryInterface $customerRepository
      */
     public function __construct(
         GetCartForUser $getCartForUser,
         CartRepositoryInterface $cartRepository,
         CustomerCartResolver $customerCartResolver = null,
         QuoteIdToMaskedQuoteIdInterface $quoteIdToMaskedQuoteId = null,
-        CartItemRepositoryInterface $cartItemRepository = null,
-        StockRegistryInterface $stockRegistry = null,
         CartQuantityValidatorInterface $cartQuantityValidator = null,
-        CustomerFactory $customerFactory,
-        LoggerInterface $logger
+        LoggerInterface $logger,
+        CustomerRepositoryInterface $customerRepository
     ) {
         $this->getCartForUser = $getCartForUser;
         $this->cartRepository = $cartRepository;
@@ -94,14 +78,10 @@ class MergeCartsPlugin
         ?: ObjectManager::getInstance()->get(CustomerCartResolver::class);
         $this->quoteIdToMaskedQuoteId = $quoteIdToMaskedQuoteId
         ?: ObjectManager::getInstance()->get(QuoteIdToMaskedQuoteIdInterface::class);
-        $this->cartItemRepository = $cartItemRepository
-        ?: ObjectManager::getInstance()->get(CartItemRepositoryInterface::class);
-        $this->stockRegistry = $stockRegistry
-        ?: ObjectManager::getInstance()->get(StockRegistryInterface::class);
         $this->cartQuantityValidator = $cartQuantityValidator
         ?: ObjectManager::getInstance()->get(CartQuantityValidatorInterface::class);
-        $this->customerFactory = $customerFactory;
         $this->logger = $logger;
+        $this->customerRepository = $customerRepository;
     }
 
     /**
@@ -179,42 +159,40 @@ class MergeCartsPlugin
                 );
             }
 
-            if ($guestCart) {
-                if ($guestCart->getShippingAddress()) {
-                    $customer = $this->customerFactory->create()->load($currentUserId);
+            if ($guestCart && $guestCart->getShippingAddress()) {
+                    $customer=$this->customerRepository->getById($currentUserId);
                     $shippingAddressId = $customer->getDefaultShipping();
-                    if ($shippingAddressId === null || $shippingAddressId === 0) {
-                        $customerCart->getShippingAddress()
-                            ->setFirstname($guestCart->getShippingAddress()->getFirstname());
-                        $customerCart->getShippingAddress()
-                            ->setLastname($guestCart->getShippingAddress()->getLastname());
-                        $customerCart->getShippingAddress()
-                            ->setStreet($guestCart->getShippingAddress()->getStreet());
-                        $customerCart->getShippingAddress()
-                            ->setCity($guestCart->getShippingAddress()->getCity());
-                        $customerCart->getShippingAddress()
-                            ->setRegion($guestCart->getShippingAddress()->getRegion());
-                        $customerCart->getShippingAddress()
-                            ->setRegionId($guestCart->getShippingAddress()->getRegionId());
-                        $customerCart->getShippingAddress()
-                            ->setPostcode($guestCart->getShippingAddress()->getPostcode());
-                        $customerCart->getShippingAddress()
-                            ->setCountryId($guestCart->getShippingAddress()->getCountryId());
-                        $customerCart->getShippingAddress()
-                            ->setTelephone($guestCart->getShippingAddress()->getTelephone());
-                        $customerCart->getShippingAddress()
-                            ->setCounty($guestCart->getShippingAddress()->getCounty());
-                    }
+                if ($shippingAddressId === null || $shippingAddressId === 0) {
+                    $customerCart->getShippingAddress()
+                        ->setFirstname($guestCart->getShippingAddress()->getFirstname());
+                    $customerCart->getShippingAddress()
+                        ->setLastname($guestCart->getShippingAddress()->getLastname());
+                    $customerCart->getShippingAddress()
+                        ->setStreet($guestCart->getShippingAddress()->getStreet());
+                    $customerCart->getShippingAddress()
+                        ->setCity($guestCart->getShippingAddress()->getCity());
+                    $customerCart->getShippingAddress()
+                        ->setRegion($guestCart->getShippingAddress()->getRegion());
+                    $customerCart->getShippingAddress()
+                        ->setRegionId($guestCart->getShippingAddress()->getRegionId());
+                    $customerCart->getShippingAddress()
+                        ->setPostcode($guestCart->getShippingAddress()->getPostcode());
+                    $customerCart->getShippingAddress()
+                        ->setCountryId($guestCart->getShippingAddress()->getCountryId());
+                    $customerCart->getShippingAddress()
+                        ->setTelephone($guestCart->getShippingAddress()->getTelephone());
+                    $customerCart->getShippingAddress()
+                        ->setCounty($guestCart->getShippingAddress()->getCounty());
                 }
             }
             try {
                 $this->cartRepository->save($customerCart);
             } catch (\Exception $e) {
-                $this->logger->err($e->getMessage());
+                $this->logger->error($e->getMessage());
                 throw new GraphQlInputException(__($e->getMessage()));
             }
         } catch (\Exception $e) {
-            $this->logger->err($e->getMessage());
+            $this->logger->error($e->getMessage());
         }
     }
 }

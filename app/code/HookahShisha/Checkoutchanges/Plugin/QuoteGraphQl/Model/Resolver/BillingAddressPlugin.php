@@ -27,8 +27,8 @@ class BillingAddressPlugin
     private $logger;
 
     /**
-     * @param \Magento\Customer\Model\CustomerFactory $_customerFactory
-     * @param \Magento\Customer\Model\AddressFactory $_addressFactory
+     * @param \Magento\Customer\Model\CustomerFactory $customerFactory
+     * @param \Magento\Customer\Model\AddressFactory $addressFactory
      * @param LoggerInterface $logger
      */
     public function __construct(
@@ -84,8 +84,8 @@ class BillingAddressPlugin
                     $cart->getShippingAddress()->setCountryId($addressnew['country_id']);
                     try {
                         $cart->save();
-                    } catch (Exception $e) {
-                        $this->logger->err($e->getMessage());
+                    } catch (\Exception $e) {
+                        $this->logger->error($e->getMessage());
                     }
                 }
             }
