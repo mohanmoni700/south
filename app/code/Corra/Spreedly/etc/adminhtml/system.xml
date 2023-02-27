@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author  CORRA
+ * @update - on configurations to support gateway_specific_fields
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="payment">
+            <group id="spreedly" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>
+                    <![CDATA[
+                    <div class="spreedly-payment"></div>
+                    <div class ="spreedly-payment-text"> Spreedly is a service that allows you to securely store credit cards and use them to transact against any number of payment gateways and third party APIs.
+                     </div>]]>
+                </label>
+                <fieldset_css>complex spreedly-section</fieldset_css>
+                <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1"
+                       showInStore="1" canRestore="1">
+                    <label><![CDATA[Enabled]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[Title]]></label>
+                </field>
+                <field id="sort_order" translate="label" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Sort Order]]></label>
+                    <frontend_class>validate-number</frontend_class>
+                </field>
+                <field id="order_status" translate="label" type="select" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[New Order Status]]></label>
+                    <source_model>Magento\Sales\Model\Config\Source\Order\Status\NewStatus</source_model>
+                </field>
+                <field id="environment_key" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[Environment Key]]></label>
+                </field>
+                <field id="environment_access_secret_key" translate="label" type="obscure" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[Environment Access Secret Key]]></label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="test_mode" translate="label" type="select" sortOrder="51" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Test Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <depends><field id="active">1</field></depends>
+                </field>
+                <field id="test_gateway_token" translate="label" type="text" sortOrder="55" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[Test Gateway Token]]></label>
+                </field>
+
+                <field id="payeezy_gateway_active" translate="label" type="select" sortOrder="56" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[Payeezy Gateway Enabled]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="payeezy_gateway_token" translate="label" type="text" sortOrder="57" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[Payeezy Gateway Token]]></label>
+                </field>
+                <field id="payeezy_gateway_distribution" translate="label" type="text" sortOrder="58" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[Payeezy Gateway Distribution]]></label>
+                    <comment>Please enter the Numeric value on Distribution</comment>
+                </field>
+
+                <field id="authorizenet_gateway_active" translate="label" type="select" sortOrder="59" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[Authorize.net Gateway Enabled]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="authorizenet_gateway_token" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[Authorize.net Gateway Token]]></label>
+                </field>
+                <field id="authorizenet_gateway_distribution" translate="label" type="text" sortOrder="61" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[Authorize.net Gateway Distribution]]></label>
+                    <comment>Please enter the Numeric value on Distribution</comment>
+                </field>
+
+                <!-- @ref OOKA-50 -->
+                <field id="gateway_specific_fields_active" translate="label" type="select" sortOrder="62" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[Gateway Specific Fields - (Y/N)]]></label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <tooltip>
+                            <![CDATA[ If "enabled", this will add <b>gateway_specific_fields</b> to all transaction requests.]]>
+                        </tooltip>
+                        <comment>
+                            <![CDATA[Refer the documentations for
+                            <a href="https://docs.spreedly.com/payment-gateways/first-data-e4-v27/#gateway-specific-fields">
+                                more details.
+                            </a>]]>
+                        </comment>
+                </field>
+                <field id="gateway_specific_fields_json" translate="label" type="textarea" sortOrder="63" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[Gateway Specific Fields - JSON]]></label>
+                    <tooltip>
+                        <![CDATA[
+                            <ul>
+                            <li>These paramaters will be added for all transactions requests</li>
+                            <li>The paramaters setup here will be fixed for this scope (website/store)</li>
+                            <li>Eg. the final request will look like below example</li>
+<pre>{"transaction": {"retain_on_success": false,"payment_method_token": "4Gk9jqznu7Zs4cNn3fFSFFid0ru","amount": 50055,"currency_code": "AED","order_id": "59000000176", "gateway_specific_fields": { "checkout_v2": { "processing_channel_id": "pc_fc2zo2b2t42unmgrmesfvi4jgq" } } } }</pre>
+                            <li>Below is an example of expected input for this field.</li>
+<pre>{ "checkout_v2": { "processing_channel_id": "pc_fc2zo2b2t42unmgrmesfvi4jgq" } }</pre>
+                            </ul>
+                            ]]>
+                    </tooltip>
+                        <depends>
+                            <field id="gateway_specific_fields_active">1</field>
+                        </depends>
+                    <comment>
+                        <![CDATA[<b>INPUT should be in JSON format</b>, without spaces and slashes. <br />
+                        <strong class="colorRed"><b>Warning !:</b> If error in JSON format, this will be considered disabled.</strong>]]>
+                    </comment>
+                </field>
+                <!-- @ref OOKA-50 -->
+
+                <field id="payment_action" translate="label" type="select" sortOrder="100" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label><![CDATA[Payment Action]]></label>
+                    <source_model>Corra\Spreedly\Model\Adminhtml\Source\PaymentAction</source_model>
+                </field>
+                <field id="cctypes" translate="label" type="multiselect" sortOrder="110" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Credit Card Types</label>
+                    <source_model>Corra\Spreedly\Model\Adminhtml\Source\Cctype</source_model>
+                </field>
+                <field id="service_url" translate="label" sortOrder="135" showInDefault="1" showInWebsite="1"
+                       showInStore="1" canRestore="1">
+                    <label>Service URL</label>
+                    <depends><field id="active">1</field></depends>
+                </field>
+                <field id="debug" translate="label" type="select" sortOrder="140" showInDefault="1" showInWebsite="1"
+                       showInStore="1" canRestore="1">
+                    <label>Debug</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="cron_enabled" translate="label comment" type="select" sortOrder="150"
+                       showInDefault="1" showInWebsite="0" showInStore="1" canRestore="1">
+                    <label>Enable Cron</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="cron_expr" translate="label comment" type="text" sortOrder="160" showInDefault="1"
+                       showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Remove redacted savedcc Cron Expression</label>
+                    <comment>
+                        <![CDATA[
+                            * * * * * command to be executed <br />
+                            | | | | | <br />
+                            | | | | +-----  Day of week (0 - 7) (Sunday=0 or 7) <br />
+                            | | | | <br />
+                            | | | +-------  Month (1 - 12) <br />
+                            | | | <br />
+                            | | +---------  Day of month (1 - 31) <br />
+                            | | <br />
+                            | +-----------  Hour (0 - 23) <br />
+                            | <br />
+                            +-------------  Minute (0 - 59) <br />
+                        ]]>
+                    </comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="cron_enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

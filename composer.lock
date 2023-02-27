@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3048d1dac40bba7799b2d1151f6c92e1",
+    "content-hash": "9a9d52361932fb1cbb882a4d19d0dfca",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -694,11 +694,11 @@
         },
         {
             "name": "avalara/excise",
-            "version": "1.3.0",
+            "version": "2.1.4",
             "dist": {
                 "type": "zip",
-                "url": "https://corratech.repo.packagist.com/al-fakher/dists/avalara/excise/1.3.0.0/e1b14344047d02e183cfb6d47f9b53941941e0b6.zip",
-                "reference": "e1b14344047d02e183cfb6d47f9b53941941e0b6",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/avalara/excise/2.1.4.0/3e132efdbc8bf4337e63dcd9babd11c6e61d3bc9.zip",
+                "reference": "3e132efdbc8bf4337e63dcd9babd11c6e61d3bc9",
                 "mirrors": [
                     {
                         "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
@@ -726,10 +726,10 @@
             "description": "Magento module for Avalara's Excise Tax suite of business tax calculation and processing services. Uses the AvaTax REST API.",
             "homepage": "https://bitbucket.org/corratech/avalara_excise",
             "support": {
-                "source": "https://bitbucket.org/corratech/avalara_excise/src/e1b14344047d02e183cfb6d47f9b53941941e0b6/?at=1.3.0",
+                "source": "https://bitbucket.org/corratech/avalara_excise/src/3e132efdbc8bf4337e63dcd9babd11c6e61d3bc9/?at=2.1.4",
                 "issues": "https://bitbucket.org/corratech/avalara_excise/issues"
             },
-            "time": "2022-05-31T13:31:31+00:00"
+            "time": "2022-09-27T06:55:33+00:00"
         },
         {
             "name": "aws/aws-crt-php",
@@ -1881,97 +1881,6 @@
             "time": "2021-10-26T13:48:26+00:00"
         },
         {
-            "name": "corra/log",
-            "version": "1.3.5",
-            "dist": {
-                "type": "zip",
-                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/log/1.3.5.0/9e0654035af4e436d967d66919bec423ccb70716.zip",
-                "reference": "9e0654035af4e436d967d66919bec423ccb70716",
-                "mirrors": [
-                    {
-                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
-            "require": {
-                "graylog2/gelf-php": "~1.0",
-                "magento/framework": ">=101.0.0",
-                "magento/framework-message-queue": ">=100.2.1",
-                "magento/module-backend": ">=100.2.0",
-                "magento/module-config": ">=101.0.0",
-                "psr/log": ">=1.0"
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "psr-4": {
-                    "Corra\\Log\\": ""
-                },
-                "files": [
-                    "registration.php"
-                ]
-            },
-            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
-            "license": [
-                "OSL-3.0",
-                "AFL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "CORRA"
-                }
-            ],
-            "description": "Corra Log",
-            "homepage": "https://bitbucket.org/corratech/log",
-            "support": {
-                "source": "https://bitbucket.org/corratech/log/src/9e0654035af4e436d967d66919bec423ccb70716/?at=1.3.5"
-            },
-            "time": "2022-06-08T05:10:57+00:00"
-        },
-        {
-            "name": "corra/log-cloud-support",
-            "version": "2.0.1",
-            "dist": {
-                "type": "zip",
-                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/log-cloud-support/2.0.1.0/e5cd61ba1055c5069789e197a455b810e834719a.zip",
-                "reference": "e5cd61ba1055c5069789e197a455b810e834719a",
-                "mirrors": [
-                    {
-                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
-            "require": {
-                "magento/magento-cloud-metapackage": ">=2.3.3"
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "psr-4": {
-                    "Corra\\LogCloudSupport\\": ""
-                },
-                "files": [
-                    "registration.php"
-                ]
-            },
-            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
-            "license": [
-                "OSL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "Corra",
-                    "email": "support@corra.com"
-                }
-            ],
-            "homepage": "https://bitbucket.org/corratech/logcloudsupport",
-            "support": {
-                "source": "https://bitbucket.org/corratech/logcloudsupport/src/e5cd61ba1055c5069789e197a455b810e834719a/?at=2.0.1",
-                "issues": "https://bitbucket.org/corratech/logcloudsupport/issues"
-            },
-            "time": "2022-06-08T05:12:53+00:00"
-        },
-        {
             "name": "corra/module-amasty-promo-graph-ql",
             "version": "1.1.11",
             "dist": {
@@ -2018,11 +1927,11 @@
         },
         {
             "name": "corra/module-cms-sitemap-graph-ql",
-            "version": "1.0.0",
+            "version": "1.0.1",
             "dist": {
                 "type": "zip",
-                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-cms-sitemap-graph-ql/1.0.0.0/71bb2167038ce766ef0571afc806aad35e3f94f7.zip",
-                "reference": "71bb2167038ce766ef0571afc806aad35e3f94f7",
+                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-cms-sitemap-graph-ql/1.0.1.0/72933fc15797c71c8cd58033cbcc55ef762805fe.zip",
+                "reference": "72933fc15797c71c8cd58033cbcc55ef762805fe",
                 "mirrors": [
                     {
                         "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
@@ -2056,10 +1965,10 @@
             "homepage": "https://bitbucket.org/corratech/cmssitemapgraphql",
             "support": {
                 "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/3789848577/CmsSitemapGraphQl",
-                "source": "https://bitbucket.org/corratech/cmssitemapgraphql/src/71bb2167038ce766ef0571afc806aad35e3f94f7/?at=1.0.0",
+                "source": "https://bitbucket.org/corratech/cmssitemapgraphql/src/72933fc15797c71c8cd58033cbcc55ef762805fe/?at=1.0.1",
                 "issues": "https://bitbucket.org/corratech/cmssitemapgraphql/issues"
             },
-            "time": "2022-05-05T07:27:23+00:00"
+            "time": "2023-01-27T04:59:26+00:00"
         },
         {
             "name": "corra/module-link-guest-order-graph-ql",
@@ -2271,48 +2180,6 @@
                 "issues": "https://bitbucket.org/corratech/signifydgraphql/issues"
             },
             "time": "2021-09-17T06:39:40+00:00"
-        },
-        {
-            "name": "corra/module-spreedly",
-            "version": "1.1.7",
-            "dist": {
-                "type": "zip",
-                "url": "https://corratech.repo.packagist.com/al-fakher/dists/corra/module-spreedly/1.1.7.0/27c01d39038847a000fa754255a39cc1ccc05159.zip",
-                "reference": "27c01d39038847a000fa754255a39cc1ccc05159",
-                "mirrors": [
-                    {
-                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ],
-                "psr-4": {
-                    "Corra\\Spreedly\\": ""
-                }
-            },
-            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
-            "license": [
-                "OSL-3.0",
-                "AFL-3.0"
-            ],
-            "authors": [
-                {
-                    "name": "CORRA"
-                }
-            ],
-            "description": "Spreedly Payment for Magento 2",
-            "homepage": "https://bitbucket.org/corratech/spreedly",
-            "support": {
-                "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/3579707442/Spreedly+PaymentGateway",
-                "source": "https://bitbucket.org/corratech/spreedly/src/27c01d39038847a000fa754255a39cc1ccc05159/?at=1.1.7",
-                "issues": "https://bitbucket.org/corratech/spreedly/issues"
-            },
-            "time": "2022-09-28T12:00:35+00:00"
         },
         {
             "name": "corra/module-veratad",
@@ -4541,16 +4408,16 @@
         },
         {
             "name": "klaviyo/magento2-extension",
-            "version": "4.0.5",
+            "version": "4.0.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/klaviyo/magento2-klaviyo.git",
-                "reference": "6ae94a8fc248bd7ebd191075a4386d2f6f8f4c06"
+                "reference": "214fe6977e8bc73386601f8cb11ddc7dabc696f8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/klaviyo/magento2-klaviyo/zipball/6ae94a8fc248bd7ebd191075a4386d2f6f8f4c06",
-                "reference": "6ae94a8fc248bd7ebd191075a4386d2f6f8f4c06",
+                "url": "https://api.github.com/repos/klaviyo/magento2-klaviyo/zipball/214fe6977e8bc73386601f8cb11ddc7dabc696f8",
+                "reference": "214fe6977e8bc73386601f8cb11ddc7dabc696f8",
                 "shasum": ""
             },
             "require": {
@@ -4570,9 +4437,9 @@
             "description": "Klaviyo extension for Magento 2. Allows pushing newsletters to Klaviyo's platform and more.",
             "support": {
                 "issues": "https://github.com/klaviyo/magento2-klaviyo/issues",
-                "source": "https://github.com/klaviyo/magento2-klaviyo/tree/4.0.5"
+                "source": "https://github.com/klaviyo/magento2-klaviyo/tree/4.0.9"
             },
-            "time": "2022-07-28T18:11:06+00:00"
+            "time": "2023-01-03T21:11:43+00:00"
         },
         {
             "name": "laminas/laminas-captcha",
@@ -25684,11 +25551,11 @@
         },
         {
             "name": "magento/quality-patches",
-            "version": "1.1.12",
+            "version": "1.1.27",
             "dist": {
                 "type": "zip",
-                "url": "https://repo.magento.com/archives/magento/quality-patches/magento-quality-patches-1.1.12.0.zip",
-                "shasum": "3108930000f9d32597b3317635005ccf5bb3ea0e"
+                "url": "https://repo.magento.com/archives/magento/quality-patches/magento-quality-patches-1.1.27.0.zip",
+                "shasum": "ad2e6eff50dbcfb03bfff39861f4522c55707035"
             },
             "require": {
                 "ext-json": "*",
@@ -25718,7 +25585,7 @@
             "license": [
                 "proprietary"
             ],
-            "description": "Provides quality patches for Magento 2"
+            "description": "Provides quality patches for AdobeCommerce & Magento OpenSource"
         },
         {
             "name": "magento/security-package",
@@ -25988,51 +25855,6 @@
                 "source": "https://github.com/mageplaza/module-core/tree/v1.4.11"
             },
             "time": "2021-07-21T06:58:49+00:00"
-        },
-        {
-            "name": "mageplaza/module-delete-orders",
-            "version": "4.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/mageplaza/magento-2-delete-orders.git",
-                "reference": "44bc6c2d219a24b66dd4c01d20f32b1f61733360"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/mageplaza/magento-2-delete-orders/zipball/44bc6c2d219a24b66dd4c01d20f32b1f61733360",
-                "reference": "44bc6c2d219a24b66dd4c01d20f32b1f61733360",
-                "shasum": ""
-            },
-            "require": {
-                "mageplaza/module-core": "^1.4.5"
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ],
-                "psr-4": {
-                    "Mageplaza\\DeleteOrders\\": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "proprietary"
-            ],
-            "authors": [
-                {
-                    "name": "Mageplaza",
-                    "email": "support@mageplaza.com",
-                    "homepage": "https://www.mageplaza.com",
-                    "role": "Technical Support"
-                }
-            ],
-            "description": "Magento 2 Delete Orders extension",
-            "support": {
-                "issues": "https://github.com/mageplaza/magento-2-delete-orders/issues",
-                "source": "https://github.com/mageplaza/magento-2-delete-orders/tree/v4.0.1"
-            },
-            "time": "2021-08-16T10:06:54+00:00"
         },
         {
             "name": "mageplaza/module-product-labels",
@@ -26522,16 +26344,16 @@
         },
         {
             "name": "monolog/monolog",
-            "version": "1.27.0",
+            "version": "1.27.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Seldaek/monolog.git",
-                "reference": "52ebd235c1f7e0d5e1b16464b695a28335f8e44a"
+                "reference": "904713c5929655dc9b97288b69cfeedad610c9a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/52ebd235c1f7e0d5e1b16464b695a28335f8e44a",
-                "reference": "52ebd235c1f7e0d5e1b16464b695a28335f8e44a",
+                "url": "https://api.github.com/repos/Seldaek/monolog/zipball/904713c5929655dc9b97288b69cfeedad610c9a1",
+                "reference": "904713c5929655dc9b97288b69cfeedad610c9a1",
                 "shasum": ""
             },
             "require": {
@@ -26592,7 +26414,7 @@
             ],
             "support": {
                 "issues": "https://github.com/Seldaek/monolog/issues",
-                "source": "https://github.com/Seldaek/monolog/tree/1.27.0"
+                "source": "https://github.com/Seldaek/monolog/tree/1.27.1"
             },
             "funding": [
                 {
@@ -26604,7 +26426,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-03-13T20:29:46+00:00"
+            "time": "2022-06-09T08:53:42+00:00"
         },
         {
             "name": "msp/cmsimportexport",
@@ -29508,16 +29330,16 @@
         },
         {
             "name": "shipperhq/module-shipper",
-            "version": "20.48.2",
+            "version": "20.51.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/shipperhq/module-shipper.git",
-                "reference": "717e9bede0efe1c4800bd9b2fd7b29719466bda5"
+                "reference": "e0c228cb98614036ed2582f14c0394837194d780"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/shipperhq/module-shipper/zipball/717e9bede0efe1c4800bd9b2fd7b29719466bda5",
-                "reference": "717e9bede0efe1c4800bd9b2fd7b29719466bda5",
+                "url": "https://api.github.com/repos/shipperhq/module-shipper/zipball/e0c228cb98614036ed2582f14c0394837194d780",
+                "reference": "e0c228cb98614036ed2582f14c0394837194d780",
                 "shasum": ""
             },
             "require": {
@@ -29577,22 +29399,22 @@
             "support": {
                 "documentation": "http://docs.shipperhq.com",
                 "issues": "https://github.com/shipperhq/module-shipper/issues",
-                "source": "https://github.com/shipperhq/module-shipper/tree/20.48.2"
+                "source": "https://github.com/shipperhq/module-shipper/tree/20.51.4"
             },
-            "time": "2022-05-25T13:24:50+00:00"
+            "time": "2022-11-23T11:20:28+00:00"
         },
         {
             "name": "signifyd/module-connect",
-            "version": "4.4.4",
+            "version": "5.2.2",
             "dist": {
                 "type": "zip",
-                "url": "https://repo.magento.com/archives/signifyd/module-connect/signifyd-module-connect-4.4.4.0.zip",
-                "shasum": "bf0c61d3fe618748a3f86d38c84012a59a0a9763"
+                "url": "https://repo.magento.com/archives/signifyd/module-connect/signifyd-module-connect-5.2.2.0.zip",
+                "shasum": "0a383be52651c10bbcaecbe1d619071e8e6eb00b"
             },
             "require": {
                 "monolog/monolog": ">=1.16.0",
                 "php": ">=5.5.22",
-                "signifyd/signifyd-php": "3.1.3"
+                "signifyd/signifyd-php": "4.1.1"
             },
             "type": "magento2-module",
             "autoload": {
@@ -29607,16 +29429,16 @@
         },
         {
             "name": "signifyd/signifyd-php",
-            "version": "3.1.3",
+            "version": "4.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/signifyd/php.git",
-                "reference": "7339ab268f8f869ff2e721ff72e7bd0f27f8d032"
+                "reference": "ae6e4da7e05b5e9a69923c06bde248166e5661d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/signifyd/php/zipball/7339ab268f8f869ff2e721ff72e7bd0f27f8d032",
-                "reference": "7339ab268f8f869ff2e721ff72e7bd0f27f8d032",
+                "url": "https://api.github.com/repos/signifyd/php/zipball/ae6e4da7e05b5e9a69923c06bde248166e5661d9",
+                "reference": "ae6e4da7e05b5e9a69923c06bde248166e5661d9",
                 "shasum": ""
             },
             "require": {
@@ -29641,9 +29463,9 @@
             "support": {
                 "email": "support@signifyd.com",
                 "issues": "https://github.com/signifyd/php/issues",
-                "source": "https://github.com/signifyd/php/tree/3.1.3"
+                "source": "https://github.com/signifyd/php/tree/4.1.1"
             },
-            "time": "2022-01-31T21:01:45+00:00"
+            "time": "2022-12-08T19:50:00+00:00"
         },
         {
             "name": "splitit/module-payment-gateway",
@@ -33009,38 +32831,6 @@
             "time": "2018-01-15T15:26:51+00:00"
         },
         {
-            "name": "veratad/ageverification",
-            "version": "3.3.5",
-            "dist": {
-                "type": "zip",
-                "url": "https://corratech.repo.packagist.com/al-fakher/dists/veratad/ageverification/3.3.5.0/b57f306f117309950ff4faec0e0a9c4426a16c3a.zip",
-                "reference": "b57f306f117309950ff4faec0e0a9c4426a16c3a",
-                "mirrors": [
-                    {
-                        "url": "https://corratech.repo.packagist.com/al-fakher/dists/%package%/%version%/r%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
-            },
-            "type": "magento2-module",
-            "autoload": {
-                "files": [
-                    "registration.php"
-                ],
-                "psr-4": {
-                    "Veratad\\AgeVerification\\": ""
-                }
-            },
-            "notification-url": "https://corratech.repo.packagist.com/al-fakher/downloads/",
-            "description": "Veratad AgeVerification",
-            "homepage": "https://bitbucket.org/corratech/veratad_ageverification",
-            "support": {
-                "source": "https://bitbucket.org/corratech/veratad_ageverification/src/b57f306f117309950ff4faec0e0a9c4426a16c3a/?at=3.3.5",
-                "issues": "https://bitbucket.org/corratech/veratad_ageverification/issues"
-            },
-            "time": "2021-09-20T07:11:59+00:00"
-        },
-        {
             "name": "vertexinc/module-address-validation",
             "version": "2.1.3",
             "dist": {
@@ -34019,11 +33809,11 @@
         },
         {
             "name": "yotpo/magento2-module-yotpo-loyalty",
-            "version": "1.3.1",
+            "version": "1.3.7",
             "dist": {
                 "type": "zip",
-                "url": "https://repo.magento.com/archives/yotpo/magento2-module-yotpo-loyalty/yotpo-magento2-module-yotpo-loyalty-1.3.1.0.zip",
-                "shasum": "9b77bdb5a603b3c729c506f29c0ef706310b893f"
+                "url": "https://repo.magento.com/archives/yotpo/magento2-module-yotpo-loyalty/yotpo-magento2-module-yotpo-loyalty-1.3.7.0.zip",
+                "shasum": "42acf885a87ebb194b92e4ae9727b902f36f3ec8"
             },
             "require": {
                 "magento/framework": ">=100.1.0",

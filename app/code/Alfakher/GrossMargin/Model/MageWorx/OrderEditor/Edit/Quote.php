@@ -38,11 +38,12 @@ class Quote extends \MageWorx\OrderEditor\Model\Edit\Quote
                 $product = $this->prepareProduct($productId, $order->getStore());
                 $config = $this->dataObjectFactory->create(['data' => $options]);
                 $quoteItem = $quote->addProduct($product, $config);
-
-                /*bv_op; debug*/
-                $grossMargin = (($product->getPrice() - $product->getCost()) / $product->getPrice() * 100);
-                $quoteItem->setGrossMargin($grossMargin);
-                /*bv_op; debug*/
+                if ($product->getTypeId() != 'bundle') {
+                    /*bv_op; debug*/
+                    $grossMargin = (($product->getPrice() - $product->getCost()) / $product->getPrice() * 100);
+                    $quoteItem->setGrossMargin($grossMargin);
+                    /*bv_op; debug*/
+                }
 
             } catch (\Exception $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());

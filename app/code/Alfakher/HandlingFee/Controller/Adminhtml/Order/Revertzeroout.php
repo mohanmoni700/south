@@ -97,8 +97,11 @@ class Revertzeroout extends \Magento\Backend\App\Action
                 $order->setTotalSubtotalDiscount(0);
 
                 # setting reverting grand totals
-                $order->setBaseGrandTotal($order->getBaseShippingAmount() + $order->getBaseSubtotal() + $order->getBaseTaxAmount() + $order->getBaseDiscountAmount());
-                $order->setGrandTotal($order->getShippingAmount() + $order->getSubtotal() + $order->getTaxAmount() + $order->getDiscountAmount());
+                $order->setBaseGrandTotal($order->getBaseShippingAmount()
+                    + $order->getBaseSubtotal() + $order->getBaseTaxAmount()
+                    + $order->getBaseDiscountAmount());
+                $order->setGrandTotal($order->getShippingAmount() + $order->getSubtotal()
+                    + $order->getTaxAmount() + $order->getDiscountAmount());
 
                 /*af_bv_op; add order comment; Start */
                 $adminUser = $this->getAdminDetail();

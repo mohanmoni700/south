@@ -1,23 +1,38 @@
 <?php
+declare(strict_types=1);
 namespace Alfakher\SeoUrlPrefix\Model\CatalogUrlRewrite;
 
-class ProductUrlPathGenerator extends \Magento\CatalogUrlRewrite\Model\ProductUrlPathGenerator
-{
+use Magento\CatalogUrlRewrite\Model\ProductUrlPathGenerator as ProductPathGenerator;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Catalog\Model\Product;
+use Magento\Catalog\Model\Category;
 
-    // CHANGE THESE FOR CUSTOM STATIC PREFIX ROUTE of PRODUCT and PRODUCT CATEGORY
-    public const PRODUCT_PREFIX_ROUTE = 'p';
+class ProductUrlPathGenerator extends ProductPathGenerator
+{
+    /**
+     * Prefix stores
+     */
+    public const PREFIX_STORES = 'hookahshisha/prefix_add_seo/seo_stores';
 
     /**
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator $categoryUrlPathGenerator
-     * @param \Magento\Catalog\Api\ProductRepositoryInterface $productRepository
+     * Prefix product route
+     */
+    public const PRODUCT_PREFIX = 'p/';
+    
+    /**
+     * @param StoreManagerInterface $storeManager
+     * @param ScopeConfigInterface $scopeConfig
+     * @param CategoryUrlPathGenerator $categoryUrlPathGenerator
+     * @param ProductRepositoryInterface $productRepository
      */
     public function __construct(
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator $categoryUrlPathGenerator,
-        \Magento\Catalog\Api\ProductRepositoryInterface $productRepository
+        StoreManagerInterface $storeManager,
+        ScopeConfigInterface $scopeConfig,
+        CategoryUrlPathGenerator $categoryUrlPathGenerator,
+        ProductRepositoryInterface $productRepository
     ) {
         $this->storeManager = $storeManager;
         parent::__construct($storeManager, $scopeConfig, $categoryUrlPathGenerator, $productRepository);
@@ -26,44 +41,42 @@ class ProductUrlPathGenerator extends \Magento\CatalogUrlRewrite\Model\ProductUr
     /**
      * Retrieve Product Url path (with category if exists)
      *
-     * @param \Magento\Catalog\Model\Product $product
-     * @param \Magento\Catalog\Model\Category $category
-     *
+     * @param Product $product
+     * @param Category $category
+     * @param int $storeId
      * @return string
      */
-    public function getUrlPath($product, $category = null)
+    public function getUrlPath($product, $category = null, $storeId = null)
     {
-
-        $storeManagerDataList = $this->storeManager->getStores();
-
-        foreach ($storeManagerDataList as $key => $value) {
-            if ($value['code'] == "hookah_wholesalers_store_view") {
-                $storeid = $key;
-            }
-        }
-        $productwebsite = $product->getWebsiteIds();
-
-        foreach ($productwebsite as $value) {
-            if ($product->getTypeId() == 'grouped') {
-                $prifix = 'p/';
-            } else {
-                $prifix = '';
-            }
-        }
+        $storeDetails = $this->scopeConfig->getValue(self::PREFIX_STORES);
+        $storeIds = $storeDetails ? explode(',', $storeDetails) : [];
 
         $path = $product->getData('url_path');
+
+        $prefix = in_array($storeId, $storeIds) ? self::PRODUCT_PREFIX : '';
+
         if ($path === null) {
             $path = $product->getUrlKey()
-            ? $this->prepareProductUrlKey($product)
-            : $this->prepareProductDefaultUrlKey($product);
+                ? $this->prepareProductUrlKey($product)
+                : $this->prepareProductDefaultUrlKey($product);
         }
-
-        if ($product->getTypeId() == 'grouped' && strpos($path, 'p/') === false) {
-            $path = $prifix . $path;
-        }
+        $path = $prefix.$path;
 
         return $category === null
-        ? $path
-        : $this->categoryUrlPathGenerator->getUrlPath($category) . '/' . $path;
+            ? $path
+            : $this->categoryUrlPathGenerator->getUrlPath($category) . '/' . $path;
+    }
+
+    /**
+     * Retrieve Product Url path with suffix
+     *
+     * @param Product $product
+     * @param int $storeId
+     * @param Category $category
+     * @return string
+     */
+    public function getUrlPathWithSuffix($product, $storeId, $category = null)
+    {
+        return $this->getUrlPath($product, $category, $storeId) . $this->getProductUrlSuffix($storeId);
     }
 }

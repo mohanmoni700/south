@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="hookahshisha">
+            <group id="prefix_add_seo" translate="label" type="text" sortOrder="110" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Add Prefix For Below Stores</label>
+                <field id="seo_stores" translate="label" type="multiselect" sortOrder="1" showInDefault="1">
+                    <label>Select Stores</label>
+                    <comment>Add prefix in url for cms pages, categories and products</comment>
+                    <source_model>Alfakher\SeoUrlPrefix\Model\Config\Source\StoreOption</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

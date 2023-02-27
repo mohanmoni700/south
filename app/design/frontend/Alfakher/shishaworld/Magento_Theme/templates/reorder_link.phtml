@@ -1,0 +1,17 @@
+<?php
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
+/** @var $block \Magento\Framework\View\Element\Template */
+?>
+<?php $helper = $this->helper(HookahShisha\ChangePassword\Helper\Data::class); ?>
+<div class="reorder-wrapper">
+    <?php if ($helper->customerLoggedIn()): ?>
+        <a class= "header_account_link" href="<?= $block->escapeUrl($this->getUrl("sales/order/history"));?>">
+            <?= $block->escapeHtml(__('Reorder')) ?>
+        </a>
+    <?php else: ?>
+        <a class= "header_account_link" href="<?= $block->escapeUrl($this->getUrl("customer/account/login"));?>">
+            <?= $block->escapeHtml(__('Reorder')) ?>
+        </a>
+    <?php endif; ?>
+</div>
