@@ -75,9 +75,11 @@ class GetCustomerLastPaymentMethod implements ResolverInterface
                     ->create(),
             ];
             $sortOrder = $this->sortOrderBuilder->setField('entity_id')->setDirection(SortOrder::SORT_DESC)->create();
-            $searchCriteria = $this->searchCriteriaBuilder
-            ->addFilters($filter)->setSortOrders([$sortOrder])
-            ->setCurrentPage(1)->setPageSize(1)->create();
+            $searchCriteria = $this->searchCriteriaBuilder->addFilters($filter)
+                ->setSortOrders([$sortOrder])
+                ->setCurrentPage(1)
+                ->setPageSize(1)
+                ->create();
             $orders = $this->orderRepository->getList($searchCriteria)->getItems();
             if (count($orders)) {
                 foreach ($orders as $order) {
