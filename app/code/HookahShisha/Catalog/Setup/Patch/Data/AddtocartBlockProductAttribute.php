@@ -19,7 +19,7 @@ use Magento\Framework\Setup\UninstallInterface;
  *
  * Class AddtocartPopupProductAttributes
  */
-class AddtocartModalProductAttribute implements DataPatchInterface, UninstallInterface
+class AddtocartBlockProductAttribute implements DataPatchInterface, UninstallInterface
 {
     /**
      * @var EavSetupFactory
@@ -52,15 +52,16 @@ class AddtocartModalProductAttribute implements DataPatchInterface, UninstallInt
         $eavSetup = $this->getSetup();
         $eavSetup->addAttribute(
             Product::ENTITY,
-            'addtocart_popup_content',
+            'addtocart_popup_cms',
             [
 
                 'sort_order' => 0,
-                'label' => 'Add to cart Popup Text|url',
+                'label' => 'Add to cart Cms block',
                 'default' => '',
                 'global' => ScopedAttributeInterface::SCOPE_STORE,
-                'type' => 'varchar',
-                'input' => 'text',
+                'type' => 'text',
+                'input' => 'select',
+                'source' => 'HookahShisha\Catalog\Model\Config\Source\Options',
                 'group' => 'HS Custom attributes',
                 'is_global' => false,
                 'user_defined' => true,
@@ -72,9 +73,8 @@ class AddtocartModalProductAttribute implements DataPatchInterface, UninstallInt
                 'apply_to' => 'simple,configurable',
 
                 /** Add a note */
-                'note' => 'Content should be added in this format -> [Popup content] | [url to redirect]
-                    example : Do you want to add amazing Ooka flavor?|c/shop-flavor-pods
-                '
+                'note' => 'Cms block selected will be shown as popup when you add this product to cart,
+                 if it is empty it will not show the popup'
             ]
         );
     }
@@ -85,7 +85,7 @@ class AddtocartModalProductAttribute implements DataPatchInterface, UninstallInt
     public function uninstall(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $eavSetup = $this->getSetup();
-        $eavSetup->removeAttribute(Product::ENTITY, 'addtocart_popup_content');
+        $eavSetup->removeAttribute(Product::ENTITY, 'addtocart_popup_cms');
     }
 
     /**
