@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HookahShisha\Catalog\Model\Config\Source;
 
 use Magento\Cms\Model\ResourceModel\Block\Collection;
@@ -29,8 +31,6 @@ class Options extends AbstractSource
      */
     public function getAllOptions()
     {
-
-
         if(!$this->_options)
         {
             $result = $this->cmsBlockcollection->getData();
