@@ -15,6 +15,7 @@ use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Sales\Model\Order;
 use Magento\Sales\Model\Order\Email\Sender\InvoiceSender;
 use Magento\Sales\Model\Service\InvoiceService;
+use Magento\Framework\Serialize\SerializerInterface;
 
 class FinalizeSlopeOrder implements ObserverInterface
 {
@@ -63,6 +64,11 @@ class FinalizeSlopeOrder implements ObserverInterface
     protected $invoiceSender;
 
     /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+    /**
      * Class constructor
      *
      * @param SlopeConfigHelper $slopeConfig
@@ -73,6 +79,7 @@ class FinalizeSlopeOrder implements ObserverInterface
      * @param InvoiceService $invoiceService
      * @param InvoiceSender $invoiceSender
      * @param Transaction $transaction
+     * @param SerializerInterface $serializer
      */
     public function __construct(
         SlopeConfigHelper $slopeConfig,
@@ -82,7 +89,8 @@ class FinalizeSlopeOrder implements ObserverInterface
         OrderRepositoryInterface $orderRepository,
         InvoiceService $invoiceService,
         InvoiceSender $invoiceSender,
-        Transaction $transaction
+        Transaction $transaction,
+        SerializerInterface $serializer
     ) {
         $this->config = $slopeConfig;
         $this->json = $json;
@@ -92,6 +100,7 @@ class FinalizeSlopeOrder implements ObserverInterface
         $this->invoiceService = $invoiceService;
         $this->transaction = $transaction;
         $this->invoiceSender = $invoiceSender;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -121,7 +130,7 @@ class FinalizeSlopeOrder implements ObserverInterface
                             __('Slope Payment Error (%1) : %2', $resp['code'], implode(',', $resp['messages']))
                         );
                     } else {
-                        $order->setSlopeInformation(serialize($resp)); // phpcs:disable
+                        $order->setSlopeInformation($this->serializer->serialize($resp));// phpcs:disable
                         $order->addCommentToStatusHistory(
                             __('Slope order %1 finalized successfully.', $resp['id']),
                             true,

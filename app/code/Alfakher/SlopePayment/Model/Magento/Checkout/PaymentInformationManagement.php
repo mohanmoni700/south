@@ -15,6 +15,7 @@ use Magento\Quote\Api\Data\AddressInterface;
 use Magento\Quote\Api\Data\PaymentInterface;
 use Magento\Quote\Api\PaymentMethodManagementInterface;
 use Magento\Quote\Model\Quote;
+use Magento\Framework\Serialize\SerializerInterface;
 
 class PaymentInformationManagement extends BasePaymentInformationManagement
 {
@@ -54,6 +55,11 @@ class PaymentInformationManagement extends BasePaymentInformationManagement
     private $paymentRateLimiter;
 
     /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+    /**
      * Constructor
      *
      * @param BillingAddressManagementInterface $billingAddressManagement
@@ -62,6 +68,7 @@ class PaymentInformationManagement extends BasePaymentInformationManagement
      * @param PaymentDetailsFactory $paymentDetailsFactory
      * @param CartTotalRepositoryInterface $cartTotalsRepository
      * @param PaymentProcessingRateLimiterInterface|null $paymentRateLimiter
+     * @param SerializerInterface $serializer
      */
     public function __construct(
         BillingAddressManagementInterface $billingAddressManagement,
@@ -69,7 +76,8 @@ class PaymentInformationManagement extends BasePaymentInformationManagement
         CartManagementInterface $cartManagement,
         PaymentDetailsFactory $paymentDetailsFactory,
         CartTotalRepositoryInterface $cartTotalsRepository,
-        ? PaymentProcessingRateLimiterInterface $paymentRateLimiter = null
+        ? PaymentProcessingRateLimiterInterface $paymentRateLimiter = null,
+        SerializerInterface $serializer
     ) {
 
         $this->billingAddressManagement = $billingAddressManagement;
@@ -79,6 +87,7 @@ class PaymentInformationManagement extends BasePaymentInformationManagement
         $this->cartTotalsRepository = $cartTotalsRepository;
         $this->paymentRateLimiter =
         $paymentRateLimiter ?? ObjectManager::getInstance()->get(PaymentProcessingRateLimiterInterface::class);
+        $this->serializer = $serializer;
         parent::__construct(
             $billingAddressManagement,
             $paymentMethodManagement,
@@ -104,7 +113,7 @@ class PaymentInformationManagement extends BasePaymentInformationManagement
             /** @var Quote $quote */
             $quote = $quoteRepository->getActive($cartId);
             $slopeInformation = $paymentMethod->getAdditionalData('slope_information');
-            $quote->setData('slope_information', serialize($slopeInformation)); // phpcs:ignore
+            $quote->setData('slope_information', $this->serializer->serialize($slopeInformation));// phpcs:disable
 
             $customerId = $quote->getBillingAddress()
                 ->getCustomerId();

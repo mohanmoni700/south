@@ -10,6 +10,7 @@ use Magento\Quote\Model\QuoteRepository;
 use Alfakher\SlopePayment\Helper\Config as SlopeConfigHelper;
 use Alfakher\SlopePayment\Model\Gateway\Request as GatewayRequest;
 use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Framework\Serialize\SerializerInterface;
 
 class SaveSlopeInformationToOrder implements ObserverInterface
 {
@@ -38,23 +39,31 @@ class SaveSlopeInformationToOrder implements ObserverInterface
     protected $json;
 
     /**
+     * @var SerializerInterface
+     */
+    private $serializer;
+
+    /**
      * Class constructor
      *
      * @param QuoteRepository $quoteRepository
      * @param SlopeConfigHelper $slopeConfig
      * @param GatewayRequest $gatewayRequest
      * @param Json $json
+     * @param SerializerInterface $serializer
      */
     public function __construct(
         QuoteRepository $quoteRepository,
         SlopeConfigHelper $slopeConfig,
         GatewayRequest $gatewayRequest,
-        Json $json
+        Json $json,
+        SerializerInterface $serializer
     ) {
         $this->quoteRepository = $quoteRepository;
         $this->config = $slopeConfig;
         $this->gatewayRequest = $gatewayRequest;
         $this->json = $json;
+        $this->serializer = $serializer;
     }
 
     /**
@@ -71,7 +80,7 @@ class SaveSlopeInformationToOrder implements ObserverInterface
             $oldExternalId = $order->getQuoteId();
             $newExternalId = $order->getIncrementId();
             $response = $this->updateSlopeOrderExternalId($oldExternalId, $newExternalId);
-            $order->setSlopeInformation(serialize($response));// phpcs:disable
+            $order->setSlopeInformation($this->serializer->serialize($response));// phpcs:disable
             $order->save();
         }
     }

@@ -2,7 +2,8 @@
 $_order = $block->getOrder();
 $slopeInfo = $_order->getSlopeInformation();
 if ($slopeInfo != null):
-    $slopeInfo = unserialize($slopeInfo);// phpcs:ignore ?>
+    $viewModel = $block->getData('view_model');
+    $slopeInfo = $viewModel->getUnSerializedInfo($slopeInfo);?>
     <br>
     <div class="slope slope-order-info">
        <table class="data-table admin__table-secondary">
