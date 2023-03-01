@@ -280,8 +280,9 @@ class InitiateFlow extends Action
             "postalCode" => $billingAddress->getPostcode(),
             "country" => $billingAddress->getCountry(),
         ];
+        $grandTotal = number_format((float)$quote->getGrandTotal(), 2, '.', '');
 
-        $orderData['total'] = $quote->getGrandTotal() * 100;
+        $orderData['total'] = $grandTotal * 100;
         $orderData['currency'] = strtolower($quote->getQuoteCurrencyCode());
         $orderData['billingAddress'] = $address;
         $orderData['externalId'] = $quote->getId();
