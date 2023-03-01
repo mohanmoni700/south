@@ -91,32 +91,30 @@ class MergeCartsPlugin
 
         $customerCart=$result['model'];
 
-        if ($customerCart != null) {
-            if ($guestCart && $guestCart->getShippingAddress()) {
-                $customer=$this->customerRepository->getById($currentUserId);
-                $shippingAddressId = $customer->getDefaultShipping();
-                if ($shippingAddressId === null || $shippingAddressId === 0) {
-                    $customerCart->getShippingAddress()
-                        ->setFirstname($guestCart->getShippingAddress()->getFirstname());
-                    $customerCart->getShippingAddress()
-                        ->setLastname($guestCart->getShippingAddress()->getLastname());
-                    $customerCart->getShippingAddress()
-                        ->setStreet($guestCart->getShippingAddress()->getStreet());
-                    $customerCart->getShippingAddress()
-                        ->setCity($guestCart->getShippingAddress()->getCity());
-                    $customerCart->getShippingAddress()
-                        ->setRegion($guestCart->getShippingAddress()->getRegion());
-                    $customerCart->getShippingAddress()
-                        ->setRegionId($guestCart->getShippingAddress()->getRegionId());
-                    $customerCart->getShippingAddress()
-                        ->setPostcode($guestCart->getShippingAddress()->getPostcode());
-                    $customerCart->getShippingAddress()
-                        ->setCountryId($guestCart->getShippingAddress()->getCountryId());
-                    $customerCart->getShippingAddress()
-                        ->setTelephone($guestCart->getShippingAddress()->getTelephone());
-                    $customerCart->getShippingAddress()
-                        ->setCounty($guestCart->getShippingAddress()->getCounty());
-                }
+        if ($customerCart != null && $guestCart && $guestCart->getShippingAddress()) {
+            $customer=$this->customerRepository->getById($currentUserId);
+            $shippingAddressId = $customer->getDefaultShipping();
+            if ($shippingAddressId === null || $shippingAddressId === 0) {
+                $customerCart->getShippingAddress()
+                ->setFirstname($guestCart->getShippingAddress()->getFirstname());
+                $customerCart->getShippingAddress()
+                ->setLastname($guestCart->getShippingAddress()->getLastname());
+                $customerCart->getShippingAddress()
+                ->setStreet($guestCart->getShippingAddress()->getStreet());
+                $customerCart->getShippingAddress()
+                ->setCity($guestCart->getShippingAddress()->getCity());
+                $customerCart->getShippingAddress()
+                ->setRegion($guestCart->getShippingAddress()->getRegion());
+                $customerCart->getShippingAddress()
+                ->setRegionId($guestCart->getShippingAddress()->getRegionId());
+                $customerCart->getShippingAddress()
+                ->setPostcode($guestCart->getShippingAddress()->getPostcode());
+                $customerCart->getShippingAddress()
+                ->setCountryId($guestCart->getShippingAddress()->getCountryId());
+                $customerCart->getShippingAddress()
+                ->setTelephone($guestCart->getShippingAddress()->getTelephone());
+                $customerCart->getShippingAddress()
+                ->setCounty($guestCart->getShippingAddress()->getCounty());
             }
         }
         try {
