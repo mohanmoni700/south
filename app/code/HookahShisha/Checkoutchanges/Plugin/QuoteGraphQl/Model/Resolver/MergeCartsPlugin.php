@@ -8,7 +8,6 @@ use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\GraphQl\Model\Query\ContextInterface;
 use Magento\QuoteGraphQl\Model\Resolver\MergeCarts as Subject;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface;
@@ -89,32 +88,32 @@ class MergeCartsPlugin
             );
         }
 
-        $customerCart=$result['model'];
+        $customerCart = $result['model'];
 
         if ($customerCart != null && $guestCart && $guestCart->getShippingAddress()) {
-            $customer=$this->customerRepository->getById($currentUserId);
+            $customer = $this->customerRepository->getById($currentUserId);
             $shippingAddressId = $customer->getDefaultShipping();
             if ($shippingAddressId === null || $shippingAddressId === 0) {
                 $customerCart->getShippingAddress()
-                ->setFirstname($guestCart->getShippingAddress()->getFirstname());
+                    ->setFirstname($guestCart->getShippingAddress()->getFirstname());
                 $customerCart->getShippingAddress()
-                ->setLastname($guestCart->getShippingAddress()->getLastname());
+                    ->setLastname($guestCart->getShippingAddress()->getLastname());
                 $customerCart->getShippingAddress()
-                ->setStreet($guestCart->getShippingAddress()->getStreet());
+                    ->setStreet($guestCart->getShippingAddress()->getStreet());
                 $customerCart->getShippingAddress()
-                ->setCity($guestCart->getShippingAddress()->getCity());
+                    ->setCity($guestCart->getShippingAddress()->getCity());
                 $customerCart->getShippingAddress()
-                ->setRegion($guestCart->getShippingAddress()->getRegion());
+                    ->setRegion($guestCart->getShippingAddress()->getRegion());
                 $customerCart->getShippingAddress()
-                ->setRegionId($guestCart->getShippingAddress()->getRegionId());
+                    ->setRegionId($guestCart->getShippingAddress()->getRegionId());
                 $customerCart->getShippingAddress()
-                ->setPostcode($guestCart->getShippingAddress()->getPostcode());
+                    ->setPostcode($guestCart->getShippingAddress()->getPostcode());
                 $customerCart->getShippingAddress()
-                ->setCountryId($guestCart->getShippingAddress()->getCountryId());
+                    ->setCountryId($guestCart->getShippingAddress()->getCountryId());
                 $customerCart->getShippingAddress()
-                ->setTelephone($guestCart->getShippingAddress()->getTelephone());
+                    ->setTelephone($guestCart->getShippingAddress()->getTelephone());
                 $customerCart->getShippingAddress()
-                ->setCounty($guestCart->getShippingAddress()->getCounty());
+                    ->setCounty($guestCart->getShippingAddress()->getCounty());
             }
         }
         try {
