@@ -89,7 +89,6 @@ class MergeCartsPlugin
             );
         }
 
-        $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
         $customerCart=$result['model'];
 
         if ($customerCart != null) {
