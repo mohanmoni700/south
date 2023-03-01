@@ -113,7 +113,7 @@ class PaymentInformationManagement extends BasePaymentInformationManagement
             /** @var Quote $quote */
             $quote = $quoteRepository->getActive($cartId);
             $slopeInformation = $paymentMethod->getAdditionalData('slope_information');
-            $quote->setData('slope_information', $this->serializer->serialize($slopeInformation));// phpcs:disable
+            $quote->setData('slope_information', $this->serializer->serialize($slopeInformation));
 
             $customerId = $quote->getBillingAddress()
                 ->getCustomerId();
@@ -140,7 +140,6 @@ class PaymentInformationManagement extends BasePaymentInformationManagement
      * Get Cart repository
      *
      * @return CartRepositoryInterface
-     * @deprecated 100.2.0
      */
     private function getCartRepository()
     {

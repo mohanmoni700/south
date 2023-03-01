@@ -9,7 +9,6 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Model\QuoteRepository;
 use Alfakher\SlopePayment\Helper\Config as SlopeConfigHelper;
 use Alfakher\SlopePayment\Model\Gateway\Request as GatewayRequest;
-use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\Serialize\SerializerInterface;
 
 class SaveSlopeInformationToOrder implements ObserverInterface
@@ -34,11 +33,6 @@ class SaveSlopeInformationToOrder implements ObserverInterface
     protected $gatewayRequest;
 
     /**
-     * @var Json
-     */
-    protected $json;
-
-    /**
      * @var SerializerInterface
      */
     private $serializer;
@@ -49,20 +43,17 @@ class SaveSlopeInformationToOrder implements ObserverInterface
      * @param QuoteRepository $quoteRepository
      * @param SlopeConfigHelper $slopeConfig
      * @param GatewayRequest $gatewayRequest
-     * @param Json $json
      * @param SerializerInterface $serializer
      */
     public function __construct(
         QuoteRepository $quoteRepository,
         SlopeConfigHelper $slopeConfig,
         GatewayRequest $gatewayRequest,
-        Json $json,
         SerializerInterface $serializer
     ) {
         $this->quoteRepository = $quoteRepository;
         $this->config = $slopeConfig;
         $this->gatewayRequest = $gatewayRequest;
-        $this->json = $json;
         $this->serializer = $serializer;
     }
 
@@ -80,7 +71,7 @@ class SaveSlopeInformationToOrder implements ObserverInterface
             $oldExternalId = $order->getQuoteId();
             $newExternalId = $order->getIncrementId();
             $response = $this->updateSlopeOrderExternalId($oldExternalId, $newExternalId);
-            $order->setSlopeInformation($this->serializer->serialize($response));// phpcs:disable
+            $order->setSlopeInformation($this->serializer->serialize($response));
             $order->save();
         }
     }
@@ -94,13 +85,14 @@ class SaveSlopeInformationToOrder implements ObserverInterface
      */
     public function updateSlopeOrderExternalId($oldExternalId, $newExternalId)
     {
-        $data = array("externalId" => $newExternalId);
-        $data = json_encode($data);
+        $data = ["externalId" => $newExternalId];
+        $data = $this->serializer->serialize($data);
+
         $apiEndpointUrl = $this->config->getEndpointUrl();
         $url = $apiEndpointUrl . self::UPDATE_ORDER;
         $url = str_replace("id", $oldExternalId, $url);
         $response = $this->gatewayRequest->post($url, $data);
-        $response = $this->json->unserialize($response);
+        $response = $this->serializer->unserialize($response);
         return $response;
     }
 }

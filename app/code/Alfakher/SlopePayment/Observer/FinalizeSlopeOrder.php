@@ -10,7 +10,6 @@ use Magento\Framework\DB\Transaction;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Message\ManagerInterface;
-use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Sales\Model\Order;
 use Magento\Sales\Model\Order\Email\Sender\InvoiceSender;
@@ -27,11 +26,6 @@ class FinalizeSlopeOrder implements ObserverInterface
      * @var $SlopeConfigHelper
      */
     protected $slopeConfig;
-
-    /**
-     * @var Json
-     */
-    protected $json;
 
     /**
      * @var GatewayRequest
@@ -72,7 +66,6 @@ class FinalizeSlopeOrder implements ObserverInterface
      * Class constructor
      *
      * @param SlopeConfigHelper $slopeConfig
-     * @param Json $json
      * @param GatewayRequest $gatewayRequest
      * @param ManagerInterface $messageManager
      * @param OrderRepositoryInterface $orderRepository
@@ -83,7 +76,6 @@ class FinalizeSlopeOrder implements ObserverInterface
      */
     public function __construct(
         SlopeConfigHelper $slopeConfig,
-        Json $json,
         GatewayRequest $gatewayRequest,
         ManagerInterface $messageManager,
         OrderRepositoryInterface $orderRepository,
@@ -93,7 +85,6 @@ class FinalizeSlopeOrder implements ObserverInterface
         SerializerInterface $serializer
     ) {
         $this->config = $slopeConfig;
-        $this->json = $json;
         $this->gatewayRequest = $gatewayRequest;
         $this->messageManager = $messageManager;
         $this->orderRepository = $orderRepository;
@@ -130,7 +121,7 @@ class FinalizeSlopeOrder implements ObserverInterface
                             __('Slope Payment Error (%1) : %2', $resp['code'], implode(',', $resp['messages']))
                         );
                     } else {
-                        $order->setSlopeInformation($this->serializer->serialize($resp));// phpcs:disable
+                        $order->setSlopeInformation($this->serializer->serialize($resp));
                         $order->addCommentToStatusHistory(
                             __('Slope order %1 finalized successfully.', $resp['id']),
                             true,
@@ -160,7 +151,7 @@ class FinalizeSlopeOrder implements ObserverInterface
         $url = $apiEndpointUrl . self::FINALIZE_ORDER;
         $url = str_replace("id", $slopeOrderExternalId, $url);
         $response = $this->gatewayRequest->post($url);
-        $response = $this->json->unserialize($response);
+        $response = $this->serializer->unserialize($response);
         return $response;
     }
 
