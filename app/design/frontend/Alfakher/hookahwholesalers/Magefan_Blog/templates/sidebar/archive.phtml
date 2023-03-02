@@ -15,11 +15,11 @@
         <?= $block->escapeHtml(__('Month List')) ?>
     </div>
     <div id="month_list_collapse" class="block-content" data-mage-init='{"accordion":{"openedState": "active", "collapsible": true, "multipleCollapsible": false}}'>
-        <?php foreach ($_years as $_year =>  $_months): ?>
+        <?php foreach ($_years as $_year => $_months): ?>
             <?php if (count($_months)): ?>
                 <div data-role="collapsible">
                     <div data-role="trigger">
-                        <span><?php echo $_year; ?></span>
+                        <span><?= $block->escapeHtml($_year); ?></span>
                     </div>
                     <div class="collapse-content" data-role="content">
                         <?php foreach ($_months as $time): ?>
