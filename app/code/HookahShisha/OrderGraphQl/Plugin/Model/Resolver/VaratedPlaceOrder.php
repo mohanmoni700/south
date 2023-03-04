@@ -46,7 +46,9 @@ class VaratedPlaceOrder
 
     private const DISABLED_AGEVERIFICATION_STORES = [
         'ooka_de_store_en',
-        'ooka_de_store_de'
+        'ooka_de_store_de',
+        'ooka_uae_store_en',
+        'ooka_uae_store_ar'
     ];
 
     /**
