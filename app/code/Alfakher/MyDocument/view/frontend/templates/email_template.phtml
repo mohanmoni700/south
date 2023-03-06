@@ -1,21 +1,13 @@
 <?php
-// phpcs:disable Magento2.Templates.ThisInTemplate
-$rejection=$block->getRejectedDoc();
-if (!empty($rejection)) { ?>
-<h3><?= $block->escapeHtml(__('Please find your documentation details.'))?></h3>
-<table border="1">
-    <tr>
-        <th><?= $block->escapeHtml(__('Document Name'))?></th>
-        <th><?= $block->escapeHtml(__('Status'))?></th>
-        <th><?= $block->escapeHtml(__('Comment'))?></th>
-    </tr>
-    <?php foreach ($rejection as $item): ?>
+$rejection = $block->getRejectedDoc();
+
+foreach ($rejection as $item):
+    $docClass = !empty($item['docmsg']) ? 'rejected_doc' : 'approved_doc';
+    ?>
         <tr>
             <td><?= /* @noEscape */ $item['docname'] ?></td>
-            <td><?= /* @noEscape */ !empty($item['docmsg']) ?
+            <td class=<?= $block->escapeHtml($docClass); ?>><?= /* @noEscape */ !empty($item['docmsg']) ?
                 $block->escapeHtml(__('Rejected')) : $block->escapeHtml(__('Approved')) ?></td>
-            <td><?= /* @noEscape */ !empty($item['docmsg']) ? $item['docmsg'] : "-" ?></td>
+            <td class="rejected_doc"><?= /* @noEscape */ !empty($item['docmsg']) ? $item['docmsg'] : "" ?></td>
         </tr> 
-    <?php endforeach;?>
-</table>
-<?php } ?>
+<?php endforeach;?>
