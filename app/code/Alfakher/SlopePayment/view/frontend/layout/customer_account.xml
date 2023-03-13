@@ -1,0 +1,15 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+   <body>
+      <referenceContainer name="head.additional">
+         <block class="Alfakher\SlopePayment\Block\View\SlopeWidgetJs" name="slope_widget_js_script" template="Alfakher_SlopePayment::js/slope_script.phtml" before="-"/>
+      </referenceContainer>
+      <referenceBlock name="customer_account_navigation">
+         <block class="Magento\Framework\View\Element\Html\Link\Current" name="slope-customer-account-prequalification" ifconfig="payment/slope_payment/active">
+            <arguments>
+               <argument name="path" xsi:type="string">slope/prequalification/index</argument>
+               <argument name="label" translate="true" xsi:type="string">Apply For Financing</argument>
+            </arguments>
+         </block>
+      </referenceBlock>
+   </body>
+</page>
