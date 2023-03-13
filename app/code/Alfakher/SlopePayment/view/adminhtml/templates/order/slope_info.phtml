@@ -1,0 +1,62 @@
+<?php
+$_order = $block->getOrder();
+$slopeInfo = $_order->getSlopeInformation();
+if ($slopeInfo != null):
+    $viewModel = $block->getData('view_model');
+    $slopeInfo = $viewModel->getUnSerializedInfo($slopeInfo);?>
+    <br>
+    <div class="slope slope-order-info">
+       <table class="data-table admin__table-secondary">
+            <tr>
+                <th><?= $block->escapeHtml(__('Order Number')) ?>:</th>
+                <td><?= $block->escapeHtml($slopeInfo['id']) ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('Customer ID')) ?>:</th>
+                <td><?= $block->escapeHtml($slopeInfo['customerId']) ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('External Ref. ID')) ?>:</th>
+                <td><?= $block->escapeHtml($slopeInfo['externalId']) ?></td>
+            </tr>
+            <tr>
+                <th><?= $block->escapeHtml(__('Order Status')) ?>:</th>
+                <td><?= $block->escapeHtml(strtoupper($slopeInfo['status'])) ?></td>
+            </tr>
+                <?php if ($slopeInfo['finalizedAt'] != null): ?>
+                    <?php $date = new \DateTime($slopeInfo['finalizedAt']);
+                          $formattedFinalizationDate = $date->format('Y-m-d H:i:s'); ?>
+             <tr>
+                <th><?= $block->escapeHtml(__('Finalized At')) ?>:</th>
+                <td><?= $block->escapeHtml($formattedFinalizationDate) ?></td>
+            </tr>
+                <?php endif; ?>
+                <?php if ($slopeInfo['paymentStatus'] != null): ?>
+            <tr>
+                <th><?= $block->escapeHtml(__('Payment Status')) ?>:</th>
+                <td><?= $block->escapeHtml(strtoupper($slopeInfo['paymentStatus'])) ?></td>
+            </tr>
+            <?php endif; ?>
+            <?php
+            $paymentSelected = [];
+            $paymentTermsId = $slopeInfo['paymentTermsId'];
+            $offeredTerms = $slopeInfo['offeredTerms'];
+            foreach ($offeredTerms as $term) {
+                if ($term['id'] === $paymentTermsId) {
+                    $name = $term['name'];
+                    $paymentMethods = $term['paymentMethods'];
+                    $paymentSelected = ['name' => $name, 'paymentMethods' => $paymentMethods];
+                }
+            }
+            $paymentMethodTerms =
+            $paymentSelected['name'].' - '.strtoupper(implode(',', $paymentSelected['paymentMethods']))
+            ?>
+            <tr>
+                <th><?= $block->escapeHtml(__('Payment Method & Terms')) ?>:</th>
+                <td>
+                    <?= $block->escapeHtml($paymentMethodTerms) ?>
+                </td>
+            </tr>
+        </table>
+    </div>
+<?php endif; ?>
