@@ -1,4 +1,6 @@
 <?php
+//phpcs:disable Generic.Files.LineLength.TooLong
+
 /* @var \Magento\Sales\Block\Adminhtml\Order\Totals $block */
 ?>
 
@@ -90,7 +92,7 @@ $shippingInclTax = $viewModel->isShippingInclTax($websiteId);
 
                         <?php /* bv_op; date : 2-5-22; displaying initial subtotal and initial shipping fee; Start */ ?>
                         <?php if ($_total->getCode() == 'subtotal' && $order->getTotalSubtotalDiscount() > 0): ?>
-                            <?php if($subtotalInclTax == 2): ?>
+                            <?php if ($subtotalInclTax == 2): ?>
                                 <?php  $_total->setData("value", $order->getOriginalSubtotalInclTax()); ?>
                                 <?php $_total->setData("base_value", $order->getOriginalBaseSubtotalInclTax());  ?>
                             <?php else: ?>

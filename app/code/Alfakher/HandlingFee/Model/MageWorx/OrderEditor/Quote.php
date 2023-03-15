@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Alfakher\HandlingFee\Model\MageWorx\OrderEditor;
 
@@ -13,13 +13,14 @@ use Magento\Quote\Model\Quote as OriginalQuote;
 use Magento\Quote\Model\Quote\Item as OriginalQuoteItem;
 use MageWorx\OrderEditor\Model\Quote\Item as OrderEditorQuoteItem;
 
-
 class Quote extends \MageWorx\OrderEditor\Model\Quote
 {
-	
-	private $skipItemErrors = false;
+    /**
+     * @var skipItemErrors|false
+     */
+    private $skipItemErrors = false;
 
-	/**
+    /**
      * Quote constructor.
      *
      * @param \Magento\Framework\Model\Context $context
@@ -159,7 +160,14 @@ class Quote extends \MageWorx\OrderEditor\Model\Quote
         );
     }
 
-	private function convertProductToQuoteItem(
+    /**
+     * Convert Product To QuoteItem
+     *
+     * @param Product $product
+     * @param DataObject $request
+     * @return $item
+     */
+    private function convertProductToQuoteItem(
         Product $product,
         DataObject $request
     ): OrderEditorQuoteItem {
@@ -181,6 +189,8 @@ class Quote extends \MageWorx\OrderEditor\Model\Quote
     }
 
     /**
+     * Add Product
+     *
      * @param Product $product
      * @param null|float|\Magento\Framework\DataObject $request
      * @param null|string $processMode

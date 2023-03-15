@@ -1,0 +1,155 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<section id="payment" sortOrder="1000" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+			<group id="slope_payment" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<label>Slope Payment</label>
+				<comment><![CDATA[<div class="slope-payment-logo"></div><div class="slope-payment-text">Offers Buy Now, Pay Later to your business buyers without the headache.<br><a href="https://www.slope.so/" target="_blank" rel="noopener noreferrer">More Details</a></div>]]></comment>
+				<fieldset_css>complex slope-section</fieldset_css>
+				<frontend_model>Alfakher\SlopePayment\Block\Adminhtml\System\Config\Fieldset\Payment</frontend_model>
+				<group id="slopegeneral" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>General Configurations</label>
+                    <attribute type="expanded">1</attribute>
+	                <field id="version" type="label" translate="label" sortOrder="0" showInDefault="1" showInStore="1" showInWebsite="1">
+	                    <label>Version</label>
+	                    <backend_model>Alfakher\SlopePayment\Model\System\Config\Backend\Version</backend_model>
+						<config_path>payment/slope_payment/version</config_path>
+	                </field>
+					<field id="active" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+						<label>Enabled</label>
+						<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+						<config_path>payment/slope_payment/active</config_path>
+					</field>
+					<field id="title" type="text" sortOrder="20" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+						<label>Title</label>
+						<config_path>payment/slope_payment/title</config_path>
+					</field>
+					<field id="order_status" type="select" sortOrder="30" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+						<label>New Order Status</label>
+						<source_model>Magento\Sales\Model\Config\Source\Order\Status\NewStatus</source_model>
+						<config_path>payment/slope_payment/order_status</config_path>
+					</field>
+					<field id="allowspecific" type="allowspecific" sortOrder="40" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+						<label>Payment from Applicable Countries</label>
+						<source_model>Magento\Payment\Model\Config\Source\Allspecificcountries</source_model>
+						<config_path>payment/slope_payment/allowspecific</config_path>
+					</field>
+					<field id="specificcountry" type="multiselect" sortOrder="50" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+						<label>Payment from Applicable Countries</label>
+						<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+						<can_be_empty>1</can_be_empty>
+						<config_path>payment/slope_payment/specificcountry</config_path>
+					</field>
+					<field id="instructions" type="textarea" sortOrder="60" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+						<label>Instructions</label>
+						<config_path>payment/slope_payment/instructions</config_path>
+					</field>
+					<field id="prequalifycontent" type="select" sortOrder="70" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+						<label>Pre-Qualification Information Block</label>
+						<source_model>Magento\Cms\Model\Config\Source\Block</source_model>
+						<config_path>payment/slope_payment/prequalifycontent</config_path>
+					</field>
+					<field id="sort_order" type="text" sortOrder="80" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+						<label>Sort Order</label>
+						<frontend_class>validate-number</frontend_class>
+						<config_path>payment/slope_payment/sort_order</config_path>
+					</field>
+				</group>
+				<group id="slopeapi" sortOrder="2" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+	                    <label>API Credentials Related Settings</label>
+	                    <comment>
+                            <![CDATA[
+                            Slope's API uses HTTP Basic Access Authentication for all requests using a public key (username) and secret key (password) pair.<br>These values are passed via the HTTP Header 'Authentication'<br>
+                            Please see <a href="https://developers.slope.so/" target="_blank" rel="noopener noreferrer">documentation</a> for more information.
+                            ]]>
+                        </comment>
+	                    <field id="environment" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+	                        <label>Environment</label>
+	                        <source_model>Alfakher\SlopePayment\Model\System\Config\Backend\Environment</source_model>
+	                        <config_path>payment/slope_payment/environment</config_path>
+	                    </field>
+	                    <field id="publickey_production" translate="label" type="obscure" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+	                        <label>Public Key - Production</label>
+	                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+	                        <config_path>payment/slope_payment/publickey_production</config_path>
+	                        <depends>
+	                            <field id="*/*/*/environment">production</field>
+	                        </depends>
+	                    </field>
+	                    <field id="privatekey_production" translate="label" type="obscure" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+	                        <label>Private Key - Production</label>
+	                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+	                        <config_path>payment/slope_payment/privatekey_production</config_path>
+	                        <depends>
+	                            <field id="*/*/*/environment">production</field>
+	                        </depends>
+	                    </field>
+	                    <field id="endpoint_production" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+	                        <label>API Endpoint URL - Production</label>
+	                        <config_path>payment/slope_payment/endpoint_production</config_path>
+	                        <depends>
+	                            <field id="*/*/*/environment">production</field>
+	                        </depends>
+	                    </field>
+	                    <field id="slopejs_production" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+	                        <label>Slope JS URL - Production</label>
+	                        <config_path>payment/slope_payment/slopejs_production</config_path>
+	                        <depends>
+	                            <field id="*/*/*/environment">production</field>
+	                        </depends>
+	                    </field>
+	                    <field id="publickey_sandbox" translate="label" type="obscure" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+	                        <label>Public Key - Sandbox</label>
+	                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+	                        <config_path>payment/slope_payment/publickey_sandbox</config_path>
+	                        <depends>
+	                            <field id="*/*/*/environment">sandbox</field>
+	                        </depends>
+	                    </field>
+	                    <field id="privatekey_sandbox" translate="label" type="obscure" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+	                        <label>Private Key - Sandbox</label>
+	                        <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+	                        <config_path>payment/slope_payment/privatekey_sandbox</config_path>
+	                        <depends>
+	                            <field id="*/*/*/environment">sandbox</field>
+	                        </depends>
+	                    </field>
+	                    <field id="endpoint_sandbox" translate="label" type="text" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+	                        <label>API Endpoint URL - Sandbox</label>
+	                        <config_path>payment/slope_payment/endpoint_sandbox</config_path>
+	                        <depends>
+	                            <field id="*/*/*/environment">sandbox</field>
+	                        </depends>
+	                    </field>
+	                    <field id="slopejs_sandbox" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+	                        <label>Slope JS URL - Sandbox</label>
+	                        <config_path>payment/slope_payment/slopejs_sandbox</config_path>
+	                        <depends>
+	                            <field id="*/*/*/environment">sandbox</field>
+	                        </depends>
+	                    </field>
+	                    <field id="key_validation" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label></label>
+                            <frontend_model>Alfakher\SlopePayment\Block\Adminhtml\Form\Field\KeyValidation</frontend_model>
+                        </field>
+	                </group>
+	                <group id="slopeadvanced" sortOrder="3" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+	                	<label>Advanced Slope Settings</label>
+                        <frontend_model>Magento\Config\Block\System\Config\Form\Fieldset</frontend_model>
+	                	<field id="debug" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                            <label>Debug</label>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                            <config_path>payment/slope_payment/debug</config_path>
+							<comment>
+                            <![CDATA[
+                            Debug logs will be stored inside <strong>var/log/slope_debug.log</strong>
+                            ]]>
+                        </comment>
+                        </field>
+	                </group>
+            </group>
+		</section>
+	</system>
+</config>

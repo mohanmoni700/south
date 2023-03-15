@@ -7,33 +7,35 @@ namespace HookahShisha\Checkoutchanges\Plugin\QuoteGraphQl\Model\Resolver;
 use Magento\QuoteGraphQl\Model\Resolver\BillingAddress as Subject;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Customer\Model\CustomerFactory;
+use Magento\Customer\Model\AddressFactory;
 use Psr\Log\LoggerInterface;
 
 class BillingAddressPlugin
 {
     /**
-     * @var \Magento\Customer\Model\CustomerFactory
+     * @var CustomerFactory
      */
     private $customerFactory;
 
     /**
-     * @var \Magento\Customer\Model\AddressFactory
+     * @var AddressFactory
      */
     private $addressFactory;
 
     /**
-     * @var \Psr\Log\LoggerInterface
+     * @var LoggerInterface
      */
     private $logger;
 
     /**
-     * @param \Magento\Customer\Model\CustomerFactory $_customerFactory
-     * @param \Magento\Customer\Model\AddressFactory $_addressFactory
+     * @param CustomerFactory $customerFactory
+     * @param AddressFactory $addressFactory
      * @param LoggerInterface $logger
      */
     public function __construct(
-        \Magento\Customer\Model\CustomerFactory $customerFactory,
-        \Magento\Customer\Model\AddressFactory $addressFactory,
+        CustomerFactory $customerFactory,
+        AddressFactory $addressFactory,
         LoggerInterface $logger
     ) {
         $this->customerFactory = $customerFactory;
@@ -84,8 +86,8 @@ class BillingAddressPlugin
                     $cart->getShippingAddress()->setCountryId($addressnew['country_id']);
                     try {
                         $cart->save();
-                    } catch (Exception $e) {
-                        $this->logger->err($e->getMessage());
+                    } catch (\Exception $e) {
+                        $this->logger->error($e->getMessage());
                     }
                 }
             }
