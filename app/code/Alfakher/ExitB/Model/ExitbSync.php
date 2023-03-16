@@ -177,10 +177,9 @@ class ExitbSync
                 
                 $shippingMethod = $order->getShippingMethod();
                 $orderData['orderData']['shipment']['code'] = $this->getConfigValue(self::SHIP_CODE, $websiteId);
-                $orderData['orderData']['shipment']['total'] = (float)$order->getOriginalShippingFee() + (float)$order->getShippingTaxAmount() + (float)$order->getHandlingFee() - (float)$order->getTotalShippingFeeDiscount();
+                $orderData['orderData']['shipment']['total'] = (float)$order->getShippingAmount() + (float)$order->getShippingTaxAmount() + (float)$order->getHandlingFee();
                 $items = $order->getAllItems();
                 $orderData['orderData']['items'] = $this->orderItems($items, $orderData['orderData']['isB2B']);
-                
                 $exitBModel = $this->exitbmodelFactory->create();
                 $exitBorderSync = $exitBModel->load($orderId, 'order_id');
 
