@@ -1,4 +1,8 @@
 <?php
+/**
+ * @author digital@hookah.com
+ */
+declare(strict_types=1);
 
 namespace HookahShisha\LoginAsCustomer\Controller\Adminhtml\Login;
 
@@ -41,17 +45,19 @@ class Login extends Action implements HttpPostActionInterface
      *
      * @see _isAllowed()
      */
-    const ADMIN_RESOURCE = 'Magento_LoginAsCustomer::login';
+    public const ADMIN_RESOURCE = 'Magento_LoginAsCustomer::login';
 
-    const PWA_STORES = [
+    public const PWA_STORES = [
         'default',
         'hookah_company_store_view',
         'hookah_store_view',
         'ooka_de_store_de',
         'ooka_de_store_en',
         'ooka_usa_store_en',
+        'ooka_uae_store_en',
+        'ooka_uae_store_ar',
         'ooka_store_view'
-        ];
+    ];
 
     /**
      * @var Session
@@ -142,21 +148,21 @@ class Login extends Action implements HttpPostActionInterface
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
-        Context $context,
-        Session $authSession,
-        StoreManagerInterface $storeManager,
-        CustomerRepositoryInterface $customerRepository,
-        ConfigInterface $config,
-        AuthenticationDataInterfaceFactory $authenticationDataFactory,
-        SaveAuthenticationDataInterface $saveAuthenticationData,
-        DeleteAuthenticationDataForUserInterface $deleteAuthenticationDataForUser,
-        TokenFactory $tokenModelFactory,
-        Url $url,
-        ?Share $share = null,
-        ?ManageStoreCookie $manageStoreCookie = null,
-        ?SetLoggedAsCustomerCustomerIdInterface $setLoggedAsCustomerCustomerId = null,
+        Context                                       $context,
+        Session                                       $authSession,
+        StoreManagerInterface                         $storeManager,
+        CustomerRepositoryInterface                   $customerRepository,
+        ConfigInterface                               $config,
+        AuthenticationDataInterfaceFactory            $authenticationDataFactory,
+        SaveAuthenticationDataInterface               $saveAuthenticationData,
+        DeleteAuthenticationDataForUserInterface      $deleteAuthenticationDataForUser,
+        TokenFactory                                  $tokenModelFactory,
+        Url                                           $url,
+        ?Share                                        $share = null,
+        ?ManageStoreCookie                            $manageStoreCookie = null,
+        ?SetLoggedAsCustomerCustomerIdInterface       $setLoggedAsCustomerCustomerId = null,
         ?IsLoginAsCustomerEnabledForCustomerInterface $isLoginAsCustomerEnabled = null,
-        ?GenerateAuthenticationSecretInterface $generateAuthenticationSecret = null
+        ?GenerateAuthenticationSecretInterface        $generateAuthenticationSecret = null
     ) {
         parent::__construct($context);
 

@@ -1088,7 +1088,7 @@ return [
         'HookahShisha_CustomerGraphQl' => 1,
         'HookahShisha_Customerb2b' => 1,
         'Magetrend_PdfTemplates' => 1,
-        'HookahShisha_GraphQl' => 1,
+        'HookahShisha_GraphQl' => 0,
         'HookahShisha_Import' => 1,
         'HookahShisha_InternationalTelephoneInput' => 1,
         'HookahShisha_InvoiceCapture' => 1,
