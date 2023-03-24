@@ -200,21 +200,12 @@ return [
                 'sort_order' => '0',
                 'is_active' => '1'
             ],
-            'hookah_store_view' => [
+            'hookah_store_view_en' => [
                 'store_id' => '2',
                 'code' => 'hookah_store_view',
                 'website_id' => '2',
                 'group_id' => '2',
                 'name' => 'Shisha-World.com (B2C) Store View EN',
-                'sort_order' => '1',
-                'is_active' => '1'
-            ],
-            'hookah_store_view_en' => [
-                'store_id' => '71',
-                'code' => 'hookah_store_view_en',
-                'website_id' => '2',
-                'group_id' => '2',
-                'name' => 'Shisha-World.com (B2C) Store View EN-default',
                 'sort_order' => '1',
                 'is_active' => '1'
             ],
