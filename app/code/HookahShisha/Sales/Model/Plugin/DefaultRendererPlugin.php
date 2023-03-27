@@ -61,8 +61,6 @@ class DefaultRendererPlugin
 
             $result = $html;
         } elseif ($column == 'tax-percent') {
-            $itemTotal = (($item->getPrice() * $item->getQtyOrdered()) - $item->getDiscountAmount());
-            $orderTaxRate = number_format($itemTotal ? ($item->getTaxAmount() * 100) / $itemTotal : 0, 2);
             $html = $defaultRenderer->displayTaxPercent($item);
 
             if (!empty($item->getExciseTax())) {
