@@ -66,15 +66,38 @@ class OrderSyncShisha implements ObserverInterface
             "orderId" => (int) $orderid,
         ];
         
-        $status = $this->exitborderModel->addFieldToFilter('order_id', $orderid);
-        $collection = $status->getColumnValues('sync_status');
-        $status_collection = !empty($collection) ? $collection[0] : null;
+        $paymentMethodCode= $order->getPayment()->getMethod();
+        $isVrPayment=$this->isVrPayment($paymentMethodCode);
 
-        if ($this->exitbsync->isModuleEnabled($websiteId) && $status_collection !== '1') {
-            $this->publisher->publish(
-                self::TOPIC_NAME,
-                $this->json->serialize($orderId)
-            );
+        if($isVrPayment == false){
+            $status = $this->exitborderModel->addFieldToFilter('order_id', $orderid);
+            $collection = $status->getColumnValues('sync_status');
+            $status_collection = !empty($collection) ? $collection[0] : null;
+
+            if ($this->exitbsync->isModuleEnabled($websiteId) && $status_collection !== '1') {
+                $this->publisher->publish(
+                    self::TOPIC_NAME,
+                    $this->json->serialize($orderId)
+                );
+            }
         }
+    }
+
+
+    /**
+     * Is Vr payment
+     *
+     * @return boolean
+     */
+    public function isVrPayment($paymentMethodCode)
+    {
+        if ($paymentMethodCode == 'vrpayecommerce_directdebit' ||
+            $paymentMethodCode == 'vrpayecommerce_creditcard' ||
+            $paymentMethodCode == 'vrpayecommerce_ccsaved' ||
+            $paymentMethodCode == 'vrpayecommerce_ddsaved'
+        ) {
+            return true;
+        }
+        return false;
     }
 }
