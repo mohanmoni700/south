@@ -56,21 +56,22 @@ class Expirydocument
      */
     public function execute()
     {
-        $this->sendDataToWebhook();
-
         // Check Expired Mail is enabled from configuration
         if ($this->documentHelper->getExpirymailEnable()) {
             $documentArray = $this->getDocumentCollection();
             if ($documentArray) {
 
                 foreach ($documentArray as $customerId => $document) {
+                    $documentDataArray = [];
+                    $documentDataArray = $this->filterDocumentData($document);
                     $documentName = '';
-                    $documentNameArray = array_column($document, 'docname');
-                    $documentIdArray = array_column($document, 'mydocument_id');
-                    $documentName = implode(",", array_column($document, 'docname'));
+                    $documentNameArray = array_column($documentDataArray, 'docname');
+                    $documentIdArray = array_column($documentDataArray, 'mydocument_id');
+                    $documentName = implode(",", array_column($documentDataArray, 'docname'));
 
                     $sendEmail = $this->documentHelper->sendExpiryMail($documentNameArray, $customerId);
                     if ($sendEmail) {
+                        $this->sendDataToWebhook($document);
                         $this->setExpiredEmailFlag($documentIdArray, $customerId);
                     }
                 }
@@ -80,13 +81,38 @@ class Expirydocument
     }
 
     /**
+     * Return the data which are required for mail sending
+     *
+     * @param {array} $documentData
+     * @return array
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     */
+    public function filterDocumentData($documentData)
+    {
+        $customerArray = [];
+        foreach ($documentData as $document) {
+            $docFilteredData = [];
+            $docFilteredData['mydocument_id'] = $document->getMydocumentId();
+            $docFilteredData['filename'] = $document->getFilename();
+            $docFilteredData['document_name'] = $document->getDocumentName();
+            if ($document->getDocumentName()) {
+                $docFilteredData[]['docname'] = $document->getDocumentName();
+            } else {
+                $docFilteredData[]['docname'] = $document->getFilename();
+            }
+            $customerArray[] = $docFilteredData;
+        }
+        return $customerArray;
+    }
+
+    /**
      * Call update document webhook to pass expire document data
      *
+     * @param {array} $documentData
      * @return void
      */
-    public function sendDataToWebhook()
+    public function sendDataToWebhook($documentData)
     {
-        $documentData = $this->getExpiredDocumentCollection();
         $docItems = [];
         foreach ($documentData as $document) {
             $docItems['items'][] = $document->getData();
@@ -111,15 +137,7 @@ class Expirydocument
             $customerId = $documentArray->getCustomerId();
             $isDelete = $documentArray->getIsDelete();
             if ($customerId && !$isDelete) {
-                $customerArray['mydocument_id'] = $documentArray->getMydocumentId();
-                $customerArray['filename'] = $documentArray->getFilename();
-                $customerArray['document_name'] = $documentArray->getDocumentName();
-                if ($documentArray->getDocumentName()) {
-                    $customerArray['docname'] = $documentArray->getDocumentName();
-                } else {
-                    $customerArray['docname'] = $documentArray->getFilename();
-                }
-                $customerDocumentArray[$customerId][] = $customerArray;
+                $customerDocumentArray[$customerId][] = $documentArray;
             }
 
         }
