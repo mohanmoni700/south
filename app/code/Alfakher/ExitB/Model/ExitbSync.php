@@ -187,7 +187,13 @@ class ExitbSync
                 
                 $shippingMethod = $order->getShippingMethod();
                 $orderData['orderData']['shipment']['code'] = $this->getConfigValue(self::SHIP_CODE, $websiteId);
-                $orderData['orderData']['shipment']['total'] = (float)$order->getShippingInclTax();
+                $orderData['orderData']['shipment']['total'] = (float)$order->getShippingAmount() + (float)$order->getShippingTaxAmount() + (float)$order->getHandlingFee();
+                if ($order->getCouponCode()!= null && $order->getDiscountAmount() != 0) {
+                    $orderData['orderData']['vouchers'][] = [
+                        "code" => $order->getCouponCode(),
+                        "discount" => (float)$order->getDiscountAmount()
+                    ];
+                }
                 $items = $order->getAllItems();
                 $orderData['orderData']['items'] = $this->orderItems($items, $orderData['orderData']['isB2B']);
                 
