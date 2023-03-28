@@ -14,4 +14,5 @@ class ExitbOrder extends AbstractModel
     {
         $this->_init(ExitbResourceModel::class);
     }
+    
 }
