@@ -13,6 +13,5 @@ class ExitbOrder extends AbstractModel
     protected function _construct()
     {
         $this->_init(ExitbResourceModel::class);
-    }
-    
+    }    
 }
