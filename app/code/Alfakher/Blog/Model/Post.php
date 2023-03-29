@@ -4,9 +4,8 @@ namespace Alfakher\Blog\Model;
 
 class Post extends \Magefan\Blog\Model\Post {
 
-	public function getMetaDescription()
-    {
-        //Get meta description
+	public function getMetaDescription() {
+
 		$key = 'filtered_meta_description';
 		if (!$this->hasData($key)) {
 			$desc = $this->getData('meta_description');
@@ -26,3 +25,4 @@ class Post extends \Magefan\Blog\Model\Post {
 	}
 
 }
+
