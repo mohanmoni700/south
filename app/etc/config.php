@@ -202,7 +202,7 @@ return [
             ],
             'hookah_store_view_en' => [
                 'store_id' => '2',
-                'code' => 'hookah_store_view',
+                'code' => 'hookah_store_view_en',
                 'website_id' => '2',
                 'group_id' => '2',
                 'name' => 'Shisha-World.com (B2C) Store View EN',
