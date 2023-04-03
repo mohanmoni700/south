@@ -181,7 +181,7 @@ class ExitbSync
                 if ($order->getCouponCode()!= null && $order->getDiscountAmount() != 0) {
                     $orderData['orderData']['vouchers'][] = [
                         "code" => $order->getCouponCode(),
-                        "discount" => (float)$order->getDiscountAmount()
+                        "discount" => (float)abs($order->getDiscountAmount())
                     ];
                 }
                 $items = $order->getAllItems();
