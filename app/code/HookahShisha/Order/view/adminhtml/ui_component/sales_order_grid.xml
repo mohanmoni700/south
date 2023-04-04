@@ -16,5 +16,13 @@
             </item>
         </argument>
     </column>
+    <column name="created_at" class="HookahShisha\Order\Ui\Component\Listing\Columns\OrderDate" component="Magento_Ui/js/grid/columns/date">
+        <settings>
+            <filter>dateRange</filter>
+            <dataType>date</dataType>
+            <label translate="true">Purchase Date</label>
+            <sorting>desc</sorting>
+        </settings>
+    </column>
 </columns>
 </listing>
