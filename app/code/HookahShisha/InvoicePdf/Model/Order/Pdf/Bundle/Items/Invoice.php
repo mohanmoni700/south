@@ -337,11 +337,20 @@ class Invoice extends \Magento\Bundle\Model\Sales\Order\Pdf\Items\Invoice
     {
         $storeId = $this->_storeManager->getStore()->getId();
 
-        $deviceSkus = $this->_scopeConfig->getValue(
-            "pdfinvoice_settings/general_setting/ooka_device_skus",
+        $ookaWhiteSku = $this->_scopeConfig->getValue(
+            "pdfinvoice_settings/general_setting/ooka_white_sku",
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
             $storeId
         );
+
+        $ookaBlackSku = $this->_scopeConfig->getValue(
+            "pdfinvoice_settings/general_setting/ooka_black_sku",
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
+        $deviceSkus = $ookaWhiteSku ? trim($ookaWhiteSku).','.trim($ookaBlackSku) : trim($ookaBlackSku);
+
         $arrayDeviceSku = explode(',', $deviceSkus);
 
         $index = array_key_last($lines);
