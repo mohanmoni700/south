@@ -3,9 +3,12 @@ declare(strict_types=1);
 
 namespace HookahShisha\Removefreegift\Model;
 
+use Magento\Catalog\Model\Product;
 use Magento\Checkout\Model\Session;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
 use Magento\Catalog\Model\ProductRepository;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 use Amasty\Promo\Helper\Item;
 use Amasty\Promo\Helper\Messages;
@@ -25,7 +28,7 @@ class Registry extends \Amasty\Promo\Model\Registry
     public const AUTO_ADD_PRODUCT_TYPES = ['simple', 'virtual', 'downloadable', 'bundle'];
 
     /**
-     * @var \Magento\Checkout\Model\Session
+     * @var Session
      */
     protected $checkoutSession;
 
@@ -35,22 +38,22 @@ class Registry extends \Amasty\Promo\Model\Registry
     protected $productCollectionFactory;
 
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var StoreManagerInterface
      */
     protected $storeManager;
 
     /**
-     * @var \Amasty\Promo\Helper\Item
+     * @var Item
      */
     protected $promoItemHelper;
 
     /**
-     * @var \Amasty\Promo\Helper\Messages
+     * @var Messages
      */
     protected $promoMessagesHelper;
 
     /**
-     * @var \Magento\Store\Model\Store
+     * @var Store
      */
     protected $store;
 
@@ -60,38 +63,38 @@ class Registry extends \Amasty\Promo\Model\Registry
     protected $fullDiscountItems;
 
     /**
-     * @var \Amasty\Promo\Model\DiscountCalculator
+     * @var DiscountCalculator
      */
     protected $discountCalculator;
 
     /**
-     * @var ItemRegistry\PromoItemRegistry
+     * @var PromoItemRegistry
      */
     protected $promoItemRegistry;
 
     /**
-     * @var \Magento\Catalog\Model\ProductRepository
+     * @var ProductRepository
      */
     protected $productRepository;
 
     /**
-     * @var \Magento\Framework\App\Request\Http
+     * @var Http
      */
     protected $httprequest;
 
     /**
      * construct method
      *
-     * @param \Magento\Checkout\Model\Session $resourceSession
+     * @param Session $resourceSession
      * @param ProductCollectionFactory $productCollectionFactory
-     * @param \Magento\Catalog\Model\ProductRepository $productRepository
-     * @param \Magento\Store\Model\StoreManagerInterface $storeManager
-     * @param \Amasty\Promo\Helper\Item $promoItemHelper
-     * @param \Amasty\Promo\Helper\Messages $promoMessagesHelper
-     * @param \Magento\Store\Model\Store $store
-     * @param \Amasty\Promo\Model\DiscountCalculator $discountCalculator
-     * @param \Amasty\Promo\Model\ItemRegistry\PromoItemRegistry $promoItemRegistry
-     * @param \Magento\Framework\App\Request\Http $httprequest
+     * @param ProductRepository $productRepository
+     * @param StoreManagerInterface $storeManager
+     * @param Item $promoItemHelper
+     * @param Messages $promoMessagesHelper
+     * @param Store $store
+     * @param DiscountCalculator $discountCalculator
+     * @param PromoItemRegistry $promoItemRegistry
+     * @param Http $httprequest
      */
     public function __construct(
         Session $resourceSession,
@@ -127,34 +130,28 @@ class Registry extends \Amasty\Promo\Model\Registry
      * @param array $discountData
      * @param int $type
      * @param string $discountAmount
-     * @return array
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @return array|false
+     * @throws LocalizedException
      */
     public function addPromoItem($sku, $qty, $ruleId, $discountData, $type, $discountAmount)
     {
         $discountData = $this->getCurrencyDiscount($discountData);
-
         $autoAdd = false;
         $request = $this->httprequest;
-    
         $graphrequest = $request->getContent();
         if (is_array($sku) && count($sku) === 1) {
             // if rule with behavior 'one of' have only single product item,
             // then behavior should be the same as rule 'all'
             $sku = $sku[0];
         }
-
         if (!is_array($sku)) {
             if (!$this->isProductValid($sku)) {
-                return;
+                return false;
             }
-
             $item = $this->promoItemRegistry->getItemBySkuAndRuleId($sku, $ruleId);
-
             if ($item === null && $this->discountCalculator->isEnableAutoAdd($discountData)) {
                 $autoAdd = $this->isProductCanBeAutoAdded($sku);
             }
-
             $item = $this->promoItemRegistry->registerItem(
                 $sku,
                 $qty,
@@ -164,7 +161,6 @@ class Registry extends \Amasty\Promo\Model\Registry
                 $discountData['discount_item'],
                 $discountAmount
             );
-
             if ($autoAdd) {
                 /* condition starts for restrict auto add free gift product during
                 remove free gift item updateCartItems*/
@@ -180,7 +176,6 @@ class Registry extends \Amasty\Promo\Model\Registry
                     unset($sku[$key]);
                     continue;
                 }
-
                 $this->promoItemRegistry->registerItem(
                     $skuValue,
                     $qty,
@@ -202,7 +197,6 @@ class Registry extends \Amasty\Promo\Model\Registry
                 $this->fullDiscountItems[$itemSku]['rule_ids'][$ruleId] = $ruleId;
             }
         }
-
         $this->checkoutSession->setAmpromoFullDiscountItems($this->fullDiscountItems);
     }
 
@@ -211,10 +205,11 @@ class Registry extends \Amasty\Promo\Model\Registry
      *
      * @param string $sku
      * @return bool
+     * @throws LocalizedException
      */
     private function isProductValid(string $sku): bool
     {
-        /** @var \Magento\Catalog\Model\Product $product */
+        /** @var Product $product */
         $productCollection = $this->productCollectionFactory->create();
         $productCollection->addFieldToFilter('sku', $sku);
         $product = $productCollection->getFirstItem();
@@ -226,13 +221,10 @@ class Registry extends \Amasty\Promo\Model\Registry
             // Ignore products from other websites
             return false;
         }
-
-        if (!$product || !$product->isInStock() || !$product->isSalable()) {
+        if (!$product->isInStock() || !$product->isSalable()) {
             $this->promoMessagesHelper->addAvailabilityError($product);
-
             return false;
         }
-
         return true;
     }
 
@@ -240,12 +232,12 @@ class Registry extends \Amasty\Promo\Model\Registry
      * IsProductCanBeAutoAdded
      *
      * @param string $sku
-     *
      * @return bool
+     * @throws NoSuchEntityException
      */
     private function isProductCanBeAutoAdded(string $sku): bool
     {
-        /** @var \Magento\Catalog\Model\Product $product */
+        /** @var Product $product */
         $product = $this->productRepository->get($sku);
 
         if ((in_array($product->getTypeId(), static::AUTO_ADD_PRODUCT_TYPES)
@@ -254,7 +246,6 @@ class Registry extends \Amasty\Promo\Model\Registry
         ) {
             return true;
         }
-
         return false;
     }
 
@@ -263,14 +254,14 @@ class Registry extends \Amasty\Promo\Model\Registry
      *
      * @param array $discountData
      * @return array
+     * @throws LocalizedException
      */
-    private function getCurrencyDiscount($discountData)
+    private function getCurrencyDiscount($discountData): array
     {
-        preg_match('/^-*\d+.*\d*$/', $discountData['discount_item'] ?? 0, $discount);
+        preg_match('/^-*\d+.*\d*$/', $discountData['discount_item'] ?? '', $discount);
         if (isset($discount[0]) && is_numeric($discount[0])) {
             $discountData['discount_item'] = $discount[0] * $this->store->getCurrentCurrencyRate();
         }
-
         return $discountData;
     }
 }
