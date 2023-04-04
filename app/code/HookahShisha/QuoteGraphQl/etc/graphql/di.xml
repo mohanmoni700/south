@@ -4,4 +4,6 @@
     <type name="Magento\QuoteGraphQl\Model\Resolver\Discounts">
         <plugin name="discount_issue_cart" type="HookahShisha\QuoteGraphQl\Plugin\Discounts"/>
     </type>
+    <preference for="Magento\Quote\Model\Quote\Item\Repository"
+                type="HookahShisha\QuoteGraphQl\Model\Quote\Item\Repository"/>
 </config>
