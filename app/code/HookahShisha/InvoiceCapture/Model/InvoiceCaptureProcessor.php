@@ -10,6 +10,7 @@ use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Sales\Model\Order\Invoice;
 use Magento\Sales\Model\Service\InvoiceService;
 use Magento\Sales\Model\Order;
+use Magento\Sales\Model\Order\Email\Sender\InvoiceSender;
 
 /**
  * Order Invoice Capture Processor Model
@@ -54,6 +55,11 @@ class InvoiceCaptureProcessor
     public $currentPaymentMethod;
 
     /**
+     * @var InvoiceSender
+     */
+    private $invoiceSender;
+
+    /**
      *  InvoiceCaptureProcessor constructor.
      *
      * @param Config $config
@@ -62,6 +68,7 @@ class InvoiceCaptureProcessor
      * @param InvoiceService $invoiceService
      * @param TransactionFactory $transactionFactory
      * @param InvoiceCaptureLogger $invoiceCaptureLogger
+     * @param InvoiceSender $invoiceSender
      */
     public function __construct(
         Config $config,
@@ -69,7 +76,8 @@ class InvoiceCaptureProcessor
         OrderRepositoryInterface $orderRepository,
         InvoiceService $invoiceService,
         TransactionFactory $transactionFactory,
-        InvoiceCaptureLogger $invoiceCaptureLogger
+        InvoiceCaptureLogger $invoiceCaptureLogger,
+        InvoiceSender $invoiceSender
     ) {
         $this->config = $config;
         $this->orderProvider = $orderProvider;
@@ -77,6 +85,7 @@ class InvoiceCaptureProcessor
         $this->invoiceService = $invoiceService;
         $this->transactionFactory = $transactionFactory;
         $this->invoiceCaptureLogger = $invoiceCaptureLogger;
+        $this->invoiceSender = $invoiceSender;
     }
 
     /**
@@ -128,6 +137,16 @@ class InvoiceCaptureProcessor
     {
         $invoice = $this->prepareInvoice($order);
         $this->saveTransaction($invoice);
+
+        // send invoice emails
+        try {
+            $this->invoiceSender->send($invoice);
+        } catch (\Exception $e) {
+            $message = "We can\'t send the invoice email right now.";
+            $trace = $e->getMessage();
+            $trace .= "\n". $e->getTraceAsString();
+            $this->invoiceCaptureLogger->logExceptionMessage($message, $trace);
+        }
     }
 
     /**
