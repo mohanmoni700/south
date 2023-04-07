@@ -1,25 +1,3 @@
-##
-# @category    HookahShisha
-# @package     HookahShisha_QuotegGraphQl
-# @author      Janis Verins <info@corra.com>
-##
-
-input CartItemInput {
-    alfa_bundle: String @doc(description: "Stringified json object containing shisha and charcoal product sku's")
-    parent_alfa_bundle: String @doc(description: "Stringified json object containing shisha and charcoal product sku's")
-}
-
-type ConfigurableCartItem {
-    alfa_bundle_flavour: String @doc(description: "Selected shisha product falvour")
-    alfa_bundle_charcoal: String @doc(description: "Selected chracoal product description")
-}
-
-type SimpleCartItem {
-    super_pack_flavour: [String] @doc(description: "All the selected flavour")
-    alfa_bundle_flavour: String @doc(description: "Selected shisha product falvour")
-    alfa_bundle_charcoal: String @doc(description: "Selected chracoal product description")
-}
-
 #not used in magento, to connect direct to magento from frontend without service.
 type Cart {
     checkoutUrl: String

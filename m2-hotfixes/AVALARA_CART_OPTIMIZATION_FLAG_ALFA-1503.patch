@@ -1,0 +1,104 @@
+diff --git a/vendor/magento/module-quote/Model/Cart/AddProductsToCart.php b/vendor/magento/module-quote/Model/Cart/AddProductsToCart.php
+--- a/vendor/magento/module-quote/Model/Cart/AddProductsToCart.php	2021-07-13 21:08:00
++++ b/vendor/magento/module-quote/Model/Cart/AddProductsToCart.php	2023-03-27 17:19:24
+@@ -16,6 +16,7 @@
+ use Magento\Quote\Model\MaskedQuoteIdToQuoteIdInterface;
+ use Magento\Quote\Model\Quote;
+ use Magento\Framework\Message\MessageInterface;
++use Avalara\Excise\Helper\Config;
+
+ /**
+  * Unified approach to add products to the Shopping Cart.
+@@ -72,6 +73,11 @@
+     private $requestBuilder;
+
+     /**
++     * @var Config
++     */
++    private Config $avalaraConfig;
++
++    /**
+      * @param ProductRepositoryInterface $productRepository
+      * @param CartRepositoryInterface $cartRepository
+      * @param MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId
+@@ -81,12 +87,14 @@
+         ProductRepositoryInterface $productRepository,
+         CartRepositoryInterface $cartRepository,
+         MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId,
+-        BuyRequestBuilder $requestBuilder
++        BuyRequestBuilder $requestBuilder,
++        Config $avalaraConfig
+     ) {
+         $this->productRepository = $productRepository;
+         $this->cartRepository = $cartRepository;
+         $this->maskedQuoteIdToQuoteId = $maskedQuoteIdToQuoteId;
+         $this->requestBuilder = $requestBuilder;
++        $this->avalaraConfig = $avalaraConfig;
+     }
+
+     /**
+@@ -118,6 +126,10 @@
+         if (count($this->errors) !== 0) {
+             /* Revert changes introduced by add to cart processes in case of an error */
+             $cart->getItemsCollection()->clear();
++        } else {
++            // restrict avalara tax request using flag for add to cart
++            $this->avalaraConfig->setAddressTaxable(false);
++            $this->cartRepository->save($cart);
+         }
+
+         return $this->prepareErrorOutput($cart);
+
+diff --git a/vendor/magento/module-quote-graph-ql/Model/Resolver/UpdateCartItems.php b/vendor/magento/module-quote-graph-ql/Model/Resolver/UpdateCartItems.php
+--- a/vendor/magento/module-quote-graph-ql/Model/Resolver/UpdateCartItems.php	2021-07-13 21:08:00
++++ b/vendor/magento/module-quote-graph-ql/Model/Resolver/UpdateCartItems.php	2023-03-27 18:00:38
+@@ -18,7 +18,7 @@
+ use Magento\QuoteGraphQl\Model\Cart\GetCartForUser;
+ use Magento\QuoteGraphQl\Model\CartItem\DataProvider\UpdateCartItems as  UpdateCartItemsProvider;
+ use Magento\Framework\GraphQl\Query\Resolver\ArgumentsProcessorInterface;
+-
++use Avalara\Excise\Helper\Config;
+ /**
+  * @inheritdoc
+  */
+@@ -45,6 +45,11 @@
+     private $argsSelection;
+
+     /**
++     * @var Config
++     */
++    private Config $avalaraConfig;
++
++    /**
+      * @param GetCartForUser $getCartForUser
+      * @param CartRepositoryInterface $cartRepository
+      * @param UpdateCartItemsProvider $updateCartItems
+@@ -54,12 +59,14 @@
+         GetCartForUser $getCartForUser,
+         CartRepositoryInterface $cartRepository,
+         UpdateCartItemsProvider $updateCartItems,
+-        ArgumentsProcessorInterface $argsSelection
++        ArgumentsProcessorInterface $argsSelection,
++        Config $avalaraConfig
+     ) {
+         $this->getCartForUser = $getCartForUser;
+         $this->cartRepository = $cartRepository;
+         $this->updateCartItems = $updateCartItems;
+         $this->argsSelection = $argsSelection;
++        $this->avalaraConfig = $avalaraConfig;
+     }
+
+     /**
+@@ -87,6 +94,12 @@
+
+         try {
+             $this->updateCartItems->processCartItems($cart, $cartItems);
++            // restrict avalara tax request using flag for update item
++            if (isset($processedArgs['input']['is_checkout']) &&
++                $processedArgs['input']['is_checkout'] === false
++            ) {
++                $this->avalaraConfig->setAddressTaxable(false);
++            }
+             $this->cartRepository->save($cart);
+         } catch (NoSuchEntityException $e) {
+             throw new GraphQlNoSuchEntityException(__($e->getMessage()), $e);
