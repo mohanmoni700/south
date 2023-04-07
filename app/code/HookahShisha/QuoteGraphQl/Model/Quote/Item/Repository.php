@@ -1,10 +1,6 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 
-namespace HookahShisha\Quote\Model\Quote\Item;
+namespace HookahShisha\QuoteGraphQl\Model\Quote\Item;
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\Exception\CouldNotSaveException;
@@ -89,7 +85,7 @@ class Repository extends \Magento\Quote\Model\Quote\Item\Repository
                 __('The %1 Cart doesn\'t contain the %2 item.', $cartId, $itemId)
             );
         }
-        
+
         try {
             $quote->removeItem($itemId);
             // restrict avalara tax request using flag for remove item
@@ -98,7 +94,7 @@ class Repository extends \Magento\Quote\Model\Quote\Item\Repository
         } catch (\Exception $e) {
             throw new CouldNotSaveException(__("The item couldn't be removed from the quote."));
         }
-        
+
         return true;
     }
 }
