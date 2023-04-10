@@ -398,7 +398,13 @@
                 right: -90px !important;
                 &::before,
                 &::after {
-                    right: 90px !important;
+                    right: 100px !important;
+                }
+                &.block-quotecart {
+                    &::before,
+                    &::after {
+                        right: -140px !important;
+                    }
                 }
             }
         }
@@ -416,6 +422,13 @@
         &::before,
         &::after {
             right: 42px !important;
+        }
+        &.block-quotecart {
+            &::before,
+            &::after {
+                right: 120px !important;
+            }
+            
         }
     }
 }
@@ -481,12 +494,18 @@
         .block-minicart {
             box-shadow: @box_shadow_minicart;
             padding: 20px 10px 10px;
-            right: -130px !important;
+            right: -145px !important;
             top: calc(~'100% + 14px');
             width: 260px !important;
             &::before,
             &::after {
-                right: 130px !important;
+                right: 145px !important;
+            }
+            &.block-quotecart {
+                &::before,
+                &::after {
+                    right: 160px !important;
+                }
             }
             #minicart-content-wrapper,
             #quotecart-content-wrapper {
@@ -498,7 +517,7 @@
                         }
                     }
                     .subtotal {
-                        color: @color_black;
+                        color: @color-black;
                         .price-wrapper {
                             font-family: @montserrat_bold;
                             span {
@@ -520,7 +539,7 @@
                             margin: 0 0 15px;
                             #top-cart-btn-checkout,
                             #top-quotecart-button {
-                                background-color: @color_black;
+                                background-color: @color-black;
                                 border-radius: 0;
                                 font-size: 10px;
                                 font-weight: 700;
@@ -549,7 +568,7 @@
                         max-height: 260px;
                         padding-left: 0;
                         padding-top: 0;
-                        scrollbar-color: @color_black transparent;
+                        scrollbar-color: @color-black transparent;
                         scrollbar-width: thin;
                         #mini-cart,
                         #quote-cart {
@@ -576,7 +595,7 @@
                                             margin: 0;
                                             min-height: 0;
                                             a {
-                                                color: @color_black;
+                                                color: @color-black;
                                                 font-size: 12px;
                                                 &:hover {
                                                     color: @hookah_theme_color;
@@ -586,7 +605,7 @@
                                         }
                                         .minicart-price {
                                             .price {
-                                                color: @color_black;
+                                                color: @color-black;
                                                 font-family: @montserrat_bold;
                                                 font-size: 11px;
                                                 font-weight: 600;
@@ -620,7 +639,7 @@
                                                     background: @color_primary;
                                                     border-color: @color_primary;
                                                     span {
-                                                        color: @color_white;
+                                                        color: @color-white;
                                                     }
                                                 }
                                                 span {
@@ -670,7 +689,7 @@
                     .actions {
                         .secondary {
                             a {
-                                color: @color_black;
+                                color: @color-black;
                                 font-size: 10px;
                                 font-weight: @font-weight__bold;
                             }
