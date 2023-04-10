@@ -154,6 +154,10 @@
                 .field.field-select-billing {
                     margin: .5rem 0 3rem 0;
                     width: 100%;
+
+                    select[name="billing_address_id"] {
+                        overflow: hidden;
+                    }
                 }
                 &.payment.ccard {
                     .label {
@@ -353,7 +357,7 @@
 
     .checkout-onepage-success {
         .page-main {
-            background: @color_white url('@{baseDir}images/order-success.svg') no-repeat center 60px;
+            background: @color-white url('@{baseDir}images/order-success.svg') no-repeat center 60px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, .10);
             margin: 40px auto 80px;
@@ -551,7 +555,7 @@
 
         .actions-toolbar {
             .action-cancel {
-                margin: 6px @indent__base 0 0;
+                margin: 0px @indent__base 0 0;
             }
         }
     }

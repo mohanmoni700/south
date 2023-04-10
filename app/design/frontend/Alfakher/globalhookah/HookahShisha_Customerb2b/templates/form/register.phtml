@@ -118,7 +118,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
                         <?= $block->getCountryHtmlSelect() ?>
                     </div>
                 </div>
-                <div class="field">
+                <div class="field hub_mobile_number">
                     <label for="hub_mobile_number" class="label">
                         <span><?= $block->escapeHtml(__('Mobile Number')) ?>
                         </span>
@@ -529,7 +529,7 @@ $regionLabel = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinc
         width="60"
         height="60"
         loading="lazy" />
-    <div class="success_msg h1"><?= $block->escapeHtml(__('Registration Successful')); ?></div>
+    <div class="success_msg"><?= $block->escapeHtml(__('Registration Successful')); ?></div>
     <h5><?= $block->escapeHtml(__('Thanks for Registering with us, one of our customer service team will be in-touch with you for document verification.')); ?></h5>
 </div>
 <div id="popup-modal-non-usa" style="display:none">

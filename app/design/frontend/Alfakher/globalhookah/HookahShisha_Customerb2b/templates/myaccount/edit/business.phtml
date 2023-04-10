@@ -104,7 +104,7 @@ $count_id=$country->getCountryId();
                 </select>
             </div>
         </div>
-        <div class="field number-of-emp required">
+        <div class="field number-of-emp">
             <label class="label" for="number_of_emp">
                 <span><?= $block->escapeHtml(__('Number of Employees')) ?></span>
             </label>
@@ -112,7 +112,7 @@ $count_id=$country->getCountryId();
                 <select id="number_of_emp"
                         name="number_of_emp"
                         title="<?= /* @noEscape */ $block->escapeHtmlAttr(__('Number of Employees')) ?>"
-                        class="validate-select number_of_emp">
+                        class="number_of_emp">
                     <option value="">
                         <?= $block->escapeHtml(__('Please select number of employees')) ?>
                     </option>
