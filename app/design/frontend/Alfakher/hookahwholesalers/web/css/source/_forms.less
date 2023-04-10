@@ -55,6 +55,14 @@
             input[type=file] {
                 margin: @indent__xs 0;
             }
+            &:not(.choice) {
+                >.label {
+                    &:after {
+                        margin-left: 3px;
+                    }
+                }
+                
+            }
         }
     }
 
@@ -129,7 +137,7 @@
     input.mage-error,
     select.mage-error,
     textarea.mage-error {
-        border-color: @color_black;
+        border-color: @color-black;
     }
 
     ._has-datepicker {

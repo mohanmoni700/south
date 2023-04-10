@@ -1,0 +1,87 @@
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+//
+//  Styles for emails
+//  _____________________________________________
+
+//  See comments in source/_email-base.less for explanation of email styles
+
+@import 'source/lib/_lib.less'; // Global lib
+@import 'source/lib/variables/_email.less'; // Global email variables
+@import 'source/_theme.less'; // Global variables override
+@import 'source/_variables.less'; // Local theme variables
+@import 'source/_email-variables.less'; // Theme variables for emails
+
+//
+//  Styles for emails
+//  ---------------------------------------------
+
+@import 'source/_email-base.less'; // Contains primary email styles
+@import 'source/_email-extend.less'; // Contains theme-specific adjustments to email styles
+
+//
+//  Module-specific styles for emails
+//  ---------------------------------------------
+
+//@magento_import 'source/_email.less';
+
+a {
+    color: #0065B3 !important;
+    text-decoration: @link__text-decoration;
+}
+
+a:hover,
+a:active,
+a:visited {
+    color: #0065B3 !important;
+}
+
+.table-radius {
+    border: 1px solid #000;
+    border-radius: 8px;
+    width: 450px;
+}
+
+.customer-details td:first-child {
+    padding-left: 40px;
+}
+.customer-details td {
+    padding: 10px;
+}
+
+
+.ii a[href] {
+    color: #0065B3;
+}
+
+td.button-design {
+    background-color: #0065B3 !important;
+    border-radius: 8px !important;
+}
+td.button-design a{
+    border: 0px solid #0065b3 !important;
+    color: #FFF !important;
+}
+.document-status th{
+    background-color: #0065b3;
+    color: #fff;
+    padding: 10px;
+}
+.document-status td:first-child{
+    width: 55%;
+}
+.document-status td {
+    padding: 10px;
+}
+.approved_doc {
+    color: #61b422;
+}
+.rejected_doc {
+  color:#bf3e0c;  
+}
+.address-details p {
+    color: #777;   
+}

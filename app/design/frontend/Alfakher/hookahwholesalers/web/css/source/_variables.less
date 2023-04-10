@@ -48,14 +48,13 @@
 
 
 //  Color
-
-@color_black: #000;
-@color_white: #fff;
-@header_background: #961e70;
+@color_primary: #961e70;
+@color_primary_hover: @color_primary;
+@header_background: @color_primary;
 @color_C4C4C4: #c4c4c4;
 @color_E0E0E0: #e0e0e0;
 @account_bgclr: #eaeaea;
-@hookah_theme_color: #961e70;
+@hookah_theme_color: @color_primary;
 @hookah_theme_color_light: lighten(@color_primary, 58.5%);
 @hookah_theme_color_extra_light:lighten(@color_primary, 62.7%);
 @hookah_theme_boxshadow: 0 8px 20px rgba(0, 0, 0, .15);
@@ -115,8 +114,8 @@
 @input-border_color: #cdcaca;
 @border-color__base-table: #cdcaca;
 @lib-summery_bg: #f5f5f5;
-@button_color_secondary: #961e70;
-@button_color_secondary_border: #961e70;
+@button_color_secondary: @color_primary;
+@button_color_secondary_border: @color_primary;
 
 
 //  Fonts Variable
@@ -124,66 +123,20 @@
 @montserrat_bold: @montserrat;
 @montserrat_semibold: @montserrat;
 @montserrat_light: @montserrat;
-
 @font-weight__bold: 700;
 @font-weight__semibold: 600;
 @font-weight__light: 300;
 @font-weight__regular: 400;
-
 @font-weight__light: 300;
 @DMSerifDisplay: 'DMSerifDisplay-Regular';
-
 @montserrat: montserrat;
 
 
 //  Text Color
 @font-gray: #333;
-
 @account-wrapperbg: #f2f2f2;
 @input_field_bg: #eaeaea;
 @navborder_clr: #000;
-@color_primary: #961e70;
-
-.cart_btn {
-    padding: 8px 20px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: @color-black;
-    .lib-font-size(12);
-    text-align: center;
-    background: @color-white;
-    border: 1px solid @color-black;
-    border-radius: 30px;
-    &:hover {
-        color: @color-white;
-        background: @hookah_theme_gradient;
-        border-color: transparent;
-        border-left-color: @border_left_gradient;
-        border-right-color: @border_right_gradient;
-    }
-}
-
 @account-wrapperbg: #f2f2f2;
 @input_field_bg: #eaeaea;
-
 @navborder_clr: #000;
-@color_primary: #961e70;
-@color_primary_hover: #961e70;
-
-.title1 {
-    font-family: @DMSerifDisplay;
-    .lib-font-size(28);
-    line-height: 38px;
-    color: @color_primary;
-    margin-bottom: 0;
-    position: relative;
-}
-
-.title-primary {
-    .lib-font-size(18);
-    color: @font-gray;
-    font-weight: @font-weight__bold;
-    line-height: 28px;
-    margin-bottom: 0;
-}

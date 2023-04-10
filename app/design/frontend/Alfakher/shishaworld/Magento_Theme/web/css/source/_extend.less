@@ -28,6 +28,15 @@
         min-height: 37.5vw !important;
       }
     }
+    .custom.navigation {
+        div[data-content-type='tabs'] {
+            .tabs-navigation {
+                li.tab-header a.tab-title:hover {
+                    color: @color_primary;
+                }
+            }
+        }
+    }
 }
 
 @media only screen and (max-width: 991px) and (min-width: 768px)  {
@@ -64,7 +73,7 @@
     .message.error{
         a{
             &:hover{
-                color: @color_black;
+                color: @color-black;
             }
         }
     }
@@ -87,7 +96,7 @@
                         -webkit-order: 2;
                         order: 2; 
                         a.header_account_link {
-                            .lib-css(color, @color_black);
+                            .lib-css(color, @color-black);
                             .lib-css(font-weight, @font-weight__semibold);
                             .lib-css(text-decoration, none);
                             display: block;
@@ -202,7 +211,7 @@
                             .lib-css(white-space, unset);
                         }
                         &:after{
-                            border-bottom: 12px solid @color_white;
+                            border-bottom: 12px solid @color-white;
                         }
                     }
                 }                 
@@ -263,7 +272,7 @@
                 }
             }
             span.klevuHeadingText{
-                color: @color_black;
+                color: @color-black;
             } 
         } 
         .klevuAutosuggestions,
@@ -280,7 +289,7 @@
             } 
         }
         span.klevuHeadingText{
-            color: @color_black;
+            color: @color-black;
         } 
         &.kuEmptySearchBox{
             .kuPopularSearchTerms{
@@ -389,7 +398,7 @@
     //  ---------------------------------------------
     .cms-no-route {
         .contact-links {
-            color: @color_black;
+            color: @color-black;
         }
         .main-heading {
             color: @color_primary; 
@@ -399,9 +408,9 @@
         }
         .back-btn {
             a {
-                background: @color_black;
-                border: 1px solid @color_black;
-                color: @color_white;
+                background: @color-black;
+                border: 1px solid @color-black;
+                color: @color-white;
             }
         }
     }
@@ -411,7 +420,7 @@
     //  ---------------------------------------------
     
     #contactBoxHead {
-        color: @color_white;
+        color: @color-white;
     }
     
     //
@@ -421,7 +430,7 @@
     .limited_sale {
         .limited_left {
             h2 {
-                .lib-css(color, @color_white);
+                .lib-css(color, @color-white);
             }
             .per_off_bg {
                 .lib-css(background, transparent);
@@ -535,6 +544,7 @@
                 }
             }
         }
+        
     }
 }
 
