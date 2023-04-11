@@ -76,7 +76,9 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
      * Need to send as true if card is being saved
      */
     private const RETAIN_ON_SUCCESS = "retain_on_success";
-
+    /**
+     * Ip address of the customer
+     */
     private const CUSTOMER_IP = "ip";
 
     /**
