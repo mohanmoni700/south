@@ -5,6 +5,11 @@
 
 namespace Corra\Spreedly\Gateway\Request;
 
+use Corra\Spreedly\Gateway\Config\Config;
+use Corra\Spreedly\Gateway\Helper\SubjectReader;
+use Corra\Spreedly\Model\TokenProvider;
+use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
+
 class AuthorizeDataBuilder extends AbstractDataBuilder
 {
     /**
@@ -72,6 +77,8 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
      */
     private const RETAIN_ON_SUCCESS = "retain_on_success";
 
+    private const CUSTOMER_IP = "ip";
+
     /**
      * @var array
      */
@@ -82,6 +89,18 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
         'cc_exp_month',
         'cc_exp_year'
     ];
+    private RemoteAddress $remoteAddress;
+
+    public function __construct(
+        SubjectReader $subjectReader,
+        Config $config,
+        TokenProvider $tokenProvider,
+        RemoteAddress $remoteAddress
+    )
+    {
+        parent::__construct($subjectReader, $config, $tokenProvider);
+        $this->remoteAddress = $remoteAddress;
+    }
 
     /**
      * @inheritdoc
@@ -134,7 +153,7 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
                 self::TRANSACTION_ROOT_ELEMENT => [
                     self::RETAIN_ON_SUCCESS => $payment_token_enabled,
                     self::CREDIT_CARD_ELEMENT => [
-                        self::FIRST_NAME => $billingAddress->getFirstname(),
+                        self::FIRST_NAME => $billingAddress->getFirstname() . "test",
                         self::LAST_NAME => $billingAddress->getLastname(),
                         self::FULL_CARD_NUMBER => $cc_number,
                         self::CVV => $cc_cvv,
@@ -153,7 +172,8 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
                     self::PAYMENT_METHOD_TOKEN => $payment_method_token,
                     self::AMOUNT => $this->formatAmount($amount),
                     self::CURRENCY_CODE => $order->getCurrencyCode(),
-                    self::ORDER_ID => $order->getOrderIncrementId()
+                    self::ORDER_ID => $order->getOrderIncrementId(),
+                    self::CUSTOMER_IP => $this->remoteAddress->getRemoteAddress()
                 ]
             ];
         }
