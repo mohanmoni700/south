@@ -89,8 +89,15 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
         'cc_exp_month',
         'cc_exp_year'
     ];
+    /** @var RemoteAddress  */
     private RemoteAddress $remoteAddress;
 
+    /**
+     * @param SubjectReader $subjectReader
+     * @param Config $config
+     * @param TokenProvider $tokenProvider
+     * @param RemoteAddress $remoteAddress
+     */
     public function __construct(
         SubjectReader $subjectReader,
         Config $config,
@@ -153,7 +160,7 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
                 self::TRANSACTION_ROOT_ELEMENT => [
                     self::RETAIN_ON_SUCCESS => $payment_token_enabled,
                     self::CREDIT_CARD_ELEMENT => [
-                        self::FIRST_NAME => $billingAddress->getFirstname() . "test",
+                        self::FIRST_NAME => $billingAddress->getFirstname(),
                         self::LAST_NAME => $billingAddress->getLastname(),
                         self::FULL_CARD_NUMBER => $cc_number,
                         self::CVV => $cc_cvv,
