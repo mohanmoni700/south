@@ -526,27 +526,34 @@ class Invoice extends \Magento\Sales\Model\Order\Pdf\Invoice
         $totals = $this->_getTotalsList();
         $lineBlock = ['lines' => [], 'height' => 15];
         foreach ($totals as $total) {
-            $total->setOrder($order)->setSource($source);
+            $stopExecutation = (
+                ($this->isEnabled() && in_array($storeCode, self::CUSTOM_INVOICEPDF_STORES))
+                 && (isset($total['title_source_field'])
+                 && $total['title_source_field'] == 'discount_description')) ? 1 : 0;
 
-            if ($total->canDisplay()) {
-                $total->setFontSize(10);
-                foreach ($total->getTotalsForDisplay() as $totalData) {
-                    $lineBlock['lines'][] = [
-                        [
-                            'text' => $totalData['label'],
-                            'feed' => 475,
-                            'align' => 'right',
-                            'font_size' => $totalData['font_size'],
-                            'font' => 'bold',
-                        ],
-                        [
-                            'text' => $totalData['amount'],
-                            'feed' => 565,
-                            'align' => 'right',
-                            'font_size' => $totalData['font_size'],
-                            'font' => 'bold'
-                        ],
-                    ];
+            if (!$stopExecutation) {
+                $total->setOrder($order)->setSource($source);
+
+                if ($total->canDisplay()) {
+                    $total->setFontSize(10);
+                    foreach ($total->getTotalsForDisplay() as $totalData) {
+                        $lineBlock['lines'][] = [
+                            [
+                                'text' => $totalData['label'],
+                                'feed' => 475,
+                                'align' => 'right',
+                                'font_size' => $totalData['font_size'],
+                                'font' => 'bold',
+                            ],
+                            [
+                                'text' => $totalData['amount'],
+                                'feed' => 565,
+                                'align' => 'right',
+                                'font_size' => $totalData['font_size'],
+                                'font' => 'bold'
+                            ],
+                        ];
+                    }
                 }
             }
         }
