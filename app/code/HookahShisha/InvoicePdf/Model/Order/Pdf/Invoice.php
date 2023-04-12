@@ -526,10 +526,10 @@ class Invoice extends \Magento\Sales\Model\Order\Pdf\Invoice
         $totals = $this->_getTotalsList();
         $lineBlock = ['lines' => [], 'height' => 15];
         foreach ($totals as $total) {
-            $stopExecutation = (
-                ($this->isEnabled() && in_array($storeCode, self::CUSTOM_INVOICEPDF_STORES))
-                 && (isset($total['title_source_field'])
-                 && $total['title_source_field'] == 'discount_description')) ? 1 : 0;
+            $stopExecutation = $this->isEnabled() &&
+            in_array($storeCode, self::CUSTOM_INVOICEPDF_STORES) &&
+            isset($total['title_source_field']) &&
+            $total['title_source_field'] == 'discount_description' ? 1 : 0;
 
             if (!$stopExecutation) {
                 $total->setOrder($order)->setSource($source);
