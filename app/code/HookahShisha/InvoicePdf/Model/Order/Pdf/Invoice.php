@@ -529,7 +529,7 @@ class Invoice extends \Magento\Sales\Model\Order\Pdf\Invoice
             $stopExecutation = $this->isEnabled() &&
             in_array($storeCode, self::CUSTOM_INVOICEPDF_STORES) &&
             isset($total['title_source_field']) &&
-            $total['title_source_field'] == 'discount_description' ? 1 : 0;
+            $total['title_source_field'] == 'discount_description';
 
             if (!$stopExecutation) {
                 $total->setOrder($order)->setSource($source);
