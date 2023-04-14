@@ -175,9 +175,9 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
                 ]
             ];
         } else {
-            if(!empty($_SERVER['HTTP_CLIENT_IP'])) {
+            if(!empty($_SERVER['HTTP_FASTLY_CLIENT_IP'])) {
                 //ip from share internet
-                $ip = $_SERVER['HTTP_CLIENT_IP'];
+                $ip = $_SERVER['HTTP_FASTLY_CLIENT_IP'];
             }elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
                 //ip pass from proxy
                 $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
