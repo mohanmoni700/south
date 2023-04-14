@@ -175,15 +175,6 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
                 ]
             ];
         } else {
-            if(!empty($_SERVER['HTTP_FASTLY_CLIENT_IP'])) {
-                //ip from share internet
-                $ip = $_SERVER['HTTP_FASTLY_CLIENT_IP'];
-            }elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
-                //ip pass from proxy
-                $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
-            }else{
-                $ip = $_SERVER['REMOTE_ADDR'];
-            }
             $result = [
                 self::TRANSACTION_ROOT_ELEMENT => [
                     self::RETAIN_ON_SUCCESS => $payment_token_enabled,
@@ -191,7 +182,7 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
                     self::AMOUNT => $this->formatAmount($amount),
                     self::CURRENCY_CODE => $order->getCurrencyCode(),
                     self::ORDER_ID => $order->getOrderIncrementId(),
-                    self::CUSTOMER_IP => $ip
+                    self::CUSTOMER_IP => $this->remoteAddress->getRemoteAddress()
                 ]
             ];
         }
