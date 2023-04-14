@@ -1,9 +1,11 @@
 <?php
 /**
- * @author Codilar
+ * @category  Shishaworld
+ * @package   Shishaworld_GraphQlTranslation
+ * @author    Codilar
  */
 declare(strict_types=1);
-namespace Vrpayecommerce\Vrpayecommerce\Plugin\Controller;
+namespace Shishaworld\GraphQlTranslation\Plugin\Controller;
 
 use Magento\Framework\App\Area;
 use Magento\Framework\App\AreaList;
