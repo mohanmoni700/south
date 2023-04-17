@@ -30,6 +30,7 @@ use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Quote\Model\Quote;
 use Magento\Tax\Api\Data\QuoteDetailsInterface;
 use Magento\Quote\Api\Data\ShippingAssignmentInterface;
+use Avalara\Excise\Logger\ExciseLogger;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -171,6 +172,7 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
      * @param OrderRepository $orderRepository
      * @param ItemFactory $quoteItemFactory
      * @param CollectionFactory $quoteItemCollectionFactory
+     * @param ExciseLogger $loggerapi
      */
     public function __construct(
         Session $checkoutSession,
@@ -189,7 +191,8 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
         Random $mathRandom,
         OrderRepository $orderRepository,
         ItemFactory $quoteItemFactory,
-        CollectionFactory $quoteItemCollectionFactory
+        CollectionFactory $quoteItemCollectionFactory,
+        ExciseLogger $loggerapi
     ) {
         $this->checkoutSession = $checkoutSession;
         $this->regionFactory = $regionFactory;
@@ -210,6 +213,7 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
         $this->orderRepository = $orderRepository;
         $this->quoteItemFactory = $quoteItemFactory;
         $this->quoteItemCollectionFactory = $quoteItemCollectionFactory;
+        $this->loggerapi = $loggerapi;
         parent::__construct(
             $checkoutSession,
             $regionFactory,
@@ -225,7 +229,8 @@ class ProcessTaxQuote extends \Avalara\Excise\Model\ProcessTaxQuote
             $productRepository,
             $customerRepository,
             $mathRandom,
-            $orderRepository
+            $orderRepository,
+            $loggerapi
         );
     }
 

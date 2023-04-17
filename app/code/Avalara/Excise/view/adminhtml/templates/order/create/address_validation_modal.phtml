@@ -1,0 +1,16 @@
+
+<?php if ($block->isValidationEnabled()): ?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "addressValidationModal": {
+                "validationEnabled": <?= /* @noEscape */ (int)$block->isValidationEnabled() ?>,
+                "instructions": <?= /* @noEscape */ $block->getInstructions() ?>,
+                "errorInstructions": <?= /* @noEscape */ $block->getErrorInstructions() ?>,
+                "countriesEnabled": "<?= /* @noEscape */ $block->getCountriesEnabled() ?>",
+                "baseUrl": "<?= /* @noEscape */ $block->getBaseUrl() ?>"
+            }
+        }
+    }
+</script>
+<?php endif; ?>
