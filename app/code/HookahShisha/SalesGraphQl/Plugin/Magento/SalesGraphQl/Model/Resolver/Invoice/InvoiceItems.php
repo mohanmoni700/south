@@ -35,7 +35,7 @@ class InvoiceItems extends SourceInvoiceItems
         ValueFactory $valueFactory,
         OrderItemProvider $orderItemProvider
     ) {
-        parent::__construct($valueFactory, $orderItemProvider);
+        $this->valueFactory = $valueFactory;
         $this->orderItemProvider = $orderItemProvider;
     }
 
