@@ -1,8 +1,4 @@
 <?php
-/**
- * Copyright © Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 declare(strict_types=1);
 
 namespace Magento\SalesGraphQl\Model\Resolver\Invoice;
@@ -17,11 +13,9 @@ use Magento\Sales\Api\Data\InvoiceItemInterface;
 use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\Data\OrderItemInterface;
 use Magento\SalesGraphQl\Model\OrderItem\DataProvider as OrderItemProvider;
+use Magento\SalesGraphQl\Model\Resolver\Invoice\InvoiceItems as SourceInvoiceItems;
 
-/**
- * Resolver for Invoice Items
- */
-class InvoiceItems implements ResolverInterface
+class InvoiceItems extends SourceInvoiceItems
 {
     /**
      * @var ValueFactory
@@ -41,7 +35,7 @@ class InvoiceItems implements ResolverInterface
         ValueFactory $valueFactory,
         OrderItemProvider $orderItemProvider
     ) {
-        $this->valueFactory = $valueFactory;
+        parent::__construct($valueFactory, $orderItemProvider);
         $this->orderItemProvider = $orderItemProvider;
     }
 
@@ -148,7 +142,7 @@ class InvoiceItems implements ResolverInterface
             $discounts = [];
         } else {
             $discounts[] = [
-                'label' => $associatedOrder->getDiscountDescription() ?? _('Discount'),
+                'label' => $associatedOrder->getDiscountDescription() ?? __('Discount'),
                 'amount' => [
                     'value' => abs($invoiceItem->getDiscountAmount()) ?? 0,
                     'currency' => $associatedOrder->getOrderCurrencyCode()
