@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9a9d52361932fb1cbb882a4d19d0dfca",
+    "content-hash": "35b32526841d849a344bb732d0ecfada",
     "packages": [
         {
             "name": "2tvenom/cborencode",
@@ -78,12 +78,13 @@
         },
         {
             "name": "amasty/base",
-            "version": "1.13.6",
+            "version": "1.14.6",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/amasty/base-1.13.6.zip"
+                "url": "https://composer.amasty.com/enterprise/packages/amasty/base-1.14.6.zip"
             },
             "require": {
+                "ext-dom": "*",
                 "php": ">=7.3"
             },
             "type": "magento2-module",
@@ -96,7 +97,7 @@
                 }
             },
             "license": [
-                "Commercial"
+                "proprietary"
             ],
             "description": "Amasty Base"
         },
@@ -318,13 +319,13 @@
         },
         {
             "name": "amasty/promo",
-            "version": "2.11.7",
+            "version": "2.13.1",
             "dist": {
                 "type": "zip",
-                "url": "https://composer.amasty.com/enterprise/packages/amasty/promo-2.11.7.zip"
+                "url": "https://composer.amasty.com/enterprise/packages/amasty/promo-2.13.1.zip"
             },
             "require": {
-                "amasty/base": ">=1.13.5",
+                "amasty/base": ">=1.14.6",
                 "amasty/module-advanced-conditions": ">=1.3.6",
                 "amasty/module-banners-lite": ">=1.0.5",
                 "amasty/module-salesrulewizard": "*",
@@ -345,7 +346,7 @@
                 }
             },
             "license": [
-                "Commercial"
+                "proprietary"
             ],
             "description": "Free Gift by Amasty"
         },
