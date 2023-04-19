@@ -6,4 +6,8 @@
                 type="HookahShisha\OrderGraphQl\Plugin\Model\Resolver\PlaceOrder" sortOrder="10" />
         <plugin name="verated_palceorder_info" type="HookahShisha\OrderGraphQl\Plugin\Model\Resolver\VaratedPlaceOrder" sortOrder="20" />
     </type>
+    <type name="Magento\QuoteGraphQl\Model\Resolver\SetBillingAddressOnCart">
+        <plugin name="alfakher_update_user_remote_ip_address_in_quote"
+                type="HookahShisha\OrderGraphQl\Plugin\Model\Resolver\SetBillingAddressOnCart" sortOrder="10" />
+    </type>
 </config>

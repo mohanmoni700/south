@@ -182,7 +182,7 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
                     self::AMOUNT => $this->formatAmount($amount),
                     self::CURRENCY_CODE => $order->getCurrencyCode(),
                     self::ORDER_ID => $order->getOrderIncrementId(),
-                    self::CUSTOMER_IP => $this->remoteAddress->getRemoteAddress()
+                    self::CUSTOMER_IP => $paymentDO->getOrder()->getRemoteIp()
                 ]
             ];
         }
