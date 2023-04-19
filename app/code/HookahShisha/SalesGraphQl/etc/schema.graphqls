@@ -1,0 +1,13 @@
+interface OrderItemInterface {
+    product_sale_price_inclusive_tax: Money @doc(description: "The sale price including taxes")
+}
+
+interface InvoiceItemInterface {
+    product_sale_price_inclusive_tax: Money @doc(description: "The sale price including taxes")
+}
+type OrderTotal {
+    subtotal_inclusive_tax: Money @doc(description: "The subtotal including taxes")
+}
+type InvoiceTotal {
+    subtotal_inclusive_tax: Money @doc(description: "The subtotal including taxes")
+}

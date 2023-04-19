@@ -3,4 +3,15 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
     <preference for="Magento\SalesGraphQl\Model\Resolver\CustomerOrders"
                 type="HookahShisha\SalesGraphQl\Model\Resolver\CustomerOrders"/>
+    <preference for="Magento\SalesGraphQl\Model\Resolver\Invoice\InvoiceItems"
+                 type="HookahShisha\SalesGraphQl\Model\Resolver\Invoice\InvoiceItems"/>
+    <type name="Magento\SalesGraphQl\Model\Resolver\OrderTotal">
+        <plugin name="order_totals_plugin" type="HookahShisha\SalesGraphQl\Plugin\Magento\SalesGraphQl\Model\Resolver\OrderTotal"/>
+    </type>
+    <type name="Magento\SalesGraphQl\Model\Resolver\Invoice\InvoiceTotal">
+        <plugin name="invoice_totals_plugin" type="HookahShisha\SalesGraphQl\Plugin\Magento\SalesGraphQl\Model\Resolver\Invoice\InvoiceTotal"/>
+    </type>
+    <type name="Magento\SalesGraphQl\Model\OrderItem\DataProvider">
+        <plugin name="order_item_data_provider_plugin" type="HookahShisha\SalesGraphQl\Plugin\Magento\SalesGraphQl\Model\OrderItem\DataProvider"/>
+    </type>
 </config>
