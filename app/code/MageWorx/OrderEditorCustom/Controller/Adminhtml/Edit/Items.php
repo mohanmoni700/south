@@ -125,9 +125,9 @@ class Items extends \MageWorx\OrderEditor\Controller\Adminhtml\Edit\Items
     }
 
     /**
-     * UpdateOrderItems
-     *
-     * @return void
+     * @return string|void
+     * @throws InputException
+     * @throws NoSuchEntityException
      */
     protected function updateOrderItems()
     {
@@ -141,17 +141,17 @@ class Items extends \MageWorx\OrderEditor\Controller\Adminhtml\Edit\Items
                 $productOrderQty = $value['fact_qty'];
                 $productQty = $productStockData->getQty();
                 $product = $this->productRepository->getById($productId);
-                if ($product->getTypeId() != 'bundle' && $product->getTypeId() != 'configurable') {
-                    if ($productQty < $productOrderQty) {
+                if ($product->getTypeId() != 'bundle' &&
+                    $product->getTypeId() != 'configurable'
+                    && ($productQty < $productOrderQty)) {
                         $this->messageManager->addError(__(
                             'Product "'.$product->getName().'" That you are trying to add is not available'
                         ));
                         $checkStock = false;
-                    }
                 }
             endif;
         }
-        if ($checkStock == false) {
+        if (!$checkStock) {
             return $this->prepareResponse();
         }
         $order = $this->getOrder();
