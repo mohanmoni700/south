@@ -9,7 +9,7 @@ use Corra\Spreedly\Gateway\Config\Config;
 use Corra\Spreedly\Gateway\Helper\SubjectReader;
 use Corra\Spreedly\Model\TokenProvider;
 use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
-
+use Magento\Sales\Api\Data\OrderPaymentInterface;
 class AuthorizeDataBuilder extends AbstractDataBuilder
 {
     /**
@@ -82,6 +82,11 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
     private const CUSTOMER_IP = "ip";
 
     /**
+     * Email address of the customer
+     */
+    private const CUSTOMER_EMAIL = "email";
+
+    /**
      * @var array
      */
     protected $additionalInformationList = [
@@ -133,6 +138,7 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
     public function getBody(array $buildSubject)
     {
         $paymentDO = $this->subjectReader->readPayment($buildSubject);
+        /** @var OrderPaymentInterface $payment */
         $payment = $paymentDO->getPayment();
 
         $order = $paymentDO->getOrder();
@@ -182,7 +188,8 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
                     self::AMOUNT => $this->formatAmount($amount),
                     self::CURRENCY_CODE => $order->getCurrencyCode(),
                     self::ORDER_ID => $order->getOrderIncrementId(),
-                    self::CUSTOMER_IP => $this->remoteAddress->getRemoteAddress()
+                    self::CUSTOMER_IP => $this->remoteAddress->getRemoteAddress(),
+                    self::CUSTOMER_EMAIL => $billingAddress->getEmail() ?? null
                 ]
             ];
         }
