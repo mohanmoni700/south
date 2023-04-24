@@ -9,7 +9,7 @@ use Corra\Spreedly\Gateway\Config\Config;
 use Corra\Spreedly\Gateway\Helper\SubjectReader;
 use Corra\Spreedly\Model\TokenProvider;
 use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
-use Magento\Sales\Api\Data\OrderPaymentInterface;
+
 class AuthorizeDataBuilder extends AbstractDataBuilder
 {
     /**
@@ -138,7 +138,7 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
     public function getBody(array $buildSubject)
     {
         $paymentDO = $this->subjectReader->readPayment($buildSubject);
-        /** @var OrderPaymentInterface $payment */
+
         $payment = $paymentDO->getPayment();
 
         $order = $paymentDO->getOrder();
