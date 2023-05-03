@@ -1,0 +1,16 @@
+diff --git a/vendor/magento/module-catalog/Model/Product/Attribute/Backend/GroupPrice/AbstractGroupPrice.php b/vendor/magento/module-catalog/Model/Product/Attribute/Backend/GroupPrice/AbstractGroupPrice.php
+index 45018406277..14578aedd1d 100644
+--- a/vendor/magento/module-catalog/Model/Product/Attribute/Backend/GroupPrice/AbstractGroupPrice.php
++++ b/vendor/magento/module-catalog/Model/Product/Attribute/Backend/GroupPrice/AbstractGroupPrice.php
+@@ -290,8 +290,9 @@
+                 $data[$key] = $v;
+                 $data[$key]['website_id'] = $websiteId;
+                 if ($this->_isPriceFixed($price)) {
+-                    $data[$key]['price'] = $v['price'] * $rates[$websiteId]['rate'];
+-                    $data[$key]['website_price'] = $v['price'] * $rates[$websiteId]['rate'];
++                    $rate  = isset($rates[$websiteId]['rate']) ? $rates[$websiteId]['rate'] : 0;
++                    $data[$key]['price'] = $v['price'] * $rate;
++                    $data[$key]['website_price'] = $v['price'] * $rate;
+                 }
+             }
+         }
