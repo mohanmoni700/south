@@ -164,6 +164,10 @@ class DefaultInvoice extends \Magento\Sales\Model\Order\Pdf\Items\Invoice\Defaul
                 $storeId
             );
 
+            $deviceSkus = $ookaWhiteSku ? trim($ookaWhiteSku).','.trim($ookaBlackSku) : trim($ookaBlackSku);
+
+            $arrayDeviceSku = explode(',', $deviceSkus);
+
             if ($this->getSku($item) == $ookaWhiteSku) {
                 foreach ($whiteDeviceAttr as $k => $val) {
                     $j = $k+1;
@@ -228,29 +232,32 @@ class DefaultInvoice extends \Magento\Sales\Model\Order\Pdf\Items\Invoice\Defaul
         $feedPrice = ($enableCusPdf && in_array($storeCode, self::CUSTOM_INVOICEPDF_STORES)) ? 430 : 395;
         $feedPriceSubAddi = ($enableCusPdf && in_array($storeCode, self::CUSTOM_INVOICEPDF_STORES)) ? 135 : 170;
         $feedSubtotal = $feedPrice + $feedPriceSubAddi;
-        foreach ($prices as $priceData) {
-            if (isset($priceData['label'])) {
-            // draw Price label
-                $lines[$i][] = ['text' => $priceData['label'], 'feed' => $feedPrice, 'align' => 'right'];
-                // draw Subtotal label
-                $lines[$i][] = ['text' => $priceData['label'], 'feed' => $feedSubtotal, 'align' => 'right'];
+
+        if (!in_array($this->getSku($item), $arrayDeviceSku)) {
+            foreach ($prices as $priceData) {
+                if (isset($priceData['label'])) {
+                // draw Price label
+                    $lines[$i][] = ['text' => $priceData['label'], 'feed' => $feedPrice, 'align' => 'right'];
+                    // draw Subtotal label
+                    $lines[$i][] = ['text' => $priceData['label'], 'feed' => $feedSubtotal, 'align' => 'right'];
+                    $i++;
+                }
+                // draw Price
+                $lines[$i][] = [
+                'text' => $priceData['price'],
+                'feed' => $feedPrice,
+                'font' => 'bold',
+                'align' => 'right',
+                ];
+                // draw Subtotal
+                $lines[$i][] = [
+                'text' => $priceData['subtotal'],
+                'feed' => $feedSubtotal,
+                'font' => 'bold',
+                'align' => 'right',
+                ];
                 $i++;
             }
-            // draw Price
-            $lines[$i][] = [
-            'text' => $priceData['price'],
-            'feed' => $feedPrice,
-            'font' => 'bold',
-            'align' => 'right',
-            ];
-            // draw Subtotal
-            $lines[$i][] = [
-            'text' => $priceData['subtotal'],
-            'feed' => $feedSubtotal,
-            'font' => 'bold',
-            'align' => 'right',
-            ];
-            $i++;
         }
         if (!$stopExecutation) {
         // draw Tax
