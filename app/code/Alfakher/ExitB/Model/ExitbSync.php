@@ -387,10 +387,7 @@ class ExitbSync
             }
             $productData[$key]['quantity'] = (int)$item->getQtyOrdered();
             $itemPriceAndDiscount = $this->getItemPriceAndDiscount($item, $isB2B);
-            $productData[$key]['priceNet'] = $itemPriceAndDiscount['priceNet'];
-            $productData[$key]['discountNet'] = $itemPriceAndDiscount['discountNet'];
-            $productData[$key]['price'] = $itemPriceAndDiscount['price'];
-            $productData[$key]['discount'] = $itemPriceAndDiscount['discount'];
+            $productData[$key] = array_merge($productData[$key], $itemPriceAndDiscount);
         }
         return $productData;
     }
@@ -410,7 +407,7 @@ class ExitbSync
         $netDiscount = ($discountAmount ? $discountAmount / $itemQty : 0);
         $netDiscount = number_format((float)$netDiscount, 2, '.', '');
         $netPrice = ($itemPrice - $netDiscount);
-        $netPrice = number_format((float)$netPrice, 2, '.', '');
+        $netPrice = number_format($netPrice, 2, '.', '');
 
         if ($isB2B) {
             return [
