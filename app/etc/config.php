@@ -1147,6 +1147,7 @@ return [
         'ShipperHQ_Common' => 1,
         'ShipperHQ_Logger' => 1,
         'Alfakher_CustomerCourierAccount' => 1,
+        'Shishaworld_GraphQlTranslation' => 1,
         'Alfakher_SignifydHoldOrder' => 1,
         'Smartwave_Megamenu' => 1,
         'Splitit_PaymentGateway' => 1,
