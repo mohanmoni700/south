@@ -411,8 +411,8 @@ class ExitbSync
 
         if ($isB2B) {
             return [
-                'priceNet' => $netPrice,
-                'discountNet' => $netDiscount,
+                'priceNet' => (float)$netPrice,
+                'discountNet' => (float)$netDiscount,
                 'price' => 0,
                 'discount' => 0
             ];
@@ -420,8 +420,8 @@ class ExitbSync
         return [
             'priceNet' => 0,
             'discountNet' => 0,
-            'price' => $netPrice,
-            'discount' => $netDiscount
+            'price' => (float)$netPrice,
+            'discount' => (float)$netDiscount
         ];
     }
 }
