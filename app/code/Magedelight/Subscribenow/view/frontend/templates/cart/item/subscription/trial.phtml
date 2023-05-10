@@ -1,0 +1,33 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+
+<?php if ($block->getAdditionalInfo()) : ?>
+<div class="md-subscription-info">
+<div id="plan-attribute-specs-table" class="data product-order-items recent">
+    <?php foreach ($block->getAdditionalInfo() as $label => $value) :?>
+        <div class="plan-attribute">
+            <label class="cell md-label"><?= /* @escapeNotVerified */ $label ?>:</label>
+            <span class="cell md-value"><?php if($label == "Trial Amount" || $label == "Discount Amount" || $label == "Initial Fee") { ?><span class="price"><?php } ?><?= /* @escapeNotVerified */ $value ?><?php if($label == "Trial Amount" || $label == "Discount Amount" || $label == "Initial Fee") { ?></span><?php } ?></span>
+        </div>
+    <?php endforeach; ?>
+</div>
+</div>
+<?php endif; ?>
+<?php if ($block->getInitialAmount() == 0) : ?>
+    <div class="feemsg">
+        <?= /* @escapeNotVerified */ __('We will charge ' . $block->getCurrency(1, true) . ' to save your card token if you choose a future subscription date.'); ?>
+    </div>
+<?php endif; ?>

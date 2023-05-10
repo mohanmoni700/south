@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- simple product -->
+        <referenceBlock name="product.info.form.content">
+            <block class="Magedelight\Subscribenow\Block\Catalog\Product\View\Subscription" name="md.subscription.content" template="Magedelight_Subscribenow::catalog/product/view/subscription.phtml" before="-" ifconfig="md_subscribenow/general/enabled">
+                <block class="Magedelight\Subscribenow\Block\Catalog\Product\View\Subscription\Type" name="subscription.type" template="Magedelight_Subscribenow::catalog/product/view/subscription/type.phtml" />
+                <block class="Magedelight\Subscribenow\Block\Catalog\Product\View\Subscription\BillingPeriod" name="billing.period" template="Magedelight_Subscribenow::catalog/product/view/subscription/billing-period.phtml" />
+                <block class="Magedelight\Subscribenow\Block\Catalog\Product\View\Subscription\BillingDate" name="billing.date" template="Magedelight_Subscribenow::catalog/product/view/subscription/billing-date.phtml" />
+                <block class="Magedelight\Subscribenow\Block\Catalog\Product\View\Subscription\AdditionalInfo" name="additional.info" template="Magedelight_Subscribenow::catalog/product/view/subscription/additional-info.phtml" />
+            </block>
+        </referenceBlock>
+
+        <!-- product with custom option -->
+        <referenceBlock name="product.info.options.wrapper">
+            <block class="Magedelight\Subscribenow\Block\Catalog\Product\View\Subscription" name="md.subscription.content.options" as="md.subscription.content" template="Magedelight_Subscribenow::catalog/product/view/subscription.phtml" after="-" ifconfig="md_subscribenow/general/enabled">
+                <block class="Magedelight\Subscribenow\Block\Catalog\Product\View\Subscription\Type" name="subscription.type.options" as="subscription.type" template="Magedelight_Subscribenow::catalog/product/view/subscription/type.phtml" />
+                <block class="Magedelight\Subscribenow\Block\Catalog\Product\View\Subscription\BillingPeriod" name="billing.period.options" as="billing.period" template="Magedelight_Subscribenow::catalog/product/view/subscription/billing-period.phtml" />
+                <block class="Magedelight\Subscribenow\Block\Catalog\Product\View\Subscription\BillingDate" name="billing.date.options" as="billing.date" template="Magedelight_Subscribenow::catalog/product/view/subscription/billing-date.phtml" />
+                <block class="Magedelight\Subscribenow\Block\Catalog\Product\View\Subscription\AdditionalInfo" name="additional.info.options" as="additional.info" template="Magedelight_Subscribenow::catalog/product/view/subscription/additional-info.phtml" />
+            </block>
+        </referenceBlock>
+    </body>
+</page>

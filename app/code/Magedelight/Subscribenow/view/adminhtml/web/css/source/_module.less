@@ -1,0 +1,91 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+@md-subscribenow-icons-admin__font-name-path: '@{baseDir}Magedelight_Subscribenow/fonts/icon';
+@md-subscribenow-icons-admin__font-name : 'Subscribenow';
+.lib-font-face(
+    @family-name:@md-subscribenow-icons-admin__font-name,
+    @font-path: @md-subscribenow-icons-admin__font-name-path,
+    @font-weight: normal,
+    @font-style: normal
+);
+
+.admin__menu .item-subscribenow-root-commonlyvisible > a:before,
+.admin__menu .item-subscribenow-root.parent.level-0 .submenu > .submenu-title:before,
+.config-nav-block .md_section_subscribenow a:before {
+    font-family: @md-subscribenow-icons-admin__font-name;
+    float: left;
+    content: "\e901";
+    padding-right: 8px;
+    font-weight: normal;
+    font-size: 2.2rem;
+}
+
+.admin__menu .item-subscribenow-root.parent.level-0 .submenu > .submenu-title{
+    font-size: 2rem;
+}
+
+.admin__menu .item-subscribenow-root-commonlyvisible>a > span {
+    display: table-cell;
+    padding: 3px 0 0 0;
+}
+.config-nav-block .md_section_subscribenow span {
+    display: table-cell;
+    padding: 5px 0 0 0;
+}
+
+#row_md_subscribenow_general_enabled td.label label.enabled:before {
+    background-color: #79a22e;
+    border-radius: 100%;
+    color: #ffffff;
+    content: '\e62d';
+    display: inline-block;
+    float: none; 
+    font-size: 1.6rem;
+    font-weight: 400;
+    height: 1em;
+    overflow: hidden;
+    width: 1em;
+    margin: 0px 6px -2px 0;
+}
+.subscribenow-productsubscribers-view {
+    .admin__page-section-item.order-payment-method{
+        float: right;
+    }
+    .admin__fieldset-wrapper-content .admin__fieldset{
+        padding-top: 10px;
+    }
+    .admin__scope-old fieldset{
+        padding: 0;
+    }
+    .order-information-table{
+        a.product-link{
+            display: block;
+        }
+        .item-options{
+            display: table;
+            float: right;
+            margin: 2rem 0 0;
+            dt{
+                clear: left;
+                float: left;
+                margin: 0 0.5rem 0.5rem 0;
+            }
+            dd{
+                display: inline-block;
+                float: right;
+                margin: 0 0 0.5rem;
+            }
+        }
+    }
+    .subscription-disclaimer {
+        clear: both;
+        span {
+            margin-top: -4%;
+            display: block;
+            float: right;
+        }
+    }
+}

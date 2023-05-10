@@ -1,0 +1,72 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+<?php if ($block->isEditMode()): ?>
+<form action="<?php echo $block->getPaymentEditUrl(); ?>" name="subscription_profile_update" id="subscription_profile_update" method="post" data-mage-init='{"validation":{}}'>
+    <?php echo $block->getBlockHtml('formkey'); ?>
+<?php endif; ?>
+<div class="info-table">
+    <ul class="content-left">
+        <li class="payment">
+            <span class="label"><?php echo __('Payment Method:'); ?></span>
+            <span class="value"><?php echo $block->getSubscription()->getPaymentTitle() ?></span>
+        <li>
+        <li class="card-details">
+            <?php if ($block->canDisplayCardInfo()): ?>
+                <span class="label"><?php echo __('Card Details:'); ?></span>
+                <span class="value">
+                    <?php if ($block->getSaveCards()): ?>
+                        <?php if ($block->isEditMode()): ?>
+                            <select id="md_savecard" name="md_savecard">
+                            <?php foreach ($block->getSaveCards() as $key => $card): ?>
+                                <option value="<?php echo $key ?>" <?php echo ($card['is_current'] == true)?'selected="selected"':''; ?>>
+                                    <?php echo $card['label'] ?>
+                                </option>
+                            <?php endforeach; ?>
+                            </select>
+                        <?php else: ?>
+                            <?php echo $block->getCardInfo() ?>
+                        <?php endif; ?>
+                    <?php else: ?>
+                        <?php echo $block->getCardInfo() ?>
+                    <?php endif; ?>
+                </span>
+            <?php endif; ?>
+        </li>
+    </ul>
+</div>
+<?php if ($block->isEditMode()): ?>
+<div class="back-subscription">
+    <button type="button"  onclick="updatSubscriptionForm()" title="<?php echo __('Apply Changes') ?>" class="button button action tocart primary" id="subscription_update">
+        <span><span><?php echo __('Apply Changes') ?></span></span>
+    </button>
+    <button type="button" onclick="location.href=removeEditForm();" title="<?php echo __('Cancel') ?>" class="button button action tocart primary" id="subscription_cancel">
+        <span><span><?php echo __('Cancel') ?></span></span>
+    </button>
+</div>
+</form>
+<script type="text/javascript">
+    function updatSubscriptionForm()
+    {
+        var dataForm = jQuery('#subscription_profile_update');
+        dataForm.mage('validation');
+        if (jQuery('#subscription_profile_update').valid()) {
+            jQuery('#subscription_update').attr('disabled', true);
+            jQuery('#subscription_profile_update').submit();
+        }
+    }
+    function removeEditForm() {
+        var url = window.location.href.replace('/edit/1/', '/');
+        return url;
+    }
+</script>
+<?php endif; ?>
