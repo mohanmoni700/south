@@ -11,27 +11,104 @@
 //  Otherwise this theme won't be available for parent nesting
 //  All new variables should be placed in local theme lib or local theme files
 
-//  Form field note icon
-@form-field-note-icon-font__content: false;
 
-@font-family-name__base: @montserrat;
+//
+//  Icons
+//  ---------------------------------------------
+
+@icon-success: '\e60e';
+@icon-error: '\e61f';
+@icon-edit: '\e601';
+@icon-print: '\e624';
+@icon-star-empty: '\e625';
+@icon-download: '\e626';
+@icon-private: '\e629';
+@icon-present: '\e62a';
+@icon-gift-registry: '\e62b';
+
+@icon-calendar__font-size: 23px;
+
+//
+//  Sidebar
+//  ---------------------------------------------
+
+@sidebar__background-color: @color-white-smoke; // Used in cart sidebar, Checkout sidebar, Tier Prices, My account navigation, Rating block background
+
+//
+//  Sidebar blocks
+//  ---------------------------------------------
+
+
+@font-family-name__base: 'montserrat';
 @font-family__base: @font-family-name__base, @font-family__sans-serif;
+@font-family-name__secondary : 'Bebas Neue';
+@font-family__base_secondary: @font-family-name__secondary;
+
+//  Fonts Variable
+@DMSerifDisplay: @font-family__base_secondary;
+@montserrat_regular: @montserrat;
+@montserrat_bold: @montserrat;
+@montserrat_semibold: @montserrat;
+@montserrat_light: @montserrat;
+@montserrat: montserrat;
+
+//  Color
+
+@color_primary: #ff9800;
+@secondary-color: #EE6C4D;
+@color_C4C4C4: #c4c4c4;
+@color_E0E0E0: #e0e0e0;
+@account_bgclr: #eaeaea;
+@hookah_theme_color: @color_primary;
+@hookah_theme_color_light: rgba(255, 152, 0,.10);
+@hookah_primary_light: #fff5e7;
+@hookah_theme_gradient: linear-gradient(275deg, @color_primary 5%, @secondary-color 100%);
+@border_left_gradient: @secondary-color;
+@border_right_gradient: @color_primary;
+
+//  Text Color
+@font-gray: @color-black_dark;
+@account-wrapperbg: @color-gray95;
+@input_field_bg: #eaeaea;
+@navborder_clr: @color-black;
+//  custom new variable define
+
+@print_color: #404040;
+@color_bdbdbd: #bdbdbd;
+@color_eb2771: #eb2771;
+@color_0cc485: #0cc485;
+@color_0ae3eb: #0ae3eb;
+@color_777: #777;
+@color_08c: #08c;
+@color_ddd: #ddd;
+@color_fbfbfb: #fbfbfb;
+@color_a39f9c: #a39f9c;
+@color_c07600: #c07600;
+@color_f3f3f3: #f3f3f3;
 
 
+//  Width
+@layout_container: 1280px;
+@layout_container_xl: 1320px;
+@searchbar_width: 500px;
+
+@color_0e312b: #0e312b;
+@color_ccc: #ccc;
+@box_shadow_minicart: 0 -10px 15px rgba(0, 0, 0, .1);
 
 
-// button style
-@button-primary__background: @color_black;
-@button-primary__border:1px solid @color_black; 
-
+//  Cart variable
+@input-border_color: #cdcaca;
+@border-color__base-table: #cdcaca;
+@lib-summery_bg: #f5f5f5;
+@button_color_secondary: @color_primary;
+@button_color_secondary_border: @color_primary;
+@button-primary__background: #000;
+@button-primary__border: 1px solid #000;
+@button__padding: 7px 25px;
 @button-primary__hover__background:#1f1e1e;
 @button-primary__hover__border:1px solid #1f1e1e;
-
-@button__padding: 7px 25px;
-
-
 @border-color__base: #CDCACA;
-
 
 //
 //  Layout variables
@@ -53,7 +130,7 @@
 
 @breadcrumbs__font-size: 14px;
 @breadcrumbs-separator__symbol: '|';
-@breadcrumbs-separator__color: @color_black;
+@breadcrumbs-separator__color: @color-black;
 @breadcrumbs-current__color: #838282;
 @breadcrumbs-current__font-weight: @font-weight__regular;
 
@@ -67,14 +144,14 @@
 //  Form elements inputs default variables
 //  ---------------------------------------------
 
-@form-element-input__border-color: @color_black;
+@form-element-input__border-color: @color-black;
 @form-element-input__border-radius: 10px;
 @form-element-input__height: 50px;
 @form-element-input__border: 2px solid @form-element-input__border-color;
 
 
 //  Form field label
-@form-field-label__color: @color_black;
+@form-field-label__color: @color-black;
 @form-field-label__font-size: 12px;
 @form-field-type-label-inline__margin: 0 0 10px 0;
 @form-field-type-label-inline__width: 100%;
@@ -108,27 +185,27 @@
 
 
 //  Error message
-@message-error__color: @color_white;
+@message-error__color: @color-white;
 @message-error__background: #FF0C27;
 @message-error__border-color: #FF0C27;
-@message-error-icon__color-inner: @color_white;
+@message-error-icon__color-inner: @color-white;
 @message-error-link__color: @hookah_theme_color;
 
 
 //  Success message
-@message-success__color: @color_white;
+@message-success__color: @color-white;
 @message-success__background: @color_primary;
 @message-success__border-color: @color_primary;
-@message-success-icon__color-inner: @color_white;
-@message-success-link__color: @color_black;
+@message-success-icon__color-inner: @color-white;
+@message-success-link__color: @color-black;
 
 
 //  Warning message
-@message-warning__color: @color_black;
+@message-warning__color: @color-black;
 @message-warning__background: #F2B807;
 @message-warning__border-color: #F2B807;
-@message-warning-icon__color-inner: @color_black;
-@message-warning-link__color: @color_black;
+@message-warning-icon__color-inner: @color-black;
+@message-warning-link__color: @color-black;
 
 
 
@@ -149,7 +226,7 @@
 @tab-control__height: 28px;
 @tab-control__line-height: 28px;
 @tab-control__margin-right: 28px;
-@tab-control__color: @color_black;
+@tab-control__color: @color-black;
 
 @tab-control__border-color: transparent;
 @tab-control__border-width: 5px;
@@ -173,8 +250,8 @@
 //  Tooltips variables
 //  _____________________________________________
 
-@tooltip__background: @color_black;
-@tooltip__border-color: @color_black;
+@tooltip__background: @color-black;
+@tooltip__border-color: @color-black;
 @tooltip__border-width: 1px;
 @tooltip__border-radius: 4px;
 @tooltip__color: @color-white;
@@ -188,118 +265,10 @@
 
 
 //
-//  Icons
-//  ---------------------------------------------
-
-@icon-success: '\e60e';
-@icon-error: '\e61f';
-@icon-edit: '\e601';
-@icon-print: '\e624';
-@icon-star-empty: '\e625';
-@icon-download: '\e626';
-@icon-private: '\e629';
-@icon-present: '\e62a';
-@icon-gift-registry: '\e62b';
-
-@icon-calendar__font-size: 23px;
-
-//
-//  Sidebar
-//  ---------------------------------------------
-
-@sidebar__background-color: @color-white-smoke; // Used in cart sidebar, Checkout sidebar, Tier Prices, My account navigation, Rating block background
-
-//
 //  Sidebar blocks
 //  ---------------------------------------------
 
 @block-items__counter__color: @color-gray43;
 
 
-//  Color
 
-@color_black: #000;
-@color_white: #fff;
-@color_primary: #ff9800;
-@color_primary_hover: @color_primary;
-@secondary-color: #EE6C4D;
-
-@header_background: @color_primary;
-@color_C4C4C4: #c4c4c4;
-@color_E0E0E0: #e0e0e0;
-@account_bgclr: #eaeaea;
-@hookah_theme_color: @color_primary;
-@hookah_theme_color_light: rgba(255, 152, 0,.10);
-@hookah_theme_boxshadow: 0 8px 20px rgba(0, 0, 0, .15);
-@hookah_theme_border: 1px solid #cdcaca;
-@hookah_primary_light: #fff5e7;
-@hookah_primary_light2: rgba(227, 216, 250, .3);
-@hookah_yellow: #f2b807;
-@hookah_yellow_light: rgba(242, 184, 7, .05);
-@hookah_yellow_light2: rgba(253, 218, 112, .4);
-@hookah_collection_bg: #e3d8fa;
-@hookah_theme_gradient: linear-gradient(275deg, @color_primary 5%, @secondary-color 100%);
-@border_left_gradient: @secondary-color;
-@border_right_gradient: @color_primary;
-
-@hookah_color_grey: #cdcaca;
-@klevu_price_color: #838282;
-@mpproduct_label_bg: #e12d41;
-@hookah_product_oldprice: #6c00a1;
-@hookah_product_specialprice: #e12d41;
-@hookah_errormessage_bg: #ff0c27;
-@minicart_product_boxshadow: #4a90e2;
-@owl_nav_bg: #cdcbcd;
-
-//  Text Color
-@font-gray: @color-black_dark;
-@account-wrapperbg: @color-gray95;
-@input_field_bg: #eaeaea;
-@navborder_clr: @color_black;
-
-@account-wrapperbg: @color-gray95;
-@input_field_bg: #eaeaea;
-
-@navborder_clr: @color_black;
-//  custom new variable define
-
-@print_color: #404040;
-@color_bdbdbd: #bdbdbd;
-@color_eb2771: #eb2771;
-@color_0cc485: #0cc485;
-@color_0ae3eb: #0ae3eb;
-@color_777: #777;
-@color_08c: #08c;
-@color_ddd: #ddd;
-@color_fbfbfb: #fbfbfb;
-@color_a39f9c: #a39f9c;
-@color_c07600: #c07600;
-@color_f3f3f3: #f3f3f3;
-
-
-//  Width
-@layout_container: 1280px;
-@layout_container_xl: 1320px;
-@searchbar_width: 500px;
-
-@color_0e312b: #0e312b;
-@color_ccc: #ccc;
-@box_shadow_minicart: 0 -10px 15px rgba(0, 0, 0, .1);
-
-
-//  Cart variable
-@input-border_color: #cdcaca;
-@border-color__base-table: #cdcaca;
-@lib-summery_bg: #f5f5f5;
-@button_color_secondary: @color_primary;
-@button_color_secondary_border: @color_primary;
-
-
-//  Fonts Variable
-@DMSerifDisplay: @font-family__base_secondary;
-
-@montserrat_regular: @montserrat;
-@montserrat_bold: @montserrat;
-@montserrat_semibold: @montserrat;
-@montserrat_light: @montserrat;
-@montserrat: montserrat;

@@ -1,23 +1,9 @@
 <?xml version="1.0"?>
-<!--
-/**
- * @category  HookahShisha
- * @package   HookahShisha_QuoteGraphQl
- * @author    Janis Verins <info@corra.com>
- */
--->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type name="Magento\Quote\Model\Cart\BuyRequest\BuyRequestBuilder">
-        <arguments>
-            <argument name="providers" xsi:type="array">
-                <item name="alfa_bundle" xsi:type="object">HookahShisha\QuoteGraphQl\Model\Cart\BuyRequest\AlfaBundleDataProvider</item>
-                <item name="parent_alfa_bundle" xsi:type="object">HookahShisha\QuoteGraphQl\Model\Cart\BuyRequest\ParentAlfaBundleDataProvider</item>
-                <item name="super_pack_price" xsi:type="object">HookahShisha\QuoteGraphQl\Model\Cart\BuyRequest\SuperPackPriceDataProvider</item>
-            </argument>
-        </arguments>
-    </type>
     <type name="Magento\QuoteGraphQl\Model\Resolver\Discounts">
         <plugin name="discount_issue_cart" type="HookahShisha\QuoteGraphQl\Plugin\Discounts"/>
     </type>
+    <preference for="Magento\Quote\Model\Quote\Item\Repository"
+                type="HookahShisha\QuoteGraphQl\Model\Quote\Item\Repository"/>
 </config>

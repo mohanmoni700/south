@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <!--Invoice Emails-->
+    <event name="fooman_emailattachments_before_send_invoice">
+        <observer name="fooman_emailattachments_before_send_invoice_observer"
+                  instance="Fooman\EmailAttachments\Observer\BeforeSendInvoiceObserver"/>
+    </event>
+
+</config>

@@ -54,4 +54,59 @@
             }
         }
     }
+
+    .fieldset {
+       > .field.hub_mobile_number {
+            margin-bottom: 30px;
+        }
+        > .field:not(.choice) {
+            > .label {
+                margin: 0 0 10px 0;
+                color: @color-black;
+                .lib-font-size(12);
+            }
+        }
+    }
+    .modals-wrapper {
+        .modal-popup.register-action-error {
+            .modal-title {
+                letter-spacing: 0;
+            }
+        }
+    }
+    .document-title {
+        .title {
+            font-family: @font-family-name__secondary;
+            letter-spacing: 1px;
+        }
+    }
+}
+
+
+//
+//  Mobile
+//  _____________________________________________
+
+@media only screen and (max-width: 1024px) {
+    body .page-wrapper .page-header .header.content .sign-in .sign-up-ul {
+        &:before {
+            right: 0px;
+        }
+        &:after {
+            right: 0px !important;
+        }
+    }
+
+    .amasty_quote-account-view.account {
+        .page-title-wrapper {
+            .order-actions-toolbar {
+                a.action.order {
+                    &:before {
+                        filter: unset;
+                        background-image: url(../images/Union_quote.svg);
+                    }
+                }
+            }
+        }
+    }
 }

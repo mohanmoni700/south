@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Fooman\EmailAttachments\Model\Api\MailProcessorInterface"
+                type="Fooman\EmailAttachments\Model\MailProcessor"/>
+    <type name="Magento\Framework\Mail\Template\TransportBuilder">
+        <plugin name="fooman_emailattachments_transportbuilder" type="Fooman\EmailAttachments\Plugin\TransportBuilder"/>
+    </type>
+    <type name="\Magento\Framework\Mail\MimeMessageInterfaceFactory">
+        <plugin name="fooman_emailattachments_mimemessagefactory" type="Fooman\EmailAttachments\Plugin\MimeMessageFactory"/>
+    </type>
+
+    <!-- module introduced preferences -->
+    <preference for="Fooman\EmailAttachments\Model\Api\AttachmentContainerInterface"
+                type="Fooman\EmailAttachments\Model\AttachmentContainer"/>
+
+    <virtualType name="fooman_emailattachments_invoice_pdf_renderer" type="\Fooman\EmailAttachments\Model\PdfRenderer">
+        <arguments>
+            <argument name="pdfRenderer" xsi:type="object">\Magento\Sales\Model\Order\Pdf\Invoice</argument>
+        </arguments>
+    </virtualType>
+    <type name="\Fooman\EmailAttachments\Observer\AbstractSendInvoiceObserver">
+        <arguments>
+            <argument name="pdfRenderer" xsi:type="object">fooman_emailattachments_invoice_pdf_renderer</argument>
+        </arguments>
+    </type>
+</config>
