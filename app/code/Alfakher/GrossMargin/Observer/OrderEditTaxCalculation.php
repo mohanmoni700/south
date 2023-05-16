@@ -6,13 +6,6 @@ namespace Alfakher\GrossMargin\Observer;
 use Magento\Tax\Model\Config;
 use Avalara\Excise\Helper\Config as ExciseTaxConfig;
 use Magento\Framework\Event\Observer;
-use Magento\Backend\Model\Auth\Session;
-use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Sales\Api\OrderRepositoryInterface;
-use Magento\Sales\Api\Data\OrderStatusHistoryInterface;
-use Magento\Sales\Api\OrderStatusHistoryRepositoryInterface;
-use Psr\Log\LoggerInterface;
-use Magento\Sales\Api\OrderItemRepositoryInterface;
 
 class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterface
 {
@@ -25,52 +18,17 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
      * @var Config
      */
     protected $taxConfig;
-
-    /**
-     * @var Session
-     */
-    protected $adminSession;
-
-    /**
-     * @var LoggerInterface
-     */
-    private $logger;
-
-    /**
-     * @var OrderStatusHistoryRepositoryInterface
-     */
-    private $orderStatusRepository;
-
-    /**
-     * @var OrderRepositoryInterface
-     */
-    private $orderRepository;
     
     /**
      * @param ExciseTaxConfig $exciseTaxConfig
      * @param Config $taxConfig
-     * @param Session $adminSession
-     * @param OrderStatusHistoryRepositoryInterface $orderStatusRepository
-     * @param OrderRepositoryInterface $orderRepository
-     * @param LoggerInterface $logger
-     * @param OrderItemRepositoryInterface $orderItemRepository
      */
     public function __construct(
         ExciseTaxConfig $exciseTaxConfig,
-        Config $taxConfig,
-        Session $adminSession,
-        OrderStatusHistoryRepositoryInterface $orderStatusRepository,
-        OrderRepositoryInterface $orderRepository,
-        LoggerInterface $logger,
-        OrderItemRepositoryInterface $orderItemRepository
+        Config $taxConfig
     ) {
         $this->exciseTaxConfig = $exciseTaxConfig;
         $this->taxConfig  = $taxConfig;
-        $this->adminSession = $adminSession;
-        $this->orderStatusRepository = $orderStatusRepository;
-        $this->orderRepository = $orderRepository;
-        $this->logger = $logger;
-        $this->orderItemRepository = $orderItemRepository;
     }
 
     /**
@@ -85,8 +43,6 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
         try {
             $order = $observer->getEvent()->getOrder();
             $quote = $observer->getEvent()->getQuote();
-
-            $itemDetailSession = $this->adminSession->getData('tax_data');
             
             if ($quote && $quote->getId()) {
 
@@ -103,9 +59,7 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
                         if (!is_null($quote->getSalesTax()) && $quote->getSalesTax() > 0) {
                             $order->setSalesTax($quote->getSalesTax());
                         }
-                        if (!is_null($quote->getExciseTax()) &&
-                            $quote->getExciseTax() > 0 || !is_null($quote->getSalesTax()) &&
-                            $quote->getSalesTax() > 0) {
+                        if (!is_null($quote->getExciseTax()) && $quote->getExciseTax() > 0 || !is_null($quote->getSalesTax()) && $quote->getSalesTax() > 0) {
                             $order->setTaxAmount($quote->getSalesTax()
                                 + $quote->getExciseTax()
                                 + $order->getShippingTaxAmount());
@@ -130,10 +84,7 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
                             if (!is_null($quote->getExciseTax()) && $quote->getExciseTax() > 0) {
                                 $item->setExciseTax($quoteItem->getExciseTax());
                             }
-                            if (!is_null($quote->getExciseTax()) &&
-                                $quote->getExciseTax() > 0 ||
-                                !is_null($quote->getSalesTax()) &&
-                                $quote->getSalesTax() > 0) {
+                            if (!is_null($quote->getExciseTax()) && $quote->getExciseTax() > 0 || !is_null($quote->getSalesTax()) && $quote->getSalesTax() > 0) {
                                 $item->setTaxAmount($quoteItem->getSalesTax() + $quoteItem->getExciseTax());
                             }
 
@@ -163,13 +114,10 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
                 }
                 $this->calculateGrandTotal($order);
                 $order->save();
-                $this->updateCommentHistory($itemDetailSession, $order->getId());
-                $this->adminSession->unsetData('text_data');
             }
         } catch (\Exception $e) {
             throw $e;
         }
-
         return $this;
     }
 
@@ -261,88 +209,5 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
         $applyTaxAfterDiscount = $this->taxConfig->applyTaxAfterDiscount() ? 1 : 0;
 
         return !$catalogPrices && !$shippingPrices && $applyTaxAfterDiscount;
-    }
-
-    /**
-     * Update comment history
-     *
-     * @param array $itemData
-     * @param int $orderId
-     * @return OrderStatusHistoryInterface|null
-     */
-    public function updateCommentHistory($itemData, $orderId)
-    {
-        $order = null;
-        try {
-            $order = $this->orderRepository->get($orderId);
-        } catch (NoSuchEntityException $exception) {
-            $this->logger->error($exception->getMessage());
-        }
-
-        $orderHistory = null;
-        
-        $changes = [];
-
-        foreach ($itemData as $key => $item) {
-            $itemData = $this->orderItemRepository->get($key);
-
-            // tax amount
-            if (isset($item['paramTaxAmount'])) {
-                $taxAmount = $itemData->getTaxAmount();
-                $origTaxAmount = $item['oldtax'];
-
-                if ($origTaxAmount != $taxAmount) {
-                    $changes[] = 'Changes for item <b>'.$itemData->getName().'</b><br>';
-                    $changes[] = 'Tax Amount has been changed from <b>'.
-                    $order->formatPriceTxt($origTaxAmount).'</b> to <b>'.$order->formatPriceTxt($taxAmount).'</b><br>';
-                }
-            }
-
-            // tax percent
-            if (isset($item['paramTaxPer'])) {
-                $origValue = $item['oldTaxPer'];
-
-                if ($origValue != $item['paramTaxPer']) {
-                    $changes[] = 'Tax Percent has been changed from <b>'.
-                    round($origValue, 2).'</b> to <b>'.round($item['paramTaxPer'], 2).'</b><br>';
-                }
-            }
-
-            // price
-            if (isset($item['paramPrice'])) {
-                $price = $item['paramPrice'];
-                $origPrice = $item['oldPrice'];
-
-                if ($origPrice != $price) {
-                    $changes[] = 'Price has been changed from <b>'.
-                    $order->formatPriceTxt($origPrice).'</b> to <b>'.$order->formatPriceTxt($price).'</b><br>';
-                }
-            }
-
-            // discount amount
-            if (isset($item['paramDiscountAmt'])) {
-                $discountAmount = $item['paramDiscountAmt'];
-                $origDiscountAmount = $item['oldDiscount'];
-
-                if ($origDiscountAmount != $discountAmount) {
-                    $changes[] = 'Discount has been changed from <b>'.
-                    $order->formatPriceTxt($origDiscountAmount).'</b> to <b>'.
-                    $order->formatPriceTxt($discountAmount).'</b>';
-                }
-            }
-
-        }
-
-        $commString = implode(" ", $changes);
-        if ($order) {
-            $comment = $order->addCommentToStatusHistory($commString);
-            try {
-                $orderHistory = $this->orderStatusRepository->save($comment);
-            } catch (\Exception $exception) {
-                $this->logger->critical($exception->getMessage());
-            }
-        }
-
-        return $orderHistory;
     }
 }

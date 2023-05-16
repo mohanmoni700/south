@@ -36,7 +36,6 @@ use MageWorx\OrderEditor\Api\TaxManagerInterface;
 use MageWorx\OrderEditor\Helper\Data as Helper;
 use MageWorx\OrderEditor\Model\Edit\QuoteFactory as OrderEditorQuoteFactory;
 use MageWorx\OrderEditor\Model\Invoice as OrderEditorInvoice;
-use Magento\Backend\Model\Auth\Session;
 
 class Item extends \MageWorx\OrderEditor\Model\Order\Item
 {
@@ -73,7 +72,6 @@ class Item extends \MageWorx\OrderEditor\Model\Order\Item
      * @param ChangeLoggerInterface $changeLogger
      * @param AbstractResource $resource
      * @param AbstractDb $resourceCollection
-     * @param Session $adminSession
      * @param array $data
      */
     public function __construct(
@@ -107,7 +105,6 @@ class Item extends \MageWorx\OrderEditor\Model\Order\Item
         ChangeLoggerInterface $changeLogger,
         AbstractResource $resource = null,
         AbstractDb $resourceCollection = null,
-        Session $adminSession,
         array $data = []
     ) {
         $this->purchasedFactory = $purchasedFactory;
@@ -131,7 +128,6 @@ class Item extends \MageWorx\OrderEditor\Model\Order\Item
         $this->stockManager = $stockManager;
         $this->logMessageFactory = $logMessageFactory;
         $this->changeLogger = $changeLogger;
-        $this->adminSession = $adminSession;
 
         parent::__construct(
             $context,
@@ -175,11 +171,6 @@ class Item extends \MageWorx\OrderEditor\Model\Order\Item
     {
         $changes = [];
 
-        $sessionDataVar1 = [];
-        $sessionDataVar2 = [];
-        $sessionDataVar3 = [];
-        $sessionDataVar4 = [];
-
         /* af_bv_op; Start */
         // gross margin
         if (isset($this->newParams['gross_margin'])) {
@@ -197,8 +188,6 @@ class Item extends \MageWorx\OrderEditor\Model\Order\Item
             $taxAmount = (float) $this->newParams['tax_amount'];
             $baseTaxAmount = $this->currencyConvertToBaseCurrency($taxAmount);
             $origTaxAmount = $this->getTaxAmount();
-
-            $sessionDataVar1 = ['paramTaxAmount' => $taxAmount, 'oldtax' => $origTaxAmount];
 
             $this->setBaseTaxAmount($baseTaxAmount)
                 ->setTaxAmount($taxAmount)
@@ -228,8 +217,6 @@ class Item extends \MageWorx\OrderEditor\Model\Order\Item
             $origValue = $this->getTaxPercent();
             $this->setTaxPercent($this->newParams['tax_percent']);
 
-            $sessionDataVar2 = ['paramTaxPer' => $this->newParams['tax_percent'], 'oldTaxPer' => $origValue];
-
             if ($origValue != $this->newParams['tax_percent']) {
                 $changes[] = __(
                     'Tax Percent has been changed from <b>%1</b> to <b>%2</b>',
@@ -244,8 +231,6 @@ class Item extends \MageWorx\OrderEditor\Model\Order\Item
             $price = (float) $this->newParams['price'];
             $basePrice = $this->currencyConvertToBaseCurrency($price);
             $origPrice = $this->getPrice();
-
-            $sessionDataVar3 = ['paramPrice' => $price, 'oldPrice' => $origPrice];
 
             $this->setBasePrice($basePrice)
                 ->setPrice($price);
@@ -273,8 +258,6 @@ class Item extends \MageWorx\OrderEditor\Model\Order\Item
             $discountAmount = (float) $this->newParams['discount_amount'];
             $baseDiscountAmount = $this->currencyConvertToBaseCurrency($discountAmount);
             $origDiscountAmount = $this->getDiscountAmount();
-
-            $sessionDataVar4 = ['paramDiscountAmt' => $discountAmount, 'oldDiscount' => $origDiscountAmount];
 
             $this->setBaseDiscountAmount($baseDiscountAmount)
                 ->setDiscountAmount($discountAmount)
@@ -317,15 +300,6 @@ class Item extends \MageWorx\OrderEditor\Model\Order\Item
                 ->setRowTotalInclTax($subtotalInclTax);
         }
 
-        $sessionDataVar = array_merge($sessionDataVar1, $sessionDataVar2, $sessionDataVar3, $sessionDataVar4);
-
-        $sessionData = $this->adminSession->getData('tax_data');
-        if (!$sessionData) {
-            $sessionData = [];
-        }
-        $sessionData[$this->getId()] = $sessionDataVar;
-        $this->adminSession->setData('tax_data', $sessionData);
-
         try {
             $this->oeOrderItemRepository->save($this);
         } catch (\Exception $e) {
@@ -334,6 +308,24 @@ class Item extends \MageWorx\OrderEditor\Model\Order\Item
             );
 
             throw $e;
+        }
+
+        if (!empty($changes)) {
+            $logMessages = [];
+            foreach ($changes as $changeMessage) {
+                $logMessages[] = $this->logMessageFactory->create(
+                    ['message' => $changeMessage, 'level' => 2]
+                );
+            }
+
+            $this->_eventManager->dispatch(
+                'mageworx_log_changes_on_order_edit',
+                [
+                    ChangeLoggerInterface::MESSAGES_KEY => $logMessages,
+                    ChangeLoggerInterface::GROUP_CODE => 'item_' . $this->getId(),
+                    ChangeLoggerInterface::TYPE_CODE => ChangeLoggerInterface::TYPE_ITEM,
+                ]
+            );
         }
     }
 }
