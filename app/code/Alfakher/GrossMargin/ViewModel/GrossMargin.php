@@ -22,12 +22,9 @@ class GrossMargin implements \Magento\Framework\View\Element\Block\ArgumentInter
      * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
-        \Magento\CatalogInventory\Api\StockRegistryInterface $stockRegistry
-
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->scopeConfig = $scopeConfig;
-        $this->stockRegistry = $stockRegistry;
     }
 
     /**
@@ -64,17 +61,5 @@ class GrossMargin implements \Magento\Framework\View\Element\Block\ArgumentInter
             }
         }
         return $item->getGrossMargin();
-    }
-
-    /**
-     * Return available balance quantity
-     *
-     * @param $productId
-     * @return float
-     */
-    public function getQty($productId): float
-    {
-        $stockItem = $this->stockRegistry->getStockItem($productId);
-        return $stockItem->getQty();
     }
 }

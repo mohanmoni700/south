@@ -16,7 +16,6 @@ use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Model\ResourceModel\AbstractResource;
 use Magento\Framework\Data\Collection\AbstractDb;
-use Magento\Store\Model\ScopeInterface;
 
 class DefaultInvoice extends \Magento\Sales\Model\Order\Pdf\Items\Invoice\DefaultInvoice
 {
@@ -86,7 +85,7 @@ class DefaultInvoice extends \Magento\Sales\Model\Order\Pdf\Items\Invoice\Defaul
             $resourceCollection,
             $data
         );
-        $this->rtlTextHandler = $rtlTextHandler ?: ObjectManager::getInstance()->get(RtlTextHandler::class);
+        $this->rtlTextHandler = $rtlTextHandler  ?: ObjectManager::getInstance()->get(RtlTextHandler::class);
     }
 
     /**
@@ -101,23 +100,26 @@ class DefaultInvoice extends \Magento\Sales\Model\Order\Pdf\Items\Invoice\Defaul
         $pdf = $this->getPdf();
         $page = $this->getPage();
         $lines = [];
-        $arrayDeviceSku = [];
 
         $storeId = $order->getStoreId();
         $storeCode = $this->getStoreCodeById($storeId);
 
-        $enableCusPdf = $this->getPdfConfigData('enabled', $storeId);
+        $enableCusPdf = $this->_scopeConfig->getValue(
+            "pdfinvoice_settings/general_setting/enabled",
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
 
         // draw Product name
         if ($enableCusPdf && in_array($storeCode, self::CUSTOM_INVOICEPDF_STORES)) {
             $lines[0][] = [
-                'text' => $this->string->split($this->prepareText((string) $item->getName()), 35, true, true),
+                'text' => $this->string->split($this->prepareText((string)$item->getName()), 35, true, true),
                 'feed' => 35,
                 'font' => 'bold'
             ];
 
-            // draw QTY
-            $lines[0][] = ['text' => 'Ordered ' . $item->getQty() * 1, 'feed' => 280, 'align' => 'right'];
+        // draw QTY
+            $lines[0][] = ['text' => 'Ordered '.$item->getQty() * 1, 'feed' => 280, 'align' => 'right'];
 
             $lines[0][] = ['text' => '', 'feed' => 290, 'align' => 'right'];
 
@@ -125,70 +127,94 @@ class DefaultInvoice extends \Magento\Sales\Model\Order\Pdf\Items\Invoice\Defaul
 
             $lines[0][] = ['text' => '', 'feed' => 550, 'align' => 'right'];
 
-            $ookaWhiteDetails = $this->getPdfConfigData('ooka_white_value', $storeId);
+            $ookaWhiteDetails = $this->_scopeConfig->getValue(
+                "pdfinvoice_settings/general_setting/ooka_white_value",
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $storeId
+            );
+
             $whiteDeviceAttr = json_decode($ookaWhiteDetails, true);
 
-            $currCode = $this->getPdfConfigData('currency_label', $storeId);
+            $vatPer = $this->_scopeConfig->getValue(
+                "pdfinvoice_settings/general_setting/vat_tax_per",
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $storeId
+            );
+            $currCode = $this->_scopeConfig->getValue(
+                "pdfinvoice_settings/general_setting/currency_label",
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $storeId
+            );
 
-            $ookaBlackDetails = $this->getPdfConfigData('ooka_black_value', $storeId);
+            $ookaBlackDetails = $this->_scopeConfig->getValue(
+                "pdfinvoice_settings/general_setting/ooka_black_value",
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $storeId
+            );
+
             $blackDeviceAttr = json_decode($ookaBlackDetails, true);
-
-            $ookaWhiteSku = $this->getPdfConfigData('ooka_white_sku', $storeId);
-            $ookaBlackSku = $this->getPdfConfigData('ooka_black_sku', $storeId);
-            $deviceSkus = $ookaWhiteSku ? trim($ookaWhiteSku) . ',' . trim($ookaBlackSku) : trim($ookaBlackSku);
-            $arrayDeviceSku = explode(',', $deviceSkus);
+            $ookaWhiteSku = $this->_scopeConfig->getValue(
+                "pdfinvoice_settings/general_setting/ooka_white_sku",
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $storeId
+            );
+            $ookaBlackSku = $this->_scopeConfig->getValue(
+                "pdfinvoice_settings/general_setting/ooka_black_sku",
+                \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+                $storeId
+            );
 
             if ($this->getSku($item) == $ookaWhiteSku) {
                 foreach ($whiteDeviceAttr as $k => $val) {
-                    $j = $k + 1;
+                    $j = $k+1;
                     $itemQty = $item->getQty() * 1;
                     $productName = $val['name'];
                     $unitPrice = $val['upi'];
-                    $unitPriceSymbol = $currCode . number_format($unitPrice, 2, '.', '');
+                    $unitPricewithSymbol = $currCode.number_format($unitPrice, 2, '.', '');
                     $totalAmt = $itemQty * $val['upi'];
-                    $taWithSymbol = $currCode . number_format($totalAmt, 2, '.', '');
-                    $prodName = $this->string->split($this->prepareText((string) $productName), 40, true, true);
-                    $lines[$j][] = ['text' => $prodName, 'feed' => 35, 'font' => 'bold', 'align' => 'left'];
+                    $taWithSymbol = $currCode.number_format($totalAmt, 2, '.', '');
+                    $prodName = $this->string->split($this->prepareText((string)$productName), 40, true, true);
+                    $lines[$j][] = ['text' => $prodName,'feed' => 35, 'font' => 'bold', 'align' => 'left'];
 
-                    $lines[$j][] = ['text' => $itemQty, 'feed' => 280, 'align' => 'right'];
+                    $lines[$j][] = ['text' => $itemQty,'feed' => 280, 'align' => 'right'];
 
-                    $lines[$j][] = ['text' => $unitPriceSymbol, 'feed' => 430, 'font' => 'bold', 'align' => 'right'];
+                    $lines[$j][] = ['text' => $unitPricewithSymbol,'feed' => 430, 'font' => 'bold', 'align' => 'right'];
 
-                    $lines[$j][] = ['text' => $taWithSymbol, 'feed' => 565, 'font' => 'bold', 'align' => 'right'];
+                    $lines[$j][] = ['text' => $taWithSymbol,'feed' => 565, 'font' => 'bold', 'align' => 'right'];
 
                 }
             } elseif ($this->getSku($item) == $ookaBlackSku) {
                 foreach ($blackDeviceAttr as $k => $val) {
-                    $j = $k + 1;
+                    $j = $k+1;
                     $itemQty = $item->getQty() * 1;
                     $productName = $val['name'];
                     $unitPrice = $val['upi'];
-                    $unitPriceSymbol = $currCode . number_format($unitPrice, 2, '.', '');
+                    $unitPricewithSymbol = $currCode.number_format($unitPrice, 2, '.', '');
                     $totalAmt = $itemQty * $val['upi'];
-                    $taWithSymbol = $currCode . number_format($totalAmt, 2, '.', '');
-                    $prodName = $this->string->split($this->prepareText((string) $productName), 40, true, true);
-                    $lines[$j][] = ['text' => $prodName, 'feed' => 35, 'font' => 'bold', 'align' => 'left'];
+                    $taWithSymbol = $currCode.number_format($totalAmt, 2, '.', '');
+                    $prodName = $this->string->split($this->prepareText((string)$productName), 40, true, true);
+                    $lines[$j][] = ['text' => $prodName,'feed' => 35, 'font' => 'bold', 'align' => 'left'];
 
-                    $lines[$j][] = ['text' => $itemQty, 'feed' => 280, 'align' => 'right'];
+                    $lines[$j][] = ['text' => $itemQty,'feed' => 280, 'align' => 'right'];
 
-                    $lines[$j][] = ['text' => $unitPriceSymbol, 'feed' => 430, 'font' => 'bold', 'align' => 'right'];
+                    $lines[$j][] = ['text' => $unitPricewithSymbol,'feed' => 430, 'font' => 'bold', 'align' => 'right'];
 
-                    $lines[$j][] = ['text' => $taWithSymbol, 'feed' => 565, 'font' => 'bold', 'align' => 'right'];
+                    $lines[$j][] = ['text' => $taWithSymbol,'feed' => 565, 'font' => 'bold', 'align' => 'right'];
 
                 }
             }
 
         } else {
             $lines[0][] = [
-                'text' => $this->string->split($this->prepareText((string) $item->getName()), 35, true, true),
-                'feed' => 35
+            'text' => $this->string->split($this->prepareText((string)$item->getName()), 35, true, true),
+            'feed' => 35
             ];
 
             // draw SKU
             $lines[0][] = [
-                'text' => $this->string->split($this->prepareText((string) $this->getSku($item)), 17),
-                'feed' => 290,
-                'align' => 'right',
+            'text' => $this->string->split($this->prepareText((string)$this->getSku($item)), 17),
+            'feed' => 290,
+            'align' => 'right',
             ];
 
             // draw QTY
@@ -202,40 +228,37 @@ class DefaultInvoice extends \Magento\Sales\Model\Order\Pdf\Items\Invoice\Defaul
         $feedPrice = ($enableCusPdf && in_array($storeCode, self::CUSTOM_INVOICEPDF_STORES)) ? 430 : 395;
         $feedPriceSubAddi = ($enableCusPdf && in_array($storeCode, self::CUSTOM_INVOICEPDF_STORES)) ? 135 : 170;
         $feedSubtotal = $feedPrice + $feedPriceSubAddi;
-
-        if (!in_array($this->getSku($item), $arrayDeviceSku)) {
-            foreach ($prices as $priceData) {
-                if (isset($priceData['label'])) {
-                    // draw Price label
-                    $lines[$i][] = ['text' => $priceData['label'], 'feed' => $feedPrice, 'align' => 'right'];
-                    // draw Subtotal label
-                    $lines[$i][] = ['text' => $priceData['label'], 'feed' => $feedSubtotal, 'align' => 'right'];
-                    $i++;
-                }
-                // draw Price
-                $lines[$i][] = [
-                    'text' => $priceData['price'],
-                    'feed' => $feedPrice,
-                    'font' => 'bold',
-                    'align' => 'right',
-                ];
-                // draw Subtotal
-                $lines[$i][] = [
-                    'text' => $priceData['subtotal'],
-                    'feed' => $feedSubtotal,
-                    'font' => 'bold',
-                    'align' => 'right',
-                ];
+        foreach ($prices as $priceData) {
+            if (isset($priceData['label'])) {
+            // draw Price label
+                $lines[$i][] = ['text' => $priceData['label'], 'feed' => $feedPrice, 'align' => 'right'];
+                // draw Subtotal label
+                $lines[$i][] = ['text' => $priceData['label'], 'feed' => $feedSubtotal, 'align' => 'right'];
                 $i++;
             }
+            // draw Price
+            $lines[$i][] = [
+            'text' => $priceData['price'],
+            'feed' => $feedPrice,
+            'font' => 'bold',
+            'align' => 'right',
+            ];
+            // draw Subtotal
+            $lines[$i][] = [
+            'text' => $priceData['subtotal'],
+            'feed' => $feedSubtotal,
+            'font' => 'bold',
+            'align' => 'right',
+            ];
+            $i++;
         }
         if (!$stopExecutation) {
-            // draw Tax
+        // draw Tax
             $lines[0][] = [
-                'text' => $order->formatPriceTxt($item->getTaxAmount()),
-                'feed' => 495,
-                'font' => 'bold',
-                'align' => 'right',
+            'text' => $order->formatPriceTxt($item->getTaxAmount()),
+            'feed' => 495,
+            'font' => 'bold',
+            'align' => 'right',
             ];
         }
 
@@ -282,7 +305,7 @@ class DefaultInvoice extends \Magento\Sales\Model\Order\Pdf\Items\Invoice\Defaul
         // phpcs:ignore Magento2.Functions.DiscouragedFunction
         return $this->rtlTextHandler->reverseRtlText(html_entity_decode($string));
     }
-
+    
     /**
      * Get store code by store id
      *
@@ -293,16 +316,4 @@ class DefaultInvoice extends \Magento\Sales\Model\Order\Pdf\Items\Invoice\Defaul
         $store = $this->_storeManager->getStore($storeId);
         return $store->getCode();
     }
-
-    /**
-     * Get config data related to custom pdf.
-     *
-     * @param  string $field
-     * @param  int $storeId
-     */
-    public function getPdfConfigData($field, $storeId)
-    {
-        $path = 'pdfinvoice_settings/general_setting/' . $field;
-        return $this->_scopeConfig->getValue($path, ScopeInterface::SCOPE_STORE, $storeId);
-    } //end getPdfConfigData()
 }
