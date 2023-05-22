@@ -1,0 +1,12 @@
+type Query {
+    getRecords : [GetAllRecords] @resolver( class: "Ooka\\OokaSerialNumber\\Model\\Resolver\\SerialCodeData") @doc(description: "Get All  Records")
+}
+
+type GetAllRecords {
+    id : Int  @doc(description: "Primary Id"),
+    order_id : String  @doc(description: "Order Id"),
+    sku : String  @doc(description: "SKU"),
+    serial_code : String  @doc(description: "Serial Code"),
+    shipment_type : String @doc(description: "Shipment Type"),
+    customer_email : String @doc(description: "Customer Email"),
+}

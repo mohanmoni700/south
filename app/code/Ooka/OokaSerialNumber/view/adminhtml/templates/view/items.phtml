@@ -1,0 +1,78 @@
+<?php
+/**
+ * @var $block Magento\Shipping\Block\Adminhtml\Create\Items
+ *
+ */
+
+?>
+<?php
+/** @var Ooka\OokaSerialNumber\ViewModel\SerialCode $viewModel */
+$viewModel = $block->getData("require_serial_code");
+?>
+<div class="admin__table-wrapper">
+    <table class="data-table admin__table-primary order-shipment-table" id="serial_code_shipment_table">
+        <input type="hidden" id="serial_code_order_id" value="
+        <?= /* @noEscape */
+        $block->getOrder()->getIncrementId()
+        ?>">
+        <thead>
+        <tr class="headings">
+            <th class="col-product"><span><?= $block->escapeHtml(__('Product')) ?></span></th>
+            <th class="col-qty last"><span><?= $block->escapeHtml(__('Qty Shipped')) ?></span></th>
+            <th class="col-qty last">
+                <span style="cursor:pointer;" title="We can add Serial Code from Manual Import and Serial code grid"
+                      class="tooltip"><?= $block->escapeHtml(__('Assign Serial Number')) ?>
+                </span>
+            </th>
+        </tr>
+        </thead>
+        <?php
+        $_items = $block->getShipment()->getAllItems();
+        $orderItemQty = [];
+        $orderedItems = $block->getOrder()->getAllItems();
+        ?>
+
+        <?php
+        $_i = 0;
+        foreach ($_items as $_item):
+            if (!empty($_item->getOrderItem())):
+                if ($_item->getOrderItem()->getParentItem()):
+                    continue;
+                endif;
+                $_i++ ?>
+                <tbody class="<?= /* @noEscape */
+                $_i % 2 ? 'odd' : 'even' ?>">
+                <td></td>
+                <td></td>
+                <td class="assign-serial-code">
+                    <?php
+                    if ($viewModel->isAttributeEnabled($_item->getSku()) && (int)$_item->getQty() > 1) { ?>
+                        <input class="input-text admin__control-text"
+                               type="text"
+                               id="assign_serial_code_input<?= /* @noEscape */ $_item->getSku() ?>"
+                               name="title"/>
+                        <button class="add_serial_code" type="button" value="<?= /* @noEscape */
+                        $_item->getSku() ?>">Add </button>
+                        <input type="hidden" id="serial_code_sku<?= /* @noEscape */
+                        $_item->getSku() ?>" value="<?= /* @noEscape */
+                        $_item->getSku(); ?>">
+                        <input type="hidden" id="serial_code_quantity_shipped" value="
+                        <?= /* @noEscape */
+                        $_item->getQty() ?>">
+                        <div>
+                            <span class="response_message<?= /* @noEscape */
+                            $_item->getSku() ?>"></span>
+                        </div>
+                        <?php
+                    } else { ?>
+                        <span><?= $block->escapeHtml(__('Serial Numbers not applicable for this products')) ?></span>
+                        <?php
+                    } ?>
+                </td>
+                <?= $block->getItemHtml($_item) ?>
+                <?= $block->getItemExtraInfoHtml($_item->getOrderItem()) ?>
+                </tbody>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    </table>
+</div>
