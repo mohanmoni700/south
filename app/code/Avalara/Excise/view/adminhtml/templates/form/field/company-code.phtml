@@ -1,0 +1,26 @@
+<?php 
+/**
+ * @var $block \Magento\Backend\Block\Template 
+ * @var $escaper \Magento\Framework\Escaper
+ */
+$url = $block->getUrl(
+    'excise/companycodes/get',
+    ['form_key' => $block->getFormKey()]
+); ?>
+<input id="<?= $escaper->escapeHtml($block->getData('excise_company_id')) ?>" 
+name="groups[<?= $escaper->escapeHtml($block->getData('company_code_group')) ?>][fields][<?=
+$escaper->escapeHtml($block->getData('company_code_field')) ?>][value]" value="" type="hidden">
+<script type="text/x-magento-init">
+    {
+    "#<?= $escaper->escapeHtml($block->getData('company_code_id')) ?>": {
+        "companyCode": {
+            "url": "<?= $escaper->escapeUrl($url) ?>",
+            "accountNumberId": "<?= $escaper->escapeHtml($block->getData('account_number_id')) ?>",
+            "licenseKeyId": "<?= $escaper->escapeHtml($block->getData('license_key_id')) ?>",
+            "companyCodeId": "<?= $escaper->escapeHtml($block->getData('excise_company_id')) ?>",
+            "mode": "<?= $escaper->escapeHtml($block->getData('avatax_mode')) ?>",
+            "api_type": "<?= $escaper->escapeHtml($block->getData('api_type')) ?>"
+        }
+    }
+}
+</script>
