@@ -1,7 +1,7 @@
-diff --git a/vendor/avalara/excise/Plugin/SalesInvoiceTaxColumns.php b/vendor/avalara/excise/Plugin/SalesInvoiceTaxColumns.php
+diff --git a/app/code/Avalara/Excise/Plugin/SalesInvoiceTaxColumns.php b/app/code/Avalara/Excise/Plugin/SalesInvoiceTaxColumns.php
 index 91020e8d..e7f73a64 100644
---- a/vendor/avalara/excise/Plugin/SalesInvoiceTaxColumns.php
-+++ b/vendor/avalara/excise/Plugin/SalesInvoiceTaxColumns.php
+--- a/app/code/Avalara/Excise/Plugin/SalesInvoiceTaxColumns.php
++++ b/app/code/Avalara/Excise/Plugin/SalesInvoiceTaxColumns.php
 @@ -45,6 +45,14 @@ class SalesInvoiceTaxColumns
                      'main_table.entity_id = salesCreditMemo.entity_id',
                      ['sales_tax','excise_tax','base_shipping_tax_amount']

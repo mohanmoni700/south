@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Block\Onepage">
+        <arguments>
+            <argument name="layoutProcessors" xsi:type="array">
+                <item name="addressValidationLayoutProcessor" xsi:type="object">Avalara\Excise\Block\Checkout\AddressValidationLayoutProcessor</item>
+                <item name="county_field_layoutprocessor" xsi:type="object">Avalara\Excise\Block\Checkout\LayoutProcessor</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="excise_checkout_billing_address_validation_config" xsi:type="object">Avalara\Excise\Model\BillingAddressValidationConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="Magento\Multishipping\Block\Checkout\Billing"
+                type="Avalara\Excise\Block\Multishipping\Checkout\Billing"/>
+    <preference for="Magento\Multishipping\Block\Checkout\Shipping"
+                type="Avalara\Excise\Block\Multishipping\Checkout\Shipping"/>
+    <type name="Magento\Checkout\Block\Cart\Totals">
+        <arguments>
+            <argument name="layoutProcessors" xsi:type="array">
+                <item name="totalsTaxTitleChange" xsi:type="object">\Avalara\Excise\Block\Cart\CartTotalsProcessor</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

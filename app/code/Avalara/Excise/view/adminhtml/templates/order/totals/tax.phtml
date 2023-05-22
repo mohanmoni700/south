@@ -1,0 +1,123 @@
+<?php
+
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var $block \Magento\Sales\Block\Adminhtml\Order\Totals\Tax
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ * @var $block \Magento\Backend\Block\Template
+ * @var $escaper \Magento\Framework\Escaper
+ */
+
+/** @var $_source \Magento\Sales\Model\Order\Invoice */
+$_source    = $block->getSource();
+$_order     = $block->getOrder();
+$_fullInfo  = $block->getFullTaxInfo();
+
+$taxTitle = __('Total Tax');
+$taxIncluded = $this->helper(\Avalara\Excise\Helper\Config::class)->getTaxSummaryConfig();
+if ($taxIncluded)
+    $taxTitle .= __(\Avalara\Excise\Helper\Config::XML_SUFFIX_AVATAX_TAX_INCLUDED);
+    
+/** @var \Magento\Tax\Helper\Data $taxHelper */
+$taxHelper = $block->getData('taxHelper');
+if (empty($taxHelper)) {
+    $taxHelper = $this->helper(\Magento\Tax\Helper\Data::class);
+}
+/** @var \Magento\Framework\Math\Random $randomHelper */
+$randomHelper = $block->getData('randomHelper');
+?>
+<?php if ($block->displayFullSummary() && $_fullInfo) { ?>
+    <tr class="summary-total" onclick="expandDetails(this, '.summary-details')">
+    <?php } else { ?>
+    <tr>
+    <?php } ?>
+    <td class="label">
+        <div class="summary-collapse" tabindex="0">
+            <?php if ($block->displayFullSummary()): ?>
+                <?= $escaper->escapeHtml("{$taxTitle}") ?>
+            <?php else: ?>
+                <?= $escaper->escapeHtml(__('Tax')) ?>
+            <?php endif; ?>
+        </div>
+    </td>
+    <td>
+        <?= /* @noEscape */ $block->displayAmount($_source->getTaxAmount(), $_source->getBaseTaxAmount()) ?>
+    </td>
+    </tr>
+
+    <?php $isTop = 1; ?>
+    <?php if ($block->displayFullSummary()): ?>
+        <?php 
+            $isTop = 1; 
+            $ratecnt = 0;
+        ?>
+        <?php if (isset($_fullInfo[0]['rates'])): ?>
+            <?php foreach ($_fullInfo as $info): ?>
+                <?php if (isset($info['hidden']) && $info['hidden']):
+                    continue;
+                endif; ?>
+                <?php
+                $percent    = $info['percent'];
+                $amount     = $info['amount'];
+                $baseAmount = $info['base_amount'];
+                $rates      = $info['rates'];
+                $isFirst    = 1;
+                $ratecnt++;
+                $rateId = $ratecnt;
+                ?>
+
+                <?php foreach ($rates as $rate): ?>
+                    <tr id="rate-<?= /* @noEscape */ $rateId ?>" class="summary-details<?= ($isTop ? ' summary-details-first' : '') ?>" style="display:none;">
+                        <?php if ($rate['percent'] !== null): ?>
+                            <td class="admin__total-mark">
+                                <?= $escaper->escapeHtml($rate['title']) ?> (<?= (float)$rate['percent'] ?>%)<br />
+                            </td>
+                        <?php else: ?>
+                            <td class="admin__total-mark"><?= $escaper->escapeHtml($rate['title']) ?><br /></td>
+                        <?php endif; ?>
+                        <?php if ($isFirst): ?>
+                            <td rowspan="<?= count($rates) ?>">
+                                <?= /* @noEscape */ $block->displayAmount($amount, $baseAmount) ?>
+                            </td>
+                        <?php endif; ?>
+                    </tr>
+
+                    <?php
+                    $isFirst = 0;
+                    $isTop = 0;
+                    ?>
+                <?php endforeach; ?>
+            <?php endforeach; ?>
+        <?php else: ?>
+            <?php $cnt = 0; ?>
+            <?php foreach ($_fullInfo as $info): ?>
+                <?php
+                $percent    = $info['percent'];
+                $amount     = $info['tax_amount'];
+                $baseAmount = $info['base_tax_amount'];
+                $isFirst    = 1;
+                $cnt++;
+                $infoId = $cnt;
+                ?>
+                <tr id="info-<?= /* @noEscape */ $infoId ?>" class="summary-details<?= ($isTop ? ' summary-details-first' : '') ?>" style="display:none;">
+                    <?php if ($info['percent'] !== null): ?>
+                        <td class="admin__total-mark">
+                            <?= $escaper->escapeHtml($info['title']) ?> (<?= (float)$info['percent'] ?>%)<br />
+                        </td>
+                    <?php else: ?>
+                        <td class="admin__total-mark"><?= $escaper->escapeHtml($info['title']) ?><br /></td>
+                    <?php endif; ?>
+                    <td><?= /* @noEscape */ $block->displayAmount($amount, $baseAmount) ?></td>
+                </tr>
+                
+                <?php
+                $isFirst = 0;
+                $isTop = 0;
+                ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    <?php endif; ?>

@@ -1,0 +1,99 @@
+<?php
+
+/** @var \Avalara\Excise\Block\Adminhtml\Log\View $block 
+* @var $escaper \Magento\Framework\Escaper
+*/
+$logModel = $block->getLog();
+?>
+<div class="entry-edit form-inline">
+    <fieldset class="fieldset">
+        <legend class="legend">
+            <span><?= /* @noEscape */  __('Log Data'); ?></span>
+        </legend><br />
+
+        <div id="log_details_fieldset" class="field log-details">
+            <table class="admin__table-secondary">
+                <colgroup>
+                    <col width="25%"></col>
+                    <col></col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th><?= /* @noEscape */  __('Log ID'); ?></th>
+                    <td><?= /* @noEscape */  $logModel->getId(); ?></td>
+                </tr>
+                <tr>
+                    <th><?= /* @noEscape */ __('Log Time'); ?></th>
+                    <td><?= /* @noEscape */ $logModel->getCreatedAt(); ?></td>
+                </tr>
+                <tr>
+                    <th><?= /* @noEscape */ __('Store ID'); ?></th>
+                    <td><?= /* @noEscape */ $logModel->getStoreId(); ?></td>
+                </tr>
+                <tr>
+                    <th><?= /* @noEscape */ __('Level'); ?></th>
+                    <td><?= /* @noEscape */ $logModel->getLevel(); ?></td>
+                </tr>
+                <tr>
+                    <th><?= /* @noEscape */ __('Message'); ?></th>
+                    <td><?= /* @noEscape */ $logModel->getMessage(); ?></td>
+                </tr>
+                <tr>
+                    <th><?= /* @noEscape */ __('Source'); ?></th>
+                    <td><?= /* @noEscape */ $logModel->getSource(); ?></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </fieldset>
+
+    <?php if ($logModel->getRequest()) {
+        ?>
+        <fieldset class="fieldset">
+            <legend class="legend">
+            <span><?= /* @noEscape */ __('Request');
+            ?></span>
+            </legend><br />
+
+            <div class="field log-details-grid">
+                <pre class="admin__avatax-log-text">
+                    <?= /* @noEscape */ $escaper->escapeHtml($logModel->getRequest()) ?>
+                </pre>
+            </div>
+        </fieldset>
+        <?php
+    } ?>
+
+    <?php if ($logModel->getResult()) {
+        ?>
+        <fieldset class="fieldset">
+            <legend class="legend">
+            <span><?= /* @noEscape */ __('Result');
+            ?></span>
+            </legend><br />
+
+            <div class="field log-details-grid">
+                <pre class="admin__avatax-log-text">
+                    <?= /* @noEscape */ $escaper->escapeHtml($logModel->getResult()) ?>
+                </pre>
+            </div>
+        </fieldset>
+        <?php
+    } ?>
+
+    <?php if ($logModel->getAdditional()) {
+        ?>
+        <fieldset class="fieldset">
+            <legend class="legend">
+            <span><?= /* @noEscape */ __('Additional'); ?></span>
+            </legend><br />
+
+            <div class="field log-details-grid">
+                <pre class="admin__avatax-log-text">
+                    <?= /* @noEscape */ $escaper->escapeHtml($logModel->getAdditional()) ?>
+                </pre>
+            </div>
+        </fieldset>
+        <?php
+    } ?>
+</div>

@@ -1,3 +1,6 @@
+1.1.9
+=====
+* Added support for Gateway Specific Fields (enables support to checkout.com)
 
 1.1.8
 =====
