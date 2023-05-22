@@ -1,0 +1,287 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<section id="tax">
+			<tab>sales</tab>
+			<resource>Avalara_Excise::config_avalara_excise</resource>
+			<group id="avatax_excise" sortOrder="0.8" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<label>AvaTax Excise - General</label>
+				<field id="enabled" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Enable</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="avatax_excise_version" translate="label" type="label" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>AvaTax Excise Extension Version:</label>
+                    <comment model="Avalara\Excise\Model\Config\Comment" />
+                </field>
+
+                <field id="avatax_excise_heading" translate="label" type="label" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[<strong>Connection Settings</strong>]]></label>
+                </field>
+
+				<field id="mode" type="select" sortOrder="20" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Sandbox Mode</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+
+				<field id="excise_account_number" type="text" sortOrder="30" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Excise User Name</label>
+					<comment/>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+				<field id="excise_license_key" type="obscure" sortOrder="40" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Excise User Password</label>
+					<comment/>
+					<backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+					<config_path>tax/avatax_excise/excise_license_key</config_path>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+				<field id="excise_company" type="text" sortOrder="50" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Excise Company ID</label>
+					<comment><![CDATA[Input the company id to use. ]]></comment>
+					<validate>required-entry validate-number validate-length maximum-length-10 </validate>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+				<field id="validate_excise_license" translate="button_label" sortOrder="55" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <button_label>Validate Excise License</button_label>
+                    <frontend_model>Avalara\Excise\Block\Adminhtml\System\Config\Validateexciselicense</frontend_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+				<field id="avatax_account_number" type="text" sortOrder="60" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>AvaTax Account Number</label>
+					<comment/>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+				<field id="avatax_license_key" type="obscure" sortOrder="70" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>AvaTax License Key</label>
+					<comment/>
+					<backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+					<config_path>tax/avatax_excise/avatax_license_key</config_path>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+				<field id="avatax_company" type="select" sortOrder="80" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>AvaTax Company</label>
+					<comment><![CDATA[Choose the company to use. If you don't see values in this dropdown, then enter values into the <strong>AvaTax Account Number</strong> and <strong>AvaTax License Key</strong> fields above.]]></comment>
+                    <frontend_model>avataxCompanyCodeFrontendModel</frontend_model>
+					<source_model>Avalara\Excise\Model\Config\Source\AvataxCompany</source_model>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+				
+				<field id="validate_avatax_license" translate="button_label" sortOrder="85" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <button_label>Validate AvaTax License</button_label>
+                    <frontend_model>Avalara\Excise\Block\Adminhtml\System\Config\Validateavataxlicense</frontend_model>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                </field>
+				
+				<field id="tax_mode" type="select" sortOrder="90" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Tax Mode</label>
+					<comment><![CDATA[<ul><li><strong>Estimate Tax</strong> — Tax estimation will run during checkout, but completed orders will not be submitted to AvaTax.</li><li><strong>Estimate Tax & Submit Transactions to AvaTax</strong> — AvaTax tax estimation will run during checkout and invoices and credit memos will be submitted to AvaTax.</li></ul>]]></comment>
+					<source_model>Avalara\Excise\Model\Config\Source\TaxMode</source_model>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+				<field id="transaction_type" type="select" sortOrder="90" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Site Type</label>
+					<source_model>Avalara\Excise\Model\Config\Source\CustomerType</source_model>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+				<field id="commit_status" type="select" sortOrder="100" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Commit Submit Transaction</label>
+					<comment/>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+				<field id="countries_enable" type="multiselect" sortOrder="110" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Taxable Countries</label>
+					<source_model>Avalara\Excise\Model\Config\Source\AvalaraCountries</source_model>
+					<comment>Current version supports excise tax calculation for United States only</comment>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+
+                <field id="shipping_code" type="text" sortOrder="115" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Default Shipping Code</label>
+					<comment>Mention the Shipping Code as per your AvaTax account settings, if this field is kept empty 'FR' will be used as a default value.</comment>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <validate>validate-length maximum-length-25</validate>
+				</field>
+				
+				<field id="avatax_logging_heading" translate="label" type="label" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[<strong>AvaTax Excise – Advanced</strong>]]></label>
+                </field>
+
+				<field id="logging_enabled" type="select" sortOrder="160" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Enable Logging</label>
+					<comment>Log request response on Magento application</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+				<field id="logging_mode" type="select" sortOrder="170" showInWebsite="0" showInStore="0" showInDefault="1" translate="label">
+					<label>Logging Mode</label>
+					<comment/>
+					<source_model>Avalara\Excise\Model\Config\Source\LoggingMode</source_model>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+                <field id="logging_limit" type="text" sortOrder="175" showInWebsite="0" showInStore="0" showInDefault="1" translate="label">
+					<label>Keep Database Logs Of Last 'X' Days</label>
+					<comment>The numeric value in this field will determine the last number of days of logs that will be kept in the database table. If the value is empty logs will never be deleted from database table.</comment>
+                    <validate>validate-number validate-not-negative-number</validate>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+				<field id="api_timeout" type="text" sortOrder="180" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>API Timeout</label>
+					<comment>Value would be in seconds.</comment>
+					<validate>validate-number validate-not-negative-number</validate>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+                <field id="queue_limit" type="text" sortOrder="190" showInWebsite="0" showInStore="0" showInDefault="1" translate="label">
+					<label>Keep Queue Entries Of Last 'X' Days</label>
+					<comment>The numeric value in this field will determine the last number of days of queue entries that will be kept in the database table. If the value is empty entries will never be deleted from database table.</comment>
+                    <validate>validate-number validate-not-negative-number</validate>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+			</group>
+			<group id="avatax" sortOrder="0.9" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+				<label>AvaTax – Address Validation</label>
+				<field id="address_validation_enabled" type="select" sortOrder="10" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Enable Address Validation</label>
+					<comment>Validate shipping address once enabled</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+				<field id="billing_address_validation_enabled" type="select" sortOrder="20" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Enable Billing Address Validation</label>
+					<comment>Validate billing address once enabled</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					 <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+				</field>
+				<field id="address_validation_countries" type="multiselect" sortOrder="30" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Enabled Countries</label>
+					<source_model>Avalara\Excise\Model\Config\Source\AvalaraCountries</source_model>
+					<comment>Current version supports address validation for United States only</comment>
+				</field>
+				<field id="address_validation_choose_address" type="select" sortOrder="40" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Allow Customer To Choose Original Address</label>
+					<comment><![CDATA[Set this to <strong>Yes</strong> to allow the user to choose between the original and validated addresses (valid address will be selected by default). If set to <strong>No</strong>, user will be required to use the validated address or update their original address. This setting is ignored in the backend and the user will always have a choice.]]></comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					 <depends>
+                        <field id="enabled">1</field>
+                        <field id="address_validation_enabled">1</field>
+                    </depends>
+				</field>
+
+				 <field id="address_validation_instructions_with_choice" translate="label comment" type="textarea" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <config_path>tax/avatax/address_validation_instructions_with_choice</config_path>
+                    <label>Address Validation Instructions</label>
+                    <comment><![CDATA[When user progresses to the <strong>Review & Payments</strong> step of the checkout, this text will be displayed above the <strong>Suggested Address</strong> and <strong>Original Address</strong> checkboxes.]]></comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="address_validation_enabled">1</field>
+                        <field id="address_validation_choose_address">1</field>
+                    </depends>
+					<validate>validate-no-html-tags validate-length maximum-length-300</validate>
+                </field>
+                <field id="address_validation_instructions_without_choice" translate="label comment" type="textarea" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <config_path>tax/avatax/address_validation_instructions_without_choice</config_path>
+                    <label>Address Validation Instructions</label>
+                    <comment><![CDATA[When user progresses to the <strong>Review & Payments</strong> step of the checkout, this text will be displayed above the suggested address.]]></comment>
+                    <depends>
+                        <field id="enabled">1</field>
+                        <field id="address_validation_enabled">1</field>
+                        <field id="address_validation_choose_address">0</field>
+                    </depends>
+					<validate>validate-no-html-tags validate-length maximum-length-300</validate>
+                </field>
+				<field id="address_validation_error_instruction" type="textarea" sortOrder="150" showInWebsite="1" showInStore="1" showInDefault="1" translate="label">
+					<label>Address Validation Error Instruction</label>
+					<comment>This text will be displayed when there is an error in the address validation process. The element assigned the "error-message" class will be filled with the error message summary returned by AvaTax.</comment>
+				    <validate>validate-no-html-tags validate-length maximum-length-300</validate>
+				</field>
+			</group>
+            <group id="classes">
+                <field id="shipping_tax_class">
+                    <comment>This setting will be ignored if AvaTax Excise is enabled. For shipping tax use the 'Default Shipping Code' setting provided in under AvaTax Excise general settings.</comment>
+                </field>
+            </group>
+            <group id="calculation">
+                <field id="algorithm">
+                    <comment>This setting will be ignored if AvaTax Excise is enabled, tax will be always calculated on a row level.</comment>
+                </field>
+                <field id="based_on">
+                    <comment>This setting will be ignored if AvaTax Excise is enabled, shipping address will be used always for tax estimation.</comment>
+                </field>
+                <field id="price_includes_tax">
+                    <comment>This setting will be ignored if AvaTax Excise is enabled, as you must set your prices in Magento without taxes included so that AvaTax Excise is the single system of record for tax estimation.</comment>
+                </field>
+                <field id="shipping_includes_tax">
+                    <comment>This setting will be ignored if AvaTax Excise is enabled, as AvaTax Excise must be responsible for calculating shipping tax.</comment>
+                </field>
+                <field id="apply_after_discount">
+                    <comment>This setting will be ignored if AvaTax Excise is enabled, as AvaTax Excise will calculate the tax on line items after discount is applied.</comment>
+                </field>
+                <field id="discount_tax">
+                    <comment>This setting will be ignored if AvaTax Excise is enabled.</comment>
+                </field>
+                <field id="apply_tax_on">
+                    <comment>This setting will be ignored if AvaTax Excise is enabled, as AvaTax Excise should always calculate tax after discounts are applied in Magento.</comment>
+                </field>
+                <field id="cross_border_trade_enabled">
+                    <comment>This setting will be ignored if AvaTax Excise is enabled.</comment>
+                </field>
+            </group>
+            <group id="defaults">
+                <field id="postcode">
+                    <comment>If AvaTax Excise is enabled, it is highly recommended that you leave this field blank. Otherwise, the number of AvaTax Excise API requests will increase significantly, as every time a guest adds a product to their cart, AvaTax Excise will calculate tax for the postal code entered above.</comment>
+                </field>
+            </group>
+            <group id="weee">
+                <field id="enable">
+                    <comment>This setting will be ignored if AvaTax Excise is enabled, The extension does not support the usage of Fixed Product Taxes, so do not enable this option.</comment>
+                </field>
+            </group>
+		</section>
+	</system>
+</config>

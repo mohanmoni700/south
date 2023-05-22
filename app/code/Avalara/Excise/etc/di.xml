@@ -1,0 +1,133 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Avalara\Excise\Api\RestInterface" type="Avalara\Excise\Framework\Rest" />
+	<preference for="Avalara\Excise\Api\RestTaxInterface" type="Avalara\Excise\Framework\Interaction\Rest\Tax" />
+    <preference for="Magento\Tax\Model\Sales\Total\Quote\Tax" type="Avalara\Excise\Model\Tax\Sales\Total\Quote\Tax" />
+    <preference for="Avalara\Excise\Api\RestAddressInterface" type="Avalara\Excise\Framework\Interaction\Rest\Address" />
+    <preference for="Avalara\Excise\Api\ValidAddressManagementInterface" type="Avalara\Excise\Model\ValidAddressManagement" />
+    <preference for="Avalara\Excise\Api\MultishippingAddressManagementInterface" type="Avalara\Excise\Model\MultishippingCheckout\AddressManagement"/>
+    
+    <preference for="Avalara\Excise\Api\Rest\ListEntityUseCodesInterface" type="Avalara\Excise\Framework\Rest\ListEntityUseCodes" />
+    <preference for="Avalara\Excise\Api\Rest\CompanyInterface" type="Avalara\Excise\Framework\Rest\Company" />
+    <type name="Avalara\Excise\Logger\Handler\FileHandler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Avalara\Excise\Logger\ExciseLogger">
+        <arguments>
+            <argument name="name" xsi:type="string">excise</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="1" xsi:type="object">Avalara\Excise\Logger\Handler\FileHandler</item>
+                <item name="2" xsi:type="object">Avalara\Excise\Logger\Handler\DbHandler</item>
+            </argument>
+            <argument name="processors" xsi:type="array">
+                <item name="1" xsi:type="object">Avalara\Excise\Logger\Processor</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Avalara\Excise\Controller\Adminhtml\CompanyCodes\Get">
+        <arguments>
+            <argument name="logger" xsi:type="object">Avalara\Excise\Logger\ExciseLogger</argument>
+        </arguments>
+    </type>
+    <type name="Avalara\Excise\Model\ValidAddressManagement">
+        <arguments>
+            <argument name="logger" xsi:type="object">Avalara\Excise\Logger\ExciseLogger</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="avatax_log_listing_data_source" xsi:type="string">AvaTaxLogGridDataProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="AvaTaxLogGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">excise_log</argument>
+            <argument name="resourceModel" xsi:type="string">Avalara\Excise\Model\ResourceModel\Log</argument>
+        </arguments>
+    </virtualType>
+    
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="excise_log_queue_listing_data_source" xsi:type="string">ExciseQueueGridDataProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="ExciseQueueGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">excise_queue</argument>
+            <argument name="resourceModel" xsi:type="string">Avalara\Excise\Model\ResourceModel\Queue</argument>
+        </arguments>
+    </virtualType>
+    
+	<preference for="Magento\Tax\Model\Sales\Total\Quote\Tax" type="Avalara\Excise\Model\Tax\Sales\Total\Quote\Tax" />
+
+    <type name="Avalara\Excise\Controller\Adminhtml\System\Config\Validate\Validateavataxlicense">
+        <arguments>
+            <argument name="logger" xsi:type="object">Avalara\Excise\Logger\ExciseLogger</argument>
+        </arguments>
+    </type>
+    <type name="Avalara\Excise\Controller\Adminhtml\System\Config\Validate\Validateexciselicense">
+        <arguments>
+            <argument name="logger" xsi:type="object">Avalara\Excise\Logger\ExciseLogger</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Model\ShippingInformationManagement">
+        <plugin name="excise_get_orig_and_valid_address" type="Avalara\Excise\Plugin\Checkout\Model\ShippingInformationManagement" />
+    </type>
+    <preference for="Avalara\Excise\Api\Data\AddressInterface" type="Avalara\Excise\Model\MultishippingCheckout\Address"/>
+	<type name="Avalara\Excise\Model\Tax\Sales\Total\Quote\Tax">
+        <arguments>
+            <argument name="loggerInterface" xsi:type="object">
+                Avalara\Excise\Logger\ExciseLogger
+            </argument>
+        </arguments>
+    </type>
+    <type name="Avalara\Excise\Model\ProcessTaxQuote">
+        <arguments>
+            <argument name="logger" xsi:type="object">
+                Avalara\Excise\Logger\ExciseLogger
+            </argument>
+        </arguments>
+    </type>
+    <type name="Avalara\Excise\Framework\AvalaraClientWrapper">
+        <arguments>
+            <argument name="logger" xsi:type="object">
+                Avalara\Excise\Logger\ExciseLogger
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Quote\Model\Quote">
+        <plugin disabled="false" name="save_county_information_billing_address" sortOrder="12" type="Avalara\Excise\Plugin\BillingAddressManagement"/>
+    </type>
+
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+        <plugin name="quote_item_to_order_item" type="Avalara\Excise\Plugin\Quote\Convertquoteitemtoorder"/>
+    </type>
+
+    <type name="Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer">
+        <plugin name="avalara_order_view_information" type="Avalara\Excise\Plugin\DefaultRendererPlugin" sortOrder="1" />
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sales_order_grid_data_source" xsi:type="string">Avalara\Excise\Model\ResourceModel\Order\Grid\Collection</item>
+            </argument>
+        </arguments>
+
+        <plugin name="sales_invoice_additional_columns" type="Avalara\Excise\Plugin\SalesInvoiceTaxColumns" sortOrder="13" disabled="false" />
+    </type>
+    <preference for="Magento\CheckoutStaging\Plugin\GuestPaymentInformationManagementPlugin" type="Avalara\Excise\Plugin\GuestPaymentInformationManagementPlugin" />
+    <preference for="Magento\CheckoutStaging\Plugin\PaymentInformationManagementPlugin" type="Avalara\Excise\Plugin\PaymentInformationManagementPlugin" />
+
+    <type name="Magento\Tax\Model\Sales\Pdf\Tax">
+        <plugin name="AvalaraExcisePdfTaxTotals" type="Avalara\Excise\Plugin\Model\Sales\Pdf\TaxPlugin"/>
+    </type>
+    
+</config>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/avalara/address/validate" method="POST">
+        <service class="Avalara\Excise\Api\ValidAddressManagementInterface" method="saveValidAddress"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+    </route>
+    <route url="/V1/carts/validate-address" method="POST">
+        <service class="Avalara\Excise\Api\ValidAddressManagementInterface" method="saveValidAddress"/>
+        <resources>
+            <resource ref="Magento_Cart::manage" />
+        </resources>
+    </route>
+    <route url="/V1/carts/billing-validate-address" method="POST">
+        <service class="Avalara\Excise\Api\ValidAddressManagementInterface" method="saveValidAddress"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+    <route url="/V1/multishipping/save-address" method="POST">
+        <service class="Avalara\Excise\Api\MultishippingAddressManagementInterface" method="execute"/>
+        <resources>
+            <resource ref="anonymous" />
+        </resources>
+    </route>
+</routes>
