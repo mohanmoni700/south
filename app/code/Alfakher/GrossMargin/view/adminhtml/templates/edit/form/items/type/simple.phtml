@@ -7,11 +7,13 @@ $parentItemId  = $block->getParentItemHtmlId();
 $hasParent     = $block->hasOrderItemParent();
 $canEditItem   = true;
 $canDeleteItem = $block->getCanDeleteItem();
+$productId = $item->getProductId();
 ?>
 
 <?php /* af_bv_op; Start */ ?>
 <?php $viewModel = $block->getViewModel() ?>
 <?php $moduleEnable = $viewModel->isModuleEnabled($block->getOrder()->getStore()->getStoreId()) ?>
+<?php $qty = $viewModel->getQty($productId); ?>
 <?php /* af_bv_op; End */ ?>
 
 <tr id="order_item_<?= $block->escapeHtml($itemId); ?>"
@@ -136,8 +138,21 @@ $canDeleteItem = $block->getCanDeleteItem();
                            data-item-id="<?= $block->escapeHtmlAttr($itemId) ?>"
                            value="<?= $block->getItemQty() * 1 ?>"/>
                 </td>
-
-                <?php if ($hasParent): ?>
+                <tr>
+                    <td>
+                        <?php
+                        if ($block->getItemQty() * 1 > $qty) {
+                            if ($qty <= 0) {
+                                /* @noEscape */ echo '<span style="color: red;"><b>'."Available 0".'</b></span>';
+                            } else {
+                                /* @noEscape */ echo '<span style="color: red;"><b>'."Available ".$qty.'</b></span>';
+                            }
+                        } else {
+                            /* @noEscape */ echo '<span style="color: green;"><b>'."Available " . $qty . '</b></span>';
+                        } ?>
+                    </td>
+                </tr>
+            <?php if ($hasParent): ?>
             <tr>
                 <td colspan="2">
                     <?php $parentItemQty = $item->getParentItem()->getQtyOrdered() - $item->getParentItem()
