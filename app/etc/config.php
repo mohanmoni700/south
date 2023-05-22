@@ -1047,6 +1047,7 @@ return [
         'Amazon_Login' => 0,
         'Amazon_Payment' => 0,
         'Auctane_Api' => 1,
+        'Avalara_BaseProvider' => 1,
         'Avalara_Excise' => 1,
         'Corra_AmastyPromoGraphQl' => 1,
         'Corra_AttributesGraphQl' => 1,

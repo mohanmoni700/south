@@ -1,0 +1,127 @@
+<?php
+
+if ($block->getIsShipping()):
+    $_fieldsContainerId = 'order-shipping_address_fields';
+    $_addressChoiceContainerId = 'order-shipping_address_choice';
+    ?>
+    <script>
+        require(["Magento_Sales/order/create/form"], function(){
+
+            order.shippingAddressContainer = '<?= /* @noEscape */ $_fieldsContainerId ?>';
+            order.setAddresses(<?= /* @noEscape */ $block->getAddressCollectionJson() ?>);
+
+        });
+    </script>
+    <?php
+else:
+    $_fieldsContainerId = 'order-billing_address_fields';
+    $_addressChoiceContainerId = 'order-billing_address_choice';
+    ?>
+    <script>
+        require(["Magento_Sales/order/create/form"], function(){
+            order.billingAddressContainer = '<?= /* @noEscape */ $_fieldsContainerId ?>';
+        });
+    </script>
+    <?php
+endif; ?>
+
+<fieldset class="admin__fieldset">
+    <legend class="admin__legend <?= /* @noEscape */ $block->getHeaderCssClass() ?>">
+        <span><?= /* @noEscape */ $block->getHeaderText() ?></span>
+    </legend><br>
+
+    <fieldset id="<?= /* @noEscape */ $_addressChoiceContainerId ?>" class="admin__fieldset order-choose-address">
+        <?php if ($block->getIsShipping()): ?>
+            <div class="admin__field admin__field-option">
+                <input type="checkbox" id="order-shipping_same_as_billing" name="shipping_same_as_billing"
+                       onclick="order.setShippingAsBilling(this.checked)" class="admin__control-checkbox"
+                       <?php if ($block->getIsAsBilling()): ?>checked<?php endif; ?> ></input>
+                <label for="order-shipping_same_as_billing" class="admin__field-label">
+                <?= /* @noEscape */ __('Same As Billing Address') ?>
+                </label>
+            </div>
+        <?php endif; ?>
+        <div class="admin__field">
+            <label class="admin__field-label">
+                <?= /* @noEscape */ __('Select from existing customer addresses:') ?>
+            </label>
+            <?php $_id = $block->getForm()->getHtmlIdPrefix() . 'customer_address_id' ?>
+            <div class="admin__field-control">
+                <select id="<?= /* @noEscape */  $_id ?>"
+                        name="<?= /* @noEscape */ $block->getForm()->getHtmlNamePrefix() ?>[customer_address_id]"
+                        style="width: 97.5%;" 
+                        onchange="order.selectAddress(this, '<?= /* @noEscape */ $_fieldsContainerId ?>')"
+                        class="admin__control-select">
+                    <option value=""><?= /* @noEscape */ __('Add New Address') ?></option>
+                    <?php foreach ($block->getAddressCollection() as $_address): ?>
+                        <option
+                            value="<?= /* @noEscape */ $_address->getId() ?>" 
+                            <?php if ($_address->getId() == $block->getAddressId()): ?> 
+                                selected="selected"<?php endif; ?>>
+                            <?= /* @noEscape */ $block->getAddressAsString($_address) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="order-address admin__fieldset" id="<?= /* @noEscape */ $_fieldsContainerId ?>">
+        <?= /* @noEscape */ $block->getForm()->toHtml() ?>
+        <div class="admin__field admin__field-option order-save-in-address-book">
+            <input name="<?= /* @noEscape */ $block->getForm()->getHtmlNamePrefix() ?>[save_in_address_book]" 
+                type="checkbox"
+                id="<?= /* @noEscape */ $block->getForm()->getHtmlIdPrefix() ?>save_in_address_book"
+                value="1"
+                <?php if (!$block->getDontSaveInAddressBook() && $block->getAddress()->getSaveInAddressBook()): ?>
+                     checked="checked"<?php endif; ?>
+                class="admin__control-checkbox"></input>
+            <label for="<?= /* @noEscape */ $block->getForm()->getHtmlIdPrefix() ?>save_in_address_book"
+                class="admin__field-label">
+                <?= /* @noEscape */ __('Save in address book') ?>
+            </label>
+        </div>
+    </div>
+    <?php $hideElement = 'address-' . ($block->getIsShipping() ? 'shipping' : 'billing') . '-overlay'; ?>
+    <div style="display: none;" id="<?= /* @noEscape */ $hideElement ?>" class="order-methods-overlay">
+        <span><?= /* @noEscape */ __('You don\'t need to select a shipping address.') ?></span>
+    </div>
+
+    <script>
+        require(["Magento_Sales/order/create/form"], function(){
+            order.bindAddressFields('<?= /* @noEscape */ $_fieldsContainerId ?>');
+            order.bindAddressFields('<?= /* @noEscape */ $_addressChoiceContainerId ?>');
+            <?php if ($block->getIsShipping() && $block->getIsAsBilling()): ?>
+            order.disableShippingAddress(true);
+            <?php endif; ?>
+        });
+    </script>
+</fieldset>
+
+<?php
+// Begin Edit - Add Button to validate above address
+$addressType = $block->getAddressType();
+$addressValidationEnabled = $this->helper('Avalara\Excise\Helper\Config')
+    ->isAddressValidationActivated(\Magento\Store\Model\Store::DEFAULT_STORE_ID);
+$isBillingAddressValidationEnabled = $this->helper('Avalara\Excise\Helper\Config')
+    ->isBillingAddressValidationEnabled(\Magento\Store\Model\Store::DEFAULT_STORE_ID);
+
+if ($addressType === 'billing' && $isBillingAddressValidationEnabled):
+    if (!$block->getIsAsBilling() || $addressType === 'billing'):
+        ?>
+        <button class="validateAddressButton" 
+            data-address-type="<?= /* @noEscape */ $addressType ?>" 
+            type="button">Validate address</button>
+    <?php endif;?>
+<?php endif;?>
+
+<?php
+// End Edit
+if ($addressType === 'shipping' && $addressValidationEnabled):
+    ?>
+        <button class="validateAddressButton" 
+            data-address-type="<?= /* @noEscape */ $addressType ?>" 
+            type="button">Validate address</button>
+    <?php
+endif;
+?>
