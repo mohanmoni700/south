@@ -1,0 +1,77 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	<default>
+		<tax>
+			<avatax_excise>
+				<enabled>0</enabled>
+				<mode>1</mode>
+				<excise_license_key/>
+				<excise_company/>
+				<atatax_account_number/>
+				<atatax_license_key/>
+				<atatax_company/>
+				<tax_mode/>
+                <transaction_type>DIRECT</transaction_type>
+				<commit_status>1</commit_status>
+				<countries_enable>CA,US</countries_enable>
+				<tax_by_region/>
+				<enabled_region/>
+				<address_validation_instruction/>
+				<address_validation_error_instruction/>
+				<logging_enabled>1</logging_enabled>
+				<logging_mode>Database</logging_mode>
+				<api_timeout>10</api_timeout>
+                <logging_limit>90</logging_limit>
+                <queue_limit>180</queue_limit>
+			</avatax_excise>
+			<avatax>
+				<address_validation_enabled>0</address_validation_enabled>
+				<billing_address_validation_enabled>0</billing_address_validation_enabled>
+				<address_validation_countries>CA,US</address_validation_countries>
+				<address_validation_choose_address>1</address_validation_choose_address>
+				<address_validation_instructions_with_choice><![CDATA[To ensure accurate delivery, we suggest the changes highlighted below. Please choose which address you would like to use. If neither option is correct, edit your address]]></address_validation_instructions_with_choice>
+                <address_validation_instructions_without_choice><![CDATA[To ensure accurate delivery, we've made the changes highlighted below. If this address is not correct, edit your address.]]></address_validation_instructions_without_choice>
+				<address_validation_error_instruction><![CDATA[We were unable to validate your address.  If the address below is correct then you don’t need to do anything else please change your address.]]></address_validation_error_instruction>
+			</avatax>
+		</tax>
+		<customer>
+			<address_templates>
+				<html><![CDATA[{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}{{depend firstname}}<br />{{/depend}}
+{{depend company}}{{var company}}<br />{{/depend}}
+{{if street1}}{{var street1}}<br />{{/if}}
+{{depend street2}}{{var street2}}<br />{{/depend}}
+{{depend street3}}{{var street3}}<br />{{/depend}}
+{{depend street4}}{{var street4}}<br />{{/depend}}
+{{if city}}{{var city}}, {{depend county}}{{var county}} ,{{/depend}} {{/if}}{{if region}}{{var region}}, {{/if}}{{if postcode}}{{var postcode}}{{/if}}<br />
+{{var country}}<br />
+{{depend telephone}}T: <a href="tel:{{var telephone}}">{{var telephone}}</a>{{/depend}}
+{{depend fax}}<br />F: {{var fax}}{{/depend}}
+{{depend vat_id}}<br />VAT: {{var vat_id}}{{/depend}}]]></html>
+				<text><![CDATA[{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}
+{{depend company}}{{var company}}{{/depend}}
+{{if street1}}{{var street1}}
+{{/if}}
+{{depend street2}}{{var street2}}{{/depend}}
+{{depend street3}}{{var street3}}{{/depend}}
+{{depend street4}}{{var street4}}{{/depend}}
+{{if city}}{{var city}}, {{depend county}}{{var county}} ,{{/depend}}{{if region}}{{var region}}, {{/if}}{{if postcode}}{{var postcode}}{{/if}}
+{{var country}}
+{{depend telephone}}T: {{var telephone}}{{/depend}}
+{{depend fax}}F: {{var fax}}{{/depend}}
+{{depend vat_id}}VAT: {{var vat_id}}{{/depend}}]]></text>
+				<oneline><![CDATA[{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}, {{var street}}, {{var city}}, {{depend county}}{{var county}} ,{{/depend}} {{var region}} {{var postcode}}, {{var country}}]]></oneline>
+				<pdf><![CDATA[{{depend prefix}}{{var prefix}} {{/depend}}{{var firstname}} {{depend middlename}}{{var middlename}} {{/depend}}{{var lastname}}{{depend suffix}} {{var suffix}}{{/depend}}|
+{{depend company}}{{var company}}|{{/depend}}
+{{if street1}}{{var street1}}|{{/if}}
+{{depend street2}}{{var street2}}|{{/depend}}
+{{depend street3}}{{var street3}}|{{/depend}}
+{{depend street4}}{{var street4}}|{{/depend}}
+{{if city}}{{var city}}, {{depend county}}{{var county}} ,{{/depend}} {{/if}}{{if region}}{{var region}}, {{/if}}{{if postcode}}{{var postcode}}{{/if}}|
+{{var country}}|
+{{depend telephone}}T: {{var telephone}}|{{/depend}}
+{{depend fax}}F: {{var fax}}|{{/depend}}|
+{{depend vat_id}}VAT: {{var vat_id}}{{/depend}}|]]></pdf>
+			</address_templates>
+		</customer>
+	</default>
+</config>

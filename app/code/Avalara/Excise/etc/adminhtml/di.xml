@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="avataxCompanyCodeFrontendModel" type="Avalara\Excise\Block\Adminhtml\Form\Field\CompanyCode">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="account_number_id" xsi:type="string">tax_avatax_excise_avatax_account_number</item>
+                <item name="license_key_id" xsi:type="string">tax_avatax_excise_avatax_license_key</item>
+                <item name="company_code_id" xsi:type="string">tax_avatax_excise_avatax_company</item>
+                <item name="company_code_group" xsi:type="string">avatax_excise</item>
+                <item name="company_code_field" xsi:type="string">avatax_company_code</item>
+                <item name="excise_company_id" xsi:type="string">tax_avatax_avatax_company_id</item>
+                <item name="avatax_mode" xsi:type="string">tax_avatax_excise_mode</item>
+                <item name="api_type" xsi:type="const">\Avalara\Excise\Framework\Constants::AVALARA_API</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Layout\Generic">
+        <plugin sortOrder="2" name="AvalaraExicseGeneric" type="Avalara\Excise\Plugin\View\Layout\GenericPlugin"/>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\Invoice\View">
+        <plugin sortOrder="2" name="AvalaraExicseInvoiceView" type="Avalara\Excise\Plugin\Sales\Order\InvoiceViewPlugin"/>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\Creditmemo\View">
+        <plugin sortOrder="2" name="AvalaraExicseCreditMemoView" type="Avalara\Excise\Plugin\Sales\Order\CreditMemoViewPlugin"/>
+    </type>
+</config>
