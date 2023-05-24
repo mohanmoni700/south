@@ -52,8 +52,8 @@ class SortCategoryProduct
 
     public function execute()
     {
-        $collection = $this->getCategoryCollection();
-        foreach ($collection as $category) {
+        $categoryCollection = $this->getCategoryCollection();
+        foreach ($categoryCollection as $category) {
             if ($this->isSmartCategoryEnabled($category)) {
                 $collection = $this->productCollectionFactory->create();
                 $collection->addAttributeToSelect('*');
