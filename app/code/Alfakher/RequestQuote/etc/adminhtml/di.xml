@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- add quote add button to order view page -->
+    <type name="Magento\Sales\Block\Adminhtml\Order\View" >
+        <plugin name="Alfakher_Request::add-quote-button"
+                type="Alfakher\RequestQuote\Plugin\Sales\Block\Adminhtml\Order\ViewPlugin" sortOrder="999"/>
+    </type>
+</config>
