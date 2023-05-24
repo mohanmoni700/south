@@ -1,11 +1,10 @@
 <?php
 /**
  * @category  Alfakher
- * @package   Alfakherd_Categoryb2b
- * @SuppressWarnings("squid:S1172")
+ * @package   Alfakherd_OutOfStockProduct
  */
 declare(strict_types=1);
-namespace Alfakher\Categoryb2b\Plugin\VisualMerchandiser;
+namespace Alfakher\OutOfStockProduct\Plugin\VisualMerchandiser;
 
 use Magento\VisualMerchandiser\Model\Sorting\OutStockBottom as MagentoOutStockBottom;
 

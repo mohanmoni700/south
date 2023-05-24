@@ -1,19 +1,20 @@
 <?php
 /**
  * @category  Alfakher
- * @package   Alfakherd_Categoryb2b
+ * @package   Alfakherd_OutOfStockProduct
  */
 declare(strict_types=1);
-namespace Alfakher\Categoryb2b\Cron;
+namespace Alfakher\OutOfStockProduct\Cron;
 
 /** Cron to auto apply the category product position */
+
+use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Catalog\Model\ResourceModel\Category\Collection;
 use Magento\Catalog\Model\ResourceModel\Category\CollectionFactory;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
 use Magento\VisualMerchandiser\Model\Rules;
 use Magento\VisualMerchandiser\Model\Sorting;
 use Psr\Log\LoggerInterface;
-use Magento\Catalog\Api\Data\ProductInterface;
-use Magento\Catalog\Model\ResourceModel\Category\Collection;
 
 class SortCategoryProduct
 {
