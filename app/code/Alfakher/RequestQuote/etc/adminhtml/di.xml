@@ -6,4 +6,9 @@
         <plugin name="Alfakher_Request::add-quote-button"
                 type="Alfakher\RequestQuote\Plugin\Sales\Block\Adminhtml\Order\ViewPlugin" sortOrder="999"/>
     </type>
+    <!-- Avalara tax amount not reflecting on Amasty Quote -->
+    <type name="Amasty\RequestQuote\Controller\Adminhtml\Quote\Edit\Save">
+        <plugin name="HookahShishaAmastyRequestQuoteAdminQuoteEditSaveAfterPlugin"
+                type="Alfakher\RequestQuote\Plugin\RequestQuote\Controller\Adminhtml\Quote\Edit\Save" />
+    </type>
 </config>

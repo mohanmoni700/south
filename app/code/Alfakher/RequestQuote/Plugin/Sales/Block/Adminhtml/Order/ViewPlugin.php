@@ -6,14 +6,12 @@ use Amasty\RequestQuote\Controller\Adminhtml\Quote\Create\FromOrder;
 use Magento\Framework\AuthorizationInterface;
 use Magento\Framework\UrlInterface;
 use Magento\Framework\View\LayoutInterface;
+use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Sales\Block\Adminhtml\Order\View;
-use Amasty\RequestQuote\Model\QuoteFactory;
-use Magento\Sales\Api\OrderRepositoryInterface;
-use Amasty\RequestQuote\Model;
-
+use Magento\Sales\Model\OrderFactory;
 
 /**
- * Class ViewPlugin
+ * Plugin Class ViewPlugin
  */
 class ViewPlugin
 {
@@ -28,24 +26,36 @@ class ViewPlugin
     private $urlBuilder;
 
     /**
-     * @var QuoteFactory
+     * @var OrderFactory
      */
-    private QuoteFactory $quoteFactory;
+    private OrderFactory $orderFactory;
 
+    /**
+     * @var CartRepositoryInterface
+     */
+    private CartRepositoryInterface $quoteRepository;
+
+    /**
+     * @param AuthorizationInterface $authorization
+     * @param UrlInterface $urlBuilder
+     * @param OrderFactory $orderFactory
+     * @param CartRepositoryInterface $quoteRepository
+     */
     public function __construct(
-        AuthorizationInterface    $authorization,
-        UrlInterface              $urlBuilder,
-        QuoteFactory              $quoteFactory,
-        OrderRepositoryInterface  $orderRepository
-    )
-    {
+        AuthorizationInterface $authorization,
+        UrlInterface           $urlBuilder,
+        OrderFactory           $orderFactory,
+        CartRepositoryInterface $quoteRepository
+    ) {
         $this->authorization = $authorization;
         $this->urlBuilder = $urlBuilder;
-        $this->quoteFactory = $quoteFactory;
-        $this->orderRepository = $orderRepository;
+        $this->orderFactory = $orderFactory;
+        $this->quoteRepository = $quoteRepository;
     }
 
     /**
+     * Before plugin
+     *
      * @param View $subject
      * @param LayoutInterface $layout
      *
@@ -56,19 +66,21 @@ class ViewPlugin
         if ($this->getQuoteByOrderId($subject->getOrderId())) {
             if ($this->authorization->isAllowed(FromOrder::ADMIN_RESOURCE)) {
                 $subject->addButton('clone_as_quote', [
-                    'label' => __('Clone as Quotes dfgtnju'),
+                    'label' => __('Clone as Quote'),
                     'class' => 'clone',
                     'id' => 'clone-as-quote',
                     'onclick' => 'setLocation(\'' . $this->getCloneUrl($subject->getOrderId()) . '\')'
                 ]);
             }
-       } else {
+        } else {
             $subject->removeButton('clone_as_quote');
-                }
+        }
         return [$layout];
     }
 
     /**
+     * Get clone url
+     *
      * @param int $orderId
      * @return string
      */
@@ -80,9 +92,21 @@ class ViewPlugin
         );
     }
 
+    /**
+     * Return if the order as quote
+     *
+     * @param int $orderId
+     * @return bool
+     */
     private function getQuoteByOrderId($orderId): bool
     {
-        $quote = $this->quoteFactory->create()->load($orderId, 'reserved_order_id');
-        return (bool)$quote->getId();
+        $order = $this->orderFactory->create()->load($orderId);
+        $quoteId = $order->getQuoteId();
+        try {
+            $quote = $this->quoteRepository->get($quoteId);
+            return (bool)$quote->getId();
+        } catch (\Exception $e) {
+            return false;
+        }
     }
 }
