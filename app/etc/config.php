@@ -1019,6 +1019,7 @@ return [
         'Alfakher_PaymentEdit' => 1,
         'Klarna_Core' => 1,
         'Alfakher_Productpageb2b' => 1,
+        'Alfakher_QuoteExtended' => 1,
         'Alfakher_RmaCustomization' => 1,
         'Alfakher_SalesApprove' => 1,
         'Mageplaza_Core' => 1,
