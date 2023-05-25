@@ -41,17 +41,8 @@ class Quote1
         $subscriptionData = $this->cartItemSubscribeDataRegistry->getData()[0] ?? null;
         if($subscriptionData && ($subscriptionData['is_subscription'] ?? null)) {
             $requestArray = $request->getData();
-            $billingPeriod = $subscriptionData['billing_period'];
-            $subscriptionIntervals = $this->scopeConfig->getValue('md_subscribenow/general/manage_subscription_interval');
-            $subscriptionIntervals = $this->json->unserialize($subscriptionIntervals);
-            $billingPeriodTimeStamp = null;
-            foreach ($subscriptionIntervals as $key => $subscriptionInterval) {
-                if(($subscriptionInterval['interval_type'].'_'.$subscriptionInterval['no_of_interval']) == $billingPeriod) {
-                    $billingPeriodTimeStamp = $key;
-                }
-            }
             $requestArray['options']['_1'] = 'subscription';
-            $requestArray['billing_period'] = $billingPeriodTimeStamp;
+            $requestArray['billing_period'] = $subscriptionData['billing_period'];
             $requestArray['subscription_start_date'] = $subscriptionData['subscription_start_date'];
             $requestArray['subscription_end_date'] = $subscriptionData['subscription_end_date'];
             $requestArray['subscription_end_cycle'] = $subscriptionData['subscription_end_cycle'];
