@@ -3,11 +3,11 @@
 namespace HookahShisha\SubscribeGraphQl\Plugin;
 
 use HookahShisha\SubscribeGraphQl\Model\CartItemSubscribeDataRegistry;
-use Magedelight\Subscribenow\Plugin\Checkout\Model\Quote;
+use Magedelight\Subscribenow\Plugin\Checkout\Model\Quote as Subject;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Serialize\Serializer\Json;
 
-class Quote1
+class Quote
 {
     private CartItemSubscribeDataRegistry $cartItemSubscribeDataRegistry;
     private ScopeConfigInterface $scopeConfig;
@@ -30,13 +30,13 @@ class Quote1
     }
 
     /**
-     * @param Quote $subject
-     * @param object $subject
+     * @param Subject $subject
+     * @param $parentSubject
      * @param object $product
      * @param null $request
      * @return array
      */
-    public function beforeBeforeAddProduct(Quote $subject, $parentSubject, $product, $request = null): array
+    public function beforeBeforeAddProduct(Subject $subject, $parentSubject, $product, $request = null): array
     {
         $subscriptionData = $this->cartItemSubscribeDataRegistry->getData()[0] ?? null;
         if($subscriptionData && ($subscriptionData['is_subscription'] ?? null)) {
