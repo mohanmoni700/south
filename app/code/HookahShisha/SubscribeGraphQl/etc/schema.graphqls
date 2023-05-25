@@ -50,19 +50,15 @@ input CartItemInput {
     is_subscription : Boolean
     billing_period : String
     subscription_start_date : String
+    subscription_end_date : String
     end_type : String
     subscription_end_cycle : Int
-    subscription_end_date : String
-}
-
-type Mutation {
-    addProductsToCart(cartId: String!, cartItems: [CartItemInput!]!): AddProductsToCartOutput @doc(description:"Add any type of product to the cart") @resolver(class: "HookahShisha\\SubscribeGraphQl\\Model\\Resolver\\AddProductsToCart")
 }
 
 interface CartItemInterface {
-    subscription_data: ItemSubscriptionData @resolver(class: "HookahShisha\\SubscribeGraphQl\\Model\\Resolver\\CartItems\\SubscriptionData") 
-
+    subscription_data: ItemSubscriptionData @resolver(class: "HookahShisha\\SubscribeGraphQl\\Model\\Resolver\\CartItems\\SubscriptionData")
 }
+
 type ItemSubscriptionData {
     is_subscription : Boolean
     billing_period : String
