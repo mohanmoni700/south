@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace HookahShisha\SubscribeGraphQl\Plugin\Model\Resolver;
 
@@ -17,7 +18,7 @@ class AddProductsToCart
     }
     public function beforeResolve(Subject $subject, ...$functionArgs)
     {
-        $args = $functionArgs[4];
+        $args = $functionArgs[4] ?? '';
         $this->cartItemSubscribeDataRegistry->setData($args['cartItems']);
         return $functionArgs;
     }

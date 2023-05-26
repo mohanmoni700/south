@@ -1,12 +1,18 @@
 <?php
+declare(strict_types=1);
 
 namespace HookahShisha\SubscribeGraphQl\Model;
 
 class CartItemSubscribeDataRegistry
 {
+    /**
+     * @var array
+     */
     private array $data = [];
 
     /**
+     * Getdata
+     *
      * @return null
      */
     public function getData()
@@ -15,6 +21,8 @@ class CartItemSubscribeDataRegistry
     }
 
     /**
+     * Setdata
+     *
      * @param null $data
      */
     public function setData($data): void

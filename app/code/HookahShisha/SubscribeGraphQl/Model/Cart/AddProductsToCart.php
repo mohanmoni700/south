@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace HookahShisha\SubscribeGraphQl\Model\Cart;
 
+use Magedelight\Subscribenow\Model\Subscription;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Message\MessageInterface;
@@ -22,10 +23,10 @@ use Magedelight\Subscribenow\Model\Service\SubscriptionService;
 use Magento\Framework\Pricing\Helper\Data as PriceHelper;
 use Magedelight\Subscribenow\Api\Data\ProductSubscribersInterface;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
-use Magedelight\Subscribenow\Model\Source\SubscriptionStart;
 use Magedelight\Subscribenow\Helper\Data as SubscriptionHelper;
 use Magento\Framework\Exception\LocalizedException;
 use HookahShisha\Quote\Model\Cart\Data\CartItemFactory;
+use Magedelight\Subscribenow\Model\Source\BillingPeriodBy;
 
 class AddProductsToCart extends SourceAddProductsToCart
 {
@@ -153,19 +154,20 @@ class AddProductsToCart extends SourceAddProductsToCart
      * @param SubscriptionHelper $subscriptionHelper
      */
     public function __construct(
-        ProductRepositoryInterface $productRepository,
-        CartRepositoryInterface $cartRepository,
+        ProductRepositoryInterface      $productRepository,
+        CartRepositoryInterface         $cartRepository,
         MaskedQuoteIdToQuoteIdInterface $maskedQuoteIdToQuoteId,
-        Json $serializer,
-        BuyRequestBuilder $requestBuilder,
-        Config $avalaraConfig,
-        Http $request,
-        SubscriptionService $service,
-        PriceHelper $priceHelper,
-        ProductSubscribersInterface $productsubscribeRepository,
-        TimezoneInterface $timezone,
-        SubscriptionHelper $subscriptionHelper
-    ) {
+        Json                            $serializer,
+        BuyRequestBuilder               $requestBuilder,
+        Config                          $avalaraConfig,
+        Http                            $request,
+        SubscriptionService             $service,
+        PriceHelper                     $priceHelper,
+        ProductSubscribersInterface     $productsubscribeRepository,
+        TimezoneInterface               $timezone,
+        SubscriptionHelper              $subscriptionHelper
+    )
+    {
         parent::__construct(
             $productRepository,
             $cartRepository,
@@ -182,7 +184,7 @@ class AddProductsToCart extends SourceAddProductsToCart
         $this->request = $request;
         $this->service = $service;
         $this->priceHelper = $priceHelper;
-        $this->productsubscribeRepository =$productsubscribeRepository;
+        $this->productsubscribeRepository = $productsubscribeRepository;
         $this->timezone = $timezone;
         $this->subscriptionHelper = $subscriptionHelper;
     }
@@ -241,10 +243,11 @@ class AddProductsToCart extends SourceAddProductsToCart
      */
     private function addItemToCart(
         CartInterface $cart,
-        CartItem $cartItem,
-        int $cartItemPosition,
-        array $cartItems
-    ): void {
+        CartItem      $cartItem,
+        int           $cartItemPosition,
+        array         $cartItems
+    ): void
+    {
         $sku = $cartItem->getSku();
         if ($cartItem->getQuantity() <= 0) {
             $this->addError(__('The product quantity should be greater than 0')->render());
@@ -259,7 +262,7 @@ class AddProductsToCart extends SourceAddProductsToCart
             );
             return;
         }
-        
+
         try {
             $productid = $product->getId();
             $isSubscription = $cartItem->getIsSubscription();
@@ -270,14 +273,14 @@ class AddProductsToCart extends SourceAddProductsToCart
                 $subscriptionEndCycle = $cartItem->getSubscriptionEndCycle();
                 $subscriptionEndDate = $cartItem->getSubscriptionEndDate();
                 $request = [
-                        'is_subscription' => $isSubscription,
-                        'billing_period' => $billingPeriod,
-                        'subscription_start_date' => $subscriptionStartDate,
-                        'end_type' => $endType,
-                        'subscription_end_cycle' => $subscriptionEndCycle,
-                        'subscription_end_date' => $subscriptionEndDate
-                    ];
-                $this->validateSubscriptionDate($product, $request);
+                    'is_subscription' => $isSubscription,
+                    'billing_period' => $billingPeriod,
+                    'subscription_start_date' => $subscriptionStartDate,
+                    'end_type' => $endType,
+                    'subscription_end_cycle' => $subscriptionEndCycle,
+                    'subscription_end_date' => $subscriptionEndDate
+                ];
+                $this->validateSubscriptionDate($request);
                 $additionalOptions = [];
                 $additionalOptions[] = [
                     'code' => 'is_subscription',
@@ -365,16 +368,8 @@ class AddProductsToCart extends SourceAddProductsToCart
                 ]);
             }
         } catch (\Throwable $e) {
-            $isInAlfaBundle = $cartItem->getParentAlfaBundle();
-            $alfaBundleProductType = $isInAlfaBundle
-                ? $this->getAlfaBundleProductType($cartItem->getSku(), $cartItems)
-                : '';
-            // We use custom message for products in alfa bundle if requested qty is not available
-            $useCustomMessage = ($e->getMessage() == 'The requested qty is not available') ||
-                ($e->getMessage() == "This product is out of stock.");
-            $customMessage = __('The requested %1 qty is not available', $alfaBundleProductType);
             $this->addError(
-                __($useCustomMessage ? $customMessage : $e->getMessage())->render(),
+                __($e->getMessage())->render(),
                 $cartItemPosition
             );
             $cart->setHasError(false);
@@ -395,12 +390,12 @@ class AddProductsToCart extends SourceAddProductsToCart
      * @param array $request
      * @throws LocalizedException
      */
-    public function validateSubscriptionDate($product, $request = [])
+    public function validateSubscriptionDate($request = [])
     {
         if ($request) {
             $currentDate = $this->timezone->date()->format('Y-m-d');
-            $requestDate = (string) isset($request['subscription_start_date']) ?
-            $request['subscription_start_date'] : '';
+            $requestDate = (string)isset($request['subscription_start_date']) ?
+                $request['subscription_start_date'] : '';
             $subscriptionStartDate = date('Y-m-d', strtotime($requestDate));
             if ($requestDate && $currentDate > $subscriptionStartDate) {
                 throw new LocalizedException(__('Subscription start date must be greater than today.'));
@@ -456,30 +451,6 @@ class AddProductsToCart extends SourceAddProductsToCart
     }
 
     /**
-     * Returns alfa bundle product type (shisha || charcoal)
-     *
-     * @param string $sku
-     * @param array $items
-     * @return string
-     */
-    private function getAlfaBundleProductType(string $sku, array $items): string
-    {
-        $type = [
-            'shisha_sku' => 'shisha',
-            'charcoal_sku' => 'charcoal'
-        ];
-        $alfaBundle = [];
-        foreach ($items as $item) {
-            $alfaBundle = $item->getAlfaBundle();
-            if ($alfaBundle) {
-                $alfaBundle = $this->serializer->unserialize($alfaBundle);
-                break;
-            }
-        }
-        return $type[array_search($sku, $alfaBundle)] ?? "shisha/charcoal";
-    }
-
-    /**
      * Get Billing Period
      *
      * @param object $product
@@ -488,15 +459,16 @@ class AddProductsToCart extends SourceAddProductsToCart
      */
     public function getBillingPeriod($product, $request = null)
     {
+        $billingFrequency = '';
         if ($product->getBillingPeriodType() == 'customer') {
             if ($request) {
                 $billingFrequency = $this->subscriptionHelper->getIntervalLabel($request['billing_period']);
             } else {
                 $billingFrequency =
-                $this->subscriptionHelper->getIntervalLabel($this->request->getPostValue('billing_period'));
+                    $this->subscriptionHelper->getIntervalLabel($this->request->getPostValue('billing_period'));
             }
         } else {
-            $optionId= $product->getBillingPeriod();
+            $optionId = $product->getBillingPeriod();
             $attribute = $product->getResource()->getAttribute('billing_period');
             if ($attribute->usesSource()) {
                 $billingFrequency = $attribute->getSource()->getOptionText($optionId);
@@ -536,11 +508,11 @@ class AddProductsToCart extends SourceAddProductsToCart
      */
     public function endCycleCalculation($request, $product)
     {
-        $endType  = $request['end_type'];
+        $endType = $request['end_type'];
         $endCycle = $request['subscription_end_cycle'];
-        if ($endType == \Magedelight\Subscribenow\Model\Subscription::END_TYPE_CYCLE) {
+        if ($endType == Subscription::END_TYPE_CYCLE) {
             return $endCycle;
-        } elseif ($endType == \Magedelight\Subscribenow\Model\Subscription::END_TYPE_DATE) {
+        } elseif ($endType == Subscription::END_TYPE_DATE) {
             return $this->endDateCalculation($request, $product);
         }
         return null;
@@ -555,27 +527,13 @@ class AddProductsToCart extends SourceAddProductsToCart
      */
     private function getSubscriptionStartDate($product, $request = null)
     {
-        $date = $this->timezone->date();
         if ($product->getDefineStartFrom() == "defined_by_customer") {
             if ($request) {
                 return $request['subscription_start_date'];
             }
             return $this->request->getPostValue('subscription_start_date');
         }
-        if ($product->getDefineStartFrom() == SubscriptionStart::MOMENT) {
-            return $date->format('d-m-Y');
-        }
-        if ($product->getDefineStartFrom() == SubscriptionStart::LAST_DAY_MONTH) {
-            return $date->format('t-m-Y');
-        }
-        if ($product->getDefineStartFrom() == SubscriptionStart::EXACT_DAY) {
-            $day = ($product->getDayOfMonth()) ? $product->getDayOfMonth() : 'd';
-            $currentDate = $date->format('d-m-Y');
-            $dayOfMonthDate = $date->format($day. '-m-Y');
-            return ($dayOfMonthDate >= $currentDate)
-                ? $dayOfMonthDate
-                : $date->modify('+1 month')->format($day. '-m-Y');
-        }
+        $this->service->getSubscriptionStartDate();
     }
 
     /**
@@ -589,6 +547,7 @@ class AddProductsToCart extends SourceAddProductsToCart
         if ($amount) {
             return strip_tags($amount);
         }
+        return false;
     }
 
     /**
@@ -624,7 +583,8 @@ class AddProductsToCart extends SourceAddProductsToCart
      */
     private function getTrialPeriod($product)
     {
-        $optionId= $product->getTrialPeriod();
+        $optionText = '';
+        $optionId = $product->getTrialPeriod();
         $attribute = $product->getResource()->getAttribute('trial_period');
         if ($attribute->usesSource()) {
             $optionText = $attribute->getSource()->getOptionText($optionId);
@@ -670,8 +630,7 @@ class AddProductsToCart extends SourceAddProductsToCart
     private function endDateCalculation($request, $product)
     {
         if (isset($request['billing_period']) &&
-            $product->getBillingPeriodType() ==
-            \Magedelight\Subscribenow\Model\Source\BillingPeriodBy::CUSTOMER) {
+            $product->getBillingPeriodType() == BillingPeriodBy::CUSTOMER) {
             $subscriptionInterval = $this->getSubscriptionInterval($request['billing_period']);
         } else {
             $billingPeriod = $this->getBillingPeriod($product, $request);
@@ -712,7 +671,7 @@ class AddProductsToCart extends SourceAddProductsToCart
                 $finalCycle = $finalCycle + 1;
             }
         }
-        
+
         $finalCycle = floor($finalCycle);
         if ($finalCycle < 1) {
             throw new LocalizedException(

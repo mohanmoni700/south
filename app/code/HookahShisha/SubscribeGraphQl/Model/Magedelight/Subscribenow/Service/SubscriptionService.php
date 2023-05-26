@@ -6,9 +6,6 @@ namespace HookahShisha\SubscribeGraphQl\Model\Magedelight\Subscribenow\Service;
 use Magedelight\Subscribenow\Model\Service\SubscriptionService as MdSubscriptionService;
 use Magedelight\Subscribenow\Helper\Data as SubscriptionHelper;
 use Magedelight\Subscribenow\Model\Source\BillingPeriodBy;
-use Magedelight\Subscribenow\Model\Source\DiscountType;
-use Magedelight\Subscribenow\Model\Source\PurchaseOption;
-use Magedelight\Subscribenow\Model\Source\SubscriptionStart;
 use Magedelight\Subscribenow\Model\Subscription;
 use Magento\Catalog\Model\ProductFactory as ProductModelFactory;
 use Magento\Directory\Model\PriceCurrency;
@@ -180,7 +177,7 @@ class SubscriptionService extends MdSubscriptionService
                 $finalCycle = $finalCycle + 1;
             }
         }
-        
+
         $finalCycle = floor($finalCycle);
 
         if ($finalCycle < 1) {

@@ -11,7 +11,6 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\Uid;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Quote\Model\Quote\Item;
 use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
@@ -43,8 +42,8 @@ class ConfigurableCartItemOptions extends MageConfigurableCartItemOptions
      */
     public function __construct(
         Configuration $configurationHelper,
-        MetadataPool $metadataPool,
-        Uid $uidEncoder
+        MetadataPool  $metadataPool,
+        Uid           $uidEncoder
     ) {
         $this->configurationHelper = $configurationHelper;
         $this->metadataPool = $metadataPool;

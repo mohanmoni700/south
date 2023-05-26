@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace HookahShisha\SubscribeGraphQl\Plugin;
 
@@ -26,7 +27,7 @@ class Quote
         CartItemSubscribeDataRegistry $cartItemSubscribeDataRegistry,
         ScopeConfigInterface          $scopeConfig,
         Json                          $json,
-        SubscribeNowHelper  $subscribeNowHelper
+        SubscribeNowHelper            $subscribeNowHelper
     )
     {
         $this->cartItemSubscribeDataRegistry = $cartItemSubscribeDataRegistry;
@@ -45,7 +46,7 @@ class Quote
     public function beforeBeforeAddProduct(Subject $subject, $parentSubject, $product, $request = null): array
     {
         $subscriptionData = $this->cartItemSubscribeDataRegistry->getData()[0] ?? null;
-        if($subscriptionData && ($subscriptionData['is_subscription'] ?? null)) {
+        if ($subscriptionData && ($subscriptionData['is_subscription'] ?? null)) {
             $requestArray = $request->getData();
             $requestArray['options']['_1'] = 'subscription';
             $billingPeriod = $subscriptionData['billing_period'] ?? null;
@@ -59,7 +60,6 @@ class Quote
             $requestArray['end_type'] = $endType;
             $request->setData($requestArray);
         }
-        // TODO: Implement plugin method.
         return [$parentSubject, $product, $request];
     }
 
