@@ -6,12 +6,9 @@ use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
 use Magento\Framework\GraphQl\Exception\GraphQlAuthorizationException;
-use Magento\CustomerGraphQl\Model\Customer\GetCustomer;
 
 class SubscriptionData implements ResolverInterface
-{
-   private $getCustomer;
-     
+{     
    public function __construct(\Magento\Framework\Serialize\SerializerInterface $serializer)
    {
       $this->serializer = $serializer;

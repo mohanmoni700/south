@@ -23,9 +23,7 @@ use Magento\Framework\Pricing\Helper\Data as PriceHelper;
 use Magedelight\Subscribenow\Api\Data\ProductSubscribersInterface;
 use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magedelight\Subscribenow\Model\Source\SubscriptionStart;
-use Magedelight\Subscribenow\Model\Subscription;
 use Magedelight\Subscribenow\Helper\Data as SubscriptionHelper;
-use Magedelight\Subscribenow\Model\Source\BillingPeriodBy;
 use Magento\Framework\Exception\LocalizedException;
 use HookahShisha\Quote\Model\Cart\Data\CartItemFactory;
 
@@ -55,6 +53,11 @@ class AddProductsToCart extends SourceAddProductsToCart
      * Customer
      */
     public const CUSTOMER = 'customer';
+
+    /**
+     * Subscription notification message
+     */
+    public const REPEATS_UNTIL_FAILED_OR_CANCELED = 'Repeats until failed or canceled';
 
     /**
      * List of error messages and codes.
@@ -219,95 +222,6 @@ class AddProductsToCart extends SourceAddProductsToCart
     }
 
     /**
-     * Get SuperPack array with product, total price and finalprice of each product
-     *
-     * @param array $superPack
-     * @return array
-     * @throws LocalizedException
-     */
-    public function getSuperPackCartItemsWithProduct($superPack)
-    {
-        $totalPrice = 0;
-        $superPackArray = [];
-        foreach ($superPack as $item) {
-            $sku = $item['variant_sku'];
-            // checking if same product exist
-            if (in_array($sku, array_keys($superPackArray))) {
-                $superPackArray[$sku]['quantity'] += 1;
-                $totalPrice +=  $superPackArray[$sku]['final_price'];
-            } else {
-                $item['quantity'] = 1;
-                try {
-                    $product = $this->productRepository->get($item['sku'], false, null, true);
-                } catch (NoSuchEntityException $e) {
-                    throw new LocalizedException(
-                        __('Could not find a product with SKU "%sku"', ['sku' => $item['sku']])
-                    );
-                }
-                $finalPrice = $product->getFinalPrice();
-                $totalPrice += $finalPrice;
-                $item['final_price'] = $finalPrice;
-                $item['product'] = $product;
-                $superPackArray[$sku] = $item;
-            }
-        }
-        return [$totalPrice, $superPackArray];
-    }
-
-    /**
-     * Get SuperPack array
-     *
-     * @param CartItem $cartItem
-     * @return bool | array
-     */
-    private function getSuperPackCartItem($cartItem)
-    {
-        $alfaBundle = $cartItem->getAlfaBundle();
-        if ($alfaBundle) {
-            $alfaBundle = $this->serializer->unserialize($alfaBundle);
-            if (isset($alfaBundle['super_pack']) && $alfaBundle['super_pack'] && is_array($alfaBundle)) {
-                return $this->getSuperPackCartItemsWithProduct($alfaBundle['super_pack']);
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Get SuperPack array
-     *
-     * @param CartInterface $cart
-     * @param array $item
-     * @param float $finalParentPrice
-     * @return Item|string
-     */
-    private function addSuperPackProductToCart(
-        CartInterface $cart,
-        array $item,
-        float $finalParentPrice
-    ) {
-        $product = $item['product'];
-        $item['super_pack_price'] = $finalParentPrice;
-        $cartItem = (new CartItemFactory())->create($item);
-        return $cart->addProduct($product, $this->requestBuilder->build($cartItem));
-    }
-
-    /**
-     * Calculate SuperPack Final Price
-     *
-     * @param float $finalPrice
-     * @param float $totalPrice
-     * @param float $simpleProductPrice
-     * @return float
-     */
-    private function calculateSuperPackFinalPrice(
-        float $finalPrice,
-        float $totalPrice,
-        float $simpleProductPrice
-    ):float {
-        return ($finalPrice/$totalPrice) * $simpleProductPrice;
-    }
-
-    /**
      * Get the subscription service
      *
      * @return SubscriptionService
@@ -345,26 +259,8 @@ class AddProductsToCart extends SourceAddProductsToCart
             );
             return;
         }
-        $superPack = $this->getSuperPackCartItem($cartItem);
         
         try {
-            if ($superPack) {
-                list($totalPrice, $superPackArray) = $superPack;
-                $qty = $cartItem->getQuantity();
-                $parentAlfabundle = $cartItem->getAlfaBundle();
-                $simpleProductPrice = $product->getFinalPrice();
-                foreach ($superPackArray as $item) {
-                    $item['quantity'] *= $qty ;
-                    $item['parent_alfa_bundle'] =  $parentAlfabundle;
-                    $finalPrice = $this->calculateSuperPackFinalPrice(
-                        $item['final_price'],
-                        $totalPrice,
-                        $simpleProductPrice
-                    );
-                    $this->addSuperPackProductToCart($cart, $item, $finalPrice);
-                }
-                $cartItem->setSuperPackPrice(0);
-            }
             $productid = $product->getId();
             $isSubscription = $cartItem->getIsSubscription();
             if ($isSubscription) {
@@ -434,11 +330,11 @@ class AddProductsToCart extends SourceAddProductsToCart
                     'label' => $this->subscriptionHelper->getSubscriptionStartDateTitle(),
                     'value' => $this->getSubscriptionStartDate($product, $request),
                 ];
-                if ($this->getSubscriptionEndDate($product, $request)) {
+                if ($this->getSubscriptionEndDate($request)) {
                     $additionalOptions[] = [
                         'code' => 'md_sub_end_date',
                         'label' => $this->subscriptionHelper->getSubscriptionEndDateTitle(),
-                        'value' => $this->getSubscriptionEndDate($product, $request),
+                        'value' => $this->getSubscriptionEndDate($request),
                     ];
                 }
             }
@@ -461,7 +357,7 @@ class AddProductsToCart extends SourceAddProductsToCart
                 $buyreqoption['subscription_start_date'] = $this->getSubscriptionStartDate($product, $request);
                 $buyreqoption['subscription_end_cycle'] = $this->getBillingCycle($product, $request);
                 $buyreqoption['end_type'] = $cartItem->getSubendType();
-                $buyreqoption['subscription_end_date'] = $this->getSubscriptionEndDate($product, $request);
+                $buyreqoption['subscription_end_date'] = $this->getSubscriptionEndDate($request);
                 $result->addOption([
                     'product_id' => $productid,
                     'code' => 'info_buyRequest',
@@ -622,11 +518,11 @@ class AddProductsToCart extends SourceAddProductsToCart
             $finalCycle = $this->endCycleCalculation($request, $product);
             return ($finalCycle) ?
                 __($finalCycle) :
-                __('Repeats until failed or canceled');
+                __(self::REPEATS_UNTIL_FAILED_OR_CANCELED);
         } else {
             return ($product->getBillingMaxCycles()) ?
                 __('Repeat %1 time(s)', $product->getBillingMaxCycles()) :
-                __("Repeats until failed or canceled");
+                __(self::REPEATS_UNTIL_FAILED_OR_CANCELED);
         }
     }
 
@@ -744,7 +640,7 @@ class AddProductsToCart extends SourceAddProductsToCart
      */
     private function getTrialCycle($product)
     {
-        $defaultVal = 'Repeats until failed or canceled';
+        $defaultVal = self::REPEATS_UNTIL_FAILED_OR_CANCELED;
         return ($product->getTrialMaxcycle()) ? __('%1 time(s)', $product->getTrialMaxcycle()) : __($defaultVal);
     }
 
@@ -755,7 +651,7 @@ class AddProductsToCart extends SourceAddProductsToCart
      * @param array $request
      * @return string
      */
-    private function getSubscriptionEndDate($product, $request = null)
+    private function getSubscriptionEndDate($request = null)
     {
         if ($request['end_type'] == "md_end_date") {
             return $request['subscription_end_date'];

@@ -27,19 +27,9 @@ class SubscriptionService extends MdSubscriptionService
     private $subscriptionHelper;
 
     /**
-     * @var \Magento\Catalog\Model\Product
-     */
-    private $product;
-
-    /**
      * @var DataObjectFactory
      */
     private $dataObject;
-
-    /**
-     * @var DataObjectFactory
-     */
-    private $subscriptionObject;
 
     /**
      * @var Json
@@ -69,16 +59,6 @@ class SubscriptionService extends MdSubscriptionService
      * @var ProductModelFactory
      */
     private $productModelFactory;
-
-    /**
-     * @var ProductModelFactory
-     */
-    private $productModel = null;
-
-    /**
-     * @var ProductModelFactory
-     */
-    private $currentProductObject = null;
 
     /**
      * SubscriptionService constructor.
