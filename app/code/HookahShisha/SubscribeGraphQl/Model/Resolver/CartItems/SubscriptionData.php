@@ -11,7 +11,7 @@ use Magento\CustomerGraphQl\Model\Customer\GetCustomer;
 class SubscriptionData implements ResolverInterface
 {
    private $getCustomer;
-     
+
    public function __construct(\Magento\Framework\Serialize\SerializerInterface $serializer)
    {
       $this->serializer = $serializer;
@@ -40,10 +40,12 @@ class SubscriptionData implements ResolverInterface
                      $subscriptionStartDate = $additionalOption['value'];
                   } elseif ($additionalOption['code'] == 'md_sub_end_date') {
                      $subscriptionEndDate = $additionalOption['value'];
+                  } elseif ($additionalOption['code'] == 'billing_cycle_title') {
+                      $endType = $additionalOption['value'];
                   }
                }
            }
-         }           
+         }
       }
       return [
          'is_subscription' => $isSubscription,
