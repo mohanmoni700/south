@@ -1,5 +1,5 @@
 <?php
-declare (strict_types = 1);
+declare (strict_types=1);
 
 namespace Ooka\OokaSerialNumber\Model\Resolver;
 
@@ -10,32 +10,47 @@ use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
+use Magento\Framework\Api\FilterBuilder;
+use Magento\Framework\Api\Search\FilterGroupBuilder;
+use Magento\CustomerGraphQl\Model\Customer\GetCustomer;
+use Magento\Framework\GraphQl\Exception\GraphQlAuthorizationException;
 
 class SerialCodeData implements ResolverInterface
 {
-    /**
-     * @var SerialNumberRepository
-     */
+    /** @var FilterBuilder */
+    private $filterBuilder;
+    /** @var FilterGroupBuilder */
+    private $filterGroupBuilder;
+    /** @var SerialNumberRepository */
     private $serialNumberRepository;
-    /**
-     * @var SearchCriteriaBuilder
-     */
+    /** @var SearchCriteriaBuilder */
     private $searchCriteriaBuilder;
+    /** @var GetCustomer */
+    private $getCustomer;
 
     /**
      * @param SerialNumberRepository $serialNumberRepository
      * @param SearchCriteriaBuilder $searchCriteriaBuilder
+     * @param FilterBuilder $filterBuilder
+     * @param FilterGroupBuilder $filterGroupBuilder
+     * @param GetCustomer $getCustomer
      */
     public function __construct(
         SerialNumberRepository $serialNumberRepository,
-        SearchCriteriaBuilder $searchCriteriaBuilder
+        SearchCriteriaBuilder  $searchCriteriaBuilder,
+        FilterBuilder          $filterBuilder,
+        FilterGroupBuilder     $filterGroupBuilder,
+        GetCustomer            $getCustomer
     ) {
         $this->serialNumberRepository = $serialNumberRepository;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->filterBuilder = $filterBuilder;
+        $this->filterGroupBuilder = $filterGroupBuilder;
+        $this->getCustomer = $getCustomer;
     }
 
     /**
-     * Reslover for send all data to frontend
+     * Resolver for send all data to frontend
      *
      * @param Field $field
      * @param ContextInterface $context
@@ -45,13 +60,31 @@ class SerialCodeData implements ResolverInterface
      * @return Value|mixed
      */
     public function resolve(
-        Field $field,
+        Field       $field,
         $context,
         ResolveInfo $info,
-        array $value = null,
-        array $args = null
+        array       $value = null,
+        array       $args = null
     ) {
-        $criteria = $this->searchCriteriaBuilder->create();
+        $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
+        /** @var ContextInterface $context */
+        if (!$context->getExtensionAttributes()->getIsCustomer()) {
+            throw new GraphQlAuthorizationException(__('The current customer isn\'t authorized.'));
+        }
+        $customer = $this->getCustomer->execute($context);
+        $emailFilter = $this->filterBuilder
+            ->setField('main_table.customer_email')
+            ->setValue($customer->getEmail())
+            ->setConditionType('eq')
+            ->create();
+        $storeFilter = $this->filterBuilder
+            ->setField('secondTable.store_id')
+            ->setValue($storeId)
+            ->setConditionType('eq')
+            ->create();
+        $group1 = $this->filterGroupBuilder->addFilter($emailFilter)->create();
+        $group2 = $this->filterGroupBuilder->addFilter($storeFilter)->create();
+        $criteria = $this->searchCriteriaBuilder->setFilterGroups([$group1, $group2])->create();
         $items = $this->serialNumberRepository->getList($criteria)->getItems();
         $data = [];
         foreach ($items as $item) {
@@ -60,8 +93,13 @@ class SerialCodeData implements ResolverInterface
                 "order_id" => $item->getOrderId(),
                 "sku" => $item->getSku(),
                 "serial_code" => $item->getSerialCode(),
-                "shipment_type" => $item->getShipmentType(),
                 'customer_email' => $item->getCustomerEmail(),
+                'item_id' => $item->getItemId(),
+                'shipment_number' => $item->getShipmentNumber(),
+                'shipping_address' => $item->getShippingAddress(),
+                'store_code' => $item->getWebsite(),
+                "created_at" => $item->getCreatedAt(),
+                "updated_at" => $item->getUpdatedAt(),
             ];
         }
         return $data;

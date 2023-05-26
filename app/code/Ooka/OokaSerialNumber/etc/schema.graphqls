@@ -7,6 +7,11 @@ type GetAllRecords {
     order_id : String  @doc(description: "Order Id"),
     sku : String  @doc(description: "SKU"),
     serial_code : String  @doc(description: "Serial Code"),
-    shipment_type : String @doc(description: "Shipment Type"),
     customer_email : String @doc(description: "Customer Email"),
+    item_id : Int @doc(description: "Item ID"),
+    shipment_number : String @doc(description: "Shipment Number"),
+    shipping_address : String @doc(description: "Shipping Address"),
+    store_code : Int @doc(description: "Shipping Address"),
+    created_at : String @doc(description: "Creation date"),
+    updated_at : String @doc(description: "Updation date"),
 }
