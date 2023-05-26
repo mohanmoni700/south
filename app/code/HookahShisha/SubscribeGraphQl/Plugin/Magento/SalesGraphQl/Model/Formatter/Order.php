@@ -10,6 +10,11 @@ use Magento\Sales\Api\Data\OrderInterface;
 class Order
 {
     /**
+     * @var AssociateOrders
+     */
+    protected $associateOrders;
+    
+    /**
      * @param AssociateOrders $associateOrders
      */
     public function __construct(
