@@ -1029,6 +1029,7 @@ return [
         'Alfakher_StoreCredit' => 1,
         'Alfakher_WarehouseShipping' => 1,
         'Alfakher_GrossMargin' => 1,
+        'Alfakher_AmastyExtended' => 1,
         'Amasty_BannersLite' => 1,
         'Amasty_Base' => 1,
         'Amasty_Conditions' => 1,
