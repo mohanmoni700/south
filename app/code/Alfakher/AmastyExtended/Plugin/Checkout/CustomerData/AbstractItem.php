@@ -34,13 +34,9 @@ class AbstractItem
      */
     public function afterGetItemData(NativeAbstractItem $subject, $result)
     {
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        $logger = $objectManager->create(\Psr\Log\LoggerInterface::class);
-        $logger->info('my plugin');
         $result['hide_remove_item_in_minicart'] = false;
 
         if ($this->item->getOptionByCode('amasty_quote_price')) {
-            $logger->info('if');
             $result['hide_remove_item_in_minicart'] = true;
         }
 
