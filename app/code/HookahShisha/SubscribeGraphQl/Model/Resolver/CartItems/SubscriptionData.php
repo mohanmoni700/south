@@ -4,14 +4,16 @@ namespace HookahShisha\SubscribeGraphQl\Model\Resolver\CartItems;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
-use Magento\Framework\GraphQl\Exception\GraphQlAuthorizationException;
+use Magento\Framework\Serialize\SerializerInterface;
 
 class SubscriptionData implements ResolverInterface
 {
-   private $getCustomer;
+    /**
+     * @var $serializer
+     */
+    protected $serializer;
 
-   public function __construct(\Magento\Framework\Serialize\SerializerInterface $serializer)
+   public function __construct(SerializerInterface $serializer)
    {
       $this->serializer = $serializer;
    }

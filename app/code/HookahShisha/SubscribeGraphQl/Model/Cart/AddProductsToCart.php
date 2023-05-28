@@ -264,7 +264,7 @@ class AddProductsToCart extends SourceAddProductsToCart
         }
 
         try {
-            $productid = $product->getId();
+            $productId = $product->getId();
             $isSubscription = $cartItem->getIsSubscription();
             if ($isSubscription) {
                 $subscriptionStartDate = $cartItem->getSubscriptionStartDate();
@@ -344,7 +344,7 @@ class AddProductsToCart extends SourceAddProductsToCart
             $result = $cart->addProduct($product, $this->requestBuilder->build($cartItem));
             if ($isSubscription) {
                 $result->addOption([
-                    'product_id' => $productid,
+                    'product_id' => $productId,
                     'code' => 'additional_options',
                     'value' => $this->serializer->serialize($additionalOptions)
                 ]);
@@ -353,8 +353,8 @@ class AddProductsToCart extends SourceAddProductsToCart
                     $buyreqoption = $result->getBuyRequest()->toArray();
                 }
                 $buyreqoption['qty'] = $cartitemqty;
-                $buyreqoption['product'] = $productid;
-                $buyreqoption['item'] = $productid;
+                $buyreqoption['product'] = $productId;
+                $buyreqoption['item'] = $productId;
                 $buyreqoption['options'] = ['_1' => 'subscription'];
                 $buyreqoption['billing_period'] = $request['billing_period'];
                 $buyreqoption['subscription_start_date'] = $this->getSubscriptionStartDate($product, $request);
@@ -362,7 +362,7 @@ class AddProductsToCart extends SourceAddProductsToCart
                 $buyreqoption['end_type'] = $cartItem->getSubendType();
                 $buyreqoption['subscription_end_date'] = $this->getSubscriptionEndDate($request);
                 $result->addOption([
-                    'product_id' => $productid,
+                    'product_id' => $productId,
                     'code' => 'info_buyRequest',
                     'value' => $this->serializer->serialize($buyreqoption)
                 ]);
