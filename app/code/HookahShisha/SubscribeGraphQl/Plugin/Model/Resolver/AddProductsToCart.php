@@ -10,15 +10,23 @@ class AddProductsToCart
 {
     private CartItemSubscribeDataRegistry $cartItemSubscribeDataRegistry;
 
+    /**
+     * @param CartItemSubscribeDataRegistry $cartItemSubscribeDataRegistry
+     */
     public function __construct(
         CartItemSubscribeDataRegistry $cartItemSubscribeDataRegistry
-    )
-    {
+    ) {
         $this->cartItemSubscribeDataRegistry = $cartItemSubscribeDataRegistry;
     }
+
+    /**
+     * @param Subject $subject
+     * @param ...$functionArgs
+     * @return array
+     */
     public function beforeResolve(Subject $subject, ...$functionArgs)
     {
-        $args = $functionArgs[4] ?? '';
+        $args = $functionArgs[4] ?? [];
         $this->cartItemSubscribeDataRegistry->setData($args['cartItems']);
         return $functionArgs;
     }
