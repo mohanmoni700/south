@@ -5,6 +5,9 @@ namespace HookahShisha\SubscribeGraphQl\Plugin\Magedelight\Subscribenow\Model\Se
 
 use Magedelight\Subscribenow\Model\Service\OrderService as OrderServiceSubject;
 
+/**
+ * OrderService
+ */
 class OrderService
 {
     /**

@@ -6,6 +6,9 @@ use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\Framework\Serialize\SerializerInterface;
 
+/**
+ * SubscriptionData
+ */
 class SubscriptionData implements ResolverInterface
 {
     /**
@@ -13,11 +16,23 @@ class SubscriptionData implements ResolverInterface
      */
     protected $serializer;
 
-   public function __construct(SerializerInterface $serializer)
+    /**
+     * @param SerializerInterface $serializer
+     */
+    public function __construct(SerializerInterface $serializer)
    {
       $this->serializer = $serializer;
    }
-   public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
+
+    /**
+     * @param Field $field
+     * @param $context
+     * @param ResolveInfo $info
+     * @param array|null $value
+     * @param array|null $args
+     * @return array
+     */
+    public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
    {
       $item = $value['model'] ?? null;
 
