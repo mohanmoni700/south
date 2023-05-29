@@ -42,6 +42,7 @@ class Quote
      * @param object $product
      * @param null $request
      * @return array
+     * @throws GraphQlInputException
      */
     public function beforeBeforeAddProduct(Subject $subject, $parentSubject, $product, $request = null): array
     {
@@ -63,7 +64,10 @@ class Quote
         return [$parentSubject, $product, $request];
     }
 
-    protected function validateEndType($endType)
+    /**
+     * @throws GraphQlInputException
+     */
+    protected function validateEndType($endType): void
     {
         $allowedEndTypes = ['md_end_cycle', 'md_end_date', 'md_end_infinite'];
         if (!in_array($endType, $allowedEndTypes)) {
@@ -71,7 +75,10 @@ class Quote
         }
     }
 
-    protected function validateBillingPeriod($billingPeriod)
+    /**
+     * @throws GraphQlInputException
+     */
+    protected function validateBillingPeriod($billingPeriod): void
     {
         $allowedBillingPeriods = array_keys($this->subscribeNowHelper->getSubscriptionInterval());
         if (!in_array($billingPeriod, $allowedBillingPeriods)) {

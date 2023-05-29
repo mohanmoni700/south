@@ -13,7 +13,7 @@ class Order
      * @var AssociateOrders
      */
     protected $associateOrders;
-    
+
     /**
      * @param AssociateOrders $associateOrders
      */
@@ -22,14 +22,14 @@ class Order
     ) {
         $this->associateOrders = $associateOrders;
     }
-    
+
     /**
      * Set subscription id with the customer's order data
      *
      * @param OrderFormatter $subject
      * @param array $return
      * @param OrderInterface $orderModel
-     * @return mixed
+     * @return array
      */
     public function afterFormat(
         OrderFormatter $subject,
@@ -47,14 +47,14 @@ class Order
         }
         return $return;
     }
-    
+
     /**
      * Get subscription ids
      *
      * @param String $orderNumber
      * @return array
      */
-    public function getAssociateSubscription($orderNumber)
+    public function getAssociateSubscription($orderNumber): array
     {
         $collection = $this->associateOrders->create()
             ->addFieldToFilter('order_id', $orderNumber);
