@@ -3,6 +3,9 @@ declare(strict_types=1);
 
 namespace HookahShisha\SubscribeGraphQl\Model;
 
+/**
+ * CartItemSubscribeDataRegistry
+ */
 class CartItemSubscribeDataRegistry
 {
     /**

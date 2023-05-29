@@ -7,32 +7,39 @@ use HookahShisha\SubscribeGraphQl\Model\CartItemSubscribeDataRegistry;
 use Magedelight\Subscribenow\Plugin\Checkout\Model\Quote as Subject;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
-use Magento\Framework\Serialize\Serializer\Json;
 use Magedelight\Subscribenow\Helper\Data as SubscribeNowHelper;
 
+/**
+ * Quote
+ */
 class Quote
 {
+    /**
+     * @var CartItemSubscribeDataRegistry
+     */
     private CartItemSubscribeDataRegistry $cartItemSubscribeDataRegistry;
+    /**
+     * @var ScopeConfigInterface
+     */
     private ScopeConfigInterface $scopeConfig;
-    private Json $json;
+    /**
+     * @var SubscribeNowHelper
+     */
     private SubscribeNowHelper $subscribeNowHelper;
 
     /**
      * @param CartItemSubscribeDataRegistry $cartItemSubscribeDataRegistry
      * @param ScopeConfigInterface $scopeConfig
-     * @param Json $json
      * @param SubscribeNowHelper $subscribeNowHelper
      */
     public function __construct(
         CartItemSubscribeDataRegistry $cartItemSubscribeDataRegistry,
         ScopeConfigInterface          $scopeConfig,
-        Json                          $json,
         SubscribeNowHelper            $subscribeNowHelper
     )
     {
         $this->cartItemSubscribeDataRegistry = $cartItemSubscribeDataRegistry;
         $this->scopeConfig = $scopeConfig;
-        $this->json = $json;
         $this->subscribeNowHelper = $subscribeNowHelper;
     }
 

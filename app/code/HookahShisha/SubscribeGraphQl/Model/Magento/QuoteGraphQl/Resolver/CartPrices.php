@@ -8,6 +8,9 @@ use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\QuoteGraphQl\Model\Resolver\CartPrices as CartPricesSubject;
 use Magento\Quote\Model\Quote\TotalsCollector;
 
+/**
+ * CartPrices
+ */
 class CartPrices
 {
     /**

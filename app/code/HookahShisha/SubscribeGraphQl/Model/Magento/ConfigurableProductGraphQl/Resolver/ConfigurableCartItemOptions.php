@@ -15,6 +15,9 @@ use Magento\Quote\Model\Quote\Item;
 use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
 
+/**
+ * ConfigurableCartItemOptions
+ */
 class ConfigurableCartItemOptions extends MageConfigurableCartItemOptions
 {
     /**

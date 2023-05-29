@@ -9,6 +9,9 @@ use Magento\Framework\GraphQl\Query\Resolver\ContextInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\QuoteGraphQl\Model\Resolver\PlaceOrder as MagentoPlaceOrder;
 
+/**
+ * PlaceOrder
+ */
 class PlaceOrder
 {
     /**

@@ -16,6 +16,9 @@ use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 use Magento\Quote\Api\CartRepositoryInterfaceFactory;
 use Magedelight\Subscribenow\Model\Service\OrderServiceFactory;
 
+/**
+ * SubscriptionService
+ */
 class SubscriptionService extends MdSubscriptionService
 {
     /**

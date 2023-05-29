@@ -6,8 +6,14 @@ namespace HookahShisha\SubscribeGraphQl\Plugin\Model\Resolver;
 use HookahShisha\SubscribeGraphQl\Model\CartItemSubscribeDataRegistry;
 use Magento\QuoteGraphQl\Model\Resolver\AddProductsToCart as Subject;
 
+/**
+ * AddProductsToCart
+ */
 class AddProductsToCart
 {
+    /**
+     * @var CartItemSubscribeDataRegistry
+     */
     private CartItemSubscribeDataRegistry $cartItemSubscribeDataRegistry;
 
     /**

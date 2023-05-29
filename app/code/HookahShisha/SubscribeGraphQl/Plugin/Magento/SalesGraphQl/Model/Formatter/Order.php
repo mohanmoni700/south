@@ -7,12 +7,15 @@ use Magedelight\Subscribenow\Model\ResourceModel\ProductAssociatedOrders\Collect
 use Magento\SalesGraphQl\Model\Formatter\Order as OrderFormatter;
 use Magento\Sales\Api\Data\OrderInterface;
 
+/**
+ * Order
+ */
 class Order
 {
     /**
      * @var AssociateOrders
      */
-    protected $associateOrders;
+    protected AssociateOrders $associateOrders;
 
     /**
      * @param AssociateOrders $associateOrders
