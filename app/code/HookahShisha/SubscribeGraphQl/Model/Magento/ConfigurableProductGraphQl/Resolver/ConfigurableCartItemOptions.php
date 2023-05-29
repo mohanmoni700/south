@@ -28,15 +28,15 @@ class ConfigurableCartItemOptions extends MageConfigurableCartItemOptions
     /**
      * @var Configuration
      */
-    private $configurationHelper;
+    private Configuration $configurationHelper;
 
     /** @var Uid */
-    private $uidEncoder;
+    private Uid $uidEncoder;
 
     /**
      * @var MetadataPool
      */
-    private $metadataPool;
+    private MetadataPool $metadataPool;
 
     /**
      * @param Configuration $configurationHelper

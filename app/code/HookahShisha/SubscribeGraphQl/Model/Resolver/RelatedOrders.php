@@ -20,28 +20,28 @@ class RelatedOrders implements ResolverInterface
     /**
      * @var AssociateOrders
      */
-    protected $associateOrders;
-    
+    protected AssociateOrders $associateOrders;
+
     /**
      * @var FilterBuilder
      */
-    protected $filterBuilder;
-    
+    protected FilterBuilder $filterBuilder;
+
     /**
      * @var SortOrderBuilder
      */
-    protected $sortOrderBuilder;
-    
+    protected SortOrderBuilder $sortOrderBuilder;
+
     /**
      * @var SearchCriteriaBuilder
      */
-    protected $searchCriteriaBuilder;
-    
+    protected SearchCriteriaBuilder $searchCriteriaBuilder;
+
     /**
      * @var OrderRepositoryInterface
      */
-    protected $orderRepository;
-    
+    protected OrderRepositoryInterface $orderRepository;
+
     /**
      * @param AssociateOrders $associateOrders
      * @param FilterBuilder $filterBuilder
@@ -62,7 +62,7 @@ class RelatedOrders implements ResolverInterface
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
         $this->orderRepository = $orderRepository;
     }
-    
+
     /**
      * Fetches the data from persistence models and format it according to the GraphQL schema.
      *
@@ -113,7 +113,7 @@ class RelatedOrders implements ResolverInterface
         }
         return $data;
     }
-    
+
     /**
      * Fetch list of related orders
      *
@@ -144,7 +144,7 @@ class RelatedOrders implements ResolverInterface
         }
         return $orders;
     }
-    
+
     /**
      * Get order's increment ids
      *

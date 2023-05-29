@@ -5,7 +5,6 @@ namespace HookahShisha\SubscribeGraphQl\Plugin;
 
 use HookahShisha\SubscribeGraphQl\Model\CartItemSubscribeDataRegistry;
 use Magedelight\Subscribenow\Plugin\Checkout\Model\Quote as Subject;
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magedelight\Subscribenow\Helper\Data as SubscribeNowHelper;
 
@@ -18,10 +17,7 @@ class Quote
      * @var CartItemSubscribeDataRegistry
      */
     private CartItemSubscribeDataRegistry $cartItemSubscribeDataRegistry;
-    /**
-     * @var ScopeConfigInterface
-     */
-    private ScopeConfigInterface $scopeConfig;
+
     /**
      * @var SubscribeNowHelper
      */
@@ -29,17 +25,14 @@ class Quote
 
     /**
      * @param CartItemSubscribeDataRegistry $cartItemSubscribeDataRegistry
-     * @param ScopeConfigInterface $scopeConfig
      * @param SubscribeNowHelper $subscribeNowHelper
      */
     public function __construct(
         CartItemSubscribeDataRegistry $cartItemSubscribeDataRegistry,
-        ScopeConfigInterface          $scopeConfig,
         SubscribeNowHelper            $subscribeNowHelper
     )
     {
         $this->cartItemSubscribeDataRegistry = $cartItemSubscribeDataRegistry;
-        $this->scopeConfig = $scopeConfig;
         $this->subscribeNowHelper = $subscribeNowHelper;
     }
 

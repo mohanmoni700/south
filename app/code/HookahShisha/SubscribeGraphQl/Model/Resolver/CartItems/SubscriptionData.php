@@ -12,9 +12,9 @@ use Magento\Framework\Serialize\SerializerInterface;
 class SubscriptionData implements ResolverInterface
 {
     /**
-     * @var $serializer
+     * @var SerializerInterface
      */
-    protected $serializer;
+    protected SerializerInterface $serializer;
 
     /**
      * @param SerializerInterface $serializer

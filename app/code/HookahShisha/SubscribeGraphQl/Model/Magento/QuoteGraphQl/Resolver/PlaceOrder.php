@@ -17,7 +17,7 @@ class PlaceOrder
     /**
      * @var AssociatedOrders $associatedOrdersFactory
      */
-    protected $associatedOrdersFactory;
+    protected AssociatedOrders $associatedOrdersFactory;
 
     /**
      * @param AssociatedOrders $associatedOrdersFactory

@@ -16,7 +16,7 @@ class CartPrices
     /**
      * @var TotalsCollector
      */
-    private $totalsCollector;
+    private TotalsCollector $totalsCollector;
 
     /**
      * @param TotalsCollector $totalsCollector
@@ -28,7 +28,7 @@ class CartPrices
     }
 
     /**
-     * Adding sunscription initial fee field
+     * Adding subscription initial fee field
      *
      * @param CartPricesSubject $subject
      * @param array $result

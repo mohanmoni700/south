@@ -18,22 +18,22 @@ class SubscriptionDetailPdp implements ResolverInterface
     /**
      * @var FilterBuilder
      */
-    protected $filterBuilder;
+    protected FilterBuilder $filterBuilder;
 
     /**
      * @var SearchCriteriaBuilder
      */
-    protected $searchCriteriaBuilder;
+    protected SearchCriteriaBuilder $searchCriteriaBuilder;
 
     /**
      * @var ProductRepositoryInterface
      */
-    private $productRepository;
+    private ProductRepositoryInterface $productRepository;
 
     /**
      * @var BillingPeriod
      */
-    private $billingPeriod;
+    private BillingPeriod $billingPeriod;
 
     /**
      *
@@ -93,7 +93,7 @@ class SubscriptionDetailPdp implements ResolverInterface
         foreach ($products as $product) {
             $finalProduct = $product;
         }
-        
+
         if ($finalProduct !== null) {
             $billingPeriod = $this->getBillingPeriod($finalProduct);
 
