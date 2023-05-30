@@ -291,6 +291,13 @@ define([
             },
             $.mage.__('A positive or negative non-decimal number please')
         ],
+        'phone':[
+            function (value, element) {
+                return this.optional(element) || /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(value)||
+                    /^\+?\d+$/.test(value) || /^\+\d{1,4}\s\d+$/.test(value);
+            },
+            $.mage.__('please enter a valid phone number')
+        ],
         'vinUS': [
             function (v) {
                 var i, n, d, f, cd, cdv, LL, VL, FL, rs;
