@@ -46,9 +46,10 @@ class Quote
      */
     public function beforeBeforeAddProduct(Subject $subject, $parentSubject, $product, $request = null): array
     {
-        $subscriptionData = $this->cartItemSubscribeDataRegistry->getData()[0] ?? null;
-        if ($subscriptionData && ($subscriptionData['is_subscription'] ?? null)) {
-            $requestArray = $request->getData();
+        $subscriptionData = $this->cartItemSubscribeDataRegistry->getData()[$product->getSku()] ?? null;
+        $requestArray = $request->getData();
+        $isExistingProduct = ($requestArray['options']['_1'] ?? null) == 'subscription';
+        if (!$isExistingProduct && $subscriptionData && ($subscriptionData['is_subscription'] ?? null)) {
             $requestArray['options']['_1'] = 'subscription';
             $billingPeriod = $subscriptionData['billing_period'] ?? null;
             $this->validateBillingPeriod($billingPeriod);

@@ -33,7 +33,15 @@ class AddProductsToCart
     public function beforeResolve(Subject $subject, ...$functionArgs)
     {
         $args = $functionArgs[4] ?? [];
-        $this->cartItemSubscribeDataRegistry->setData($args['cartItems']);
+        $cartItems = $args['cartItems'];
+        $data = [];
+        foreach ($cartItems as $cartItem) {
+            $sku = $cartItem['sku'] ?? null;
+            if ($sku) {
+                $data[$sku] = $cartItem;
+            }
+        }
+        $this->cartItemSubscribeDataRegistry->setData($data);
         return $functionArgs;
     }
 }

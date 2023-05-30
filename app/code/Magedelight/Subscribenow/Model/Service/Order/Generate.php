@@ -266,7 +266,7 @@ class Generate
             $quoteItem->setOriginalCustomPrice($this->getProfile()->getBillingAmount()); // setting product subtotal
         }
 
-        if ($this->isProfileInTrialPeriod()) {
+        if ($this->isProfileInTrialPeriod() && false) {
             $quoteItem->setName(__('Trial ') . $this->getProduct()->getName());
             $quoteItem->setCustomPrice(0);
             $quoteItem->setOriginalCustomPrice(0);

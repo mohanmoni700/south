@@ -18,4 +18,9 @@
                 type="HookahShisha\SubscribeGraphQl\Plugin\Magedelight\Subscribenow\Checkout\Model\ShippingInformationManagement"
                 sortOrder="10"/>
     </type>
+    <type name="Magedelight\Subscribenow\Model\Subscription">
+        <plugin name="subscription_discount_amount_on_product"
+                type="HookahShisha\SubscribeGraphQl\Plugin\Model\Resolver\Subscription"
+                sortOrder="10"/>
+    </type>
 </config>
