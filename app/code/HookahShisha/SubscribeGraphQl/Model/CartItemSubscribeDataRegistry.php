@@ -13,9 +13,9 @@ class CartItemSubscribeDataRegistry
      */
     private array $data = [];
 
+    private bool $isDataSet = false;
+
     /**
-     * Getdata
-     *
      * @return null
      */
     public function getData()
@@ -24,12 +24,19 @@ class CartItemSubscribeDataRegistry
     }
 
     /**
-     * Setdata
-     *
-     * @param null $data
+     * @param $data
      */
     public function setData($data): void
     {
         $this->data = $data;
+        $this->isDataSet = true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDataSet(): bool
+    {
+        return $this->isDataSet;
     }
 }
