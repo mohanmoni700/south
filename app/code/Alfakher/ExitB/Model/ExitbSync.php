@@ -48,7 +48,7 @@ class ExitbSync
      * @var Json $json
      */
     protected $json;
-    
+
     /**
      * @var ManagerInterface
      */
@@ -183,8 +183,12 @@ class ExitbSync
                 if ($order->hasInvoices()) {
                     $orderData['orderData']['payment']['isPayed'] = true;
                     $orderData['orderData']['payment']['amountPayed'] = (float)$order->getPayment()->getAmountPaid();
+                } else {
+                    if (str_contains($paymentCode, 'vrpayecommerce') || str_contains($paymentCode, 'klarna')) {
+                        $orderData['orderData']['payment']['isPayed'] = false;
+                    }
                 }
-                
+
                 $shippingMethod = $order->getShippingMethod();
                 $orderData['orderData']['shipment']['code'] = $this->getConfigValue(self::SHIP_CODE, $websiteId);
                 $orderData['orderData']['shipment']['total'] = (float)$order->getShippingAmount() + (float)$order->getShippingTaxAmount() + (float)$order->getHandlingFee();
@@ -196,7 +200,6 @@ class ExitbSync
                 }
                 $items = $order->getAllItems();
                 $orderData['orderData']['items'] = $this->orderItems($items, $orderData['orderData']['isB2B']);
-                
                 $exitBModel = $this->exitbmodelFactory->create();
                 $exitBorderSync = $exitBModel->load($orderId, 'order_id');
 
@@ -360,7 +363,7 @@ class ExitbSync
         }
         return '';
     }
-    
+
     /**
      * Get order items
      *
