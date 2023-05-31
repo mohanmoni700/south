@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace HookahShisha\OrderItemExcludingTaxPrice\Model\Resolver;
+namespace Shishaworld\OrderItemExcludingTaxPrice\Model\Resolver;
 
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;

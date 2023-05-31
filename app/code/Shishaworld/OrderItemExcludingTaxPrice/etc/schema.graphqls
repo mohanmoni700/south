@@ -1,0 +1,7 @@
+interface OrderItemInterface {
+    item_including_tax_price_data: GetIncludingTaxPrice @doc(description: "Get product Qty and Stock Status") @resolver(class: "\\Shishaworld\\OrderItemExcludingTaxPrice\\Model\\Resolver\\OrderItem")
+}
+
+type GetIncludingTaxPrice {
+    item_including_tax_price: Float @doc(description:"Product Qty")
+}
