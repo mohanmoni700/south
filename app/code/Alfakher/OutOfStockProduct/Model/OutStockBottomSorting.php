@@ -35,9 +35,9 @@ class OutStockBottomSorting extends MagentoSorting
      * Apply sorting to collection
      * Adding quantityStock join for OutStockBottom Sorting as well
      *
-     * @param \Magento\Catalog\Model\Category $category
-     * @param \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
-     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
+     * @param Category $category
+     * @param Collection $collection
+     * @return Collection
      * @throws LocalizedException
      */
     public function applySorting(
