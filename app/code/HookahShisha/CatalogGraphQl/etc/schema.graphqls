@@ -10,6 +10,7 @@ interface CategoryInterface {
 
 interface ProductInterface {
     url_key: String @doc(description: "The part of the URL that identifies the product") @resolver(class: "\\HookahShisha\\CatalogGraphQl\\Model\\Resolver\\UrlRewrite\\ProductUrlKey")
+    saleable_qty: String @doc(description: "get the saleable qty") @resolver(class: "HookahShisha\\CatalogGraphQl\\Model\\Resolver\\Saleableqty")
 }
 
 type BundleProduct {
