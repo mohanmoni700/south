@@ -49,7 +49,11 @@ class SortCategoryProduct
         $this->sorting = $sorting;
         $this->logger = $logger;
     }
-
+    /**
+     * Cron Execute method to refresh the category product position
+     * Move oos products to bottom of the page
+     * @return void
+     */
     public function execute()
     {
         $categoryCollection = $this->getCategoryCollection();
@@ -102,7 +106,7 @@ class SortCategoryProduct
     {
         if ($category) {
             $rules = $this->rules->loadByCategory($category);
-            return (bool)$rules->getIsActive();
+            return $rules->getIsActive();
         }
         return false;
     }

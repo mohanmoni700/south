@@ -10,6 +10,8 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\VisualMerchandiser\Model\Sorting as MagentoSorting;
 use Magento\VisualMerchandiser\Model\Resolver\QuantityAndStock;
 use Magento\VisualMerchandiser\Model\Sorting\Factory;
+use Magento\Catalog\Model\Category;
+use Magento\Catalog\Model\ResourceModel\Product\Collection;
 
 /** overwrite class to Adding quantityStock join for OutStockBottom Sorting as well */
 class OutStockBottomSorting extends MagentoSorting
@@ -20,6 +22,7 @@ class OutStockBottomSorting extends MagentoSorting
     private $quantityStockResolver;
 
     /**
+     * @param Factory $factory
      * @param QuantityAndStock $quantityAndStockResolver
      * @throws LocalizedException
      */
@@ -38,8 +41,8 @@ class OutStockBottomSorting extends MagentoSorting
      * @throws LocalizedException
      */
     public function applySorting(
-        \Magento\Catalog\Model\Category $category,
-        \Magento\Catalog\Model\ResourceModel\Product\Collection $collection
+        Category $category,
+        Collection $collection
     ) {
         $sortBuilder = $this->getSortingInstance($category->getAutomaticSorting());
         if ($category->getAutomaticSorting() &&
