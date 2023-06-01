@@ -9,6 +9,7 @@ namespace Alfakher\OutOfStockProduct\Plugin\VisualMerchandiser;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\VisualMerchandiser\Model\Sorting\OutStockBottom as MagentoOutStockBottom;
 use Magento\VisualMerchandiser\Model\Resolver\QuantityAndStock;
+use Magento\Framework\DB\Select;
 
 /** Plugin to move out of stock order to bottom of the page */
 class OutStockBottom
@@ -34,12 +35,8 @@ class OutStockBottom
      */
     public function afterSort(MagentoOutStockBottom $subject, $collection) //NOSONAR $subject is required
     {
-        $query = (string) $collection->getSelect();
-        if (!str_contains($query, "SUM(`at_parent_stock`.`qty`), `at_child_stock`.`qty`) AS `stock`")) {
-            $collection = $this->quantityStockResolver->joinStock($collection);
-        }
         $collection->getSelect()
-            ->reset('order')
+            ->reset(Select::ORDER)
             ->order(['is_in_stock DESC',
                 'stock DESC'
             ]);
