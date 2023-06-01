@@ -1125,7 +1125,7 @@ return [
         'Magefan_WysiwygAdvanced' => 1,
         'Magefan_YouTubeWidget' => 1,
         'Alfakher_Webhook' => 1,
-        'Mageplaza_MultipleCoupons' => 1,
+        'Mageplaza_MultipleCoupons' => 0,
         'Mageplaza_ProductLabels' => 1,
         'Mageplaza_ProductLabelsGraphQl' => 1,
         'Mageplaza_Seo' => 1,
