@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    
+
     <preference for="Magento\Catalog\Ui\DataProvider\Product\Form\ProductDataProvider" type="Alfakher\GrossMargin\Ui\Magento\Catalog\DataProvider\Product\Form\ProductDataProvider" />
 
     <preference for="Magento\SharedCatalog\Ui\DataProvider\Configure\Pricing" type="Alfakher\GrossMargin\Ui\Magento\SharedCatalog\DataProvider\Configure\Pricing" />
@@ -13,8 +13,4 @@
     <type name="Magento\Sales\Model\AdminOrder\Create">
         <plugin name="around_admin_order_create" type="Alfakher\GrossMargin\Plugin\Sales\Model\AdminOrder\CreatePlugin" sortOrder="10"/>
     </type>
-
-
-    <preference for="Magento\VisualMerchandiser\Model\Category\Products" type="Alfakher\GrossMargin\Model\Magento\VisualMerchandiser\Category\Products" />
-
 </config>
