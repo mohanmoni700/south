@@ -1,0 +1,50 @@
+diff --git a/vendor/mageplaza/module-multiple-coupons/Plugin/Model/RuleCollection.php b/vendor/mageplaza/module-multiple-coupons/Plugin/Model/RuleCollection.php
+index bf0e2061a..03c3882da 100644
+--- a/vendor/mageplaza/module-multiple-coupons/Plugin/Model/RuleCollection.php
++++ b/vendor/mageplaza/module-multiple-coupons/Plugin/Model/RuleCollection.php
+@@ -27,6 +27,7 @@ use Magento\Quote\Model\Quote\Address;
+ use Magento\SalesRule\Model\ResourceModel\Rule\Collection;
+ use Magento\SalesRule\Model\Rule;
+ use Mageplaza\MultipleCoupons\Helper\Data;
++use Magento\Store\Model\StoreManagerInterface;
+ 
+ /**
+  * Class RuleCollection
+@@ -44,18 +45,26 @@ class RuleCollection
+      */
+     protected $timezone;
+ 
++    /**
++     * @var StoreManagerInterface
++     */
++    protected $storeManager;
++
+     /**
+      * RuleCollection constructor.
+      *
+      * @param Data $data
+      * @param TimezoneInterface $timezone
++     * @param StoreManagerInterface $storeManager
+      */
+     public function __construct(
+         Data $data,
+-        TimezoneInterface $timezone
++        TimezoneInterface $timezone,
++        StoreManagerInterface $storeManager
+     ) {
+         $this->data     = $data;
+         $this->timezone = $timezone;
++        $this->storeManager = $storeManager;
+     }
+ 
+     /**
+@@ -78,7 +87,8 @@ class RuleCollection
+         $now = null,
+         Address $address = null
+     ) {
+-        if (!$this->data->isApplyFor($websiteId) || !strlen($couponCode)) {
++        $storeId = $this->storeManager->getStore()->getStoreId();
++        if (!$this->data->isApplyFor($storeId) || !strlen($couponCode)) {
+             return $proceed($websiteId, $customerGroupId, $couponCode, $now, $address);
+         }
+ 
