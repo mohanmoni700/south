@@ -155,9 +155,12 @@ class ExitbSync
                 $customerId = $order->getCustomerId();
                 if ($customerId) {
                     $orderData['orderData']['customer']['number'] = $order->getCustomerId();
-                    $orderData['orderData']['customer']['email'] = $order->getCustomerEmail();
-                    $orderData['orderData']['customer']['phone'] = $order->getShippingAddress()->getTelephone();
+                } else {
+                    $orderData['orderData']['customer']['number'] = $order->getCustomerEmail();
                 }
+                $orderData['orderData']['customer']['email'] = $order->getCustomerEmail();
+                $orderData['orderData']['customer']['phone'] = $order->getShippingAddress()->getTelephone();
+
                 $companydata = $order->getExtensionAttributes()->getCompanyOrderAttributes();
                 $companyName = '';
                 if (!empty($companydata)) {
