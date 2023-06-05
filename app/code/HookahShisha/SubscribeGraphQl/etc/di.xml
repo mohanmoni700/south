@@ -39,4 +39,11 @@
                 sortOrder="10"
         />
     </type>
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="subscription-create-order" xsi:type="object">HookahShisha\SubscribeGraphQl\Console\SubscriptionCreateOrder</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
