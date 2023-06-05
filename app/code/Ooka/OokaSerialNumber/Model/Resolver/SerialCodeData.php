@@ -66,6 +66,8 @@ class SerialCodeData implements ResolverInterface
         array       $value = null,
         array       $args = null
     ) {
+        $pageSize = $args['pageSize'] ?? 10;
+        $currentPage = $args['currentPage'] ?? 1;
         $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
         /** @var ContextInterface $context */
         if (!$context->getExtensionAttributes()->getIsCustomer()) {
@@ -86,22 +88,42 @@ class SerialCodeData implements ResolverInterface
         $group2 = $this->filterGroupBuilder->addFilter($storeFilter)->create();
         $criteria = $this->searchCriteriaBuilder->setFilterGroups([$group1, $group2])->create();
         $items = $this->serialNumberRepository->getList($criteria)->getItems();
-        $data = [];
-        foreach ($items as $item) {
-            $data[] = [
-                "id" => $item->getId(),
-                "order_id" => $item->getOrderId(),
-                "sku" => $item->getSku(),
-                "serial_code" => $item->getSerialCode(),
-                'customer_email' => $item->getCustomerEmail(),
-                'item_id' => $item->getItemId(),
-                'shipment_number' => $item->getShipmentNumber(),
-                'shipping_address' => $item->getShippingAddress(),
-                'store_code' => $item->getWebsite(),
-                "created_at" => $item->getCreatedAt(),
-                "updated_at" => $item->getUpdatedAt(),
-            ];
+        $count = count($items);
+        $result = [];
+        if ($count) {
+            $total_pages =  ceil($count / $pageSize);
+            if ($currentPage <= 0 || $currentPage > $total_pages) {
+                throw new GraphQlAuthorizationException(__('Invalid Page Number.'));
+            }
+            $chunks = array_chunk(
+                $items,
+                $pageSize
+            );
+            $items = $chunks[$currentPage - 1] ?? $chunks[$currentPage];
+            $data = [];
+            foreach ($items as $item) {
+                $data[] = [
+                    "id" => $item->getId(),
+                    "order_id" => $item->getOrderId(),
+                    "sku" => $item->getSku(),
+                    "serial_code" => $item->getSerialCode(),
+                    'customer_email' => $item->getCustomerEmail(),
+                    'item_id' => $item->getItemId(),
+                    'shipment_number' => $item->getShipmentNumber(),
+                    'shipping_address' => $item->getShippingAddress(),
+                    'website' => $item->getWebsite(),
+                    "created_at" => $item->getCreatedAt(),
+                    "updated_at" => $item->getUpdatedAt(),
+                ];
+            }
+            $result['record'] = $data;
+            $result['total_count'] = $count;
+            $result['total_pages'] = $total_pages;
+        } else {
+            $result['record'] = [];
+            $result['total_count'] = 0;
+            $result['total_pages'] = 0;
         }
-        return $data;
+        return $result;
     }
 }
