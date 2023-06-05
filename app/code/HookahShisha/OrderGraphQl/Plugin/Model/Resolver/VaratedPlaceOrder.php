@@ -50,8 +50,9 @@ class VaratedPlaceOrder
         'ooka_uae_store_en',
         'ooka_uae_store_ar',
         'hookah_store_view_en',
-        'hookah_store_view_es', 
-        'hookah_store_view_de'
+        'hookah_store_view_es',
+        'hookah_store_view_de',
+        'hookah_wholesalers_store_view'
     ];
 
     /**
