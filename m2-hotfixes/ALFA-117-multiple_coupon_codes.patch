@@ -1,5 +1,5 @@
 diff --git a/vendor/mageplaza/module-multiple-coupons/Plugin/Model/RuleCollection.php b/vendor/mageplaza/module-multiple-coupons/Plugin/Model/RuleCollection.php
-index bf0e2061a..03c3882da 100644
+index bf0e2061a..53b3886f0 100644
 --- a/vendor/mageplaza/module-multiple-coupons/Plugin/Model/RuleCollection.php
 +++ b/vendor/mageplaza/module-multiple-coupons/Plugin/Model/RuleCollection.php
 @@ -27,6 +27,7 @@ use Magento\Quote\Model\Quote\Address;
@@ -38,8 +38,18 @@ index bf0e2061a..03c3882da 100644
      }
  
      /**
-@@ -78,7 +87,8 @@ class RuleCollection
-         $now = null,
+@@ -72,25 +81,26 @@ class RuleCollection
+     public function aroundSetValidationFilter(
+         Collection $subject,
+         Closure $proceed,
+-        $websiteId,
+-        $customerGroupId,
+-        $couponCode = '',
+-        $now = null,
++                   $websiteId,
++                   $customerGroupId,
++                   $couponCode = '',
++                   $now = null,
          Address $address = null
      ) {
 -        if (!$this->data->isApplyFor($websiteId) || !strlen($couponCode)) {
@@ -48,3 +58,17 @@ index bf0e2061a..03c3882da 100644
              return $proceed($websiteId, $customerGroupId, $couponCode, $now, $address);
          }
  
+         $coupons = $this->data->formatCodeArray($couponCode);
+ 
+-        if (!empty($intersectCodes = array_intersect($coupons, $this->data->getUniqueCodes($websiteId)))) {
++        if (!empty($intersectCodes = array_intersect($coupons, $this->data->getUniqueCodes($storeId)))) {
+             $coupons = [end($intersectCodes)];
+         }
+ 
+         /** @var Collection $result */
+         $result = $proceed($websiteId, $customerGroupId, $couponCode, $now, $address);
+-        $limit  = $this->data->getLimitQty($websiteId);
++        $limit  = $this->data->getLimitQty($storeId);
+         if ($limit && count($coupons) > $limit) {
+             return $result;
+         }
