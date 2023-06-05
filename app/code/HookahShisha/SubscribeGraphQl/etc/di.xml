@@ -28,4 +28,15 @@
                 type="HookahShisha\SubscribeGraphQl\Plugin\Model\Quote\Item\CartItemPersister"
                 sortOrder="10"/>
     </type>
+    <preference for="Magedelight\Subscribenow\Model\ResourceModel\ProductSubscribers"
+                type="HookahShisha\SubscribeGraphQl\Model\ResourceModel\ProductSubscribers" />
+
+    <preference for="Magedelight\Subscribenow\Model\Service\OrderService"
+                type="HookahShisha\SubscribeGraphQl\Model\Service\OrderService" />
+    <type name="Magedelight\Subscribenow\Model\Data\ProductSubscribers">
+        <plugin name="subscribe_product_get_product_options"
+                type="HookahShisha\SubscribeGraphQl\Plugin\Model\Data\ProductSubscribers"
+                sortOrder="10"
+        />
+    </type>
 </config>
