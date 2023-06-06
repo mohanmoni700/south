@@ -1,0 +1,25 @@
+{
+    "name": "tabby/magento2-checkout",
+    "description": "Tabby Payment Gateway - Checkout Method",
+    "require": {
+        "php": ">=7.1",
+        "magento/module-sales": "*",
+        "magento/module-checkout": "*",
+        "magento/module-payment": "*",
+        "magento/framework": "*"
+    },
+    "type": "magento2-module",
+    "version": "3.7.1",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Tabby\\Checkout\\": ""
+        }
+    }
+}
