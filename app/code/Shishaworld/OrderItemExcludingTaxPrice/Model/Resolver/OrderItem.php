@@ -18,6 +18,6 @@ class OrderItem implements ResolverInterface
     public function resolve(Field $field, $context, ResolveInfo $info, array $value = null, array $args = null)
     {
         $parentItem = $value['model'];
-        return ['item_including_tax_price' => $parentItem->getOriginalPrice()];
+        return ['item_including_tax_price' => $parentItem->getPriceInclTax()];
     }
 }

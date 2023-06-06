@@ -1,7 +1,33 @@
 interface OrderItemInterface {
-    item_including_tax_price_data: GetIncludingTaxPrice @doc(description: "Get product Qty and Stock Status") @resolver(class: "\\Shishaworld\\OrderItemExcludingTaxPrice\\Model\\Resolver\\OrderItem")
+    item_including_tax_price_data: GetIncludingTaxPrice @doc(description: "Get order item incl tax") @resolver(class: "\\Shishaworld\\OrderItemExcludingTaxPrice\\Model\\Resolver\\OrderItem")
+}
+
+interface InvoiceItemInterface {
+    invoice_item_including_tax_price_data: GetIncludingTaxPriceOfInvoice @doc(description: "Get invoice item incl tax") @resolver(class: "\\Shishaworld\\OrderItemExcludingTaxPrice\\Model\\Resolver\\Invoice\\InvoiceItems")
+}
+
+type OrderTotal {
+    subtotal_incl_tax_data: GetIncludingTaxSubtotal @doc(description: "Subtotal of the order, incl taxes") @resolver(class: "\\Shishaworld\\OrderItemExcludingTaxPrice\\Model\\Resolver\\OrderTotal")
+}
+
+type InvoiceTotal {
+    invoice_subtotal_incl_tax_data: GetIncludingTaxSubtotalOfInvoice @doc(description: "Subtotal of the order, incl taxes")
 }
 
 type GetIncludingTaxPrice {
-    item_including_tax_price: Float @doc(description:"Product Qty")
+    item_including_tax_price: Float @doc(description:"Item incl price")
+}
+
+type GetIncludingTaxPriceOfInvoice {
+    invoice_item_including_tax_price: Float @doc(description:"Item incl price")
+}
+
+type GetIncludingTaxSubtotal {
+    subtotal_incl_tax: Float @doc(description:"Subtotal incl tax")
+    subtotal_currency: String @doc(description:"Subtotal incl tax currency")
+}
+
+type GetIncludingTaxSubtotalOfInvoice {
+    invoice_subtotal_incl_tax: Float @doc(description: "The subtotal of the invoice, incl taxes")
+    invoice_subtotal_currency: String @doc(description:"Subtotal incl tax currency")
 }
