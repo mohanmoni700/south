@@ -46,4 +46,15 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magedelight\Subscribenow\Model\Service\Order\Generate">
+        <plugin name="subscribe_order_set_discount"
+                type="HookahShisha\SubscribeGraphQl\Plugin\Model\Service\Order\Generate"
+                sortOrder="10"
+        />
+    </type>
+    <type name="Magedelight\Subscribenow\Plugin\Magento\Bundle\Model\Product\Price">
+        <plugin name="subscribe_order_bundel_product_set_discount"
+                type="HookahShisha\SubscribeGraphQl\Plugin\Magento\Bundle\Model\Product\Price"
+                sortOrder="10" />
+    </type>
 </config>
