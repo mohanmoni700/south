@@ -4,90 +4,89 @@
  */
 ?>
 <?php
-$customerid=$block->getCustomerId();
-$customerData= $block->getCustomercollection($customerid);
-$data= $customerData->getData();
-$customeradd=$block->getCustomeraddress($customerid);
-$country=$customeradd->getData('country_id');
-$documentData= $block->getDocumentCollection();
+$customerid = $block->getCustomerId();
+$customerData = $block->getCustomercollection($customerid);
+$data = $customerData->getData();
+$customeradd = $block->getCustomeraddress($customerid);
+$country = $customeradd->getData('country_id');
+$documentData = $block->getDocumentCollection();
 $docdata = $documentData->getData();
 $mediaUrl = $block->getMediaUrl();
-$mediaUrl = $mediaUrl."myDocument/";
+$mediaUrl = $mediaUrl . "myDocument/";
 $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
 ?>
 
 <div class="fieldset-wrapper customer-information">
     <div class="fieldset-wrapper-title">
-      <span class="title"><?= $block->escapeHtml('Documents') ?></span>
+        <span class="title"><?= $block->escapeHtml('Documents') ?></span>
     </div>
     <div class="fieldset-wrapper-title">
         <span class="title"><?= $block->escapeHtml(__('Customer Information')) ?></span>
     </div>
     <table class="admin__table-secondary">
         <tbody>
-        <?php //= $block->getChildHtml() ?>
         <tr>
             <th><?= $block->escapeHtml(__('Customer Name:')) ?></th>
-            <td><?= $block->escapeHtml($customerData->getName())?></td>
+            <td><?= $block->escapeHtml($customerData->getName()) ?></td>
         </tr>
 
         <tr>
             <th><?= $block->escapeHtml(__('Customer Email:')) ?></th>
-            <td><?= $block->escapeHtml($customerData->getEmail())?></td>
+            <td><?= $block->escapeHtml($customerData->getEmail()) ?></td>
         </tr>
-        <?php if ($country == 'US') {?>
+        <?php if ($country == 'US') { ?>
 
             <?php if ($block->getCompanyName()) { ?>
-        <tr>
-            <th><?= $block->escapeHtml(__('Company Name:')) ?></th>
-            <td>
-                <a href="
-                <?= $block->escapeHtml(__($block->getUrl('company/index/edit/', ['id' => $block->getEntityId()]))); ?>" 
-                target="_blank" 
-                rel="noopener">
-                    <span><?= $block->escapeHtml($block->getCompanyName()) ?></span>
-                </a>
-            </td>
-        </tr>
-        <?php } ?>
+                <tr>
+                    <th><?= $block->escapeHtml(__('Company Name:')) ?></th>
+                    <td>
+                        <a href="
+                <?= $block->escapeHtml(__($block->getUrl('company/index/edit/', ['id' => $block->getEntityId()]))); ?>"
+                           target="_blank"
+                           rel="noopener">
+                            <span><?= $block->escapeHtml($block->getCompanyName()) ?></span>
+                        </a>
+                    </td>
+                </tr>
+            <?php } ?>
 
             <?php if ($block->getVatTaxId()) { ?>
-        <tr>
-            <th><?= $block->escapeHtml(__('Sales Tax ID:')) ?></th>
-            <td><?= $block->escapeHtml($block->getVatTaxId())?></td>
-        </tr>
-        <?php } ?>
+                <tr>
+                    <th><?= $block->escapeHtml(__('Sales Tax ID:')) ?></th>
+                    <td><?= $block->escapeHtml($block->getVatTaxId()) ?></td>
+                </tr>
+            <?php } ?>
 
 
             <?php if ($block->getResellerId()) { ?>
-        <tr>
-            <th><?= $block->escapeHtml(__('Reseller ID:')) ?></th>
-            <td><?= $block->escapeHtml($block->getResellerId())?></td>
-        </tr>
-        <?php } ?>
+                <tr>
+                    <th><?= $block->escapeHtml(__('Reseller ID:')) ?></th>
+                    <td><?= $block->escapeHtml($block->getResellerId()) ?></td>
+                </tr>
+            <?php } ?>
 
 
             <?php if ($block->getNumberOfEmp()) { ?>
-        <tr>
-            <th><?= $block->escapeHtml(__('Number of Emp:')) ?></th>
-            <td><?= $block->escapeHtml($block->getNumberOfEmp())?></td>
-        </tr>
-        <?php } ?>
+                <tr>
+                    <th><?= $block->escapeHtml(__('Number of Emp:')) ?></th>
+                    <td><?= $block->escapeHtml($block->getNumberOfEmp()) ?></td>
+                </tr>
+            <?php } ?>
 
 
             <?php if ($block->getTinNumber()) { ?>
-        <tr>
-            <th><?= $block->escapeHtml(__('Tin Number:')) ?></th>
-            <td><?= $block->escapeHtml($block->getTinNumber())?></td>
-        </tr>
-        <?php } ?>
+                <tr>
+                    <th><?= $block->escapeHtml(__('Tin Number:')) ?></th>
+                    <td><?= $block->escapeHtml($block->getTinNumber()) ?></td>
+                </tr>
+            <?php } ?>
 
             <?php if ($block->getTobaccoPermitNumber()) { ?>
-        <tr>
-            <th><?= $block->escapeHtml(__('Tobacco Permit Number:')) ?></th>
-            <td><?= $block->escapeHtml($block->getTobaccoPermitNumber())?></td>
-        </tr>
-        <?php } ?>
+                <tr>
+                    <th><?= $block->escapeHtml(__('Tobacco Permit Number:')) ?></th>
+                    <td><?= $block->escapeHtml($block->getTobaccoPermitNumber()) ?></td>
+                </tr>
+            <?php } ?>
         <?php } ?>
         </tbody>
     </table>
@@ -99,224 +98,178 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
 </div>
 <?php if (!empty($docdata)) { ?>
 
-<!-- Document Information. -->
+    <!-- Document Information. -->
     <?php
-        $items= $block->getDocumentCollection();
-        $i=0;
-        $customer_id = ['customer_id' => $customerid,];
+    $items = $block->getDocumentCollection();
+    $i = 0;
+    $customer_id = ['customer_id' => $customerid,];
     ?>
 
-<!-- Form start BS 24-1-22 -->
+    <!-- Form start BS 24-1-22 -->
     <div class="my_document">
         <form action="<?= $block->escapeHtml($block->getUrl('mydoc/document/save', ['_query' => $customer_id])) ?>"
-            method="post"
-            class="form doc-form"
-            accept-charset="utf-8"
-            enctype="multipart/form-data"
-            data-mage-init='{"validation": {}}'>
+              method="post"
+              class="form doc-form"
+              accept-charset="utf-8"
+              enctype="multipart/form-data"
+              data-mage-init='{"validation": {}}'>
 
-            <input name="form_key" type="hidden" value="<?= $block->escapeHtml($block->getFormKey()) ?>" />
+            <input name="form_key" type="hidden" value="<?= $block->escapeHtml($block->getFormKey()) ?>"/>
 
-            <input name="customer_id" type="hidden" value="<?= $block->escapeHtml(__($customerid)) ?>" />            
-            <!-- <input name="new_doc" type="hidden" value=""> -->
-            <div class="updated-container upload-container">        
-     
-               <?php foreach ($items as $document) { ?>
-            
-                <div class="upload <?php if (!$document->getIsDelete()) { echo 'active'; } ?>" >
-                  <!--   <input type="hidden"
-                    class="doc_id"
-                    name="mydocument_id[]"
-                    value="<?= $block->escapeHtml($document->getMydocumentId()) ?>"> -->
-                    <!-- <label class="admin__form_value">
-                        <?= $block->escapeHtml($document->getDocumentName()) ?></label>    -->             
-                    <?php
-                        $filename=$document->getFilename();
+            <input name="customer_id" type="hidden" value="<?= $block->escapeHtml(__($customerid)) ?>"/>
+            <div class="updated-container upload-container">
+
+                <?php foreach ($items as $document) { ?>
+
+                    <div class="upload <?php if (!$document->getIsDelete()) {
+                        echo 'active';
+                                       } ?>">
+                        <?php
+                        $filename = $document->getFilename();
                         $queryParams = ['filename' => $filename,];
-                    ?>
-                    <!-- <span class="admin__form_label">File:</span> -->
-                    <?php if (!$document->getIsDelete()) { ?>
-                          <input type="hidden"
-                    class="doc_id"
-                    name="mydocument_id[]"
-                    value="<?= $block->escapeHtml($document->getMydocumentId()) ?>">
-                        <label class="empty-label"></label>
-                        <div class="input-file pdf"
-                        id="input-updatefile-<?= $block->escapeHtml($document['mydocument_id']); ?>">
-                        <!-- <input type="hidden" id="test"
-                            name="filename[]"
-                            value="<?= $block->escapeUrl($fileName); ?>"/> -->
+                        ?>
 
-                            <?php
-                            //$fileName = $block->getUrl('mydoc/document/download', ['_query' => $queryParams])
-                            $fileName = $mediaUrl.$filename;
-                            $checkext = $block->checkExtension($fileName);
-                            $extension = $checkext['extension'];
-                            ?>
-                            <div>
-                                <?php if ($extension == "pdf"): ?>
-                                    <img src="
-                                    <?= $block->escapeUrl($pdfImg); ?>" class="pdf-image" alt="pdf documents" />
-                                <?php else: ?>
-                                    <img src="<?= $block->escapeUrl($fileName); ?>" height="170" width="170" />
-                                <?php endif; ?>
-                                <div class="doc-actions">
-                                    <a  class="view-doc-link"
-                                    href="<?= $block->escapeUrl($fileName); ?>"
-                                    target="_blank">
-                                        View
-                                    </a>
-                                    <a  class="deletedocument deleteuploadeddoc"
-                                    name="deletedocument"
-                                    href="#"
-                                    id="<?= $block->escapeHtml($document->getMydocumentId()) ?>">
-                                        Delete
+                        <?php if (!$document->getIsDelete()) { ?>
+                            <input type="hidden"
+                                   class="doc_id"
+                                   name="mydocument_id[]"
+                                   value="<?= $block->escapeHtml($document->getMydocumentId()) ?>">
+                            <label class="empty-label"></label>
+                            <div class="input-file pdf"
+                                 id="input-updatefile-<?= $block->escapeHtml($document['mydocument_id']); ?>">
+
+                                <?php
+                                $fileName = $mediaUrl . $filename;
+                                $checkext = $block->checkExtension($fileName);
+                                $extension = isset($checkext['extension']);
+                                ?>
+                                <div>
+                                    <?php if ($extension == "pdf"): ?>
+                                        <img src="
+                                        <?= $block->escapeUrl($pdfImg); ?>" class="pdf-image" alt="pdf documents"/>
+                                    <?php else: ?>
+                                        <img src="<?= $block->escapeUrl($fileName); ?>" height="170" width="170"/>
+                                    <?php endif; ?>
+                                    <div class="doc-actions">
+                                        <a class="view-doc-link"
+                                           href="<?= $block->escapeUrl($fileName); ?>"
+                                           target="_blank">
+                                            View
+                                        </a>
+                                        <a class="deletedocument deleteuploadeddoc"
+                                           name="deletedocument"
+                                           href="#"
+                                           id="<?= $block->escapeHtml($document->getMydocumentId()) ?>">
+                                            Delete
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="doc-name" id="doc-name-<?= $block->escapeHtml($document['mydocument_id']) ?>">
+                                <span><?= $block->escapeHtml($document['filename']); ?></span>
+                                <a href="<?=
+                                $block->escapeUrl($fileName); ?>" target="_blank" download="" class="download-doc"></a>
+                            </div>
+
+                        <?php } else { ?>
+                            <div class="input-file jpg"
+                                 id="input-updatefile-<?= $block->escapeHtml($document['mydocument_id']); ?>">
+                                <input type="hidden"
+                                       name="mydocument_id[]"
+                                       value="<?= $block->escapeHtml($document['mydocument_id']); ?>"
+                                />
+                                <input type="file"
+                                       id="updatefile_<?= $block->escapeHtml($document['mydocument_id']); ?>"
+                                       class="upload-filename"
+                                       name="updatefile<?= $block->escapeHtml($document['mydocument_id']); ?>"
+                                       data-validate="{required:true}" required/>
+                                <span class="input-note">
+                                <?= $block->escapeHtml(__('(Only one document can be uploaded)')); ?>
+                            </span>
+                                <span id="image-error-message<?= $block->escapeHtml($document['mydocument_id']); ?>"
+                                      style="color:red;"></span>
+                                <!-- bv_vv; date:04-02-2022; File Preview Start; -->
+                                <img class="previewimage-filename<?= $block->escapeHtml($document['mydocument_id']); ?>"
+                                     height="170" width="170"
+                                     src="" title="" style="display:none;"/>
+                                <div class="doc-actions"
+                                     id="doc-actions-filename<?= $block->escapeHtml($document['mydocument_id']); ?>"
+                                     style="display:none;">
+                                    <a class="view-doc-link"
+                                       id="view-doc-link-filename<?= $block->escapeHtml($document['mydocument_id']); ?>"
+                                       href="" target="_blank"></a>
+                                    <a class="deletedocument-preview deletedocument"
+                                       id="deletedocument-filename<?= $block->escapeHtml($document['mydocument_id']); ?>">
                                     </a>
                                 </div>
                             </div>
-                        </div>
-                        <div class="doc-name" id="doc-name-<?= $block->escapeHtml($document['mydocument_id'])?>">
-                            <span><?= $block->escapeHtml($document['filename']); ?></span>
-                            <a href="<?=
-                            $block->escapeUrl($fileName); ?>" target="_blank" download="" class="download-doc"></a>
-                        </div>
-                        
-                    <?php } else { ?>
-                        <div class="input-file jpg"
-                        id="input-updatefile-<?= $block->escapeHtml($document['mydocument_id']);?>">
-                            <input type="hidden"
-                            name="mydocument_id[]"
-                            value="<?= $block->escapeHtml($document['mydocument_id']); ?>"
-                            />
-                            <input type="file" id="updatefile_<?= $block->escapeHtml($document['mydocument_id']);?>"
-                            class="upload-filename"
-                            name="updatefile<?= $block->escapeHtml($document['mydocument_id']);?>"
-                            data-validate="{required:true}" required/>
-                            <span class="input-note">
-                                <?= $block->escapeHtml(__('(Only one document can be uploaded)')); ?>
-                            </span>
-                            <span id="image-error-message<?= $block->escapeHtml($document['mydocument_id']);?>"
-                                style="color:red;"></span>
-                            <!-- bv_vv; date:04-02-2022; File Preview Start; -->
-                            <img class="previewimage-filename<?= $block->escapeHtml($document['mydocument_id']);?>"
-                            height="170" width="170"
-                            src="" title="" style="display:none;"/>
-                            <div class="doc-actions"
-                            id="doc-actions-filename<?= $block->escapeHtml($document['mydocument_id']);?>"
-                            style="display:none;">
-                                <a class="view-doc-link"
-                                id="view-doc-link-filename<?= $block->escapeHtml($document['mydocument_id']);?>"
-                                href="" target="_blank"></a>
-                                <a class="deletedocument-preview deletedocument"
-                                id="deletedocument-filename<?= $block->escapeHtml($document['mydocument_id']);?>"></a>
-                            </div>
-                        </div>
+                        <?php } ?>
 
-<!--                         <div class="expiry_dates" style="margin: 14px 0;">
-                        <label class="admin__form_label">Expiry Date:</label>                        
-                        <input type="text"
-                                    placeholder="Expiry Date"
-                                    name="expiry_date[]"
-                                    id="expiry_date-<?= $block->escapeHtml($document['mydocument_id']); ?>"
-                                    class="update-date"
-                                    data-validate="{required:true}"
-                                    value="<?= $block->escapeHtml($document->getExpiryDate()) ?>" readonly/>
-                        </div> --> 
+                        <?php $docName = $document->getDocumentName(); ?>
 
-                    <?php } ?>
+                        <?php if ($docName == "FEIN" ||
+                            $docName == "Sales Tax/Resale License" ||
+                            $docName == "State Tobacco License" ||
+                            $docName == "Unified Resale Certificate") {
+                            $readonly = "readonly";
+                        } else {
+                            $readonly = "";
+                        }
+                        ?>
 
-                    <?php $docName=$document->getDocumentName(); ?>
-
-                    <?php if ($docName == "FEIN" ||
-                        $docName=="Sales Tax/Resale License" ||
-                        $docName=="State Tobacco License" ||
-                        $docName=="Unified Resale Certificate") {
-                        $readonly="readonly";
-                    } else {
-                        $readonly = "";
-                    }
-                    ?>
-                    
-                    <div class="mydoc_name" for="document name">
+                        <div class="mydoc_name" for="document name">
                             <label><?= $block->escapeHtml(__('Document Name')); ?></label>
-                            <input type="text" id="name-<?= $block->escapeHtml($document['mydocument_id']);?>"
-                            name="document_name[]"
-                            data-validate="{required:true}"
-                            value="<?=$block
-                            ->escapeHtml($document['document_name']); ?>" <?= $block->escapeHtml(__($readonly)) ?>/>
+                            <input type="text" id="name-<?= $block->escapeHtml($document['mydocument_id']); ?>"
+                                   name="document_name[]"
+                                   data-validate="{required:true}"
+                                   value="<?= $block
+                                       ->escapeHtml($document['document_name']); ?>" <?= $block->escapeHtml(__($readonly)) ?>/>
+                        </div>
+
+                        <div class="expiry_dates" style="margin: 14px 0;">
+                            <label class="admin__form_label">Expiry Date:</label>
+                            <input type="text"
+                                   placeholder="Expiry Date"
+                                   name="expiry_date[]"
+                                   id="expiry_date-<?= $block->escapeHtml($document['mydocument_id']); ?>"
+                                   class="update-date"
+                                   data-validate="{required:true}"
+                                   value="<?= $block->escapeHtml($document->getExpiryDate()) ?>" readonly/>
+                        </div>
+
+                        <?php $val = $document->getMydocumentId(); ?>
+
+                        <div class="set_expiry" style="display: block;">
+                            <label class="admin__form_label">Document Verified:</label>
+                            <label class="switch admin__form_value">
+
+                                <input type="checkbox"
+                                       id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
+                                       class='cmn-toggle cmn-toggle-round'
+                                       value="<?= $block
+                                           ->escapeHtml($document->getStatus()) ?>"
+                                       name='status[]' <?= $document->getStatus() == '1' ? 'checked' : ''; ?>
+                                />
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+
+                        <div class="doc_name" id="message_<?= $block->escapeHtml($document->getMydocumentId()) ?>">
+                            <label class="admin__form_label">Rejected Reason:</label>
+
+                            <input type="text"
+                                   name="message[]"
+                                   class="admin__form_value"
+                                   value="<?= $block->escapeHtml($document->getMessage()) ?>"/>
+                        </div>
+
+                        <?php $i++; ?>
                     </div>
-
-                    <div class="expiry_dates" style="margin: 14px 0;">
-                        <label class="admin__form_label">Expiry Date:</label>                        
-                        <input type="text"
-                                    placeholder="Expiry Date"
-                                    name="expiry_date[]"
-                                    id="expiry_date-<?= $block->escapeHtml($document['mydocument_id']); ?>"
-                                    class="update-date"
-                                    data-validate="{required:true}"
-                                    value="<?= $block->escapeHtml($document->getExpiryDate()) ?>" readonly/>
-                    </div> 
-
-                    <?php $val=$document->getMydocumentId(); ?>
-
-                    <div class="set_expiry" style="display: block;">
-                        <label class="admin__form_label">Document Verified:</label>
-                        <label class="switch admin__form_value">
-
-                         <input type="checkbox"
-                            id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
-                            class='cmn-toggle cmn-toggle-round'
-                            value="<?=$block
-                            ->escapeHtml($document->getStatus())?>"
-                            name='status[]' <?= $document->getStatus()== '1' ? 'checked' : ''; ?>
-                            />
-
-                        <!-- bv-hd toggle disable after admin action -->
-                        <!-- <?php if ($document->getStatus() == 1) { ?>
-                        
-                        <input type="checkbox"
-                        id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
-                        class='cmn-toggle cmn-toggle-round'
-                        value="0"
-                        name='status[]' <?= $document->getStatus() == '1' ? 'checked' : ''; ?>
-                        disabled />
-                        <?php } elseif ($document->getStatus() == 0 && $document->getMessage() !=null) { ?>
-                            <input type="checkbox"
-                            id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
-                            class='cmn-toggle cmn-toggle-round'
-                            value="0"
-                            name='status[]'
-                                 <?= $document->getStatus()== '1' ? 'checked' : ''; ?> disabled />
-                        <?php } else { ?>
-                            <input type="checkbox"
-                            id='toggle_<?= $block->escapeHtml($document->getMydocumentId()) ?>'
-                            class='cmn-toggle cmn-toggle-round'
-                            value="0"
-                            name='status[]'
-                            <?= $document->getStatus()== '1' ? 'checked' : ''; ?> />
-                        <?php } ?> -->
-                        <!-- bv-hd toggle disable after admin action -->
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-
-
-
-                    <div class="doc_name" id="message_<?= $block->escapeHtml($document->getMydocumentId()) ?>">
-                        <label class="admin__form_label">Rejected Reason:</label>
-                    
-                        <input type="text"
-                        name="message[]"
-                        class="admin__form_value"
-                        value="<?= $block->escapeHtml($document->getMessage()) ?>" />
-                    </div>
-
-                    <?php $i++; ?>
-            </div>  
-        <?php } ?> 
-        <!-- for admin to upload documents after submit -->
-        <?=$block->getChildHtml('add_more_doc');?>
-        <!-- for admin to upload documents after submit -->
+                <?php } ?>
+                <!-- for admin to upload documents after submit -->
+                <?= $block->getChildHtml('add_more_doc'); ?>
+                <!-- for admin to upload documents after submit -->
             </div>
             <div class="actions-toolbar justify_btn">
                 <div class="primary regis">
@@ -325,46 +278,32 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
             </div>
         </form>
     </div>
-   <!-- Form End BS 24-1-22 -->
-</div>
-
-
+    <!-- Form End BS 24-1-22 -->
+    </div>
 <?php } else {
-        //echo "No Documents are uploaded!";
-        echo $block->getChildHtml('add_documents');
+    echo $block->getChildHtml('add_documents');
 } ?>
 
 <script>
+    require(['jquery', 'jquery/ui'], function ($) {
+        jQuery(document).ready(function () {
+            jQuery("[id^='toggle_']").on('change', function () {
 
-       require(['jquery', 'jquery/ui'], function($){
-           jQuery(document).ready( function() {         
-               jQuery("[id^='toggle_']").on('change', function(){
-                  
-                  var toggle_id = $(this).attr('id');
-                  var check = this.checked ? 1 : 0;
-                  var splitid = toggle_id.split("_");
-                   
-                   if(check == 1) {
-                       jQuery("#message_"+splitid[1]).hide();
-                       jQuery("#message_"+splitid[1]).find('input').prop('required',false);
-                        jQuery("#message_"+splitid[1]).find('input').val('');
-                        $("#"+toggle_id).val('1');
-                   }
-                   else{
-                       jQuery("#message_"+splitid[1]).show();
-                        $("#"+toggle_id).val('0');
-                        jQuery("#message_"+splitid[1]).find('input').prop('required',true);
-                   }
+                var toggle_id = $(this).attr('id');
+                var check = this.checked ? 1 : 0;
+                var splitid = toggle_id.split("_");
 
-/*                   if(jQuery("#message_"+splitid[1]).find('input').val()){
-                     jQuery("#message_"+splitid[1]).find('input').prop('readonly',true);
-
-                   }else{
-                     jQuery("#message_"+splitid[1]).find('input').prop('readonly',false);
-                   }*/
-
-
-                    jQuery("#expiry_date-"+splitid[1]).datepicker({
+                if (check == 1) {
+                    jQuery("#message_" + splitid[1]).hide();
+                    jQuery("#message_" + splitid[1]).find('input').prop('required', false);
+                    jQuery("#message_" + splitid[1]).find('input').val('');
+                    $("#" + toggle_id).val('1');
+                } else {
+                    jQuery("#message_" + splitid[1]).show();
+                    $("#" + toggle_id).val('0');
+                    jQuery("#message_" + splitid[1]).find('input').prop('required', true);
+                }
+                jQuery("#expiry_date-" + splitid[1]).datepicker({
                     minDate: 1,
                     showMonthAfterYear: false,
                     dateFormat: 'yy-mm-dd',
@@ -372,30 +311,29 @@ $pdfImg = $block->getViewFileUrl('Alfakher_MyDocument/images/pdf.svg');
                     changeYear: true,
                     yearRange: '2020:2030',
                 });
-               }).change();
+            }).change();
         });
 
     });
 </script>
-
 <!-- to remove document name for empty files[BS] -->
 <script>
-   require(['jquery', 'jquery/ui'], function($){
-    $(document).on( 'click', '#custom_btn', function () {
+    require(['jquery', 'jquery/ui'], function ($) {
+        $(document).on('click', '#custom_btn', function () {
 
-        if($("#filename1").val()==""){
-            $("#name-1").val('');
-        }
-        if($("#filename2").val()==""){
-            $("#name-2").val('');
-        }
-        if($("#filename3").val()==""){
-            $("#name-3").val('');
-        }
-        if($("#filename4").val()==""){
-            $("#name-4").val('');
-        }
-  });
- });
+            if ($("#filename1").val() == "") {
+                $("#name-1").val('');
+            }
+            if ($("#filename2").val() == "") {
+                $("#name-2").val('');
+            }
+            if ($("#filename3").val() == "") {
+                $("#name-3").val('');
+            }
+            if ($("#filename4").val() == "") {
+                $("#name-4").val('');
+            }
+        });
+    });
 </script>
 <!-- to remove document name for empty files[BS] -->
