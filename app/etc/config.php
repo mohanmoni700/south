@@ -339,6 +339,11 @@ return [
     ],
     'system' => [
         'default' => [
+            'advanced' => [
+                'modules_disable_output' => [
+                    'Magento_Banner' => '1'
+                ]
+            ],
             'general' => [
                 'locale' => [
                     'code' => 'en_US'
