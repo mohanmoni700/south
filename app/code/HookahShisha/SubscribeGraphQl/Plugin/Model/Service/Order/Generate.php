@@ -4,20 +4,33 @@ namespace HookahShisha\SubscribeGraphQl\Plugin\Model\Service\Order;
 
 use HookahShisha\SubscribeGraphQl\Model\Storage;
 use Magedelight\Subscribenow\Model\Service\Order\Generate as Subject;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
+use Magedelight\Subscribenow\Helper\Data as SubscribeHelper;
 
 class Generate
 {
+
+    const FREE_SHIPPING_METHOD_CODE = 'freeshipping_freeshipping';
+
     private Storage $storage;
+    private ScopeConfigInterface $scopeConfig;
+    private SubscribeHelper $subscribeHelper;
 
     /**
      * @param Storage $storage
+     * @param ScopeConfigInterface $scopeConfig
+     * @param SubscribeHelper $subscribeHelper
      */
     public function __construct(
-        Storage $storage
+        Storage $storage,
+        ScopeConfigInterface $scopeConfig,
+        SubscribeHelper $subscribeHelper
     )
     {
         $this->storage = $storage;
+        $this->scopeConfig = $scopeConfig;
+        $this->subscribeHelper = $subscribeHelper;
     }
 
     public function beforeGenerateOrder(Subject $subject)
@@ -60,5 +73,20 @@ class Generate
             $quoteItem->setCustomPrice($finalPrice); // showing discounted price
             $quoteItem->setOriginalCustomPrice($finalPrice); // setting product subtotal
         }
+    }
+
+    public function afterSetShippingMethod(Subject $subject, $result, $cart)
+    {
+        $isSubscriptionRecurringOrder = $this->storage->get('is_subscription_recurring_order');
+        $isFreeShippingEnabledForSubscriptionOrders = $this->scopeConfig->getValue(
+            'md_subscribenow/shipping/free_shipping_subscription'
+        );
+        $autoSelect = $this->subscribeHelper->isAutoSelectShippingMethod();
+        if ($isSubscriptionRecurringOrder && !$autoSelect  && $isFreeShippingEnabledForSubscriptionOrders) {
+            $cart->getShippingAddress()
+                ->setShippingMethod(static::FREE_SHIPPING_METHOD_CODE)
+                ->setCollectShippingRates(true);
+        }
+        return $result;
     }
 }
