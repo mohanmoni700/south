@@ -70,7 +70,7 @@
                     <!-- ko template: {name: getTemplate(), data: item.product_price, as: 'price'} --><!-- /ko -->
                 <!-- /ko -->
                 <!-- /ko -->
-                <!-- ko if: !is_amasty_quote_item -->
+                <!-- ko ifnot: is_amasty_quote_item -->
                 <div class="details-qty qty">
                     <label class="label" data-bind="i18n: 'Qty', attr: {
                            for: 'cart-item-'+item_id+'-qty'}"></label>
@@ -94,7 +94,7 @@
                     </button>
                 </div>
                 <!-- /ko -->
-                <!-- ko ifnot: !is_amasty_quote_item -->
+                <!-- ko if: is_amasty_quote_item -->
                 <div class="details-qty qty">
                     <label class="label" data-bind="i18n: 'Qty', attr: {
                            for: 'cart-item-'+item_id+'-qty'}"></label>

@@ -93,7 +93,7 @@ $canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinima
             <?= $block->getUnitPriceHtml($_item) ?>
         </td>
     <?php endif; ?>
-    <?php if (!$_item->getOptionByCode('amasty_quote_price')) {?>
+       <?php if (!$_item->getOptionByCode('amasty_quote_price')): ?>
         <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
             <div class="field qty">
                 <div class="control qty">
@@ -114,7 +114,7 @@ $canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinima
                 </div>
             </div>
         </td>
-    <?php } else { ?>
+    <?php else:  ?>
         <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
             <div class="field qty">
                 <div class="control qty">
@@ -136,7 +136,7 @@ $canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinima
                 </div>
             </div>
         </td>
-    <?php } ?>
+    <?php endif; ?>
     <td class="col subtotal" data-th="<?= $block->escapeHtml(__('Subtotal')) ?>">
         <?php if ($canApplyMsrp) :?>
             <span class="cart msrp subtotal">--</span>
