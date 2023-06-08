@@ -66,12 +66,29 @@ class ApplyCouponToCart
         array $args = null
     ) {
         if ($this->data->isEnabled()) {
+
+            if (empty($args['input']['cart_id'])) {
+                throw new GraphQlInputException(__('Required parameter "cart_id" is missing'));
+            }
+            $maskedCartId = $args['input']['cart_id'];
+
+            $currentUserId = $context->getUserId();
+            $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
+            $cart = $this->getCartForUser->execute($maskedCartId, $currentUserId, $storeId);
+            $cartId = $cart->getId();
+
+            /** Validated the max number coupon can apply */
+            $appliedCoupons = count($this->data->getAppliedCodes());
+            $maxCouponQty = $this->data->getLimitQty($storeId);
+            if ($appliedCoupons >= $maxCouponQty) {
+                throw new GraphQlInputException(__('Coupon code quantity limit has been reached.'));
+            }
             /** Remove all coupon before applying new Loyalty,
              * At a time only one Loyalty coupon should be there on cart **/
             try {
-                $this->removeCouponsFromCart($args, $context);
-            } catch (CouldNotDeleteException $e) {
-                throw new LocalizedException(__($e->getMessage()), $e);
+                $this->removeCouponsFromCart($cartId);
+            } catch (LocalizedException $e) {
+                throw new GraphQlInputException(__("something went wrong". $e->getMessage()));
             }
         }
         return [$field, $context, $info, $value, $args];
@@ -88,18 +105,8 @@ class ApplyCouponToCart
      * @throws NoSuchEntityException
      * @throws \Magento\Framework\GraphQl\Exception\GraphQlAuthorizationException
      */
-    public function removeCouponsFromCart($args, $context)
+    public function removeCouponsFromCart($cartId)
     {
-        if (empty($args['input']['cart_id'])) {
-            throw new GraphQlInputException(__('Required parameter "cart_id" is missing'));
-        }
-        $maskedCartId = $args['input']['cart_id'];
-
-        $currentUserId = $context->getUserId();
-        $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
-        $cart = $this->getCartForUser->execute($maskedCartId, $currentUserId, $storeId);
-        $cartId = $cart->getId();
-
         try {
             $this->couponManagement->remove($cartId);
         } catch (NoSuchEntityException $e) {
