@@ -96,14 +96,10 @@ class ApplyCouponToCart
 
     /**
      * Remove Coupons from Cart
-     * @param $args
-     * @param $context
+     * @param $cartId
      * @return void
-     * @throws GraphQlInputException
      * @throws GraphQlNoSuchEntityException
      * @throws LocalizedException
-     * @throws NoSuchEntityException
-     * @throws \Magento\Framework\GraphQl\Exception\GraphQlAuthorizationException
      */
     public function removeCouponsFromCart($cartId)
     {
