@@ -181,6 +181,11 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
                 ]
             ];
         } else {
+            $ip = $order->getRemoteIp();
+            if (!$ip) {
+                // if ip is not found in order then fetch it dynamically or localhost
+                $ip = $this->remoteAddress->getRemoteAddress() ?? '127.0.0.1';
+            }
             $result = [
                 self::TRANSACTION_ROOT_ELEMENT => [
                     self::RETAIN_ON_SUCCESS => $payment_token_enabled,
@@ -188,7 +193,7 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
                     self::AMOUNT => $this->formatAmount($amount),
                     self::CURRENCY_CODE => $order->getCurrencyCode(),
                     self::ORDER_ID => $order->getOrderIncrementId(),
-                    self::CUSTOMER_IP => $order->getRemoteIp(),//$this->remoteAddress->getRemoteAddress() ?? '127.0.0.1',
+                    self::CUSTOMER_IP => $ip,
                     self::CUSTOMER_EMAIL => $billingAddress->getEmail() ?? null
                 ]
             ];
