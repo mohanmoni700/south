@@ -12,13 +12,17 @@ use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\QuoteGraphQl\Model\Resolver\ApplyCouponToCart as GraphQlApplyCouponToCart;
 use Mageplaza\MultipleCoupons\Helper\Data;
+use Magento\Framework\Registry;
 
 /**
  * @inheritdoc
  */
 class ApplyCouponToCart
 {
-
+    /**
+     * @var Registry
+     */
+    private $registry;
     /**
      * @var Data
      */
@@ -26,11 +30,14 @@ class ApplyCouponToCart
 
     /**
      * @param Data $data
+     * @param Registry $registry
      */
     public function __construct(
-        Data $data
+        Data $data,
+        Registry $registry
     ) {
         $this->data = $data;
+        $this->registry = $registry;
     }
 
     /**
@@ -44,20 +51,25 @@ class ApplyCouponToCart
         array $value = null,
         array $args = null
     ) {
-        if ($this->data->isEnabled()) {
+        $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
+        if ($this->data->isEnabled($storeId)) {
+            /** Core file its sets only if extension is enable for default config, We need it in website level */
+            $this->registry->register('is_multiple_coupon', true);
+            
+            $couponQty = 0;
             $requestedCoupon = $args['input']['coupon_code'];
             if(!empty($requestedCoupon)) {
                 $args['input']['coupon_code'] = $this->validateCode($requestedCoupon);
+                $couponArray = explode(";", $args['input']['coupon_code']);
+                $couponQty = count($couponArray);
             }
             if (empty($args['input']['cart_id'])) {
                 throw new GraphQlInputException(__('Required parameter "cart_id" is missing'));
             }
-            $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
 
             /** Validated the max number coupon can apply */
-            $appliedCoupons = count($this->data->getAppliedCodes());
             $maxCouponQty = $this->data->getLimitQty($storeId);
-            if ($appliedCoupons >= $maxCouponQty) {
+            if ($couponQty > $maxCouponQty) {
                 throw new GraphQlInputException(__('Coupon code quantity limit has been reached.'));
             }
         }
