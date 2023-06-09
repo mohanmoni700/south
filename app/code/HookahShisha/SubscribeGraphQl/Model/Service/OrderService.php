@@ -39,6 +39,15 @@ class OrderService extends \Magedelight\Subscribenow\Model\Service\OrderService
         $this->serializer = $serializer;
     }
 
+    public function setOrderInfo($order, $item)
+    {
+        /** @var \Magento\Sales\Model\Order $order */
+        parent::setOrderInfo($order, $item);
+        $ip = $order->getRemoteIp();
+        $this->getSubscriptionModel()->setData('ip_address', $ip);
+        return $this;
+    }
+
     public function setItemProductOption($order, $item)
     {
         $itemProductOptions = [];

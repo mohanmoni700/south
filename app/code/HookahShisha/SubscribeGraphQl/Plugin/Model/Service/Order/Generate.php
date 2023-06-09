@@ -87,6 +87,14 @@ class Generate
                 ->setShippingMethod(static::FREE_SHIPPING_METHOD_CODE)
                 ->setCollectShippingRates(true);
         }
+        $this->setIpAddress($subject, $cart);
         return $result;
+    }
+
+    protected function setIpAddress(Subject $subject, $cart)
+    {
+        /** @var \Magento\Quote\Model\Quote $cart */
+        $subscription = $subject->getProfile();
+        $cart->setRemoteIp($subscription->getData('ip_address'));
     }
 }
