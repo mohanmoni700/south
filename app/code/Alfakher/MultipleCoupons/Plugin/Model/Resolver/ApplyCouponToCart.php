@@ -46,7 +46,7 @@ class ApplyCouponToCart
         $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
         if ($this->data->isEnabled($storeId)) {            
             $couponQty = 0;
-            $requestedCoupon = $args['input']['coupon_code'];
+            $requestedCoupon = strtolower($args['input']['coupon_code']);
             if(!empty($requestedCoupon)) {
                 $couponArray = $this->validateCode($requestedCoupon);
                 $couponQty = count($couponArray);
