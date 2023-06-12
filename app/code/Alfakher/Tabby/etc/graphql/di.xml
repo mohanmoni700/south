@@ -2,12 +2,8 @@
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type name="Magento\StoreGraphQl\Model\Resolver\Store\StoreConfigDataProvider">
-        <arguments>
-            <argument name="extendedConfigData" xsi:type="array">
-                <item name="tabby_show_promotions_on_product_page" xsi:type="string">tabby/tabby_api/product_promotions</item>
-                <item name="tabby_show_promotions_on_cart_page" xsi:type="string">tabby/tabby_api/cart_promotions</item>
-            </argument>
-        </arguments>
+    <type name="Magento\QuoteGraphQl\Model\Resolver\PlaceOrder">
+        <plugin name="place-order-resolver-after-plugin-for-tabby-checkout-session"
+                type="Alfakher\Tabby\Plugin\Model\Resolver\TabbyPlaceOrder" sortOrder="10" />
     </type>
 </config>
