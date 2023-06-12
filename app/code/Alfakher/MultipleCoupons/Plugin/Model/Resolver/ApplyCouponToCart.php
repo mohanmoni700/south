@@ -12,7 +12,6 @@ use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 use Magento\QuoteGraphQl\Model\Resolver\ApplyCouponToCart as GraphQlApplyCouponToCart;
 use Mageplaza\MultipleCoupons\Helper\Data;
-use Magento\Framework\Registry;
 
 /**
  * @inheritdoc
@@ -20,24 +19,17 @@ use Magento\Framework\Registry;
 class ApplyCouponToCart
 {
     /**
-     * @var Registry
-     */
-    private $registry;
-    /**
      * @var Data
      */
     private $data;
 
     /**
      * @param Data $data
-     * @param Registry $registry
      */
     public function __construct(
-        Data $data,
-        Registry $registry
+        Data $data
     ) {
         $this->data = $data;
-        $this->registry = $registry;
     }
 
     /**
@@ -52,10 +44,7 @@ class ApplyCouponToCart
         array $args = null
     ) {
         $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
-        if ($this->data->isEnabled($storeId)) {
-            /** Core file its sets only if extension is enable for default config, We need it in website level */
-            $this->registry->register('is_multiple_coupon', true);
-            
+        if ($this->data->isEnabled($storeId)) {            
             $couponQty = 0;
             $requestedCoupon = $args['input']['coupon_code'];
             if(!empty($requestedCoupon)) {
