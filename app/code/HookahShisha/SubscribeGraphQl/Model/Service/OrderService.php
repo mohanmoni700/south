@@ -2,6 +2,7 @@
 
 namespace HookahShisha\SubscribeGraphQl\Model\Service;
 
+use HookahShisha\SubscribeGraphQl\Helper\Logger as SubscribeLogger;
 use Magedelight\Subscribenow\Helper\Data as subscriptionHelper;
 use Magedelight\Subscribenow\Logger\Logger;
 use Magedelight\Subscribenow\Model\ProductSubscribersFactory as SubscriptionFactory;
@@ -19,7 +20,22 @@ class OrderService extends \Magedelight\Subscribenow\Model\Service\OrderService
 
     private SubscriptionService $subscriptionService;
     private Json $serializer;
+    private SubscribeLogger $subscribeLogger;
 
+    /**
+     * @param subscriptionHelper $subscriptionHelper
+     * @param SubscriptionFactory $subscriptionFactory
+     * @param SubscriptionService $subscriptionService
+     * @param NumericValue $numericValue
+     * @param PaymentService $paymentService
+     * @param TimezoneInterface $timezone
+     * @param Generate $generate
+     * @param Logger $logger
+     * @param EventManager $eventManager
+     * @param Json $serializer
+     * @param ResolverInterface $localeResolver
+     * @param SubscribeLogger $subscribeLogger
+     */
     public function __construct(
         subscriptionHelper $subscriptionHelper,
         SubscriptionFactory $subscriptionFactory,
@@ -31,12 +47,14 @@ class OrderService extends \Magedelight\Subscribenow\Model\Service\OrderService
         Logger $logger,
         EventManager $eventManager,
         Json $serializer,
-        ResolverInterface $localeResolver
+        ResolverInterface $localeResolver,
+        SubscribeLogger $subscribeLogger
     )
     {
         parent::__construct($subscriptionHelper, $subscriptionFactory, $subscriptionService, $numericValue, $paymentService, $timezone, $generate, $logger, $eventManager, $serializer, $localeResolver);
         $this->subscriptionService = $subscriptionService;
         $this->serializer = $serializer;
+        $this->subscribeLogger = $subscribeLogger;
     }
 
     public function setOrderInfo($order, $item)
@@ -44,6 +62,7 @@ class OrderService extends \Magedelight\Subscribenow\Model\Service\OrderService
         /** @var \Magento\Sales\Model\Order $order */
         parent::setOrderInfo($order, $item);
         $ip = $order->getRemoteIp();
+        $this->subscribeLogger->log('IP is: ' . $ip);
         $this->getSubscriptionModel()->setData('ip_address', $ip);
         return $this;
     }

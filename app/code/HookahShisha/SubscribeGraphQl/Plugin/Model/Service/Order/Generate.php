@@ -7,6 +7,7 @@ use Magedelight\Subscribenow\Model\Service\Order\Generate as Subject;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magedelight\Subscribenow\Helper\Data as SubscribeHelper;
+use HookahShisha\SubscribeGraphQl\Helper\Logger as SubscribeLogger;
 
 class Generate
 {
@@ -16,21 +17,25 @@ class Generate
     private Storage $storage;
     private ScopeConfigInterface $scopeConfig;
     private SubscribeHelper $subscribeHelper;
+    private SubscribeLogger $subscribeLogger;
 
     /**
      * @param Storage $storage
      * @param ScopeConfigInterface $scopeConfig
      * @param SubscribeHelper $subscribeHelper
+     * @param SubscribeLogger $subscribeLogger
      */
     public function __construct(
         Storage $storage,
         ScopeConfigInterface $scopeConfig,
-        SubscribeHelper $subscribeHelper
+        SubscribeHelper $subscribeHelper,
+        SubscribeLogger $subscribeLogger
     )
     {
         $this->storage = $storage;
         $this->scopeConfig = $scopeConfig;
         $this->subscribeHelper = $subscribeHelper;
+        $this->subscribeLogger = $subscribeLogger;
     }
 
     public function beforeGenerateOrder(Subject $subject)
@@ -95,6 +100,8 @@ class Generate
     {
         /** @var \Magento\Quote\Model\Quote $cart */
         $subscription = $subject->getProfile();
-        $cart->setRemoteIp($subscription->getData('ip_address'));
+        $ip = $subscription->getData('ip_address');
+        $this->subscribeLogger->log('IP from subscription Profile is: ' . $ip);
+        $cart->setRemoteIp($ip);
     }
 }

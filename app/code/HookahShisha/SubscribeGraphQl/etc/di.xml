@@ -61,4 +61,22 @@
         <plugin name="set_grand_total_in_grid"
                 type="HookahShisha\SubscribeGraphQl\Plugin\Block\Adminhtml\ProductSubscribers\View\Tab\Grid\RelatedOrders" />
     </type>
+    <virtualType name="subscriptionLoggerHandler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">var/log/subscription.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="subscriptionLogger" type="Monolog\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">subscriptionLogger</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">subscriptionLoggerHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="HookahShisha\SubscribeGraphQl\Helper\Logger">
+        <arguments>
+            <argument name="logger" xsi:type="object">subscriptionLogger</argument>
+        </arguments>
+    </type>
 </config>
