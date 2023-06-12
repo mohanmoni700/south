@@ -59,9 +59,9 @@ class ApplyCouponToCart
             $couponQty = 0;
             $requestedCoupon = $args['input']['coupon_code'];
             if(!empty($requestedCoupon)) {
-                $args['input']['coupon_code'] = $this->validateCode($requestedCoupon);
-                $couponArray = explode(";", $args['input']['coupon_code']);
+                $couponArray = $this->validateCode($requestedCoupon);
                 $couponQty = count($couponArray);
+                $args['input']['coupon_code'] = implode(";", $couponArray);
             }
             if (empty($args['input']['cart_id'])) {
                 throw new GraphQlInputException(__('Required parameter "cart_id" is missing'));
@@ -84,10 +84,8 @@ class ApplyCouponToCart
     public function validateCode($couponCode)
     {
         if ($couponCode) {
-            $couponArray = explode(";",$couponCode);
-            $couponArray = array_unique($couponArray);
-            $couponCode = implode(";", $couponArray);
+            $couponArray = explode(";", $couponCode);
+            return array_unique($couponArray);
         }
-        return $couponCode;
     }
 }
