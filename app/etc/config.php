@@ -339,6 +339,11 @@ return [
     ],
     'system' => [
         'default' => [
+            'advanced' => [
+                'modules_disable_output' => [
+                    'Magento_Banner' => '1'
+                ]
+            ],
             'general' => [
                 'locale' => [
                     'code' => 'en_US'
@@ -1019,6 +1024,7 @@ return [
         'Alfakher_PaymentEdit' => 1,
         'Klarna_Core' => 1,
         'Alfakher_Productpageb2b' => 1,
+        'Alfakher_QuoteExtended' => 1,
         'Amasty_RequestQuote' => 1,
         'Alfakher_RmaCustomization' => 1,
         'Alfakher_SalesApprove' => 1,
@@ -1126,6 +1132,7 @@ return [
         'Magefan_WysiwygAdvanced' => 1,
         'Magefan_YouTubeWidget' => 1,
         'Alfakher_Webhook' => 1,
+        'Mageplaza_MultipleCoupons' => 1,
         'Mageplaza_ProductLabels' => 1,
         'Mageplaza_ProductLabelsGraphQl' => 1,
         'Mageplaza_Seo' => 1,
@@ -1133,6 +1140,7 @@ return [
         'Alfakher_Seamlesschex' => 1,
         'MagestyApps_WebImages' => 1,
         'HookahShisha_Customization' => 1,
+        'Mollie_Payment' => 1,
         'Mondu_Mondu' => 1,
         'OlegKoval_RegenerateUrlRewrites' => 1,
         'PCAPredict_Tag' => 1,
