@@ -105,8 +105,9 @@ class Data extends AbstractHelper
             'sortOrder' => 3,
             'validation' => [
                 "required-entry" => true,
-                "max_text_length" => 255,
+                "max_text_length" => 15,
                 "min_text_length" => 1,
+                "custom-validate-telephone" => true
             ],
             'options' => [],
             'filterBy' => null,
