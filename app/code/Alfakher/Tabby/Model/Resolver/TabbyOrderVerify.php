@@ -2,16 +2,21 @@
 
 namespace Alfakher\Tabby\Model\Resolver;
 
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Sales\Model\ResourceModel\Order as OrderResource;
 use Magento\Sales\Model\Order;
 use Magento\Sales\Model\OrderFactory;
 use Tabby\Checkout\Helper\Order as OrderHelper;
+use Magento\Quote\Model\QuoteIdToMaskedQuoteIdInterface;
 
 class TabbyOrderVerify implements ResolverInterface
 {
+    const TABBY_INSTALLMENTS_METHOD_CODE = 'tabby_installments';
+
     /**
      * @var OrderHelper
      */
@@ -24,20 +29,34 @@ class TabbyOrderVerify implements ResolverInterface
      * @var OrderFactory
      */
     private $orderFactory;
+    /**
+     * @var CartRepositoryInterface
+     */
+    private $quoteRepository;
+    /**
+     * @var QuoteIdToMaskedQuoteIdInterface
+     */
+    private $maskedQuote;
 
     /**
      * @param OrderHelper $orderHelper
      * @param OrderResource $orderResource
      * @param OrderFactory $orderFactory
+     * @param CartRepositoryInterface $quoteRepository
+     * @param QuoteIdToMaskedQuoteIdInterface $maskedQuote
      */
     public function __construct(
-        OrderHelper   $orderHelper,
-        OrderResource $orderResource,
-        OrderFactory  $orderFactory
+        OrderHelper                     $orderHelper,
+        OrderResource                   $orderResource,
+        OrderFactory                    $orderFactory,
+        CartRepositoryInterface         $quoteRepository,
+        QuoteIdToMaskedQuoteIdInterface $maskedQuote
     ) {
         $this->orderHelper = $orderHelper;
         $this->orderResource = $orderResource;
         $this->orderFactory = $orderFactory;
+        $this->quoteRepository = $quoteRepository;
+        $this->maskedQuote = $maskedQuote;
     }
 
     /**
@@ -57,9 +76,19 @@ class TabbyOrderVerify implements ResolverInterface
             ];
         }
 
+        $maskedQuoteId = '';
         $incrementId = $args['order_increment_id'];
         $paymentStatus = $args['payment_status'];
-        $paymentId = $this->getTabbyPaymentId($incrementId);
+        $order = $this->getOrder($incrementId);
+        $paymentId = $this->getTabbyPaymentId($order);
+        $paymentMethodCode = $order->getPayment() ? $order->getPayment()->getMethod() : '';
+
+        if ($paymentMethodCode != self::TABBY_INSTALLMENTS_METHOD_CODE) {
+            return [
+                'status' => false,
+                'message' => __("Only tabby orders can be verified")
+            ];
+        }
 
         if (empty($paymentId)) {
             return [
@@ -73,40 +102,71 @@ class TabbyOrderVerify implements ResolverInterface
                 $this->orderHelper->authorizeOrder($incrementId, $paymentId, 'success page');
             } elseif ($paymentStatus == 'FAILED') {
                 $comment = __('Payment with Tabby is failed');
+                $maskedQuoteId = $this->restoreQuote($order);
                 $this->orderHelper->cancelCurrentOrderByIncrementId($incrementId, $comment);
             } else {
+                $maskedQuoteId = $this->restoreQuote($order);
                 $this->orderHelper->cancelCurrentOrderByIncrementId($incrementId);
             }
         } catch (\Exception $e) {
             return [
                 'status' => false,
-                'message' => __('%1', $e->getMessage()),
+                'message' => __('%1', $e->getMessage())
             ];
         }
 
         return [
             'status' => true,
-            'message' => __('Order %1 successfully verified and processed', $incrementId)
+            'message' => __('Order %1 successfully verified and processed', $incrementId),
+            'masked_quote_id' => $maskedQuoteId
         ];
     }
 
     /**
      * Get tabby payment id required for payment verification
      *
-     * @param  string $incrementId
+     * @param Order $order
      * @return string
      */
-    private function getTabbyPaymentId($incrementId)
+    private function getTabbyPaymentId($order)
     {
-        /** @var Order $order */
-        $order = $this->orderFactory->create();
-
-        $this->orderResource->load($order, $incrementId, Order::INCREMENT_ID);
         if ($payment = $order->getPayment()) {
             $additionalInfo = $payment->getAdditionalInformation();
             return $additionalInfo['checkout_id'] ?? '';
         }
 
         return '';
+    }
+
+    /**
+     * Restore quote from order
+     *
+     * @param  Order $order
+     * @return string
+     */
+    private function restoreQuote($order)
+    {
+        try {
+            $quote = $this->quoteRepository->get($order->getQuoteId());
+            $quote->setIsActive(1)->setReservedOrderId(null);
+            $this->quoteRepository->save($quote);
+            return $this->maskedQuote->execute($quote->getId());
+        } catch (NoSuchEntityException $e) {
+            return '';
+        }
+    }
+
+    /**
+     * Get loaded order object
+     *
+     * @param string $incrementId
+     * @return Order
+     */
+    private function getOrder($incrementId)
+    {
+        /** @var Order $order */
+        $order = $this->orderFactory->create();
+        $this->orderResource->load($order, $incrementId, Order::INCREMENT_ID);
+        return $order;
     }
 }
