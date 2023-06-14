@@ -339,6 +339,11 @@ return [
     ],
     'system' => [
         'default' => [
+            'advanced' => [
+                'modules_disable_output' => [
+                    'Magento_Banner' => '1'
+                ]
+            ],
             'general' => [
                 'locale' => [
                     'code' => 'en_US'
@@ -1019,6 +1024,8 @@ return [
         'Alfakher_PaymentEdit' => 1,
         'Klarna_Core' => 1,
         'Alfakher_Productpageb2b' => 1,
+        'Alfakher_QuoteExtended' => 1,
+        'Amasty_RequestQuote' => 1,
         'Alfakher_RmaCustomization' => 1,
         'Alfakher_SalesApprove' => 1,
         'Mageplaza_Core' => 1,
@@ -1035,7 +1042,7 @@ return [
         'Amasty_Conditions' => 1,
         'Amasty_Mage24Fix' => 1,
         'Amasty_Promo' => 1,
-        'Amasty_RequestQuote' => 1,
+        'Alfakher_RequestQuote' => 1,
         'Amasty_Rgrid' => 1,
         'Amasty_SalesRuleWizard' => 1,
         'Amasty_Scroll' => 1,
