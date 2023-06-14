@@ -114,8 +114,6 @@ class SerialCode extends Data implements ArgumentInterface
                 'eq' => $sku
         ])->addFieldToFilter('main_table.order_id', [
             'eq' => $orderId
-        ])->addFieldToFilter('main_table.item_id', [
-            'eq' => $itemId
         ])->getItems();
         $itemsSerialCodes = [];
         foreach ($items as $item) {

@@ -52,20 +52,12 @@ class Collection extends AbstractCollection
     protected function _initSelect()
     {
         parent::_initSelect();
-
         $this->getSelect()->joinInner(
-            ['secondTable' => $this->getTable('sales_shipment_grid')],
-            'main_table.order_id = secondTable.order_increment_id',
-            [
-                'secondTable.increment_id as shipment_number',
-                'secondTable.shipping_address as shipping_address',
-                'secondTable.store_id as website'
-            ]
-        )->joinInner(
             ['thirdTable' => $this->getTable('sales_order_grid')],
             'main_table.order_id = thirdTable.increment_id',
             [
-                'thirdTable.store_name as website'
+                'thirdTable.store_name as website',
+                'thirdTable.store_id as store_id'
             ]
         );
         return $this;

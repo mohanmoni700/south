@@ -80,7 +80,7 @@ class SerialCodeData implements ResolverInterface
             ->setConditionType('eq')
             ->create();
         $storeFilter = $this->filterBuilder
-            ->setField('secondTable.store_id')
+            ->setField('thirdTable.store_id')
             ->setValue($storeId)
             ->setConditionType('eq')
             ->create();
