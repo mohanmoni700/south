@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace Alfakher\MultipleCoupons\Plugin\Model\Resolver;
 
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
@@ -35,8 +36,9 @@ class ApplyCouponToCart
     /**
      * @inheritdoc
      */
-    public function beforeResolve(
+    public function aroundResolve(
         GraphQlApplyCouponToCart $subject,
+        callable $proceed,
         Field $field,
         $context,
         ResolveInfo $info,
@@ -44,7 +46,7 @@ class ApplyCouponToCart
         array $args = null
     ) {
         $storeId = (int)$context->getExtensionAttributes()->getStore()->getId();
-        if ($this->data->isEnabled($storeId)) {            
+        if ($this->data->isEnabled($storeId)) {
             $couponQty = 0;
             $requestedCoupon = strtolower($args['input']['coupon_code']);
             if(!empty($requestedCoupon)) {
@@ -62,7 +64,12 @@ class ApplyCouponToCart
                 throw new GraphQlInputException(__('Coupon code quantity limit has been reached.'));
             }
         }
-        return [$field, $context, $info, $value, $args];
+        try {
+            $result = $proceed($field, $context, $info, $value, $args);
+        } catch (LocalizedException $e) {
+            throw new GraphQlInputException(__($e->getMessage()));
+        }
+        return $result;
     }
 
     /**
@@ -74,7 +81,13 @@ class ApplyCouponToCart
     {
         if ($couponCode) {
             $couponArray = explode(";", $couponCode);
-            return array_unique($couponArray);
+            $qtyBefore = count($couponArray);
+            $couponArray = array_unique($couponArray);
+            $qtyAfter = count($couponArray);
+            if ($qtyBefore != $qtyAfter) {
+                throw new GraphQlInputException(__('Coupon code is already applied.'));
+            }
+            return $couponArray;
         }
     }
 }
