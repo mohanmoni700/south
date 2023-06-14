@@ -1,0 +1,27 @@
+diff --git a/app/code/Tabby/Checkout/Observer/ConfigObserver.php b/app/code/Tabby/Checkout/Observer/ConfigObserver.php
+index 6fe00af31..8655b70bb 100644
+--- a/app/code/Tabby/Checkout/Observer/ConfigObserver.php
++++ b/app/code/Tabby/Checkout/Observer/ConfigObserver.php
+@@ -99,6 +99,7 @@ class ConfigObserver implements ObserverInterface
+         }
+         foreach ($register_hooks as $groupId => $currencies) {
+             $group = $this->_storeManager->getGroup($groupId);
++            $storeCode = $this->_storeManager->getStore()->getCode();
+             $webhookUrl = $this->_urlHelper->getUrl('tabby/result/webhook', ['_scope' => $group->getDefaultStoreId()]);
+ 
+             if ($this->getWebsiteConfigValue('tabby/tabby_api/local_currency', $website->getCode())) {
+@@ -110,12 +111,12 @@ class ConfigObserver implements ObserverInterface
+                     }
+                     $this->_api->registerWebhook(
+                         $group->getDefaultStoreId(),
+-                        $group->getCode() . '_' . $currencyCode,
++                        $storeCode . '_' . $currencyCode,
+                         $webhookUrl
+                     );
+                 }
+             } else {
+-                $this->_api->registerWebhook($group->getDefaultStoreId(), $group->getCode(), $webhookUrl);
++                $this->_api->registerWebhook($group->getDefaultStoreId(), $storeCode, $webhookUrl);
+             }
+         }
+     }
