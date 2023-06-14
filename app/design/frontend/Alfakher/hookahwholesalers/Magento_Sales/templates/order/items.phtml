@@ -21,7 +21,7 @@ if ($order->getExciseTax() > 0) {
                 <tr>
                     <td colspan="6" data-block="order-items-pager-top"
                     class="test order-pager-wrapper order-pager-wrapper-top">
-                    <div class="excise-note">    
+                    <div class="excise-note">
                         <strong><?= $block->escapeHtml(__($exciseNote)); ?></strong>
                     </div>
                         <?= $block->getPagerHtml() ?>
@@ -31,7 +31,7 @@ if ($order->getExciseTax() > 0) {
                 <tr>
                     <td colspan="6" data-block="order-items-pager-top"
                     class="order-without-pager">
-                        <div class="excise-note">    
+                        <div class="excise-note">
                             <strong><?= $block->escapeHtml(__($exciseNote)); ?></strong>
                         </div>
                     </td>
@@ -42,6 +42,7 @@ if ($order->getExciseTax() > 0) {
                 <th class="col name"><?= $block->escapeHtml(__('Product Name')) ?></th>
                 <th class="col sku"><?= $block->escapeHtml(__('SKU')) ?></th>
                 <th class="col price"><?= $block->escapeHtml(__('Price')) ?></th>
+                <th class="col tax"><?= $block->escapeHtml(__('Tax')) ?></th>
                 <th class="col qty"><?= $block->escapeHtml(__('Qty')) ?></th>
                 <th class="col subtotal"><?= $block->escapeHtml(__('Subtotal')) ?></th>
                 <th class="col action"><?= $block->escapeHtml(__('Action')) ?></th>

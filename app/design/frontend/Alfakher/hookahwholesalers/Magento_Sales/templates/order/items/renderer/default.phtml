@@ -43,6 +43,9 @@ $_item = $block->getItem();
     <td class="col price" data-th="<?= $block->escapeHtml(__('Price')) ?>">
         <?= $block->getItemPriceHtml() ?>
     </td>
+    <td class="col tax" data-th="<?= $block->escapeHtml(__('Tax')) ?>">
+        <?= $block->escapeHtml($_item->getTaxAmount()) ?>
+    </td>
     <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
         <ul class="items-qty">
         <?php if ($block->getItem()->getQtyOrdered() > 0): ?>
