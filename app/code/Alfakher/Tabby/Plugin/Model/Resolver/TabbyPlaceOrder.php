@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Alfakher\Tabby\Plugin\Model\Resolver;
 
 use Alfakher\Tabby\Model\TabbySession;

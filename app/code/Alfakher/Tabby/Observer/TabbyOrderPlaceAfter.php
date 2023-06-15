@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Alfakher\Tabby\Observer;
 
 use Alfakher\Tabby\Model\TabbyCheckout;
 use Alfakher\Tabby\Model\TabbySession;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Sales\Model\Order;
 
 class TabbyOrderPlaceAfter implements ObserverInterface
@@ -38,6 +41,7 @@ class TabbyOrderPlaceAfter implements ObserverInterface
      *
      * @param  Observer $observer
      * @return void
+     * @throws LocalizedException
      */
     public function execute(Observer $observer)
     {

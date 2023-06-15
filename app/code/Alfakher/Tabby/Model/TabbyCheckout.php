@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Alfakher\Tabby\Model;
 
 use Magento\Framework\Exception\LocalizedException;
