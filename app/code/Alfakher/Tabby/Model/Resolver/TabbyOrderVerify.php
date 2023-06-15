@@ -152,7 +152,7 @@ class TabbyOrderVerify implements ResolverInterface
             $quote = $this->quoteRepository->get($order->getQuoteId());
             $quote->setIsActive(1)->setReservedOrderId(null);
             $this->quoteRepository->save($quote);
-            return $this->maskedQuote->execute($quote->getId());
+            return $this->maskedQuote->execute((int)$quote->getId());
         } catch (NoSuchEntityException $e) {
             return '';
         }
