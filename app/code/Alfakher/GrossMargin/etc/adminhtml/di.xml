@@ -13,4 +13,7 @@
     <type name="Magento\Sales\Model\AdminOrder\Create">
         <plugin name="around_admin_order_create" type="Alfakher\GrossMargin\Plugin\Sales\Model\AdminOrder\CreatePlugin" sortOrder="10"/>
     </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\Create\Search\Grid\Renderer\Product">
+        <plugin name="after_product_name_availability" type="Alfakher\GrossMargin\Plugin\Sales\Model\AdminOrder\AvailabilityPlugin" sortOrder="10" disabled="false"/>
+    </type>
 </config>

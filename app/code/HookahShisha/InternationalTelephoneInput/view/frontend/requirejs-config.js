@@ -12,5 +12,12 @@ var config = {
         'internationalTelephoneInput': {
             'deps':['jquery', 'intlTelInput']
         }
+    },
+    config: {
+        mixins: {
+            'Magento_Ui/js/lib/validation/validator': {
+                'HookahShisha_InternationalTelephoneInput/js/validator-mixin': true
+            }
+        }
     }
 };
