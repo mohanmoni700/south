@@ -34,6 +34,7 @@ use Magento\Store\Model\StoreManagerInterface;
 use Psr\Log\LoggerInterface;
 use Magento\Quote\Api\CartRepositoryInterface as CartRepository;
 use Magento\Checkout\Model\SessionFactory as CheckoutSessionFactory;
+use Amasty\RequestQuote\Model\UrlResolver;
 
 class UpdatePost extends \Amasty\RequestQuote\Controller\Cart\UpdatePost
 {
@@ -163,6 +164,11 @@ class UpdatePost extends \Amasty\RequestQuote\Controller\Cart\UpdatePost
     protected $dateTime;
 
     /**
+     * @var \Amasty\RequestQuote\Model\UrlResolver
+     */
+    protected $urlResolver;
+
+    /**
      * @var CartRepository
      */
     protected CartRepository $cartRepository;
@@ -200,6 +206,7 @@ class UpdatePost extends \Amasty\RequestQuote\Controller\Cart\UpdatePost
      * @param LoggerInterface $logger
      * @param Registry $registry
      * @param DateTime $dateTime
+     * @param UrlResolver $urlResolver,
      * @param CartRepository $cartRepository
      * @param CheckoutSessionFactory $checkoutSessionFactory
      */
@@ -232,7 +239,8 @@ class UpdatePost extends \Amasty\RequestQuote\Controller\Cart\UpdatePost
         Registry $registry,
         DateTime $dateTime,
         CartRepository $cartRepository,
-        CheckoutSessionFactory $checkoutSessionFactory
+        CheckoutSessionFactory $checkoutSessionFactory,
+        UrlResolver $urlResolver
     ) {
         $this->cartRepository = $cartRepository;
         $this->checkoutSessionFactory = $checkoutSessionFactory;
@@ -263,7 +271,8 @@ class UpdatePost extends \Amasty\RequestQuote\Controller\Cart\UpdatePost
             $customerExtractor,
             $logger,
             $registry,
-            $dateTime
+            $dateTime,
+            $urlResolver
         );
     }
 
