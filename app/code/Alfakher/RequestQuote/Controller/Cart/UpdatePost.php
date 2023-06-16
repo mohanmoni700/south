@@ -35,6 +35,7 @@ use Psr\Log\LoggerInterface;
 use Magento\Quote\Api\CartRepositoryInterface as CartRepository;
 use Magento\Checkout\Model\SessionFactory as CheckoutSessionFactory;
 use Amasty\RequestQuote\Model\UrlResolver;
+use Magento\Framework\Filter\LocalizedToNormalized;
 
 class UpdatePost extends \Amasty\RequestQuote\Controller\Cart\UpdatePost
 {
@@ -164,11 +165,6 @@ class UpdatePost extends \Amasty\RequestQuote\Controller\Cart\UpdatePost
     protected $dateTime;
 
     /**
-     * @var \Amasty\RequestQuote\Model\UrlResolver
-     */
-    protected $urlResolver;
-
-    /**
      * @var CartRepository
      */
     protected CartRepository $cartRepository;
@@ -177,6 +173,16 @@ class UpdatePost extends \Amasty\RequestQuote\Controller\Cart\UpdatePost
      * @var CheckoutSessionFactory
      */
     protected CheckoutSessionFactory $checkoutSessionFactory;
+
+    /**
+     * @var UrlResolver
+     */
+    protected $urlResolver;
+
+    /**
+     * @var LocalizedToNormalized
+     */
+    private $localizedToNormalized;
 
     /**
      * @param Context $context
@@ -206,9 +212,10 @@ class UpdatePost extends \Amasty\RequestQuote\Controller\Cart\UpdatePost
      * @param LoggerInterface $logger
      * @param Registry $registry
      * @param DateTime $dateTime
-     * @param UrlResolver $urlResolver,
      * @param CartRepository $cartRepository
      * @param CheckoutSessionFactory $checkoutSessionFactory
+     * @param UrlResolver $urlResolver
+     * @param LocalizedToNormalized $localizedToNormalized
      */
     public function __construct(
         Context $context,
@@ -240,7 +247,8 @@ class UpdatePost extends \Amasty\RequestQuote\Controller\Cart\UpdatePost
         DateTime $dateTime,
         CartRepository $cartRepository,
         CheckoutSessionFactory $checkoutSessionFactory,
-        UrlResolver $urlResolver
+        UrlResolver $urlResolver,
+        LocalizedToNormalized $localizedToNormalized = null
     ) {
         $this->cartRepository = $cartRepository;
         $this->checkoutSessionFactory = $checkoutSessionFactory;
@@ -272,7 +280,8 @@ class UpdatePost extends \Amasty\RequestQuote\Controller\Cart\UpdatePost
             $logger,
             $registry,
             $dateTime,
-            $urlResolver
+            $urlResolver,
+            $localizedToNormalized
         );
     }
 
