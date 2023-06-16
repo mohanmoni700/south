@@ -9,7 +9,10 @@ class ProductSubscribers
     public function aroundGetOrderItemInfo(Subject $subject, callable $proceed, $key = null)
     {
         $productId = $subject->getData('product_id');
-        $rawData = \json_decode($subject->getData('additional_info'), true);
+        $rawData = $subject->getData('additional_info');
+        if (!is_array($rawData)) {
+            $rawData = \json_decode($rawData, true);
+        }
 
         $data = [
             'item' => $productId

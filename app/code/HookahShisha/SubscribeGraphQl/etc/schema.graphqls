@@ -20,6 +20,21 @@ type Query {
         currentPage: Int @doc(description: "Current Page")
         pageSize: Int @doc(description: "Page Size")
     ) : relatedOrderData @resolver( class: "HookahShisha\\SubscribeGraphQl\\Model\\Resolver\\RelatedOrders")
+
+    getSubscriptions (
+         subscriptionId: Int @doc(description: "Id of Subscription")
+     ) : subscriptionData @resolver( class: "Magedelight\\SubscribenowGraphQl\\Model\\Resolver\\Subscriptions")
+    getSubscriptionsByCustomerId (
+         currentPage: Int @doc(description: "Current Page")
+         pageSize: Int @doc(description: "Page Size")
+         filter: String @doc(description: "Filter")
+         sort: [SubscriptionSort] @doc(description: "Sort")
+     ) : customerSubscriptionFilterOutput @resolver( class: "Magedelight\\SubscribenowGraphQl\\Model\\Resolver\\CustomerSubscriptions")
+}
+
+input SubscriptionSort {
+    field: String
+    direction: SortEnum
 }
 
 type SubscriptionDetailPdp {

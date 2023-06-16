@@ -47,7 +47,11 @@ class Quote
     public function beforeBeforeAddProduct(Subject $subject, $parentSubject, $product, $request = null): array
     {
         $subscriptionData = $this->cartItemSubscribeDataRegistry->getData()[$product->getSku()] ?? null;
-        $requestArray = $request->getData();
+        if ($request instanceof \Magento\Framework\DataObject) {
+            $requestArray = $request->getData();
+        } else {
+            $requestArray = [];
+        }
         $isExistingProduct = ($requestArray['options']['_1'] ?? null) == 'subscription';
         if (!$isExistingProduct && $subscriptionData && ($subscriptionData['is_subscription'] ?? null)) {
             $requestArray['options']['_1'] = 'subscription';

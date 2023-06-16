@@ -2,6 +2,7 @@
 
 namespace HookahShisha\SubscribeGraphQl\Plugin\Model\Service\Order;
 
+use HookahShisha\SubscribeGraphQl\Helper\Logger;
 use HookahShisha\SubscribeGraphQl\Model\Storage;
 use Magedelight\Subscribenow\Model\Service\Order\Generate as Subject;
 use Magento\Framework\App\Config\ScopeConfigInterface;
@@ -18,29 +19,41 @@ class Generate
     private ScopeConfigInterface $scopeConfig;
     private SubscribeHelper $subscribeHelper;
     private SubscribeLogger $subscribeLogger;
+    private SubscribeLogger $logger;
 
     /**
      * @param Storage $storage
      * @param ScopeConfigInterface $scopeConfig
      * @param SubscribeHelper $subscribeHelper
      * @param SubscribeLogger $subscribeLogger
+     * @param SubscribeLogger $logger
      */
     public function __construct(
         Storage $storage,
         ScopeConfigInterface $scopeConfig,
         SubscribeHelper $subscribeHelper,
-        SubscribeLogger $subscribeLogger
+        SubscribeLogger $subscribeLogger,
+        Logger $logger
     )
     {
         $this->storage = $storage;
         $this->scopeConfig = $scopeConfig;
         $this->subscribeHelper = $subscribeHelper;
         $this->subscribeLogger = $subscribeLogger;
+        $this->logger = $logger;
     }
 
     public function beforeGenerateOrder(Subject $subject)
     {
         $this->storage->set('is_subscription_recurring_order', true);
+        $subscriptionData = $subject->getProfile()->getData();
+        $this->logger->log('');
+        $this->logger->log('');
+        $this->logger->log('SUBSCRIPTION DATA START');
+        $this->logger->log(\json_encode($subscriptionData, JSON_PRETTY_PRINT));
+        $this->logger->log('SUBSCRIPTION DATA END');
+        $this->logger->log('');
+        $this->logger->log('');
         return [];
     }
 
