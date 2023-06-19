@@ -2,6 +2,8 @@
 
 namespace Alfakher\HandlingFee\ViewModel;
 
+use HookahShisha\Customization\Plugin\Magetrend\Order\Pdf\MagetrendInvoice;
+
 class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
 {
 
@@ -100,5 +102,19 @@ class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
     public function getExciseNote($section)
     {
         return $this->scopeConfig->getValue($section, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
+     * can Show tax column for this invoice
+     * @param $order
+     * @return mixed
+     */
+    public function canShowTaxColumn($order)
+    {
+        $address = $order->getShippingAddress();
+        if ($address->getRegionId() == MagetrendInvoice::KN_REGION_ID) {
+            return true;
+        }
+        return false;
     }
 }

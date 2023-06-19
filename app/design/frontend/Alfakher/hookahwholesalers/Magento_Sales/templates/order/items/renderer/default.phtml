@@ -2,7 +2,15 @@
 // phpcs:disable Magento2.Templates.ThisInTemplate
 
 /** @var  $block \Magento\Sales\Block\Order\Item\Renderer\DefaultRenderer */
+use HookahShisha\Customization\Plugin\Magetrend\Order\Pdf\MagetrendInvoice;
+
 $_item = $block->getItem();
+$canShowTaxColumn = false;
+$order = $block->getOrder();
+$address = $order->getShippingAddress();
+if ($address->getRegionId() == MagetrendInvoice::KN_REGION_ID) {
+    $canShowTaxColumn = true;
+}
 ?>
 <tr id="order-item-row-<?= (int) $_item->getId() ?>">
     <td class="col name" data-th="<?= $block->escapeHtml(__('Product Name')) ?>">
@@ -43,9 +51,11 @@ $_item = $block->getItem();
     <td class="col price" data-th="<?= $block->escapeHtml(__('Price')) ?>">
         <?= $block->getItemPriceHtml() ?>
     </td>
-    <td class="col tax" data-th="<?= $block->escapeHtml(__('Tax')) ?>">
-        <?= $block->escapeHtml($_item->getTaxAmount()) ?>
-    </td>
+    <?php if ($canShowTaxColumn): ?>
+        <td class="col tax" data-th="<?= $block->escapeHtml(__('Tax')) ?>">
+            <?= $block->escapeHtml($_item->getTaxAmount()) ?>
+        </td>
+    <?php endif; ?>
     <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
         <ul class="items-qty">
         <?php if ($block->getItem()->getQtyOrdered() > 0): ?>
