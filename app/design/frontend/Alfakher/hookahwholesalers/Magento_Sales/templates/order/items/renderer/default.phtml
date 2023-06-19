@@ -53,9 +53,8 @@ $canShowTaxColumn = $address->getRegionId() == MagetrendInvoice::KN_REGION_ID;
             <?php
             /** @var \Magento\Framework\Pricing\Helper\Data $priceHelper */
             $priceHelper = $this->helper("Magento\Framework\Pricing\Helper\Data");
-            $formattedPrice = $priceHelper->currency($_item->getTaxAmount(), true, false);
             ?>
-            <?= $block->escapeHtml($formattedPrice) ?>
+            <?= $block->escapeHtml($priceHelper->currency($_item->getTaxAmount(), true, false)) ?>
         </td>
     <?php endif; ?>
     <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
