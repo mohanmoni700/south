@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Quote\Api\CartManagementInterface">
+        <plugin name="disable_coupon" type="Alfakher\RequestQuote\Plugin\DisableCoupon" sortOrder="1" />
+    </type>
+    <type name="Yotpo\Loyalty\Model\Api\Swell\Session\CouponManagement">
+        <plugin name="disable_loyalty_coupon" type="Alfakher\RequestQuote\Plugin\DisableLoyaltyCoupon" sortOrder="1" />
+    </type>
+</config>
