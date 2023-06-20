@@ -5,6 +5,10 @@
         <plugin name="alfakher_outofstockproduct_elasticsearch_sorting_outofstocktobottom"
                 type="Alfakher\OutOfStockProduct\Model\Elasticsearch7\SearchAdapter\Mapper" />
     </type>
+    <!-- override class to update product collection sort order query -->
+    <preference for="Magento\CatalogGraphQl\Model\Resolver\Products\DataProvider\ProductSearch"
+                type="Alfakher\OutOfStockProduct\Model\Resolver\Products\DataProvider\ProductSearch"/>
+
     <!-- To add the stock_status in Elasticsearch Index -->
     <virtualType name="additionalFieldsProviderForElasticsearch" type="Magento\AdvancedSearch\Model\Adapter\DataMapper\AdditionalFieldsProvider">
         <arguments>
