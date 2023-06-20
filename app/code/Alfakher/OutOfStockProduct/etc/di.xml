@@ -1,12 +1,6 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <type name="Magento\VisualMerchandiser\Model\Sorting\OutStockBottom">
-    <plugin name="alfakher_outofstockproduct_sorting_outstocktobottom"
-                type="Alfakher\OutOfStockProduct\Plugin\VisualMerchandiser\OutStockBottom" sortOrder="10" disabled="false" />
-    </type>
-    <preference for="Magento\VisualMerchandiser\Model\Sorting" type="Alfakher\OutOfStockProduct\Model\OutStockBottomSorting"/>
-
-    <!-- plugin to update the Elasticsearch7 sort order query -->
+     <!-- plugin to update the Elasticsearch7 sort order query -->
     <type name="Magento\Elasticsearch7\SearchAdapter\Mapper">
         <plugin name="alfakher_outofstockproduct_elasticsearch_sorting_outofstocktobottom"
                 type="Alfakher\OutOfStockProduct\Model\Elasticsearch7\SearchAdapter\Mapper" />
