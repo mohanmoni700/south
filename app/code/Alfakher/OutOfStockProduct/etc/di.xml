@@ -5,4 +5,18 @@
                 type="Alfakher\OutOfStockProduct\Plugin\VisualMerchandiser\OutStockBottom" sortOrder="10" disabled="false" />
     </type>
     <preference for="Magento\VisualMerchandiser\Model\Sorting" type="Alfakher\OutOfStockProduct\Model\OutStockBottomSorting"/>
+
+    <!-- plugin to update the Elasticsearch7 sort order query -->
+    <type name="Magento\Elasticsearch7\SearchAdapter\Mapper">
+        <plugin name="alfakher_outofstockproduct_elasticsearch_sorting_outofstocktobottom"
+                type="Alfakher\OutOfStockProduct\Model\Elasticsearch7\SearchAdapter\Mapper" />
+    </type>
+    <!-- To add the stock_status in Elasticsearch Index -->
+    <virtualType name="additionalFieldsProviderForElasticsearch" type="Magento\AdvancedSearch\Model\Adapter\DataMapper\AdditionalFieldsProvider">
+        <arguments>
+            <argument name="fieldsProviders" xsi:type="array">
+                <item name="stock_status" xsi:type="object">Alfakher\OutOfStockProduct\Model\Adapter\Elasticsearch\BatchDataMapper\StockStatus</item>
+            </argument>
+        </arguments>
+    </virtualType>
 </config>
