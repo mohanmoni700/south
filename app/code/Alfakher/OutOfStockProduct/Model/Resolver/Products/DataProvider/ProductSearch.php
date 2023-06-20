@@ -24,6 +24,15 @@ use Magento\CatalogGraphQl\Model\Resolver\Products\DataProvider\ProductSearch as
 
 class ProductSearch extends MagentoProductSearch
 {
+    /**
+     * @param CollectionFactory $collectionFactory
+     * @param ProductSearchResultsInterfaceFactory $searchResultsFactory
+     * @param CollectionProcessorInterface $collectionPreProcessor
+     * @param CollectionPostProcessor $collectionPostProcessor
+     * @param SearchResultApplierFactory $searchResultsApplierFactory
+     * @param ProductCollectionSearchCriteriaBuilder $searchCriteriaBuilder
+     * @param Visibility $catalogProductVisibility
+     */
     public function __construct(
         CollectionFactory                      $collectionFactory,
         ProductSearchResultsInterfaceFactory   $searchResultsFactory,
@@ -32,8 +41,7 @@ class ProductSearch extends MagentoProductSearch
         SearchResultApplierFactory             $searchResultsApplierFactory,
         ProductCollectionSearchCriteriaBuilder $searchCriteriaBuilder,
         Visibility                             $catalogProductVisibility
-    )
-    {
+    ) {
         parent::__construct(
             $collectionFactory, $searchResultsFactory, $collectionPreProcessor,
             $collectionPostProcessor, $searchResultsApplierFactory, $searchCriteriaBuilder,
@@ -48,6 +56,13 @@ class ProductSearch extends MagentoProductSearch
         $this->searchResultApplierFactory = $searchResultsApplierFactory;
     }
 
+    /**
+     * @param SearchCriteriaInterface $searchCriteria
+     * @param SearchResultInterface $searchResult
+     * @param array $attributes
+     * @param ContextInterface|null $context
+     * @return SearchResultsInterface
+     */
     public function getList(
         SearchCriteriaInterface $searchCriteria,
         SearchResultInterface   $searchResult,
