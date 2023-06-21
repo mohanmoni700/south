@@ -1,4 +1,5 @@
 <?php
+declare (strict_types = 1);
 
 namespace SouthSmoke\AdditionalCharges\Block\Adminhtml\Sales\Order\Invoice;
 
