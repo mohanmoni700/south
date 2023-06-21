@@ -27,6 +27,9 @@ class SubscriptionFailedObserver implements ObserverInterface
     {
         /** @var \Exception $exception */
         $exception = $observer->getEvent()->getData('exception');
+        if (!$exception instanceof \Exception) {
+            $exception = new \Exception(__('Initialized new exception object'));
+        }
         /** @var string $errorMessage */
         $errorMessage = $observer->getEvent()->getData('error_message');
         $this->logger->log('');
