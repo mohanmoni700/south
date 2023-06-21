@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\QuoteGraphQl\Model\Resolver\CartPrices">
+        <plugin name="southsmoke_insurances_cart" type="SouthSmoke\AdditionalCharges\Plugin\Model\Resolver\CartPrices" sortOrder="10" />
+    </type>
+    <type name="Magento\SalesGraphQl\Model\Resolver\OrderTotal">
+        <plugin name="southsmoke_insurances_order" type="SouthSmoke\AdditionalCharges\Plugin\Model\Resolver\OrderTotal" sortOrder="10" />
+    </type>
+    <type name="Magento\SalesGraphQl\Model\Resolver\Invoice\InvoiceTotal">
+        <plugin name="southsmoke_insurances_order" type="SouthSmoke\AdditionalCharges\Plugin\Model\Resolver\Invoice\InvoiceTotal" sortOrder="10" />
+    </type>
+</config>

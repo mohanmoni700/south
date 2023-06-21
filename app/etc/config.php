@@ -1150,6 +1150,7 @@ return [
         'Shishaworld_GraphQlTranslation' => 1,
         'Alfakher_SignifydHoldOrder' => 1,
         'Smartwave_Megamenu' => 1,
+        'SouthSmoke_AdditionalCharges' => 1,
         'Splitit_PaymentGateway' => 1,
         'Temando_ShippingRemover' => 1,
         'Vertex_Tax' => 1,
