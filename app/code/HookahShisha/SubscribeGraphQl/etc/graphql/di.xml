@@ -14,4 +14,12 @@
         <plugin name="alfa_customer_orders_after" type="HookahShisha\SubscribeGraphQl\Plugin\Magento\SalesGraphQl\Model\Formatter\Order" />
     </type>
 
+    <type name="Magedelight\SubscribenowGraphQl\Model\Resolver\Subscriptions">
+        <plugin name="subscription-query-modify-date-format"
+                type="HookahShisha\SubscribeGraphQl\Plugin\Model\Resolver\SubscriptionFormatDate"/>
+    </type>
+    <type name="Magedelight\SubscribenowGraphQl\Model\Resolver\CustomerSubscriptions">
+        <plugin name="customer-subscription-query-format-date"
+                type="HookahShisha\SubscribeGraphQl\Plugin\Model\Resolver\CustomerSubscriptionFormatDate"/>
+    </type>
 </config>
