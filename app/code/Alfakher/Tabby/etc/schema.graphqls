@@ -8,7 +8,6 @@ type Mutation {
 type TabbyOrderVerifyResponse {
     status: Boolean @doc(description: "Tabby Order Status")
     message: String @doc(description: "Status message")
-    masked_quote_id: String @doc(description: "Restore Quote ID in case of payment is failed/canceled")
 }
 
 type Order {
