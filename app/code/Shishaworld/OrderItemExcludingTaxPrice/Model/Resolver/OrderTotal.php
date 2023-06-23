@@ -27,8 +27,8 @@ class OrderTotal implements ResolverInterface
         $order = $value['model'];
 
         return [
-            'subtotal_incl_tax' => $order->getSubtotalInclTax(),
-            'subtotal_currency' => $order->getOrderCurrencyCode()
+            'value' => $order->getSubtotalInclTax(),
+            'currency' => $order->getOrderCurrencyCode()
         ];
     }
 }

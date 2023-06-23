@@ -34,8 +34,8 @@ class InvoiceTotal
         array $args = null
     ) {
 
-        $result['invoice_subtotal_incl_tax_data']['invoice_subtotal_incl_tax'] = $value['model']['subtotal_incl_tax'];
-        $result['invoice_subtotal_incl_tax_data']['invoice_subtotal_currency'] = $value['model']['store_currency_code'];
+        $result['subtotal_incl_tax']['value'] = $value['model']['subtotal_incl_tax'];
+        $result['subtotal_incl_tax']['currency'] = $value['model']['store_currency_code'];
 
         return $result;
     }
