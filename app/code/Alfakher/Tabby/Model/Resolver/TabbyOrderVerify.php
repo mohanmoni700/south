@@ -93,12 +93,8 @@ class TabbyOrderVerify implements ResolverInterface
 
         try {
             if ($paymentStatus == 'SUCCESS') {
-                $paymentStatus = $this->orderHelper->authorizeOrder($incrementId, $paymentId, 'success page');
-                if ($paymentStatus) {
-                    $this->deActiveQuote($order);
-                } else {
-                    throw new LocalizedException(__("Couldn't authorize the order"));
-                }
+                $this->orderHelper->authorizeOrder($incrementId, $paymentId, 'success page');
+                $this->deActiveQuote($order);
             } elseif ($paymentStatus == 'FAILED') {
                 $comment = __('Payment with Tabby is failed');
                 $this->orderHelper->cancelCurrentOrderByIncrementId($incrementId, $comment);
