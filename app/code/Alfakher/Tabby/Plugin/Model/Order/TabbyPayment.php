@@ -25,13 +25,16 @@ class TabbyPayment
     ) {
         $result = $proceed($orderModel);
 
-        if ($paymentMethod = $orderModel->getPayment()) {
-            $paymentMethodCode = $paymentMethod->getMethod();
-            if ($paymentMethodCode == self::TABBY_INSTALLMENTS_METHOD_CODE) {
-                foreach ($result as &$item) {
-                    $item['name'] = $paymentMethod->getMethodInstance()->getTitle();
+        try {
+            if ($paymentMethod = $orderModel->getPayment()) {
+                $paymentMethodCode = $paymentMethod->getMethod();
+                if ($paymentMethodCode == self::TABBY_INSTALLMENTS_METHOD_CODE) {
+                    foreach ($result as &$item) {
+                        $item['name'] = $paymentMethod->getMethodInstance()->getTitle();
+                    }
                 }
             }
+        } catch (\Exception $e) {
         }
 
         return $result;
