@@ -17,4 +17,12 @@
             </argument>
         </arguments>
     </virtualType>
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="clean" xsi:type="object">Alfakher\OutOfStockProduct\Model\UpdateStock</item>
+            </argument>
+        </arguments>
+    </type>
+
 </config>
