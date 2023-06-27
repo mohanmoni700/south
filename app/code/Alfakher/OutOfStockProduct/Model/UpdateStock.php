@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * @category  Alfakher
+ * @package   Alfakherd_OutOfStockProduct
+ */
+declare(strict_types=1);
 namespace Alfakher\OutOfStockProduct\Model;
 
 use Magento\Framework\DB\Adapter\AdapterInterface;
