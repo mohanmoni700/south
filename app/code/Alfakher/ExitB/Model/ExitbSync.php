@@ -1,5 +1,6 @@
 <?php
 declare(strict_types=1);
+
 namespace Alfakher\ExitB\Model;
 
 use Magento\Framework\Model\Context;
@@ -37,7 +38,7 @@ class ExitbSync
     /**
      * @var OrderRepositoryInterface
      */
-    private $orderRepository;
+    private $order;
 
     /**
      * @var Curl $curl
@@ -48,7 +49,7 @@ class ExitbSync
      * @var Json $json
      */
     protected $json;
-    
+
     /**
      * @var ManagerInterface
      */
@@ -77,15 +78,16 @@ class ExitbSync
      * @param CompanyRepositoryInterface $companyRepository
      */
     public function __construct(
-        Context $context,
-        ScopeConfigInterface $scopeConfig,
-        OrderRepositoryInterface $orderRepository,
-        Curl $curl,
-        Json $json,
-        ManagerInterface $messageManager,
-        ExitbOrderFactory $exitbmodelFactory,
+        Context                    $context,
+        ScopeConfigInterface       $scopeConfig,
+        OrderRepositoryInterface   $orderRepository,
+        Curl                       $curl,
+        Json                       $json,
+        ManagerInterface           $messageManager,
+        ExitbOrderFactory          $exitbmodelFactory,
         CompanyRepositoryInterface $companyRepository
-    ) {
+    )
+    {
         $this->scopeConfig = $scopeConfig;
         $this->order = $orderRepository;
         $this->curl = $curl;
@@ -119,7 +121,7 @@ class ExitbSync
      */
     public function isModuleEnabled($websiteId)
     {
-        return (bool) $this->getConfigValue(self::EXITB_ENABLE, $websiteId);
+        return (bool)$this->getConfigValue(self::EXITB_ENABLE, $websiteId);
     }
 
     /**
@@ -138,9 +140,9 @@ class ExitbSync
                 $orderData = [];
                 $websiteId = $order->getStore()->getWebsiteId();
                 $orderData['orderData']['number'] = $this->getConfigValue(
-                    self::ORDER_PREFIX,
-                    $websiteId
-                ) . '-' . $order->getIncrementId();
+                        self::ORDER_PREFIX,
+                        $websiteId
+                    ) . '-' . $order->getIncrementId();
                 $orderData['orderData']['externalNumber'] = $order->getEntityId();
                 $orderData['orderData']['date'] = $order->getCreatedAt();
                 $orderData['orderData']['currency'] = $order->getOrderCurrencyCode();
@@ -177,18 +179,18 @@ class ExitbSync
                     $orderData['orderData']['payment']['token'] = $order->getMonduReferenceId();
                 } else {
                     $klarnaToken = $order->getPayment()->getAdditionalInformation('klarna_order_id');
-                    $vrToken     = $order->getPayment()->getAdditionalInformation('REFERENCE_ID');
+                    $vrToken = $order->getPayment()->getAdditionalInformation('REFERENCE_ID');
                     $orderData['orderData']['payment']['token'] = $klarnaToken ? $klarnaToken : $vrToken;
                 }
                 if ($order->hasInvoices()) {
                     $orderData['orderData']['payment']['isPayed'] = true;
                     $orderData['orderData']['payment']['amountPayed'] = (float)$order->getPayment()->getAmountPaid();
                 }
-                
+
                 $shippingMethod = $order->getShippingMethod();
                 $orderData['orderData']['shipment']['code'] = $this->getConfigValue(self::SHIP_CODE, $websiteId);
                 $orderData['orderData']['shipment']['total'] = (float)$order->getShippingAmount() + (float)$order->getShippingTaxAmount() + (float)$order->getHandlingFee();
-                if ($order->getCouponCode()!= null && $order->getDiscountAmount() != 0) {
+                if ($order->getCouponCode() != null && $order->getDiscountAmount() != 0) {
                     $orderData['orderData']['vouchers'][] = [
                         "code" => $order->getCouponCode(),
                         "discount" => (float)abs($order->getDiscountAmount())
@@ -196,7 +198,7 @@ class ExitbSync
                 }
                 $items = $order->getAllItems();
                 $orderData['orderData']['items'] = $this->orderItems($items, $orderData['orderData']['isB2B']);
-                
+
                 $exitBModel = $this->exitbmodelFactory->create();
                 $exitBorderSync = $exitBModel->load($orderId, 'order_id');
 
@@ -360,7 +362,7 @@ class ExitbSync
         }
         return '';
     }
-    
+
     /**
      * Get order items
      *
@@ -370,6 +372,7 @@ class ExitbSync
      */
     public function orderItems($items, $isB2B)
     {
+        $productData = array();
         foreach ($items as $key => $item) {
             $productData[$key]['externalNumber'] = $item->getItemId();
             $vhsArticleNumber = $item->getProduct()->getData('vhsarticlenumber');
@@ -383,12 +386,42 @@ class ExitbSync
                 $productData[$key]['articleNumber'] = $articleNumber;
             }
             $productData[$key]['quantity'] = (int)$item->getQtyOrdered();
-            $productData[$key]['price'] = $isB2B ? 0 : (float)$item->getPriceInclTax();
-            if ($isB2B) {
-                $productData[$key]['priceNet'] = (float)$item->getPrice();
-            }
-            $productData[$key]['discount'] = (float)$item->getDiscountAmount();
+            $itemPriceAndDiscount = $this->getItemPriceAndDiscount($item, $isB2B);
+            $productData[$key] = array_merge($productData[$key], $itemPriceAndDiscount);
         }
         return $productData;
+    }
+
+    /**
+     * Get Item Price And Discount based on B2B, B2C
+     * @param $item
+     * @param $isB2B
+     * @return array
+     */
+    private function getItemPriceAndDiscount($item, $isB2B)
+    {
+        $itemQty = (int)$item->getQtyOrdered();
+        $discountAmount = (float)$item->getDiscountAmount();
+        $itemPrice = (float)$item->getPrice();
+
+        $netDiscount = ($discountAmount ? $discountAmount / $itemQty : 0);
+        $netDiscount = number_format((float)$netDiscount, 2, '.', '');
+        $netPrice = ($itemPrice - $netDiscount);
+        $netPrice = number_format($netPrice, 2, '.', '');
+
+        if ($isB2B) {
+            return [
+                'priceNet' => (float)$netPrice,
+                'discountNet' => (float)$netDiscount,
+                'price' => 0,
+                'discount' => 0
+            ];
+        }
+        return [
+            'priceNet' => 0,
+            'discountNet' => 0,
+            'price' => (float)$netPrice,
+            'discount' => (float)$netDiscount
+        ];
     }
 }
