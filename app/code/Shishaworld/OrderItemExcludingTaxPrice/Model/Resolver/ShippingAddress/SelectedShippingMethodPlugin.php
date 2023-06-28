@@ -32,9 +32,11 @@ class SelectedShippingMethodPlugin
         array $value = null,
         array $args = null
     ) {
-        // Modified the $result array
-        $result['amount_incl_tax']['value'] = $value['model']->getShippingInclTax();
-        $result['amount_incl_tax']['currency'] = $value['model']->getQuote()->getQuoteCurrencyCode();
+        if (!empty($result)) {
+            // Modified the $result array
+            $result['amount_incl_tax']['value'] = $value['model']->getShippingInclTax() ?? null;
+            $result['amount_incl_tax']['currency'] = $value['model']->getQuote()->getQuoteCurrencyCode() ?? null;
+        }
 
         return $result;
     }
