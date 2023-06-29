@@ -17,8 +17,11 @@ $tierPriceModel = $block->getPrice();
 $tierPrices = $tierPriceModel->getTierPriceList();
 $msrpShowOnGesture = $block->getPriceType('msrp_price')->isShowPriceOnGesture();
 $product = $block->getSaleableItem();
+
+$_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
+$showCart = $_helperB2b->isCustomerLoggedIn();
 ?>
-<?php if (count($tierPrices)): ?>
+<?php if (count($tierPrices) && $showCart): ?>
     <ul class="<?= $block->escapeHtmlAttr(($block->hasListClass() ? $block->getListClass() : 'prices-tier items')) ?>">
         <?php foreach ($tierPrices as $index => $price): ?>
             <li class="item">
