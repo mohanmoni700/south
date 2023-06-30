@@ -41,6 +41,8 @@ class DisableLoyaltyCoupon
             // Check if there are any quoted products in the cart
             $quotedProductsExist = $this->checkQuotedProductsExist($quote);
             if ($quotedProductsExist) {
+                $quote->setHasError(true);
+                $quote->setMessage(__('Rewards cannot be applied to quoted products.'));
                 return $this->getErrorResponse(); // Return error response
             }
         }
@@ -55,10 +57,11 @@ class DisableLoyaltyCoupon
      */
     private function checkQuotedProductsExist($quote): bool
     {
+        $result = false;
         if ($quote->getOptionByCode('amasty_quote_price')) {
-            return false;
+            $result = true;
         }
-        return true;
+        return $result;
     }
 
     /**
