@@ -1,8 +1,50 @@
 diff --git a/app/code/Tabby/Checkout/Observer/ConfigObserver.php b/app/code/Tabby/Checkout/Observer/ConfigObserver.php
-index 6fe00af31..80635701a 100644
+index 6fe00af31..60b9abc80 100644
 --- a/app/code/Tabby/Checkout/Observer/ConfigObserver.php
 +++ b/app/code/Tabby/Checkout/Observer/ConfigObserver.php
-@@ -88,18 +88,18 @@ class ConfigObserver implements ObserverInterface
+@@ -11,6 +11,7 @@ use Magento\Store\Model\ScopeInterface;
+ use Magento\Store\Model\StoreManager;
+ use Tabby\Checkout\Gateway\Config\Config;
+ use Tabby\Checkout\Model\Api\Tabby\Webhooks;
++use Magento\Backend\Helper\Data;
+ 
+ class ConfigObserver implements ObserverInterface
+ {
+@@ -32,6 +33,11 @@ class ConfigObserver implements ObserverInterface
+      */
+     protected $_scopeConfig;
+ 
++    /**
++     * @var Data
++     */
++    private $_adminHelper;
++
+     /**
+      * @var StoreManager
+      */
+@@ -44,17 +50,20 @@ class ConfigObserver implements ObserverInterface
+      * @param Url $urlHelper
+      * @param ScopeConfigInterface $scopeConfig
+      * @param StoreManager $storeManager
++     * @param Data $adminHelper
+      */
+     public function __construct(
+         Webhooks $webhooks,
+         Url $urlHelper,
+         ScopeConfigInterface $scopeConfig,
+-        StoreManager $storeManager
++        StoreManager $storeManager,
++        Data $adminHelper
+     ) {
+         $this->_api = $webhooks;
+         $this->_urlHelper = $urlHelper;
+         $this->_scopeConfig = $scopeConfig;
+         $this->_storeManager = $storeManager;
++        $this->_adminHelper = $adminHelper;
+     }
+ 
+     /**
+@@ -88,18 +97,20 @@ class ConfigObserver implements ObserverInterface
                  continue;
              }
              if ($this->isMethodActive($store->getId())) {
@@ -24,11 +66,13 @@ index 6fe00af31..80635701a 100644
 -            $webhookUrl = $this->_urlHelper->getUrl('tabby/result/webhook', ['_scope' => $group->getDefaultStoreId()]);
 +        foreach ($register_hooks as $storeId => $currencies) {
 +            $store = $this->_storeManager->getStore($storeId);
-+            $webhookUrl = $this->_urlHelper->getUrl('tabby/result/webhook', ['_scope' => $store->getId()]);
++            $adminUrl = $this->_adminHelper->getHomePageUrl();
++            $baseURL = parse_url($adminUrl, PHP_URL_SCHEME) . '://' . parse_url($adminUrl, PHP_URL_HOST);
++            $webhookUrl  = $baseURL . '/tabby/result/webhook/';
  
              if ($this->getWebsiteConfigValue('tabby/tabby_api/local_currency', $website->getCode())) {
                  $currencies = array_unique($currencies);
-@@ -109,13 +109,13 @@ class ConfigObserver implements ObserverInterface
+@@ -109,13 +120,13 @@ class ConfigObserver implements ObserverInterface
                          continue;
                      }
                      $this->_api->registerWebhook(
