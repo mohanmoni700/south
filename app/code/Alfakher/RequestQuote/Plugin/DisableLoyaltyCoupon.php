@@ -57,11 +57,7 @@ class DisableLoyaltyCoupon
      */
     private function checkQuotedProductsExist($quote): bool
     {
-        $result = false;
-        if ($quote->getOptionByCode('amasty_quote_price')) {
-            $result = true;
-        }
-        return $result;
+        return (Bool)$quote->getOptionByCode('amasty_quote_price');
     }
 
     /**
