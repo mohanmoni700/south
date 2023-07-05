@@ -21,8 +21,7 @@ class TabbyCheckout extends Checkout
         'not_available' =>
             'Sorry, Tabby is unable to approve this purchase. Please use an alternative payment method for your order.',
         'order_amount_too_high' =>
-            'This purchase is above your current spending limit with Tabby,
-            try a smaller cart or use another payment method',
+            'This purchase is above your current spending limit with Tabby, try a smaller cart or use another payment method',
         'order_amount_too_low' =>
             'The purchase amount is below the minimum amount required to use Tabby, try adding more items or use another payment method'
     ];
@@ -80,7 +79,7 @@ class TabbyCheckout extends Checkout
                     throw new LocalizedException(
                         __($this->rejectionReasons[$result->configuration->products->installments->rejection_reason]),
                         null,
-                        '100'
+                        100
                     );
                 } else {
                     throw new LocalizedException(__("Response not have status field or payment rejected"));
