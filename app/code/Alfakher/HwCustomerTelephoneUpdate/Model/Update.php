@@ -1,4 +1,6 @@
 <?php
+declare (strict_types = 1);
+
 namespace Alfakher\HwCustomerTelephoneUpdate\Model;
 
 use Magento\Framework\DB\Adapter\AdapterInterface;
