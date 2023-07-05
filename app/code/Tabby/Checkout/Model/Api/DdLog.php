@@ -5,6 +5,9 @@ namespace Tabby\Checkout\Model\Api;
 use Magento\Framework\Module\ModuleList;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Store\Model\StoresConfig;
+use Laminas\Http\Request;
+use Laminas\Http\Client;
+
 
 class DdLog
 {
@@ -32,6 +35,7 @@ class DdLog
     public function __construct(
         StoreManagerInterface $storeManager,
         ModuleList $moduleList,
+        Client $httpClient,
         StoresConfig $storesConfig
     ) {
         $this->_storeManager = $storeManager;
@@ -42,17 +46,17 @@ class DdLog
     /**
      * @param string $status
      * @param string $message
-     * @param null $e
-     * @param null $data
+     * @param ?\Exception $e
+     * @param ?array $data
      */
     public function log($status = "error", $message = "Something went wrong", $e = null, $data = null)
     {
         try {
-            $client = new \Zend_Http_Client("https://http-intake.logs.datadoghq.eu/v1/input");
+            $client = new Client("https://http-intake.logs.datadoghq.eu/v1/input");
 
-            $client->setMethod(\Zend_Http_Client::POST);
-            $client->setHeaders("DD-API-KEY", "pubd0a8a1db6528927ba1877f0899ad9553");
-            $client->setHeaders(\Zend_Http_Client::CONTENT_TYPE, 'application/json');
+            $client->setMethod(Request::METHOD_POST);
+            $client->setHeaders(array("DD-API-KEY" => "pubd0a8a1db6528927ba1877f0899ad9553"));
+            $client->setEncType('application/json');
 
             $storeURL = parse_url($this->_storeManager->getStore()->getBaseUrl());
 
@@ -63,7 +67,7 @@ class DdLog
                 "message" => $message,
 
                 "service" => "magento2",
-                "hostname" => $storeURL["host"],
+                "hostname" => array_key_exists('host', $storeURL) ? $storeURL['host'] : 'unknown',
                 "settings" => $this->getModuleSettings(),
                 "code" => $this->_storeManager->getStore()->getCode(),
 
@@ -82,9 +86,9 @@ class DdLog
             }
 
             $params = json_encode($log);
-            $client->setRawData($params);
+            $client->setRawBody($params);
 
-            $client->request();
+            $client->send();
         } catch (\Exception $e) {
             // do not generate any exceptions
         }
@@ -100,7 +104,8 @@ class DdLog
         foreach ([
                      'tabby/tabby_api' => 'Tabby Api',
                      'payment/tabby_checkout' => 'Pay Later',
-                     'payment/tabby_installments' => 'Installments'
+                     'payment/tabby_installments' => 'Installments',
+                     'payment/tabby_cc_installments' => 'CC Installments'
                  ] as $path => $name) {
             $config = $this->_storesConfig->getStoresConfigByPath($path);
             foreach ($stores as $store) {
@@ -109,6 +114,9 @@ class DdLog
                 }
                 $settings[$store->getCode()][$name] = array_key_exists($store->getId(),
                     $config) ? $config[$store->getId()] : [];
+                foreach ($settings[$store->getCode()][$name] as $key => $value) {
+                    if ($key == 'secret_key' && !strstr($settings[$store->getCode()][$name][$key], '_test_')) $settings[$store->getCode()][$name][$key] = strstr($settings[$store->getCode()][$name][$key], '-', true);
+                }
             }
         }
         return $settings;

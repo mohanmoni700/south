@@ -20,7 +20,6 @@ use Tabby\Checkout\Gateway\Config\Config;
 use Magento\Payment\Model\Method\AbstractMethod;
 use Magento\Quote\Api\Data\PaymentInterface;
 use Magento\Framework\DataObject;
-use Magento\Framework\HTTP\ZendClientFactory;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
 use Magento\Framework\Api\ExtensionAttributesFactory;
@@ -57,7 +56,7 @@ class Checkout extends AbstractMethod
     /**
      * @var string
      */
-    const ALLOWED_COUNTRIES = 'AE,SA,KW,BH,EG';
+    const ALLOWED_COUNTRIES = 'AE,SA,KW,BH,QA';
     const PAYMENT_ID_FIELD = 'checkout_id';
     const TABBY_CURRENCY_FIELD = 'tabby_currency';
 
@@ -154,11 +153,6 @@ class Checkout extends AbstractMethod
     protected $_canCancelInvoice = true;
 
     /**
-     * @var ZendClientFactory|null
-     */
-    protected $_httpClientFactory = null;
-
-    /**
      * @var OrderPaymentExtensionInterfaceFactory|null
      */
     protected $paymentExtensionFactory = null;
@@ -209,6 +203,36 @@ class Checkout extends AbstractMethod
     protected $invoiceSender;
 
     /**
+     * @var localeResolver
+     */
+    protected $localeResolver;
+
+    /**
+     * @var _urlInterface
+     */
+    protected $_urlInterface;
+
+    /**
+     * @var imageHelper
+     */
+    protected $imageHelper;
+
+    /**
+     * @var orderHistory
+     */
+    protected $orderHistory;
+
+    /**
+     * @var buyerHistory
+     */
+    protected $buyerHistory;
+
+    /**
+     * @var customerRepository
+     */
+    protected $customerRepository;
+
+    /**
      * @param Context $context
      * @param Registry $registry
      * @param ExtensionAttributesFactory $extensionFactory
@@ -217,7 +241,6 @@ class Checkout extends AbstractMethod
      * @param ScopeConfigInterface $scopeConfig
      * @param Logger $logger
      * @param OrderService $orderService
-     * @param ZendClientFactory $httpClientFactory
      * @param Config $config ,
      * @param TransactionFactory $transactionFactory
      * @param OrderPaymentExtensionInterfaceFactory $paymentExtensionFactory
@@ -245,7 +268,6 @@ class Checkout extends AbstractMethod
         ScopeConfigInterface $scopeConfig,
         Logger $logger,
         OrderService $orderService,
-        ZendClientFactory $httpClientFactory,
         Config $config,
         TransactionFactory $transactionFactory,
         OrderPaymentExtensionInterfaceFactory $paymentExtensionFactory,
@@ -281,7 +303,6 @@ class Checkout extends AbstractMethod
         );
         $this->_invoiceService = $invoiceService;
         $this->_orderService = $orderService;
-        $this->_httpClientFactory = $httpClientFactory;
         $this->_configModule = $config;
         $this->_transactionFactory = $transactionFactory;
         $this->paymentExtensionFactory = $paymentExtensionFactory;
@@ -409,7 +430,7 @@ class Checkout extends AbstractMethod
                     __("Something wrong with your transaction, please contact support.")
                 );
             }
-            if ($payment->formatAmount($order->getGrandTotal(), true) != floatval($result->amount)) {
+            if ($payment->formatAmount($order->getGrandTotal(), true) != $payment->formatAmount($result->amount, true)) {
                 $logData = array(
                     "payment.id" => $id,
                     "payment.amount" => $result->amount,
@@ -441,7 +462,7 @@ class Checkout extends AbstractMethod
                         }
             */
 
-            if ($amount != $result->amount) {
+            if ($payment->formatAmount($amount, true) != $payment->formatAmount($result->amount, true)) {
                 $logData = array(
                     "payment.id" => $id,
                     "payment.amount" => $result->amount,
@@ -932,36 +953,11 @@ class Checkout extends AbstractMethod
      */
     public function isAvailable(CartInterface $quote = null)
     {
-        return parent::isAvailable($quote) && $this->checkSkus($quote) && !$this->isDisabled();
+        return parent::isAvailable($quote) && $this->_configModule->isTabbyActiveForCart($quote) && !$this->isDisabled();
     }
 
     protected function isDisabled() {
-        return in_array($this->_code, ['tabby_checkout']);
-    }
-    /**
-     * @param CartInterface|null $quote
-     * @return bool
-     * @throws LocalizedException
-     */
-    public function checkSkus(CartInterface $quote = null)
-    {
-
-        $skus = explode("\n", $this->getConfigData("disable_for_sku") ?: '');
-        $result = true;
-
-        foreach ($skus as $sku) {
-            if (!$quote) {
-                break;
-            }
-            foreach ($quote->getAllVisibleItems() as $item) {
-                if ($item->getSku() == trim($sku, "\r\n ")) {
-                    $result = false;
-                    break 2;
-                }
-            }
-        }
-
-        return $result;
+        return in_array($this->_code, ['tabby_checkout', 'tabby_cc_installments']);
     }
 
     /**
@@ -1116,7 +1112,8 @@ class Checkout extends AbstractMethod
             
         } catch (\Exception $e) {
             $this->_ddlog->log("error", "createSession exception", $e, $data);
-            throw new LocalizedException(__("Something went wrong. Please try again later or contact support."));
+            // be silent, no exception require here. just redirect to checkout again
+            //throw new LocalizedException(__("Something went wrong. Please try again later or contact support."));
         }
 
         return $redirectUrl;
@@ -1169,7 +1166,10 @@ class Checkout extends AbstractMethod
                 'title'         => $item->getName(),
                 'description'   => $item->getDescription(),
                 'quantity'      => $item->getQtyOrdered() * 1,
-                'unit_price'    => $this->getTabbyPrice($item, 'price_incl_tax'),
+                'unit_price'    => $this->getInfoInstance()->formatAmount(
+                    $this->getTabbyPrice($item, 'price') - $this->getTabbyPrice($item, 'discount_amount') + $this->getTabbyPrice($item, 'tax_amount')
+                ),
+                'tax_amount'    => $this->getTabbyPrice($item, 'tax_amount'),
                 'reference_id'  => $item->getSku(),
                 'image_url'     => $this->getSessionItemImageUrl($item),
                 'product_url'   => $item->getProduct()->getUrlInStore(),

@@ -3,7 +3,8 @@
 namespace Tabby\Checkout\Gateway\Config;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Serialize\Serializer\Json;
+use Magento\Quote\Api\Data\CartInterface;
+use Magento\Catalog\Model\Product;
 
 class Config extends \Magento\Payment\Gateway\Config\Config
 {
@@ -37,15 +38,11 @@ class Config extends \Magento\Payment\Gateway\Config\Config
      * Tabby config constructor
      *
      * @param ScopeConfigInterface $scopeConfig
-     * @param null|string $methodCode
-     * @param string $pathPattern
      */
     public function __construct(
-        ScopeConfigInterface $scopeConfig,
-        $methodCode = self::CODE,
-        $pathPattern = self::DEFAULT_PATH_PATTERN
+        ScopeConfigInterface $scopeConfig
     ) {
-        parent::__construct($scopeConfig, $methodCode, $pathPattern);
+        parent::__construct($scopeConfig, self::CODE, self::DEFAULT_PATH_PATTERN);
         $this->scopeConfig = $scopeConfig;
     }
 
@@ -73,5 +70,49 @@ class Config extends \Magento\Payment\Gateway\Config\Config
     public function getScopeConfig()
     {
         return $this->scopeConfig;
+    }
+    /**
+     * @param CartInterface|null $quote
+     * @return bool
+     * @throws LocalizedException
+     */
+    public function isTabbyActiveForCart(CartInterface $quote = null)
+    {
+        $result = true;
+
+        if ($quote) {
+            foreach ($quote->getAllVisibleItems() as $item) {
+                if (!$this->isTabbyActiveForProduct($item->getProduct())) {
+                    $result = false;
+                    break;
+                }
+            }
+        }
+
+        return $result;
+    }
+    /**
+     * @return bool
+     */
+    public function isTabbyActiveForProduct(Product $product)
+    {
+        $skus = $this->getDisableForSku();
+        $result = true;
+
+        foreach ($skus as $sku) {
+            if ($product->getSku() == trim($sku, "\r\n ")) {
+                $result = false;
+                break;
+            }
+        }
+
+        return $result;
+    }
+    /**
+     * @return false|string[]
+     */
+    private function getDisableForSku()
+    {
+        return array_filter(explode("\n", $this->getValue('disable_for_sku') ?: ''));
     }
 }

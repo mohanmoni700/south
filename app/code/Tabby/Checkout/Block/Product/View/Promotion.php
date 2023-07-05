@@ -17,6 +17,7 @@ use Magento\Framework\Pricing\PriceCurrencyInterface;
 use Magento\Framework\Stdlib\StringUtils;
 use Magento\Framework\Url\EncoderInterface;
 use Magento\Store\Model\ScopeInterface;
+use Tabby\Checkout\Gateway\Config\Config;
 
 class Promotion extends View
 {
@@ -42,15 +43,21 @@ class Promotion extends View
     protected $checkoutSession;
 
     /**
+     * @var Tabby\Checkout\Gateway\Config\Config
+     */
+    protected $moduleConfig;
+
+    /**
      * @param Context $context
      * @param EncoderInterface $urlEncoder
      * @param \Magento\Framework\Json\EncoderInterface $jsonEncoder
      * @param StringUtils $string
      * @param Product $productHelper
      * @param ConfigInterface $productTypeConfig
+     * @param Config $moduleConfig
      * @param FormatInterface $localeFormat
      * @param Session $customerSession
-     * @param ProductRepositoryInterface|PriceCurrencyInterface $productRepository
+     * @param ProductRepositoryInterface $productRepository
      * @param PriceCurrencyInterface $priceCurrency
      * @param ResolverInterface $localeResolver
      * @param Data $catalogHelper
@@ -66,6 +73,7 @@ class Promotion extends View
         StringUtils $string,
         Product $productHelper,
         ConfigInterface $productTypeConfig,
+        Config $moduleConfig,
         FormatInterface $localeFormat,
         Session $customerSession,
         ProductRepositoryInterface $productRepository,
@@ -91,6 +99,7 @@ class Promotion extends View
         $this->localeResolver = $localeResolver;
         $this->catalogHelper = $catalogHelper;
         $this->checkoutSession = $checkoutSession;
+        $this->moduleConfig = $moduleConfig;
     }
 
     /**
@@ -124,17 +133,6 @@ class Promotion extends View
     }
 
     /**
-     * @return false|string[]
-     */
-    private function getDisableForSku()
-    {
-        return array_filter(explode("\n", $this->_scopeConfig->getValue(
-            'tabby/tabby_api/disable_for_sku',
-            ScopeInterface::SCOPE_STORE
-        )?:''));
-    }
-
-    /**
      * @return bool
      * @throws LocalizedException
      * @throws NoSuchEntityException
@@ -143,22 +141,7 @@ class Promotion extends View
     {
         $quote = $this->checkoutSession->getQuote();
 
-        $skus = $this->getDisableForSku();
-        $result = true;
-
-        foreach ($skus as $sku) {
-            if (!$quote) {
-                break;
-            }
-            foreach ($quote->getAllVisibleItems() as $item) {
-                if ($item->getSku() == trim($sku, "\r\n ")) {
-                    $result = false;
-                    break 2;
-                }
-            }
-        }
-
-        return $result;
+        return $this->moduleConfig->isTabbyActiveForCart($quote);
     }
 
     /**
@@ -166,17 +149,11 @@ class Promotion extends View
      */
     public function isPromotionsActiveForProductSku()
     {
-        $skus = $this->getDisableForSku();
-        $result = true;
+        return $this->moduleConfig->isTabbyActiveForProduct($this->getProduct());
+    }
 
-        foreach ($skus as $sku) {
-            if ($this->getProduct()->getSku() == trim($sku, "\r\n ")) {
-                $result = false;
-                break;
-            }
-        }
-
-        return $result;
+    private function getBaseCurrency() {
+        return $this->_storeManager->getStore()->getBaseCurrency(); // @phan-suppress-current-line PhanUndeclaredMethod
     }
 
     /**
@@ -190,7 +167,7 @@ class Promotion extends View
             ScopeInterface::SCOPE_STORE
         );
         if ($max_base_price > 0) {
-            $max_price = $this->_storeManager->getStore()->getBaseCurrency()->convert(
+            $max_price = $this->getBaseCurrency()->convert(
                 $max_base_price,
                 $this->getCurrencyCode()
             );
@@ -211,7 +188,7 @@ class Promotion extends View
             ScopeInterface::SCOPE_STORE
         );
         if ($min_base_price > 0) {
-            $min_price = $this->_storeManager->getStore()->getBaseCurrency()->convert(
+            $min_price = $this->getBaseCurrency()->convert(
                 $min_base_price,
                 $this->getCurrencyCode()
             );
@@ -231,7 +208,7 @@ class Promotion extends View
             ScopeInterface::SCOPE_STORE
         );
         if ($min_base_price > 0) {
-            $min_price = $this->_storeManager->getStore()->getBaseCurrency()->convert(
+            $min_price = $this->getBaseCurrency()->convert(
                 $min_base_price,
                 $this->getCurrencyCode()
             );
@@ -311,6 +288,7 @@ class Promotion extends View
             "currency" => $this->getCurrencyCode(),
             "currencyRate" => $this->getCurrencyRate(),
             "theme" => $this->getTabbyTheme(),
+            "installmentsCount" => $this->getTabbyInstallmentsCount(),
             "productType" => $this->getProductType(),
             // we do not set cart price, because we need to update snippet from quote totals in javascript
             "price" => (float)$this->formatAmount($this->onShoppingCartPage ? 0 : $this->getTabbyProductPrice())/*,
@@ -327,15 +305,31 @@ class Promotion extends View
         return $this->isCreditCardInstallmentsActive() && !$this->isInstallmentsOrPayLaterActive() ? 'creditCardInstallments' : 'installments';
     }
 
+    public function getTabbyThemeConfig() {
+        $theme = explode(':', $this->_scopeConfig->getValue(
+            'tabby/tabby_api/promo_theme',
+            ScopeInterface::SCOPE_STORE
+        ) ?: '');
+        return [
+            'theme' => array_shift($theme),
+            'installmentsCount' => !empty($theme) ? 0 : 4
+        ];
+    }
+
     /**
      * @return mixed
      */
     public function getTabbyTheme()
     {
-        return $this->_scopeConfig->getValue(
-            'tabby/tabby_api/promo_theme',
-            ScopeInterface::SCOPE_STORE
-        );
+        return $this->getTabbyThemeConfig()['theme'];
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getTabbyInstallmentsCount()
+    {
+        return $this->getTabbyThemeConfig()['installmentsCount'];
     }
 
     /**
@@ -345,7 +339,7 @@ class Promotion extends View
      */
     public function getTabbyCartPrice()
     {
-        return $this->_storeManager->getStore()->getBaseCurrency()->convert(
+        return $this->getBaseCurrency()->convert(
             $this->checkoutSession->getQuote()->getBaseGrandTotal(),
             $this->getCurrencyCode()
         );
@@ -359,7 +353,7 @@ class Promotion extends View
     {
         return $this->catalogHelper->getTaxPrice(
             $this->getProduct(),
-            $this->_storeManager->getStore()->getBaseCurrency()->convert(
+            $this->getBaseCurrency()->convert(
                 $this->getProduct()->getFinalPrice(),
                 $this->getCurrencyCode()
             ),
@@ -374,8 +368,8 @@ class Promotion extends View
     public function getCurrencyRate()
     {
         $from = $this->getCurrencyCode();
-        $to = $this->_storeManager->getStore()->getCurrentCurrency()->getCode();
-        return $from == $to ? 1 : 1 / $this->_storeManager->getStore()->getBaseCurrency()->getRate($to);
+        $to = $this->_storeManager->getStore()->getCurrentCurrency()->getCode(); // @phan-suppress-current-line PhanUndeclaredMethod
+        return $from == $to ? 1 : 1 / $this->getBaseCurrency()->getRate($to);
     }
 
     /**
@@ -423,7 +417,7 @@ class Promotion extends View
      */
     public function getCurrencyCode()
     {
-        return $this->getUseLocalCurrency() ? $this->_storeManager->getStore()->getCurrentCurrency()->getCode() : $this->_storeManager->getStore()->getBaseCurrency()->getCode();
+        return $this->getUseLocalCurrency() ? $this->_storeManager->getStore()->getCurrentCurrency()->getCode() : $this->getBaseCurrency()->getCode(); // @phan-suppress-current-line PhanUndeclaredMethod
     }
 
     /*
