@@ -3,8 +3,11 @@
 namespace Alfakher\HandlingFee\ViewModel;
 
 use HookahShisha\Customization\Plugin\Magetrend\Order\Pdf\MagetrendInvoice;
+use Magento\Store\Model\ScopeInterface;
+use Magento\Framework\View\Element\Block\ArgumentInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
 
-class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
+class Fee implements ArgumentInterface
 {
 
     public const MODULE_ENABLE = "hookahshisha/handling_fee_group/handling_fee_enable";
@@ -19,10 +22,10 @@ class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
     /**
      * Constructor
      *
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+     * @param ScopeConfigInterface $scopeConfig
      */
     public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
+        ScopeConfigInterface $scopeConfig
     ) {
         $this->scopeConfig = $scopeConfig;
     }
@@ -45,7 +48,7 @@ class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
      */
     public function isSubtotalEditEnabled($websiteId)
     {
-        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE;
+        $storeScope = ScopeInterface::SCOPE_WEBSITE;
         return $this->scopeConfig->getValue(self::SUBTOTAL_FEE, $storeScope, $websiteId);
     }
 
@@ -56,7 +59,7 @@ class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
      */
     public function isShippingFeeEditEnabled($websiteId)
     {
-        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE;
+        $storeScope = ScopeInterface::SCOPE_WEBSITE;
         return $this->scopeConfig->getValue(self::SHIPPING_FEE, $storeScope, $websiteId);
     }
 
@@ -67,7 +70,7 @@ class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
      */
     public function isZeroOutEnabled($websiteId)
     {
-        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE;
+        $storeScope = ScopeInterface::SCOPE_WEBSITE;
         return $this->scopeConfig->getValue(self::ZERO_OUT, $storeScope, $websiteId);
     }
 
@@ -78,7 +81,7 @@ class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
      */
     public function isSubtotalInclTax($websiteId)
     {
-        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE;
+        $storeScope = ScopeInterface::SCOPE_WEBSITE;
         return $this->scopeConfig->getValue(self::IS_SUBTOTAL_INCL_TAX, $storeScope, $websiteId);
     }
 
@@ -89,7 +92,7 @@ class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
      */
     public function isShippingInclTax($websiteId)
     {
-        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_WEBSITE;
+        $storeScope = ScopeInterface::SCOPE_WEBSITE;
         return $this->scopeConfig->getValue(self::IS_SHIPPING_INCL_TAX, $storeScope, $websiteId);
     }
 
@@ -101,7 +104,7 @@ class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
      */
     public function getExciseNote($section)
     {
-        return $this->scopeConfig->getValue($section, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue($section, ScopeInterface::SCOPE_STORE);
     }
 
     /**
@@ -111,7 +114,9 @@ class Fee implements \Magento\Framework\View\Element\Block\ArgumentInterface
      */
     public function canShowTaxColumn($order)
     {
+        $kentuckyStateId = $this->scopeConfig->getValue(MagetrendInvoice::KN_REGION_ID_CONFIG_PATH,
+            ScopeInterface::SCOPE_STORE);
         $address = $order->getShippingAddress();
-        return $address->getRegionId() == MagetrendInvoice::KN_REGION_ID;
+        return $address->getRegionId() == $kentuckyStateId;
     }
 }

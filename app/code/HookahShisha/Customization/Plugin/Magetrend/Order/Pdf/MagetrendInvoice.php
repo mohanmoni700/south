@@ -26,7 +26,7 @@ use Magento\Framework\Registry;
 class MagetrendInvoice
 {
     const TEMPLATE_ID_CONFIG_PATH = "invoice_template_customization/forced_invoice_template/template_id";
-    const KN_REGION_ID = 79;
+    const KN_REGION_ID_CONFIG_PATH = "invoice_template_customization/region_id/kn_region_id";
     /**
      * @var ScopeConfigInterface
      */
@@ -120,15 +120,31 @@ class MagetrendInvoice
     }
 
     /**
+     * get region id for Kentucky state
+     * @param $store
+     * @return mixed
+     */
+    public function getKentuckyRegionId($store = null)
+    {
+        return $this->scopeConfig->getValue(
+            self::KN_REGION_ID_CONFIG_PATH,
+            ScopeInterface::SCOPE_STORE,
+            $store
+        );
+    }
+
+    /**
      * can Show tax column for this invoice
      * @param $invoices
      * @return mixed
      */
     public function canShowTaxColumn($invoices)
     {
+        $storeId = $this->getStoreId($invoices);
+        $kentuckyStateId = $this->getKentuckyRegionId($storeId);
         foreach ($invoices as $invoice) {
             $address = $invoice->getOrder()->getShippingAddress();
-            if ($address->getRegionId() == self::KN_REGION_ID) {
+            if ($address->getRegionId() == $kentuckyStateId) {
                 return true;
             }
         }
