@@ -5,8 +5,11 @@ declare(strict_types = 1);
 namespace Alfakher\Tabby\Model;
 
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Payment\Model\InfoInterface;
+use Magento\Quote\Model\Quote;
 use Magento\Sales\Model\Order;
+use Tabby\Checkout\Exception\NotFoundException;
 use Tabby\Checkout\Model\Method\Checkout;
 
 class TabbyCheckout extends Checkout
@@ -98,7 +101,7 @@ class TabbyCheckout extends Checkout
     }
 
     /**
-     * @ingeritdoc
+     * @inheritDoc
      */
     public function getInfoInstance()
     {
@@ -111,5 +114,166 @@ class TabbyCheckout extends Checkout
         }
 
         return $instance;
+    }
+
+    /**
+     * Get payment object from quote
+     *
+     * @param  Quote $quote
+     * @return InfoInterface
+     * @throws LocalizedException
+     */
+    public function getInfoInstanceFromQuote(Quote $quote): InfoInterface
+    {
+        $instance = $quote->getPayment();
+
+        if (!$instance instanceof InfoInterface) {
+            throw new \Magento\Framework\Exception\LocalizedException(
+                __('We cannot retrieve the payment information object instance.')
+            );
+        }
+
+        return $instance;
+    }
+
+    /**
+     * Tabby Pre-scoring api call
+     *
+     * @param  Quote $quote
+     * @return array
+     * @throws LocalizedException
+     * @throws NotFoundException
+     */
+    public function tabbyCreateSession(Quote $quote): array
+    {
+
+        $requestData = [
+            'lang' => strstr($this->localeResolver->getLocale(), '_', true) == 'en' ? 'en' : 'ar',
+            'merchant_code' => $quote->getStore()->getCode() . ($this->getConfigData('local_currency') ? '_' . $quote->getQuoteCurrencyCode() : ''),
+            'merchant_urls' => $this->getMerchantUrls(),
+            'payment' => $this->getSessionPaymentObjectFromQuote($quote)
+        ];
+
+        $result = $this->_checkoutApi->createSession($quote->getStoreId(), $requestData);
+
+        if ($result && property_exists($result, 'status') && $result->status == 'created') {
+            if (property_exists($result->configuration->available_products, $this->_codeTabby)) {
+                return [
+                    'is_available' => true,
+                    'rejection_message' => null
+                ];
+            } else {
+                return [
+                    'is_available' => false,
+                    'rejection_message' => __($this->rejectionReasons['not_available'])
+                ];
+            }
+        } else {
+            if (property_exists($result->configuration->products->installments, 'rejection_reason')
+                && isset($this->rejectionReasons[$result->configuration->products->installments->rejection_reason])
+            ) {
+                return [
+                    'is_available' => false,
+                    'rejection_message' => __($this->rejectionReasons[$result->configuration->products->installments->rejection_reason])
+                ];
+            } else {
+                return [
+                    'is_available' => false,
+                    'rejection_message' => __($this->rejectionReasons['not_available'])
+                ];
+            }
+        }
+    }
+
+    /**
+     * Get payment data from quote
+     *
+     * @param  Quote $quote
+     * @return array
+     * @throws LocalizedException
+     * @throws NoSuchEntityException
+     */
+    private function getSessionPaymentObjectFromQuote(Quote $quote): array
+    {
+        $address = $quote->getShippingAddress() ?: $quote->getBillingAddress();
+        $customer = $quote->getCustomer();
+
+        if (!$quote->getCustomerIsGuest()) {
+            $customer = $this->customerRepository->getById($quote->getCustomerId());
+        }
+
+        $orderHistory = $this->orderHistory->getOrderHistoryObject($customer, $quote->getCustomerEmail(), $address ? $address->getTelephone() : null);
+
+        return [
+            "amount"    => strval($this->getTabbyPriceFromQuote($quote, 'grand_total')),
+            "currency"  => $this->getIsInLocalCurrencyFromQuote($quote) ? $quote->getQuoteCurrencyCode() : $quote->getBaseCurrencyCode(),
+            "buyer"     => [
+                "phone"     => $address ? $address->getTelephone() : '',
+                "email"     => $quote->getCustomerEmail(),
+                "name"      => $quote->getCustomerFirstname() . ' ' . $quote->getCustomerLastname()
+            ],
+            "shipping_address" => [
+                "city"      => $address ? $address->getCity() : '',
+                "address"   => $address ? implode(PHP_EOL, $address->getStreet()) : '',
+                "zip"       => $address ? $address->getPostcode() : ''
+            ],
+            "order"     => [
+                "tax_amount"        => strval($this->getTabbyPriceFromQuote($quote, 'tax_amount')),
+                "shipping_amount"   => strval($this->getTabbyPriceFromQuote($quote, 'shipping_amount')),
+                "discount_amount"   => strval($this->getTabbyPriceFromQuote($quote, 'discount_amount')),
+                "items"             => $this->getSessionQuoteItems($quote)
+            ],
+            "buyer_history"     => $this->buyerHistory->getBuyerHistoryObject($customer, $orderHistory),
+            "order_history"     => $this->orderHistory->limitOrderHistoryObject($orderHistory)
+        ];
+    }
+
+    /**
+     * Get quote items
+     *
+     * @param Quote $quote
+     * @return array
+     */
+    private function getSessionQuoteItems($quote)
+    {
+        $items = [];
+
+        foreach ($quote->getAllVisibleItems() as $item) {
+            $items[] = [
+                'title'         => $item->getName(),
+                'description'   => $item->getDescription(),
+                'quantity'      => $item->getQty(),
+                'unit_price'    => strval(round($item->getPrice() - $item->getDiscountAmount() + $item->getTaxAmount(), 2)),
+                'tax_amount'    => strval(round($item->getTaxAmount(), 2)),
+                'reference_id'  => $item->getSku(),
+                'image_url'     => $this->getSessionItemImageUrl($item),
+                'product_url'   => $item->getProduct()->getUrlInStore(),
+                'category'      => $this->getSessionCategoryName($item)
+            ];
+        }
+        return $items;
+    }
+
+    /**
+     * Get tabby price
+     *
+     * @param  Quote $quote
+     * @param  string $field
+     * @return int|float
+     * @throws LocalizedException
+     */
+    public function getTabbyPriceFromQuote(Quote $quote, string $field)
+    {
+        return round($this->getIsInLocalCurrencyFromQuote($quote) ? $quote->getData($field) : $quote->getData('base_' . $field), 2);
+    }
+
+    /**
+     * @param  Quote $quote
+     * @return bool
+     * @throws LocalizedException
+     */
+    protected function getIsInLocalCurrencyFromQuote(Quote $quote): bool
+    {
+        return ($this->getInfoInstanceFromQuote($quote)->getAdditionalInformation(self::TABBY_CURRENCY_FIELD) == 'order');
     }
 }

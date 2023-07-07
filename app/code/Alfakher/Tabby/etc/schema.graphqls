@@ -5,9 +5,20 @@ type Mutation {
     ): TabbyOrderVerifyResponse @resolver(class: "Alfakher\\Tabby\\Model\\Resolver\\TabbyOrderVerify") @doc(description: "Tabby Payment Verification")
 }
 
+type Query {
+    tabbyPreScoring(
+        cart_id: String! @doc(description: "Masked Quote ID")
+    ): TabbyResponse @resolver(class: "Alfakher\\Tabby\\Model\\Resolver\\TabbyCreateSession") @doc(description: "Tabby Pre-scoring API call")
+}
+
 type TabbyOrderVerifyResponse {
     status: Boolean @doc(description: "Tabby Order Status")
     message: String @doc(description: "Status message")
+}
+
+type TabbyResponse {
+    is_available: Boolean @doc(description: "Is tabby payment available")
+    rejection_message: String @doc(description: "Tabby rejection message if not available")
 }
 
 type Order {
