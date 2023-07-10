@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Alfakher\RequestQuote\Plugin\RequestQuote\Controller\Move;
 
