@@ -53,10 +53,20 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
                 if ($isAddressTaxable) {
                     $order->setExciseTaxResponseOrder($quote->getExciseTaxResponseOrder());
                     if (!$quote->getIsMultiShipping()) {
-                        $order->setExciseTax($quote->getExciseTax());
-                        $order->setSalesTax($quote->getSalesTax());
-                        $order->setTaxAmount($quote->getSalesTax() + $quote->getExciseTax() + $order->getShippingTaxAmount());
-                        $order->setBaseTaxAmount($quote->getSalesTax() + $quote->getExciseTax() + $order->getBaseShippingTaxAmount());
+                        if (!is_null($quote->getExciseTax()) && $quote->getExciseTax() > 0) {
+                            $order->setExciseTax($quote->getExciseTax());
+                        }
+                        if (!is_null($quote->getSalesTax()) && $quote->getSalesTax() > 0) {
+                            $order->setSalesTax($quote->getSalesTax());
+                        }
+                        if (!is_null($quote->getExciseTax()) && $quote->getExciseTax() > 0 || !is_null($quote->getSalesTax()) && $quote->getSalesTax() > 0) {
+                            $order->setTaxAmount($quote->getSalesTax()
+                                + $quote->getExciseTax()
+                                + $order->getShippingTaxAmount());
+                            $order->setBaseTaxAmount($quote->getSalesTax()
+                                + $quote->getExciseTax()
+                                + $order->getBaseShippingTaxAmount());
+                        }
                     } else {
                         $taxSummary = $this->getTaxSummary($order);
                         $order->setExciseTax($taxSummary[1]);
@@ -67,27 +77,43 @@ class OrderEditTaxCalculation implements \Magento\Framework\Event\ObserverInterf
                         $quoteItemId = $item->getQuoteItemId();
                         $quoteItem = $quote->getItemById($quoteItemId);
 
-                        $item->setSalesTax($quoteItem->getSalesTax());
-                        $item->setExciseTax($quoteItem->getExciseTax());
-                        $item->setTaxAmount($quoteItem->getSalesTax() + $quoteItem->getExciseTax());
-                        /* bv_mp; date : 06-09-22; resolving issue of grand total shipping edit; Start */
-                        $item->setBaseTaxAmount($quoteItem->getBaseTaxAmount());
-                        /* bv_mp; date : 06-09-22; resolving issue of grand total shipping edit; End */
-                        $item->setTaxPercent($quoteItem->getTaxPercent());
+                        if ($quoteItem) {
+                            if (!is_null($quote->getSalesTax()) && $quote->getSalesTax() > 0) {
+                                $item->setSalesTax($quoteItem->getSalesTax());
+                            }
+                            if (!is_null($quote->getExciseTax()) && $quote->getExciseTax() > 0) {
+                                $item->setExciseTax($quoteItem->getExciseTax());
+                            }
+                            if (!is_null($quote->getExciseTax()) && $quote->getExciseTax() > 0 || !is_null($quote->getSalesTax()) && $quote->getSalesTax() > 0) {
+                                $item->setTaxAmount($quoteItem->getSalesTax() + $quoteItem->getExciseTax());
+                            }
 
-                        /* bv_op; date : 24-8-22; resolving issue of row subtotal; Start */
-                        $item->setPriceInclTax($quoteItem->getPriceInclTax());
-                        $item->setBasePriceInclTax($quoteItem->getBasePriceInclTax());
+                            /* bv_mp; date : 06-09-22; resolving issue of grand total shipping edit; Start */
+                            $item->setBaseTaxAmount($quoteItem->getBaseTaxAmount());
+                            /* bv_mp; date : 06-09-22; resolving issue of grand total shipping edit; End */
 
-                        $item->setRowTotalInclTax($quoteItem->getRowTotal() + $quoteItem->getSalesTax() + $quoteItem->getExciseTax());
-                        $item->setBaseRowTotalInclTax($quoteItem->getBaseRowTotal() + $quoteItem->getSalesTax() + $quoteItem->getExciseTax());
-                        /* bv_op; date : 24-8-22; resolving issue of row subtotal; End */
+                            if (!is_null($quote->getTaxPercent()) && $quoteItem->getTaxPercent() > 0) {
+                                $item->setTaxPercent($quoteItem->getTaxPercent());
+                            }
+
+                            /* bv_op; date : 24-8-22; resolving issue of row subtotal; Start */
+                            $item->setPriceInclTax($quoteItem->getPriceInclTax());
+                            $item->setBasePriceInclTax($quoteItem->getBasePriceInclTax());
+
+                            $item->setRowTotalInclTax($quoteItem->getRowTotal()
+                                + $quoteItem->getSalesTax()
+                                + $quoteItem->getExciseTax());
+                            $item->setBaseRowTotalInclTax($quoteItem->getBaseRowTotal()
+                                + $quoteItem->getSalesTax()
+                                + $quoteItem->getExciseTax());
+                            /* bv_op; date : 24-8-22; resolving issue of row subtotal; End */
+                        }
                     }
                 } else {
                     $this->clearItemTax($order);
                 }
-                $order->save();
                 $this->calculateGrandTotal($order);
+                $order->save();
             }
         } catch (\Exception $e) {
             throw $e;

@@ -18,13 +18,16 @@ class Index extends Action\Action
     /**
      * Index constructor.
      * @param Action\Context $context
+     * @param \Magento\Customer\Model\Session $session
      * @param PageFactory $resultPageFactory
      */
     public function __construct(
         Action\Context $context,
-        PageFactory $resultPageFactory
+        PageFactory $resultPageFactory,
+        \Magento\Customer\Model\Session $session
     ) {
         $this->resultPageFactory = $resultPageFactory;
+        $this->_customerSession = $session;
         parent::__construct($context);
     }
 
@@ -35,8 +38,14 @@ class Index extends Action\Action
      */
     public function execute()
     {
-        $resultPage = $this->resultPageFactory->create();
-        $resultPage->getConfig()->getTitle()->set(__('Slope Pre-Qualification'));
-        return $resultPage;
+        if ($this->_customerSession->isLoggedIn()) {
+            $resultPage = $this->resultPageFactory->create();
+            $resultPage->getConfig()->getTitle()->set(__('Slope Pre-Qualification'));
+            return $resultPage;
+        } else {
+            $resultRedirect = $this->resultRedirectFactory->create();
+            $resultRedirect->setPath('customer/account/login/');
+            return $resultRedirect;
+        }
     }
 }
