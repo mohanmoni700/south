@@ -434,6 +434,13 @@ return [
                         'code' => 'de_DE'
                     ]
                 ]
+            ],
+            'ooka_uae_store_ar' => [
+                'general' => [
+                    'locale' => [
+                        'code' => 'ar_SA'
+                    ]
+                ]
             ]
         ],
         'websites' => [
