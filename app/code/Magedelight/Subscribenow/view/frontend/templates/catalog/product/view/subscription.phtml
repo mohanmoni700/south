@@ -1,0 +1,68 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2018 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2018 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+<?php
+// @codingStandardsIgnoreFile
+/** @var \Magedelight\Subscribenow\Block\Catalog\Product\View\Subscription $block */
+?>
+<?php 
+$helper = $this->helper('Magedelight\Subscribenow\Helper\Data');
+$viewPlanForNotAllowed = true;
+$exist = true;
+$group_id = $block->getGroupId();
+$viewPlanForNotAllowed = $helper->isAllowToViewPlan();
+if (!$viewPlanForNotAllowed && !in_array($group_id, $helper->getAllowedCustomerGroups())) {
+    $exist = false;
+}
+?>
+<?php if($exist): ?>
+<?php
+$isCustomerAllowed = $block->isAllowedCustomerGroup();
+if (!$isCustomerAllowed) {
+    $message = $helper->getNotAllowedCustomerMessage(); ?>
+    <?php if ($block->canDisplaySubscription()): ?>
+        <div class="subscription-message">
+        <strong><?= __($message); ?></strong>
+    </div>
+    <?php endif; ?>
+    <?php
+}
+?>
+
+<?php if ($block->canDisplaySubscription()): ?>
+    <input type="hidden" name="productviewpage" value="yes"/>
+    <?php echo $block->getChildHtml('subscription.type'); ?>
+    <div id="md_subscription_content" class="md-subscription-content" style="<?php echo ($block->canDisplayContent()) ? '' : 'display: none;'; ?>">
+        <div class="md-subscription-wrapper">
+            <h4><?php echo __('Subscription Details'); ?></h4>
+            <?php echo $block->getChildHtml('billing.period'); ?>
+            <?php echo $block->getChildHtml('billing.date'); ?>
+        </div>
+        <?php if ($block->getTrialAmount() || $block->getDiscountAmount() || $block->getInitialAmount()): ?>
+        <div class="md-subscription-info">
+            <?php echo $block->getChildHtml('additional.info'); ?>
+        </div>
+        <?php endif; ?>
+    </div>
+    <script type="text/javascript">
+        require(["jquery", "MagedelightSubscription"],
+            function ($, subscription) {
+                subscription.init();
+            }
+        );
+    </script>
+<?php endif; ?>
+<script type="text/javascript">
+    /*For Custom Options Remove Add to cart Button*/
+    let isAllowedCustomer = '<?php echo $isCustomerAllowed ?>';
+</script>
+<?php endif; ?>

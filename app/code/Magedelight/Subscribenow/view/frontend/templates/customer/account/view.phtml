@@ -1,0 +1,62 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+<?php if ($block->isEditMode()): ?>
+<form action="<?php echo $block->getEditUrl(); ?>" name="subscription_profile_update" id="subscription_profile_update" method="post" data-mage-init='{"validation":{}}'>
+    <?php echo $block->getBlockHtml('formkey'); ?>
+<?php endif; ?>
+<div class="col2-set sub-info-box">
+    <div class="col-1-sub" >
+        <div class="info-box">
+            <div class="box-content">
+                <?php echo $block->getChildHtml('subscription.details'); ?>
+            </div>
+        </div>
+    </div>
+    <div class="col-2-sub">
+        <div class="info-box">
+            <div class="box-title">
+                <h2><?php echo __('Subscription Payment Details'); ?></h2>
+            </div>
+            <div class="box-content">
+                <?php echo $block->getChildHtml('payment.info'); ?>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="subscription-disclaimer">
+    <span><sup><?= __('** All prices are displayed as per unit price') ?></sup></span>
+</div>
+<div class="back-subscription go-back">
+    <a href="<?php echo $block->getBackUrl(); ?>">
+        <small><?php echo __('«') ?></small>&nbsp;<?php echo __('Back to Subscription Profiles'); ?>
+    </a>
+</div>
+<?php if ($block->isEditMode()): ?>
+<div class="back-subscription">
+    <button type="button"  onclick="updatSubscriptionForm()" title="<?php echo __('Update Profile') ?>" class="button button action tocart primary" id="subscription_update">
+        <span><span><?php echo __('Update Profile') ?></span></span>
+    </button>
+</div>
+</form>
+<script type="text/javascript">
+    function updatSubscriptionForm()
+    {
+        var dataForm = jQuery('#subscription_profile_update');
+        dataForm.mage('validation');
+        if (jQuery('#subscription_profile_update').valid()) {
+            jQuery('#subscription_update').attr('disabled', true);
+            jQuery('#subscription_profile_update').submit();
+        }
+    }
+</script>
+<?php endif; ?>

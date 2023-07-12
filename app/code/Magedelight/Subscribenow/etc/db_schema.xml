@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  	<table name="md_subscribenow_product_subscribers" resource="default">
+      <column xsi:type="int" name="subscription_id" padding="11" nullable="false" identity="true" comment="Unique id for subscribers"/>
+      <constraint xsi:type="primary" referenceId="PRIMARY">
+        <column name="subscription_id"/>
+      </constraint>
+      <column name="profile_id" nullable="false" xsi:type="varchar" length="150" comment="Subscription profile ID, Unique key"/>
+      <constraint xsi:type="unique" referenceId="MD_SUBSCRIBENOW_PRODUCT_SUBSCRIBERS_PROFILE_ID">
+        <column name="profile_id"/>
+      </constraint>
+      <column name="customer_id" nullable="false" xsi:type="int" comment="Customer id of subscriber for website" identity="false"/>
+      <column name="product_id" nullable="false" xsi:type="int" comment="Subscribed product id" identity="false"/>
+      <column name="product_sku" nullable="false" xsi:type="text" comment="Product SKU" />
+      <column name="qty_subscribed" nullable="false" xsi:type="decimal" default="0" comment="Qty Subscribed" precision="12" scale="4"/>
+      <column name="product_name" nullable="true" xsi:type="text" comment="Product Name" />
+      <column name="parent_product_id" nullable="true" xsi:type="int" comment="Subscription Product(s) Parent ID" identity="false"/>
+      <column name="subscriber_name" nullable="false" xsi:type="text" comment="Subscriber full name"/>
+      <column name="subscriber_email" nullable="false" xsi:type="text" comment="Customer email address"/>
+      <column name="store_id" nullable="false" xsi:type="smallint" comment="Store id from which subscriber has subscribed plan." identity="false"/>
+      <column name="payment_method_code" nullable="false" xsi:type="text" comment="Payment Method code"/>
+      <column name="subscription_start_date" nullable="false" xsi:type="timestamp" comment="subscription start date for subscriber" default="CURRENT_TIMESTAMP"/>
+      <column name="suspension_threshold" nullable="false" xsi:type="smallint" comment="limit for failure of payment till profile can active" identity="false"/>
+      <column name="billing_period_label" nullable="false" xsi:type="text" comment="Product Subscription billing period label"/>
+      <column name="billing_period" nullable="false" xsi:type="smallint" comment="Product subscription billing period" identity="false"/>
+      <column name="billing_frequency" nullable="false" xsi:type="smallint" comment="Product subscription period frequency which defines once cycle" identity="false"/>
+      <column name="period_max_cycles" nullable="false" xsi:type="int" comment="Subscription period max cycles to be repeated" identity="false"/>
+      <column name="billing_amount" nullable="false" xsi:type="decimal" comment="Total billing amount for subscriber" precision="12" scale="4"/>
+      <column name="base_billing_amount" nullable="true" xsi:type="decimal" comment="Base billing amount for subscriber" precision="12" scale="4"/>
+      <column name="trial_period_label" nullable="false" xsi:type="text" comment="Product Subscription billing period label"/>
+      <column name="trial_period_unit" nullable="false" xsi:type="smallint" comment="Product subscription trial billing period" identity="false"/>
+      <column name="trial_period_frequency" nullable="false" xsi:type="smallint" comment="Product subscription trial period frequency" identity="false"/>
+      <column name="trial_period_max_cycle" nullable="false" xsi:type="int" comment="Product subscription trial period max cycles to be repeated" identity="false"/>
+      <column name="trial_billing_amount" nullable="false" xsi:type="decimal" comment="Product subscription trial period billing amount" precision="12" scale="4"/>
+      <column name="base_trial_billing_amount" nullable="false" xsi:type="decimal" comment="Product subscription base trial period billing amount" precision="12" scale="4"/>
+      <column name="currency_code" nullable="false" xsi:type="text" comment="Subscription order currency code"/>
+      <column name="base_currency_code" nullable="true" xsi:type="text" comment="Subscription order base currency code"/>
+      <column name="shipping_amount" nullable="false" xsi:type="decimal" comment="Subscription order shipping amount" precision="12" scale="4"/>
+      <column name="tax_amount" nullable="false" xsi:type="decimal" comment="Subscription order tax amount" precision="12" scale="4"/>
+      <column name="initial_amount" nullable="false" xsi:type="decimal" comment="Subscription order initial amount" precision="12" scale="4"/>
+      <column name="base_initial_amount" nullable="true" xsi:type="decimal" comment="Subscription order base initial amount" precision="12" scale="4"/>
+      <column name="discount_amount" nullable="false" xsi:type="decimal" comment="Subscription order discount amount" precision="12" scale="4"/>
+      <column name="order_info" nullable="false" xsi:type="text" comment="Subscription order info"/>
+      <column name="billing_address_info" nullable="false" xsi:type="text" comment="Order billing information for customer"/>
+      <column name="shipping_address_info" nullable="false" xsi:type="text" comment="Order shipping information for subscriber"/>
+      <column name="additional_info" nullable="true" xsi:type="text" comment="Subscriber related additional information"/>
+      <column name="subscription_status" nullable="false" xsi:type="smallint" comment="Subscription status" identity="false"/>
+      <column name="initial_order" nullable="false" xsi:type="int" comment="Initial Order Id" identity="false"/>
+      <column name="subscription_item_info" nullable="true" xsi:type="text" comment="Subscriber Item Info"/>
+      <column name="subscription_end_date" xsi:type="date" comment="If admin allowed customer to set end date it will stored date in this column"/>
+      <column name="next_occurrence_date" nullable="false" xsi:type="timestamp" comment="Next Occurence Date" default="CURRENT_TIMESTAMP"/>
+      <column name="last_bill_date" nullable="false" xsi:type="timestamp" comment="Last Billing Paid Date" default="CURRENT_TIMESTAMP"/>
+      <column name="trial_count" nullable="true" xsi:type="int" default="0" comment="Trial Count" />
+      <column name="is_trial" nullable="true" xsi:type="boolean" default="0" comment="Is Trial flag" />
+      <column name="shipping_method_code" nullable="true" xsi:type="text" comment="Shipping Method Code" />
+      <column name="payment_token" nullable="true" xsi:type="text" comment="Payment Token" />
+      <column name="payment_title" nullable="true" xsi:type="text" comment="Payment Method Title" />
+      <column name="total_bill_count" nullable="true" xsi:type="int" comment="Total Bill Count" />
+      <column name="base_shipping_amount" nullable="true" xsi:type="decimal" comment="Base Shipping Amount" precision="12" scale="4"/>
+      <column name="base_tax_amount" nullable="true" xsi:type="decimal" comment="Base Tax Amount" precision="12" scale="4"/>
+      <column name="base_discount_amount" nullable="true" xsi:type="decimal" comment="Base Discount Amount" precision="12" scale="4"/>
+      <column name="initial_order_id" nullable="true" xsi:type="text" comment="Initial Order ID" />
+      <column name="billing_address_id" nullable="true" xsi:type="int" comment="Billing Address Id" />
+      <column name="shipping_address_id" nullable="true" xsi:type="int" comment="Payment Token" />
+      <column name="is_update_billing_frequency" nullable="true" default="false" xsi:type="boolean" comment="Can Update Billing Frequency?" />
+      <column name="billing_frequency_cycle" nullable="true" xsi:type="text" comment="Config Billing Frequency Cycle" />
+      <column name="created_at" nullable="false" xsi:type="timestamp" comment="Subscription created at" default="CURRENT_TIMESTAMP"/>
+      <column name="updated_at" nullable="false" xsi:type="timestamp" comment="Subscription updated at" default="CURRENT_TIMESTAMP" on_update="true"/>
+  	</table>
+    <table name="md_subscribenow_product_associated_orders" resource="default">
+      <column xsi:type="int" name="relation_id" padding="11" unsigned="true" nullable="false" identity="true" comment="Subscription relation unique id"/>
+      <constraint xsi:type="primary" referenceId="PRIMARY">
+        <column name="relation_id"/>
+      </constraint>
+      <column xsi:type="int" name="subscription_id" padding="11" nullable="false" identity="false" comment="Id for subscribers"/>
+      <column name="order_id" nullable="false" xsi:type="text" comment="subscription order id" />
+      <constraint xsi:type="foreign" referenceId="md_subscribenow_product_associated_orders_subscription_id" table="md_subscribenow_product_associated_orders" column="subscription_id" referenceTable="md_subscribenow_product_subscribers" referenceColumn="subscription_id" onDelete="CASCADE"/>
+      <index referenceId="md_subscribenow_product_associated_orders" indexType="btree">
+        <column name="subscription_id" />
+      </index>
+    </table>
+    <table name="md_subscribenow_product_subscription_history" resource="default">
+      <column xsi:type="int" name="hid" padding="10" unsigned="true" nullable="false" identity="true" comment="History id"/>
+      <constraint xsi:type="primary" referenceId="PRIMARY">
+        <column name="hid"/>
+      </constraint>
+
+      <column xsi:type="int" name="subscription_id" padding="10" nullable="false" comment="Unique id for subscribers"/>
+      <column name="modify_by" nullable="false" xsi:type="int" comment="Product Subscription Affect By" identity="false"/>
+      <column name="comment" nullable="false" xsi:type="text" comment="Product Subscription Comment"/>
+      <column name="created_at" nullable="false" xsi:type="timestamp" comment="Subscription created at" default="CURRENT_TIMESTAMP"/>
+      <constraint xsi:type="foreign" referenceId="MD_SUBSCRIBENOW_HISTORY_ID_SUBSCRIPTION_ID" table="md_subscribenow_product_subscription_history"
+                column="subscription_id" referenceTable="md_subscribenow_product_subscribers" referenceColumn="subscription_id" onDelete="CASCADE"/>
+      <index referenceId="MD_SUBSCRIBENOW_SUBSCRIPTION_ID" indexType="btree">
+        <column name="subscription_id"/>
+      </index>
+    </table>
+    <table name="md_subscribenow_aggregated_customer" resource="default">
+      <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+      <constraint xsi:type="primary" referenceId="PRIMARY">
+        <column name="id"/>
+      </constraint>
+
+      <column name="period" nullable="true" xsi:type="timestamp" comment="Period"/>
+      <column name="store_id" nullable="true" xsi:type="smallint" comment="Store Id" identity="false"/>
+      <index referenceId="MAGEDELIGHT_SUBSCRIBENOW_AGGREGATED_CUSTOMER_STORE_ID" indexType="btree">
+        <column name="store_id"/>
+      </index>
+
+      <column name="customer_id" nullable="true" xsi:type="int" comment="Customer Id" identity="false"/>
+      <column name="customer_name" nullable="true" xsi:type="text" comment="Customer Name"/>
+      <column name="customer_email" nullable="true" xsi:type="text" comment="Customer Email"/>
+      <column name="subscriber_count" nullable="false" default="0" xsi:type="int" comment="Subscriber Count" identity="false"/>
+      <column name="active_subscriber" nullable="false" default="0" xsi:type="int" comment="Active Subscriber Count" identity="false"/>
+      <column name="pause_subscriber" nullable="false" default="0" xsi:type="int" comment="Pause Subscriber Count" identity="false"/>
+      <column name="cancel_subscriber" nullable="false" default="0" xsi:type="int" comment="Cancel Subscriber Count" identity="false"/>
+      <column name="no_of_occurrence" nullable="false" default="0" xsi:type="int" comment="No of occurrence" identity="false"/>
+    </table>
+    <table name="md_subscribenow_aggregated_product" resource="default">
+      <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+      <constraint xsi:type="primary" referenceId="PRIMARY">
+        <column name="id"/>
+      </constraint>
+
+      <column name="period" nullable="true" xsi:type="timestamp" comment="Period"/>
+      <column name="store_id" nullable="true" xsi:type="smallint" comment="Store Id" identity="false"/>
+      <index referenceId="MAGEDELIGHT_SUBSCRIBENOW_AGGREGATED_PRODUCT_STORE_ID" indexType="btree">
+        <column name="store_id"/>
+      </index>
+
+      <column name="product_id" nullable="true" xsi:type="int" comment="Product Id" identity="false"/>
+      <index referenceId="MAGEDELIGHT_SUBSCRIBENOW_AGGREGATED_PRODUCT_ID" indexType="btree">
+        <column name="product_id"/>
+      </index>
+
+      <column name="product_name" nullable="true" xsi:type="text" comment="Product Name"/>
+      <column name="subscriber_count" nullable="false" default="0" xsi:type="int" comment="Subscriber Count" identity="false"/>
+      <column name="active_subscriber" nullable="false" default="0" xsi:type="int" comment="Active Subscriber Count" identity="false"/>
+      <column name="pause_subscriber" nullable="false" default="0" xsi:type="int" comment="Pause Subscriber Count" identity="false"/>
+      <column name="cancel_subscriber" nullable="false" default="0" xsi:type="int" comment="Cancel Subscriber Count" identity="false"/>
+      <column name="no_of_occurrence" nullable="false" default="0" xsi:type="int" comment="No of occurrence" identity="false"/>
+    </table>
+    <table name="sales_order" resource="default" engine="innodb" comment="Sales Order">
+      <column xsi:type="decimal" name="subscribenow_init_amount" scale="4" precision="12" nullable="true" comment="Subscription Initial Amount"/>
+      <column xsi:type="decimal" name="base_subscribenow_init_amount" scale="4" precision="12" nullable="true" comment="Base Subscription Initial Amount"/>
+      <column xsi:type="decimal" name="subscribenow_trial_amount" scale="4" precision="12" nullable="true" comment="Subscription Trial Amount"/>
+      <column xsi:type="decimal" name="base_subscribenow_trial_amount" scale="4" precision="12" nullable="true" comment="Base Subscription Trial Amount"/>
+      <column xsi:type="smallint" name="has_trial" nullable="true" comment="Has Trial flag" />
+      <!-- After version 100.1.3 -->
+      <column xsi:type="int" name="subscription_parent_id" nullable="true" comment="Subscription Parent ID" />
+    </table>
+    <table name="quote" resource="default" engine="innodb" comment="Quote">
+      <column xsi:type="decimal" name="subscribenow_init_amount" scale="4" precision="12" nullable="true" comment="Subscription Initial Amount"/>
+      <column xsi:type="decimal" name="base_subscribenow_init_amount" scale="4" precision="12" nullable="true" comment="Base Subscription Initial Amount"/>
+      <column xsi:type="decimal" name="subscribenow_trial_amount" scale="4" precision="12" nullable="true" comment="Subscription Trial Amount"/>
+      <column xsi:type="decimal" name="base_subscribenow_trial_amount" scale="4" precision="12" nullable="true" comment="Base Subscription Trial Amount"/>
+      <column xsi:type="smallint" name="md_cron_order" default="0" nullable="true" comment="Subscription cron order flag" />
+      <column xsi:type="smallint" name="md_trial_set" default="0" nullable="true" comment="Subscription trial order flag" />
+    </table>
+    <table name="quote_address" resource="default" engine="innodb" comment="Quote Address">
+      <column xsi:type="decimal" name="subscribenow_init_amount" scale="4" precision="12" nullable="true" comment="Subscription Initial Amount"/>
+      <column xsi:type="decimal" name="base_subscribenow_init_amount" scale="4" precision="12" nullable="true" comment="Base Subscription Initial Amount"/>
+      <column xsi:type="decimal" name="subscribenow_trial_amount" scale="4" precision="12" nullable="true" comment="Subscription Trial Amount"/>
+      <column xsi:type="decimal" name="base_subscribenow_trial_amount" scale="4" precision="12" nullable="true" comment="Base Subscription Trial Amount"/>
+    </table>
+    <table name="sales_invoice" resource="default" engine="innodb" comment="Sales Invoice">
+      <column xsi:type="decimal" name="subscribenow_init_amount" scale="4" precision="12" nullable="true" comment="Subscription Initial Amount"/>
+      <column xsi:type="decimal" name="base_subscribenow_init_amount" scale="4" precision="12" nullable="true" comment="Base Subscription Initial Amount"/>
+      <column xsi:type="decimal" name="subscribenow_trial_amount" scale="4" precision="12" nullable="true" comment="Subscription Trial Amount"/>
+      <column xsi:type="decimal" name="base_subscribenow_trial_amount" scale="4" precision="12" nullable="true" comment="Base Subscription Trial Amount"/>
+    </table>
+    <table name="sales_creditmemo" resource="default" engine="innodb" comment="Sales CreditMemo">
+      <column xsi:type="decimal" name="subscribenow_init_amount" scale="4" precision="12" nullable="true" comment="Subscription Initial Amount"/>
+      <column xsi:type="decimal" name="base_subscribenow_init_amount" scale="4" precision="12" nullable="true" comment="Base Subscription Initial Amount"/>
+      <column xsi:type="decimal" name="subscribenow_trial_amount" scale="4" precision="12" nullable="true" comment="Subscription Trial Amount"/>
+      <column xsi:type="decimal" name="base_subscribenow_trial_amount" scale="4" precision="12" nullable="true" comment="Base Subscription Trial Amount"/>
+    </table>
+    <table name="quote_item" resource="default" engine="innodb" comment="Quote Item">
+      <column xsi:type="decimal" name="md_item_org_price" scale="4" precision="12" nullable="true" comment="Future date subscription price"/>
+      <column xsi:type="decimal" name="is_subscription" scale="4" precision="12" nullable="true" comment="Item subscription flag"/>
+    </table>
+    <table name="sales_order_item" resource="default" engine="innodb" comment="Sales order item">
+      <column xsi:type="decimal" name="md_item_org_price" scale="4" precision="12" nullable="true" comment="Future date subscription price"/>
+      <column xsi:type="decimal" name="is_subscription" scale="4" precision="12" nullable="true" comment="Item subscription flag"/>
+    </table>
+</schema>

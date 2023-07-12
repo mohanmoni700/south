@@ -1,0 +1,61 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+
+// @codingStandardsIgnoreFile
+/** @var \Magedelight\Subscribenow\Block\Adminhtml\ProductSubscribers\View\Tab\ProfileInfo $block */
+?>
+<?php if ($block->isEditMode()): ?>
+<form action="<?php echo $this->escapeUrl($block->getSubmitUrl()); ?>" name="subscription_profile_update" id="subscription_profile_update" method="post" data-mage-init='{"validation":{}}'>
+    <?php echo $block->getBlockHtml('formkey'); ?>
+    <input type="hidden" name="subscription_id" value="<?php echo $this->escapeHtml($block->getSubscription()->getId()); ?>" readonly=""/>
+<?php endif; ?>
+<section class="admin__page-section order-view-account-information">
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-information">
+            <?php echo $block->getChildHtml('subscription.details'); ?>
+        </div>
+        <div class="admin__page-section-item payment-information">
+            <div class="admin__page-section-item order-payment-method">
+                <?php echo $block->getChildHtml('payment.info'); ?>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="admin__page-section order-view-account-information">
+    <div class="admin__page-section-content">
+        <?php echo $block->getChildHtml('subscription.history'); ?>
+    </div>
+</section>
+
+<div class="admin__page-section order-addresses">
+    <?php echo $block->getChildHtml('address.info'); ?>
+</div>
+
+<div class="subscription-disclaimer">
+    <span><sup><?= __('** All prices are displayed as per unit price') ?></sup></span>
+</div>
+
+<?php if($block->isEditMode()): ?>
+</form>
+<script type="text/javascript">
+    function updatSubscriptionForm()
+    {
+        var dataForm = jQuery('#subscription_profile_update');
+        dataForm.mage('validation');
+        if (jQuery('#subscription_profile_update').valid()) {
+            jQuery('#subscription_update').attr('disabled', true);
+            jQuery('#subscription_profile_update').submit();
+        }
+    }
+</script>
+<?php endif;

@@ -1,0 +1,122 @@
+##
+# @category    HookahShisha
+# @package     HookahShisha_SubscribeGraphQl
+# @author      ALFA
+##
+
+interface ProductInterface {
+    is_subscription : Boolean @doc(description: "Subscription enable for product")
+    discount_type: String @doc(description: "Discount type of a product")
+    discount_amount: String @doc(description: "Discount Amount of a product")
+}
+
+type Query {
+    getSubscriptionDetailPdp (
+        url_key: String @doc(description: "Get products url key")
+    ) : SubscriptionDetailPdp
+    @resolver(class: "HookahShisha\\SubscribeGraphQl\\Model\\Resolver\\SubscriptionDetailPdp")
+    getSubscriptionRelatedOrders (
+        subscriptionId: Int @doc(description: "Id of Subscription")
+        currentPage: Int @doc(description: "Current Page")
+        pageSize: Int @doc(description: "Page Size")
+    ) : relatedOrderData @resolver( class: "HookahShisha\\SubscribeGraphQl\\Model\\Resolver\\RelatedOrders")
+
+    getSubscriptions (
+         subscriptionId: Int @doc(description: "Id of Subscription")
+     ) : subscriptionData @resolver( class: "Magedelight\\SubscribenowGraphQl\\Model\\Resolver\\Subscriptions")
+    getSubscriptionsByCustomerId (
+         currentPage: Int @doc(description: "Current Page")
+         pageSize: Int @doc(description: "Page Size")
+         filter: String @doc(description: "Filter")
+         sort: [SubscriptionSort] @doc(description: "Sort")
+     ) : customerSubscriptionFilterOutput @resolver( class: "Magedelight\\SubscribenowGraphQl\\Model\\Resolver\\CustomerSubscriptions")
+}
+
+input SubscriptionSort {
+    field: String
+    direction: SortEnum
+}
+
+type SubscriptionDetailPdp {
+    is_subscription : Boolean @doc(description: "The Id of subscription")
+    subscription_type: String @doc(description: "The part of subscription of which type product")
+    discount_type: String @doc(description: "Discount type of a product")
+    discount_amount: String @doc(description: "Discount Amount of a product")
+    initial_amount: String @doc(description: "Initial Amount  of a product")
+    billing_period_type: String @doc(description: "Billing Period type of a product")
+    billing_max_cycles: Int @doc(description: "Billing Max Cycles of a product")
+    define_start_from: String @doc(description: "Define Start From of a product")
+    day_of_month: String @doc(description: "Define Day of the Month")
+    allow_update_date: Int @doc(description: "Allow Update Date of a product")
+    allow_trial: Boolean @doc(description: "Allow For trail value of product")
+    trial_period: String @doc(description: "Trail Period For a Product")
+    trial_amount: String @doc(description: "Trail Amount value of product")
+    trial_maxcycle: Int @doc(description: "Maximum trail cycle")
+    allow_subscription_end_date: Boolean @doc(description: "Allow Customers to set the subscription end date")
+    billing_period: [BillingData]
+}
+
+type BillingData {
+    value: String
+    label: String
+}
+
+input CartItemInput {
+    is_subscription : Boolean
+    billing_period : String
+    subscription_start_date : String
+    subscription_end_date : String
+    end_type : String
+    subscription_end_cycle : Int
+}
+
+interface CartItemInterface {
+    subscription_data: ItemSubscriptionData @resolver(class: "HookahShisha\\SubscribeGraphQl\\Model\\Resolver\\CartItems\\SubscriptionData")
+}
+
+type ItemSubscriptionData {
+    is_subscription : Boolean
+    billing_period : String
+    subscription_start_date : String
+    end_type : String
+    subscription_end_date : String
+}
+
+
+type CartPrices {
+    subscribenow_init_amount: Money
+}
+
+type Order {
+    orderSubscriptionDetails:[orderSubscriptionData] @doc(description: "Order subscription data")
+}
+
+type orderSubscriptionData {
+    profile_id: String @doc(description: "Subscription profile id")
+    subscription_id: Int @doc(description: "Subscription id")
+}
+
+type subscriptionData {
+    profile_id: String
+    billing_address_info: String
+    shipping_address_info: String
+    billing_amount : Float
+}
+
+type relatedOrderData {
+    total_count:  Int @doc(description: "total_count")
+    items: [relatedOrders] @doc(description: "items")
+}
+
+type relatedOrders {
+    increment_id: String @doc(description: "Order increment id")
+    order_date: String @doc(description: "Order date")
+    grand_total: Money @doc(description: "Order grand total")
+    status: String @doc(description: "Order status")
+    firstname: String @doc(description: "Customer first name")
+    lastname: String @doc(description: "Customer last name")
+}
+
+type CustomerOrder {
+    orderSubscriptionDetails:[orderSubscriptionData] @doc(description: "Order subscription data")
+}

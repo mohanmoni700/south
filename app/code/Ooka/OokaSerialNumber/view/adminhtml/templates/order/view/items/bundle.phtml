@@ -1,0 +1,359 @@
+<?php
+
+use Magento\Bundle\Block\Adminhtml\Sales\Order\View\Items\Renderer;
+use Magento\Catalog\Helper\Data;
+
+?>
+<?php
+/**
+ * @see Renderer
+ */
+
+/** @var Renderer $block */
+?>
+<?php
+/** @var Ooka\OokaSerialNumber\ViewModel\SerialCode $viewModel */
+$viewModel = $block->getData("view_model");
+?>
+<?php
+$_item = $block->getItem() ?>
+<?php
+$items = array_merge([$_item], $_item->getChildrenItems()); ?>
+<?php
+$_count = count($items) ?>
+<?php
+$_index = 0 ?>
+<?php
+$_prevOptionId = '' ?>
+<?php
+$moduleEn = $viewModel->getGrossStatus('hookahshisha/gross_margin_group/gross_margin_enable', $_item->getStoreId()) ?>
+
+<?php
+if ($block->getOrderOptions() || $block->canDisplayGiftmessage()): ?>
+    <?php
+    $_showlastRow = true ?>
+    <?php
+   else: ?>
+       <?php
+        $_showlastRow = false ?>
+       <?php
+    endif; ?>
+<?php
+/** @var Data $catalogHelper */
+$catalogHelper = $block->getData('catalogHelper');
+?>
+<?php
+foreach ($items as $_item): ?>
+
+    <?php
+    $block->setPriceDataObject($_item) ?>
+
+    <tr <?= (++$_index == $_count && !$_showlastRow) ? ' class="border"' : '' ?>>
+        <?php
+        if (!$_item->getParentItem()): ?>
+            <td class="col-thumbnail">
+                <?php
+                //TODO:check bundle parent item thumbnail bug ?>
+            </td>
+            <td class="col-product">
+                <div class="product-title" id="order_item_<?= $block->escapeHtmlAttr($_item->getId()) ?>_title">
+                    <?= $block->escapeHtml($_item->getName()) ?>
+                </div>
+                <div class="product-sku-block">
+                    <span><?= $block->escapeHtml(__('SKU')) ?>:</span>
+                    <?= /* @noEscape */
+                    implode(
+                        '<br />',
+                        $block->escapeHtml($catalogHelper->splitSku($_item->getSku()))
+                    ) ?>
+                </div>
+                <div class="product-sku-block">
+                    <div>
+                        <?php
+                        if (!empty(
+                            $viewModel->getSerialNumbers(
+                                $_item->getSku(),
+                                $_item->getOrder()->getIncrementId(),
+                                $_item->getItemId()
+                            )
+                        )) { ?>
+                        <span STYLE="font-weight:bold"><?= $block->escapeHtml(__('Serial No:')) ?></span><br>
+                        <span STYLE="font-weight:bold">
+                            <?php
+                            $serialCodes = $viewModel->
+                            getSerialNumbers(
+                                $_item->getSku(),
+                                $_item->getOrder()->getIncrementId(),
+                                $_item->getItemId()
+                            );
+
+                            $qty = 0;
+                            foreach ($serialcode as $key => $code) {
+                                if ($qty < $_item->getQtyOrdered()) {
+                                    /* @noEscape */
+                                    echo $code;
+                                    if (isset($serialcode[$key + 1])) {
+                                        echo ',';
+                                        echo '</br>';
+                                    }
+                                }
+                                $qty++;
+                            }
+                            ?>
+                            <?php
+                        }
+                        ?>
+                    </span>
+                    </div>
+                </div>
+                <?= $block->escapeHtml($_item->getDescription()) ?>
+            </td>
+            <?php
+        else: ?>
+            <td class="col-thumbnail">
+                <?= /* @noEscape */
+                $block->getColumnHtml($_item, 'thumbnail') ?>
+            </td>
+            <td class="col-product">
+                <div class="option-value"><?= $block->getValueHtml($_item) ?></div>
+                <?= $block->escapeHtml($_item->getDescription()) ?>
+                <div>
+                    <?php
+                    $serialcode = $viewModel->
+                    getSerialNumbers($_item->getSku(), $_item->getOrder()->getIncrementId(), $_item->getItemId());
+                    if (!empty($serialcode) && !empty($_item->getData('is_serialize'))) {
+                        ?>
+                    <span STYLE="font-weight:bold"><?= $block->escapeHtml(__('Serial No:')) ?></span><br>
+                    <span STYLE="font-weight:bold">
+                        <?php
+                        $qty = 0;
+                        foreach ($serialcode as $key => $code) {
+                            if ($qty < $_item->getQtyOrdered()) {
+                                /* @noEscape */
+                                echo $code;
+                                if (isset($serialcode[$key + 1])) {
+                                    echo ',';
+                                    echo '</br>';
+                                }
+                            }
+                            $qty++;
+                        }
+                        ?>
+                        <?php
+                    }
+                    ?>
+                    </span>
+                </div>
+            </td>
+            <?php
+        endif; ?>
+        <td class="col-status">
+            <?php
+            if ($block->canShowPriceInfo($_item)): ?>
+                <?= $block->escapeHtml($_item->getStatus()) ?>
+                <?php
+            endif; ?>
+        </td>
+        <td class="col-price-original">
+            <?php
+            if ($block->canShowPriceInfo($_item)): ?>
+                <?= /* @noEscape */
+                $block->displayPriceAttribute('original_price') ?>
+                <?php
+            endif; ?>
+        </td>
+        <td class="col-price">
+            <?php
+            if ($block->canShowPriceInfo($_item)): ?>
+                <?= /* @noEscape */
+                $block->getColumnHtml($_item, 'price'); ?>
+                <?php
+            endif; ?>
+        </td>
+        <td class="col-ordered-qty">
+            <?php
+            if ($block->canShowPriceInfo($_item)): ?>
+                <table class="qty-table">
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Ordered')) ?></th>
+                        <td><?= /* @noEscape */
+                            $_item->getQtyOrdered() * 1 ?></td>
+                    </tr>
+                    <?php
+                    if ((float)$_item->getQtyInvoiced()): ?>
+                        <tr>
+                            <th><?= $block->escapeHtml(__('Invoiced')) ?></th>
+                            <td><?= /* @noEscape */
+                                $_item->getQtyInvoiced() * 1 ?></td>
+                        </tr>
+                        <?php
+                    endif; ?>
+                    <?php
+                    if ((float)$_item->getQtyShipped() && $block->isShipmentSeparately($_item)): ?>
+                        <tr>
+                            <th><?= $block->escapeHtml(__('Shipped')) ?></th>
+                            <td><?= /* @noEscape */
+                                $_item->getQtyShipped() * 1 ?></td>
+                        </tr>
+                        <?php
+                    endif; ?>
+                    <?php
+                    if ((float)$_item->getQtyRefunded()): ?>
+                        <tr>
+                            <th><?= $block->escapeHtml(__('Refunded')) ?></th>
+                            <td><?= /* @noEscape */
+                                $_item->getQtyRefunded() * 1 ?></td>
+                        </tr>
+                        <?php
+                    endif; ?>
+                    <?php
+                    if ((float)$_item->getQtyCanceled()): ?>
+                        <tr>
+                            <th><?= $block->escapeHtml(__('Canceled')) ?></th>
+                            <td><?= /* @noEscape */
+                                $_item->getQtyCanceled() * 1 ?></td>
+                        </tr>
+                        <?php
+                    endif; ?>
+                </table>
+                <?php
+            elseif ($block->isShipmentSeparately($_item)): ?>
+                <table class="qty-table">
+                    <tr>
+                        <th><?= $block->escapeHtml(__('Ordered')) ?></th>
+                        <td><?= /* @noEscape */
+                            $_item->getQtyOrdered() * 1 ?></td>
+                    </tr>
+                    <?php
+                    if ((float)$_item->getQtyShipped()): ?>
+                        <tr>
+                            <th><?= $block->escapeHtml(__('Shipped')) ?></th>
+                            <td><?= /* @noEscape */
+                                $_item->getQtyShipped() * 1 ?></td>
+                        </tr>
+                        <?php
+                    endif; ?>
+                </table>
+                <?php
+            endif; ?>
+        </td>
+        <td class="col-subtotal">
+            <?php
+            if ($block->canShowPriceInfo($_item)): ?>
+                <?= /* @noEscape */
+                $block->getColumnHtml($_item, 'subtotal'); ?>
+                <?php
+            endif; ?>
+        </td>
+
+        <td class="col-tax-amount">
+            <?php
+            if ($block->canShowPriceInfo($_item)): ?>
+                <?= /* @noEscape */
+                $block->displayPriceAttribute('tax_amount') ?>
+                <?php
+            endif; ?>
+        </td>
+        <td class="col-tax-percent">
+            <?php
+            if ($block->canShowPriceInfo($_item)): ?>
+                <?= /* @noEscape */
+                $block->displayTaxPercent($_item) ?>
+                <?php
+            endif; ?>
+        </td>
+        <td class="col-discont">
+            <?php
+            if ($block->canShowPriceInfo($_item)): ?>
+                <?= /* @noEscape */
+                $block->displayPriceAttribute('discount_amount') ?>
+                <?php
+            endif; ?>
+        </td>
+        <td class="col-total last">
+            <?php
+            if ($block->canShowPriceInfo($_item)): ?>
+                <?= /* @noEscape */
+                $block->getColumnHtml($_item, 'total'); ?>
+                <?php
+            endif; ?>
+        </td>
+        <?php
+        if ($moduleEn === '1'): ?>
+            <?php
+            if ($block->canShowPriceInfo($_item)): ?>
+                <td class="col-grossmargin last">
+                    <?= /* @noEscape */
+                    $_item->getGrossMargin() . "%"; ?>
+                </td>
+                <?php
+            endif; ?>
+            <?php
+        endif; ?>
+
+    </tr>
+    <?php
+endforeach; ?>
+<?php
+if ($_showlastRow): ?>
+    <tr<?php
+    if (!$block->canDisplayGiftmessage()) {
+        echo ' class="border"';
+    } ?>>
+        <td class="col-product">
+            <?php
+            if ($block->getOrderOptions()): ?>
+                <dl class="item-options">
+                    <?php
+                    foreach ($block->getOrderOptions() as $option): ?>
+                        <dt><?= $block->escapeHtml($option['label']) ?>:</dt>
+                        <dd>
+                            <?php
+                            if (isset($option['custom_view']) && $option['custom_view']): ?>
+                                <?= $block->escapeHtml($option['value']); ?>
+                                <?php
+                            else: ?>
+                                <?= $block->escapeHtml(
+                                    $block->truncateString($option['value'], 55, '', $_remainder)
+                                ); ?>
+                                <?php
+                                if ($_remainder): ?>
+                                    ... <span id="<?= $block->escapeHtmlAttr($_id = 'id' . uniqid()) ?>">
+                                    <?= $block->escapeHtml($_remainder) ?>
+                                </span>
+                                    <script>
+                                        require(['prototype'], function () {
+
+                                            $('<?= $block->escapeJs($_id) ?>').hide();
+                                            $('<?= $block->escapeJs($_id) ?>').up().observe('mouseover', function () {
+                                                $('<?= $block->escapeJs($_id) ?>').show();
+                                            });
+                                            $('<?= $block->escapeJs($_id) ?>').up().observe('mouseout', function () {
+                                                $('<?= $block->escapeJs($_id) ?>').hide();
+                                            });
+                                        });
+                                    </script>
+                                    <?php
+                                endif; ?>
+                                <?php
+                            endif; ?>
+                        </dd>
+                        <?php
+                    endforeach; ?>
+                </dl>
+                <?php
+            endif; ?>
+        </td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td>&nbsp;</td>
+        <td class="last">&nbsp;</td>
+    </tr>
+    <?php
+endif; ?>

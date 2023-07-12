@@ -1,0 +1,155 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package  Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magedelight\Subscribenow\Api\Data\ProductSubscribersSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Magedelight\Subscribenow\Api\Data\ProductSubscribersInterface" type="Magedelight\Subscribenow\Model\ProductSubscribers" />
+    <preference for="Magedelight\Subscribenow\Api\ProductSubscribersRepositoryInterface" type="Magedelight\Subscribenow\Model\ProductSubscribersRepository" />
+    <preference for="Magedelight\Subscribenow\Api\SubscriptionManagementInterface" type="Magedelight\Subscribenow\Model\SubscriptionManagement" />
+    <preference for="Magedelight\Subscribenow\Api\SubscribeNowRepositoryInterface" type="Magedelight\Subscribenow\Model\SubscribeNowRepository"/>
+    <preference for="Magento\Quote\Model\QuoteAddressValidator" type="Magedelight\Subscribenow\Model\QuoteAddressValidator" />
+
+    <virtualType name="MdSubscribenowGirdFilterPool" type="Magento\Framework\View\Element\UiComponent\DataProvider\FilterPool">
+        <arguments>
+            <argument name="appliers" xsi:type="array">
+                <item name="regular" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\RegularFilter</item>
+                <item name="fulltext" xsi:type="object">Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+  
+    <virtualType name="MdSubscribenowProductsGridDataProvider" type="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider">
+        <arguments>
+            <argument name="collection" xsi:type="object" shared="false">Magedelight\Subscribenow\Model\ResourceModel\ProductSubscribers\Collection</argument>
+            <argument name="filterPool" xsi:type="object" shared="false">MdSubscribenowGirdFilterPool</argument>
+        </arguments>
+    </virtualType>   
+    
+    <type name="Magedelight\Subscribenow\Model\ResourceModel\ProductSubscribers\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">md_subscribenow_product_subscribers</argument>
+            <argument name="eventPrefix" xsi:type="string">md_subscribenow_product_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">product_subscribers_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magedelight\Subscribenow\Model\ResourceModel\ProductSubscribers</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="subscribenow_product_subscriber_data_source" xsi:type="string">Magedelight\Subscribenow\Model\ResourceModel\ProductSubscribers\Grid\Collection</item>
+                <item name="sales_order_view_subscription_profiles_grid_data_source" xsi:type="string">Magedelight\Subscribenow\Model\ResourceModel\Order\ProductSubscribers\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="subscribenow_product_plugin"
+                type="Magedelight\Subscribenow\Plugin\ProductPlugin"
+                sortOrder="10" disabled="false" />
+    </type>
+
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="subscribenow_order_extension_attribute" type="Magedelight\Subscribenow\Plugin\OrderRepositoryPlugin" sortOrder="10" />
+    </type>
+    <type name="Magento\Quote\Model\Quote">
+        <plugin name="subscribenow_checkout_quote_plugin" type="Magedelight\Subscribenow\Plugin\Checkout\Model\Quote" sortOrder="10" />
+    </type>
+    <type name="Magento\Shipping\Model\Rate\Result">
+        <plugin name="subscribenow_restrict_shipping" type="Magedelight\Subscribenow\Plugin\Shipping\Rate\Result\Append" />
+         <plugin name="subscribenow_restrict_shipping_rate" type="Magedelight\Subscribenow\Plugin\Shipping\Rate\Result\GetAllRates" /> 
+    </type>
+
+    <type name="Magedelight\Subscribenow\Logger\Handler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Magedelight\Subscribenow\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">subscriptionLogs</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">Magedelight\Subscribenow\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magedelight\Authorizecim\Model\Payment">
+        <plugin name="md_authorize_save_additional_info" type="Magedelight\Subscribenow\Plugin\Payment\Authorizecim" sortOrder="1" />
+    </type>
+    <type name="Magedelight\Cybersource\Model\Payment">
+        <plugin name="md_cybersource_save_additional_info" type="Magedelight\Subscribenow\Plugin\Payment\Cybersource" sortOrder="1" />
+    </type>
+    <type name="Magedelight\Firstdata\Model\Payment">
+        <plugin name="md_firstdata_save_additional_info" type="Magedelight\Subscribenow\Plugin\Payment\Firstdata" sortOrder="1" />
+    </type>
+    <type name="Magedelight\Moneris\Model\Payment">
+        <plugin name="md_moneris_save_additional_info" type="Magedelight\Subscribenow\Plugin\Payment\Moneris" sortOrder="1" />
+    </type>
+    <type name="Magedelight\Monerisca\Model\Payment">
+        <plugin name="md_monerisca_save_additional_info" type="Magedelight\Subscribenow\Plugin\Payment\Monerisca" sortOrder="1" />
+    </type>
+    <!-- Adjustment Pricing -->
+    <type name="Magento\Framework\Pricing\Adjustment\Collection">
+        <arguments>
+            <argument name="adjustments" xsi:type="array">
+                <item name="subscription_discount" xsi:type="const">Magedelight\Subscribenow\Pricing\Adjustment::ADJUSTMENT_CODE</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Pricing\Adjustment\Pool">
+        <arguments>
+            <argument name="adjustments" xsi:type="array">
+                <item name="subscription_discount" xsi:type="array">
+                    <item name="className" xsi:type="string">Magedelight\Subscribenow\Pricing\Adjustment</item>
+                    <item name="sortOrder" xsi:type="string">999</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- Adjustment Pricing -->
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="md_subscribenow_upgrade_subscriptions" xsi:type="object">Magedelight\Subscribenow\Console\Upgrade</item>
+            </argument>
+        </arguments>
+    </type>
+    
+    <type name="Magento\Checkout\Model\ShippingInformationManagement">
+        <plugin name="md_subscribenow_save_address_in_book" type="Magedelight\Subscribenow\Plugin\Checkout\Model\ShippingInformationManagement" sortOrder="1"/>
+    </type>
+
+    <type name="Magento\Bundle\Model\Product\Price">
+        <plugin name="md_subscribenow_bundle_recurrence_price"
+                type="Magedelight\Subscribenow\Plugin\Magento\Bundle\Model\Product\Price" sortOrder="1"/>
+    </type>
+
+    <preference for="Magento\GroupedProduct\Model\Product\Type\Grouped"
+                type="Magedelight\Subscribenow\Model\GroupedProduct\Product\Type\Grouped" />
+
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+        <plugin name="md_subscribenow_quote_to_order_item" type="Magedelight\Subscribenow\Plugin\Magento\Quote\QuoteToOrderItem"/>
+    </type>
+
+    <!-- Set Subscribe Now Discount On Display Product List/View -->
+    <virtualType name="Magento\Catalog\Pricing\Price\Pool" type="Magento\Framework\Pricing\Price\Pool">
+        <arguments>
+            <argument name="prices" xsi:type="array">
+                <item name="subscription_discount_price" xsi:type="string">Magedelight\Subscribenow\Pricing\Price\SubscriptionDiscountPrice</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <!-- End: Set Subscribe Now Discount On Display Product List/View -->
+
+</config>

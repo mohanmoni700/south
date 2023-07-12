@@ -1,0 +1,30 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+<?php $urlInfo = $block->getUrlInfo(); ?>
+<div class="block block-addresses-default">
+    <div class="block-title">
+        <ul class="subscription tabs">
+        <?php foreach ($block->getLinks() as $page => $link): ?>
+            <?php if ($this->isCurrentPage($page)): ?>
+                <li class="active"><?php echo __($link['title']); ?></li>
+            <?php else: ?>
+                <li>
+                <a href="<?php echo $link['url'] ?>">
+                    <?php echo __($link['title']); ?>
+                </a>
+                </li>
+            <?php endif; ?>
+        <?php endforeach;?>
+        </ul>
+    </div>
+</div>

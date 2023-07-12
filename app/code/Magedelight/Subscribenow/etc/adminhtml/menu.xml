@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<!--
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * Category  Magedelight
+ * Package   Magedelight_Subscribenow
+ * Copyright Copyright (c) 2019 MageDelight (http://www.magedelight.com/)
+ * License   http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * Author    Magedelight <info@magedelight.com>
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <!-- main -->
+        <add id="Magedelight_Subscribenow::subscribenow_root"
+             title="Subscribe Now"
+             module="Magedelight_Subscribenow"
+             sortOrder="45"
+             resource="Magedelight_Subscribenow::root"
+             toolTip="magedelight_base"/>
+        <add id="Magedelight_Subscribenow::subscribenow_root_commonlyvisible"
+             title="Subscribe Now"
+             module="Magedelight_Subscribenow"
+             sortOrder="10"
+             parent="Magedelight_Base::md_modules"
+             resource="Magedelight_Subscribenow::root"/>
+
+        <add dependsOnConfig="md_subscribenow/general/enabled"
+             id="Magedelight_Subscribenow::subscribenow_subscription"
+             title="Subscriptions"
+             module="Magedelight_Subscribenow"
+             sortOrder="60"
+             parent="Magedelight_Subscribenow::subscribenow_root"
+             action="subscribenow/productsubscribers"
+             resource="Magedelight_Subscribenow::subscribenow_subscription"/>
+        <add id="Magedelight_Subscribenow::subscribenow_config"
+             title="Configuration"
+             module="Magedelight_Subscribenow"
+             sortOrder="80"
+             parent="Magedelight_Subscribenow::subscribenow_root"
+             action="adminhtml/system_config/edit/section/md_subscribenow"
+             resource="Magedelight_Subscribenow::config_root"/>
+
+        <!-- Reports -->
+        <add dependsOnConfig="md_subscribenow/general/enabled"
+             id="Magedelight_Subscribenow::subscribenow_report"
+             title="Reports"
+             module="Magedelight_Subscribenow"
+             sortOrder="90"
+             parent="Magedelight_Subscribenow::subscribenow_root"
+             resource="Magedelight_Subscribenow::subscribenow_report"/>
+        <add id="Magedelight_Subscribenow::report_product"
+             title="Product Wise Subscriptions"
+             module="Magedelight_Subscribenow"
+             sortOrder="10"
+             parent="Magedelight_Subscribenow::subscribenow_report"
+             action="subscribenow/report_product/view"
+             resource="Magedelight_Subscribenow::subscribenow_product"/>
+        <add dependsOnConfig="md_subscribenow/general/enabled"
+             id="Magedelight_Subscribenow::report_customer"
+             title="Customer Wise Subscriptions"
+             module="Magedelight_Subscribenow"
+             sortOrder="20"
+             parent="Magedelight_Subscribenow::subscribenow_report"
+             action="subscribenow/report_customer/view"
+             resource="Magedelight_Subscribenow::subscribenow_customer"/>
+
+        <!-- Documentation -->
+        <add id="Magedelight_Subscribenow::useful_links"
+             title="Useful Links"
+             module="Magedelight_Subscribenow"
+             sortOrder="999"
+             parent="Magedelight_Subscribenow::subscribenow_root"
+             resource="Magedelight_Subscribenow::subscribenow_root" />
+        <add id="Magedelight_Subscribenow::documentation"
+             title="Documentation"
+             module="Magedelight_Subscribenow"
+             sortOrder="10"
+             target="_blank"
+             parent="Magedelight_Subscribenow::useful_links"
+             resource="Magedelight_Subscribenow::subscribenow_root" />
+    </menu>
+</config>

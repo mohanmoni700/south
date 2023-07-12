@@ -1,0 +1,158 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+<?php $subscriptions = $block->getSubscription(); ?>
+<?php echo $this->getChildHtml("profile_list_toolbar"); ?>
+<?php if ($subscriptions && $subscriptions->getSize() > 0): ?>
+    <div class="table-wrapper orders-history">
+        <div class="data table table-order-items history" id="my-orders-table"  data-mage-init='{"accordion":{"openedState": "active", "collapsible": true, "active": false, "multipleCollapsible": true}}'>
+                <?php foreach ($subscriptions as $subscription): ?>
+                    <div class="subsription-profile account">
+                        <div class="product-action">
+                            <div class="profile-status-id">
+                                <div class="profile-status <?php /* @escapeNotVerified */ echo $block->getSubscriptionStatus($subscription->getSubscriptionStatus()) ?>">
+                                    <?php /* @escapeNotVerified */ echo $block->getSubscriptionStatus($subscription->getSubscriptionStatus()) ?>
+                                </div>
+                               <div class="profile-id">
+                                    <span class="label">Subscription: </span><span class="value"><?php /* @escapeNotVerified */ echo $subscription->getProfileId() ?></span>
+                                </div>
+                            </div>
+                            <div class="action-toolbar">
+                                    <a href="<?php /* @escapeNotVerified */ echo $block->getViewUrl($subscription->getSubscriptionId()) ?>" title="<?php echo __('View Profile') ?>">
+                                        <button type="button" title="<?php echo __('View') ?>" class="action add <?php if($subscription->getSubscriptionStatus() !== "2" && $subscription->getSubscriptionStatus() !== "7"): echo 'primary'; endif; ?>">
+                                            <span><?php echo __('View') ?></span>
+                                        </button>
+                                    </a>
+                                    <?php if ($block->canUpdateProfile($subscription)): ?>
+                                        <?php if ($block->canResume($subscription)): ?>
+                                            <a href="<?php echo $block->getResumeUrl($subscription->getSubscriptionId()); ?>" title="<?php echo __('Resume Subscription') ?>" onclick="return confirm('<?php echo __('Are you sure ? You want to resume this subscription profile.') ?>');">
+                                                <button type="button" title="<?php echo __('Resume Subscription') ?>" class="action primary add">
+                                                    <span><?php echo __('Resume Subscription') ?></span>
+                                                </button>
+                                            </a>
+                                        <?php endif; ?>
+                                        <?php if ($block->canSkip($subscription)): ?>
+                                            <a href="<?php echo $block->getSkipUrl($subscription->getSubscriptionId()); ?>" title="<?php echo __('Skip Profile') ?>" onclick="return confirm('<?php echo __('Are you sure ? You want to skip this subscription profile for next occurrence.') ?>');">
+                                                <button type="button" title="<?php echo __('Skip') ?>" class="action add">
+                                                    <span><?php echo __('Skip') ?></span>
+                                                </button>
+                                            </a>
+                                        <?php endif; ?>               
+                                        <?php if ($block->canPause($subscription)): ?>
+                                            <a href="<?php echo $block->getPauseUrl($subscription->getSubscriptionId()); ?>" title="<?php echo __('Pause Profile') ?>" onclick="return confirm('<?php echo __('Are you sure ? You want to pause this subscription profile.') ?>');">
+                                                <button type="button" title="<?php echo __('Pause') ?>" class="action add">
+                                                    <span><?php echo __('Pause') ?></span>
+                                                </button>
+                                            </a>
+                                        <?php endif; ?>
+
+                                        <?php if ($block->canCancel($subscription)): ?>
+                                            <a href="<?php echo $block->getCancelUrl($subscription->getSubscriptionId()); ?>" title="<?php echo __('Cancel Subscription') ?>" onclick="return confirm('<?php echo __('Are you sure ? You want to cancel this subscription profile.') ?>');">
+                                                <button type="button" title="<?php echo __('Cancel Subscription') ?>" class="action add">
+                                                    <span><?php echo __('Cancel Subscription') ?></span>
+                                                </button>
+                                            </a>
+                                        <?php endif; ?>
+
+                                    <?php endif; ?>                                                
+                                    <?php if ($block->canRenew($subscription)): ?>
+                                        <a href="<?php echo $block->getRenewUrl($subscription->getSubscriptionId()); ?>" title="<?php echo __('Renew') ?>" onclick="return confirm('<?php echo __('Are you sure ? You want to renew this subscription profile, It will create new subscription profile.') ?>');">
+                                            <button type="button" title="<?php echo __('Renew') ?>" class="action primary add">
+                                                <span><?php echo __('Renew') ?></span>
+                                            </button>
+                                        </a>
+                                    <?php endif; ?>                     
+                            </div>               
+                        </div>
+                        <div class="profile-details <?php /* @escapeNotVerified */ echo $block->getSubscriptionStatus($subscription->getSubscriptionStatus()) ?>">
+                            <div class="subscription-nextorder">
+                                <div class="nextorder-block">
+                                    <?php if($subscription->getSubscriptionStatus() === "1"): ?>
+                                    <div class="orderdate">
+                                        <span class="label">Next Order On </span>
+                                        <span class="value"><?php /* @escapeNotVerified */ echo $block->getNextOccurrenceDate($subscription) ?></span>
+                                        <span class="due-label"><?php /* @escapeNotVerified */ echo $block->getDueTime($subscription) ?></span>
+                                    </div>
+                                    <?php endif; ?>
+                                    <div class="profile-img">
+                                        <img src="<?php echo $block->getProductImageUrl($subscription->getProductId()); ?>" />
+                                    </div>
+                                                                  
+                                </div>
+                            </div>
+                            <div class="subsription-data">
+                                <div class="profile-desc">
+                                    <div class="product">
+                                        <div class="product-desc">
+                                            <div class="product-name">
+                                                <a href="<?php /* @escapeNotVerified */ echo $block->getViewUrl($subscription->getSubscriptionId()) ?>" class="action view"><?php /* @escapeNotVerified */ echo $subscription->getProductName() ?></a>
+                                                <?php if ($productOptions = $block->getProductOption($subscription->getAdditionalInfo())) { ?>
+                                                    <dl class="item-options">
+                                                        <?php foreach ($productOptions as $optionKey => $option) { ?>
+                                                            <dt><?= $option['label'] ?> :</dt>
+                                                            <dd><?= $option['value'] ?></dd>
+                                                        <?php } ?>
+                                                    </dl>
+                                                <?php } ?>
+                                            </div>
+                                            <div class="qty"><span class="label">Quantity : </span><span class="value"><?php /* @escapeNotVerified */ echo (float) $subscription->getQtySubscribed() ?></span></div>
+                                            <div class="billing-frequency"><span class="label">Order Frequency : </span><span class="value"><?php /* @escapeNotVerified */ echo $subscription->getBillingPeriodLabel() ?></span></div>
+                                            <!-- <div class="next-order"><span class="label">Next Order On </span><span class="value"><?php /* @escapeNotVerified */ echo $block->getNextOccurrenceDate($subscription) ?></span></div> -->
+                                            <!-- <div class="subscription-occurrence">
+                                                <div class="no-of-occurrence"><strong class="label">Number of Occurrence</strong><span class="value"><?php /* @escapeNotVerified */ echo $block->getBillingMaxCycle($subscription) ?></span></div>
+                                                <div class="passed-occurrence"><strong class="label">Passed Occurrence</strong><span class="value"><?php /* @escapeNotVerified */ echo $subscription->getTotalBillCount(); ?></span></div>
+                                            </div> -->
+                                        </div>
+                                        <div class="profile-price">
+                                            <span class="price"><?php echo $block->getBillingAmount($subscription); ?></span>
+                                        </div>
+                                    </div> 
+                                    <div data-role="collapsible" class="more-details" >
+                                        <div data-role="trigger">
+                                            <span>View More</span>
+                                        </div>
+                                    </div>  
+                                    <div class="additional-details" data-role="content" style="display:none;">
+                                        <div class="shipping-address">
+                                            <strong class="box-title"><span><?php echo __('Shipping Address') ?></span></strong>    
+                                            <?php echo $block->getCustomerAddress('shipping', $subscription); ?>
+                                        </div>
+                                            
+                                        <div class="billing-address">
+                                            <strong class="box-title"><span><?php echo __('Billing Address') ?></span></strong>    
+                                            <?php echo $block->getCustomerAddress('billing', $subscription); ?>
+                                        </div>
+
+                                        <div class="shipping-method">
+                                            <strong class="box-title"><span><?php echo __('Shipping Method') ?></span></strong>    
+                                            <?php echo $block->getShippingMethod($subscription->getAdditionalInfo()); ?>
+                                        </div>
+
+                                        <div class="payment-information">
+                                            <strong class="box-title"><span><?php echo __('Payment Information') ?></span></strong>    
+                                            <?php echo $subscription->getPaymentTitle() ?>
+                                        </div>
+                                    </div>                          
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                <?php endforeach; ?>
+        </div>
+    </div>
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+    <?php endif ?>
+<?php else: ?>
+    <div class="message info empty"><span><?php /* @escapeNotVerified */ echo __('You don’t currently have any subscriptions'); ?></span></div>
+<?php endif; ?>
