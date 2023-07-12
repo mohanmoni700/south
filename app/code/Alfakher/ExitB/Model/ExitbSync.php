@@ -157,9 +157,12 @@ class ExitbSync
                 $customerId = $order->getCustomerId();
                 if ($customerId) {
                     $orderData['orderData']['customer']['number'] = $order->getCustomerId();
-                    $orderData['orderData']['customer']['email'] = $order->getCustomerEmail();
-                    $orderData['orderData']['customer']['phone'] = $order->getShippingAddress()->getTelephone();
+                } else {
+                    $orderData['orderData']['customer']['number'] = $order->getCustomerEmail();
                 }
+                $orderData['orderData']['customer']['email'] = $order->getCustomerEmail();
+                $orderData['orderData']['customer']['phone'] = $order->getShippingAddress()->getTelephone();
+
                 $companydata = $order->getExtensionAttributes()->getCompanyOrderAttributes();
                 $companyName = '';
                 if (!empty($companydata)) {
@@ -185,6 +188,10 @@ class ExitbSync
                 if ($order->hasInvoices()) {
                     $orderData['orderData']['payment']['isPayed'] = true;
                     $orderData['orderData']['payment']['amountPayed'] = (float)$order->getPayment()->getAmountPaid();
+                } else {
+                    if (str_contains($paymentCode, 'vrpayecommerce') || str_contains($paymentCode, 'klarna')) {
+                        $orderData['orderData']['payment']['isPayed'] = false;
+                    }
                 }
 
                 $shippingMethod = $order->getShippingMethod();
@@ -198,7 +205,6 @@ class ExitbSync
                 }
                 $items = $order->getAllItems();
                 $orderData['orderData']['items'] = $this->orderItems($items, $orderData['orderData']['isB2B']);
-
                 $exitBModel = $this->exitbmodelFactory->create();
                 $exitBorderSync = $exitBModel->load($orderId, 'order_id');
 

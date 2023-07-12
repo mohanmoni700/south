@@ -1,0 +1,44 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+
+<?php if ($block->canPurchaseSeparately()) : ?>
+    <div class="md_subscription_form_detail">
+        <div class="control">
+            <input
+                type="radio"
+                value="nosubscription"
+                id="no_subscription_<?= /* @escapeNotVerified */ $block->getItemId() ?>"
+                class="radio required product-custom-option subscription_type_radio"
+                name="cart[<?= /* @escapeNotVerified */ $block->getItemId() ?>][subscription][_1]"
+                <?php echo (!$block->isSubscriptionChecked())?"checked=checked":""?>
+            >
+            <label for="no_subscription_<?= /* @escapeNotVerified */ $block->getItemId() ?>"><?= $block->escapeHtml($block->getFirstSubscriptionLabel()); ?></label>
+        </div>
+        <div class="control">
+            <input
+                type="radio"
+                value="subscription"
+                id="subscription_<?=$block->getItemId()?>"
+                class="radio required product-custom-option subscription_type_radio"
+                name="cart[<?=$block->getItemId()?>][subscription][_1]"
+                <?= /* @escapeNotVerified */ ($block->isSubscriptionChecked())?"checked=checked":"" ?>
+            >
+            <label for="subscription_<?= /* @escapeNotVerified */ $block->getItemId() ?>"><?= $block->escapeHtml($block->getSecondSubscriptionLabel()); ?></label>
+        </div>
+    </div>
+<?php else : ?>
+    <input type="hidden" value="subscription" name="cart[<?=$block->getItemId()?>][subscription][_1]">
+<?php endif; ?>

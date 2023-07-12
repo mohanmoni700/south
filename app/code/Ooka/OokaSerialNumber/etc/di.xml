@@ -1,0 +1,37 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\ImportExport\Model\Import\SampleFileProvider">
+        <arguments>
+            <argument name="samples" xsi:type="array">
+                <item name="serialnumber" xsi:type="string">Ooka_OokaSerialNumber</item>
+            </argument>
+        </arguments>
+    </type>
+    <preference for="Ooka\OokaSerialNumber\Api\Data\SerialNumberInterface"
+                type="Ooka\OokaSerialNumber\Model\SerialNumber"/>
+    <preference for="Ooka\OokaSerialNumber\Api\SerialNumberRepositoryInterface"
+                type="Ooka\OokaSerialNumber\Model\Api\SerialNumberRepository"/>
+    <preference for="Ooka\OokaSerialNumber\Api\Data\SerialNumberSearchInterface"
+                type="Ooka\OokaSerialNumber\Model\SerialNumberSearch"/>
+    <preference for="Ooka\OokaSerialNumber\Api\Data\SerialNumberInterface"
+                type="Ooka\OokaSerialNumber\Model\SerialNumber"/>
+    <type name="Magento\Bundle\Block\Adminhtml\Sales\Order\View\Items\Renderer">
+        <plugin name="serailCodeBeforePlugin" sortOrder="100" type="Ooka\OokaSerialNumber\Plugin\BundleRenderer"/>
+    </type>
+    <type name="Ooka\OokaSerialNumber\Model\ResourceModel\SerialNumber\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">product_serial_code</argument>
+            <argument name="resourceModel" xsi:type="string">Ooka\OokaSerialNumber\Model\ResourceModel\SerialNumber
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="serialnumber_listing_data_source" xsi:type="string">
+                    Ooka\OokaSerialNumber\Model\ResourceModel\SerialNumber\Grid\Collection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+</config>

@@ -1,0 +1,86 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+<?php if ($block->isEditMode()): ?>
+<form action="<?php echo $block->getAddressEditUrl(); ?>" name="subscription_profile_update" id="subscription_profile_update" method="post" data-mage-init='{"validation":{}}'>
+    <?php echo $block->getBlockHtml('formkey'); ?>
+<?php endif; ?>
+<div class="info-table">
+    <div class="col-2-sub billing-address <?php if ($block->isEditMode() && $block->isBillingEditable()):
+        echo 'col-1-sub';
+        endif; ?>">
+            <strong class="box-title">
+                <span><?php echo __('Billing Address') ?></span>
+            </strong>
+            <div class="box-content">
+                <?php if ($block->isEditMode() && $block->isBillingEditable()): ?>
+                    <select id="md_billing_address" name="md_billing_address" class="validate-select required-entry" aria-required="true">
+                        <?php foreach ($block->getAllAddress('billing') as $id => $address): ?>
+                            <option value="<?php echo $id?>" <?php echo ($address['is_current'])?"selected='selected'":""; ?>>
+                                <?php echo $address['data'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php else: ?>
+                    <address><?php  echo $block->getCustomerAddress('billing'); ?></address>
+                <?php endif; ?>
+            </div>
+    </div>
+    <?php if ($block->canShowShippingAddress()): ?>
+    <div class="col-2-sub shipping-address<?php if ($block->isEditMode() && $block->isShippingEditable()):
+        echo 'col-1-sub';
+        endif; ?>">
+        <strong class="box-title">
+            <span><?php echo __('Shipping Address') ?></span>
+        </strong>
+        <div class="box-content">
+            <?php if ($block->isEditMode() && $block->isShippingEditable()): ?>
+                <select id="md_shipping_address" name="md_shipping_address"  class="validate-select required-entry" aria-required="true">
+                    <?php foreach ($block->getAllAddress('shipping') as $id => $address): ?>
+                        <option value="<?php echo $id?>" <?php echo ($address['is_current'])?"selected='selected'":""; ?>>
+                            <?php echo $address['data'] ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            <?php else: ?>
+                <address><?php echo $block->getCustomerAddress('shipping'); ?></address>
+            <?php endif; ?>
+        </div>
+    </div>
+    <?php endif; ?>
+</div>
+<?php if ($block->isEditMode()): ?>
+<div class="back-subscription">
+    <button type="button"  onclick="updatSubscriptionForm()" title="<?php echo __('Apply Changes') ?>" class="button button action tocart primary" id="subscription_update">
+        <span><span><?php echo __('Apply Changes') ?></span></span>
+    </button>
+    <button type="button" onclick="location.href=removeEditForm();" title="<?php echo __('Cancel') ?>" class="button button action tocart primary" id="subscription_cancel">
+        <span><span><?php echo __('Cancel') ?></span></span>
+    </button>
+</div>
+</form>
+<script type="text/javascript">
+    function updatSubscriptionForm()
+    {
+        var dataForm = jQuery('#subscription_profile_update');
+        dataForm.mage('validation');
+        if (jQuery('#subscription_profile_update').valid()) {
+            jQuery('#subscription_update').attr('disabled', true);
+            jQuery('#subscription_profile_update').submit();
+        }
+    }
+    function removeEditForm() {
+        var url = window.location.href.replace('/edit/1/', '/');
+        return url;
+    }
+</script>
+<?php endif; ?>

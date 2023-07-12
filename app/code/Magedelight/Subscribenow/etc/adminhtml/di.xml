@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category  Magedelight
+ * @package   Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Backend\Model\Menu\Item">
+        <plugin name="md_subscribenow_menu_item_newtab" type="Magedelight\Subscribenow\Plugin\Magento\Backend\Model\Menu\Item" />
+    </type>
+    <type name="Magento\Reports\Model\ResourceModel\Refresh\Collection">
+        <plugin name="md_subscribenow_reports" type="Magedelight\Subscribenow\Plugin\Magento\Reports\Model\ResourceModel\Refresh\Collection" sortOrder="1" />
+    </type>
+    <type name="Magento\Reports\Controller\Adminhtml\Report\Statistics">
+        <arguments>
+            <argument name="reportTypes" xsi:type="array">                
+                <item name="product_subscription" xsi:type="string">Magedelight\Subscribenow\Model\ResourceModel\Report\ProductSubscription</item>
+                <item name="customer_subscription" xsi:type="string">Magedelight\Subscribenow\Model\ResourceModel\Report\CustomerSubscription</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

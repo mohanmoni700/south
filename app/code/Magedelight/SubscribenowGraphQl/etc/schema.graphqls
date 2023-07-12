@@ -1,0 +1,174 @@
+# Copyright © Magento, Inc. All rights reserved.
+type Query {
+	getSubscriptions (
+        subscriptionId: Int @doc(description: "Id of Subscription")
+    ) : subscriptionData @resolver( class: "Magedelight\\SubscribenowGraphQl\\Model\\Resolver\\Subscriptions")
+	getSubscriptionsByCustomerId (
+        currentPage: Int @doc(description: "Current Page")
+        pageSize: Int @doc(description: "Page Size")
+        filter: String @doc(description: "Filter")
+        sort: String @doc(description: "Sort")
+    ) : customerSubscriptionFilterOutput @resolver( class: "Magedelight\\SubscribenowGraphQl\\Model\\Resolver\\CustomerSubscriptions")
+}
+type subscriptionData {
+    subscription_id:  Int @doc(description: "Id of Subscription")
+    profile_id: Int @doc(description: "ProfileId")
+    customer_id: Int @doc(description: "Customer Id")
+    product_id: Int @doc(description: "Product Id")
+    product_sku: String
+    subscriber_name: String
+    subscriber_email: String
+    store_id: Int
+    payment_method_code : String
+    subscription_start_date : String
+    suspension_threshold : Int
+    billing_period_label : String
+    billing_period : Int
+    billing_frequency : Int
+    period_max_cycles : Int
+    billing_amount : Int
+    trial_period_label : String
+    trial_period_unit: String
+    trial_period_frequency : Int
+    trial_period_max_cycles : Int
+    trial_billing_amount : String
+    currency_code : String
+    shipping_amount : String
+    tax_amount : String
+    initial_amount : String
+    discount_amount : String
+    subscription_status : String
+    subscription_item_info : String
+    created_at : String
+    updated_at : String
+    next_occurrence_date : String
+    last_bill_date : String
+    trial_count : Int
+    payment_token : String
+    total_bill_count : Int
+    base_currency_code : String
+    base_billing_amount : String
+    base_trial_billing_amount : String
+    base_shipping_amount : String
+    base_tax_amount : String
+    base_initial_amount : String
+    base_discount_amount : String
+    initial_order_id : String
+    billing_address_id : String
+    shipping_address_id : String
+    is_trial : String
+    shipping_method_code : String
+    product_name : String
+    payment_title : String
+    billing_frequency_cycle : String
+    is_update_billing_frequency : String
+    order_item_info : String
+    additional_info : String
+    order_info  : String
+}
+type customerSubscriptionFilterOutput {
+    total_count:  Int @doc(description: "total_count")
+    items: [subscriptionData] @doc(description: "items")
+}
+
+
+type Mutation {
+    generateSubscription(orderId: Int!): generateSubscriptionOutput @resolver(class: "Magedelight\\SubscribenowGraphQl\\Model\\Resolver\\GenerateSubscriptionByOrderId") @doc(description:"Generate Subscription By OrderId")
+    skipSubscription(subscriptionId: Int!): skipSubscriptionOutput  @resolver(class: "Magedelight\\SubscribenowGraphQl\\Model\\Resolver\\SkipSubscription") @doc(description:"Skip Subscription By SubscriptionId")
+    pauseSubscription(subscriptionId: Int!): pauseSubscriptionOutput  @resolver(class: "Magedelight\\SubscribenowGraphQl\\Model\\Resolver\\PauseSubscription") @doc(description:"Pause Subscription By SubscriptionId")
+    resumeSubscription(subscriptionId: Int!): resumeSubscriptionOutput  @resolver(class: "Magedelight\\SubscribenowGraphQl\\Model\\Resolver\\ResumeSubscription") @doc(description:"Resume Subscription By SubscriptionId")
+    cancelSubscription(subscriptionId: Int!): cancelSubscriptionOutput  @resolver(class: "Magedelight\\SubscribenowGraphQl\\Model\\Resolver\\CancelSubscription") @doc(description:"Cancel Subscription By SubscriptionId")
+    createSubscription (input: subscriptionInput!): subscriptionData @resolver(class: "Magedelight\\SubscribenowGraphQl\\Model\\Resolver\\CreateSubscription") @doc(description:"Create Subscription")
+}
+
+type generateSubscriptionOutput {
+    success: Boolean @doc(description: "Result of generated Subscription")
+    message: String @doc(description: "Message of generated Subscription")
+}
+
+type createSubscriptionOutputTry {
+    message: String @doc(description: "Message of generated Subscription")
+}
+
+
+type skipSubscriptionOutput {
+    success: Boolean @doc(description: "Result of skipped Subscription")
+    message: String @doc(description: "Message of skipped Subscription")
+}
+
+type pauseSubscriptionOutput {
+    success: Boolean @doc(description: "Result of paused Subscription")
+    message: String @doc(description: "Message of paused Subscription")
+}
+
+type resumeSubscriptionOutput {
+    success: Boolean @doc(description: "Result of resumed Subscription")
+    message: String @doc(description: "Message of resumed Subscription")
+}
+
+type cancelSubscriptionOutput {
+    success: Boolean @doc(description: "Result of resumed Subscription")
+    message: String @doc(description: "Message of resumed Subscription")
+}
+
+input subscriptionInput {
+     profile_id: Int @doc(description: "ProfileId")
+     customer_id: Int @doc(description: "Customer Id")
+     product_id: Int @doc(description: "Product Id")
+     product_sku: String
+     qty_subscribed: Int
+     subscriber_name: String
+     subscriber_email: String
+     store_id: Int
+     payment_method_code : String
+     subscription_start_date : String
+     billing_period_label : String
+     billing_period : Int
+     billing_frequency : Int
+     period_max_cycles : Int
+     billing_amount : Int
+     trial_period_label : String
+     trial_period_unit: String
+     trial_period_frequency : Int
+     trial_period_max_cycles : Int
+     trial_billing_amount : String
+     currency_code : String
+     shipping_amount : String
+     tax_amount : String
+     initial_amount : String
+     discount_amount : String
+     subscription_status : String
+     next_occurrence_date : String
+     last_bill_date : String
+     payment_token : String
+     base_currency_code : String
+     base_billing_amount : String
+     base_trial_billing_amount : String
+     base_shipping_amount : String
+     base_tax_amount : String
+     base_initial_amount : String
+     base_discount_amount : String
+     billing_address_id : String
+     shipping_address_id : String
+     is_trial : String
+     shipping_method_code : String
+     product_name : String
+     payment_title : String
+     order_item_info : [OrderItemInfo]
+     additional_info : [AdditionalInfo]
+     order_info  : String
+}
+
+input AdditionalInfo @doc(description: "Additional Options Subscribe Product Data.") {
+   product_sku : String
+   shipping_title :String
+}
+
+input OrderItemInfo @doc(description: "Order Info Subscribe Product Data.") {
+   options : [OrderItemInfoOptions]
+   subscription_start_date : String
+   qty :String
+}
+input OrderItemInfoOptions @doc(description: "OrderItem Options Subscribe Product Data.") {
+   _1 :String
+}

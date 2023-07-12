@@ -1,0 +1,93 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+<div class="action-toolbar">
+    <div class="back-btn">
+            <a href="<?php echo $block->getBackUrl(); ?>" title="<?php echo __('Back to Subscription Profiles') ?>" class="back">
+                <button type="button" title="<?php echo __('Back to Subscription Profiles') ?>" class="action primary add">
+                    <span><?php echo __('Back') ?></span>
+                </button>
+            </a>
+    </div>
+    <?php if ($block->canUpdateProfile()): ?>
+            <?php if ($block->canResume()): ?>
+                <a href="<?php echo $block->getResumeUrl(); ?>" title="<?php echo __('Resume Subscription') ?>" onclick="return confirm('<?php echo __('Are you sure ? You want to resume this subscription profile.') ?>');">
+                    <button type="button" title="<?php echo __('Resume Subscription') ?>" class="action primary add">
+                        <span><?php echo __('Resume Subscription') ?></span>
+                    </button>
+                </a>
+            <?php endif; ?>
+
+            <?php if ($block->canSkip()): ?>
+                <a href="<?php echo $block->getSkipUrl(); ?>" title="<?php echo __('Skip Profile') ?>" onclick="return confirm('<?php echo __('Are you sure ? You want to skip this subscription profile for next occurrence.') ?>');">
+                    <button type="button" title="<?php echo __('Skip') ?>" class="action add">
+                        <span><?php echo __('Skip') ?></span>
+                    </button>
+                </a>
+            <?php endif; ?>
+
+            <?php if ($block->canPause()): ?>
+                <a href="<?php echo $block->getPauseUrl(); ?>" title="<?php echo __('Pause Profile') ?>" onclick="return confirm('<?php echo __('Are you sure ? You want to pause this subscription profile.') ?>');">
+                    <button type="button" title="<?php echo __('Pause') ?>" class="action add">
+                        <span><?php echo __('Pause') ?></span>
+                    </button>
+                </a>
+            <?php endif; ?>
+
+            <?php if ($block->canCancel()): ?>
+                <a href="<?php echo $block->getCancelUrl(); ?>" title="<?php echo __('Cancel Subscription') ?>" onclick="return confirm('<?php echo __('Are you sure ? You want to cancel this subscription profile.') ?>');">
+                <button type="button" title="<?php echo __('Cancel Subscription') ?>" class="action add">
+                        <span><?php echo __('Cancel Subscription') ?></span>
+                    </button>
+                </a>
+            <?php endif; ?>
+
+            <?php if ($block->canEdit()): ?>
+                <a href="<?php echo $block->getEditUrl(); ?>" title="<?php echo __('Modify') ?>" onclick="return confirm('<?php echo __('Are you sure ? You want to edit this subscription profile.') ?>');">
+                    <button type="button" title="<?php echo __('Modify') ?>" class="action primary add">
+                        <span><?php echo __('Modify') ?></span>
+                    </button>
+                </a>
+            <?php endif; ?>
+        <?php else: ?>
+            <?php if (!($block->canRenew()) && !($block->isEditMode())): ?>
+                <div class="freeze-msg">
+                    <span><?php echo __('You can not modify this profile as it has subscription due in near date.') ?></span>
+                </div>
+            <?php endif; ?>
+    <?php endif; ?>
+
+    <?php if ($block->canRenew()): ?>
+    <a href="<?php echo $block->getRenewUrl(); ?>" title="<?php echo __('Renew') ?>" onclick="return confirm('<?php echo __('Are you sure ? You want to renew this subscription profile, It will create new subscription profile.') ?>');">
+        <button type="button" title="<?php echo __('Renew') ?>" class="action add primary">
+            <span><?php echo __('Renew') ?></span>
+        </button>
+    </a>
+    <?php endif; ?>
+
+    <?php if ($block->isEditMode()): ?>
+        </form>
+        <script type="text/javascript">
+            function updatSubscriptionForm()
+            {
+                var dataForm = jQuery('#subscription_profile_update');
+                dataForm.mage('validation');
+                if (jQuery('#subscription_profile_update').valid()) {
+                    jQuery('#subscription_update').attr('disabled', true);
+                    jQuery('#subscription_profile_update').submit();
+                }
+            }
+        </script>
+    <?php endif; ?>
+</div>
+
+

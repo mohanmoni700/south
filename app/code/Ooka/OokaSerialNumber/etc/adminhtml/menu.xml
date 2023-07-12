@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Ooka_OokaSerialNumber::serialnumber"
+             title="OOKA Serial Number Management"
+             module="Ooka_OokaSerialNumber"
+             sortOrder="100"
+             parent="Magento_Sales::sales_operation"
+             action="serialnumber/serialnumber/index"
+             resource="Ooka_OokaSerialNumber::serialnumber"
+        />
+    </menu>
+</config>

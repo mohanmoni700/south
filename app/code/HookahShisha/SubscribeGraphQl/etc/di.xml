@@ -1,0 +1,84 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magedelight\Subscribenow\Model\Service\SubscriptionService" type="HookahShisha\SubscribeGraphQl\Model\Magedelight\Subscribenow\Service\SubscriptionService" />
+
+    <type name="Magedelight\Subscribenow\Model\Service\OrderService">
+        <plugin name="Alfa_Address_Info_plugin" type="HookahShisha\SubscribeGraphQl\Plugin\Magedelight\Subscribenow\Model\Service\OrderService" />
+    </type>
+    <type name="Magento\QuoteGraphQl\Model\Resolver\AddProductsToCart">
+        <plugin name="cart_item_subscription_data_set" type="HookahShisha\SubscribeGraphQl\Plugin\Model\Resolver\AddProductsToCart" />
+    </type>
+    <type name="Magedelight\Subscribenow\Plugin\Checkout\Model\Quote">
+        <plugin name="cart_item_subscription_data_set"
+                type="HookahShisha\SubscribeGraphQl\Plugin\Quote"
+                sortOrder="10"/>
+    </type>
+    <type name="Magedelight\Subscribenow\Plugin\Checkout\Model\ShippingInformationManagement">
+        <plugin name="subscription_customer_address_check"
+                type="HookahShisha\SubscribeGraphQl\Plugin\Magedelight\Subscribenow\Checkout\Model\ShippingInformationManagement"
+                sortOrder="10"/>
+    </type>
+    <type name="Magedelight\Subscribenow\Model\Subscription">
+        <plugin name="subscription_discount_amount_on_product"
+                type="HookahShisha\SubscribeGraphQl\Plugin\Model\Resolver\Subscription"
+                sortOrder="10"/>
+    </type>
+    <type name="Magento\Quote\Model\Quote\Item\CartItemPersister">
+        <plugin name="ignore_save_for_subscription_product"
+                type="HookahShisha\SubscribeGraphQl\Plugin\Model\Quote\Item\CartItemPersister"
+                sortOrder="10"/>
+    </type>
+    <preference for="Magedelight\Subscribenow\Model\ResourceModel\ProductSubscribers"
+                type="HookahShisha\SubscribeGraphQl\Model\ResourceModel\ProductSubscribers" />
+
+    <preference for="Magedelight\Subscribenow\Model\Service\OrderService"
+                type="HookahShisha\SubscribeGraphQl\Model\Service\OrderService" />
+    <type name="Magedelight\Subscribenow\Model\Data\ProductSubscribers">
+        <plugin name="subscribe_product_get_product_options"
+                type="HookahShisha\SubscribeGraphQl\Plugin\Model\Data\ProductSubscribers"
+                sortOrder="10"
+        />
+    </type>
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="subscription-create-order" xsi:type="object">HookahShisha\SubscribeGraphQl\Console\SubscriptionCreateOrder</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magedelight\Subscribenow\Model\Service\Order\Generate">
+        <plugin name="subscribe_order_set_discount"
+                type="HookahShisha\SubscribeGraphQl\Plugin\Model\Service\Order\Generate"
+                sortOrder="10"
+        />
+    </type>
+    <type name="Magedelight\Subscribenow\Plugin\Magento\Bundle\Model\Product\Price">
+        <plugin name="subscribe_order_bundel_product_set_discount"
+                type="HookahShisha\SubscribeGraphQl\Plugin\Magento\Bundle\Model\Product\Price"
+                sortOrder="10" />
+    </type>
+    <type name="Magedelight\Subscribenow\Block\Adminhtml\ProductSubscribers\View\Tab\Grid\RelatedOrders">
+        <plugin name="set_grand_total_in_grid"
+                type="HookahShisha\SubscribeGraphQl\Plugin\Block\Adminhtml\ProductSubscribers\View\Tab\Grid\RelatedOrders" />
+    </type>
+    <virtualType name="subscriptionLoggerHandler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">var/log/subscription.log</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="subscriptionLogger" type="Monolog\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">subscriptionLogger</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">subscriptionLoggerHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="HookahShisha\SubscribeGraphQl\Helper\Logger">
+        <arguments>
+            <argument name="logger" xsi:type="object">subscriptionLogger</argument>
+        </arguments>
+    </type>
+    <preference for="Magedelight\Subscribenow\Model\SubscribeNowRepository"
+                type="HookahShisha\SubscribeGraphQl\Model\SubscribeNowRepository" />
+</config>
