@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HookahShisha\SubscribeGraphQl\Model\ResourceModel;
 
 use Magento\Framework\DataObject;

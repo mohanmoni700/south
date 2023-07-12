@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 namespace HookahShisha\SubscribeGraphQl\Model\Resolver\CartItems;
 
 use Magento\Framework\GraphQl\Query\ResolverInterface;

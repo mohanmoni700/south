@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HookahShisha\SubscribeGraphQl\Helper;
 
 use Psr\Log\LoggerInterface;
