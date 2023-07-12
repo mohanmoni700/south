@@ -1,0 +1,96 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+// @codingStandardsIgnoreFile
+/** @var \Magedelight\Subscribenow\Block\Adminhtml\ProductSubscribers\View\Tab\ProfileInfo\History $block */
+?>
+
+<div class="admin__page-section-item-title">
+    <span class="title">
+        <?php /* @escapeNotVerified */ echo __('Subscription History') ?>
+    </span>
+</div>
+<div class="admin__page-section-item-content">
+    <table class="admin__table-secondary">
+        <tr>
+            <th><?php /* @escapeNotVerified */ echo __('Subscription Generated On') ?></th>
+            <td><?php /* @escapeNotVerified */ echo $block->formatDate($block->getSubscription()->getCreatedAt(),1) ?></td>
+        </tr>
+        <tr>
+            <th><?php /* @escapeNotVerified */ echo __('Next Occurrence Date') ?></th>
+            <?php /* @escapeNotVerified */
+            if($block->canUpdateNextOccurrenceDate()): ?>
+                <td class="date-picker">
+                    <input type="text" id="md_subscription_start" name="subscription_start_date" class="input-text"  readonly="readonly" value="" />
+                </td>
+            <?php else: ?>
+                <td>
+                    <?php echo $block->escapeHtml($block->getNextOccurrenceDate()); ?>
+                </td>
+            <?php endif; ?>
+        </tr>
+        <tr>
+            <th><span class="nobr"><?php echo __('Billing Period:'); ?></span></th>
+            <td>
+                <?php if ($block->canUpdateBillingFrequency() && $billing = $block->getBillingInterval()) : ?>
+                    <select id="md_billing_frequency" name="md_billing_frequency">
+                        <?php foreach ($billing as $key => $interval) : ?>
+                            <option value="<?php echo $key ?>" <?php echo ($interval['is_selected'] == true) ? 'selected="selected"' : ''; ?>>
+                                <?php echo $interval['interval_label'] ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                <?php else: ?>
+                    <?php echo $block->getSubscription()->getBillingPeriodLabel(); ?>
+                <?php endif; ?>
+            </td>
+        </tr>
+        <tr>
+            <th><?php /* @escapeNotVerified */ echo __('Number Of Occurrence') ?></th>
+            <td><?php /* @escapeNotVerified */ echo $block->escapeHtml($block->getBillingMaxCycle()) ?></td>
+        </tr>
+        <tr>
+            <th><?php /* @escapeNotVerified */ echo __('Passed Occurrence') ?></th>
+            <td><?php /* @escapeNotVerified */ echo $block->escapeHtml($block->getSubscription()->getTotalBillCount()) ?></td>
+        </tr>
+        <?php if($block->hasTrialSubscription()): ?>
+            <tr>
+                <th><?php /* @escapeNotVerified */ echo __('Trial Billing Period') ?></th>
+                <td><?php /* @escapeNotVerified */ echo $block->escapeHtml($block->getSubscription()->getTrialPeriodLabel()) ?></td>
+            </tr>
+            <tr>
+                <th><?php /* @escapeNotVerified */ echo __('Number of Trial Occurrence') ?></th>
+                <td><?php /* @escapeNotVerified */ echo $block->escapeHtml($block->getTrialMaxCycle()) ?></td>
+            </tr>
+            <tr>
+                <th><?php /* @escapeNotVerified */ echo __('Passed Trial Occurrence') ?></th>
+                <td><?php /* @escapeNotVerified */ echo $block->escapeHtml($block->getSubscription()->getTrialCount()) ?></td>
+            </tr>
+        <?php endif; ?>
+    </table>
+</div>
+
+<?php if ($block->canUpdateNextOccurrenceDate()): ?>
+<script type="text/javascript">
+    require(
+        ["jquery", "mage/calendar"], function ($) {
+            $("#md_subscription_start").calendar({
+                showsTime: false,
+                hideIfNoPrevNext: true,
+                buttonText: "<?php echo __('Select Date') ?>",
+                dateFormat: "yy-mm-dd",
+                minDate: new Date('<?php echo $block->getJsCurrentDate() ?>')
+            });
+            $("#md_subscription_start").calendar().datepicker("setDate", new Date('<?php echo $block->getNextOccurrenceDate('Y/m/d'); ?>'));
+        }
+    );
+</script>
+<?php endif; ?>

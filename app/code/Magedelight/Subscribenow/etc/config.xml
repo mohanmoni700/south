@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Magedelight
+ * Copyright (C) 2017 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2017 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <md_subscribenow>
+            <general>
+                <enabled>0</enabled>
+                <allow_to_view_subscription>1</allow_to_view_subscription>
+                <allow_to_addtocart_subscription>0</allow_to_addtocart_subscription>
+                <subscription_customer_group_message>You're Not allowed to add this subscription item.</subscription_customer_group_message>
+                <maximum_payment_failed>5</maximum_payment_failed>
+                <payment_gateway>magedelight_cybersource</payment_gateway>
+                <update_billing_frequency>0</update_billing_frequency>
+                <update_next_occurrence_on_frequency>0</update_next_occurrence_on_frequency>
+                <update_billing_address>1</update_billing_address>
+                <update_shipping_address>1</update_shipping_address>
+                <update_profile_before>5</update_profile_before>
+                <reminder_occurrence_before>6</reminder_occurrence_before>
+            </general>
+            <subscription_label>
+                    <label1>One Time Purchase</label1>
+                    <label2><![CDATA[Subscribe & Save]]></label2>
+                </subscription_label>
+            <product_subscription>
+                <maximum_quantity_subscribe>3</maximum_quantity_subscribe>
+                <enabled>0</enabled>                
+                <subscription_list_text>Subscription Product</subscription_list_text>
+                <header_summary_text>Your subscription plan information,</header_summary_text>
+                <content_summary_text>You are about to subscribe to the item listed below and your card will be saved safely for recurring orders. We do not save whole card information in our system.</content_summary_text>
+                <free_shipping_subscription>0</free_shipping_subscription>
+                <allow_skip_subscription>0</allow_skip_subscription>
+                <allow_pause_subscription>1</allow_pause_subscription>
+                <allow_cancel_subscription>1</allow_cancel_subscription>                
+            </product_subscription>
+            <email>                
+                <subscription_email_sender>general</subscription_email_sender>
+                <new_subscription_template>md_subscribenow_email_new_subscription_template</new_subscription_template>
+                <subscription_update_template>md_subscribenow_email_subscription_update_template</subscription_update_template>
+                <payment_fail_template>md_subscribenow_email_payment_fail_template</payment_fail_template>
+                <allow_new_subscription_mail>1</allow_new_subscription_mail>
+                <allow_update_subscription_mail>1</allow_update_subscription_mail>
+                <allow_payment_failed_mail>1</allow_payment_failed_mail>
+                <allow_ewallet_topup_reminder_mail>1</allow_ewallet_topup_reminder_mail>
+                <allow_subscription_renew_mail>1</allow_subscription_renew_mail>
+                <allow_subscription_order_mail>1</allow_subscription_order_mail>
+                <allow_subscription_reminder_mail>1</allow_subscription_reminder_mail>
+            </email>
+        </md_subscribenow>
+    </default>
+</config>

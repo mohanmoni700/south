@@ -1,0 +1,23 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2018 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2018 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+<?php if ($block->hasAdditionalInfo()): ?>
+<div id="plan-attribute-specs-table" class="data product-order-items recent">
+    <?php foreach ($this->getAdditionalInfo() as $label => $value):?>
+        <div class="plan-attribute">
+            <label class="cell md-label"><?php echo $label; ?> : </label>
+            <span class="cell md-value"><?php echo $value; ?></span>
+        </div>
+    <?php endforeach; ?>
+</div>
+<?php endif;
+

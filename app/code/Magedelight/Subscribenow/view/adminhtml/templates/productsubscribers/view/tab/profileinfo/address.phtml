@@ -1,0 +1,61 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+
+// @codingStandardsIgnoreFile
+/** @var \Magedelight\Subscribenow\Block\Adminhtml\ProductSubscribers\View\Tab\ProfileInfo\Address $block */
+?>
+<div class="admin__page-section-title">
+    <span class="title"><?php /* @escapeNotVerified */ echo __('Address Information') ?></span>
+</div>
+<div class="admin__page-section-content">
+    <div class="admin__page-section-item order-billing-address">
+        <?php /* Billing Address */ ?>
+        <div class="admin__page-section-item-title">
+            <span class="title"><?php /* @escapeNotVerified */ echo __('Billing Address') ?></span>                
+        </div>
+        <?php if($block->isEditMode()): ?>
+            <select id="md_billing_address" name="md_billing_address" class="validate-select required-entry" aria-required="true">
+                <?php foreach ($block->getAllAddress('billing') as $id => $address): ?>
+                    <option value="<?php echo $id?>" <?php echo ($address['is_current'])?"selected='selected'":""; ?>>
+                        <?php echo $address['data'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        <?php else: ?>
+            <address class="admin__page-section-item-content"><?php /* @escapeNotVerified */ echo $block->getAddress('billing'); ?></address>
+        <?php endif; ?>
+    </div>
+    <?php if($block->isEditMode()): ?>
+</div> <br>
+<div class="admin__page-section-content">
+    <?php endif; ?>
+    <?php if ($this->canShowShippingAddress()): ?>
+        <div class="admin__page-section-item order-billing-address">
+            <?php /* Shipping Address */ ?>
+            <div class="admin__page-section-item-title">
+                <span class="title"><?php /* @escapeNotVerified */ echo __('Shipping Address') ?></span>
+            </div>
+            
+            <?php if($block->isEditMode()): ?>
+            <select id="md_shipping_address" name="md_shipping_address"  class="validate-select required-entry" aria-required="true">
+                <?php foreach ($block->getAllAddress('shipping') as $id => $address): ?>
+                    <option value="<?php echo $id?>" <?php echo ($address['is_current'])?"selected='selected'":""; ?>>
+                        <?php echo $address['data'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        <?php else: ?>
+            <address class="admin__page-section-item-content"><?php /* @escapeNotVerified */ echo $block->getAddress('shipping'); ?></address>
+        <?php endif; ?>
+        </div>
+    <?php endif; ?>
+</div>

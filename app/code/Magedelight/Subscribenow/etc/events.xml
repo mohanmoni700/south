@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="payment_method_is_active">
+        <observer name="subscribenow_restrict_payment_method" instance="Magedelight\Subscribenow\Observer\RestrictPaymentMethods" />
+    </event>
+    <event name="sales_order_place_after">
+        <observer name="md_subscription_place_order_after" instance="Magedelight\Subscribenow\Observer\OrderPlaceAfter" />
+        <observer name="subscribenow_sales_observer_comment_order_save_after" instance="Magedelight\Subscribenow\Observer\OrderComment" />
+    </event>
+    <event name="sales_order_payment_refund">
+        <observer name="md_subscription_payment_refund" instance="Magedelight\Subscribenow\Observer\PaymentRefund" />
+    </event>
+    <event name="order_cancel_after">
+        <observer name="md_subscription_order_cancel_after" instance="Magedelight\Subscribenow\Observer\OrderCancelAfter" />
+    </event>
+    <event name="sales_model_service_quote_submit_before">
+        <observer name="md_subscription_quote_submit_before" instance="Magedelight\Subscribenow\Observer\QuoteSubmitBefore" />
+    </event>
+    <event name="md_subscribenow_subscription_failed">
+        <observer name="md_subscribenow_subscription_failed_after" instance="Magedelight\Subscribenow\Observer\SubscriptionFailedObserver" />
+    </event>
+    <event name="subscribenow_grouped_product_option_prepare">
+        <observer name="subscribenow_subscription_group_product_option"
+                  instance="Magedelight\Subscribenow\Observer\CartProductOption" disabled="false"/>
+    </event>
+    <event name="sales_quote_item_set_product">
+        <observer name="subscribenow_sales_quote_item_set_is_subscription" instance="Magedelight\Subscribenow\Observer\SetQuoteItemIsSubscription" />
+    </event>
+    <!-- <event name="sales_order_save_after">
+        <observer name="subscribenow_sales_observer_comment_order_save_after" instance="Magedelight\Subscribenow\Observer\OrderComment" />
+    </event> -->
+</config>

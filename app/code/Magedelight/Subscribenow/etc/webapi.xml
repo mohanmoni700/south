@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * Category Magedelight
+ * Package Magedelight_Subscribenow
+ * Copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * License http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * Author Magedelight <info@magedelight.com>
+ */
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+
+    <!-- Get Subscriptions By Customer -->
+    <route url="/V1/subscriptions" method="POST">
+        <service class="Magedelight\Subscribenow\Api\SubscribeNowRepositoryInterface" method="getSubscriptionsByCustomer"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <!-- View Subscriptions -->
+    <route url="/V1/subscription/:subscriptionId" method="GET">
+        <service class="Magedelight\Subscribenow\Api\SubscribeNowRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <!-- Create subscription -->
+    <route url="/V1/subscription/create" method="POST">
+        <service class="Magedelight\Subscribenow\Api\ProductSubscribersRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="Magedelight_Subscribenow::subscribenow_productsubscription" />
+        </resources>
+    </route>
+    <!-- Create subscription By Order Id -->
+    <route url="/V1/subscription/create-by-order/:orderId" method="POST">
+        <service class="Magedelight\Subscribenow\Api\ProductSubscribersRepositoryInterface" method="createByOrderId"/>
+        <resources>
+            <resource ref="Magedelight_Subscribenow::subscribenow_productsubscription" />
+        </resources>
+    </route>
+    
+    <!-- Subscription Operations -->
+    <route url="/V1/subscription/skip/:subscriptionId" method="PUT">
+        <service class="Magedelight\Subscribenow\Api\SubscriptionManagementInterface" method="skip"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <route url="/V1/subscription/pause/:subscriptionId" method="PUT">
+        <service class="Magedelight\Subscribenow\Api\SubscriptionManagementInterface" method="pause"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <route url="/V1/subscription/resume/:subscriptionId" method="PUT">
+        <service class="Magedelight\Subscribenow\Api\SubscriptionManagementInterface" method="resume"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <route url="/V1/subscription/cancel/:subscriptionId" method="PUT">
+        <service class="Magedelight\Subscribenow\Api\SubscriptionManagementInterface" method="cancel"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <route url="/V1/subscription/update/:subscriptionId" method="PUT">
+        <service class="Magedelight\Subscribenow\Api\SubscriptionManagementInterface" method="update"/>
+        <resources>
+            <resource ref="self"/>
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+</routes>
