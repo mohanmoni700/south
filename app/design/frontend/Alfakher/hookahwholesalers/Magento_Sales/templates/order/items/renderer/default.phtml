@@ -2,7 +2,14 @@
 // phpcs:disable Magento2.Templates.ThisInTemplate
 
 /** @var  $block \Magento\Sales\Block\Order\Item\Renderer\DefaultRenderer */
+use HookahShisha\Customization\Plugin\Magetrend\Order\Pdf\MagetrendInvoice;
+
 $_item = $block->getItem();
+$order = $block->getOrder();
+$address = $order->getShippingAddress();
+$helper =  $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
+$kentuckyStateId = $helper->getConfigValue(MagetrendInvoice::KN_REGION_ID_CONFIG_PATH);
+$canShowTaxColumn = $address->getRegionId() == $kentuckyStateId;
 ?>
 <tr id="order-item-row-<?= (int) $_item->getId() ?>">
     <td class="col name" data-th="<?= $block->escapeHtml(__('Product Name')) ?>">
@@ -43,6 +50,15 @@ $_item = $block->getItem();
     <td class="col price" data-th="<?= $block->escapeHtml(__('Price')) ?>">
         <?= $block->getItemPriceHtml() ?>
     </td>
+    <?php if ($canShowTaxColumn): ?>
+        <td class="col tax" data-th="<?= $block->escapeHtml(__('Tax')) ?>">
+            <?php
+            /** @var \Magento\Framework\Pricing\Helper\Data $priceHelper */
+            $priceHelper = $this->helper(Magento\Framework\Pricing\Helper\Data::class);
+            ?>
+            <?= $block->escapeHtml($priceHelper->currency($_item->getTaxAmount(), true, false)) ?>
+        </td>
+    <?php endif; ?>
     <td class="col qty" data-th="<?= $block->escapeHtml(__('Qty')) ?>">
         <ul class="items-qty">
         <?php if ($block->getItem()->getQtyOrdered() > 0): ?>

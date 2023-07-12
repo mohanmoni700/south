@@ -1,0 +1,27 @@
+type Query {
+    getRecords(
+     pageSize: Int = 5 @doc(description: "Specifies the maximum number of results to return at once. This attribute is optional."),
+     currentPage: Int = 1 @doc(description: "Specifies which page of results to return. The default value is 1.")
+    ) : SerialData @resolver( class: "Ooka\\OokaSerialNumber\\Model\\Resolver\\SerialCodeData") @doc(description: "Get All  Records")
+}
+type SerialData @doc(description: "Serial number record for current customer") {
+    total_count: Int @doc(description: "Total count")
+    total_pages: Int @doc(description: "Total count")
+    record: [GetAllRecords]
+}
+
+type GetAllRecords {
+    id : Int  @doc(description: "Primary Id"),
+    order_id : String  @doc(description: "Order Id"),
+    sku : String  @doc(description: "SKU"),
+    serial_code : String  @doc(description: "Serial Code"),
+    customer_email : String @doc(description: "Customer Email"),
+    item_id : Int @doc(description: "Item ID"),
+    shipment_number : String @doc(description: "Shipment Number"),
+    shipping_address : String @doc(description: "Shipping Address"),
+    website : String @doc(description: "Website Name"),
+    created_at : String @doc(description: "Creation date"),
+    updated_at : String @doc(description: "Updation date"),
+    total_count: Int @doc(description: "Total count")
+    total_pages: Int @doc(description: "Total count")
+}

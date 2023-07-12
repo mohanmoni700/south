@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">serialnumber_form.serialnumber_form</item>
+            <item name="deps" xsi:type="string">serialnumber_form.serialnumber_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">SerialNumber Management Details</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">serialnumber_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="save" class="Ooka\OokaSerialNumber\Block\Adminhtml\Block\Edit\SaveButton"/>
+            <button name="back" class="Ooka\OokaSerialNumber\Block\Adminhtml\Block\Edit\BackButton"/>
+        </buttons>
+        <namespace>serialnumber_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>serialnumber_form.serialnumber_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="serialnumber_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Ooka\OokaSerialNumber\Model\SerialNumber\DataProvider</argument>
+            <argument name="name" xsi:type="string">serialnumber_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+        <settings>
+            <submitUrl path="serialnumber/serialnumber/save"/>
+        </settings>
+    </dataSource>
+    <fieldset name="serialnumber_details">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">false</item>
+                <item name="label" xsi:type="string" translate="true">SerialNumber Management Details</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+            </item>
+        </argument>
+        <field name="order_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Order Id</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">serialnumber</item>
+                    <item name="dataScope" xsi:type="string">order_id</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <disabled>1</disabled>
+            </settings>
+        </field>
+        <field name="sku">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Sku</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">serialnumber</item>
+                    <item name="dataScope" xsi:type="string">sku</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <disabled>1</disabled>
+            </settings>
+        </field>
+        <field name="serial_code">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Serial Code</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">serialnumber</item>
+                    <item name="dataScope" xsi:type="string">serial_code</item>
+                </item>
+            </argument>
+        </field>
+        <field name="customer_email">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Customer Email</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="source" xsi:type="string">serialnumber</item>
+                    <item name="dataScope" xsi:type="string">customer_email</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <disabled>1</disabled>
+            </settings>
+        </field>
+    </fieldset>
+</form>

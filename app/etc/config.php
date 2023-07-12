@@ -339,6 +339,11 @@ return [
     ],
     'system' => [
         'default' => [
+            'advanced' => [
+                'modules_disable_output' => [
+                    'Magento_Banner' => '1'
+                ]
+            ],
             'general' => [
                 'locale' => [
                     'code' => 'en_US'
@@ -1009,7 +1014,9 @@ return [
         'Alfakher_FinanceVerified' => 1,
         'MageWorx_OrdersBase' => 1,
         'MageWorx_OrderEditor' => 1,
+        'Alfakher_HwCustomerTelephoneUpdate' => 1,
         'Alfakher_KlaviyoCustomCatalog' => 1,
+        'Mageplaza_Core' => 1,
         'Alfakher_MyDocument' => 1,
         'Alfakher_NotPaidInvoice' => 1,
         'Alfakher_OfflinePaymentRecords' => 1,
@@ -1019,9 +1026,11 @@ return [
         'Alfakher_PaymentEdit' => 1,
         'Klarna_Core' => 1,
         'Alfakher_Productpageb2b' => 1,
+        'Alfakher_QuoteExtended' => 1,
+        'Amasty_RequestQuote' => 1,
         'Alfakher_RmaCustomization' => 1,
         'Alfakher_SalesApprove' => 1,
-        'Mageplaza_Core' => 1,
+        'Mageplaza_Webhook' => 1,
         'Alfakher_SeoUrlPrefix' => 1,
         'Alfakher_ShippingEdit' => 1,
         'Signifyd_Connect' => 1,
@@ -1029,12 +1038,13 @@ return [
         'Alfakher_StoreCredit' => 1,
         'Alfakher_WarehouseShipping' => 1,
         'Alfakher_GrossMargin' => 1,
+        'Alfakher_AmastyExtended' => 1,
         'Amasty_BannersLite' => 1,
         'Amasty_Base' => 1,
         'Amasty_Conditions' => 1,
         'Amasty_Mage24Fix' => 1,
         'Amasty_Promo' => 1,
-        'Amasty_RequestQuote' => 1,
+        'Alfakher_RequestQuote' => 1,
         'Amasty_Rgrid' => 1,
         'Amasty_SalesRuleWizard' => 1,
         'Amasty_Scroll' => 1,
@@ -1110,7 +1120,7 @@ return [
         'MageModule_Core' => 1,
         'MageModule_OrderImportExport' => 1,
         'MageWorx_Info' => 1,
-        'Mageplaza_Webhook' => 1,
+        'Alfakher_Webhook' => 1,
         'MageWorx_OrderEditorCustom' => 1,
         'Alfakher_HandlingFee' => 1,
         'Magefan_AdminUserGuide' => 1,
@@ -1124,7 +1134,8 @@ return [
         'Magefan_ProductWidget' => 1,
         'Magefan_WysiwygAdvanced' => 1,
         'Magefan_YouTubeWidget' => 1,
-        'Alfakher_Webhook' => 1,
+        'Mageplaza_MultipleCoupons' => 1,
+        'Alfakher_MultipleCoupons' => 1,
         'Mageplaza_ProductLabels' => 1,
         'Mageplaza_ProductLabelsGraphQl' => 1,
         'Mageplaza_Seo' => 1,
