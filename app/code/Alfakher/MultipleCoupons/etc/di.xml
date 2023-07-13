@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <!-- Apply multiple coupon before validation for GraphQl -->
-    <type name="Magento\QuoteGraphQl\Model\Resolver\ApplyCouponToCart">
-        <plugin name="alfakher_multiplecoupons_apply_coupons_graphql" type="Alfakher\MultipleCoupons\Plugin\Model\Resolver\ApplyCouponToCart"/>
-    </type>
-</config>
