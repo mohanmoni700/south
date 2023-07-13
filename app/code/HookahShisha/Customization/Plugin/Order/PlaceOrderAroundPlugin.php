@@ -32,9 +32,13 @@ class PlaceOrderAroundPlugin
         $comment,
         $status = false
     ) {
-        $adminUser = $this->authSession->getUser()->getUsername();
+        if ($this->authSession->getUser()) {
+            $adminUser = $this->authSession->getUser()->getUsername();
+        } else {
+            $adminUser = null;
+        }
         $result = $proceed($comment, $status);
-        if ($comment) {
+        if ($comment && $adminUser) {
             $result->setAdminName($adminUser);
         }
         return $result;

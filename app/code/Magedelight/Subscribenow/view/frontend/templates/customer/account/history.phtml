@@ -1,0 +1,43 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+<div class="info-table">
+    <?php $history = $block->getSubscriptionHistory(); ?>
+    <h2><?php echo __('Profile history based on this profile') ?></h2>
+    <?php if ($history->getSize()): ?>
+        <div class="table-wrapper orders-history">
+            <table class="data table table-order-items history" id="my-orders-table">
+                <caption class="table-caption"><?php echo __('Profile History') ?></caption>
+                <thead>
+                    <tr>
+                        <th scope="col" class="col shipping"><?php echo __('Change log') ?></th>
+                        <th scope="col" class="col date"><?php echo __('Modified on') ?></th>
+                        <th scope="col" class="col id"><?php echo __('Modified By') ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($history as $item): ?>
+                    <tr>
+                        <td data-th="<?php echo $block->escapeHtml(__('Change log')) ?>" class="col status"><?php echo $item->getComment(); ?></td>
+                        <td data-th="<?php echo $block->escapeHtml(__('Modified on')) ?>" class="col created"><?php echo $block->getFormattedDate($item->getCreatedAt()); ?></td>
+                        <td data-th="<?php echo $block->escapeHtml(__('Modified by')) ?>" class="col id"><?php echo $block->getModifiedLabel($item->getModifyBy()) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="order-products-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+    <?php else: ?>
+        <div class="message info empty"><span><?php echo __('You don’t currently have any subscriptions.'); ?></span></div>
+    <?php endif ?>
+</div>

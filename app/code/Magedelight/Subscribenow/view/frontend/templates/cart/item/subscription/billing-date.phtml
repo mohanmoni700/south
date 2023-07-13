@@ -1,0 +1,117 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+
+// @codingStandardsIgnoreFile
+/* @var $block \Magedelight\Subscribenow\Block\Cart\Item\Subscription\BillingDate */
+?>
+
+<div class="md_subscription_content_start">
+    <div class="date-picker">
+        <?php if ($block->isCustomerDefined()) : ?>
+            <label class="label">
+                <?= /* @escapeNotVerified */ __('Subscription Start Date :') ?>
+            </label>
+            <div class="control date-picker">
+                <input type="text" readonly="readonly"
+                       name="cart[<?= /* @escapeNotVerified */ $block->getItemId() ?>][subscription][subscription_start_date]"
+                       class="input-text input-date-picker" data-date="<?=$block->getSubscriptionSelectedDate(); ?>"
+                       data-min-date="<?= /* @escapeNotVerified */ $block->getCurrentDate() ?>" />
+                <button type="button" class="ui-datepicker-trigger v-middle"><span>&nbsp;</span></button>
+            </div>
+        <?php else : ?>
+            <input type="hidden" name="cart[<?=$block->getItemId()?>][subscription][subscription_start_date]"
+                   value="<?= /* @escapeNotVerified */ $block->getSubscriptionDate() ?>" />
+        <?php endif; ?>
+    </div>
+</div>
+
+<div class="control date-picker end-date">
+    <div class="field">
+        <label for="md_subscription_end" class="label">
+            <?= __('Subscription End By:'); ?>
+        </label>
+        <div class="md_end_type last">
+            <input type="radio" id="cart[<?= $block->getItemId() ?>][end_by_cycle]"
+                   name="cart[<?= $block->getItemId() ?>][subscription][end_type]" value="md_end_cycle"
+                   class="radio required-entry"
+                   data-validate="{'validate-one-required-by-name':true}"
+                   <?= $block->isCheckedType("md_end_cycle"); ?>>
+            <label for="cart[<?= $block->getItemId() ?>][end_by_cycle]" class="label">
+                <div class="dot"></div>
+                <?= __('End By Cycle'); ?>
+                <span class="field-tooltip-action">
+                    <a href="#" class="tooltip-toggle">hover me</a>
+                    <span class="tooltip-content">
+                        <?= __('This will create a subscription order until mentioned delivery cycle completed. 
+                        I.e. 3 Cycle means 3 orders to be delivered.'); ?></span>
+                </span>
+            </label>
+            <div class="end_type_content" style="display:none;">
+                <input type="text" id="md_subscription_cycle"
+                       name="cart[<?= $block->getItemId() ?>][subscription][subscription_end_cycle]"
+                       value="<?= $block->getSubscriptionEndCycle(); ?>"
+                       class="input-text required-entry validate-greater-than-zero validate-digits"/>
+		        <span>orders</span>
+            </div>
+        </div>
+        <?php if($block->isEndDateAllowed()): ?>
+        <div class="md_end_type">
+            <input type="radio" id="cart[<?= $block->getItemId() ?>][end_by_date]"
+                   name="cart[<?= $block->getItemId() ?>][subscription][end_type]"
+                   value="md_end_date" class="radio required-entry"
+                   data-validate="{'validate-one-required-by-name':true}"
+                   <?= $block->isCheckedType("md_end_date"); ?>>
+            <label for="cart[<?= $block->getItemId() ?>][end_by_date]" class="label">
+                <div class="dot"></div>
+                <?= __('End By Date'); ?>
+                <span class="field-tooltip-action">
+                    <a href="#" class="tooltip-toggle">hover me</a>
+                    <span class="tooltip-content">
+                        <?= __('This will create a subscription order until mentioned end date completed. 
+                        I.e. If your start date is 1st Jan end date is 30th Jan and frequency is daily 
+                        that means 30 orders to be delivered.'); ?></span>
+                </span>
+            </label>
+            <div class="end_type_content" style="display:none;">
+                <input type="text"
+                       readonly="readonly"
+                       name="cart[<?= $block->getItemId() ?>][subscription][subscription_end_date]"
+                       class="input-text input-date-picker"
+                       value="<?= $block->getSubscriptionEndDateSelected(); ?>"
+                       data-date="<?= $block->getSubscriptionEndDateSelected(); ?>"
+                       data-min-date="<?= /* @escapeNotVerified */ $block->getCurrentDate() ?>" />
+                       <button type="button" class="ui-datepicker-trigger v-middle"><span>undefined</span></button>
+            </div>
+        </div>
+        <?php endif; ?>
+        <div class="md_end_type">
+            <input type="radio" id="cart[<?= $block->getItemId() ?>][infinite]"
+                   name="cart[<?= $block->getItemId() ?>][subscription][end_type]"
+                   value="md_end_infinite" class="radio required-entry"
+                   data-validate="{'validate-one-required-by-name':true}"
+                   <?= $block->isCheckedType("md_end_infinite"); ?>>
+            <label for="cart[<?= $block->getItemId() ?>][infinite]" class="label">
+                <div class="dot"></div>
+                <?= __('Until you cancel'); ?>
+                <span class="field-tooltip-action">
+                    <a href="#" class="tooltip-toggle">hover me</a>
+                    <span class="tooltip-content">
+                        <?= __('This will create subscription order until you cancel it from your My Account 
+                        or your payment get failed multiple times.'); ?></span>
+                </span>
+            </label>
+            <div class="end_type_content" style="display:none;">
+                &nbsp;
+            </div>
+        </div>    
+    </div>
+</div>

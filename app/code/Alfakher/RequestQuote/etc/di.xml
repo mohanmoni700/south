@@ -4,4 +4,9 @@
     <type name="Magento\Quote\Api\CartManagementInterface">
         <plugin name="disable_coupon" type="Alfakher\RequestQuote\Plugin\DisableCoupon" sortOrder="1" />
     </type>
+    <type name="Amasty\RequestQuote\Controller\Move\InCart">
+        <plugin name="Alfakher_Request::AmastyRequestQuoteAdminQuoteMovetoCart"
+                type="Alfakher\RequestQuote\Plugin\RequestQuote\Controller\Move\InCart" />
+    </type>
+    <preference for="Amasty\RequestQuote\Controller\Cart\UpdatePost" type="Alfakher\RequestQuote\Controller\Cart\UpdatePost" />
 </config>

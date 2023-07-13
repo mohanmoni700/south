@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magedelight
+ * Copyright (C) 2017 Magedelight <info@magedelight.com>
+ *
+ * Category Magedelight
+ * Package Magedelight_Subscribenow
+ * Copyright Copyright (c) 2017 Mage Delight (http://www.magedelight.com/)
+ * License http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * Author Magedelight <info@magedelight.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:DataObject/etc/fieldset.xsd">
+    <scope id="global">
+        <fieldset id="sales_convert_quote">
+            <field name="subscribenow_init_amount">
+                <aspect name="to_order" />
+            </field>
+            <field name="base_subscribenow_init_amount">
+                <aspect name="to_order" />
+            </field>
+            <field name="subscribenow_trial_amount">
+                <aspect name="to_order" />
+            </field>
+            <field name="base_subscribenow_trial_amount">
+                <aspect name="to_order" />
+            </field>
+        </fieldset>
+        <fieldset id="sales_convert_order">
+            <field name="subscribenow_init_amount">
+                <aspect name="to_order" />
+            </field>
+            <field name="base_subscribenow_init_amount">
+                <aspect name="to_order" />
+            </field>
+            <field name="subscribenow_trial_amount">
+                <aspect name="to_order" />
+            </field>
+            <field name="base_subscribenow_trial_amount">
+                <aspect name="to_order" />
+            </field>
+        </fieldset>
+        <fieldset id="quote_convert_item">
+            <field name="is_subscription">
+                <aspect name="to_order_item" />
+            </field>
+        </fieldset>
+    </scope>
+</config>

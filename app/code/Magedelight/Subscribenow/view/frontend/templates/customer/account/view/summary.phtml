@@ -1,0 +1,154 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+<?php if ($block->isEditMode()): ?>
+<form action="<?php echo $block->getProfileEditUrl(); ?>" name="subscription_profile_update" id="subscription_profile_update" method="post" data-mage-init='{"validation":{}}'>
+    <?php echo $block->getBlockHtml('formkey'); ?>
+<?php endif; ?>
+<div class="info-table">
+    <div class="subscription-status <?php echo $block->getSubscriptionStatus(); ?>">
+        <span class="label"><?php echo __('Status'); ?></span>
+        <span class="value"><?php echo $block->getSubscriptionStatus(); ?></span>
+    </div>
+    <ul class="content-left <?php if($block->getSubscriptionStatus() != "Active"): ?> nt-act-profile<?php endif; ?>">
+        <li class="subscription-idstatus">
+            <div class="subscription-id">
+                <span class="label"><?php echo __('Profile'); ?></span>
+                <span class="value"><?php echo $block->getSubscription()->getProfileId(); ?></span>
+            </div>
+            <div class="create-date">
+                <span class="label"><?php echo __('Created On:'); ?></span>
+                <span class="value"><?php echo $block->formatDate($block->getSubscription()->getCreatedAt(), 1); ?></span>
+            </div>
+        </li>
+        <?php if($block->getSubscriptionStatus() == "Active"): ?>
+        <li class="subscription-date">
+            <div class="next-order-date">
+                <span class="value"> <?php if ($block->canUpdateNextOccurrenceDate()): ?>
+                    <span class="date-picker">
+                        <span class="label">Next Order On: </span>
+                        <input type="text" id="md_subscription_start" name="subscription_start_date" class="input-text"  readonly="readonly" value="" />
+                        <button type="button" class="ui-datepicker-trigger v-middle"></button>
+                    </span>
+                    <?php else: ?>
+                        <div class="orderdate">
+                            <span class="label">Next Order On </span>
+                            <span class="value"><?php /* @escapeNotVerified */ echo $block->getNextOccurrenceDate() ?></span>
+                        </div>
+                    <?php endif; ?>
+                </span>
+            </div>
+        </li>
+        <?php endif; ?>
+        <li class="subscription-info <?php if($block->getSubscriptionStatus() != "Active"): ?> nt-act<?php endif; ?>">
+            <div class="frequency">
+                <span class="label"><?php echo __('Frequency:'); ?></span>
+                <span class="value">
+                    <?php if ($block->canUpdateBillingFrequency() && $billing = $block->getBillingInterval()): ?>
+                        <select id="md_billing_frequency" name="md_billing_frequency">
+                            <?php foreach ($billing as $key => $interval): ?>
+                                <option value="<?php echo $key ?>" <?php echo ($interval['is_selected'] == true) ? 'selected="selected"' : ''; ?>>
+                                <?php echo str_replace(array('\'', '"'), '', $interval['interval_label']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    <?php else: ?>
+                        <?php echo $block->getSubscription()->getBillingPeriodLabel(); ?>
+                    <?php endif; ?>
+                </span>
+            </div> 
+            <div class="number-of-order">
+                <span class="label"><?php echo __('Number of Orders:'); ?></span>
+                <span class="value<?php if(is_numeric($block->getBillingMaxCycle())) { echo ' val-num'; } ?>"><?php echo $block->getBillingMaxCycle(); ?></span>
+            </div>
+            <div class="passed-order">
+                <?php $passed_orders = $block->getSubscription()->getTotalBillCount(); ?>
+                <span class="label"><?php echo __('Passed Orders:'); ?></span>
+                <span class="value"><?php echo (is_null($passed_orders)) ? ('Yet to start subscription') : ($passed_orders); ?></span>
+            </div>           
+        </li>
+    </ul>
+    <ul class="subscription-period">
+        <li class="trial-subscription">
+            <?php if ($block->hasTrialSubscription()): ?>
+                <div class="message">
+                    <span class="iconWrapper">
+                        <svg id="info" xmlns="http://www.w3.org/2000/svg" width="18.092" height="18.092" viewBox="0 0 18.092 18.092">
+                            <g id="Group_4" data-name="Group 4">
+                            <g id="Group_3" data-name="Group 3">
+                                <path id="Path_1" data-name="Path 1" d="M201.083,218.856a.88.88,0,0,1-.53-.119.551.551,0,0,1-.152-.452,2.35,2.35,0,0,1,.049-.411,4.529,4.529,0,0,1,.107-.461l.485-1.669a2.53,2.53,0,0,0,.1-.506c0-.185.025-.312.025-.387a1.081,1.081,0,0,0-.382-.859,1.608,1.608,0,0,0-1.085-.329,2.817,2.817,0,0,0-.822.136q-.436.136-.917.325l-.14.543c.095-.033.21-.07.341-.111a1.4,1.4,0,0,1,.387-.058.789.789,0,0,1,.522.127.6.6,0,0,1,.136.448,1.949,1.949,0,0,1-.045.411q-.043.216-.111.456l-.489,1.678a4.8,4.8,0,0,0-.095.473,2.939,2.939,0,0,0-.029.411,1.073,1.073,0,0,0,.411.851,1.645,1.645,0,0,0,1.1.337,2.536,2.536,0,0,0,.822-.119q.35-.119.933-.341l.132-.518a2.272,2.272,0,0,1-.325.107A1.561,1.561,0,0,1,201.083,218.856Z" transform="translate(-190.828 -206.109)"/>
+                                <path id="Path_2" data-name="Path 2" d="M250.546,128.3a1.251,1.251,0,0,0-1.645,0,.983.983,0,0,0,0,1.488,1.233,1.233,0,0,0,1.645,0,.987.987,0,0,0,0-1.488Z" transform="translate(-239.777 -123.467)"/>
+                                <path id="Path_3" data-name="Path 3" d="M9.046,0a9.046,9.046,0,1,0,9.046,9.046A9.046,9.046,0,0,0,9.046,0Zm0,17.269a8.224,8.224,0,1,1,8.224-8.224A8.223,8.223,0,0,1,9.046,17.269Z"/>
+                            </g>
+                            </g>
+                        </svg>
+                    </span>
+                    <span class="msg"><?php echo __('You had a trial period for this subscription.'); ?></span>
+                </div>
+                <div class="billing">
+                    <span class="label"><?php echo __('Trial Billing Period:'); ?></span>
+                    <span class="value"><?php echo $block->getSubscription()->getTrialPeriodLabel(); ?></span>
+                </div>
+                <div class="number-of-trial">
+                    <span class="label"><?php echo __('Number of Trial Orders:'); ?></span>
+                    <span class="value"><?php echo $block->getTrialMaxCycle(); ?></span>
+                </div>
+                <div class="passed-trial">
+                    <span class="label"><?php echo __('Passed Trial Orders:'); ?></span>
+                    <span class="value"><?php echo $block->getSubscription()->getTrialCount() ?></span>
+                </div>
+            <?php endif; ?>    
+        </li>
+    </ul>
+</div>
+<?php if ($block->canUpdateNextOccurrenceDate()): ?>
+<script type="text/javascript">
+    require(
+        ["jquery", "mage/calendar"], function ($) {
+            $("#md_subscription_start").calendar({
+                showsTime: false,
+                hideIfNoPrevNext: true,
+                buttonText: "<?php echo __('Select Date') ?>",
+                dateFormat: "yy-mm-dd",
+                minDate: new Date('<?php echo $block->getJsCurrentDate() ?>')
+            });
+            $("#md_subscription_start").calendar().datepicker("setDate", new Date('<?php echo $block->getNextOccurrenceDate('Y/m/d'); ?>'));
+        }
+    );
+</script>
+<?php endif; ?>
+<?php if ($block->isEditMode()): ?>
+<div class="back-subscription">
+    <button type="button"  onclick="updatSubscriptionForm()" title="<?php echo __('Apply Changes') ?>" class="button button action tocart primary" id="subscription_update">
+        <span><span><?php echo __('Apply Changes') ?></span></span>
+    </button>
+    <button type="button" onclick="location.href=removeEditForm();" title="<?php echo __('Cancel') ?>" class="button button action tocart primary" id="subscription_cancel">
+        <span><span><?php echo __('Cancel') ?></span></span>
+    </button>
+</div>
+</form>
+<script type="text/javascript">
+    function updatSubscriptionForm()
+    {
+        var dataForm = jQuery('#subscription_profile_update');
+        dataForm.mage('validation');
+        if (jQuery('#subscription_profile_update').valid()) {
+            jQuery('#subscription_update').attr('disabled', true);
+            jQuery('#subscription_profile_update').submit();
+        }
+    }
+    function removeEditForm() {
+        var url = window.location.href.replace('/edit/1/', '/');
+        return url;
+    }
+</script>
+<?php endif; ?>

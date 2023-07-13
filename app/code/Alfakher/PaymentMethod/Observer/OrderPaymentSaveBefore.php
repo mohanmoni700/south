@@ -42,7 +42,7 @@ class OrderPaymentSaveBefore implements \Magento\Framework\Event\ObserverInterfa
         $order = $observer->getOrder();
         $paymentOrder = $order->getPayment();
         $order = $paymentOrder->getOrder();
-        $quote = $this->quoteRepository->get($order->getQuoteId());
+        $quote = $observer->getQuote();
         $paymentQuote = $quote->getPayment();
         $method = $paymentQuote->getMethodInstance()->getCode();
         if ($this->_state->getAreaCode() !== \Magento\Framework\App\Area::AREA_ADMINHTML &&

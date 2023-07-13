@@ -1,0 +1,38 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2019 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+
+<?php $block->setProduct(); 
+$helper = $this->helper('Magedelight\Subscribenow\Helper\Data');
+$viewPlanForNotAllowed = true;
+$viewPlanForNotAllowed = $helper->isAllowToViewPlan();  
+?>
+<?php if ($viewPlanForNotAllowed) : ?>
+<?php if ($block->canDisplaySubscription()): ?>
+    <div class="md_subscription_form">
+       <?= /* @escapeNotVerified */ $block->getChildBlock('subscription.type')->setItem($block->getItem())->toHtml() ?>
+        <div class="md_subscription_content <?= /* @escapeNotVerified */ ($block->canDisplayContent())?'':'md_subscription_content_hidden' ?>">
+            <div class="product-options-wrapper">
+                <div class="field">
+                <?= /* @escapeNotVerified */ $block->getChildBlock('billing.period')->setItem($block->getItem())->toHtml() ?>
+                <?= /* @escapeNotVerified */ $block->getChildBlock('additional.info')->setItem($block->getItem())->toHtml() ?>
+                <?= /* @escapeNotVerified */ $block->getChildBlock('billing.date')->setItem($block->getItem())->toHtml() ?>
+                </div>
+            </div>
+            <div class="product-options-info">
+                <?= /* @escapeNotVerified */ $block->getChildBlock('trial.info')->setItem($block->getItem())->toHtml() ?>
+            </div>
+        </div>
+            
+    </div>
+<?php endif; ?>
+<?php endif; ?>
