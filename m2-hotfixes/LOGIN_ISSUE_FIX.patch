@@ -1,0 +1,70 @@
+diff --git a/vendor/magento/module-quote-graph-ql/Model/Resolver/MergeCarts.php b/vendor/magento/module-quote-graph-ql/Model/Resolver/MergeCarts.php
+index 7f7889c81..a27284040 100644
+--- a/vendor/magento/module-quote-graph-ql/Model/Resolver/MergeCarts.php
++++ b/vendor/magento/module-quote-graph-ql/Model/Resolver/MergeCarts.php
+@@ -26,6 +26,7 @@ use Magento\Quote\Model\Cart\CustomerCartResolver;
+ use Magento\Quote\Model\QuoteIdToMaskedQuoteIdInterface;
+ use Magento\QuoteGraphQl\Model\Cart\GetCartForUser;
+ use Magento\QuoteGraphQl\Model\Cart\MergeCarts\CartQuantityValidatorInterface;
++use Psr\Log\LoggerInterface;
+ 
+ /**
+  * Merge Carts Resolver
+@@ -69,6 +70,11 @@ class MergeCarts implements ResolverInterface
+      */
+     private $cartQuantityValidator;
+ 
++    /**
++     * @var LoggerInterface
++     */
++    private $logger;
++
+     /**
+      * @param GetCartForUser $getCartForUser
+      * @param CartRepositoryInterface $cartRepository
+@@ -84,7 +90,8 @@ class MergeCarts implements ResolverInterface
+         QuoteIdToMaskedQuoteIdInterface $quoteIdToMaskedQuoteId = null,
+         CartItemRepositoryInterface $cartItemRepository = null,
+         StockRegistryInterface $stockRegistry = null,
+-        CartQuantityValidatorInterface $cartQuantityValidator = null
++        CartQuantityValidatorInterface $cartQuantityValidator = null,
++        LoggerInterface $logger
+     ) {
+         $this->getCartForUser = $getCartForUser;
+         $this->cartRepository = $cartRepository;
+@@ -98,6 +105,7 @@ class MergeCarts implements ResolverInterface
+             ?: ObjectManager::getInstance()->get(StockRegistryInterface::class);
+         $this->cartQuantityValidator = $cartQuantityValidator
+             ?: ObjectManager::getInstance()->get(CartQuantityValidatorInterface::class);
++        $this->logger = $logger;
+     }
+ 
+     /**
+@@ -166,12 +174,20 @@ class MergeCarts implements ResolverInterface
+                 $storeId
+             );
+         }
+-        $customerCart->merge($guestCart);
+-        $guestCart->setIsActive(false);
+-        $this->cartRepository->save($customerCart);
+-        $this->cartRepository->save($guestCart);
+-        return [
+-            'model' => $customerCart,
+-        ];
++
++        try {
++            $customerCart->merge($guestCart);
++            $guestCart->setIsActive(false);
++            $this->cartRepository->save($customerCart);
++            $this->cartRepository->save($guestCart);
++            return [
++                'model' => $customerCart
++            ];
++        } catch (\Exception $exception) {
++            $this->logger->critical($exception->getMessage());
++            return [
++                'model' => $customerCart
++            ];
++        }
+     }
+ }
