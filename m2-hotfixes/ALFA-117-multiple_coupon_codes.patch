@@ -1,5 +1,5 @@
 diff --git a/vendor/mageplaza/module-multiple-coupons/Plugin/Model/RuleCollection.php b/vendor/mageplaza/module-multiple-coupons/Plugin/Model/RuleCollection.php
-index bf0e2061a..53b3886f0 100644
+index bf0e2061a..308f7ae1b 100644
 --- a/vendor/mageplaza/module-multiple-coupons/Plugin/Model/RuleCollection.php
 +++ b/vendor/mageplaza/module-multiple-coupons/Plugin/Model/RuleCollection.php
 @@ -27,6 +27,7 @@ use Magento\Quote\Model\Quote\Address;
@@ -72,3 +72,12 @@ index bf0e2061a..53b3886f0 100644
          if ($limit && count($coupons) > $limit) {
              return $result;
          }
+@@ -123,7 +133,7 @@ class RuleCollection
+             )->joinInner(
+                 ['customer_group_ids' => $saleRuleCustomerGroupTable],
+                 $connection->quoteInto(
+-                    'main_table.rule_id = customer_group_ids.'
++                    'main_table.row_id = customer_group_ids.'
+                     . $srcgColumnName .
+                     ' AND customer_group_ids.customer_group_id = ?',
+                     $customerGroupId
