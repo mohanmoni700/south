@@ -1,0 +1,19 @@
+type OrderTotal {
+    subtotal_incl_tax: Money! @doc(description: "Subtotal of the order, incl taxes") @resolver(class: "\\Shishaworld\\OrderItemExcludingTaxPrice\\Model\\Resolver\\OrderTotal")
+}
+
+type InvoiceTotal {
+    subtotal_incl_tax: Money! @doc(description: "Subtotal of the order, incl taxes")
+}
+
+interface OrderItemInterface {
+    product_sale_price_incl_tax: Money! @doc(description: "Get order item incl tax") @resolver(class: "\\Shishaworld\\OrderItemExcludingTaxPrice\\Model\\Resolver\\OrderItem")
+}
+
+interface InvoiceItemInterface {
+    product_sale_price_incl_tax: Money! @doc(description: "Get invoice item incl tax") @resolver(class: "\\Shishaworld\\OrderItemExcludingTaxPrice\\Model\\Resolver\\Invoice\\InvoiceItems")
+}
+
+type SelectedShippingMethod {
+  amount_incl_tax: Money! @doc(description: "Selected shipping amount incl tax.")
+}
