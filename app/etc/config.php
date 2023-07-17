@@ -434,6 +434,13 @@ return [
                         'code' => 'de_DE'
                     ]
                 ]
+            ],
+            'ooka_uae_store_ar' => [
+                'general' => [
+                    'locale' => [
+                        'code' => 'ar_SA'
+                    ]
+                ]
             ]
         ],
         'websites' => [
@@ -1037,6 +1044,7 @@ return [
         'Signifyd_Connect' => 1,
         'Alfakher_SlopePayment' => 1,
         'Alfakher_StoreCredit' => 1,
+        'Tabby_Checkout' => 1,
         'Alfakher_WarehouseShipping' => 1,
         'Alfakher_GrossMargin' => 1,
         'Amasty_BannersLite' => 1,
@@ -1168,6 +1176,7 @@ return [
         'Alfakher_SignifydHoldOrder' => 1,
         'Smartwave_Megamenu' => 1,
         'Splitit_PaymentGateway' => 1,
+        'Alfakher_Tabby' => 1,
         'Temando_ShippingRemover' => 1,
         'Vertex_Tax' => 1,
         'Vertex_AddressValidationApi' => 1,
