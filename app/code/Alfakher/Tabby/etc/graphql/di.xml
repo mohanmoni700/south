@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\QuoteGraphQl\Model\Resolver\PlaceOrder">
+        <plugin name="place-order-resolver-after-plugin-for-tabby-checkout-session"
+                type="Alfakher\Tabby\Plugin\Model\Resolver\TabbyPlaceOrder" sortOrder="10" />
+    </type>
+    <type name="Magento\SalesGraphQl\Model\Order\OrderPayments">
+        <plugin name="tabby-payment-method-title"
+                type="Alfakher\Tabby\Plugin\Model\Order\TabbyPayment"/>
+    </type>
+</config>

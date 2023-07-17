@@ -434,6 +434,13 @@ return [
                         'code' => 'de_DE'
                     ]
                 ]
+            ],
+            'ooka_uae_store_ar' => [
+                'general' => [
+                    'locale' => [
+                        'code' => 'ar_SA'
+                    ]
+                ]
             ]
         ],
         'websites' => [
@@ -1001,6 +1008,7 @@ return [
         'Magento_GiftCardRequisitionListGraphQl' => 0,
         'Alfakher_AddtocartPriceHide' => 1,
         'Alfakher_AdminReorder' => 1,
+        'Amasty_RequestQuote' => 1,
         'Magefan_Community' => 1,
         'Alfakher_Categoryb2b' => 1,
         'Alfakher_CheckoutPage' => 1,
@@ -1027,7 +1035,7 @@ return [
         'Klarna_Core' => 1,
         'Alfakher_Productpageb2b' => 1,
         'Alfakher_QuoteExtended' => 1,
-        'Amasty_RequestQuote' => 1,
+        'Alfakher_RequestQuote' => 1,
         'Alfakher_RmaCustomization' => 1,
         'Alfakher_SalesApprove' => 1,
         'Mageplaza_Webhook' => 1,
@@ -1036,15 +1044,15 @@ return [
         'Signifyd_Connect' => 1,
         'Alfakher_SlopePayment' => 1,
         'Alfakher_StoreCredit' => 1,
+        'Tabby_Checkout' => 1,
         'Alfakher_WarehouseShipping' => 1,
         'Alfakher_GrossMargin' => 1,
-        'Alfakher_AmastyExtended' => 1,
         'Amasty_BannersLite' => 1,
         'Amasty_Base' => 1,
         'Amasty_Conditions' => 1,
         'Amasty_Mage24Fix' => 1,
         'Amasty_Promo' => 1,
-        'Alfakher_RequestQuote' => 1,
+        'Alfakher_AmastyExtended' => 1,
         'Amasty_Rgrid' => 1,
         'Amasty_SalesRuleWizard' => 1,
         'Amasty_Scroll' => 1,
@@ -1149,6 +1157,7 @@ return [
         'HookahShisha_Customization' => 1,
         'Mondu_Mondu' => 1,
         'OlegKoval_RegenerateUrlRewrites' => 1,
+        'Ooka_OokaSerialNumber' => 1,
         'PCAPredict_Tag' => 1,
         'ParadoxLabs_TokenBase' => 1,
         'ParadoxLabs_FirstData' => 1,
@@ -1168,6 +1177,7 @@ return [
         'Alfakher_SignifydHoldOrder' => 1,
         'Smartwave_Megamenu' => 1,
         'Splitit_PaymentGateway' => 1,
+        'Alfakher_Tabby' => 1,
         'Temando_ShippingRemover' => 1,
         'Vertex_Tax' => 1,
         'Vertex_AddressValidationApi' => 1,
