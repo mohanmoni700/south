@@ -1187,8 +1187,6 @@ return [
         'Vertex_TaxStaging' => 1,
         'Vrpayecommerce_VrpayecommerceGraphql' => 1,
         'Alfakher_ExitB' => 1,
-        'Webkul_MultiQuickbooksConnect' => 1,
-        'Webkul_QuickbookCustomInv' => 1,
         'Wyomind_Framework' => 1,
         'Wyomind_MassStockUpdate' => 1,
         'Wyomind_MassProductImport' => 1,
