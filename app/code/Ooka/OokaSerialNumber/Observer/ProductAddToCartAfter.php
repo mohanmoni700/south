@@ -61,7 +61,6 @@ class ProductAddToCartAfter implements ObserverInterface
         $quote = $observer->getEvent()->getQuote();
         if (!empty($quote->getId()) && !empty($quote->getItemsCount())) {
             $updatedQuoteItems = [];
-            $quote = $this->cartRepository->get($quote->getId());
             $quoteItems = $quote->getAllItems();
             foreach ($quoteItems as $item) {
                 $product = $this->productRepository->get($item->getSku(), false, $quote->getStoreId());
