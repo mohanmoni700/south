@@ -37,31 +37,16 @@ class DisableLoyaltyCoupon
     {
         try {
             $quote = $this->checkoutSession->getQuote();
-            if ($quote->getId()) {
+            if ($quote->getId() && $quote->getOptionByCode('amasty_quote_price')) {
                 // Check if there are any quoted products in the cart
-                $quotedProductsExist = $this->checkQuotedProductsExist($quote);
-                if ($quotedProductsExist) {
-                    $errorMessage = 'Rewards cannot be applied to quoted products.';
-                    $this->yotpoHelper->log("[Yotpo Loyalty API - Coupon - ERROR] " . $errorMessage . "\n", "error");
-                    $result['error'] = true;
-                    $result['error_message'] = $errorMessage;
-                }
+                $this->yotpoHelper->log("[Yotpo Loyalty API - Coupon - ERROR] " . 'Rewards cannot be applied to quoted products' . "\n", "error");
+                $result['error'] = true;
+                $result['error_message'] ='Rewards cannot be applied to quoted products.';
             }
         } catch (\Exception $e) {
             $this->yotpoHelper->log("[Yotpo Loyalty API - Coupon - ERROR] " . $e->getMessage() .
                 "\n" . $e->getTraceAsString(), "error");
         }
         return $result;
-    }
-
-    /**
-     * Check if quoted product exist in cart
-     *
-     * @param object $quote
-     * @return true
-     */
-    private function checkQuotedProductsExist(object $quote): bool
-    {
-        return (bool) $quote->getOptionByCode('amasty_quote_price');
     }
 }
