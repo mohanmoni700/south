@@ -22,6 +22,24 @@
             }
             .header-links-wrapper {
                 .header-links {
+                    padding: 12px 0;
+
+                    .header-item {
+                        border-right: 1px solid #fff;
+                        padding-inline-end: 20px;
+
+                        &::before {
+                            height: 24px;
+                            top: -4px;
+                            width: 24px;
+                        }
+
+                        .header-text {
+                            font-weight: 500;
+                            font-size: 14px;
+                        }
+                    }
+
                     .tiktok {
                         &::before {
                             background-image: url('@{baseDir}images/tiktok.svg');
@@ -32,6 +50,65 @@
                         &::before {
                             background-image: url('@{baseDir}images/whatsapp.svg');
                             cursor: pointer;
+                        }
+                    }
+
+                    .header-top-right {
+                        width: 100%;
+                        justify-content: space-between;
+
+                        .one {
+                            gap: 0;
+
+                            .header-item {
+                                &.email {
+                                    &::before {
+                                        background-image: url('@{baseDir}images/email.svg');
+                                    }
+                                }
+                                &.phone {
+                                    &::before {
+                                        background-image: url('@{baseDir}images/phone.svg');
+                                    }
+                                }
+                            }
+
+                            &:last-child {
+                                border: none;
+                            }
+                        }
+
+                        .two {
+                            display: flex;
+                            
+                            .header-item {
+                                &.youtube {
+                                    &::before {
+                                        background-image: url('@{baseDir}images/youtube.svg');
+                                    }
+                                }
+                                &.facebook {
+                                    &::before {
+                                        background-image: url('@{baseDir}images/facebook.svg');
+                                    }
+                                }
+                                &.rewards {
+                                    width: auto;
+
+                                    a {
+                                        color: #fff;
+                                        margin-inline-start: 30px;
+
+                                        &:hover {
+                                            text-decoration: underline;
+                                        }
+                                    }
+
+                                    &::before {
+                                        background-image: url('@{baseDir}images/rewards.svg');
+                                    }
+                                }
+                            }
                         }
                     }
                 }
