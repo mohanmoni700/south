@@ -9,4 +9,7 @@
                 type="Alfakher\RequestQuote\Plugin\RequestQuote\Controller\Move\InCart" />
     </type>
     <preference for="Amasty\RequestQuote\Controller\Cart\UpdatePost" type="Alfakher\RequestQuote\Controller\Cart\UpdatePost" />
+    <type name="Yotpo\Loyalty\Model\Api\Swell\Session\CouponManagement">
+        <plugin name="disable_loyalty_coupon" type="Alfakher\RequestQuote\Plugin\DisableLoyaltyCoupon" sortOrder="1"/>
+    </type>
 </config>
