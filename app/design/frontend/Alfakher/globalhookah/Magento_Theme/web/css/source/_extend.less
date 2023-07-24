@@ -52,6 +52,25 @@
                     }
                 }
 
+                .minicart-wrapper {
+                    .amquote-showcart { 
+                        display: flex;
+                        gap: 8px;
+                        
+                        &::before {
+                            background-image: url('@{baseDir}images/quotes.svg');
+                        }
+                        .text {
+                            font-size: 14px;
+                        }
+                        .counter.qty {
+                            min-width: 18px;
+                            top: -10px;
+                            left: 7px;
+                        }
+                    }
+                }
+
                 .right_section {
                     .sign-in {
                         flex-direction: row;
