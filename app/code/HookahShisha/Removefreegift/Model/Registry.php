@@ -3,19 +3,20 @@ declare(strict_types=1);
 
 namespace HookahShisha\Removefreegift\Model;
 
-use Magento\Catalog\Model\Product;
+use Amasty\Promo\Model\Product;
 use Magento\Checkout\Model\Session;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
 use Magento\Catalog\Model\ProductRepository;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Session\SessionManager;
 use Magento\Store\Model\StoreManagerInterface;
 use Amasty\Promo\Helper\Item;
 use Amasty\Promo\Helper\Messages;
 use Magento\Store\Model\Store;
 use Amasty\Promo\Model\DiscountCalculator;
-use Amasty\Promo\Model\ItemRegistry\PromoItemRegistry;
 use Magento\Framework\App\Request\Http;
+use Amasty\Promo\Model\PromoItemRepository;
 
 /**
  * Promo Items Registry
@@ -28,9 +29,9 @@ class Registry extends \Amasty\Promo\Model\Registry
     public const AUTO_ADD_PRODUCT_TYPES = ['simple', 'virtual', 'downloadable', 'bundle'];
 
     /**
-     * @var Session
+     * @var SessionManager
      */
-    protected $checkoutSession;
+    private $checkoutSession;
 
     /**
      * @var ProductCollectionFactory
@@ -67,10 +68,6 @@ class Registry extends \Amasty\Promo\Model\Registry
      */
     protected $discountCalculator;
 
-    /**
-     * @var PromoItemRegistry
-     */
-    protected $promoItemRegistry;
 
     /**
      * @var ProductRepository
@@ -81,43 +78,63 @@ class Registry extends \Amasty\Promo\Model\Registry
      * @var Http
      */
     protected $httprequest;
+    /**
+     * @var Session|SessionManager
+     */
+    protected $resourceSession;
+
+    protected Product $product;
+
+    protected PromoItemRepository $promoItemRepository;
 
     /**
-     * construct method
-     *
-     * @param Session $resourceSession
-     * @param ProductCollectionFactory $productCollectionFactory
+     * @param SessionManager|Session $resourceSession
      * @param ProductRepository $productRepository
      * @param StoreManagerInterface $storeManager
      * @param Item $promoItemHelper
      * @param Messages $promoMessagesHelper
      * @param Store $store
+     * @param Product $product
      * @param DiscountCalculator $discountCalculator
-     * @param PromoItemRegistry $promoItemRegistry
+     * @param PromoItemRepository $promoItemRepository
      * @param Http $httprequest
+     * @param ProductCollectionFactory $productCollectionFactory
      */
     public function __construct(
-        Session $resourceSession,
-        ProductCollectionFactory $productCollectionFactory,
-        ProductRepository $productRepository,
-        StoreManagerInterface $storeManager,
-        Item $promoItemHelper,
-        Messages $promoMessagesHelper,
-        Store $store,
-        DiscountCalculator $discountCalculator,
-        PromoItemRegistry $promoItemRegistry,
-        Http $httprequest
+        SessionManager           $resourceSession,
+        ProductRepository        $productRepository,
+        StoreManagerInterface    $storeManager,
+        Item                     $promoItemHelper,
+        Messages                 $promoMessagesHelper,
+        Store                    $store,
+        Product                  $product,
+        DiscountCalculator       $discountCalculator,
+        PromoItemRepository      $promoItemRepository,
+        Http                     $httprequest,
+        ProductCollectionFactory $productCollectionFactory
     ) {
+        parent::__construct(
+            $resourceSession,
+            $productRepository,
+            $storeManager,
+            $promoItemHelper,
+            $promoMessagesHelper,
+            $store,
+            $product,
+            $discountCalculator,
+            $promoItemRepository
+        );
         $this->checkoutSession = $resourceSession;
-        $this->productCollectionFactory = $productCollectionFactory;
         $this->productRepository = $productRepository;
+        $this->fullDiscountItems = [];
         $this->storeManager = $storeManager;
         $this->promoItemHelper = $promoItemHelper;
         $this->promoMessagesHelper = $promoMessagesHelper;
         $this->store = $store;
-        $this->fullDiscountItems = [];
+        $this->product = $product;
         $this->discountCalculator = $discountCalculator;
-        $this->promoItemRegistry = $promoItemRegistry;
+        $this->promoItemRepository = $promoItemRepository;
+        $this->productCollectionFactory = $productCollectionFactory;
         $this->httprequest = $httprequest;
     }
 
@@ -133,7 +150,7 @@ class Registry extends \Amasty\Promo\Model\Registry
      * @return array|false
      * @throws LocalizedException
      */
-    public function addPromoItem($sku, $qty, $ruleId, $discountData, $type, $discountAmount)
+    public function addPromoItem($sku, $qty, $ruleId, $discountData, $type, $discountAmount, int $quoteId = null)
     {
         $discountData = $this->getCurrencyDiscount($discountData);
         $autoAdd = false;
@@ -144,15 +161,21 @@ class Registry extends \Amasty\Promo\Model\Registry
             // then behavior should be the same as rule 'all'
             $sku = $sku[0];
         }
+
+        if (!$quoteId) {
+            $quoteId = $this->checkoutSession->getQuote()->getId();
+        }
+        $promoItemsGroup = $this->promoItemRepository->getItemsByQuoteId((int)$quoteId);
+
         if (!is_array($sku)) {
             if (!$this->isProductValid($sku)) {
                 return false;
             }
-            $item = $this->promoItemRegistry->getItemBySkuAndRuleId($sku, $ruleId);
+            $item = $promoItemsGroup->getItemBySkuAndRuleId($sku, $ruleId);
             if ($item === null && $this->discountCalculator->isEnableAutoAdd($discountData)) {
                 $autoAdd = $this->isProductCanBeAutoAdded($sku);
             }
-            $item = $this->promoItemRegistry->registerItem(
+            $item = $promoItemsGroup->registerItem(
                 $sku,
                 $qty,
                 $ruleId,
@@ -176,7 +199,7 @@ class Registry extends \Amasty\Promo\Model\Registry
                     unset($sku[$key]);
                     continue;
                 }
-                $this->promoItemRegistry->registerItem(
+                $promoItemsGroup->registerItem(
                     $skuValue,
                     $qty,
                     $ruleId,
@@ -237,11 +260,11 @@ class Registry extends \Amasty\Promo\Model\Registry
      */
     private function isProductCanBeAutoAdded(string $sku): bool
     {
-        /** @var Product $product */
+        /** @var \Magento\Catalog\Model\Product $product */
         $product = $this->productRepository->get($sku);
 
         if ((in_array($product->getTypeId(), static::AUTO_ADD_PRODUCT_TYPES)
-            && !$product->getTypeInstance(true)->hasRequiredOptions($product))
+                && !$product->getTypeInstance(true)->hasRequiredOptions($product))
             || $product->getTypeId() == \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE
         ) {
             return true;
