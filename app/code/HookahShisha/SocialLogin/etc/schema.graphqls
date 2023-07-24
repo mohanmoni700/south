@@ -1,0 +1,17 @@
+type Mutation {
+    generateCustomerTokenBySocialLogin(
+        type: SocialLoginType! @doc(description: "The type of token")
+        token: String! @doc(description: "The social login oauth token")
+    ): CustomerToken
+    @resolver(class: "HookahShisha\\SocialLogin\\Model\\Resolver\\GetCustomerTokenBySocialLogin")
+    @doc(description: "Create a customer if not exists, and generate token, using social login")
+}
+
+enum SocialLoginType {
+    Google
+    Facebook
+}
+
+type Customer {
+    is_social_login: String @doc(description: "Value to Identify is Customer is Registered via Social Login")
+}

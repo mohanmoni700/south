@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="HookahShisha\SocialLogin\Model\Resolver\GetCustomerTokenBySocialLogin">
+        <arguments>
+            <argument name="providers" xsi:type="array">
+                <item name="Google" xsi:type="object">HookahShisha\SocialLogin\Model\Resolver\TokenResolvers\Google</item>
+                <item name="Facebook" xsi:type="object">HookahShisha\SocialLogin\Model\Resolver\TokenResolvers\Facebook</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\CustomerGraphQl\Model\Customer\CreateCustomerAccount">
+        <plugin name="isSocialLogin" type="HookahShisha\SocialLogin\Model\Customer\CreateCustomerAccount"/>
+    </type>
+    <type name="Magento\CustomerGraphQl\Model\Customer\ExtractCustomerData">
+        <plugin name="SocialLoginExtractCustomerData" type="HookahShisha\SocialLogin\Model\Customer\ExtractCustomerData"/>
+    </type>
+    <type name="Magento\Customer\Model\AccountManagement">
+        <plugin name="SocialLoginResetPassword" type="HookahShisha\SocialLogin\Model\Customer\AccountManagement"/>
+    </type>
+</config>
