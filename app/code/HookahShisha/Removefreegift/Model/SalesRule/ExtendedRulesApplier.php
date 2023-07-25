@@ -67,12 +67,7 @@ class ExtendedRulesApplier extends RulesApplier
             if (!$this->validatorUtility->canProcessRule($rule, $address)) {
                 continue;
             }
-
-            //Ignore the applied rule ids for promo product
-            if ($this->ruleHelper->validatePromoItem($rule, $item)) {
-                continue;
-            }
-
+            
             if (!$skipValidation && !$rule->getActions()->validate($item)) {
                 if (!$this->childrenValidationLocator->isChildrenValidationRequired($item)) {
                     continue;
@@ -92,6 +87,12 @@ class ExtendedRulesApplier extends RulesApplier
             }
 
             $this->applyRule($item, $rule, $address, $couponCode);
+
+            //Ignore the applied rule ids for promo product
+            if ($this->ruleHelper->validatePromoItem($rule, $item)) {
+                continue;
+            }
+
             $appliedRuleIds[$rule->getRuleId()] = $rule->getRuleId();
 
             if ($rule->getStopRulesProcessing()) {
