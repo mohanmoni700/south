@@ -55,6 +55,29 @@
         }
     }
 
+    .about-store {       
+        .pagebuilder {
+            &-column {
+                align-self: center !important;
+
+                h2 {
+                    font-size: 40px;
+                }
+
+                p {
+                    font-size: 16px;
+                }
+
+                &-group {
+                    gap: 72px;
+                    flex-wrap: nowrap;
+
+
+                }
+            }
+        }
+    }
+
     .fieldset {
        > .field.hub_mobile_number {
             margin-bottom: 30px;
@@ -84,6 +107,32 @@
 
 
 //
+//  Desktop
+//  _____________________________________________
+
+@media only screen and (min-width: 1024px) and (max-width: 1920px) { 
+    body {
+        .about-store {
+            max-width: 100%;
+            margin: 0 72px;
+        }
+    }
+}
+
+//
+//  Desktop large
+//  _____________________________________________
+
+@media only screen and (min-width: 1921px) { 
+    body {
+        .about-store {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+    }
+}
+
+//
 //  Mobile
 //  _____________________________________________
 
@@ -94,6 +143,27 @@
         }
         &:after {
             right: 0px !important;
+        }
+    }
+
+    .about-store {
+        margin: 0;
+
+        .pagebuilder {
+            &-column {
+                h2 {
+                    font-size: 24px;
+                }
+
+                p {
+                    font-size: 14px;
+                }
+
+                &-group {
+                    gap: 0;
+                    flex-wrap: wrap;
+                }
+            }
         }
     }
 
