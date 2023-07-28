@@ -51,6 +51,110 @@
                         }
                     }
                 }
+
+                .minicart-wrapper {
+                    order: 3;
+                    padding-bottom: 1px;
+
+                    .action.showcart {
+                        padding-top: 0;
+
+                        .counter.qty {
+                            height: 18px;
+                            left: 9px;
+                            min-width: 18px;
+                            top: -5px;
+                        }
+
+                        &::before {
+                            height: 24px;
+                            width: 24px;
+                            position: unset;
+                            transform: none;
+                        }
+                    }
+
+                    .block-minicart {
+                        right: -80px !important;
+
+                        &::after,
+                        &::before {
+                            right: 80px !important;
+                        }
+                    }
+
+                    &.amquote-cart-wrapper {
+                        order: 1;
+                        padding-bottom: 0;
+                    }
+
+                    .amquote-showcart { 
+                        display: flex;
+                        gap: 8px;
+                        
+                        &::before {
+                            background-image: url('@{baseDir}images/quotes.svg');
+                            height: 24px;
+                            width: 24px;
+                            margin: 0;
+                        }
+                        .text {
+                            font-size: 14px;
+                        }
+                        .counter.qty {
+                            min-width: 18px;
+                            top: -10px;
+                            left: 7px;
+                        }
+                    }
+                }
+
+                .right_section {
+                    padding-bottom: 10px;
+
+                    .sign-in {
+                        flex-direction: row;
+                        align-items: center;
+                        gap: 4px;
+                        order: 2;
+
+                        .sign-up {
+                            font-size: 14px;
+                        }
+
+                        &::before { 
+                            background-image: url('@{baseDir}images/myaccount.svg');
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            background-size: contain;
+                            content: '';
+                            height: 24px;
+                            width: 24px;
+                        }
+
+                        &::after {
+                            background-image: url('@{baseDir}images/arrow-down.svg');
+                            background-position: center;
+                            background-repeat: no-repeat;
+                            position: unset;
+                            order: unset;
+                            width: 8px;
+                            height: 20px;
+                        }
+
+                        .sign-up-ul.customer_logged_in { 
+                            li {
+                                &.my_account {
+                                    a {
+                                        &:before {
+                                            background-position: center;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -105,6 +209,26 @@
     }
 }
 
+//
+//  Desktop large
+//  _____________________________________________
+
+@media only screen and (min-width: 1440px) and (max-width: 1920px) { 
+    body {
+        .page-header {
+            .header.content {
+                max-width: 100%;
+                padding: 10px 72px;
+            }
+            .header-links-wrapper {
+                .header-links { 
+                    max-width: 100%;
+                    padding: 10px 72px;
+                } 
+            }
+        }
+    }
+}
 
 //
 //  Desktop
@@ -141,12 +265,43 @@
         display: none;
     }
     
-    body .page-wrapper .page-header .header.content .sign-in .sign-up-ul {
-        &:before {
-            right: 0px;
+    body .page-wrapper .page-header .header.content {
+        .sign-in .sign-up-ul {
+            &:before {
+                right: 0px;
+            }
+            &:after {
+                right: 0px !important;
+            }
         }
-        &:after {
-            right: 0px !important;
+
+        .minicart-wrapper { 
+            .action.showcart {
+                height: 24px;
+    
+                .counter.qty {
+                    padding: 1px 3px;
+                }
+            }
+
+            .block-minicart {
+                right: -20px !important;
+
+                &::after,
+                &::before {
+                    right: 20px !important;
+                }
+            }
+        }
+    }
+
+    .right_section {
+        padding-bottom: 0;
+
+        .sign-in {
+            &::after {
+                display: none;
+            }
         }
     }
 
