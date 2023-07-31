@@ -55,6 +55,70 @@
         }
     }
 
+    .accessories_wholesale {
+        .pagebuilder {
+            &-column {
+                .h2_heading_builder {
+                    font-size: 40px;
+                    text-align: center;
+                    margin-right: 0;
+                }
+
+                .accordion_comman {
+                    .accordion {
+                        &_title {
+                            font-size: 28px;
+                            padding: 36px 0;
+
+                            &::before {
+                                background: transparent;
+                                background-image: url('@{baseDir}images/plus.svg');
+                                background-repeat: no-repeat;
+                                border-radius: 0;
+                                left: unset;
+                                top: 42px;
+                                right: 0;
+                                width: 24px;
+                                height: 24px;
+                            }
+                        }
+
+                        &_content {
+                            font-size: 16px;
+                            padding: 0 0 35px 0;
+                        }
+                    }
+
+                    [aria-expanded='true'] {
+                        .accordion_title {
+                            &::before {
+                                background-image: url('@{baseDir}images/minus.svg');
+                                background-repeat: no-repeat;
+                            }
+                        }
+                    }
+                }
+            }
+
+            &-button-primary {
+                margin: 0;
+                margin-top: 56px;
+                border: 1px solid #000;
+                border-radius: 27px;
+                background: transparent;
+                color: #000;
+                font-size: 16px;
+                font-weight: 600;
+                padding: 17px 40px;
+
+                &:hover {
+                    background: transparent linear-gradient(180deg, #229B62 0%, #346DB0 200%) 0% 0% no-repeat padding-box;
+                    border-image-source: linear-gradient(180deg, #229B62 0%, #346DB0 200%);
+                }
+            }
+        }
+    }
+
     .fieldset {
        > .field.hub_mobile_number {
             margin-bottom: 30px;
@@ -106,6 +170,40 @@
                         background-image: url(../images/Union_quote.svg);
                     }
                 }
+            }
+        }
+    }
+
+    .accessories_wholesale {
+        .pagebuilder {
+            &-column {
+                .h2_heading_builder {
+                    font-size: 24px;
+                }
+
+                .accordion_comman {
+                    .accordion {
+                        &_title {
+                            font-size: 18px;
+                            padding: 24px 0;
+
+                            &::before {
+                                top: 22px;
+                            }
+                        }
+
+                        &_content {
+                            font-size: 14px;
+                            padding: 0 0 20px 0;
+                        }
+                    }
+                }
+            }
+
+            &-button-primary {
+                margin-top: 24px;
+                font-size: 14px;
+                padding: 12px 32px;
             }
         }
     }
