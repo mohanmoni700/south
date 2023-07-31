@@ -3,9 +3,10 @@ define(
         'uiComponent',
         'Magento_Checkout/js/model/quote',
         'Magento_Customer/js/customer-data',
-        'underscore'
+        'underscore',
+        'jquery'
     ],
-    function (Component, quote, customerData, _) {
+    function (Component, quote, customerData, _,$) {
         'use strict';
         return Component.extend({
             defaults: {
@@ -36,7 +37,7 @@ define(
                             }
                         }
                         if (isAmastyQuoteItem) {
-                            jQuery('.yotpo-checkout-widget-content').hide();
+                            jQuery('.yotpo-widget-checkout-redemptions-widget').hide();
                         }
                     }
                 }
