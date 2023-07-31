@@ -175,9 +175,11 @@
                 &-group {
                     gap: 72px;
                     flex-wrap: nowrap;
-
-
                 }
+            }
+
+            &-button-primary { 
+                display: none;
             }
         }
     }
@@ -321,6 +323,32 @@
                 &-group {
                     gap: 0;
                     flex-wrap: wrap;
+                }
+
+                div:last-of-type {
+                    display: none;
+                }
+            }
+
+            &-button-primary {
+                display: block;
+                padding: 0;
+                margin: 0 0 2rem;
+                border: none;
+                background: transparent;
+                color: #316BB2;
+                font-size: 14px;
+                font-weight: 600;
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    background-image: url(../images/arrow-color.svg);
+                    background-position: center;
+                    background-repeat: no-repeat;
+                    width: 10px;
+                    height: 22px;
+                    margin-left: 6px;
                 }
             }
         }
