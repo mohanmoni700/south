@@ -37,7 +37,8 @@ define(
                             }
                         }
                         if (isAmastyQuoteItem) {
-                            jQuery('.yotpo-widget-checkout-redemptions-widget').hide();
+                            $('.yotpo-widget-instance').hide();
+                            $('.yotpo-widget-checkout-redemptions-widget').hide();
                         }
                     }
                 }
