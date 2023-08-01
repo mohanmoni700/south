@@ -89,7 +89,7 @@
 
                 .post-title {
                     &-holder {
-                        margin: 24px 0 16px;
+                        margin: 2.4rem 0 1.6rem;
                     }
 
                     a {
@@ -101,6 +101,19 @@
             .post-list-content-wrapper {
                 max-width: 100%;
                 margin: 0 7.2rem;
+
+                .view-more a.action.primary {
+                    font-size: 1.6rem;
+                    background: transparent;
+                    color: #000;
+                    padding: 1.7rem 4rem;
+
+                    &:hover {
+                        color: #fff;
+                        background: transparent linear-gradient(180deg, #229B62 0%, #346DB0 200%) 0% 0% no-repeat padding-box;
+                        border-image-source: linear-gradient(180deg, #229B62 0%, #346DB0 200%);
+                    }
+                }
             }
 
             .post-holder {
@@ -118,7 +131,7 @@
                         position: absolute;
                         bottom: 0;
                         z-index: -1;
-                        border-radius: 10px;
+                        border-radius: 1rem;
                     }
     
                     .post-content {
@@ -171,14 +184,12 @@
 //  _____________________________________________
 
 @media only screen and (min-width: 1921px) { 
-    body {
-        .cms-home {
-            .blog-widget-recent {   
-                .post-list {    
-                    .slick-track {
-                        display: flex;
-                        max-width: 1280px !important;
-                    }
+    .cms-home {
+        .blog-widget-recent {
+            .post-list {
+                .slick-track {
+                    display: flex;
+                    max-width: 1280px !important;
                 }
             }
         }
@@ -240,6 +251,11 @@
 
             .post-list-content-wrapper {
                 margin: 0;
+
+                .view-more a.action.primary {
+                    font-size: 1.4rem;
+                    padding: 1.2rem 3.2rem;
+                }
             }
 
             .post-holder {
