@@ -53,30 +53,31 @@ script;
         'underscore'
     ], function ($, customerData, quote, _) {
         $(document).ready(function () {
-            let cartData = customerData.get('cart');
-            // Subscribe to changes on the cartData observable
-            cartData.subscribe(function (updatedCartData) {
-                // Check if the cart data is available
-                if (!$.isEmptyObject(updatedCartData)) {
-                    let cartItems = updatedCartData['items'] || [];
-
-                    // Continue with your logic here
-                    let isAmastyQuoteItem = false;
-                    if (cartItems.length > 0) {
-                        $.each(cartItems, function (index, item) {
-                            if (item['is_amasty_quote_item']) {
-                                isAmastyQuoteItem = true;
-                                return false; // exit the loop since we found the item
+            $(document).ajaxComplete(function (event, xhr, settings) {
+                alert("hi!!");
+                let cartData = customerData.get('cart');
+                // Subscribe to changes on the cartData observable
+                cartData.subscribe(function (updatedCartData) {
+                    // Check if the cart data is available
+                    if (!$.isEmptyObject(updatedCartData)) {
+                        let cartItems = updatedCartData['items'] || [];
+                        let isAmastyQuoteItem = false;
+                        if (cartItems.length > 0) {
+                            $.each(cartItems, function (index, item) {
+                                if (item['is_amasty_quote_item']) {
+                                    isAmastyQuoteItem = true;
+                                    return false; // exit the loop since we found the item
+                                }
+                            });
+                            if (isAmastyQuoteItem) {
+                                $('.yotpo-widget-checkout-redemptions-widget').hide();
+                                $('.yotpo-checkout-widget-content').hide();
                             }
-                        });
-                        if (isAmastyQuoteItem) {
-                            $('.yotpo-widget-checkout-redemptions-widget').hide();
-                            $('.yotpo-checkout-widget-content').hide();
                         }
+                    } else {
+                        console.log('Cart data not available.');
                     }
-                } else {
-                    console.log('Cart data not available.');
-                }
+                });
             });
             // Trigger the cartData observable to fetch the cart data
             cartData();
