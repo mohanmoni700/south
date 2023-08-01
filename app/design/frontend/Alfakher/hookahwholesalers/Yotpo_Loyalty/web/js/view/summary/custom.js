@@ -4,9 +4,10 @@ define(
         'Magento_Checkout/js/model/quote',
         'Magento_Customer/js/customer-data',
         'underscore',
-        'jquery'
+        'jquery',
+        'domReady'
     ],
-    function (Component, quote, customerData, _,$) {
+    function (Component, quote, customerData, _,$,domReady) {
         'use strict';
         return Component.extend({
             defaults: {
@@ -25,23 +26,25 @@ define(
                 jQuery('.yotpo-widget-instance').attr('data-yotpo-instance-id', instanceId);
 
                 // Get current cart quote
-                var quoteData = customerData.get('cart')();
-                if (!_.isUndefined(quoteData.items)) {
-                    // Find the item in the cart data that matches the given item's item_id
-                    if (quoteItemData) {
-                        for (var i = 0; i < quoteData.items.length; i++) {
-                            if (quoteData.items[i]['is_amasty_quote_item']) {
-                                // isAmastyQuoteItem = quoteDataItem[0]['is_amasty_quote_item'];
-                                isAmastyQuoteItem = true;
-                                break;
+                domReady(function () {
+                    var quoteData = customerData.get('cart')();
+                    if (!_.isUndefined(quoteData.items)) {
+                        // Find the item in the cart data that matches the given item's item_id
+                        if (quoteItemData) {
+                            for (var i = 0; i < quoteData.items.length; i++) {
+                                if (quoteData.items[i]['is_amasty_quote_item']) {
+                                    // isAmastyQuoteItem = quoteDataItem[0]['is_amasty_quote_item'];
+                                    isAmastyQuoteItem = true;
+                                    break;
+                                }
+                            }
+                            if (isAmastyQuoteItem) {
+                                $('.yotpo-widget-instance').hide();
+                                $('.yotpo-widget-checkout-redemptions-widget').hide();
                             }
                         }
-                        if (isAmastyQuoteItem) {
-                            $('.yotpo-widget-instance').hide();
-                            $('.yotpo-widget-checkout-redemptions-widget').hide();
-                        }
                     }
-                }
+                });
             }
         });
     }
