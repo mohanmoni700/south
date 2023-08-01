@@ -1,0 +1,11 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\SalesGraphQl\Model\Resolver\Invoice\InvoiceTotal">
+        <plugin name="invoice_total_plugin" type="Shishaworld\OrderItemExcludingTaxPrice\Model\Resolver\Invoice\InvoiceTotal" sortOrder="10" disabled="false" />
+    </type>
+    <type name="Magento\QuoteGraphQl\Model\Resolver\ShippingAddress\SelectedShippingMethod">
+        <plugin name="checkout_summary_plugin" type="Shishaworld\OrderItemExcludingTaxPrice\Model\Resolver\ShippingAddress\SelectedShippingMethodPlugin"
+               sortOrder="1"/>
+    </type>
+</config>
+
