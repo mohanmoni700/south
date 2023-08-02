@@ -14,8 +14,6 @@ define(
                 template: 'Yotpo_Loyalty/summary/custom'
             },
             loadJsCustomAfterKoRender: function () {
-                var quoteItemData = {};
-                var isAmastyQuoteItem = false;
                 var guidId = window.valuesConfig;
                 var instanceId = window.swellInstanceId;
                 var url = 'https://cdn-widgetsrepository.yotpo.com/v1/loader/' + guidId;
@@ -27,23 +25,18 @@ define(
 
                 // Get current cart quote
                 domReady(function () {
-                    var quoteData = customerData.get('cart')();
-                    if (!_.isUndefined(quoteData.items)) {
-                        // Find the item in the cart data that matches the given item's item_id
-                        if (quoteItemData) {
-                            for (var i = 0; i < quoteData.items.length; i++) {
-                                if (quoteData.items[i]['is_amasty_quote_item']) {
-                                    // isAmastyQuoteItem = quoteDataItem[0]['is_amasty_quote_item'];
-                                    isAmastyQuoteItem = true;
-                                    break;
-                                }
-                            }
-                            if (isAmastyQuoteItem) {
-                                $('.yotpo-widget-instance').hide();
-                                $('.yotpo-widget-checkout-redemptions-widget').hide();
-                            }
+                    let isAmastyQuoteItem = false;
+                    let quoteData = customerData.get('cart')();
+                    let cartItems = quoteData.items || [];
+                    // Find the item in the cart data that matches the given item's is_amasty_quote_item flag
+                    _.some(cartItems, function (item) {
+                        if (item.is_amasty_quote_item) {
+                            isAmastyQuoteItem = true;
+                            return true;
                         }
-                    }
+                        return false;
+                    });
+                    customerData.set('is_amasty_quote_item', isAmastyQuoteItem);
                 });
             }
         });
