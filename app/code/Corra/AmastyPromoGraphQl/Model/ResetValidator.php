@@ -102,7 +102,8 @@ class ResetValidator extends Validator
         $appliedRuleIds = $quote->getAppliedRuleIds();
         if (!empty($appliedRuleIds)) {
             //Get All Rule Ids with No Coupon
-            $noCouponsRuleIds = $this->_collectionFactory->create()->addFieldToFilter('coupon_type', ['eq' => self::NO_COUPON])
+            $noCouponsRuleIds = $this->_collectionFactory->create()
+                ->addFieldToFilter('coupon_type', ['eq' => self::NO_COUPON])
                 ->getAllIds();
             $ruleIds = explode(',', $appliedRuleIds);
             $appliedIds = [];

@@ -12,4 +12,8 @@
     <!-- To avoid removing the existing no coupon rule ids -->
     <preference for="Magento\SalesRule\Model\Validator"
                 type="Corra\AmastyPromoGraphQl\Model\ResetValidator"/>
+
+    <!-- To avoid promo products being removed-->
+    <preference for="Magento\SalesRule\Model\Validator" type="Corra\AmastyPromoGraphQl\Model\Rewrite\SalesRule\Model\Validator" />
+
 </config>

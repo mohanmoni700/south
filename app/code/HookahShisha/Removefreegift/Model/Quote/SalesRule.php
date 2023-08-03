@@ -52,16 +52,15 @@ class SalesRule
                     if (!isset($parentId)) {
                         if ($rule->getId() && $rule->getActions()->validate($quoteItem) && $this->isPromoItem($quoteItem->getSku())) {
                             return true;
-                        } else {
-                            return false;
                         }
+                        return false;
                     }
                 }
             }
-            return true;
         } catch (\Exception $exception) {
-            return true;
+            //In case of exception also it should return as true
         }
+        return true;
     }
 
     /**
