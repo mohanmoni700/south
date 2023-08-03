@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace HookahShisha\Removefreegift\Model;
 
 use Amasty\Promo\Model\Product;
+use HookahShisha\Removefreegift\Model\Quote\SalesRule;
 use Magento\Checkout\Model\Session;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
 use Magento\Catalog\Model\ProductRepository;
@@ -86,6 +87,7 @@ class Registry extends \Amasty\Promo\Model\Registry
     protected Product $product;
 
     protected PromoItemRepository $promoItemRepository;
+    private SalesRule $salesRule;
 
     /**
      * @param SessionManager|Session $resourceSession
@@ -111,8 +113,10 @@ class Registry extends \Amasty\Promo\Model\Registry
         DiscountCalculator       $discountCalculator,
         PromoItemRepository      $promoItemRepository,
         Http                     $httprequest,
-        ProductCollectionFactory $productCollectionFactory
-    ) {
+        ProductCollectionFactory $productCollectionFactory,
+        SalesRule                $salesRule
+    )
+    {
         parent::__construct(
             $resourceSession,
             $productRepository,
@@ -136,6 +140,7 @@ class Registry extends \Amasty\Promo\Model\Registry
         $this->promoItemRepository = $promoItemRepository;
         $this->productCollectionFactory = $productCollectionFactory;
         $this->httprequest = $httprequest;
+        $this->salesRule = $salesRule;
     }
 
     /**
@@ -152,55 +157,34 @@ class Registry extends \Amasty\Promo\Model\Registry
      */
     public function addPromoItem($sku, $qty, $ruleId, $discountData, $type, $discountAmount, int $quoteId = null)
     {
-        $discountData = $this->getCurrencyDiscount($discountData);
-        $autoAdd = false;
-        $request = $this->httprequest;
-        $graphrequest = $request->getContent();
-        if (is_array($sku) && count($sku) === 1) {
-            // if rule with behavior 'one of' have only single product item,
-            // then behavior should be the same as rule 'all'
-            $sku = $sku[0];
-        }
+        //Check Whether the rule id is already applied and, it is the correct rule id
+        if ($this->salesRule->getSalesRuleIdByQuote($quoteId, $ruleId)) {
+            $discountData = $this->getCurrencyDiscount($discountData);
+            $autoAdd = false;
+            $request = $this->httprequest;
+            $graphrequest = $request->getContent();
+            if (is_array($sku) && count($sku) === 1) {
+                // if rule with behavior 'one of' have only single product item,
+                // then behavior should be the same as rule 'all'
+                $sku = $sku[0];
+            }
 
-        if (!$quoteId) {
-            $quoteId = $this->checkoutSession->getQuote()->getId();
-        }
-        $promoItemsGroup = $this->promoItemRepository->getItemsByQuoteId((int)$quoteId);
+            if (!$quoteId) {
+                $quoteId = $this->checkoutSession->getQuote()->getId();
+            }
 
-        if (!is_array($sku)) {
-            if (!$this->isProductValid($sku)) {
-                return false;
-            }
-            $item = $promoItemsGroup->getItemBySkuAndRuleId($sku, $ruleId);
-            if ($item === null && $this->discountCalculator->isEnableAutoAdd($discountData)) {
-                $autoAdd = $this->isProductCanBeAutoAdded($sku);
-            }
-            $item = $promoItemsGroup->registerItem(
-                $sku,
-                $qty,
-                $ruleId,
-                $type,
-                $discountData['minimal_price'],
-                $discountData['discount_item'],
-                $discountAmount
-            );
-            if ($autoAdd) {
-                /* condition starts for restrict auto add free gift product during
-                remove free gift item updateCartItems*/
-                /** removed condition for skip adding Free product on updateCartItems action. JIRA ID: OOKA-205 */
-                if (!strpos($graphrequest, "removeItemFromCart") !== false) {
-                    $item->setAutoAdd($autoAdd);
+            $promoItemsGroup = $this->promoItemRepository->getItemsByQuoteId((int)$quoteId);
+
+            if (!is_array($sku)) {
+                if (!$this->isProductValid($sku)) {
+                    return false;
                 }
-                /* condition ends for restrict auto add free gift product during remove free gift item*/
-            }
-        } else {
-            foreach ($sku as $key => $skuValue) {
-                if (!$this->isProductValid($skuValue)) {
-                    unset($sku[$key]);
-                    continue;
+                $item = $promoItemsGroup->getItemBySkuAndRuleId($sku, $ruleId);
+                if ($item === null && $this->discountCalculator->isEnableAutoAdd($discountData)) {
+                    $autoAdd = $this->isProductCanBeAutoAdded($sku);
                 }
-                $promoItemsGroup->registerItem(
-                    $skuValue,
+                $item = $promoItemsGroup->registerItem(
+                    $sku,
                     $qty,
                     $ruleId,
                     $type,
@@ -208,19 +192,44 @@ class Registry extends \Amasty\Promo\Model\Registry
                     $discountData['discount_item'],
                     $discountAmount
                 );
+                if ($autoAdd) {
+                    /* condition starts for restrict auto add free gift product during
+                    remove free gift item updateCartItems*/
+                    /** removed condition for skip adding Free product on updateCartItems action. JIRA ID: OOKA-205 */
+                    if (!strpos($graphrequest, "removeItemFromCart") !== false) {
+                        $item->setAutoAdd($autoAdd);
+                    }
+                    /* condition ends for restrict auto add free gift product during remove free gift item*/
+                }
+            } else {
+                foreach ($sku as $key => $skuValue) {
+                    if (!$this->isProductValid($skuValue)) {
+                        unset($sku[$key]);
+                        continue;
+                    }
+                    $promoItemsGroup->registerItem(
+                        $skuValue,
+                        $qty,
+                        $ruleId,
+                        $type,
+                        $discountData['minimal_price'],
+                        $discountData['discount_item'],
+                        $discountAmount
+                    );
+                }
             }
-        }
 
-        if ($this->discountCalculator->isFullDiscount($discountData)) {
-            if (!is_array($sku)) {
-                $sku = [$sku];
-            }
+            if ($this->discountCalculator->isFullDiscount($discountData)) {
+                if (!is_array($sku)) {
+                    $sku = [$sku];
+                }
 
-            foreach ($sku as $itemSku) {
-                $this->fullDiscountItems[$itemSku]['rule_ids'][$ruleId] = $ruleId;
+                foreach ($sku as $itemSku) {
+                    $this->fullDiscountItems[$itemSku]['rule_ids'][$ruleId] = $ruleId;
+                }
             }
+            $this->checkoutSession->setAmpromoFullDiscountItems($this->fullDiscountItems);
         }
-        $this->checkoutSession->setAmpromoFullDiscountItems($this->fullDiscountItems);
     }
 
     /**

@@ -67,7 +67,7 @@ class ExtendedRulesApplier extends RulesApplier
             if (!$this->validatorUtility->canProcessRule($rule, $address)) {
                 continue;
             }
-            
+
             if (!$skipValidation && !$rule->getActions()->validate($item)) {
                 if (!$this->childrenValidationLocator->isChildrenValidationRequired($item)) {
                     continue;
