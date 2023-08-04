@@ -135,7 +135,7 @@ class StockStateProvider extends \Magento\CatalogInventory\Model\StockStateProvi
 
         if (!$this->checkQty($stockItem, $summaryQty) || !$this->checkQty($stockItem, $qty)) {
             $productname = $stockItem->getProductName();
-            $message = __('The requested qty is not available for ' . $productname);
+            $message = __('The requested qty is not available. MAX available qty is ' . $stockItem->getQty() . ' for '. $productname);
             $result->setHasError(true)
                 ->setErrorCode('qty_available')
                 ->setMessage($message)
