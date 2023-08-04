@@ -50,7 +50,9 @@ class SalesRule
                 foreach ($quote->getAllVisibleItems() as $quoteItem) {
                     $parentId = $quoteItem->getParentItemId();
                     if (!isset($parentId)) {
-                        if ($rule->getId() && $rule->getActions()->validate($quoteItem) && $this->isPromoItem($quoteItem->getSku())) {
+                        if ($rule->getId()
+                            && $rule->getActions()->validate($quoteItem)
+                            && $this->isPromoItem($quoteItem->getSku())) {
                             return true;
                         }
                         return false;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Corra\AmastyPromoGraphQl\Model;
 
 use Magento\Catalog\Helper\Data;

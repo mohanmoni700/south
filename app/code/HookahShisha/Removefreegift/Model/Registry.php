@@ -192,15 +192,14 @@ class Registry extends \Amasty\Promo\Model\Registry
                     $discountData['discount_item'],
                     $discountAmount
                 );
-                if ($autoAdd) {
-                    /* condition starts for restrict auto add free gift product during
-                    remove free gift item updateCartItems*/
-                    /** removed condition for skip adding Free product on updateCartItems action. JIRA ID: OOKA-205 */
-                    if (!strpos($graphrequest, "removeItemFromCart") !== false) {
-                        $item->setAutoAdd($autoAdd);
-                    }
-                    /* condition ends for restrict auto add free gift product during remove free gift item*/
+
+                /* condition starts for restrict auto add free gift product
+                   during remove free gift item updateCartItems*/
+                /** removed condition for skip adding Free product on updateCartItems action. JIRA ID: OOKA-205 */
+                if ($autoAdd && !strpos($graphrequest, "removeItemFromCart") !== false) {
+                    $item->setAutoAdd($autoAdd);
                 }
+                /* condition ends for restrict auto add free gift product during remove free gift item*/
             } else {
                 foreach ($sku as $key => $skuValue) {
                     if (!$this->isProductValid($skuValue)) {
