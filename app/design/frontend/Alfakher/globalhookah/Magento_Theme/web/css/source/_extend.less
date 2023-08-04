@@ -71,7 +71,7 @@
                 }
 
                 img {
-                    padding-bottom: 3rem;
+                    top: -2rem;
                 }
             }
 
@@ -82,12 +82,58 @@
 
             img {
                 width: auto !important;
+                border-right: none;
+            }
+
+            p {
                 padding-bottom: 2rem;
                 background-image: url('@{baseDir}images/category-mask.svg');
                 background-repeat: no-repeat;
                 background-position: bottom;
-                background-size: contain;
-                border-right: none;
+                background-size: 156px;
+            }
+        }
+
+        .hookahs {
+            &:hover {
+                img {
+                    content: url('@{baseDir}images/hookahs.png');
+                }
+            }
+        }
+        .hookahs-charcoal {
+            &:hover {
+                img {
+                    content: url('@{baseDir}images/charcoal.png');
+                }
+            }
+        }
+        .tobacco-free {
+            &:hover {
+                img {
+                    content: url('@{baseDir}images/tobacco-free.png');
+                }
+            }
+        }
+        .shisha {
+            &:hover {
+                img {
+                    content: url('@{baseDir}images/shisha.png');
+                }
+            }
+        }
+        .accessories {
+            &:hover {
+                img {
+                    content: url('@{baseDir}images/accessories.png');
+                }
+            }
+        }
+        .specials {
+            &:hover {
+                img {
+                    content: url('@{baseDir}images/specials.png');
+                }
             }
         }
     }
@@ -153,8 +199,7 @@
         }
 
         .slick-slide {
-            width: 11.5rem !important;
-            margin-right: 2rem;
+            margin-right: 2.4rem;
 
             &:first-of-type {
                 margin-left: 2rem;
@@ -165,14 +210,10 @@
             .pagebuilder-button-link {
                 white-space: unset;
             }
-        }
-    }
-}
 
-@media only screen and (max-width: 648px) {
-    .homepage_category_slider { 
-        .slick-slide {
-            width: 8.5rem !important;
+            p {
+                background-size: 100%;
+            }
         }
     }
 }
