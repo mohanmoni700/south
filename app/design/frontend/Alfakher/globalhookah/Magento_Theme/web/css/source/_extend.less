@@ -55,6 +55,65 @@
         }
     }
 
+    .banner-row-wrapper {
+        max-width: 100%;
+        margin: 0 7.2rem;
+        height: 42rem;
+        background: transparent linear-gradient(182deg, #C7D2EC 0%, #316BB2 100%) 0% 0% no-repeat padding-box;
+        border-radius: 4rem;
+        padding: 5rem;
+        opacity: 1;
+
+        .image-banner-logo {
+            transform: translateY(-38%);
+        }
+
+        .info-text-message {
+            color: @color-white;
+            text-transform: uppercase;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .info-account-text {
+            font-size: 4rem;
+            font-weight: 600;
+            text-align: left;
+            color: @color-white;
+            margin-bottom: 3.6rem !important;
+        }
+
+        .info-discription {
+            color: @color-white;
+            font-size: 1.5rem;
+            text-align: left;
+            margin-bottom: 5.6rem !important;
+        }
+
+        .pagebuilder-button-secondary {
+            background: transparent;
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: @color-white;
+            padding: 1.7rem 4rem;
+            cursor: pointer;
+
+            &:hover {
+                background: @color-white;
+                border: 1px solid @color-white;
+                color: @color-black;
+            }
+        }
+
+        .banner-wrapper-text-message {
+            font-size: 6rem;
+            font-weight: 600;
+            opacity: 1;
+            color: @color-white;
+            text-align: left;
+        }
+    }
+
     .fieldset {
        > .field.hub_mobile_number {
             margin-bottom: 30px;
@@ -82,6 +141,85 @@
     }
 }
 
+@media only screen and (min-width: 1921px) {
+    .banner-row-wrapper {
+        max-width: 1280px;
+        margin: 0 auto;
+
+        .image-banner-logo {
+            transform: translateY(-38%);
+        }
+
+        .info-text-message {
+            text-transform: uppercase;
+            font-size: 2rem;
+        }
+
+        .info-account-text {
+            margin-bottom: 1.6rem !important;
+        }
+
+        .info-discription {
+            margin-bottom: 3.6rem !important;
+        }
+    }
+}
+
+//
+//  Mobile (screen-xs)
+//  _____________________________________________
+
+@media only screen and (max-width: 480px) {
+    .banner-row-wrapper {
+        max-width: 100%;
+        margin: 0;
+        height: auto;
+        border-radius: 0;
+        padding: 2rem;
+
+        .image-banner-logo {
+            transform: translate(6%, -59%);
+            height: 26rem !important;
+        }
+
+        .info-text-message {
+            font-size: 1.6rem;
+        }
+
+        .info-account-text {
+            font-size: 2.4rem;
+            margin-bottom: 1.6rem !important;
+        }
+
+        .info-discription {
+            font-size: 1.4rem;
+            margin-bottom: 2rem !important;
+        }
+
+        .pagebuilder-button-secondary {
+            font-size: 1.4rem;
+            padding: 1.2rem 3.2rem;
+        }
+
+        .banner-wrapper-text-message {
+            font-size: 3.2rem;
+            width: 60% !important;
+        }
+    }
+}
+
+//
+//  Mobile (screen-xxs)
+//  _____________________________________________
+
+@media only screen and (max-width: 375px) {
+    .banner-row-wrapper {
+        .image-banner-logo {
+            transform: translate(6%, -52%);
+            height: 20rem !important;
+        }
+    }
+}
 
 //
 //  Mobile
@@ -107,6 +245,43 @@
                     }
                 }
             }
+        }
+    }
+
+    .banner-row-wrapper {
+        max-width: 100%;
+        margin: 0;
+        height: auto;
+        border-radius: 0;
+        padding: 2rem;
+
+        .image-banner-logo {
+            transform: translate(6%, -59%);
+            height: 7rem;
+        }
+
+        .info-text-message {
+            font-size: 1.6rem;
+        }
+
+        .info-account-text {
+            font-size: 2.4rem;
+            margin-bottom: 1.6rem !important;
+        }
+
+        .info-discription {
+            font-size: 1.4rem;
+            margin-bottom: 2rem !important;
+        }
+
+        .pagebuilder-button-secondary {
+            font-size: 1.4rem;
+            padding: 1.2rem 3.2rem;
+        }
+
+        .banner-wrapper-text-message {
+            font-size: 3.2rem;
+            width: 100%;
         }
     }
 }
