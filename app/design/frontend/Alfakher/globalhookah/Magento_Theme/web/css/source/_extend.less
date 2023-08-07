@@ -76,6 +76,7 @@
         }
 
         .info-account-text {
+            font-family: 'Quicksand';
             font-size: 4rem;
             font-weight: 600;
             text-align: left;
@@ -106,6 +107,7 @@
         }
 
         .banner-wrapper-text-message {
+            font-family: 'Quicksand';
             font-size: 6rem;
             font-weight: 600;
             opacity: 1;
@@ -137,6 +139,30 @@
         .title {
             font-family: @font-family-name__secondary;
             letter-spacing: 1px;
+        }
+    }
+}
+
+@media only screen and (min-width: 1024px) and (max-width: 1440px) {
+    .banner-row-wrapper {
+        max-width: 100%;
+        margin: 0 2rem;
+
+        .image-banner-logo {
+            transform: translateY(-18%);
+        }
+
+        .info-account-text {
+            margin-bottom: 1.6rem !important;
+        }
+
+        .info-discription {
+            margin-bottom: 3.6rem !important;
+        }
+
+        .banner-wrapper-text-message {
+            width: 90%;
+            font-size: 4rem;
         }
     }
 }
