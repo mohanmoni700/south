@@ -126,7 +126,7 @@
         .lib-vendor-prefix-display(flex);
         justify-content: space-between;
         border-top: 1px solid #C7D2EC;
-        margin: 0 180px;
+        margin: 0 7.2rem;
         max-width: 100%;
         padding: 25px 0;
         .copyright {
@@ -490,6 +490,22 @@
     .copyright_merge {
         margin: 0 auto;
         max-width: 1440px;
+    }
+}
+
+@media only screen and (min-width: 1024px) and (max-width: 1440px) {
+    .block.newsletter {
+        .action_field {
+            gap: 0.4rem;
+
+            .actions {
+                .subscribe-enable {
+                    font-size: 1.2rem;
+                    letter-spacing: 0.1rem;
+                    padding: 0.5rem 2rem;
+                }
+            }
+        }
     }
 }
 
