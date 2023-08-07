@@ -29,7 +29,7 @@ use Magento\Framework\App\Action\Action;
                     <?= $block->getImage($_item, $image)->toHtml() ?>
                 </a>
                 <div class="product-item-details">
-                    <p class="product-item-sku"><?= $block->escapeHtml($_item->getSku()) ?></p>
+                    <p class="product-item-brand"><?= $block->escapeHtml($_item->getAttributeText('brand')) ?></p>
                     <strong class="product-item-name">
                         <a title="<?= $block->escapeHtml($_item->getName()) ?>"
                            href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"
