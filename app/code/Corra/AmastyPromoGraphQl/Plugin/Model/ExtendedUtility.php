@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Corra\AmastyPromoGraphQl\Plugin\Model;
 
 use Magento\SalesRule\Model\Utility;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HookahShisha\Removefreegift\Model\Quote;
 
 use Magento\Quote\Api\CartRepositoryInterface;

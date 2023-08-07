@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HookahShisha\Removefreegift\Model\SalesRule;
 
 use Magento\Framework\App\ObjectManager;
