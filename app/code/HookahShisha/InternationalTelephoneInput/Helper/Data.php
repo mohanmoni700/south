@@ -131,6 +131,12 @@ class Data extends AbstractHelper
             'customEntry' => null,
             'template' => 'ui/form/field',
             'elementTmpl' => 'HookahShisha_InternationalTelephoneInput/form/element/telephone',
+            'validation' => [
+                "required-entry" => true,
+                "max_text_length" => 15,
+                "min_text_length" => 1,
+                "custom-validate-telephone" => true
+            ],
             'tooltip' => [
                 'description' => 'For delivery questions.',
                 'tooltipTpl' => 'ui/form/element/helper/tooltip',
