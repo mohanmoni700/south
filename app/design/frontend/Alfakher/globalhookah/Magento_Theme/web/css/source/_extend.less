@@ -280,7 +280,7 @@
 
             .h2_heading_builder {
                 font-size: 4rem;
-                font-weight: 600;
+                font-weight: bold;
                 text-align: center;
                 border-bottom: none;
 
@@ -296,7 +296,7 @@
             &-column {
                 .h2_heading_builder {
                     font-size: 4rem;
-                    font-weight: 600;
+                    font-weight: bold;
                     text-align: center;
                     margin-right: 0;
                 }
@@ -328,6 +328,8 @@
 
                     [aria-expanded='true'] {
                         .accordion_title {
+                            font-weight: 600;
+                            
                             &::before {
                                 background-image: url('@{baseDir}images/minus.svg');
                                 background-repeat: no-repeat;
