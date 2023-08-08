@@ -61,8 +61,10 @@
         height: 42rem;
         background: transparent linear-gradient(182deg, #C7D2EC 0%, #316BB2 100%) 0% 0% no-repeat padding-box;
         border-radius: 4rem;
-        padding: 5rem;
-        opacity: 1;
+
+        > .pagebuilder-column-group {
+            padding: 5rem;
+        }
 
         .image-banner-logo {
             transform: translateY(-38%);
@@ -78,7 +80,7 @@
         .info-account-text {
             font-family: 'Quicksand';
             font-size: 4rem;
-            font-weight: 600;
+            font-weight: bold;
             text-align: left;
             color: @color-white;
             margin-bottom: 3.6rem !important;
@@ -86,7 +88,7 @@
 
         .info-discription {
             color: @color-white;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             text-align: left;
             margin-bottom: 5.6rem !important;
         }
@@ -109,8 +111,8 @@
         .banner-wrapper-text-message {
             font-family: 'Quicksand';
             font-size: 6rem;
-            font-weight: 600;
-            opacity: 1;
+            font-weight: bold;
+            margin-bottom: 0;
             color: @color-white;
             text-align: left;
         }
@@ -143,7 +145,20 @@
     }
 }
 
-@media only screen and (min-width: 480px) and (max-width: 768px) {
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+    .banner-row-wrapper {
+        .banner-wrapper-text {
+            > div {
+                width: min-content;
+                margin-inline-start: auto;
+                padding-top: 5rem;
+            }
+        }
+    }
+}
+
+@media only screen and (min-width: 480px) and (max-width: 767px) {
     .banner-row-wrapper {
         .image-banner-logo {
             transform: translate(6%, -18%) !important;
@@ -161,6 +176,14 @@
         max-width: 100%;
         margin: 0 2rem;
 
+        .banner-wrapper-text {
+            > div {
+                width: min-content;
+                margin-inline-start: auto;
+                padding-top: 5rem;
+            }
+        }
+
         .image-banner-logo {
             transform: translateY(-18%);
         }
@@ -174,8 +197,23 @@
         }
 
         .banner-wrapper-text-message {
-            width: 90%;
             font-size: 4rem;
+        }
+    }
+}
+
+@media only screen and (min-width: 1440px) and (max-width: 1920px) {
+    .banner-row-wrapper {
+        .banner-wrapper-text {
+            > div {
+                width: min-content;
+                margin-inline-start: auto;
+                padding-top: 5rem;
+            }
+        }
+        
+        .banner-wrapper-text-message {
+            font-size: 7rem !important;
         }
     }
 }
@@ -293,6 +331,10 @@
         height: auto;
         border-radius: 0;
         padding: 2rem;
+
+        > .pagebuilder-column-group {
+            padding: 0;
+        }
 
         .image-banner-logo {
             transform: translate(6%, -59%);
