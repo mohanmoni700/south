@@ -49,6 +49,7 @@ class SalesRule
                 $rule = $rule->load($ruleId);
 
                 //Get All Quote Items and validate only the non-promo item
+                $isValid = true;
                 foreach ($quote->getAllVisibleItems() as $quoteItem) {
                     $parentId = $quoteItem->getParentItemId();
                     if (!isset($parentId)) {
@@ -57,9 +58,12 @@ class SalesRule
                             && $this->isPromoItem($quoteItem->getSku())) {
                             return true;
                         }
-                        return false;
+                        $isValid = false;
                     }
                 }
+
+                //To check all the products in the cart
+                return $isValid;
             }
         } catch (\Exception $exception) {
             //In case of exception also it should return as true
