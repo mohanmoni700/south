@@ -77,7 +77,7 @@
 
             .pagebuilder-button-link {
                 font-weight: 600;
-                white-space: nowrap;
+                word-wrap: inherit;
             }
 
             img {
@@ -207,12 +207,66 @@
         }
 
         .pagebuilder-column {
+            &:hover {
+                .pagebuilder-button-link {
+                    color: @color-black;
+                }
+
+                img {
+                    top: unset;
+                }
+            }
+
             .pagebuilder-button-link {
                 white-space: unset;
             }
 
             p {
                 background-size: 100%;
+            }
+        }
+
+
+        .hookahs {
+            &:hover {
+                img {
+                    content: unset;
+                }
+            }
+        }
+        .hookahs-charcoal {
+            &:hover {
+                img {
+                    content: unset;
+                }
+            }
+        }
+        .tobacco-free {
+            &:hover {
+                img {
+                    content: unset;
+                }
+            }
+        }
+        .shisha {
+            &:hover {
+                img {
+                    content: unset;
+                }
+            }
+        }
+        .accessories {
+            &:hover {
+                img {
+                    content: unset;
+                }
+            }
+        }
+        .specials {
+            &:hover {
+                img {
+                    content: unset;
+                }
             }
         }
     }
