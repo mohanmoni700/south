@@ -138,11 +138,21 @@ use Magento\Framework\App\Action\Action;
         "jquery"
     ], function ($) {
         $(document).ready(function() {
-            var $isSlider = $('.top_sellling > .widget-product-carousel > button');
             var $progressBar = $('.progress');
+            var $slider = $('.top_sellling > .widget-product-carousel');
             var $progressBarLabel = $( '.slider__label' );
+
+            $slider.on('init', function(event, slick) {
+                checkSlider(slick);
+            });
+
+            function checkSlider(slick) {
+                var displayValue = $('.top_sellling > .widget-product-carousel > button').length ? 'block' : 'none';
+    
+                $progressBar.css('display', displayValue);
+            }
             
-            $slider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {   
+            $slider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {               
                 var calc = ( (nextSlide) / (slick.slideCount-1) ) * 100;
                 
                 $progressBar
