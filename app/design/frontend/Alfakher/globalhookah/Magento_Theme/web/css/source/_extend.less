@@ -57,7 +57,7 @@
 
     .banner-row-wrapper {
         max-width: 100%;
-        margin: 0 7.2rem;
+        margin: 7.2rem;
         height: 42rem;
         background: transparent linear-gradient(182deg, #C7D2EC 0%, #316BB2 100%) 0% 0% no-repeat padding-box;
         border-radius: 4rem;
@@ -111,10 +111,12 @@
         .banner-wrapper-text-message {
             font-family: 'Quicksand';
             font-size: 6rem;
+            line-height: 90%;
             font-weight: bold;
             margin-bottom: 0;
             color: @color-white;
             text-align: left;
+            width: min-content !important;
         }
     }
 
@@ -168,17 +170,13 @@
             transform: translate(6%, -18%) !important;
             height: auto !important;
         }
-
-        .banner-wrapper-text-message {
-            width: 55% !important;
-        }
     }
 }
 
 @media only screen and (min-width: 1024px) and (max-width: 1440px) {
     .banner-row-wrapper {
         max-width: 100%;
-        margin: 0 2rem;
+        margin: 2rem;
 
         .banner-wrapper-text {
             > div {
@@ -189,7 +187,7 @@
         }
 
         .image-banner-logo {
-            transform: translateY(-18%);
+            transform: translateY(-38%);
         }
 
         .info-account-text {
@@ -201,7 +199,7 @@
         }
 
         .banner-wrapper-text-message {
-            font-size: 4rem;
+            font-size: 8rem;
         }
     }
 }
@@ -225,7 +223,7 @@
 @media only screen and (min-width: 1921px) {
     .banner-row-wrapper {
         max-width: 1280px;
-        margin: 0 auto;
+        margin: 7.2rem auto;
 
         .banner-wrapper-text {
             > div {
@@ -292,7 +290,6 @@
 
         .banner-wrapper-text-message {
             font-size: 3.2rem;
-            width: 60% !important;
         }
     }
 }
@@ -339,7 +336,7 @@
 
     .banner-row-wrapper {
         max-width: 100%;
-        margin: 0;
+        margin: 3.6rem 0;
         height: auto;
         border-radius: 0;
         padding: 2rem;
@@ -374,7 +371,6 @@
 
         .banner-wrapper-text-message {
             font-size: 3.2rem;
-            width: 100%;
         }
     }
 }
