@@ -1,0 +1,10 @@
+##
+# @category    HookahShisha
+# @package     HookahShisha_Catalog
+# @author      ALFA
+##
+
+interface CartItemInterface {
+    is_annual_bundle: Boolean @resolver(class: "HookahShisha\\Catalog\\Model\\Resolver\\CartItems\\AnnualBundle") @doc(description: "Get Is Annual Bundle")
+}
+
