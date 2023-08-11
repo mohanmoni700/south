@@ -58,8 +58,6 @@ class HookahProductSpecsAttributes implements DataPatchInterface
             10
         );
 
-        $eavSetup->removeAttribute(Product::ENTITY, 'vase_style');
-
         $eavSetup->addAttribute(
             Product::ENTITY,
             'vase_style',
@@ -88,8 +86,6 @@ class HookahProductSpecsAttributes implements DataPatchInterface
                 'is_used_in_grid' => false,
             ]
         );
-        $eavSetup->removeAttribute(Product::ENTITY, 'screw_on_vase_capability');
-
         $eavSetup->addAttribute(
             Product::ENTITY,
             'screw_on_vase_capability',
@@ -118,8 +114,6 @@ class HookahProductSpecsAttributes implements DataPatchInterface
                 'is_used_in_grid' => false,
             ]
         );
-        $eavSetup->removeAttribute(Product::ENTITY, 'multi_hose_capability');
-
         $eavSetup->addAttribute(
             Product::ENTITY,
             'multi_hose_capability',
@@ -148,8 +142,6 @@ class HookahProductSpecsAttributes implements DataPatchInterface
                 'is_used_in_grid' => false,
             ]
         );
-        $eavSetup->removeAttribute(Product::ENTITY, 'included_accessories');
-
         $eavSetup->addAttribute(
             Product::ENTITY,
             'included_accessories',
@@ -178,8 +170,6 @@ class HookahProductSpecsAttributes implements DataPatchInterface
                 'is_used_in_grid' => false,
             ]
         );
-        $eavSetup->removeAttribute(Product::ENTITY, 'colors');
-
         $eavSetup->addAttribute(
             Product::ENTITY,
             'colors',
@@ -208,8 +198,6 @@ class HookahProductSpecsAttributes implements DataPatchInterface
                 'is_used_in_grid' => false,
             ]
         );
-        $eavSetup->removeAttribute(Product::ENTITY, 'brand');
-
         $eavSetup->addAttribute(
             Product::ENTITY,
             'brand',
@@ -238,8 +226,6 @@ class HookahProductSpecsAttributes implements DataPatchInterface
                 'is_used_in_grid' => false,
             ]
         );
-        $eavSetup->removeAttribute(Product::ENTITY, 'size');
-
         $eavSetup->addAttribute(
             Product::ENTITY,
             'size',
@@ -268,9 +254,6 @@ class HookahProductSpecsAttributes implements DataPatchInterface
                 'is_used_in_grid' => false,
             ]
         );
-        $eavSetup->removeAttribute(Product::ENTITY, 'country_of_manufacture');
-
-        
         $eavSetup->addAttribute(
             Product::ENTITY,
             'country_of_manufacture',
