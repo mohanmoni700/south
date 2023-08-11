@@ -270,6 +270,7 @@ class HookahProductSpecsAttributes implements DataPatchInterface
         );
         $eavSetup->removeAttribute(Product::ENTITY, 'country_of_manufacture');
 
+        
         $eavSetup->addAttribute(
             Product::ENTITY,
             'country_of_manufacture',
