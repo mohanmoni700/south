@@ -54,7 +54,7 @@ class Facebook implements TokenResolverInterface
             $fb = new \Facebook\Facebook([
                 'app_id' => $this->config->getProviderValue('facebook', 'app_id'),
                 'app_secret' => $this->config->getProviderValue('facebook', 'app_secret'),
-                'graph_api_version' => 'v5.0'
+                'graph_api_version' => 'v17.0'
             ]);
             $response = $fb->get('/me?fields=id,email,first_name,last_name', $token);
             $user = $response->getGraphUser();
