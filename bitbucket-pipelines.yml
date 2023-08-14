@@ -18,10 +18,10 @@ definitions:
         caches:
           - sonar
         script:
-          - pipe: sonarsource/sonarcloud-scan:1.2.0
+          - pipe: sonarsource/sonarcloud-scan:1.4.0
             variables:
               SONAR_TOKEN: ${SONAR_TOKEN}
-              EXTRA_ARGS: '-Dsonar.sources=./app/code/HookahShisha,./app/design/frontend/Corra/alfakher'
+              EXTRA_ARGS: '-Dsonar.sources=./app/code,./app/design/frontend'
   services:
     docker:
       memory: 4096
