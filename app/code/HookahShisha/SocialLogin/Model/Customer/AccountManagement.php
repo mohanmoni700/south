@@ -54,9 +54,9 @@ class AccountManagement
     public function aroundResetPassword(
         MagentoAccountManagement $subject,
         callable $proceed,
-        string $email,
-        string $resetToken,
-        string $newPassword
+        $email,
+        $resetToken,
+        $newPassword
     ) {
         if (!$email) {
             try {
