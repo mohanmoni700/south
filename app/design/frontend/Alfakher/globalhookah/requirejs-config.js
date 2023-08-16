@@ -2,7 +2,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-var config = {
+let config = {
     deps: [
         "js/promo_banner",
         "js/mobile_menu",
