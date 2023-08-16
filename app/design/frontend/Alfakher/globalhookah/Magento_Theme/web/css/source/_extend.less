@@ -111,6 +111,22 @@
     }
 }
 
+@media only screen and (max-width: 768px) {
+    body .page-wrapper .page-header {
+        .warning-section-wrapper {
+            .warning-section {  
+                .heading-section {
+                    h3 {
+                        font-size: 1rem;
+                        margin-left: 0.6rem !important;
+                        width: 80% !important;
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 //
 //  Mobile
@@ -126,16 +142,17 @@
         }
     }
 
-    body {
+    body .page-wrapper .page-header {
         .warning-section-wrapper {
             .warning-section {
-                max-width: 100%;
+                max-width: 1280px;
                 margin: 0 auto;
-                padding: 0.4rem 1rem;
+                padding: 0.4rem 1rem !important;
     
                 .heading-section {
                     h3 {
-                        margin-left: 0.6rem;
+                        margin-left: 0.6rem !important;
+                        width: fit-content;
                     }
                 }
             }
