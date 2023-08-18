@@ -78,7 +78,7 @@ class Post implements ResolverInterface
     private function getPostId(array $args): string
     {
         if (!isset($args['id'])) {
-            throw new GraphQlInputException(__('"Post id should be specified'));
+            throw new GraphQlInputException(__('Post id should be specified'));
         }
 
         return (string)$args['id'];
