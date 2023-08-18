@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Alfakher\Blog\Model\Resolver;
 
 use Magefan\Blog\Model\ResourceModel\Post\Collection;
-
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Exception\GraphQlInputException;
 use Magento\Framework\GraphQl\Exception\GraphQlNoSuchEntityException;
