@@ -8,6 +8,14 @@
     </div>
     <div class="block-content">
         <?php if (!$_order->getIsVirtual()) : ?>
+            <div class="box box-order-billing-address">
+                <strong class="box-title">
+                    <span><?= $block->escapeHtml(__('Billing Address')) ?></span>
+                </strong>
+                <div class="box-content">
+                    <address><?= /* @noEscape */ $block->getFormattedAddress($_order->getBillingAddress()) ?></address>
+                </div>
+            </div>
             <div class="box box-order-shipping-address">
                 <strong class="box-title"><span><?= $block->escapeHtml(__('Shipping Address')) ?></span></strong>
                 <div class="box-content">
@@ -36,15 +44,6 @@
                 </div>
             </div>
         <?php endif; ?>
-
-        <div class="box box-order-billing-address">
-            <strong class="box-title">
-                <span><?= $block->escapeHtml(__('Billing Address')) ?></span>
-            </strong>
-            <div class="box-content">
-                <address><?= /* @noEscape */ $block->getFormattedAddress($_order->getBillingAddress()) ?></address>
-            </div>
-        </div>
         <div class="box box-order-billing-method">
             <strong class="box-title">
                 <span><?= $block->escapeHtml(__('Payment Method')) ?></span>
