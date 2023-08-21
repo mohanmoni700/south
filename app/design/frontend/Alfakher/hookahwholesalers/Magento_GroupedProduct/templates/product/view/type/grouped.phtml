@@ -24,7 +24,6 @@
         data-mage-init='{ "Magento_GroupedProduct/js/product-ids-resolver": {} }'>
         <caption class="table-caption"><?= $block->escapeHtml(__('Grouped product items')) ?></caption>
         <?php if ($_hasAssociatedProducts): ?>
-
             <?php $_associatedProducts = $block->getAssociatedProducts(); 
             $inStockProducts = [];
             $outOfStockProducts = [];
@@ -36,19 +35,14 @@
                     $outOfStockProducts[] = $_item;
                 }
             }
-
             usort($inStockProducts, function ($a, $b) {
                 return strcasecmp($a->getName(), $b->getName());
             });
-
             usort($outOfStockProducts, function ($a, $b) {
                 return strcasecmp($a->getName(), $b->getName());
             });
-
             $sortedProducts = array_merge($inStockProducts, $outOfStockProducts);
-
             ?>
-            
             <tbody>
                 <?php foreach ($sortedProducts as $_item): ?>
                     <?php $productAvailableQty = $_helperB2b->getStockQty($_item->getId()); ?>
