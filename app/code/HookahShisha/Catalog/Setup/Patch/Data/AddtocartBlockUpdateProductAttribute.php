@@ -8,7 +8,6 @@ use Magento\Catalog\Model\Product;
 use Magento\Eav\Setup\EavSetup;
 use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
-use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 
 /**
