@@ -54,93 +54,101 @@
             }
         }
     }
+    
+    h2 {
+        font-size: 2.5rem;
+    }
+    .shop-by-cat {
+        margin-bottom: 5.625rem; 
+    }
 
-    .homepage_category_slider { 
-        h2 {
-            font-size: 40px;
-        }
-
-        .pagebuilder-column {
-            &:hover {
-                > div {
-                    top: unset;
-                }
-
-                .pagebuilder-button-link {
-                    font-weight: 600;
-                }
-
-                img {
-                    top: -2rem;
-                }
+    .pagebuilder-column {
+        &:hover {
+            > div {
+                top: unset;
             }
 
             .pagebuilder-button-link {
                 font-weight: 600;
-                word-wrap: inherit;
+                text-decoration: none;
             }
 
             img {
-                width: auto !important;
-                border-right: none;
-            }
-
-            p {
-                padding-bottom: 2rem;
-                background-image: url('@{baseDir}images/category-mask.svg');
-                background-repeat: no-repeat;
-                background-position: bottom;
-                background-size: 156px;
+                top: -2rem;
             }
         }
 
-        .hookahs {
-            &:hover {
-                img {
-                    content: url('@{baseDir}images/hookahs.png');
-                }
-            }
+        .pagebuilder-button-link {
+            font-weight: 600;
+            word-wrap: inherit;
+            margin: 0 10px;
+            padding: 14px 0;
+            color: @color-black;
         }
-        .hookahs-charcoal {
-            &:hover {
-                img {
-                    content: url('@{baseDir}images/charcoal.png');
-                }
-            }
+
+        img {
+            width: auto !important;
+            border-right: none;
+            padding: 0 10px;
+            position: relative;
         }
-        .tobacco-free {
-            &:hover {
-                img {
-                    content: url('@{baseDir}images/tobacco-free.png');
-                }
-            }
-        }
-        .shisha {
-            &:hover {
-                img {
-                    content: url('@{baseDir}images/shisha.png');
-                }
-            }
-        }
-        .accessories {
-            &:hover {
-                img {
-                    content: url('@{baseDir}images/accessories.png');
-                }
-            }
-        }
-        .specials {
-            &:hover {
-                img {
-                    content: url('@{baseDir}images/specials.png');
-                }
-            }
+
+        p {
+            padding-bottom: 2rem;
+            background-image: url('@{baseDir}images/category-mask.svg');
+            background-repeat: no-repeat;
+            background-position: bottom;
+            background-size: 9.75rem;
         }
     }
 
+    .hookahs {
+        &:hover {
+            img {
+                content: url('@{baseDir}images/hookahs.png');
+            }
+        }
+    }
+    .hookahs-charcoal {
+        &:hover {
+            img {
+                content: url('@{baseDir}images/charcoal.png');
+            }
+        }
+    }
+    .tobacco-free {
+        &:hover {
+            img {
+                content: url('@{baseDir}images/tobacco-free.png');
+            }
+        }
+    }
+    .shisha {
+        &:hover {
+            img {
+                content: url('@{baseDir}images/shisha.png');
+            }
+        }
+    }
+    .accessories {
+        &:hover {
+            img {
+                content: url('@{baseDir}images/accessories.png');
+            }
+        }
+    }
+    .specials {
+        &:hover {
+            img {
+                content: url('@{baseDir}images/specials.png');
+            }
+        }
+    }
+    
+
     .fieldset {
        > .field.hub_mobile_number {
-            margin-bottom: 30px;
+            margin-bottom: 1.875rem;
         }
         > .field:not(.choice) {
             > .label {
@@ -193,50 +201,67 @@
         }
     }
 
-    .homepage_category_slider { 
-        h2 {
-            font-size: 2.4rem;
-        }
 
-        .slick-slide {
-            margin-right: 2.4rem;
+    h2 {
+        font-size: 2.4rem;
+    }
 
-            &:first-of-type {
-                margin-left: 2rem;
-            }
-        }
+    .slick-slide {
+        margin-right: 2.4rem;
 
-        .pagebuilder-column {
-            &:hover {
-                .pagebuilder-button-link {
-                    color: @color-black;
-                }
-
-                img {
-                    top: unset;
-                }
-            }
-
-            .pagebuilder-button-link {
-                white-space: unset;
-            }
-
-            p {
-                background-size: 100%;
-            }
-        }
-
-
-        .hookahs:hover,
-        .hookahs-charcoal:hover,
-        .shisha:hover,
-        .tobacco-free:hover,
-        .accessories:hover,
-        .specials:hover
-          {
-            img {
-                content: unset;
-            }
+        &:first-of-type {
+            margin-left: 2rem;
         }
     }
+
+    .shop-by-cat {
+        .pagebuilder-column-group {
+            flex-wrap: nowrap;
+            overflow-x: scroll;
+            padding-bottom: 10px;
+        }
+        margin-bottom: 3.75rem;
+    }
+
+    .pagebuilder-column {
+        padding: 0 12px;
+        width: 28% !important;
+        &:hover {
+            .pagebuilder-button-link {
+                color: @color-black;
+            }
+
+            img {
+                top: unset;
+            }
+        }
+        a.pagebuilder-button-link:hover {
+            text-decoration: none;
+        }
+        img {
+            padding: 0 10px;
+        }
+        .pagebuilder-button-link {
+            white-space: unset;
+            color: @color-black;
+        }
+
+        p {
+            background-size: 100%;
+        }
+    }
+
+
+    .hookahs:hover,
+    .hookahs-charcoal:hover,
+    .shisha:hover,
+    .tobacco-free:hover,
+    .accessories:hover,
+    .specials:hover
+        {
+        img {
+            content: unset;
+        }
+    }
+    
 }
