@@ -24,7 +24,7 @@
         data-mage-init='{ "Magento_GroupedProduct/js/product-ids-resolver": {} }'>
         <caption class="table-caption"><?= $block->escapeHtml(__('Grouped product items')) ?></caption>
         <?php if ($_hasAssociatedProducts): ?>
-            <?php $_associatedProducts = $block->getAssociatedProducts(); 
+            <?php $_associatedProducts = $block->getAssociatedProducts();
             $inStockProducts = [];
             $outOfStockProducts = [];
             foreach ($_associatedProducts as $_item) {
@@ -53,7 +53,7 @@
                      $finalGrossMargin = number_format($grossMargin, 2, ".", "");
                     ?>
                       <td data-th="<?= $block->escapeHtml(__('Product Name')) ?>" class="col item">
-                        <?php if ($adminsession): ?>     
+                        <?php if ($adminsession): ?>
                             <strong class="product-item-name" title="<?= $block
                             ->escapeHtml('Qty : '.$productAvailableQty.' , GrossMargin : ' . $finalGrossMargin.'%') ?>">
                             <?= $block->escapeHtml($_item->getName()) ?>
