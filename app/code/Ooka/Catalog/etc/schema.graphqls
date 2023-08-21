@@ -1,0 +1,10 @@
+##
+# @category    Ooka
+# @package     Ooka_Catalog
+# @author      ALFA
+##
+
+interface CartItemInterface {
+    is_annual_bundle: Boolean @resolver(class: "Ooka\\Catalog\\Model\\Resolver\\CartItems\\AnnualBundle") @doc(description: "Get Is Annual Bundle")
+}
+

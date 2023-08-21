@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace HookahShisha\Catalog\Observer;
+namespace Ooka\Catalog\Observer;
 
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\CustomerBalance\Helper\Data;
 use Magento\CustomerBalance\Model\BalanceFactory;
-use Magento\Framework\Event\Observer;
+use Magento\CustomerBalance\Model\ResourceModel\Balance as ResourceModel;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\CustomerBalance\Model\ResourceModel\Balance as ResourceModel;
 use Psr\Log\LoggerInterface;
 
 class BundleSalesOrderInvoiceSave implements ObserverInterface
@@ -82,11 +82,9 @@ class BundleSalesOrderInvoiceSave implements ObserverInterface
                     $orderItems = $order->getAllItems();
                     foreach ($orderItems as $orderItem) {
                         $parentItemId = $orderItem->getParentItemId();
-                        if (!isset($parentItemId)) {
-                            //check whether if cart contains annual bundle product
-                            if (!$isAnnualBundle) {
-                                $isAnnualBundle = $orderItem->getProduct()->getData('is_annual_bundle') == 1;
-                            }
+                        //check whether if cart contains annual bundle product
+                        if (!isset($parentItemId) && !$isAnnualBundle) {
+                            $isAnnualBundle = $orderItem->getProduct()->getData('is_annual_bundle') == 1;
                         }
 
                         //Check whether item exist in the config with store credit
@@ -97,7 +95,6 @@ class BundleSalesOrderInvoiceSave implements ObserverInterface
 
                     //Check for annual bundle and store credit exist for the item
                     if ($isAnnualBundle && isset($storeCredit)) {
-
                         // add store credit to customer
                         $this->addStoreCreditToCustomer($customerId, $storeCredit, $order);
                     }
@@ -124,7 +121,7 @@ class BundleSalesOrderInvoiceSave implements ObserverInterface
         $skuStoreCredit = [];
         if (is_string($bundleConfigData)) {
             $bundleConfigData = json_decode($bundleConfigData, true);
-            foreach ($bundleConfigData as $key => $bundle) {
+            foreach ($bundleConfigData as $bundle) {
                 if (isset($bundle['sku']) && isset($bundle['store_credit'])) {
                     $skuStoreCredit[$bundle['sku']] = $bundle['store_credit'];
                 }

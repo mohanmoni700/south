@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace HookahShisha\Catalog\Model\Resolver\CartItems;
+namespace Ooka\Catalog\Model\Resolver\CartItems;
 
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;

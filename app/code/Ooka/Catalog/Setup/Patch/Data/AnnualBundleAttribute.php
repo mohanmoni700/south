@@ -2,19 +2,20 @@
 
 declare(strict_types=1);
 
-namespace HookahShisha\Catalog\Setup\Patch\Data;
+namespace Ooka\Catalog\Setup\Patch\Data;
 
-use Magento\Eav\Setup\EavSetup;
-use Magento\Framework\Setup\ModuleContextInterface;
-use Magento\Framework\Setup\Patch\DataPatchInterface;
-use Magento\Eav\Setup\EavSetupFactory;
-use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Catalog\Model\Product;
 use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
 use Magento\Eav\Model\Entity\Attribute\Source\Boolean;
+use Magento\Eav\Setup\EavSetup;
+use Magento\Eav\Setup\EavSetupFactory;
+use Magento\Framework\Setup\ModuleContextInterface;
+use Magento\Framework\Setup\ModuleDataSetupInterface;
+use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
 use Magento\Framework\Setup\UninstallInterface;
 use Psr\Log\LoggerInterface;
+
 class AnnualBundleAttribute implements DataPatchInterface, UninstallInterface
 {
     /**
