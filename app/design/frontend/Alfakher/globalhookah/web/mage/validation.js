@@ -185,7 +185,7 @@ define([
      * @return {Boolean}
      */
     function tableSingleValidation(value, element) {
-        var empty = $(element).closest('table')
+        let empty = $(element).closest('table')
             .find('input.required-option:visible')
             .filter(function (i, el) {
                 if ($(el).is('disabled')) {
@@ -434,7 +434,7 @@ define([
         /* detect chars that would require more than 3 bytes */
         'validate-no-utf8mb4-characters': [
             function (value) {
-                var validator = this,
+                let validator = this,
                     message = $.mage.__('Please remove invalid characters: {0}.'),
                     matches = value.match(/(?:[\uD800-\uDBFF][\uDC00-\uDFFF])/g),
                     result = matches === null;
@@ -937,7 +937,7 @@ define([
         ],
         'validate-digits-range': [
             function (v, elm, param) {
-                var numValue, dataAttrRange, classNameRange, result, range, m, classes, ii;
+                let numValue, dataAttrRange, classNameRange, result, range, m, classes, ii;
 
                 if ($.mage.isEmptyNoTrim(v)) {
                     return true;
@@ -1414,7 +1414,7 @@ define([
         ],
         'validate-length': [
             function (v, elm) {
-                var reMax = new RegExp(/^maximum-length-[0-9]+$/),
+                let reMax = new RegExp(/^maximum-length-[0-9]+$/),
                     reMin = new RegExp(/^minimum-length-[0-9]+$/),
                     validator = this,
                     result = true,
@@ -1563,7 +1563,7 @@ define([
         ],
         'required-if-specified': [
             function (value, element, params) {
-                var valid = true,
+                let valid = true,
                     dependent = $(params),
                     dependentValue;
 
@@ -1632,7 +1632,7 @@ define([
         ],
         'validate-item-quantity': [
             function (value, element, params) {
-                var validator = this,
+                let validator = this,
                     result = false,
                     // obtain values for validation
                     qty = $.mage.parseNumber(value),
