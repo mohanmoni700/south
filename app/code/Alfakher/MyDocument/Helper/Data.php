@@ -1,4 +1,5 @@
 <?php
+
 namespace Alfakher\MyDocument\Helper;
 
 use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory;
@@ -63,16 +64,17 @@ class Data extends AbstractHelper
      */
     public function __construct(
         \Magento\Framework\Translate\Inline\StateInterface $inlineTranslation,
-        \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder,
+        \Magento\Framework\Mail\Template\TransportBuilder  $transportBuilder,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Psr\Log\LoggerInterface $loggerInterface,
-        StoreManagerInterface $storeManager,
-        CustomerFactory $customer,
-        CollectionFactory $collection,
-        \Magento\Customer\Api\AddressRepositoryInterface $addressRepositoryInterface,
-        \Magento\Framework\Filesystem\Io\File $filesystem,
-        array $data = []
-    ) {
+        \Psr\Log\LoggerInterface                           $loggerInterface,
+        StoreManagerInterface                              $storeManager,
+        CustomerFactory                                    $customer,
+        CollectionFactory                                  $collection,
+        \Magento\Customer\Api\AddressRepositoryInterface   $addressRepositoryInterface,
+        \Magento\Framework\Filesystem\Io\File              $filesystem,
+        array                                              $data = []
+    )
+    {
         $this->_inlineTranslation = $inlineTranslation;
         $this->_transportBuilder = $transportBuilder;
         $this->_scopeConfig = $scopeConfig;
@@ -135,10 +137,9 @@ class Data extends AbstractHelper
             ->setTemplateOptions(
                 [
                     'area' => 'frontend',
-                    'store' => $storeId, /** Passed storeId here [BS]*/
+                    'store' => $storeId,/** Passed storeId here [BS]*/
                 ]
             )
-
             ->setTemplateVars([
                 'msg' => $msg,
                 'name' => $customerName,
@@ -155,6 +156,7 @@ class Data extends AbstractHelper
             return false;
         }
     }
+
     /**
      * @inheritDoc
      */
@@ -191,7 +193,8 @@ class Data extends AbstractHelper
             ];
 
             $transport = $this->_transportBuilder
-                ->setTemplateIdentifier('custom_expiry_doc_email')
+                ->setTemplateIdentifier(($this->getWebsiteCode($storeId) == 'hookah_wholesalers') ?
+                    'hookah_wholesalers_expiry_doc_email' : 'custom_expiry_doc_email')
                 ->setTemplateOptions(
                     [
                         'area' => 'frontend',
@@ -199,7 +202,6 @@ class Data extends AbstractHelper
                         'store' => $storeId,
                     ]
                 )
-
                 ->setTemplateVars([
                     'name' => $customerName,
                     'documentarray' => $rejectedDoc,
@@ -214,6 +216,7 @@ class Data extends AbstractHelper
             return false;
         }
     }
+
     /**
      * @inheritDoc
      */
@@ -262,5 +265,22 @@ class Data extends AbstractHelper
     public function checkExtension($file)
     {
         return $this->filesystem->getPathInfo($file, PATHINFO_EXTENSION);
+    }
+
+    /**
+     * @param $storeId
+     * @return string|null
+     */
+    public function getWebsiteCode($storeId)
+    {
+        $websiteCode = null;
+        try {
+            $websiteId = (int)$this->storeManager->getStore($storeId)->getWebsiteId();
+            $websiteCode = $this->storeManager->getWebsite($websiteId)->getCode();
+        } catch (\Exception $exception) {
+            $this->_logger->error('Expiry document email error :'. $exception->getMessage());
+        }
+
+        return $websiteCode;
     }
 }
