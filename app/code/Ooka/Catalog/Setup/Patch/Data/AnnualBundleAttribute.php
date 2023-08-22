@@ -106,6 +106,7 @@ class AnnualBundleAttribute implements DataPatchInterface, UninstallInterface
      */
     public function getAliases(): array
     {
+        //In case of Aliases
         return [];
     }
 }

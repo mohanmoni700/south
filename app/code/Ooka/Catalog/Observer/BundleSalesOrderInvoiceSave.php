@@ -69,7 +69,6 @@ class BundleSalesOrderInvoiceSave implements ObserverInterface
             $order = $invoice->getOrder();
 
             //if the order exist
-            $isAnnualBundle = false;
             if (isset($order)) {
                 $customerId = $order->getCustomerId();
                 //if the order is placed by a logged-in user
@@ -78,26 +77,8 @@ class BundleSalesOrderInvoiceSave implements ObserverInterface
                     //Get Sku associated with store credit
                     $skuStoreCredit = $this->getBundleConfig($order->getStoreId());
 
-                    //Get All Order Items
-                    $orderItems = $order->getAllItems();
-                    foreach ($orderItems as $orderItem) {
-                        $parentItemId = $orderItem->getParentItemId();
-                        //check whether if cart contains annual bundle product
-                        if (!isset($parentItemId) && !$isAnnualBundle) {
-                            $isAnnualBundle = $orderItem->getProduct()->getData('is_annual_bundle') == 1;
-                        }
-
-                        //Check whether item exist in the config with store credit
-                        if (isset($skuStoreCredit[$orderItem->getSku()])) {
-                            $storeCredit = $skuStoreCredit[$orderItem->getSku()];
-                        }
-                    }
-
-                    //Check for annual bundle and store credit exist for the item
-                    if ($isAnnualBundle && isset($storeCredit)) {
-                        // add store credit to customer
-                        $this->addStoreCreditToCustomer($customerId, $storeCredit, $order);
-                    }
+                    //Update store credit based on the order item
+                    $this->updateStoreCreditByOrder($customerId, $order, $skuStoreCredit);
                 }
             }
         } catch (\Exception $exception) {
@@ -175,6 +156,39 @@ class BundleSalesOrderInvoiceSave implements ObserverInterface
             ScopeInterface::SCOPE_STORE,
             $storeId
         );
+
+    }
+
+    /**
+     * @param $customerId
+     * @param $order
+     * @param $skuStoreCredit
+     * @return void
+     */
+    public function updateStoreCreditByOrder($customerId, $order, $skuStoreCredit)
+    {
+        $isAnnualBundle = false;
+        //Get All Order Items
+        $orderItems = $order->getAllItems();
+
+        foreach ($orderItems as $orderItem) {
+            $parentItemId = $orderItem->getParentItemId();
+            //check whether if cart contains annual bundle product
+            if (!isset($parentItemId) && !$isAnnualBundle) {
+                $isAnnualBundle = $orderItem->getProduct()->getData('is_annual_bundle') == 1;
+            }
+
+            //Check whether item exist in the config with store credit
+            if (isset($skuStoreCredit[$orderItem->getSku()])) {
+                $storeCredit = $skuStoreCredit[$orderItem->getSku()];
+            }
+        }
+
+        //Check for annual bundle and store credit exist for the item
+        if ($isAnnualBundle && isset($storeCredit)) {
+            // add store credit to customer
+            $this->addStoreCreditToCustomer($customerId, $storeCredit, $order);
+        }
 
     }
 }
