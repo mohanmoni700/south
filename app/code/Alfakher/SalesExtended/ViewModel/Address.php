@@ -6,6 +6,7 @@ namespace Alfakher\SalesExtended\ViewModel;
 
 use Magento\Customer\Api\AddressRepositoryInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
+use Psr\Log\LoggerInterface;
 
 class Address implements ArgumentInterface
 {
@@ -19,9 +20,11 @@ class Address implements ArgumentInterface
      * @param AddressRepositoryInterface $addressRepository
      */
     public function __construct(
-        AddressRepositoryInterface $addressRepository
+        AddressRepositoryInterface $addressRepository,
+        LoggerInterface $logger
     ) {
         $this->addressRepository = $addressRepository;
+        $this->logger = $logger;
     }
 
 
@@ -40,6 +43,7 @@ class Address implements ArgumentInterface
                 return $attr->getValue();
             }
         } catch (\Exception $e) {
+            $this->logger->error($e->getMessage());
         }
         return '';
     }
