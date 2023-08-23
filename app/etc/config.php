@@ -1038,6 +1038,7 @@ return [
         'Alfakher_RequestQuote' => 1,
         'Alfakher_RmaCustomization' => 1,
         'Alfakher_SalesApprove' => 1,
+        'Alfakher_SalesExtended' => 1,
         'Mageplaza_Webhook' => 1,
         'Alfakher_SeoUrlPrefix' => 1,
         'Alfakher_ShippingEdit' => 1,
