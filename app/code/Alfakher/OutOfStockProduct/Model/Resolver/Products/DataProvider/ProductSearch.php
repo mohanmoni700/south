@@ -103,7 +103,10 @@ class ProductSearch extends MagentoProductSearch
             $this->getSortOrderArray($searchCriteriaForCollection)
         )->apply();
 
-        /** if it is pdp it is filtered with urlkey, so when ever we have url key filter we dont do need stock filters */
+        /**
+         * if it is pdp it is filtered with urlkey, so when ever we
+         * have url key filter we dont do need stock filters
+         */
         if ($urlKey = $this->getUrlKeyIfPDP($searchResult)) {
             $collection->addAttributeToSelect('*')
                 ->addAttributeToFilter('url_key', $urlKey);
