@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Alfakher\SalesExtended\ViewModel;
+namespace GlobalHookah\SalesExtended\ViewModel;
 
 use Magento\Customer\Api\AddressRepositoryInterface;
 use Magento\Framework\View\Element\Block\ArgumentInterface;
