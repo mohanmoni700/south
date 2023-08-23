@@ -100,7 +100,7 @@ class GiftcardAmount extends Giftcard
                 $allowedAmounts[] = $this->priceCurrency->round($value['website_value']);
             }
             /** if allowed amounts is empty in certain cases*/
-            if (count($allowedAmounts) == 0) {
+            if (empty($allowedAmounts)) {
                 foreach ($this->allowedOptions->getGiftCardAmounts($product) as $value) {
                     if(isset($value['value'])) {
                         $allowedAmounts[] = $this->priceCurrency->round($value['value']);
