@@ -32,14 +32,17 @@ $viewModel = $block->getData('view_model');
             <tbody>
             <?php foreach ($_orders as $_order) : ?>
                 <tr>
-                    <td data-th="<?= $block->escapeHtml(__('Order #')) ?>" 
+                    <td data-th="<?= $block->escapeHtml(__('Order #')) ?>"
                     class="col id"><?= $block->escapeHtml($_order->getRealOrderId()) ?></td>
                     <td data-th="<?= $block->escapeHtml(__('Date')) ?>"
                      class="col date"><?= /* @noEscape */ $block->formatDate($_order->getCreatedAt()) ?></td>
                     <?php if (!$_order->getIsVirtual()): ?>
                         <?php $_shippingAddress = $_order->getShippingAddress(); ?>
                         <td data-th="<?= $block->escapeHtml(__(LOCATION_TYPE)) ?>"
-                         class="col location"><?= $block->escapeHtml($viewModel->getLocationType($_shippingAddress->getData()['customer_address_id'] ?? null)); ?></td>
+                         class="col location">
+                         <?= $block->escapeHtml($viewModel->getLocationType(
+                            $_shippingAddress->getData()['customer_address_id'] ?? null)); ?>
+                            </td>
                     <?php else: ?>
                         <td data-th="<?= $block->escapeHtml(__(LOCATION_TYPE)) ?>"
                          class="col location"></td>
@@ -54,8 +57,9 @@ $viewModel = $block->getData('view_model');
                             <a href="<?= $block->escapeUrl($block->getViewUrl($_order)) ?>" class="action view">
                                 <span><?= $block->escapeHtml(__('View Order')) ?></span>
                             </a>
-                            <?php if 
-                            ($this->helper(\Magento\Sales\Helper\Reorder::class)->canReorder($_order->getEntityId())) : ?>
+                            <?php if
+                            ($this->helper(\Magento\Sales\Helper\Reorder::class)->canReorder($_order->getEntityId()))
+                             : ?>
                             <a href="#" data-post='<?= /* @noEscape */
                             $this->helper(\Magento\Framework\Data\Helper\PostHelper::class)
                                 ->getPostData($block->getReorderUrl($_order))
