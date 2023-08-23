@@ -3,8 +3,13 @@
 namespace Alfakher\MyDocument\Helper;
 
 use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory;
+use Magento\Customer\Api\AddressRepositoryInterface;
 use Magento\Customer\Model\CustomerFactory;
 use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\App\Helper\Context;
+use Magento\Framework\Filesystem\Io\File;
+use Magento\Framework\Mail\Template\TransportBuilder;
+use Magento\Framework\Translate\Inline\StateInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 
@@ -31,11 +36,6 @@ class Data extends AbstractHelper
     protected $_scopeConfig;
 
     /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $_logLoggerInterface;
-
-    /**
      * @var StoreManagerInterface
      */
     protected $storeManager;
@@ -50,40 +50,37 @@ class Data extends AbstractHelper
      */
     protected $filesystem;
 
+
     /**
-     * @param \Magento\Framework\Translate\Inline\StateInterface $inlineTranslation
-     * @param \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder
-     * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
-     * @param \Psr\Log\LoggerInterface $loggerInterface
+     * @param Context $context
+     * @param StateInterface $inlineTranslation
+     * @param TransportBuilder $transportBuilder
      * @param StoreManagerInterface $storeManager
      * @param CustomerFactory $customer
      * @param CollectionFactory $collection
-     * @param \Magento\Customer\Api\AddressRepositoryInterface $addressRepositoryInterface
-     * @param \Magento\Framework\Filesystem\Io\File $filesystem
-     * @param array $data
+     * @param AddressRepositoryInterface $addressRepositoryInterface
+     * @param File $filesystem
      */
     public function __construct(
-        \Magento\Framework\Translate\Inline\StateInterface $inlineTranslation,
-        \Magento\Framework\Mail\Template\TransportBuilder  $transportBuilder,
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Psr\Log\LoggerInterface                           $loggerInterface,
-        StoreManagerInterface                              $storeManager,
-        CustomerFactory                                    $customer,
-        CollectionFactory                                  $collection,
-        \Magento\Customer\Api\AddressRepositoryInterface   $addressRepositoryInterface,
-        \Magento\Framework\Filesystem\Io\File              $filesystem,
-        array                                              $data = []
+        Context                    $context,
+        StateInterface             $inlineTranslation,
+        TransportBuilder           $transportBuilder,
+        StoreManagerInterface      $storeManager,
+        CustomerFactory            $customer,
+        CollectionFactory          $collection,
+        AddressRepositoryInterface $addressRepositoryInterface,
+        File                       $filesystem
     )
     {
         $this->_inlineTranslation = $inlineTranslation;
         $this->_transportBuilder = $transportBuilder;
-        $this->_scopeConfig = $scopeConfig;
-        $this->_logLoggerInterface = $loggerInterface;
+        $this->_scopeConfig = $context->getScopeConfig();
         $this->customer = $customer;
         $this->collection = $collection;
         $this->storeManager = $storeManager;
         $this->addressRepositoryInterface = $addressRepositoryInterface;
         $this->filesystem = $filesystem;
+        parent::__construct($context);
     }
 
     /**
@@ -278,7 +275,7 @@ class Data extends AbstractHelper
             $websiteId = (int)$this->storeManager->getStore($storeId)->getWebsiteId();
             $websiteCode = $this->storeManager->getWebsite($websiteId)->getCode();
         } catch (\Exception $exception) {
-            $this->_logger->error('Expiry document email error :'. $exception->getMessage());
+            $this->_logger->error('Expiry document email error :' . $exception->getMessage());
         }
 
         return $websiteCode;
