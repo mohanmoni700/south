@@ -103,7 +103,7 @@ class GiftcardAmount extends Giftcard
             if (count($allowedAmounts) == 0) {
                 foreach ($this->allowedOptions->getGiftCardAmounts($product) as $value) {
                     if(isset($value['value'])) {
-                        $allowedAmounts[] = (int)$value['value'];
+                        $allowedAmounts[] = $this->priceCurrency->round($value['value']);
                     }
                 }
             }
