@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Alfakher\MyDocument\Helper;
 
 use Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory;
@@ -50,6 +52,11 @@ class Data extends AbstractHelper
      */
     protected $filesystem;
 
+    const HOOKAH_WHOLESALERS_EXPIRY_DOC_EMAIL = 'hookah_wholesalers_expiry_doc_email';
+
+    const CUSTOM_EXPIRY_DOC_EMAIL = 'custom_expiry_doc_email';
+
+    const HW_WEB_CODE = 'hookah_wholesalers';
 
     /**
      * @param Context $context
@@ -190,8 +197,8 @@ class Data extends AbstractHelper
             ];
 
             $transport = $this->_transportBuilder
-                ->setTemplateIdentifier(($this->getWebsiteCode($storeId) == 'hookah_wholesalers') ?
-                    'hookah_wholesalers_expiry_doc_email' : 'custom_expiry_doc_email')
+                ->setTemplateIdentifier(($this->getWebsiteCode($storeId) == self::HW_WEB_CODE) ?
+                    self::HOOKAH_WHOLESALERS_EXPIRY_DOC_EMAIL : self::CUSTOM_EXPIRY_DOC_EMAIL)
                 ->setTemplateOptions(
                     [
                         'area' => 'frontend',
