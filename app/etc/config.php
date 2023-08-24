@@ -1010,6 +1010,7 @@ return [
         'Alfakher_AdminReorder' => 1,
         'Amasty_RequestQuote' => 1,
         'Magefan_Community' => 1,
+        'Alfakher_CatalogExtended' => 1,
         'Alfakher_Categoryb2b' => 1,
         'Alfakher_CheckoutPage' => 1,
         'Alfakher_CmsCanonical' => 1,
