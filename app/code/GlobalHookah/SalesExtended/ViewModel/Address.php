@@ -40,7 +40,7 @@ class Address implements ArgumentInterface
         try {
             $address = $this->addressRepository->getById($addrId);
             if ($attr = $address->getCustomAttribute('destination_type')) {
-                return $attr->getValue();
+                return ucfirst(strtolower($attr->getValue()));
             }
         } catch (\Exception $e) {
             $this->logger->error($e->getMessage());
