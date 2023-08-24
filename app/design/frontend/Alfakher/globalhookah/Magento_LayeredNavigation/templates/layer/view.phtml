@@ -14,6 +14,10 @@ $stateBlock = $block->getLayout()->createBlock(\Magento\LayeredNavigation\Block\
 <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
 $IsFinanceVerified = $_helperB2b->getIsFinanceVerified();
 ?>
+ <?php ?>
+                 <div class="cate-filter"><a href="javascript:void(0)" class="filter_button" id="is_filter">
+                    <span class="filter-text-span"><?= $block->escapeHtml(__("Hide Filter")) ?></span></a></div>
+            <?php?>
 <?php if ($block->canShowBlock()): ?>    
     <div class="block filter" id="layered-filter-block" data-mage-init='
     {
@@ -31,18 +35,18 @@ $IsFinanceVerified = $_helperB2b->getIsFinanceVerified();
     }'>
         <?php $_filters = $stateBlock->getActiveFilters() ?>
         <?php $filtered = count($block->getLayer()->getState()->getFilters()) ?>
-        <!-- <div class="block-title filter-title" data-role="title">
-            <strong role="heading" aria-level="2" data-role="title" 
+        <div class="block-title filter-title" data-role="title">
+            <strong role="heading" aria-level="2" data-role="title"
                     data-count="<?= /* @noEscape */ count($_filters) ?>"><?= $block->escapeHtml(__('Filters')) ?>
             </strong>
-        </div> -->
+        </div>
 
         <div class="block-content filter-content">
             <?= $block->getChildHtml('state') ?>
 
             <?php if ($block->getLayer()->getState()->getFilters()): ?>
                 <div class="block-actions filter-actions">
-                    <a href="<?= $block->escapeUrl($block->getClearUrl()) ?>" 
+                    <a href="<?= $block->escapeUrl($block->getClearUrl()) ?>"
                        class="action clear filter-clear">
                        <span><?= $block->escapeHtml(__('Clear All')) ?></span>
                     </a>
@@ -51,11 +55,10 @@ $IsFinanceVerified = $_helperB2b->getIsFinanceVerified();
             <?php $wrapOptions = false; ?>
             <?php foreach ($block->getFilters() as $filter): ?>
                 <?php if (!$wrapOptions): ?>
-                    <strong role="heading" aria-level="2" 
+                    <strong role="heading" aria-level="2"
                             class="block-subtitle filter-subtitle"><?= $block->escapeHtml(__('Filters')) ?>
                     </strong>
                     <div class="filter-options" id="narrow-by-list">
-                                        
                         <?php if (!empty($_filters)): ?>
                         <div class="filter-current active">
                             <strong class="block-subtitle filter-current-subtitle"
@@ -65,7 +68,6 @@ $IsFinanceVerified = $_helperB2b->getIsFinanceVerified();
                                     data-count="<?= /* @noEscape */ count($_filters) ?>">
                                     <?= $stateBlock->escapeHtml(__('Now Shopping by')) ?>
                             </strong>
-                            
                             <ol class="items">
                                 <?php foreach ($_filters as $_filter): ?>
                                     <li class="item">
@@ -82,7 +84,7 @@ $IsFinanceVerified = $_helperB2b->getIsFinanceVerified();
                                             ->stripTags($_filter->getLabel()));
                                         if ($clearLinkUrl):
                                             ?>
-                                            <a class="action previous" 
+                                            <a class="action previous"
                                             href="<?= $stateBlock->escapeUrl($_filter->getRemoveUrl()) ?>"
                                             title="<?= $stateBlock->escapeHtmlAttr(__('Previous')) ?>">
                                                 <span><?= $stateBlock->escapeHtml(__('Previous')) ?></span>
@@ -91,11 +93,11 @@ $IsFinanceVerified = $_helperB2b->getIsFinanceVerified();
                                                 ->getFilter()->getClearLinkText()) ?>"
                                             href="<?= $stateBlock->escapeUrl($clearLinkUrl) ?>">
                                                 <span><?= $stateBlock->escapeHtml($_filter
-                                                    ->getFilter()->getClearLinkText()) ?> 
+                                                    ->getFilter()->getClearLinkText()) ?>
                                                 </span>
                                             </a>
                                         <?php else: ?>
-                                            <a class="action remove" 
+                                            <a class="action remove"
                                                href="<?= $stateBlock->escapeUrl($_filter->getRemoveUrl()) ?>"
                                             title="<?= /* @noEscape */ $stateBlock
                                             ->escapeHtmlAttr(__('Remove')) . " " . $currentFilterName ?>">

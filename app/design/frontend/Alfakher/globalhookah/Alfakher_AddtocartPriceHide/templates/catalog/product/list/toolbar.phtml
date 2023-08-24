@@ -31,8 +31,8 @@
                 <?= /* @noEscape */ $block->fetchView(
                     $block->getTemplateFile('Magento_Catalog::product/list/toolbar/sorter.phtml')
                 ) ?>
-                 <div class="cate-filter"><a href="javascript:void(0)" class="filter_button" id="is_filter">
-                    <span class="filter-text-span"><?= $block->escapeHtml(__("Hide Filter")) ?></span></a></div>
+                 <!-- <div class="cate-filter"><a href="javascript:void(0)" class="filter_button" id="is_filter">
+                    <span class="filter-text-span"><?= $block->escapeHtml(__("Hide Filter")) ?></span></a></div> -->
             <?php endif; ?>
         </div>
     <?php endif; ?>
@@ -45,14 +45,18 @@
              $(".filter-text-span").html("<?= $block->escapeHtml(__("Hide Filter")) ?>");
         }
         $(document).on("click", '.cate-filter', function(event) { 
-            if ($(".sidebar.sidebar-main").css("display") == 'block') {       
+            if ($("#layered-filter-block").css("display") == 'block') {       
                 $(".filter-text-span").html("<?= $block->escapeHtml(__("Show Filter")) ?>");
-                $(".sidebar.sidebar-main").css("display", "none");
+                $(".filter-text-span").addClass("show-filter");
+                $("#layered-filter-block").css("display", "none");
                 $(".column.main").addClass("filter-collapse");
+                $(".cate-filter").css("display","block");
             } else {
                 $(".filter-text-span").html("<?= $block->escapeHtml(__("Hide Filter")) ?>");
-                $(".sidebar.sidebar-main").css("display", "block");
+                $("#layered-filter-block").css("display", "block");
                 $(".column.main").removeClass("filter-collapse");
+                $(".filter-text-span").removeClass("show-filter");
+                $(".catalog-topnav .cate-filter").css("display","none");
             }
         });
     });
