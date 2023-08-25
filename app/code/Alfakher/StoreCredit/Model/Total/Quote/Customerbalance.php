@@ -86,23 +86,21 @@ class Customerbalance extends \Magento\CustomerBalance\Model\Total\Quote\Custome
         // Changes for quote calculation after partial store credit
         // Check store credit amount and credit type is partial
         if ($quote->getUseCustomerBalance() && (!empty($baseStoreCreditAmount) &&
-                ($baseStoreCreditType == 'partial')))
-        {
-            if ($baseStoreCreditAmount <= $baseBalance) {
-                if ($baseStoreCreditAmount >= $total->getBaseGrandTotal()) {
-                    $baseUsed = $total->getBaseGrandTotal();
-                    $used = $total->getGrandTotal();
+                ($baseStoreCreditType == 'partial') && ($baseStoreCreditAmount <= $baseBalance))) {
+            if ($baseStoreCreditAmount >= $total->getBaseGrandTotal()) {
+                $baseUsed = $total->getBaseGrandTotal();
+                $used = $total->getGrandTotal();
 
-                    $total->setBaseGrandTotal(0);
-                    $total->setGrandTotal(0);
-                } else {
-                    $baseUsed = $baseStoreCreditAmount;
-                    $used = $storeCreditAmount;
+                $total->setBaseGrandTotal(0);
+                $total->setGrandTotal(0);
+            } else {
+                $baseUsed = $baseStoreCreditAmount;
+                $used = $storeCreditAmount;
 
-                    $total->setBaseGrandTotal($total->getBaseGrandTotal() - $baseStoreCreditAmount);
-                    $total->setGrandTotal($total->getGrandTotal() - $storeCreditAmount);
-                }
+                $total->setBaseGrandTotal($total->getBaseGrandTotal() - $baseStoreCreditAmount);
+                $total->setGrandTotal($total->getGrandTotal() - $storeCreditAmount);
             }
+
         } else {
             $baseAmountLeft = $baseBalance - $quote->getBaseCustomerBalAmountUsed();
             $amountLeft = $balance - $quote->getCustomerBalanceAmountUsed();
