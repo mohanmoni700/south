@@ -85,7 +85,9 @@ class Customerbalance extends \Magento\CustomerBalance\Model\Total\Quote\Custome
 
         // Changes for quote calculation after partial store credit
         // Check store credit amount and credit type is partial
-        if ($quote->getUseCustomerBalance() && (!empty($baseStoreCreditAmount) && ($baseStoreCreditType == 'partial'))) {
+        if ($quote->getUseCustomerBalance() && (!empty($baseStoreCreditAmount) &&
+                ($baseStoreCreditType == 'partial')))
+        {
             if ($baseStoreCreditAmount <= $baseBalance) {
                 if ($baseStoreCreditAmount >= $total->getBaseGrandTotal()) {
                     $baseUsed = $total->getBaseGrandTotal();
