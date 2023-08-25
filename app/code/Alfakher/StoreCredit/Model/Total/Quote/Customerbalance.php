@@ -6,9 +6,7 @@ use Magento\Checkout\Model\Session;
 use Magento\CustomerBalance\Helper\Data;
 use Magento\CustomerBalance\Model\BalanceFactory;
 use Magento\Framework\Pricing\PriceCurrencyInterface;
-use Magento\Quote\Api\Data\ShippingAssignmentInterface;
 use Magento\Quote\Model\Quote\Address;
-use Magento\Quote\Model\Quote\Address\Total;
 use Magento\Store\Model\StoreManagerInterface;
 
 class Customerbalance extends \Magento\CustomerBalance\Model\Total\Quote\Customerbalance
@@ -29,12 +27,13 @@ class Customerbalance extends \Magento\CustomerBalance\Model\Total\Quote\Custome
      * @param StoreManagerInterface $storeManager
      */
     public function __construct(
-        Session $checkoutSession,
-        Data $customerBalanceData,
-        BalanceFactory $balanceFactory,
+        Session                $checkoutSession,
+        Data                   $customerBalanceData,
+        BalanceFactory         $balanceFactory,
         PriceCurrencyInterface $priceCurrency,
-        StoreManagerInterface $storeManager
-    ) {
+        StoreManagerInterface  $storeManager
+    )
+    {
         $this->checkoutSession = $checkoutSession;
         parent::__construct(
             $storeManager,
@@ -48,10 +47,11 @@ class Customerbalance extends \Magento\CustomerBalance\Model\Total\Quote\Custome
      * @inheritDoc
      */
     public function collect(
-        \Magento\Quote\Model\Quote $quote,
+        \Magento\Quote\Model\Quote                          $quote,
         \Magento\Quote\Api\Data\ShippingAssignmentInterface $shippingAssignment,
-        \Magento\Quote\Model\Quote\Address\Total $total
-    ) {
+        \Magento\Quote\Model\Quote\Address\Total            $total
+    )
+    {
         if (!$this->_customerBalanceData->isEnabled()) {
             return $this;
         }
@@ -82,40 +82,23 @@ class Customerbalance extends \Magento\CustomerBalance\Model\Total\Quote\Custome
                 $balance = $this->priceCurrency->convert($baseBalance, $quote->getStore());
             }
         }
-        /* start = changes for quote calculation after partial store credit */
-        if ($quote->getUseCustomerBalance()) {
-            if ($baseStoreCreditType == 'partial') {
-                if ($baseStoreCreditAmount <= $baseBalance) {
-                    if ($baseStoreCreditAmount >= $total->getBaseGrandTotal()) {
-                        $baseUsed = $total->getBaseGrandTotal();
-                        $used = $total->getGrandTotal();
 
-                        $total->setBaseGrandTotal(0);
-                        $total->setGrandTotal(0);
-                    } else {
-                        $baseUsed = $baseStoreCreditAmount;
-                        $used = $storeCreditAmount;
-
-                        $total->setBaseGrandTotal($total->getBaseGrandTotal() - $baseStoreCreditAmount);
-                        $total->setGrandTotal($total->getGrandTotal() - $storeCreditAmount);
-                    }
-                }
-            } elseif ($baseStoreCreditType == 'all') {
-                $baseAmountLeft = $baseBalance - $quote->getBaseCustomerBalAmountUsed();
-                $amountLeft = $balance - $quote->getCustomerBalanceAmountUsed();
-
-                if ($baseAmountLeft >= $total->getBaseGrandTotal()) {
+        // Changes for quote calculation after partial store credit
+        // Check store credit amount and credit type is partial
+        if ($quote->getUseCustomerBalance() && (!empty($baseStoreCreditAmount) && ($baseStoreCreditType == 'partial'))) {
+            if ($baseStoreCreditAmount <= $baseBalance) {
+                if ($baseStoreCreditAmount >= $total->getBaseGrandTotal()) {
                     $baseUsed = $total->getBaseGrandTotal();
                     $used = $total->getGrandTotal();
 
                     $total->setBaseGrandTotal(0);
                     $total->setGrandTotal(0);
                 } else {
-                    $baseUsed = $baseAmountLeft;
-                    $used = $amountLeft;
+                    $baseUsed = $baseStoreCreditAmount;
+                    $used = $storeCreditAmount;
 
-                    $total->setBaseGrandTotal($total->getBaseGrandTotal() - $baseAmountLeft);
-                    $total->setGrandTotal($total->getGrandTotal() - $amountLeft);
+                    $total->setBaseGrandTotal($total->getBaseGrandTotal() - $baseStoreCreditAmount);
+                    $total->setGrandTotal($total->getGrandTotal() - $storeCreditAmount);
                 }
             }
         } else {
@@ -136,7 +119,8 @@ class Customerbalance extends \Magento\CustomerBalance\Model\Total\Quote\Custome
                 $total->setGrandTotal($total->getGrandTotal() - $amountLeft);
             }
         }
-        /* end = changes for quote calculation after partial store credit */
+        /* Changes for quote calculation after partial store credit */
+
         $baseTotalUsed = $quote->getBaseCustomerBalAmountUsed() + $baseUsed;
         $totalUsed = $quote->getCustomerBalanceAmountUsed() + $used;
 
