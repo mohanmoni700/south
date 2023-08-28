@@ -167,27 +167,26 @@ class BundleSalesOrderInvoiceSave implements ObserverInterface
      */
     public function updateStoreCreditByOrder($customerId, $order, $skuStoreCredit)
     {
-        $isAnnualBundle = false;
         //Get All Order Items
         $orderItems = $order->getAllItems();
+        $totalStoreCredit = 0;
 
         foreach ($orderItems as $orderItem) {
-            $parentItemId = $orderItem->getParentItemId();
+
             //check whether if cart contains annual bundle product
-            if (!isset($parentItemId) && !$isAnnualBundle) {
-                $isAnnualBundle = $orderItem->getProduct()->getData('is_annual_bundle') == 1;
-            }
+            $isAnnualBundle = $orderItem->getProduct()->getData('is_annual_bundle') == 1;
+            $qty = $orderItem->getQtyOrdered();
 
             //Check whether item exist in the config with store credit
-            if (isset($skuStoreCredit[$orderItem->getSku()])) {
-                $storeCredit = $skuStoreCredit[$orderItem->getSku()];
+            if ($isAnnualBundle && isset($skuStoreCredit[$orderItem->getSku()])) {
+                $totalStoreCredit += $skuStoreCredit[$orderItem->getSku()] * $qty;
             }
         }
 
-        //Check for annual bundle and store credit exist for the item
-        if ($isAnnualBundle && isset($storeCredit)) {
+        //Check store credit exist and store credit !=0
+        if (isset($totalStoreCredit) && $totalStoreCredit != 0) {
             // add store credit to customer
-            $this->addStoreCreditToCustomer($customerId, $storeCredit, $order);
+            $this->addStoreCreditToCustomer($customerId, $totalStoreCredit, $order);
         }
 
     }
