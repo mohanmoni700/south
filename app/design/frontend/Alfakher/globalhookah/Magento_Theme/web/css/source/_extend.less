@@ -10,84 +10,6 @@
 
 & when (@media-common = true) {
     body {
-        .top_products {
-            div[data-content-type='tabs'] .tabs-navigation li.tab-header.ui-state-active {
-                border:unset;
-                background-color: unset;
-                .ui-tabs-anchor {
-                    color: #169C60;
-                    padding: 1.5rem 0;
-                    border-bottom: 5px solid #169C60;
-                    font-size: 2rem;
-                    font-weight: 600;
-                }
-            }
-            .tabs-navigation{
-                padding:0 ;
-            }
-            .tabs-navigation::-webkit-scrollbar {
-                display: none !important;
-            }
-            .tab-header {
-                min-width:14.75rem;
-            }
-            .tab-title {
-                &::after {
-                    display: none;
-                }
-            }
-            .comman_arrow .slick-arrow {
-                top: 26.3rem;
-                position: absolute;
-                border:unset;
-            }
-            .comman_arrow .slick-prev {
-                left: -19.188rem;              
-                &::before {
-                    content: url('@{baseDir}images/arrow_left.svg');
-                 }
-            }
-            .comman_arrow .slick-arrow:hover {
-                background-color: unset;
-            }
-            .comman_arrow .slick-next {
-                left: -10rem;
-                &::before {
-                    content: url('@{baseDir}images/arrow_right.svg');
-                }
-            }
-            .pagebuilder-column {
-                p {
-                    color: @color-black;
-                }
-                margin-top: 4.5rem;
-
-                h2 {
-                    margin-bottom: 3rem;
-                }
-
-                .top-prod-button {
-                    margin-top: 3.5rem;
-                }
-            }
-            .pagebuilder-column-group {
-                width: 100%;
-                max-width: 1280px;
-                margin: 0 auto;
-            }
-            .pagebuilder-button-secondary {
-                border-radius: 2rem;
-                font-size: 1.6rem;
-                border: 1px solid @color-black;
-                background: unset;
-                padding: 10px 30px;
-                &:hover {
-                    background: #229B62 ;
-                    color:#FFFFFF ;
-
-                }
-            }
-        }
         .page-header {
             .warning-section-wrapper {
                 .warning-section {
@@ -372,7 +294,6 @@
                     }
                 }
             }
-
         }
     }
 
@@ -1131,12 +1052,6 @@
             }
         }
     }
-    div[data-content-type='tabs'] .tabs-navigation {
-        padding:0 0 0 20px ;
-        flex-wrap: nowrap;
-        border: unset;
-        background-color: unset;
-    }
 }
 
 //
@@ -1460,11 +1375,6 @@
             max-width: 100%;
             margin: 0 auto;
         }
-        .top_products {
-            .tabs-navigation {
-                padding: 0 ;
-            }
-        }
     }
 }
 
@@ -1488,55 +1398,6 @@
 
 @media only screen and (max-width: 1024px) {
     body {
-        .top_products {
-            .pagebuilder-column {
-                margin-top: 0;
-                h2 {
-                    margin-bottom: 1rem;
-                    margin-top:1rem;
-                }
-                .top-prod-button {
-                    margin-top: 0.625rem;
-                }
-            }
-            .pagebuilder-button-secondary {
-                font-size: 1rem;
-                padding: 5px 30px;
-                margin: 0 10px 25px 0;
-                border-color:@button-primary__border;
-            }
-            .tabs-navigation {
-                flex-wrap: nowrap;
-                overflow:scroll;
-                border:unset;
-                background-color: unset;
-            } 
-            div[data-content-type='tabs'] .tabs-navigation li.tab-header {
-                border: unset;
-                background-color: unset;
-                a.tab-title span.tab-title {
-                    margin-right: auto;
-                }
-                a.tab-title {
-                    padding: 0rem;
-                }
-            }
-            .tab-title { 
-                font-size: 1rem;
-            }
-            .tab-header {
-                min-width: 7.3125rem;
-            }
-            div[data-content-type='tabs'] .tabs-navigation {
-                li.tab-header.ui-tabs-active::before {
-                    display:none;
-                }
-                li.tab-header.ui-state-active .ui-tabs-anchor {
-                    border-bottom: 3px solid #169C60 ;
-                    padding: 0.5rem 0;
-                }
-            }
-        }
         .header-links-wrapper {
             display: none;
         }
@@ -1674,7 +1535,7 @@
             }
         }
     }
-   
+
     .amasty_quote-account-view.account {
         .page-title-wrapper {
             .order-actions-toolbar {
@@ -1682,6 +1543,11 @@
                     &:before {
                         filter: unset;
                         background-image: url(../images/Union_quote.svg);
+                    }
+                    .action.print {
+                        span {
+                            color:#316BB2;
+                        }
                     }
                 }
             }
