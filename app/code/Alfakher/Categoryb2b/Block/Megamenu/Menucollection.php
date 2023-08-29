@@ -22,11 +22,6 @@
         {
             return $this->_categoryHelper->getStoreCategories($sorted , $asCollection, $toLoad);
         }
-
-        public function getAllCurrentStoreCategories($sorted = true, $asCollection = true, $toLoad = true)
-        {
-            return $this->_categoryHelper->getStoreCategories($sorted , $asCollection, $toLoad);
-        }
         public function getContent($staticBlockId)
         {
             $block = $this->blockRepository->getById($staticBlockId);
@@ -39,3 +34,4 @@
         }
 
     }
+    
