@@ -915,137 +915,25 @@
        > .field.hub_mobile_number {
             margin-bottom: 1.875rem;
         }
-    }
-
-    .about-store {       
-        .pagebuilder {
-            &-column {
-                align-self: center !important;
-
-                h2 {
-                    font-size: 40px;
-                }
-
-                p {
-                    font-size: 16px;
-                }
-
-                &-group {
-                    gap: 72px;
-                    flex-wrap: nowrap;
-                }
-
-                .read-more { 
-                    display: none;
-                }
+        > .field:not(.choice) {
+            > .label {
+                margin: 0 0 10px 0;
+                color: @color-black;
+                .lib-font-size(12);
             }
         }
     }
-
-    .cms-index-index {
-        .blog-widget-recent {
-            .post-ftimg-hld {
-                img {
-                    max-height: 32rem;
-                    border-radius: 1rem;
-                    width: -webkit-fill-available !important;
-                    margin-left: 3.6rem !important;
-                    margin-right: 3.6rem !important;
-                }
+    .modals-wrapper {
+        .modal-popup.register-action-error {
+            .modal-title {
+                letter-spacing: 0;
             }
         }
     }
-
-    .cms-home {
-        .blog-widget-recent {
-            max-width: 100%;
-            background-color: #E6EEFF;
-
-            .post-list {
-                margin: 0 !important;
-
-                .slick-track {
-                    display: flex;
-                }
-
-                .slick-slide {
-                    height: auto;
-
-                    > div {
-                        height: 100%;
-                    }
-                }
-
-                .post-title {
-                    &-holder {
-                        margin: 2.4rem 0 1.6rem;
-                    }
-
-                    a {
-                        font-size: 2.8rem;
-                        font-weight: 600;
-                    }
-                }
-            }
-
-            .post-list-content-wrapper {
-                max-width: 100%;
-                margin: 0 7.2rem;
-
-                .view-more a.action.primary {
-                    font-size: 1.6rem;
-                    background: transparent;
-                    color: #000;
-                    padding: 1.7rem 4rem;
-
-                    &:hover {
-                        color: #fff;
-                        background: transparent linear-gradient(180deg, #229B62 0%, #346DB0 200%) 0% 0% no-repeat padding-box;
-                        border-image-source: linear-gradient(180deg, #229B62 0%, #346DB0 200%);
-                    }
-                }
-            }
-
-            .post-holder {
-                margin: 0 !important;
-                height: 100%;
-
-                .post-holder-hover {
-                    position: relative;
-                    height: 100%;
-    
-                    .white-wrapper {
-                        background: #fff;
-                        width: 100%;
-                        height: 80%;
-                        position: absolute;
-                        bottom: 0;
-                        z-index: -1;
-                        border-radius: 1rem;
-                    }
-    
-                    .post-content {
-                        padding: 0 3.6rem 1rem;
-
-                        .post-description {
-                            img {
-                                display: none;
-                            }
-                        }
-                    }
-                }
-            }
-
-            .h2_heading_builder {
-                font-size: 4rem;
-                font-weight: bold;
-                text-align: center;
-                border-bottom: none;
-
-                &::before {
-                    display: none;
-                }
-            }
+    .document-title {
+        .title {
+            font-family: @font-family-name__secondary;
+            letter-spacing: 1px;
         }
     }
     
@@ -1238,12 +1126,6 @@
                 width: 8rem;
             }
         }
-    }
-    div[data-content-type='tabs'] .tabs-navigation {	
-        padding:0 0 0 20px ;	
-        flex-wrap: nowrap;	
-        border: unset;	
-        background-color: unset;	
     }
 }
 
