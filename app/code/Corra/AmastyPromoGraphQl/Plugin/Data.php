@@ -37,10 +37,11 @@ class Data
      * @param ProductRepository $productRepository
      */
     public function __construct(
-        RuleFactory $ruleFactory,
-        Items $promoItems,
+        RuleFactory       $ruleFactory,
+        Items             $promoItems,
         ProductRepository $productRepository
-    ) {
+    )
+    {
         $this->ruleFactory = $ruleFactory;
         $this->promoItems = $promoItems;
         $this->productRepository = $productRepository;
@@ -55,57 +56,27 @@ class Data
     {
         $freeGiftData = [];
         $freeSamplesData = [];
-        $itemData = [];
-        $quoteRules = [];
         $triggeredProducts = $result['triggered_products'];
-        $rules = $this->cartRuleData;
-        $cartSubtotal = $this->cartSubtotal;
-        if (isset($rules) && $rules) {
-            $quoteRules = explode(',', $rules);
-        }
 
         foreach ($triggeredProducts as $key => $triggeredProduct) {
             $coupon = $this->ruleFactory->create()->load($key);
             $skuList = $triggeredProduct['sku'];
-            $itemData = [];
             $allowedMaxQty = $coupon->getData('discount_amount');
             if (isset($coupon) && $coupon->getCouponCode()) {
                 $discountQty = $coupon->getData('discount_qty');
                 if (0 == $discountQty || $discountQty == null) {
-                    $stepAmountQty = $this->cartSubtotal/$coupon->getData('discount_step');
+                    $stepAmountQty = $this->cartSubtotal / $coupon->getData('discount_step');
                     if ($stepAmountQty >= 2) {
                         $allowedMaxQty = $allowedMaxQty + $coupon->getData('discount_amount');
                     }
                 }
-                foreach ($skuList as $sku => $skuItem) {
-                    $itemData = $this->getProductDataBySku($sku);
-                    $freeGiftData[] = [
-                        'sku' => $sku,
-                        'name' => $itemData['name'],
-                        'img' => $itemData['img'],
-                        'max_qty' => $allowedMaxQty,
-                        'rule_id' => $key,
-                        'is_added' => 0,
-                        'allowed_qty' => $allowedMaxQty
-                    ];
-                }
+                $freeGiftData = $this->getFreeData($skuList, $allowedMaxQty, $key);
             } else {
-                foreach ($skuList as $sku => $skuItem) {
-                    $itemData = $this->getProductDataBySku($sku);
-                    $freeSamplesData[] = [
-                        'sku' => $sku,
-                        'name' => $itemData['name'],
-                        'img' => $itemData['img'],
-                        'max_qty' => $allowedMaxQty,
-                        'rule_id' => $key,
-                        'is_added' => 0,
-                        'allowed_qty' => $allowedMaxQty
-                    ];
-                }
+                $freeSamplesData = $this->getFreeData($skuList, $allowedMaxQty, $key);
             }
         }
 
-        return[
+        return [
             'common_qty' => $result['common_qty'],
             'triggered_products' => $triggeredProducts,
             'promo_sku' => $result['promo_sku'],
@@ -122,9 +93,9 @@ class Data
     {
         $product = $this->productRepository->get($sku);
         $imageUrl = $this->promoItems->getImageHelper()
-            ->init($product, 'small_image', ['type'=>'small_image'])
+            ->init($product, 'small_image', ['type' => 'small_image'])
             ->getUrl();
-        return[
+        return [
             'name' => $product->getName(),
             'img' => $imageUrl
         ];
@@ -150,5 +121,29 @@ class Data
             }
         }
         $this->cartSubtotal = $subTotal;
+    }
+
+    /**
+     * @param $skuList
+     * @param $allowedMaxQty
+     * @param $key
+     * @return array
+     */
+    public function getFreeData($skuList, $allowedMaxQty, $key)
+    {
+        $freeGiftData = [];
+        foreach ($skuList as $sku => $skuItem) {
+            $itemData = $this->getProductDataBySku($sku);
+            $freeGiftData[] = [
+                'sku' => $sku,
+                'name' => $itemData['name'],
+                'img' => $itemData['img'],
+                'max_qty' => $allowedMaxQty,
+                'rule_id' => $key,
+                'is_added' => 0,
+                'allowed_qty' => $allowedMaxQty
+            ];
+        }
+        return $freeGiftData;
     }
 }

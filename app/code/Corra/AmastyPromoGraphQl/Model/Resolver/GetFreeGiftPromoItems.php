@@ -69,7 +69,6 @@ class GetFreeGiftPromoItems implements ResolverInterface
             array_multisort(array_column($gifts, 'sku'), SORT_ASC, $gifts);
             $samples = $promoItems['free_samples'];
             array_multisort(array_column($samples, 'sku'), SORT_ASC, $samples);
-            $cartRuleData = [];
             $giftsUpdated = $gifts;
             $samplesUpdated = $samples;
             foreach ($cartItems as $cartItem) {

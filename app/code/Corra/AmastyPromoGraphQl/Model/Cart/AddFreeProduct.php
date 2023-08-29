@@ -172,10 +172,10 @@ class AddFreeProduct
                 $sku,
                 $params['quantity'],
                 $params['rule_id'],
-                $ruleType = Rule::RULE_TYPE_ALL,
-                $minimalPrice = null,
-                $discountItem = null,
-                $discountAmount = $params['allowed_quantity']
+                Rule::RULE_TYPE_ALL,
+                null,
+                null,
+                $params['allowed_quantity']
             );
         }
         return $promoItemData;
