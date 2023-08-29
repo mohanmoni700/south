@@ -1,11 +1,11 @@
 <?php
     namespace Alfakher\Categoryb2b\Block\Megamenu;
 
-    class Menucollection extends \Magento\Framework\View\Element\Template{ 
+    class Menucollection extends \Magento\Framework\View\Element\Template{
         protected $_categoryCollection;
         protected $_storeManager;
 		protected $categoryFactory;
-        
+
         public function __construct(
             \Magento\Cms\Api\BlockRepositoryInterface $blockRepository,
             \Magento\Framework\View\Element\Template\Context $context,
@@ -17,12 +17,12 @@
             $this->_categoryHelper = $categoryHelper;
 			$this->categoryFactory = $categoryFactory;
             parent::__construct($context, $data);
-        }    
+        }
         public function getMainStoreCategories($sorted = false, $asCollection = false, $toLoad = true)
         {
             return $this->_categoryHelper->getStoreCategories($sorted , $asCollection, $toLoad);
-        }    
-       
+        }
+
         public function getAllCurrentStoreCategories($sorted = true, $asCollection = true, $toLoad = true)
         {
             return $this->_categoryHelper->getStoreCategories($sorted , $asCollection, $toLoad);

@@ -21,12 +21,7 @@
                 </arguments>
               </block>
         </referenceContainer>
-        <referenceContainer name="page.top">
-           <!-- <block class="Magento\Cms\Block\Block" name="megamenu-desktop">
-                <arguments>
-                  <argument name="block_id" xsi:type="string">megamenu-desktop</argument>
-                </arguments>
-              </block> -->
+        <referenceContainer name="page.top">          
               <block class="Alfakher\Categoryb2b\Block\Megamenu\Menucollection" name="megamenuCustom" template="Magento_Theme::html/MegaMenu.phtml"/>
         </referenceContainer>
         <referenceBlock name="sw.topnav" remove="true"/>

@@ -18,8 +18,7 @@ require(['jquery',
             });
             $('.tabs-content .pagebuilder-column-group .pagebuilder-column:first-child ul').prepend('<li class="first"><div class="close-submenu">Close</div><div class="parent-name"></div></li>');
             $('.tabs-navigation li a').off('click').on('click', function () {
-                var $href = $(this).attr('href');
-                var text = $(this).text();                         
+                let $href = $(this).attr('href');                       
                 $($href).find('.parent-name').html($(this).html()); // this is what you need to do
             });
             $('.tabs-navigation li').off('click').on('click', function () {
@@ -29,8 +28,6 @@ require(['jquery',
             $(' .close-submenu').off('click').on('click', function () {
                 $('.tabs-content').removeClass('active');
             });
-           
-          
         }
         mediaCheck({
             media: '(min-width: 1025px)',
