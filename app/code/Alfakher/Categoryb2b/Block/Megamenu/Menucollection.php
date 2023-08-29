@@ -38,5 +38,4 @@
             return $this->categoryFactory->create()->load($categoryId);
         }
 
-
     }
