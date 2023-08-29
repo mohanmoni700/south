@@ -1,0 +1,34 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .account {
+        .nav.items {
+            .nav {
+                strong {
+                    &::before {
+                        top: 1.5rem;
+                    }
+                }
+
+                &.frontend_mc_info {
+                    a,
+                    strong {
+                        &:before {
+                            background: url('@{baseDir}images/paymentinfo.png') no-repeat;
+                            width: 1.9rem;
+                            height: 1.9rem;
+                            background-size: contain;
+                        }
+                    }
+                    strong {
+                        &:before {
+                            filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
