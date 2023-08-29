@@ -1157,6 +1157,7 @@ return [
         'HookahShisha_Customization' => 1,
         'Mondu_Mondu' => 1,
         'OlegKoval_RegenerateUrlRewrites' => 1,
+        'Ooka_Catalog' => 1,
         'Ooka_Customizations' => 1,
         'Ooka_OokaSerialNumber' => 1,
         'PCAPredict_Tag' => 1,
