@@ -52,6 +52,7 @@ class ApplyCouponToCart
             if(!empty($requestedCoupon)) {
                 $couponArray = $this->validateCode($requestedCoupon);
                 $couponQty = count($couponArray);
+                //To validate the yopto coupon
                 $this->validateYoptoCoupon($couponArray);
                 $args['input']['coupon_code'] = implode(";", $couponArray);
             }
