@@ -1,0 +1,61 @@
+<?php
+// phpcs:disable Magento2.Templates.ThisInTemplate
+/**
+ * Product list toolbar
+ *
+ * @var $block \Magento\Catalog\Block\Product\ProductList\Toolbar
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+
+?>
+<?php $size=$block->getCollection(); ?>
+<?php if (!empty($size)): ?>
+    <?php if ($block->getCollection()->getSize()):?>
+        <?php $jsonHelper = $this->helper(\Magento\Framework\Json\Helper\Data::class); ?>
+        <?php $widget = $jsonHelper->jsonDecode($block->getWidgetOptionsJson()); ?>
+        <?php $widgetOptions = $jsonHelper->jsonEncode($widget['productListToolbarForm']); ?>
+        <div class="toolbar toolbar-products" 
+                data-mage-init='{"productListToolbarForm":<?= /* @noEscape */ $widgetOptions ?>}'>
+
+            <?= /* @noEscape */ $block->fetchView(
+                $block->getTemplateFile('Magento_Catalog::product/list/toolbar/amount.phtml')
+            ) ?>
+
+            <?= $block->getPagerHtml() ?>
+
+            <?= /* @noEscape */ $block->fetchView(
+                $block->getTemplateFile('Magento_Catalog::product/list/toolbar/limiter.phtml')
+            ) ?>
+            
+            <?php if ($block->isExpanded()):?>
+                <?= /* @noEscape */ $block->fetchView(
+                    $block->getTemplateFile('Magento_Catalog::product/list/toolbar/sorter.phtml')
+                ) ?>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+<?php endif; ?>
+<script>
+    require(['jquery'], function($) {
+        if($("div").hasClass("filter-collapse")){
+            $(".filter-text-span").html("<?= $block->escapeHtml(__("Show Filter")) ?>");
+        }else{
+             $(".filter-text-span").html("<?= $block->escapeHtml(__("Hide Filter")) ?>");
+        }
+        $(document).on("click", '.cate-filter', function(event) { 
+            if ($("#layered-filter-block").css("display") == 'block') {       
+                $(".filter-text-span").html("<?= $block->escapeHtml(__("Show Filter")) ?>");
+                $(".filter-text-span").addClass("show-filter");
+                $("#layered-filter-block").css("display", "none");
+                $(".column.main").addClass("filter-collapse");
+                $(".cate-filter").css("display","block");
+            } else {
+                $(".filter-text-span").html("<?= $block->escapeHtml(__("Hide Filter")) ?>");
+                $("#layered-filter-block").css("display", "block");
+                $(".column.main").removeClass("filter-collapse");
+                $(".filter-text-span").removeClass("show-filter");
+                $(".catalog-topnav .cate-filter").css("display","none");
+            }
+        });
+    });
+</script>
