@@ -123,6 +123,115 @@
         }
     }
 
+    .bestselling-picks {
+        h2 {
+            margin-bottom: 5.6rem;
+            font-size: 4rem;
+        }
+
+        .progress {
+            display: block;
+            width: 100%;
+            height: 5px;
+            border-radius: 2.8rem;
+            margin-top: 3.6rem;
+            overflow: hidden;
+            background-color: #C7D2EC;
+            background-image: linear-gradient(to right, #316BB2, #316BB2);
+            background-repeat: no-repeat;
+            background-size: 0 100%;
+            transition: background-size .4s ease-in-out;
+
+            .sr-only {
+                position: absolute;
+                width: 1px;
+                height: 1px;
+                padding: 0;
+                margin: -1px;
+                overflow: hidden;
+                clip: rect(0,0,0,0);
+                border: 0;
+            }
+        }
+
+        .product-item {
+            &-brand {
+                font-size: 1.4rem;
+                color: #316BB2;
+                margin: 1.6rem 0;
+            }
+
+            &-details {
+                text-align: left;
+            }
+
+            &-name {
+                font-size: 1.6rem;
+                font-weight: 600;
+            }
+
+            .price-box {
+                font-family: 'Quicksand';
+                
+                .price-label {
+                    font-size: 1.6rem;
+                }
+            }
+
+            .special-price,
+            .minimal-price {
+                .price {
+                    font-size: 1.6rem;
+                    color: #FC2F29;
+                }
+            }
+
+            .old-price {
+                display: none;
+            }
+        }
+
+        .comman_arrow {
+            .slick-prev,
+            .slick-next {
+                border: none;
+                border-radius: 0;
+                top: -8rem;
+
+                &:hover {
+                    background-color: unset;
+                }
+            }
+
+            .slick-prev { 
+                left: unset;
+                right: 12rem;
+
+                &::before {
+                    content: "";
+                    display: block;
+                    height: 4rem;
+                    width: 4rem;
+                    background-image: url('@{baseDir}images/prev.svg');
+                    background-repeat: no-repeat;
+                }
+            }
+
+            .slick-next {
+                right: 7rem;
+
+                &::before {
+                    content: "";
+                    display: block;
+                    height: 4rem;
+                    width: 4rem;
+                    background-image: url('@{baseDir}images/next.svg');
+                    background-repeat: no-repeat;
+                }
+            }
+        }
+    }
+    
     .accessories_wholesale {
         .pagebuilder {
             &-column {
@@ -214,6 +323,61 @@
     }
 }
 
+//
+//  Desktop
+//  _____________________________________________
+
+@media only screen and (min-width: 1024px) and (max-width: 1920px) { 
+    body {
+        .bestselling-picks {
+            max-width: 100%;
+            margin: 0 7.2rem 7.2rem;
+
+            .comman_arrow {
+                .slick-prev,
+                .slick-next {
+                    display: block !important;
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop large
+//  _____________________________________________
+
+@media only screen and (min-width: 1921px) { 
+    body {
+        .bestselling-picks {
+            max-width: 1280px;
+            margin: 0 auto 7.2rem;
+        }
+    }
+}
+
+@media only screen and (min-width: 767px) and (max-width: 1024px) {
+    body {
+        .bestselling-picks {
+            max-width: 100%;
+            margin: 0 auto 1rem;
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .top_sellling {
+        .widget-product-carousel.product-items {
+            .slick-list {
+                padding-right: 10rem !important;
+            }
+        }
+    }
+}
 
 //
 //  Mobile
@@ -250,6 +414,41 @@
         }
     }
 
+    .bestselling-picks {
+        margin-bottom: 1rem;
+               
+        h2 {
+            margin-bottom: 1.6rem;
+            font-size: 2.4rem;
+        }
+
+        .product-item {
+            &-name {
+                font-size: 1.4rem;
+                min-height: unset; 
+
+                > a {
+                    -webkit-line-clamp: 1;
+                }
+            }
+
+            &-brand {
+                font-size: 1.2rem;
+            }
+
+            .price-box .price-label {
+                font-size: 1.4rem;
+            }
+
+            .special-price,
+            .minimal-price {
+                .price {
+                    font-size: 1.4rem;
+                }
+            }
+        }
+    }
+    
     .accessories_wholesale {
         .pagebuilder {
             &-column {
