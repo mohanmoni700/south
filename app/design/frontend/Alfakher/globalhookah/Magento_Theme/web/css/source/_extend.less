@@ -38,18 +38,34 @@
             }
             .header.content {
                 padding: @indent__s 0;
-
+                .left_section {
+                    flex-basis: 72%;
+                }
+                .right_section {
+                    flex-basis: 28%;
+                }
                 .logo {
                      width: 230px;
                      height: auto;
                 }
                 .block-search {
                     margin-top: 20px;
+                    max-width: 750px;
                     .control { 
                         input {
-                            height: 35px;
+                           border-bottom: 1px solid  @color_primary; 
+                           padding:0;
+                           border-top:unset;
+                           border-left: unset;
+                           border-right:unset;
+                           border-radius: 0;
+                           height: 35px;
                         }
                     }
+                    .action.search {
+                       right:0;
+                    }
+            
                 }
 
                 .minicart-wrapper {
@@ -731,6 +747,9 @@
                 }
             }
         }
+    }
+    body .page-wrapper .page-header .header.content .block-search .action.search {
+        right:0;
     }
 
     .amasty_quote-account-view.account {
