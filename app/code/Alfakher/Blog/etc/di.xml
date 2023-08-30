@@ -1,8 +1,10 @@
 <?xml version="1.0" ?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-	
+
 	<preference for="Magefan\Blog\Block\Sidebar\Archive" type="Alfakher\Blog\Block\Sidebar\Archive"/>
 	<preference for="Magefan\Blog\Block\Archive\PostList" type="Alfakher\Blog\Block\Archive\PostList"/>
 
 	<preference for="Magefan\Blog\Model\Post" type="Alfakher\Blog\Model\Post"/>
+    <preference for="Magefan\BlogGraphQl\Model\Resolver\Post" type="Alfakher\Blog\Model\Resolver\Post"/>
+
 </config>
