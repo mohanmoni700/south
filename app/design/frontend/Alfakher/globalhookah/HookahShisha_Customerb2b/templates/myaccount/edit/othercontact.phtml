@@ -7,11 +7,6 @@
 $actionURL = "#";
 $formDisable = 1;
 ?>
-<?php $messageData = $block->getMessagedata(); ?>
-<?php if ($messageData['isContactChanged'] == 1): ?>
-    <?php $actionURL = $this->getUrl('customerb2b/account/contactPost'); ?>
-    <?php $formDisable = 0; ?>
-<?php endif; ?>
 <form class="form-address-edit"
       action="<?= $block->escapeUrl($actionURL) ?>"
       method="post"
@@ -93,15 +88,6 @@ $formDisable = 1;
         </div>
     </div>
 </form>
-<script>
-    require(['jquery'], function ($) { 
-        $(document).ready(function() {
-            setTimeout(function() {
-                $("#other-contact-form-validate :input").prop("disabled", true);
-            }, 1000);
-        });
-    });
-</script>
 <?php if ($formDisable == 1): ?>
     <?php
     $scriptString = <<<script
