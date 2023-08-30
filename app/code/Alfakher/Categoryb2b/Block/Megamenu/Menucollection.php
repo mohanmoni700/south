@@ -2,8 +2,8 @@
     namespace Alfakher\Categoryb2b\Block\Megamenu;
 
     class Menucollection extends \Magento\Framework\View\Element\Template{
-        protected $_categoryCollection;
-        protected $_storeManager;
+        protected $categoryCollection;
+        protected $storeManager;
         protected $categoryFactory;
 
         public function __construct(
@@ -33,4 +33,4 @@
             return $this->categoryFactory->create()->load($categoryId);
         }
 
-    }    
+    }
