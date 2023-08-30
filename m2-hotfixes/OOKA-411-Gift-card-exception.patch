@@ -1,14 +1,13 @@
 diff --git a/vendor/magento/module-gift-card-graph-ql/Model/Resolver/Product/ConfigAttributes.php b/vendor/magento/module-gift-card-graph-ql/Model/Resolver/Product/ConfigAttributes.php
-index bd61efbf2..03cb84157 100644
+index bd61efbf2..c1769d1b2 100644
 --- a/vendor/magento/module-gift-card-graph-ql/Model/Resolver/Product/ConfigAttributes.php
 +++ b/vendor/magento/module-gift-card-graph-ql/Model/Resolver/Product/ConfigAttributes.php
-@@ -62,7 +62,8 @@ class ConfigAttributes implements ResolverInterface
-                 'allow_message' => GiftcardModel::XML_PATH_ALLOW_MESSAGE
-             ];
- 
--            if (isset($product[$field->getName()]) && isset($product['use_config_' . $field->getName()])) {
-+            if (isset($product[$field->getName()]) && isset($product['use_config_' . $field->getName()])
-+                && is_string($attributesWithConfigPathKeys[$field->getName()])) {
-                 $data = $this->overrideValueFromConfig(
-                     $product[$field->getName()],
-                     $product['use_config_' . $field->getName()],
+@@ -84,7 +84,7 @@ class ConfigAttributes implements ResolverInterface
+      * @param string $configPath
+      * @return bool
+      */
+-    private function overrideValueFromConfig(int $value, int $configValue, string $configPath) : bool
++    private function overrideValueFromConfig($value, $configValue, $configPath) : bool
+     {
+         if ($configValue) {
+             $value = $this->scopeConfig->getValue(
