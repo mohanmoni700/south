@@ -34,10 +34,6 @@ $regionProvinceLabel = $block->escapeHtml(__('Province'));
 $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel;
 /* End Change the region_id Label if the Country is US for State and Other for the State */
 ?>
-<?php $messageData = $block->getMessagedata(); ?>
-<?php if ($messageData['cstAccountVerified'] == 0 && $messageData['cstDetailsChanged'] == 0): ?>
-    <?php $formDisable = 0; ?>
-<?php endif; ?>
 
 <form class="form-address-edit"
       action="<?= $block->escapeUrl($this->getUrl('customerb2b/account/basicPost')) ?>"
@@ -284,63 +280,18 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
 </script>
 <?php
     $scriptString = <<<script
-        require(['jquery','Magento_Customer/js/customer-data','jquery/ui','mage/mage'], function($,customerData){
-    script;
+        require(['jquery',], function($,customerData){
+script;
 ?>
 <?php if ($formDisable == 1): ?>
     <?php
         $scriptString .= <<<script
             $(document).ready(function(){
-                $("#form-validate :input").prop("disabled", true);
                 setTimeout(function(){
                     $("#form-validate :input").prop("disabled", true);
-                }, 5000);
-            });
-        script;
+                }, 1000);
+            });});
+script;
     ?>
 <?php endif; ?>
-<?php
-    $scriptString .= <<<script
-            $(document).ready(function(){
-                var sections = ['customer'];
-                customerData.reload(sections, true);
-                jQuery("#form-validate #country").attr("disabled","true");
-            });
-
-            //right before the form submits, we re-enable the fields, to make them submit.
-            $("#form-validate").submit(function( event ) {
-                if($('#form-validate').valid()){
-                    $("body").trigger('processStart');
-                    $("#country").prop( "disabled", false );
-                }
-            });
-
-
-            $("#country").change(function () {
-                onCountryChange();
-            });
-        });
-        function onCountryChange() {
-            require(['jquery'], function($){
-                var countryval = $('#country option:selected').val();
-                if(countryval=='US'){
-                    $('#region_id_label').children('span').html("$regionStateLabel");
-                    $('#region_id').attr('placeholder',"$regionStateLabel");
-                    $('.vat-tax-id').show();
-                    $('.tin-number').show();
-                    $('.tobacco-permit-number').show();
-                }else{
-                    $('#region_id_label').children('span').html("$regionProvinceLabel");
-                    $('#region').attr('placeholder',"$regionProvinceLabel");
-                    $('.vat-tax-id').hide();
-                    $('#vat_tax_id').val('');
-                    $('.tin-number').hide();
-                    $('#tin_number').val('');
-                    $('.tobacco-permit-number').hide();
-                    $('#tobacco_permit_number').val('');
-                }
-            });
-        }
-    script;
-?>
 <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
