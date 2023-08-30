@@ -1,0 +1,15 @@
+diff --git a/vendor/magento/module-sales-graph-ql/Model/Resolver/CustomerOrders/Query/OrderFilter.php b/vendor/magento/module-sales-graph-ql/Model/Resolver/CustomerOrders/Query/OrderFilter.php
+--- a/vendor/magento/module-sales-graph-ql/Model/Resolver/CustomerOrders/Query/OrderFilter.php	2023-08-02 14:16:46
++++ b/vendor/magento/module-sales-graph-ql/Model/Resolver/CustomerOrders/Query/OrderFilter.php	2023-08-02 14:19:39
+@@ -79,11 +79,6 @@
+         );
+         $filterGroups[] = $this->filterGroupBuilder->create();
+
+-        $this->filterGroupBuilder->setFilters(
+-            [$this->filterBuilder->setField('store_id')->setValue($storeId)->setConditionType('eq')->create()]
+-        );
+-        $filterGroups[] = $this->filterGroupBuilder->create();
+-
+         if (isset($args['filter'])) {
+             $filters = [];
+             foreach ($args['filter'] as $field => $cond) {

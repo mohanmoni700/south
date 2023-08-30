@@ -1,0 +1,17 @@
+Index: vendor/yotpo/magento2-module-yotpo-loyalty/Observer/OrderSaveAfter.php
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/vendor/yotpo/magento2-module-yotpo-loyalty/Observer/OrderSaveAfter.php b/vendor/yotpo/magento2-module-yotpo-loyalty/Observer/OrderSaveAfter.php
+--- a/vendor/yotpo/magento2-module-yotpo-loyalty/Observer/OrderSaveAfter.php	
++++ b/vendor/yotpo/magento2-module-yotpo-loyalty/Observer/OrderSaveAfter.php	(date 1664351270000)
+@@ -81,7 +81,7 @@
+                         ->setEntityType("order")
+                         ->setEntityId($order->getId())
+                         ->setEntityStatus($entityStatus)
+-                        ->setStoreId($this->_yotpoHelper->getCurrentStoreId())
++                        ->setStoreId($order->getStoreId())
+                         ->setCreatedAt($this->_yotpoHelper->getCurrentDate())
+                         ->setPreparedSchema($preparedData)
+                         ->save();
