@@ -49,6 +49,20 @@
                 }
             }
         }
+
+        .fieldset > .field:not(.choice) {
+            margin-bottom: 2.9rem;
+        }
+
+        .my_account_b2b {
+            li {
+                &.basic_details {
+                    span {
+                        max-width: 100px;
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -59,6 +73,13 @@
                 max-width: 650px;
             }
         }
+
+        .account {
+            .fieldset > .field:not(.choice) {
+                margin-bottom: 2rem;
+            }
+        }
+
         .customer-account-create {
             .login-container {
                 padding: 40px 30px 40px 30px;
@@ -145,9 +166,12 @@
         .account {
             .my_account_b2b {
                 li {
-                    width: 33.33%;
+                    width: 50%;
                     > a {
                         width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                     }
                 }
             }
@@ -237,6 +261,13 @@
                 }
             }
         }
+
+        .columns {
+            .column.main {
+                padding: 0;
+            }
+        }
+
         .field.choice.newsletter {
             label {
                 .lib-vendor-prefix-display(flex);
@@ -416,7 +447,7 @@
                 float: none;
             }
             .field.choice.newsletter {
-                margin-top: 0;
+                margin-block: 0;
             }
             .login-container {
                 .actions-toolbar {
@@ -778,11 +809,7 @@
                     }
                 }
             }
-            .columns {
-                .column.main {
-                    padding: 20px 20px 30px 20px;
-                }
-            }
+
             .column.main {
                 .block:not(.widget) {
                     .block-content {
