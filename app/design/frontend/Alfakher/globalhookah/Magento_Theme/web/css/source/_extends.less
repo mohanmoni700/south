@@ -425,34 +425,6 @@
         }
     }
 
-    /**
-    *  Progress Bar
-    */
-    .progress {
-        display: block;
-        width: 100%;
-        height: 5px;
-        border-radius: 2.8rem;
-        margin-top: 3.6rem;
-        overflow: hidden;
-        background-color: #C7D2EC;
-        background-image: linear-gradient(to right, #316BB2, #316BB2);
-        background-repeat: no-repeat;
-        background-size: 0 100%;
-        transition: background-size .4s ease-in-out;
-    }
-
-    .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0,0,0,0);
-        border: 0;
-      }
-
     .banner-row-wrapper {
         max-width: 100%;
         margin: 7.2rem;
@@ -517,84 +489,5 @@
             width: min-content !important;
         }
     }
-    
-    .bestselling-picks {
-        h2 {
-            margin-bottom: 5.6rem;
-            font-size: 4rem;
-        }
-
-        .product-item {
-            &-brand {
-                font-size: 1.4rem;
-                color: #316BB2;
-                margin: 1.6rem 0;
-            }
-
-            &-details {
-                text-align: left;
-            }
-
-            &-name {
-                font-size: 1.6rem;
-                font-weight: 600;
-            }
-
-            .price-box .price-label {
-                font-size: 1.6rem;
-            }
-
-            .special-price,
-            .minimal-price {
-                .price {
-                    font-size: 1.6rem;
-                    color: #FC2F29;
-                }
-            }
-
-            .old-price {
-                display: none;
-            }
-        }
-
-        .comman_arrow {
-            .slick-prev,
-            .slick-next {
-                border: none;
-                border-radius: 0;
-                top: -8rem;
-
-                &:hover {
-                    background-color: unset;
-                }
-            }
-
-            .slick-prev { 
-                left: unset;
-                right: 12rem;
-
-                &::before {
-                    content: "";
-                    display: block;
-                    height: 4rem;
-                    width: 4rem;
-                    background-image: url('@{baseDir}images/prev.svg');
-                    background-repeat: no-repeat;
-                }
-            }
-
-            .slick-next {
-                right: 7rem;
-
-                &::before {
-                    content: "";
-                    display: block;
-                    height: 4rem;
-                    width: 4rem;
-                    background-image: url('@{baseDir}images/next.svg');
-                    background-repeat: no-repeat;
-                }
-            }
-        }
-    }
 }
+
