@@ -489,5 +489,192 @@
             width: min-content !important;
         }
     }
+        //
+    //  Footer
+    //  ---------------------------------------------
+
+    footer.page-footer {
+        background: #FDFCFB;
+        color: @color-black;
+
+        .footer.content {
+            max-width: 100%;
+            margin: 0 7.2rem;
+        }
+
+        hr {
+            border-color: #C7D2EC !important;
+        }
+
+        .footer_logo .block {
+            float: unset;
+        }
+
+        .category-container,
+        .helpful-container {
+            margin-top: 6rem;
+
+            .header {
+                font-size: 2.8rem;
+                font-family: @font-family__base_secondary;
+                font-weight: 600;
+            }
+
+            .collapsible-content {
+                margin-top: 3.6rem;
+
+                p {
+                    margin-bottom: 2.4rem;
+
+                    a {
+                        color: @color-black;
+                    }
+                }
+            }
+        }
+
+        .footer-social, 
+        .footer-info {
+            flex-direction: row !important;
+            align-items: center;
+
+            p {
+                font-size: 1.6rem;
+                margin: 0;
+            }
+
+        }
+
+        .footer-info {
+            gap: 2rem;
+
+            p {
+                display: flex;
+                align-items: flex-end;
+                gap: 8px;
+
+                a {
+                    color: @color-black;
+                }
+            }
+
+            > div {
+                &:first-of-type {
+                    border-right: 1px solid #169C60;
+                    padding-inline-end: 2rem;
+
+                    ::before {
+                        content: "";
+                        background-image: url('@{baseDir}images/email-color.svg');
+                        width: 2.4rem;
+                        height: 2.4rem;
+                    }
+                }
+
+                &:last-of-type {
+                    ::before {
+                        content: "";
+                        background-image: url('@{baseDir}images/telephone.svg');
+                        width: 2.4rem;
+                        height: 2.4rem;
+                    }
+                }
+            }
+        }
+
+        .footer-social {
+            justify-content: end !important;
+            align-items: end !important;
+            gap: 2rem;
+
+            > div {
+                &:not(:first-of-type) {
+                    p {
+                        height: 24px;
+                    }
+                }
+
+                &:last-of-type {
+                    p {
+                        &::before {
+                            content: "";
+                            background-color: #169C60;
+                            display: inline-block;
+                            height: 2rem;
+                            margin-right: 2rem;
+                            width: 1px;
+                        }
+                    }
+                }
+            }
+        }
+        .footer-about {
+            font-size: 2.8rem;
+            font-family: @font-family__base_secondary;
+            font-weight: 600;
+        }
+
+        .about-desc {
+            font-size: 1.6rem;
+        }
+    }
+}
+@media only screen and (max-width: 768px) {
+    body .page-wrapper .page-header {
+        .warning-section-wrapper {
+            .warning-section {  
+                .heading-section {
+                    h3 {
+                        font-size: 1rem;
+                        margin-left: 0.6rem !important;
+                        width: 80% !important;
+                    }
+                }
+            }
+        }
+    }
+    .shop-by-cat {
+        .pagebuilder-column-group {
+            flex-wrap: nowrap;
+            overflow-x: scroll;
+            padding-bottom: 10px;
+        }
+        margin-bottom: 3.75rem;
+        .pagebuilder-column {
+            padding: 0 12px;
+            width: 28% !important;
+            img {
+                width: 8.5rem !important;
+            }
+            &:hover {
+                .pagebuilder-button-link {
+                    color: @color-black;
+                }
+    
+                img {
+                    top: 0;
+                    content: initial;
+                }
+            }
+            a.pagebuilder-button-link:hover {
+                text-decoration: none;
+                .lib-font-size(12);
+            }
+            img {
+                padding: 0 10px;
+            }
+            .pagebuilder-button-link {
+                white-space: unset;
+                color: @color-black;
+                padding: 5px 0 14px 0;
+                .lib-font-size(12);
+            }
+    
+            p {
+                background-size: 100%;
+                width: 8rem;
+            }
+        }
+    }
 }
 
