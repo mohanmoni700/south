@@ -11,10 +11,14 @@
 <div class="b2b_basic_business_contact">
     <ul class="my_account_b2b">
         <li class="basic_details active">
-            <a href="javascript:void(0)" class="b2b_header basic_details_header" data-id="basic_details"><span><?= $block->escapeHtml(__('Basic Details')) ?></span></a>
+            <a href="javascript:void(0)" 
+            class="b2b_header basic_details_header" 
+            data-id="basic_details"><span><?= $block->escapeHtml(__('Basic Details')) ?></span></a>
         </li>
         <li class="business_details">
-            <a href="javascript:void(0)" class="b2b_header business_details_header" data-id="business_details"><span><?= $block->escapeHtml(__('Business Details')) ?></span></a>
+            <a href="javascript:void(0)" 
+            class="b2b_header business_details_header" 
+            data-id="business_details"><span><?= $block->escapeHtml(__('Business Details')) ?></span></a>
         </li>
     </ul>
     <div id="basic_details" class="basic_details_tab">
@@ -39,7 +43,7 @@
                     });
                     $("#"+displayform).show();
                     $(tab).parent('li').addClass('active');
-               }); 
+               });
             });
         });
     script;
