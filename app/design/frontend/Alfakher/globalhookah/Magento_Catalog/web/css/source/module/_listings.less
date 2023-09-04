@@ -756,6 +756,7 @@
     h3 {
         white-space: nowrap;
         padding: 0rem 4rem;
+        font-weight: 700;
     }
 }
 
@@ -765,10 +766,6 @@
 
 .pagebuilder-attributes-wrapper {
     background-color: #FFF8E5;
-    div[data-content-type='text'] {
-        word-wrap: break-word;
-        display: none;
-    }
     .product-section-title {
         display: none;
     }
@@ -781,10 +778,11 @@
     padding-right: 2rem;
     position: relative;
     width: 100%;
+    .active {
+        border-bottom: 3px solid #316bb2;
+        margin-bottom: 0rem;
+        font-size: 3rem;
+    }
 }
 
-.active {
-    border-bottom: 3px solid #316bb2;
-    margin-bottom: 0rem;
-    font-size: 3rem;
-}
+

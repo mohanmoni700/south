@@ -4,13 +4,16 @@ require(['jquery'],function($){
     $('.product-full-width-section').each(function() {
         let $section = $(this);
         let $h2 = $section.find('.product-section-title');
+        console.log($h2.text());
         let $content = $section.find('p');
 
-        if ($h2.length > 0 && $content.length > 0) {
+        if ($h2.length > 0 && $content.length > 0 && $h2.text() != 'Marketing') {
             tabData.push({
                 title: $h2.text(),
                 content: $content.html()
             });
+            $h2.css('display', 'none');
+            $content.css('display', 'none');
         }
     });
     let $containertab = $('<div id ="container1"></div>');
