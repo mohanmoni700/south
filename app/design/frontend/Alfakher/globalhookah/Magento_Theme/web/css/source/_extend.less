@@ -11,6 +11,7 @@
 & when (@media-common = true) {
     body {
         .top_products {
+            margin-top:0;
             div[data-content-type='tabs'] .tabs-navigation li.tab-header.ui-state-active {
                 border:unset;
                 background-color: unset;
@@ -57,9 +58,6 @@
                 }
             }
             .pagebuilder-column {
-                p {
-                    color: @color-black;
-                }
                 margin-top: 4.5rem;
                 h2 {
                     margin-bottom: 3rem;
@@ -709,7 +707,7 @@
             p {
                 background-size: 100%;
                 min-width: 5.3rem;
-                max-height: 5.3rem;
+                max-height: 7.3rem;
             }
         }
     }
@@ -753,6 +751,7 @@
         .pagebuilder-column {
             p {
                 background-size: 100%;
+                max-height: 14.3rem;
             }
             .pagebuilder-button-link {
                 font-size: 1.7rem;
