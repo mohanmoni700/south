@@ -3,7 +3,7 @@
 declare (strict_types = 1);
 
 /**
- * Patch to Create product Attributes
+ * Patch to Create product title Attributes
  */
 namespace HookahShisha\Catalog\Setup\Patch\Data;
 
@@ -17,17 +17,17 @@ use Magento\Framework\Setup\Patch\DataPatchInterface;
 /**
  * Class HookahProductSpecsAttributes for adding additional attributes for product
  */
-class HookahProductSpecsAttributes implements DataPatchInterface
+class HookahProductSpecsTitleAttributes implements DataPatchInterface
 {
     /**
      * @var ModuleDataSetupInterface
      */
-    private ModuleDataSetupInterface $moduleDataSetup;
+    private $moduleDataSetup;
 
     /**
      * @var EavSetupFactory
      */
-    private EavSetupFactory $eavSetupFactory;
+    private $eavSetupFactory;
 
     /**
      * Attribute Constructor
@@ -37,7 +37,7 @@ class HookahProductSpecsAttributes implements DataPatchInterface
      */
     public function __construct(
         ModuleDataSetupInterface $moduleDataSetup,
-        EavSetupFactory $eavSetupFactory
+        EavSetupFactory          $eavSetupFactory
     ) {
         $this->moduleDataSetup = $moduleDataSetup;
         $this->eavSetupFactory = $eavSetupFactory;
@@ -59,14 +59,14 @@ class HookahProductSpecsAttributes implements DataPatchInterface
 
         $eavSetup->addAttribute(
             Product::ENTITY,
-            'vase_style',
+            'vase_style_title',
             [
                 'type' => 'text',
-                'label' => 'Vase Style',
+                'label' => 'Vase Style Title',
                 'input' => 'text',
                 'global' => ScopedAttributeInterface::SCOPE_STORE,
                 'Source' => '',
-                'store_id'=>'5',
+                'store_id' => '5',
                 'group' => 'Hookah Company',
                 'visible' => true,
                 'required' => false,
@@ -80,7 +80,7 @@ class HookahProductSpecsAttributes implements DataPatchInterface
                 'is_html_allowed_on_front' => true,
                 'unique' => false,
                 'apply_to' => '',
-                'sort_order' => 0,
+                'sort_order' => 5,
                 'is_global' => false,
                 'is_used_in_grid' => false,
             ]
@@ -88,15 +88,15 @@ class HookahProductSpecsAttributes implements DataPatchInterface
 
         $eavSetup->addAttribute(
             Product::ENTITY,
-            'screw_on_vase_capability',
+            'screw_on_vase_capability_title',
             [
                 'type' => 'text',
-                'label' => 'Screw on Vase Capability',
+                'label' => 'Screw on Vase Capability Title',
                 'input' => 'text',
                 'global' => ScopedAttributeInterface::SCOPE_STORE,
                 'Source' => 'Magento\Eav\Model\Entity\Attribute\Source\Boolean',
                 'group' => 'Hookah Company',
-                'store_id'=>'5',
+                'store_id' => '5',
                 'visible' => true,
                 'required' => false,
                 'user_defined' => true,
@@ -109,7 +109,7 @@ class HookahProductSpecsAttributes implements DataPatchInterface
                 'is_html_allowed_on_front' => true,
                 'unique' => false,
                 'apply_to' => '',
-                'sort_order' => 0,
+                'sort_order' => 15,
                 'is_global' => false,
                 'is_used_in_grid' => false,
             ]
@@ -117,14 +117,14 @@ class HookahProductSpecsAttributes implements DataPatchInterface
 
         $eavSetup->addAttribute(
             Product::ENTITY,
-            'multi_hose_capability',
+            'multi_hose_capability_title',
             [
                 'type' => 'text',
-                'label' => 'Multi Hose Capability',
+                'label' => 'Multi Hose Capability Title',
                 'input' => 'text',
                 'global' => ScopedAttributeInterface::SCOPE_STORE,
                 'Source' => '',
-                'store_id'=>'5',
+                'store_id' => '5',
                 'group' => 'Hookah Company',
                 'visible' => true,
                 'required' => false,
@@ -138,7 +138,7 @@ class HookahProductSpecsAttributes implements DataPatchInterface
                 'is_html_allowed_on_front' => true,
                 'unique' => false,
                 'apply_to' => '',
-                'sort_order' => 0,
+                'sort_order' => 25,
                 'is_global' => false,
                 'is_used_in_grid' => false,
             ]
@@ -146,14 +146,14 @@ class HookahProductSpecsAttributes implements DataPatchInterface
 
         $eavSetup->addAttribute(
             Product::ENTITY,
-            'included_accessories',
+            'included_accessories_title',
             [
                 'type' => 'text',
-                'label' => 'Included Accessories',
+                'label' => 'Included Accessories Title',
                 'input' => 'text',
                 'global' => ScopedAttributeInterface::SCOPE_STORE,
                 'Source' => '',
-                'store_id'=>'5',
+                'store_id' => '5',
                 'group' => 'Hookah Company',
                 'visible' => true,
                 'required' => false,
@@ -167,7 +167,7 @@ class HookahProductSpecsAttributes implements DataPatchInterface
                 'is_html_allowed_on_front' => true,
                 'unique' => false,
                 'apply_to' => '',
-                'sort_order' => 0,
+                'sort_order' => 35,
                 'is_global' => false,
                 'is_used_in_grid' => false,
             ]
@@ -175,12 +175,12 @@ class HookahProductSpecsAttributes implements DataPatchInterface
 
         $eavSetup->addAttribute(
             Product::ENTITY,
-            'colors',
+            'colors_title',
             [
                 'type' => 'text',
-                'label' => 'Colors',
+                'label' => 'Colors Title',
                 'input' => 'text',
-                'store_id'=>'5',
+                'store_id' => '5',
                 'global' => ScopedAttributeInterface::SCOPE_STORE,
                 'Source' => '',
                 'group' => 'Hookah Company',
@@ -196,7 +196,7 @@ class HookahProductSpecsAttributes implements DataPatchInterface
                 'is_html_allowed_on_front' => true,
                 'unique' => false,
                 'apply_to' => '',
-                'sort_order' => 0,
+                'sort_order' => 45,
                 'is_global' => false,
                 'is_used_in_grid' => false,
             ]
@@ -204,14 +204,14 @@ class HookahProductSpecsAttributes implements DataPatchInterface
 
         $eavSetup->addAttribute(
             Product::ENTITY,
-            'hookah_brand',
+            'hookah_brand_title',
             [
                 'type' => 'text',
-                'label' => 'Hookah Brand',
+                'label' => 'Hookah Brand Title',
                 'input' => 'text',
                 'global' => ScopedAttributeInterface::SCOPE_STORE,
                 'Source' => '',
-                'store_id'=>'5',
+                'store_id' => '5',
                 'group' => 'Hookah Company',
                 'visible' => true,
                 'required' => false,
@@ -225,7 +225,7 @@ class HookahProductSpecsAttributes implements DataPatchInterface
                 'is_html_allowed_on_front' => true,
                 'unique' => false,
                 'apply_to' => '',
-                'sort_order' => 0,
+                'sort_order' => 55,
                 'is_global' => false,
                 'is_used_in_grid' => false,
             ]
@@ -233,14 +233,14 @@ class HookahProductSpecsAttributes implements DataPatchInterface
 
         $eavSetup->addAttribute(
             Product::ENTITY,
-            'hookah_size',
+            'hookah_size_title',
             [
                 'type' => 'text',
-                'label' => 'Hookah Size',
+                'label' => 'Hookah Size Title',
                 'input' => 'text',
                 'global' => ScopedAttributeInterface::SCOPE_STORE,
                 'Source' => '',
-                'store_id'=>'5',
+                'store_id' => '5',
                 'group' => 'Hookah Company',
                 'visible' => true,
                 'required' => false,
@@ -254,7 +254,7 @@ class HookahProductSpecsAttributes implements DataPatchInterface
                 'is_html_allowed_on_front' => true,
                 'unique' => false,
                 'apply_to' => '',
-                'sort_order' => 0,
+                'sort_order' => 65,
                 'is_global' => false,
                 'is_used_in_grid' => false,
             ]
@@ -262,14 +262,14 @@ class HookahProductSpecsAttributes implements DataPatchInterface
 
         $eavSetup->addAttribute(
             Product::ENTITY,
-            'hookah_country_of_manufacture',
+            'hookah_country_of_manufacture_title',
             [
                 'type' => 'text',
-                'label' => 'Hookah Country Of Manufacture',
+                'label' => 'Hookah Country Of Manufacture Title',
                 'input' => 'text',
                 'global' => ScopedAttributeInterface::SCOPE_STORE,
                 'Source' => '',
-                'store_id'=>'5',
+                'store_id' => '5',
                 'group' => 'Hookah Company',
                 'visible' => true,
                 'required' => false,
@@ -283,7 +283,7 @@ class HookahProductSpecsAttributes implements DataPatchInterface
                 'is_html_allowed_on_front' => true,
                 'unique' => false,
                 'apply_to' => '',
-                'sort_order' => 0,
+                'sort_order' => 75,
                 'is_global' => false,
                 'is_used_in_grid' => false,
             ]
