@@ -20,14 +20,23 @@
             border-bottom: 0;
         }
         > tbody {
+            .tablerow-mobile {
+                display: flex !important;
+                justify-content: space-between !important;
+            }
             > tr {
                 border-bottom: 1px solid @color_C4C4C4;
                 > td {
+                    .price {
+                        color: @tableprice_clr;
+                font-size: @font-size__base;
+                font-weight: @font-weight__bold;
+                    }
                     padding:8px 0;
                     vertical-align: middle;
                     &.col.qty {
                         padding-right: 20px;
-                        text-align: right;
+                        text-align: center;
                         width: 140px;
                         .control.qty {
                             > span {
