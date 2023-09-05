@@ -3,8 +3,7 @@ require(['jquery'],function($){
     let tabData = [];
     $('.product-full-width-section').each(function() {
         let $section = $(this);
-        let $h2 = $section.find('.product-section-title');
-        console.log($h2.text());
+        let $h2 = $section.find('.product-section-title');  
         let $content = $section.find('p');
 
         if ($h2.length > 0 && $content.length > 0 && $h2.text() != 'Marketing') {
