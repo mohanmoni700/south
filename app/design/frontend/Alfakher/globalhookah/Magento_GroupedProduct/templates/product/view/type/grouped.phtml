@@ -19,8 +19,11 @@
 
     <div id="validation-message-box"></div>
     <div class="table-wrapper grouped">
+    <div class="product-attribute-variant">
+        <div class="value" itemprop="sku">Select Variant</div>
+</div>
     <?php if ($is_mobile):?>
-        <table class="table data grouped"
+        <table class="table data grouped tableGroupedMobile"
         id="super-product-table"
         data-mage-init='{ "Magento_GroupedProduct/js/product-ids-resolver": {} }'>
         <caption class="table-caption"><?= $block->escapeHtml(__('Grouped product items')) ?></caption>
@@ -30,7 +33,7 @@
             <tbody>
                 <?php foreach ($sortedProducts as $_item): ?>
                     <?php $productAvailableQty = $_helperB2b->getStockQty($_item->getId()); ?>
-                    <tr>
+                    <tr class = "table-row-heading">
                     <?php
                     $cost = $_helperB2b->getGrossMargin($_item->getId());
                     $grossMargin = ($_item->getPrice() - $cost) / $_item->getPrice() * 100;
@@ -159,11 +162,11 @@
              <?php $sortedProducts = $block->getSortedProducts();
             ?>
             <tbody>
-            <tr class="col item">
+            <tr class="col item table-variant-row">
                         <td class="col item">Variant</td>
                         <td >Unit Price</td>
                         <td class="col qty">Qty</td>
-                        <td class="col item">Total Price</td>
+                        <td class="col qty">Total Price</td>
                     </tr>
                 <?php foreach ($sortedProducts as $_item): ?>
                     <?php $productAvailableQty = $_helperB2b->getStockQty($_item->getId()); ?>
@@ -309,6 +312,16 @@
                    const totalPrice=  requestQty*roundedPrice
                    const roundetTotalPrice = totalPrice.toFixed(2);
                     $("#totalqtydrop_"+productId).html('$'+ roundetTotalPrice);
+                    var totalSum = 0;
+
+                    $('.totalqty').each(function() {
+                        var value = parseFloat($(this).text().trim().replace('$', ''));
+                            if (!isNaN(value)) {
+                                totalSum += value;
+                            }
+                     });
+
+                    $("#Product_price_grouped").html('$' + totalSum.toFixed(2));
                     var exist = $("[name='"+productId+"-qty[]']").length;
                     if(exist && typeof exist !== 'undefined'){
                         var bvSpecialPrice = 0;
@@ -397,6 +410,8 @@
     }
 
     $(document).ready(function() {
+        var a = $('.box-tocart .actions');
+        console.log(a);
         $(document).on("click", '#product-addtocart-button', function(e){
             if(!$(".err-show").valid()){
                 setCaretToPos($(".err-show")[0], 1);
