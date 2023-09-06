@@ -1,6 +1,8 @@
 <?php
 
-namespace Alfakher\CatalogExtended\Model\Service\Order;
+declare(strict_types=1);
+
+namespace HookahShisha\SubscribeGraphQl\Model\Service\Order;
 
 use Magedelight\Subscribenow\Helper\Data as SubscribeHelper;
 use Magedelight\Subscribenow\Model\Service\Order\Generate;
