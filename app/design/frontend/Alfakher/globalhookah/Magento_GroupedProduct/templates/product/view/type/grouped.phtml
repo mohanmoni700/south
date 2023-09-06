@@ -160,7 +160,7 @@
             ?>
             <tbody>
             <tr class="col item table-variant-row">
-                        <td class="col item">Variant</td>
+                        <td class="col item variant">Variant</td>
                         <td >Unit Price</td>
                         <td class="col qty">Qty</td>
                         <td class="col qty">Total Price</td>
@@ -349,18 +349,19 @@
             /*bv-hd for desktop checkqty*/
             $("[id^='qtytext_']").on("keydown keyup",function(e){
                 var currentId= $(this).attr('id');
+                
                 var regex = new RegExp("^[0-9]+$");
+                
                 if (regex.test(this.value)) {
                     var requestQty = this.value;
                     if(requestQty < 0){
                         $(this).val(0);
                     }
-                    var productId = $(this).data('product-id');
-
+                    var productId= $(this).data('product-id');
                     var availableProductQty = $(this).data('product-available-qty');
                     if(requestQty > availableProductQty){
                         $("#qtymessage_"+productId)
-                        .html("Requested Qty "+requestQty+" Is Not Available")
+                        .html("Requested Qty is not available. MAX available qty is "+availableProductQty )
                         .show().delay(15000).fadeOut();
                         $(this).val(0);
                         $("#"+currentId).blur();
@@ -382,7 +383,7 @@
                 if(requestQty > availableProductQty){
                     $(this).val(0);
                     $("#qtymessage_"+productId)
-                    .html("Requested Qty "+requestQty+" Is Not Available")
+                    .html("Requested Qty is not available. MAX available qty is "+availableProductQty )
                     .show().delay(15000).fadeOut();
                 }else{
                     $("#qtymessage_"+productId).html("");
@@ -407,9 +408,7 @@
     }
 
     $(document).ready(function() {
-        var a = $('.box-tocart .actions');
-        console.log(a);
-        $(document).on("click", '#product-addtocart-button', function(e){
+        $(document).on("click", '#product-addtocart-button', function(e){ 
             if(!$(".err-show").valid()){
                 setCaretToPos($(".err-show")[0], 1);
             }
