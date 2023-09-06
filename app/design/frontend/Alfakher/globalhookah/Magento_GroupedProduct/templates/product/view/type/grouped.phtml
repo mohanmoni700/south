@@ -19,9 +19,6 @@
 
     <div id="validation-message-box"></div>
     <div class="table-wrapper grouped">
-    <div class="product-attribute-variant">
-        <div class="value" itemprop="sku">Select Variant</div>
-</div>
     <?php if ($is_mobile):?>
         <table class="table data grouped tableGroupedMobile"
         id="super-product-table"
@@ -95,9 +92,9 @@
                                                onclick="this.select();"/>
                                                 <span id="qtymessage_<?= $block->escapeHtmlAttr($_item->getId()) ?>"
                                                     style="color: red;"></span>
-                                       </div> 
+                                       </div>
                                    <?php else: ?>
-                                    <div class="stock unavailable" 
+                                    <div class="stock unavailable"
                                     title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
                                         <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
                                     </div>
@@ -112,7 +109,7 @@
                              >
                             <?php if ($block->getCanShowProductPrice($_product)): ?>
                                     <?php if ($block->getCanShowProductPrice($_item)): ?>
-                                        <?= /* @noEscape */ (float)$block->getProductPrice($_item)* (int)$_item->getQty() ?>
+                                        <?= /* @noEscape */'$'.(float)$block->getProductPrice($_item)* (int)$_item->getQty().'.00'?>
                                 <?php endif; ?>
                             <?php endif; ?>
 
@@ -247,7 +244,7 @@
                              >
                             <?php if ($block->getCanShowProductPrice($_product)): ?>
                                     <?php if ($block->getCanShowProductPrice($_item)): ?>
-                                        <?= /* @noEscape */ (float)$block->getProductPrice($_item)* (int)$_item->getQty() ?>
+                                        <?= /* @noEscape */'$'.(float)$block->getProductPrice($_item)* (int)$_item->getQty().'.00'?>
                                 <?php endif; ?>
                             <?php endif; ?>
 
