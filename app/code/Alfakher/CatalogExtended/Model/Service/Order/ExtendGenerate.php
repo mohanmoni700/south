@@ -194,7 +194,9 @@ class ExtendGenerate extends Generate
 
             /** Add Order Comment With Profile Id */
             if ($order->getEntityId()) {
-                $profile_id = '<a href="'.$this->storeManager->getStore()->getBaseUrl().'subscribenow/account/summary/id/'.$this->getProfile()->getSubscriptionId().'/">'.$this->getProfile()->getProfileId().'</a>';
+                $profile_id = '<a href="'.$this->storeManager->getStore()->getBaseUrl().
+                    'subscribenow/account/summary/id/'.$this->getProfile()->getSubscriptionId().'/">' .
+                    $this->getProfile()->getProfileId().'</a>';
                 $comment = __("Order has been placed from Subscription profile ".$profile_id.".");
                 $status = $order->getStatus();
                 $history = $this->historyFactory->create();
