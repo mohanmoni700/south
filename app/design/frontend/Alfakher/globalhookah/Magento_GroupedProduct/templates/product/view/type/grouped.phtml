@@ -3,8 +3,8 @@
     /**
      * Grouped product data template
      *
-     * @var $block \Magento\Catalog\Block\Product\View\BaseImage
-     * @var $block \Magento\GroupedProduct\Block\Product\View\Type\Grouped
+     * @let $block \Magento\Catalog\Block\Product\View\BaseImage
+     * @let $block \Magento\GroupedProduct\Block\Product\View\Type\Grouped
      */
 ?>
 <?php $block->setPreconfiguredValue(); ?>
@@ -171,8 +171,8 @@
             <th></th>
             <th></th>
             </tr>
-            <tr class="col item table-variant-row">
-                        <td class="col item variant">Variant</td>
+            <tr class="col item table-letiant-row">
+                        <td class="col item letiant">letiant</td>
                         <td >Unit Price</td>
                         <td class="col qty">Qty</td>
                         <td class="col qty">Total Price</td>
@@ -301,7 +301,7 @@
     <script type="text/x-magento-init">
        {
            "*": {
-               "validateCustomGroupedQty": {}
+               "vhttps://bitbucket.org/digi_tech/alfakher-code/pull-requests/4220?t=1alidateCustomGroupedQty": {}
            }
        }
     </script>
@@ -311,37 +311,37 @@
 
             $(".col.qty .control.qty .input-text.qty").on("change paste keyup", function (e) {
                 if (typeof $(this).val() !== 'undefined' && $(this).val() != '' && $(this).val() > 0) {
-                    var requestQty = parseInt($(this).val());
-                    var productId = $(this).data('product-id');
+                    let requestQty = parseInt($(this).val());
+                    let productId = $(this).data('product-id');
                     $("#totalqtydrop_"+productId).html(requestQty);
-                    var priceValue = $(this).parents('td').prev('td').find("span.price").text();
-                    var numericPrice = parseFloat(priceValue.replace('$', ''));
-                    var roundedPrice = numericPrice.toFixed(2);
+                    let priceValue = $(this).parents('td').prev('td').find("span.price").text();
+                    let numericPrice = parseFloat(priceValue.replace('$', ''));
+                    let roundedPrice = numericPrice.toFixed(2);
                    const totalPrice=  requestQty*roundedPrice
                    const roundetTotalPrice = totalPrice.toFixed(2);
                     $("#totalqtydrop_"+productId).html('$'+ roundetTotalPrice);
-                    var totalSum = 0;
+                    let totalSum = 0;
 
                     $('.totalqty').each(function() {
-                        var value = parseFloat($(this).text().trim().replace('$', ''));
+                        let value = parseFloat($(this).text().trim().replace('$', ''));
                             if (!isNaN(value)) {
                                 totalSum += value;
                             }
                      });
 
                     $("#Product_price_grouped").html('$' + totalSum.toFixed(2));
-                    var exist = $("[name='"+productId+"-qty[]']").length;
+                    let exist = $("[name='"+productId+"-qty[]']").length;
                     if(exist && typeof exist !== 'undefined'){
-                        var bvSpecialPrice = 0;
+                        let bvSpecialPrice = 0;
                         $.each($("[name='"+productId+"-qty[]']"), function (index, value) {
-                            var bvSpecialPriceQty = parseInt($(value).val());
+                            let bvSpecialPriceQty = parseInt($(value).val());
                             if (requestQty >= bvSpecialPriceQty) {
                                 bvSpecialPrice = $("[name='"+productId+"-qty-"+$(value).val()+"']").val();
                             }
                         });
 
                         if (bvSpecialPrice != 0) {
-                            var priceHtml="<span><strong>$"+parseFloat(bvSpecialPrice).toFixed(2)+"</strong></span>";
+                            let priceHtml="<span><strong>$"+parseFloat(bvSpecialPrice).toFixed(2)+"</strong></span>";
                             $(".bv-special-price-"+productId).html(priceHtml);
                             $(this).parents('td').prev('td').find("span.price").addClass('old-price');
                         }else{
@@ -351,7 +351,7 @@
                     }
 
                 }else{
-                    var productId = $(this).data('product-id');
+                    let productId = $(this).data('product-id');
                     $(".bv-special-price-"+productId).html("");
                     $(this).parents('td').prev('td').find("span.price").removeClass('old-price');
                 }
@@ -359,15 +359,15 @@
             });
             /*bv-hd for desktop checkqty*/
             $("[id^='qtytext_']").on("keydown keyup",function(e){
-                var currentId= $(this).attr('id');
-                var regex = new RegExp("^[0-9]+$");
+                let currentId= $(this).attr('id');
+                let regex = new RegExp("^[0-9]+$");
                 if (regex.test(this.value)) {
-                    var requestQty = this.value;
+                    let requestQty = this.value;
                     if(requestQty < 0){
                         $(this).val(0);
                     }
-                    var productId= $(this).data('product-id');
-                    var availableProductQty = $(this).data('product-available-qty');
+                    let productId= $(this).data('product-id');
+                    let availableProductQty = $(this).data('product-available-qty');
                     if(requestQty > availableProductQty){
                         $("#qtymessage_"+productId)
                         .html("Requested Qty is not available. MAX available qty is "+availableProductQty )
@@ -386,9 +386,9 @@
             });
             /*bv-hd for mobile checkqty*/
             $("[id^='qtydrop_']").on('change',function(){
-                var requestQty = this.value;
-                var productId= $(this).data('product-id');
-                var availableProductQty = $(this).data('product-available-qty');
+                let requestQty = this.value;
+                let productId= $(this).data('product-id');
+                let availableProductQty = $(this).data('product-available-qty');
                 if(requestQty > availableProductQty){
                     $(this).val(0);
                     $("#qtymessage_"+productId)
