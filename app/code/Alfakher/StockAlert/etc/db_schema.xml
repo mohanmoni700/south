@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="product_alert_stock_guest_user" resource="default" engine="innodb" comment="Product Alert Stock">
+        <column xsi:type="int" name="alert_stock_id" unsigned="true" nullable="false" identity="true"
+                comment="Product alert stock ID"/>
+        <column xsi:type="varchar" name="email_id" nullable="true" length="32" comment="Email ID"/>
+        <column xsi:type="varchar" name="name" nullable="true" length="32" comment="Name"/>
+        <column xsi:type="int" name="product_id" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Product ID"/>
+        <column xsi:type="smallint" name="website_id" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Website ID"/>
+        <column xsi:type="smallint" name="store_id" unsigned="true" nullable="true" identity="false"
+                default="0" comment="Store ID"/>
+        <column xsi:type="timestamp" name="add_date" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Product alert add date"/>
+        <column xsi:type="timestamp" name="send_date" on_update="false" nullable="true"
+                comment="Product alert send date"/>
+        <column xsi:type="smallint" name="send_count" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Send Count"/>
+        <column xsi:type="smallint" name="status" unsigned="true" nullable="false" identity="false"
+                default="0" comment="Product alert status"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="alert_stock_id"/>
+        </constraint>
+    </table>
+</schema>
