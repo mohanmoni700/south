@@ -56,16 +56,6 @@
             .price-label {
                 display: none;
             }
-        }
-
-        .product-item-name {
-            font-weight: @font-weight__regular;
-            margin:0;
-            .lib-font-size(14);
-            min-height: auto;
-        }
-
-        .price-box {
             .price {
                 color: @tableprice_clr;
                 font-size: @font-size__base;
@@ -78,6 +68,12 @@
             }
         }
 
+        .product-item-name {
+            font-weight: @font-weight__regular;
+            margin:0;
+            .lib-font-size(14);
+            min-height: auto;
+        }
         .control {
             .qty {
                 &:extend(.abs-input-qty all);
