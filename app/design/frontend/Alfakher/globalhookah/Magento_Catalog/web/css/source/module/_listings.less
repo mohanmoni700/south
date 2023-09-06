@@ -579,6 +579,19 @@
             }
         }
     }
+    #container1 {
+        padding-left: 2rem;
+        padding-right: 2rem;
+        .nav-tabs {
+            gap: 2rem;
+            h3 {
+                .lib-font-size(16);
+            }
+        }
+        .active {
+            .lib-font-size(24);
+        }
+    }
 }
 
 .media-width(@extremum, @break) when (@extremum ='min') and (@break =@screen__s) {
@@ -753,10 +766,15 @@
     border-bottom: 1px solid black;
     overflow: scroll;
 
-    h3 {
+    .active {
+        .lib-font-size(24) !important;
+    }
+    .nav-tab {
         white-space: nowrap;
-        padding: 0rem 4rem;
         font-weight: 700;
+        font-family: Quicksand;
+        .lib-font-size(16);
+        padding: 0.3rem 1rem;
     }
 }
 
@@ -774,8 +792,10 @@
 #container1 {
     margin: 0 auto;
     max-width: 128rem;
-    padding-left: 2rem;
-    padding-right: 2rem;
+    // padding-left: 2rem;
+    // padding-right: 2rem;
+    padding-bottom: 4rem;
+    padding-top: 3rem;
     position: relative;
     width: 100%;
     .active {
