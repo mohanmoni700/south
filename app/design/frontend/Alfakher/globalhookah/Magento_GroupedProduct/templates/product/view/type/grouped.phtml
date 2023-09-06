@@ -28,6 +28,12 @@
              <?php $sortedProducts = $block->getSortedProducts();
             ?>
             <tbody>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                </tr>
                 <?php foreach ($sortedProducts as $_item): ?>
                     <?php $productAvailableQty = $_helperB2b->getStockQty($_item->getId()); ?>
                     <tr class = "table-row-heading">
@@ -108,8 +114,8 @@
                              data-product-id="<?=  $block->escapeHtmlAttr($_item->getId()) ?>"
                              >
                             <?php if ($block->getCanShowProductPrice($_product)): ?>
-                                    <?php if ($block->getCanShowProductPrice($_item)): ?>
-                                        <?= /* @noEscape */'$'.(float)$block->getProductPrice($_item)* (int)$_item->getQty().'.00'?>
+                            <?php if ($block->getCanShowProductPrice($_item)): ?>
+                            <?= /* @noEscape */'$'.(float)$block->getProductPrice($_item)* (int)$_item->getQty().'.00'?>
                                 <?php endif; ?>
                             <?php endif; ?>
 
@@ -159,6 +165,12 @@
              <?php $sortedProducts = $block->getSortedProducts();
             ?>
             <tbody>
+            <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            </tr>
             <tr class="col item table-variant-row">
                         <td class="col item variant">Variant</td>
                         <td >Unit Price</td>
@@ -227,24 +239,23 @@
                                                onclick="this.select();"/>
                                                 <span id="qtymessage_<?= $block->escapeHtmlAttr($_item->getId()) ?>"
                                                     style="color: red;"></span>
-                                       </div> 
+                                       </div>
                                    <?php else: ?>
-                                    <div class="stock unavailable" 
+                                    <div class="stock unavailable"
                                     title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
                                         <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
                                     </div>
                                 <?php endif; ?>
                             <?php endif; ?>
                         </td>
-
                         <td class="col qty">
                             <div class ="control totalqty price"
                              id="totalqtydrop_<?= $block->escapeHtmlAttr($_item->getId()) ?>"
                              data-product-id="<?=  $block->escapeHtmlAttr($_item->getId()) ?>"
                              >
                             <?php if ($block->getCanShowProductPrice($_product)): ?>
-                                    <?php if ($block->getCanShowProductPrice($_item)): ?>
-                                        <?= /* @noEscape */'$'.(float)$block->getProductPrice($_item)* (int)$_item->getQty().'.00'?>
+                            <?php if ($block->getCanShowProductPrice($_item)): ?>
+                            <?= /* @noEscape */'$'.(float)$block->getProductPrice($_item)* (int)$_item->getQty().'.00'?>
                                 <?php endif; ?>
                             <?php endif; ?>
 
@@ -349,9 +360,7 @@
             /*bv-hd for desktop checkqty*/
             $("[id^='qtytext_']").on("keydown keyup",function(e){
                 var currentId= $(this).attr('id');
-                
                 var regex = new RegExp("^[0-9]+$");
-                
                 if (regex.test(this.value)) {
                     var requestQty = this.value;
                     if(requestQty < 0){
@@ -408,7 +417,7 @@
     }
 
     $(document).ready(function() {
-        $(document).on("click", '#product-addtocart-button', function(e){ 
+        $(document).on("click", '#product-addtocart-button', function(e){
             if(!$(".err-show").valid()){
                 setCaretToPos($(".err-show")[0], 1);
             }
