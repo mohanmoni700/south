@@ -28,12 +28,12 @@
              <?php $sortedProducts = $block->getSortedProducts();
             ?>
             <tbody>
-                <tr>
+                <!-- <tr>
                     <th></th>
                     <th></th>
                     <th></th>
                     <th></th>
-                </tr>
+                </tr> -->
                 <?php foreach ($sortedProducts as $_item): ?>
                     <?php $productAvailableQty = $_helperB2b->getStockQty($_item->getId()); ?>
                     <tr class = "table-row-heading">
@@ -171,8 +171,8 @@
             <th></th>
             <th></th>
             </tr>
-            <tr class="col item table-letiant-row">
-                        <td class="col item letiant">letiant</td>
+            <tr class="col item table-variant-row">
+                        <td class="col item variant">variant</td>
                         <td >Unit Price</td>
                         <td class="col qty">Qty</td>
                         <td class="col qty">Total Price</td>
