@@ -1090,6 +1090,7 @@ return [
         'Fooman_EmailAttachments' => 1,
         'Glew_Service' => 1,
         'GlobalHookah_SalesExtended' => 1,
+        'HookahShisha_Avalara' => 1,
         'HookahShisha_AvalaraExciseGraphQl' => 1,
         'Magefan_Blog' => 1,
         'HookahShisha_Catalog' => 1,
