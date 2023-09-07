@@ -10,7 +10,7 @@ $subcats = $category->getChildrenCategories();
           ->toHtml();
 ?>
 <!-- this condition to check wether sub category exists[BS]start -->
-<?php $size = 0; ?>   
+<?php $size = 0; ?>
 <?php if (!empty($subcats->getData())): ?>
     <div class="shorting_main">
         <div class="shorting_slider">
@@ -40,11 +40,11 @@ $subcats = $category->getChildrenCategories();
             }else{
                 $arrow = "false";
             }
-        }else{ 
-            if (<?= /* @noEscape */$size ?> >= 3){ 
+        }else{
+            if (<?= /* @noEscape */$size ?> >= 3){
                 $arrow = "true";
             }else{
-                $arrow = "false";  
+                $arrow = "false";
             }
         }
         if ($arrow == "true" ) {
