@@ -155,7 +155,7 @@
                 }
 
                 .actions-secondary {
-                    display: inline-block;
+                    display: none;
                     font-size: 1.4rem;
                     vertical-align: middle;
                     white-space: nowrap;
@@ -385,6 +385,10 @@
                     }
                 }
             }
+            .actions-primary {
+                margin-top: 1rem;
+                text-align: left;
+            }
         }
     }
 
@@ -540,7 +544,7 @@
     .product {
         &-item {
             &-name {
-                .lib-font-size(16);
+                .lib-font-size(14);
                 min-height: 2.875rem;
             }
             .catalog.description-item {
@@ -549,6 +553,9 @@
             &-details {
                 .stock.unavailable {
                     font-size: 0.813rem;
+                }
+                .product-item-brand {
+                    .lib-font-size(12);
                 }
             }
         }
