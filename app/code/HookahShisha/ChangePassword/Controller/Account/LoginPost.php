@@ -300,7 +300,7 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                     }
                     $baseurl = $this->_storemanager->getStore()->getBaseUrl();
                     $myDocumentConfigValue = $this->helper->getConfigValue('hookahshisha/my_document/is_enabled');
-                    if (in_array(0, $status) || empty($dataSize) || (in_array("exp", $msg)) && $myDocumentConfigValue) {
+                    if ((in_array(0, $status) || empty($dataSize) || in_array("exp", $msg)) && $myDocumentConfigValue) {
                         $response = [
                             'url' => $baseurl . "mydocument/customer/index",
                         ];
