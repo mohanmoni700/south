@@ -473,6 +473,56 @@
             &:extend(.abs-reset-image-wrapper all);
         }
     }
+    // shop by brands design
+    .shopbybrands{
+        .brandcollection{
+            display: flex;
+            flex-wrap: wrap;
+            .branditem{   
+                width: ~'calc(25% - 2.7rem)';
+                margin: 0 3.6rem 3.6rem 0;
+                a{
+                    float: left;
+                    width: 100%;
+                    .brand-image{
+                        width: 100%;
+                        float: left;
+                        background: #f6f6f6;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 30px;
+                        img{
+                            position: relative;
+                            top: 0;
+                            transition: ease-in-out 0.5s;
+                        }
+                    }
+                    .brandname{
+                        width: 100%;
+                        float: left;
+                        .lib-font-size(16);
+                        color: @color-black;
+                        font-weight:  @font-weight__semibold;
+                        margin-top: 2.0rem;
+                        text-align: center;
+                    }
+                }
+                &:nth-child(4n){
+                    margin-right: 0;
+                }
+                &:hover{
+                    a{  
+                        .brand-image{
+                            img{
+                                top: -20px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     //
     //  Responsive Tablet
@@ -492,6 +542,52 @@
                 }
             }
         }
+        // shop by brands design
+        .shopbybrands{
+            .brandcollection{            
+                .branditem{   
+                    width: ~'calc(33% - 2.7rem)'; 
+                    &:nth-child(4n){
+                        margin-right: 3.6rem;
+                    }
+                    &:nth-child(3n){
+                        margin-right: 0;
+                    }
+                }
+            }
+        }        
+    }
+    @media(max-width: 768px){
+          // shop by brands design
+          .shopbybrands{
+            .brandcollection{            
+                .branditem{   
+                    width: ~'calc(33% - 2.7rem)'; 
+                    &:nth-child(4n){
+                        margin-right: 3.6rem;
+                    }
+                    &:nth-child(3n){
+                        margin-right: 0;
+                    }
+                }
+            }
+        } 
+    }
+    @media(max-width: 599px){
+        // shop by brands design
+        .shopbybrands{
+            .brandcollection{            
+                .branditem{   
+                    width: ~'calc(50% - 2.7rem)';                     
+                    &:nth-child(3n){
+                        margin-right: 3.6rem;
+                    }
+                    &:nth-child(2n){
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
     }
 
     @media only screen and (max-width: 360px) {
@@ -505,7 +601,7 @@
                 }
             }
         }
-    }
+    }    
 }
 
 //
