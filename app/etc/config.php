@@ -1022,6 +1022,7 @@ return [
         'Vrpayecommerce_Vrpayecommerce' => 1,
         'Alfakher_FinanceVerified' => 1,
         'MageWorx_OrdersBase' => 1,
+        'Alfakher_GroupedProduct' => 1,
         'MageWorx_OrderEditor' => 1,
         'Alfakher_HwCustomerTelephoneUpdate' => 1,
         'Alfakher_KlaviyoCustomCatalog' => 1,
