@@ -52,7 +52,12 @@
 
             &-details {
                 margin-top: 0.625rem;
-                text-align: center;
+                text-align: left;
+                .product-item-inner {
+                    .logged-in-action {
+                        padding-top:1rem;
+                    }
+                }
                 .product-item-brand {
                     color: #316BB2;
                     text-align: left;
@@ -61,7 +66,8 @@
                 }
                 .stock.unavailable {
                     color: @color-red9;
-                    font-size: 1rem;
+                    font-size: 1.5rem;
+                    text-align: left;
                 }
                 .product-reviews-summary {
                     margin: 0 auto 18px;
