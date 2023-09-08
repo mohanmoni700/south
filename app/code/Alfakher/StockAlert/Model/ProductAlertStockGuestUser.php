@@ -21,7 +21,6 @@ class ProductAlertStockGuestUser extends \Magento\Framework\Model\AbstractExtens
         return $this->getData(self::ALERT_STOCK_ID);
     }
 
-
     /**
      * Set Alert stock Id
      *

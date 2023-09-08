@@ -23,5 +23,15 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="alert_stock_id"/>
         </constraint>
+        <constraint xsi:type="foreign" referenceId="CATALOG_PRODUCT_ENTITY_PRODUCT_ID_PRODUCT_ALERT_STOCK_GUEST_USER_PRODUCT_ID"
+                    table="product_alert_stock_guest_user" column="product_id"
+                    referenceTable="catalog_product_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="STORE_WEBSITE_WEBSITE_ID_PRODUCT_ALERT_STOCK_GUEST_USER_WEBSITE_ID"
+                    table="product_alert_stock_guest_user" column="website_id"
+                    referenceTable="store_website" referenceColumn="website_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="STORE_STORE_ID_PRODUCT_ALERT_STOCK_GUEST_USER_STORE_ID"
+                    table="product_alert_stock_guest_user" column="store_id" referenceTable="store" referenceColumn="store_id" onDelete="CASCADE"/>
+
+
     </table>
 </schema>

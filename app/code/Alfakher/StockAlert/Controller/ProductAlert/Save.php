@@ -6,14 +6,12 @@ namespace Alfakher\StockAlert\Controller\ProductAlert;
 
 use Alfakher\StockAlert\Api\Data\ProductAlertStockGuestUserInterface;
 use Alfakher\StockAlert\Api\ProductAlertStockGuestUserRepositoryInterface;
+use Alfakher\StockAlert\Model\ProductAlertStockGuestUserFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Data\Form\FormKey\Validator;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Registry;
-use Magento\Framework\App\Request\Http;
-use Magento\Store\Model\StoreManagerInterface;
 use Alfakher\StockAlert\Helper\Data;
 
 class Save extends Action
@@ -22,11 +20,6 @@ class Save extends Action
      * @var Validator
      */
     protected Validator $formKeyValidator;
-
-    /**
-     * @var StoreManagerInterface
-     */
-    private StoreManagerInterface $storeManager;
 
     /**
      * @var ProductAlertStockGuestUserRepositoryInterface
@@ -39,34 +32,38 @@ class Save extends Action
     private ProductAlertStockGuestUserInterface $guestSubscriptionDataFactory;
 
     /**
-     * @var Registry
+     * @var ProductAlertStockGuestUserFactory
      */
-    private Registry $coreRegistry;
+    private ProductAlertStockGuestUserFactory $productAlertStockGuestUserFactory;
 
     /**
-     * @var \Magento\Catalog\Helper\Data
+     * @var Data
      */
-    private \Magento\Catalog\Helper\Data $catalogHelper;
+    private Data $data;
 
+    /**
+     * Save Controller
+     *
+     * @param Context $context
+     * @param Validator $formKeyValidator
+     * @param ProductAlertStockGuestUserRepositoryInterface $guestSubscriptionRepository
+     * @param ProductAlertStockGuestUserInterface $guestSubscriptionDataFactory
+     * @param ProductAlertStockGuestUserFactory $productAlertStockGuestUserFactory
+     * @param Data $data
+     */
     public function __construct(
         Context $context,
-        Http $httpRequest,
         Validator $formKeyValidator,
-        StoreManagerInterface $storeManager,
-        Registry              $coreRegistry,
         ProductAlertStockGuestUserRepositoryInterface $guestSubscriptionRepository,
         ProductAlertStockGuestUserInterface $guestSubscriptionDataFactory,
-        \Magento\Catalog\Helper\Data $catalogHelper,
+        ProductAlertStockGuestUserFactory $productAlertStockGuestUserFactory,
         Data $data
     ) {
         parent::__construct($context);
-        $this->httpRequest = $httpRequest;
         $this->formKeyValidator = $formKeyValidator;
-        $this->storeManager = $storeManager;
-        $this->coreRegistry = $coreRegistry;
         $this->guestSubscriptionDataFactory = $guestSubscriptionDataFactory;
         $this->guestSubscriptionRepository = $guestSubscriptionRepository;
-        $this->catalogHelper = $catalogHelper;
+        $this->productAlertStockGuestUserFactory = $productAlertStockGuestUserFactory;
         $this->data = $data;
     }
 
@@ -95,52 +92,26 @@ class Save extends Action
             'email_id' => $email,
             'product_id' => $productId,
             'website_id' => $websiteId,
-            'store_id'  => $storeId
+            'store_id'  => $storeId,
+            'status' => 1
         ];
-
         try {
-            $dataModel = $this->guestSubscriptionDataFactory->setData($data);
-            $this->guestSubscriptionRepository->save($dataModel);
-            $this->messageManager->addSuccess(__('Form data saved successfully.'));
+            $guestSubscriptionModel = $this->productAlertStockGuestUserFactory->create();
+            $collection = $guestSubscriptionModel->getCollection();
+            $collection->addFieldToFilter('name', $name)
+                ->addFieldToFilter('email_id', $email)
+                ->addFieldToFilter('product_id', $productId);
+            if ($collection->getSize() > 0) {
+                $this->messageManager->addSuccess(__('You are already subscribed to alerts for this product.'));
+            } else {
+                $dataModel = $this->guestSubscriptionDataFactory->setData($data);
+                $this->guestSubscriptionRepository->save($dataModel);
+                $this->messageManager->addSuccess(__('Alert subscription has been saved.'));
+            }
             return $resultRedirect->setPath('catalog/product/view', ['id' => $productId]);
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage(__('An error occurred while saving the subscription.'));
         }
         return $resultRedirect->setPath('*/*/');
     }
-
-    /**
-     * Get Store Id
-     *
-     * @throws NoSuchEntityException
-     */
-    public function getStoreId(): int
-    {
-        return $this->storeManager->getStore()->getId();
-    }
-
-    /**
-     * Get Website Id
-     *
-     * @throws NoSuchEntityException
-     */
-    public function getWebsiteId(): int
-    {
-        return $this->storeManager->getStore()->getWebsiteId();
-    }
-
-    /**
-     * Get Product Id
-     *
-     * @return mixed|null
-     */
-    public function getProduct()
-    {
-        return $this->coreRegistry->registry('current_product');
-    }
-
-//    public function getProductId(): int
-//    {
-//        return $this->catalogHelper->getProduct()->getId();
-//    }
 }

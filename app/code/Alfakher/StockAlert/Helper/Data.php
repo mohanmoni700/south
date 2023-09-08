@@ -15,6 +15,16 @@ class Data
     private RequestInterface $request;
 
     /**
+     * @var Registry
+     */
+    private Registry $registry;
+
+    /**
+     * @var StoreManagerInterface
+     */
+    private StoreManagerInterface $storeManager;
+
+    /**
      * @param StoreManagerInterface $storeManager
      * @param Registry $registry
      * @param RequestInterface $request
