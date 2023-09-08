@@ -16,6 +16,7 @@
 ?>
 <?php if ($additional = $block->getAdditionalData()) : ?>
     <div class="pagebuilder-attributes-wrapper">
+        <div>
     <?php foreach ($additional as $key => $data) : ?>
         <?php
                if(
@@ -47,6 +48,7 @@
                             <?php endif; ?>
 
         <?php endforeach; ?>
+        </div>
     </div>
 
 
