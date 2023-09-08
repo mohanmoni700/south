@@ -1829,7 +1829,7 @@
     @media only screen and (min-width: 1300px) {
         body{
             .page-wrapper {
-                .navigation{ 
+                .navigation{
                     >ul{
                         display: flex;
                         justify-content: space-between;
@@ -1841,12 +1841,10 @@
             }
         }
     }
-}
-& when (@media-target = 'desktop'), (@media-target = 'all') {
     @media only screen and (max-width: 1299px) and (min-width: 1025px) {
         body{
             .page-wrapper {
-                .navigation.sw-megamenu{ 
+                .navigation.sw-megamenu{
                     >ul{
                         display: flex;
                         justify-content: space-between;
@@ -2144,10 +2142,10 @@
             }
         }
         .sw-megamenu{
-            li.level0.fullwidth{ 
+            li.level0.fullwidth{
                 &.no-child{
                     cursor: pointer;
-                }           
+                }
                 .submenu{
                     width: 100% !important;
                     .container{
@@ -2172,7 +2170,7 @@
                         }
                         .submenu-main-link{
                             a{
-                                color: #333;                                
+                                color: #333;
                                 .lib-font-size(18);
                                 font-weight: 700;
                                 line-height: 20px;
@@ -2195,7 +2193,7 @@
                                 padding: 1.25rem 0;
                                 width: 100%;
                                 li{
-                                    margin-bottom: 15px; 
+                                    margin-bottom: 15px;
                                     a {
                                         color: #333;
                                         .lib-font-size(14);
@@ -2207,7 +2205,7 @@
                                     }
                                 }
                             }
-                        }  
+                        }
                         .marketing-content {
                             text-align: center;
                             p {
@@ -2220,16 +2218,16 @@
                                     font-size: 13px;
                                     line-height: 1;
                                 }
-                            }     
-                        } 
+                            }
+                        }
                     }
                     .ui-tabs{
                         display: flex;
                         ul.tabs-navigation{
                             width: 25%;
                             float: left;
-                            white-space: unset; 
-                            border-right: 1px solid #e0e0e0;   
+                            white-space: unset;
+                            border-right: 1px solid #e0e0e0;
                             overflow: hidden;
                             li.tab-header{
                                 width: 100%;
@@ -2240,11 +2238,11 @@
                                     margin-left: 1px;
                                     margin-top: 1px;
                                     position: relative;
-                                    text-transform: inherit;                                
+                                    text-transform: inherit;
                                     z-index: 10;
                                     font-weight: 700;
                                     padding: 5px 15px 5px 20px;
-                                    .lib-font-size(14);                              
+                                    .lib-font-size(14);
                                     line-height: 38px;
                                 }
                                 &.ui-tabs-active{
@@ -2257,7 +2255,7 @@
                                         background: #e0e0e0;
                                     }
                                 }
-                            }                    
+                            }
                         }
                         .tabs-content{
                             width: 75%;
@@ -2266,7 +2264,7 @@
                             padding-top: 0;
                             border: none;
                             .pagebuilder-column{
-                                > div{                                   
+                                > div{
                                     ul{
                                         padding: 5px 0;
                                         li{
@@ -2285,10 +2283,10 @@
                                             }
                                         }
                                     }
-                                    
+
                                 }
                             }
-                            .pagebuilder-column-group {                               
+                            .pagebuilder-column-group {
                                 .pagebuilder-column{
                                     min-width: 194px;
                                     ul{
@@ -2298,7 +2296,7 @@
                                     &:last-child{
                                         ul{
                                             border-right: none;
-                                        }                                        
+                                        }
                                     }
                                 }
                             }
@@ -2310,7 +2308,7 @@
                 margin-right: 2.3rem;
             }
         }
-        
+
     }
 
     //
@@ -2734,7 +2732,7 @@
                     color: @color-black;
                     font-size: 12px;
                     padding-top: @indent__xl - 1; // 50px
-                    position: relative;                    
+                    position: relative;
                     span.sign-up {
                     }
                     &::after {
@@ -2846,7 +2844,7 @@
                     right: -34px;
                 }
             }
-    
+
         }
         .comman_arrow {
             .slick-prev {
@@ -2911,7 +2909,7 @@
                 padding: 0 (@indent__base - @indent__xs);
             }
         }
-        
+
     }
     @media only screen and (min-width: (@screen__l + 1 )) and (max-width:  1280px) {
         body .page-header {
@@ -2932,7 +2930,7 @@
             }
         }
     }
-    
+
     @media only screen and (min-width: @screen__m) and (max-width: 1079px) {
         body .page-header .header-links-wrapper {
             .header-links .header-top-left {
@@ -2949,7 +2947,7 @@
                 padding-right: 0;
             }
         }
-    } 
+    }
 }
 
 
@@ -2958,10 +2956,10 @@
     //  Navigation
     //  _____________________________________________
 
-    
+
 
     @media only screen and (max-width: 1024px) {
-            
+
         .klevuTarget.klevu-fluid > div.klevuWrap {
             max-width: 100%;
             width: ~'calc(100% - 40px)';
@@ -3175,7 +3173,7 @@
                     }
                 }
             }
-            
+
         }
         //
         //  minicart mobile view fixed
@@ -3215,7 +3213,7 @@
             cursor: pointer;
             display: inline-block;
         }
-        
+
         .bar1,
         .bar2,
         .bar3 {
@@ -3225,16 +3223,16 @@
             transition: .4s;
             width: 18px;
         }
-        
+
         .change .bar1 {
             -webkit-transform: rotate(-45deg) translate(-3px, 2px);
             transform: rotate(-45deg) translate(-3px, 2px);
         }
-        
+
         .change .bar2 {
             opacity: 0;
         }
-        
+
         .change .bar3 {
             -webkit-transform: rotate(45deg) translate(-6px, -6px);
             transform: rotate(45deg) translate(-6px, -6px);
@@ -3343,7 +3341,7 @@
         // Mobile Mega menu
 
         .sw-megamenu{
-            li.level0.fullwidth{ 
+            li.level0.fullwidth{
                 &.active{
                     .submenu.level0{
                         height: auto;
@@ -3351,8 +3349,8 @@
                     }
                 }
                 &.no-child{
-                    cursor: pointer;                    
-                }           
+                    cursor: pointer;
+                }
                 .submenu{
                     .container{
                         position: relative;
@@ -3390,16 +3388,16 @@
                             text-transform: capitalize;
                             font-weight: 700;
                             padding: 5px 5px 5px 20px;
-                        } 
-                        .row-without-tabs{ 
+                        }
+                        .row-without-tabs{
                             .pagebuilder-column{
                                 width: 100% !important;
-                            }                           
+                            }
                             ul{
                                 padding: 1.25rem 0;
                                 width: 100%;
                                 li{
-                                    margin-bottom: 15px; 
+                                    margin-bottom: 15px;
                                     a {
                                         color: #333;
                                         .lib-font-size(14);
@@ -3408,18 +3406,18 @@
                                     }
                                 }
                             }
-                        }  
+                        }
                         .marketing-block {
                             figure,
                             .marketing-content{
                                 display: none;
 
-                            }    
-                        }        
+                            }
+                        }
                     }
-                    .ui-tabs{                        
-                        ul.tabs-navigation{  
-                            border: none;                         
+                    .ui-tabs{
+                        ul.tabs-navigation{
+                            border: none;
                             li.tab-header{
                                 width: 100%;
                                 border: none;
@@ -3437,20 +3435,19 @@
                                 }
                                 a{
                                     color: #333;
-                                    font-weight: 700;
                                     margin-left: 1px;
                                     margin-top: 1px;
                                     position: relative;
-                                    text-transform: inherit;                                
+                                    text-transform: inherit;
                                     z-index: 10;
                                     font-weight: 400;
                                     padding: 5px 15px 5px 20px;
-                                    .lib-font-size(14);                               
+                                    .lib-font-size(14);
                                     line-height: 38px;
                                     align-items: center;
                                     justify-content: flex-start;
                                     background: #fff;
-                                    span{                                        
+                                    span{
                                         &:after{
                                             -webkit-font-smoothing: antialiased;
                                             -moz-osx-font-smoothing: grayscale;
@@ -3480,9 +3477,9 @@
                                         background: #fff;
                                     }
                                 }
-                            }                    
+                            }
                         }
-                        .tabs-content{                           
+                        .tabs-content{
                             border-width: 0;
                             padding-top: 0;
                             display: none;
@@ -3499,7 +3496,7 @@
                             }
                             .pagebuilder-column{
                                 width:100% !important;
-                                > div{                                   
+                                > div{
                                     ul{
                                         padding: 5px 0;
                                         li{
@@ -3518,6 +3515,7 @@
                                                     font-size: 0;
                                                     display: inline-block;
                                                     vertical-align: middle;
+                                                    cursor: pointer;
                                                     &:after{
                                                         -webkit-font-smoothing: antialiased;
                                                         -moz-osx-font-smoothing: grayscale;
@@ -3549,7 +3547,7 @@
                                             }
                                         }
                                     }
-                                    
+
                                 }
                                 .marketing-block{
                                     width: 100%;
@@ -3560,7 +3558,7 @@
                                         display: inline-block;
                                     }
                                     .marketing-content{
-                                        p{                                            
+                                        p{
                                             width: 100%;
                                             display: inline-block;
                                             text-align: center;
@@ -3568,12 +3566,12 @@
                                             .lib-font-size(14);
                                             font-weight: 400;
                                             padding: 5px 5px 5px 20px;
-                                        }                                        
+                                        }
                                     }
                                 }
-                            }                            
+                            }
                         }
-                    }                    
+                    }
                 }
             }
         }
