@@ -265,7 +265,7 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
             self::ADDRESS1 => $billingAddress->getStreetLine1(),
             self::ADDRESS2 => $billingAddress->getStreetLine2(),
             self::CITY => $billingAddress->getCity(),
-            self::STATE => $billingAddress->getRegionCode(),
+            self::STATE => $this->getRegion($billingAddress->getRegionCode(), $billingAddress->getCountryId()),
             self::ZIP => $billingAddress->getPostcode(),
             self::COUNTRY => $billingAddress->getCountryId(),
             self::PHONE_NUMBER => $billingAddress->getTelephone()
