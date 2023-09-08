@@ -1825,6 +1825,43 @@
         }
     }
 }
+& when (@media-target = 'desktop'), (@media-target = 'all') {
+    @media only screen and (min-width: 1300px) {
+        body{
+            .page-wrapper {
+                .navigation{ 
+                    >ul{
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                    .level0 {
+                        margin: 0 2.4rem 0 0;
+                    }
+                }
+            }
+        }
+    }
+}
+& when (@media-target = 'desktop'), (@media-target = 'all') {
+    @media only screen and (max-width: 1299px) and (min-width: 1025px) {
+        body{
+            .page-wrapper {
+                .navigation.sw-megamenu{ 
+                    >ul{
+                        display: flex;
+                        justify-content: space-between;
+                    }
+                    .level0 {
+                        margin: 0 0.093rem 0 0;
+                        .level-top{
+                            .lib-font-size(12);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 
 //
@@ -2112,6 +2149,7 @@
                     cursor: pointer;
                 }           
                 .submenu{
+                    width: 100% !important;
                     .container{
                         position: relative;
                         &::before{
@@ -2149,6 +2187,41 @@
                             font-weight: 700;
                             padding: 5px 5px 5px 20px;
                         }
+                        .row-without-tabs{
+                            .pagebuilder-column{
+                                border-right:1px solid  #e0e0e0;
+                            }
+                            ul{
+                                padding: 1.25rem 0;
+                                width: 100%;
+                                li{
+                                    margin-bottom: 15px; 
+                                    a {
+                                        color: #333;
+                                        .lib-font-size(14);
+                                        font-weight: 400;
+                                        padding: 5px 5px 5px 20px;
+                                        &:hover{
+                                            color: #0065b3;
+                                        }
+                                    }
+                                }
+                            }
+                        }  
+                        .marketing-content {
+                            text-align: center;
+                            p {
+                                padding: 5px 5px 5px 20px;
+                                font-weight: 400;
+                                a{
+                                    text-decoration: underline;
+                                    text-transform: capitalize;
+                                    font-weight: 700;
+                                    font-size: 13px;
+                                    line-height: 1;
+                                }
+                            }     
+                        } 
                     }
                     .ui-tabs{
                         display: flex;
@@ -2191,19 +2264,20 @@
                             float: right;
                             border-width: 0;
                             padding-top: 0;
+                            border: none;
                             .pagebuilder-column{
                                 > div{                                   
                                     ul{
                                         padding: 5px 0;
                                         li{
-                                            margin-bottom: 15px;
+                                            margin-bottom: 12px;
                                             a{
                                                 color: #333;
                                                 .lib-font-size(14);
                                                 font-weight: 400;
                                                 padding: 5px 5px 5px 20px;
                                                 &:hover{
-                                                    color: @addto-hover-color;
+                                                    color: #0065b3;
                                                 }
                                             }
                                             &.first{
@@ -2231,6 +2305,9 @@
                         }
                     }
                 }
+            }
+            li.level0{
+                margin-right: 2.3rem;
             }
         }
         
@@ -3313,7 +3390,32 @@
                             text-transform: capitalize;
                             font-weight: 700;
                             padding: 5px 5px 5px 20px;
-                        }
+                        } 
+                        .row-without-tabs{ 
+                            .pagebuilder-column{
+                                width: 100% !important;
+                            }                           
+                            ul{
+                                padding: 1.25rem 0;
+                                width: 100%;
+                                li{
+                                    margin-bottom: 15px; 
+                                    a {
+                                        color: #333;
+                                        .lib-font-size(14);
+                                        font-weight: 400;
+                                        padding: 5px 5px 5px 20px;
+                                    }
+                                }
+                            }
+                        }  
+                        .marketing-block {
+                            figure,
+                            .marketing-content{
+                                display: none;
+
+                            }    
+                        }        
                     }
                     .ui-tabs{                        
                         ul.tabs-navigation{  
@@ -3322,6 +3424,12 @@
                                 width: 100%;
                                 border: none;
                                 background: #fff;
+                                float:left;
+                                a.tab-title{
+                                    &:after{
+                                        content: none;
+                                    }
+                                }
                                 &.ui-tabs-active{
                                     &:before{
                                         height: 0;
@@ -3335,14 +3443,14 @@
                                     position: relative;
                                     text-transform: inherit;                                
                                     z-index: 10;
-                                    font-weight: 700;
+                                    font-weight: 400;
                                     padding: 5px 15px 5px 20px;
                                     .lib-font-size(14);                               
                                     line-height: 38px;
                                     align-items: center;
                                     justify-content: flex-start;
                                     background: #fff;
-                                    span{
+                                    span{                                        
                                         &:after{
                                             -webkit-font-smoothing: antialiased;
                                             -moz-osx-font-smoothing: grayscale;
@@ -3390,6 +3498,7 @@
                                 overflow: auto;
                             }
                             .pagebuilder-column{
+                                width:100% !important;
                                 > div{                                   
                                     ul{
                                         padding: 5px 0;
@@ -3442,9 +3551,29 @@
                                     }
                                     
                                 }
+                                .marketing-block{
+                                    width: 100%;
+                                    figure{
+                                        text-align: center;
+                                    }
+                                    img{
+                                        display: inline-block;
+                                    }
+                                    .marketing-content{
+                                        p{                                            
+                                            width: 100%;
+                                            display: inline-block;
+                                            text-align: center;
+                                            color: #333;
+                                            .lib-font-size(14);
+                                            font-weight: 400;
+                                            padding: 5px 5px 5px 20px;
+                                        }                                        
+                                    }
+                                }
                             }                            
                         }
-                    }
+                    }                    
                 }
             }
         }
