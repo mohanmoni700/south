@@ -28,12 +28,6 @@
              <?php $sortedProducts = $block->getSortedProducts();
             ?>
             <tbody>
-                <!-- <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr> -->
                 <?php foreach ($sortedProducts as $_item): ?>
                     <?php $productAvailableQty = $_helperB2b->getStockQty($_item->getId()); ?>
                     <tr class = "table-row-heading">
