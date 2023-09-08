@@ -55,8 +55,12 @@
 
             &-details {
                 margin-top: 0.625rem;
-                text-align: center;
-
+                text-align: left;
+                .product-item-inner {
+                    .logged-in-action {
+                        padding-top:1rem;
+                    }
+                }
                 .product-item-brand {
                     color: #316BB2;
                     text-align: left;
@@ -66,7 +70,8 @@
 
                 .stock.unavailable {
                     color: @color-red9;
-                    font-size: 1rem;
+                    font-size: 1.5rem;
+                    text-align: left;
                 }
 
                 .product-reviews-summary {
@@ -164,7 +169,7 @@
                 }
 
                 .actions-secondary {
-                    display: inline-block;
+                    display: none;
                     font-size: 1.4rem;
                     vertical-align: middle;
                     white-space: nowrap;
@@ -403,6 +408,10 @@
                     }
                 }
             }
+            .actions-primary {
+                margin-top: 1rem;
+                text-align: left;
+            }
         }
     }
 
@@ -490,6 +499,56 @@
             &:extend(.abs-reset-image-wrapper all);
         }
     }
+    // shop by brands design
+    .shopbybrands{
+        .brandcollection{
+            display: flex;
+            flex-wrap: wrap;
+            .branditem{   
+                width: ~'calc(25% - 2.7rem)';
+                margin: 0 3.6rem 3.6rem 0;
+                a{
+                    float: left;
+                    width: 100%;
+                    .brand-image{
+                        width: 100%;
+                        float: left;
+                        background: #f6f6f6;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        padding: 30px;
+                        img{
+                            position: relative;
+                            top: 0;
+                            transition: ease-in-out 0.5s;
+                        }
+                    }
+                    .brandname{
+                        width: 100%;
+                        float: left;
+                        .lib-font-size(16);
+                        color: @color-black;
+                        font-weight:  @font-weight__semibold;
+                        margin-top: 2.0rem;
+                        text-align: center;
+                    }
+                }
+                &:nth-child(4n){
+                    margin-right: 0;
+                }
+                &:hover{
+                    a{  
+                        .brand-image{
+                            img{
+                                top: -20px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     //
     //  Responsive Tablet
@@ -510,6 +569,52 @@
                 }
             }
         }
+        // shop by brands design
+        .shopbybrands{
+            .brandcollection{            
+                .branditem{   
+                    width: ~'calc(33% - 2.7rem)'; 
+                    &:nth-child(4n){
+                        margin-right: 3.6rem;
+                    }
+                    &:nth-child(3n){
+                        margin-right: 0;
+                    }
+                }
+            }
+        }        
+    }
+    @media(max-width: 768px){
+          // shop by brands design
+          .shopbybrands{
+            .brandcollection{            
+                .branditem{   
+                    width: ~'calc(33% - 2.7rem)'; 
+                    &:nth-child(4n){
+                        margin-right: 3.6rem;
+                    }
+                    &:nth-child(3n){
+                        margin-right: 0;
+                    }
+                }
+            }
+        } 
+    }
+    @media(max-width: 599px){
+        // shop by brands design
+        .shopbybrands{
+            .brandcollection{            
+                .branditem{   
+                    width: ~'calc(50% - 2.7rem)';                     
+                    &:nth-child(3n){
+                        margin-right: 3.6rem;
+                    }
+                    &:nth-child(2n){
+                        margin-right: 0;
+                    }
+                }
+            }
+        }
     }
 
     @media only screen and (max-width: 360px) {
@@ -523,7 +628,7 @@
                 }
             }
         }
-    }
+    }    
 }
 
 //
@@ -564,7 +669,7 @@
     .product {
         &-item {
             &-name {
-                .lib-font-size(16);
+                .lib-font-size(14);
                 min-height: 2.875rem;
             }
 
@@ -575,6 +680,9 @@
             &-details {
                 .stock.unavailable {
                     font-size: 0.813rem;
+                }
+                .product-item-brand {
+                    .lib-font-size(12);
                 }
             }
         }
