@@ -6,4 +6,11 @@
     <preference for="Magento\CustomerBalance\Block\Adminhtml\Sales\Order\Create\Payment" type="Alfakher\StoreCredit\Block\Adminhtml\Sales\Order\Create\Payment" />
     <!-- Override for make payment methods visible when partial store credit selected -->
     <preference for="Magento\CustomerBalance\Observer\TogglePaymentMethodsObserver" type="Alfakher\StoreCredit\Observer\TogglePaymentMethodsObserver" />
+
+    <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+        <plugin name="remove_store_credit"
+                type="Alfakher\StoreCredit\Plugins\Checkout\HideStoreCredit"
+                sortOrder="1"
+                disabled="false"/>
+    </type>
 </config>
