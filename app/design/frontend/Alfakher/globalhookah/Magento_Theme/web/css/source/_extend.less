@@ -94,9 +94,38 @@
         .page-header {
             .warning-section-wrapper {
                 .warning-section {
+                    max-width: 100%;
+                    margin: 0 7.2rem;
+                    width: auto;
+                    padding: 1.2rem 3rem;
+
                     .heading-section {
+                        position: relative;
+                        display: flex;
+                        width: 100%;
+                        justify-content: center;
+                        align-items: center;
+
                         h3 {
-                            .lib-css(font-family, @font-family__base);
+                            text-transform: uppercase;
+                            font-size: 1.4rem;
+                            font-weight: 600;
+                            font-family: @font-family-name__base;
+                            margin-left: 0.6rem;
+                        }
+
+                        &::before {
+                            position: unset;
+                            width: 2rem;
+                            height: 2rem;
+                            transform: initial;
+                        }
+
+                        .promo-btn {
+                            position: absolute;
+                            right: 0;
+                            height: 1.6rem;
+                            cursor: pointer;
                         }
                     }
                 }
@@ -2042,6 +2071,23 @@
                 margin: 0 auto;
                 padding: 0.4rem 1rem !important;
 
+                .heading-section {
+                    h3 {
+                        margin-left: 0.6rem !important;
+                        width: fit-content;
+                    }
+                }
+            }
+        }
+    }
+
+    body .page-wrapper .page-header {
+        .warning-section-wrapper {
+            .warning-section {
+                max-width: 1280px;
+                margin: 0 auto;
+                padding: 0.4rem 1rem !important;
+    
                 .heading-section {
                     h3 {
                         margin-left: 0.6rem !important;
