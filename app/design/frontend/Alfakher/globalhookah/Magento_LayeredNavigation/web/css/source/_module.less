@@ -408,12 +408,15 @@
             display: block;
 
             .filter-title {
-                display: block;
-                top: 36px;
+                display: flex;
+                border-right: 1px solid #cdcaca;
+                top: 18px;
+                min-height: 1.75rem;
                 strong {
-                    font-size: 14px;
+                    font-size: 1.6rem;
                     font-weight: @font-weight__bold;
-
+                    margin-left: auto;
+                    margin-right: auto;
                     &:after {
                         content: ' By (' attr(data-count) ')';
                     }
@@ -573,9 +576,8 @@
             }
 
             .filter-title {
-                height: 3.125rem;
                 left: auto;
-                min-height: 3.125rem;
+                min-height: 1.75rem;
                 position: fixed !important;
                 right: 8px;
                 top: 5px;
