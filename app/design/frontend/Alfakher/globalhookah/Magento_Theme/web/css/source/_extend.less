@@ -17,7 +17,7 @@
                 background-color: unset;
                 .ui-tabs-anchor {
                     color: #169C60;
-                    padding: 1.5rem 0;
+                    padding: 0 5rem 1.5rem 0;
                     border-bottom: 5px solid #169C60;
                     font-size: 2rem;
                     font-weight: 600;
@@ -29,9 +29,9 @@
             .tabs-navigation::-webkit-scrollbar {
                 display: none !important;
             }
-            .tab-header {
-                min-width:14.75rem;
-            }
+            // .tab-header {
+            //     min-width:14.75rem;
+            // }
             .tab-title {
                 &::after {
                     display: none;
@@ -1097,14 +1097,11 @@
                     font-size: 1.3rem;
                 }
                 a.tab-title {
-                    padding: 1rem 0;
+                    padding: 0 3rem 0 0;
                 }
             }
             .tab-title { 
                 font-size: 1.3rem;
-            }
-            .tab-header {
-                min-width: 8.3125rem;
             }
             div[data-content-type='tabs'] .tabs-navigation {
                 li.tab-header.ui-tabs-active::before {
@@ -1112,7 +1109,7 @@
                 }
                 li.tab-header.ui-state-active .ui-tabs-anchor {
                     border-bottom: 3px solid #169C60 ;
-                    padding:  0;
+                    padding: 0 3rem 0 0;
                 }
             }
             .product-item-brand {
