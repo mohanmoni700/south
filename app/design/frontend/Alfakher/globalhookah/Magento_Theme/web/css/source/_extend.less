@@ -156,6 +156,9 @@
 
                         &::before {
                             background-image: url('@{baseDir}images/quotes.svg');
+                            height: 24px;
+                            width: 24px;
+                            margin: 0;
                         }
                         .text {
                             font-size: 14px;
@@ -169,10 +172,13 @@
                 }
 
                 .right_section {
+                    padding-bottom: 10px;
+
                     .sign-in {
                         flex-direction: row;
+                        align-items: center;
                         gap: 4px;
-                        align-items: flex-end;
+                        order: 2;
 
                         .sign-up {
                             font-size: 14px;
@@ -511,11 +517,37 @@
 }
 
 //
+//  Desktop large
+//  _____________________________________________
+
+@media only screen and (min-width: 1440px) and (max-width: 1920px) { 
+    body {
+        .page-header {
+            .header.content {
+                max-width: 100%;
+                padding: 10px 72px;
+            }
+            .header-links-wrapper {
+                .header-links { 
+                    max-width: 100%;
+                    padding: 10px 72px;
+                } 
+            }
+        }
+    }
+}
+
+//
 //  Desktop
 //  _____________________________________________
 
 @media only screen and (min-width: 1024px) and (max-width: 1920px) {
     body {
+        .about-store {
+            max-width: 100%;
+            margin: 0 72px;
+        }
+
         .bestselling-picks {
             max-width: 100%;
             margin: 0 7.2rem 7.2rem;
@@ -536,6 +568,11 @@
 
 @media only screen and (min-width: 1921px) {
     body {
+        .about-store {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+        
         .bestselling-picks {
             max-width: 1280px;
             margin: 0 auto 7.2rem;
@@ -576,6 +613,63 @@
 //  _____________________________________________
 
 @media only screen and (max-width: 1024px) {
+
+    .about-store {
+        margin: 0;
+
+        .pagebuilder {
+            &-column {
+                h2 {
+                    font-size: 2.4rem;
+                }
+
+                p {
+                    font-size: 1.4rem;
+                }
+
+                &-group {
+                    gap: 0;
+                    flex-wrap: wrap;
+                }
+
+                div:last-of-type {
+                    display: none;
+                }
+
+                .read-more {
+                    display: block;
+                    padding: 0;
+                    margin: 0 0 2rem;
+                    border: none;
+                    background: transparent;
+                    color: #316BB2;
+                    font-size: 1.4rem;
+                    font-weight: 600;
+
+                    a:active {
+                        text-decoration: none;
+                    }
+    
+                    &:hover {
+                        background: transparent;
+                        color: #316BB2;
+                        border: none;
+                    }
+    
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        background-image: url(../images/arrow-color.svg);
+                        background-position: center;
+                        background-repeat: no-repeat;
+                        width: 1rem;
+                        height: 2rem;
+                        margin-left: 0.7rem;
+                    }
+                }
+            }
+        }
+    }
 
     .amasty_quote-account-view.account {
         .page-title-wrapper {
