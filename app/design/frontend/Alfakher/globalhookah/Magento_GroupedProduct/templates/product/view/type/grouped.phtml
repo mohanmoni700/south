@@ -302,6 +302,37 @@
     <?php /* bv_op; date : 10-2-22; Start */ ?>
     <script>
         require(['jquery'], function ($) {
+  $(document).ready(function() {
+    var col1Div = document.querySelector('.column-1');
+if (col1Div) {
+  var h2Element = document.createElement('span');
+  h2Element.textContent = 'Description';
+  h2Element.classList.add('Description-product-page');
+  col1Div.insertBefore(h2Element, col1Div.firstChild);
+
+}
+  var inputValues = {};
+  $(".col.qty .control.qty .input-text.qty").each(function() {
+    let requestQty = parseInt($(this).val());
+                    let productId = $(this).data('product-id');
+                    $("#totalqtydrop_"+productId).html(requestQty);
+                    let priceValue = $(this).parents('td').prev('td').find("span.price").text();
+                    let numericPrice = parseFloat(priceValue.replace('$', ''));
+                    let roundedPrice = numericPrice.toFixed(2);
+                   const totalPrice=  requestQty*roundedPrice
+                   const roundetTotalPrice = totalPrice.toFixed(2);
+                    $("#totalqtydrop_"+productId).html('$'+ roundetTotalPrice);
+                    let totalSum = 0;
+
+                    $('.totalqty').each(function() {
+                        let value = parseFloat($(this).text().trim().replace('$', ''));
+                            if (!isNaN(value)) {
+                                totalSum += value;
+                            }
+                     });
+                     $("#Product_price_grouped").html('$' + totalSum.toFixed(2));
+  });
+});
 
             $(".col.qty .control.qty .input-text.qty").on("change paste keyup", function (e) {
                 if (typeof $(this).val() !== 'undefined' && $(this).val() != '' && $(this).val() > 0) {
@@ -422,3 +453,4 @@
     });
 });
 </script>
+
