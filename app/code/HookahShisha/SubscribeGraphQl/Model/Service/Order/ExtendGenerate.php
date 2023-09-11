@@ -19,9 +19,11 @@ use Magento\Framework\Registry;
 use Magento\Quote\Api\CartManagementInterface;
 use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
+use Magento\Sales\Model\Order;
 use Magento\Sales\Model\Order\Email\Sender\OrderSenderFactory;
 use Magento\Sales\Model\Order\Status\HistoryFactory;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Sales\Model\OrderFactory;
 
 class ExtendGenerate extends Generate
 {
@@ -34,6 +36,8 @@ class ExtendGenerate extends Generate
     private OrderRepositoryInterface $orderRepository;
 
     private PaymentService $paymentService;
+
+    private OrderFactory $orderFactory;
 
     /**
      * @param StoreManagerInterface $storeManager
@@ -50,6 +54,7 @@ class ExtendGenerate extends Generate
      * @param EventManager $eventManager
      * @param CurrencyFactory $currencyFactory
      * @param HistoryFactory $historyFactory
+     * @param OrderFactory $orderFactory
      */
     public function __construct(
         StoreManagerInterface $storeManager,
@@ -65,7 +70,8 @@ class ExtendGenerate extends Generate
         Registry $registry,
         EventManager $eventManager,
         CurrencyFactory $currencyFactory,
-        HistoryFactory $historyFactory
+        HistoryFactory $historyFactory,
+        OrderFactory $orderFactory
     ) {
         parent::__construct(
             $storeManager,
@@ -88,6 +94,7 @@ class ExtendGenerate extends Generate
         $this->cartManagement = $cartManagement;
         $this->orderRepository = $orderRepository;
         $this->paymentService = $paymentService;
+        $this->orderFactory = $orderFactory;
     }
 
     /**
@@ -98,10 +105,10 @@ class ExtendGenerate extends Generate
         $address = $this->getCustomer()->getAddressById($this->getProfile()->getBillingAddressId());
         $addressId = $address->getId();
 
-        //Whenever the billing addressId is null, default billing id is used
+        //Whenever the billing addressId is null, order billing id is used
         if (!isset($addressId)) {
-            $billingAddressId = $this->getCustomer()->getDefaultBillingAddress()->getId();
-            $address = $this->getCustomer()->getAddressById($billingAddressId);
+            $order = $this->getOrderById();
+            return $order->getBillingAddress()->getData();
         }
 
         $address->setCustomer($this->getCustomer())
@@ -117,10 +124,10 @@ class ExtendGenerate extends Generate
         $address = $this->getCustomer()->getAddressById($this->getProfile()->getShippingAddressId());
         $addressId = $address->getId();
 
-        //Whenever the shipping addressId is null, default shipping id is used
+        //Whenever the shipping addressId is null, order shipping id is used
         if (!isset($addressId)) {
-            $shippingAddressId = $this->getCustomer()->getDefaultShippingAddress()->getId();
-            $address = $this->getCustomer()->getAddressById($shippingAddressId);
+            $order = $this->getOrderById();
+            return $order->getShippingAddress()->getData();
         }
 
         $address->setCustomer($this->getCustomer())
@@ -221,5 +228,14 @@ class ExtendGenerate extends Generate
 
             return $order;
         }
+    }
+
+    /**
+     * @return Order
+     */
+    public function getOrderById()
+    {
+        $incrementId = $this->getProfile()->getInitialOrderId();
+        return $this->orderFactory->create()->loadByIncrementId($incrementId);
     }
 }
