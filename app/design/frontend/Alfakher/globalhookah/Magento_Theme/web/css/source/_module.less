@@ -2232,6 +2232,7 @@
                             li.tab-header{
                                 width: 100%;
                                 border: none;
+                                margin-left: 0 !important;
                                 a{
                                     color: #333;
                                     margin-left: 1px;
@@ -2243,15 +2244,41 @@
                                     padding: 0.5rem 1.5rem 0.5rem 2.0rem;
                                     .lib-font-size(14);
                                     line-height: 3.8rem;
+                                    text-decoration: none !important;
+                                    &:after{                                        
+                                        -webkit-font-smoothing: antialiased;
+                                        -moz-osx-font-smoothing: grayscale;
+                                        font-size: 42px;
+                                        line-height: inherit;
+                                        color: inherit;
+                                        content: '\e622' !important;
+                                        font-family: 'icons-blank-theme';
+                                        vertical-align: middle;
+                                        display: inline-block;
+                                        font-weight: normal;
+                                        overflow: hidden;
+                                        speak: none;
+                                        text-align: center;
+                                        font-size: 3rem;
+                                        right: 0;
+                                        top: 7px;
+                                        font-weight: 700;
+                                        transform: rotate(-90deg);
+                                        height: unset;
+                                        width: unset;
+                                        background: transparent;
+                                    }
                                 }
                                 &.ui-tabs-active{
                                     a{
                                         background: #e0e0e0;
+                                        text-decoration: none;
                                     }
                                 }
                                 &:hover{
                                     a{
                                         background: #e0e0e0;
+                                        text-decoration: none;
                                     }
                                 }
                             }
@@ -2261,7 +2288,8 @@
                             float: right;
                             border-width: 0;
                             padding-top: 0;
-                            border: none;
+                            border: none !important;
+                            top:0;
                             .pagebuilder-column{
                                 > div{
                                     ul{
@@ -2296,6 +2324,23 @@
                                         ul{
                                             border-right: none;
                                         }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .submenu-single-link-with-one-tab {
+                        position: absolute;
+                        left: -31.5%;
+                        top: 6rem;
+                    }
+                    div[data-content-type='tabs'] {
+                        .tabs-navigation {
+                            li.tab-header {
+                                margin-left: 0 !important;
+                                a.tab-title{
+                                    &:after{
+                                        content: none;
                                     }
                                 }
                             }
@@ -3385,6 +3430,7 @@
                             text-transform: capitalize;
                             font-weight: 700;
                             padding: 0.5rem 0.5rem 0.5rem 2.0 rem;
+                            .lib-font-size(18);
                         }
                         .row-without-tabs{
                             .pagebuilder-column{
@@ -3438,9 +3484,9 @@
                                     text-transform: inherit;
                                     z-index: 10;
                                     font-weight: 400;
-                                    padding: 0.5rem 1.5rem 0.5rem 2.0 rem;
+                                    padding: 0.5rem 1.5rem 0.5rem 2.0rem;
                                     .lib-font-size(14);
-                                    line-height: 3.8rem;
+                                    line-height: 2.0rem;
                                     align-items: center;
                                     justify-content: flex-start;
                                     background: #fff;
@@ -3483,13 +3529,14 @@
                             &.active{
                                 display: block;
                                 position: fixed;
-                                top:210px;
+                                top:19.0rem;
                                 left:0;
                                 width: 100%;
-                                height: ~'calc(100% - 210px)';
+                                height: ~'calc(100% - 190px)';
                                 background: #fff;
                                 z-index: 19;
                                 overflow: auto;
+                                border: none !important;
                             }
                             .pagebuilder-column{
                                 width:100% !important;
@@ -3502,7 +3549,7 @@
                                                 color: #333;
                                                 .lib-font-size(14);
                                                 font-weight: 400;
-                                                padding: 5px 5px 5px 20px;
+                                                padding: 1.0rem 1.0rem 1.0rem 2.0rem;
                                                 &:hover{
                                                     color: @addto-hover-color;
                                                 }
