@@ -52,6 +52,8 @@ class ApplyCouponToCart
             if(!empty($requestedCoupon)) {
                 $couponArray = $this->validateCode($requestedCoupon);
                 $couponQty = count($couponArray);
+                //To validate the yopto coupon
+                $this->validateYoptoCoupon($couponArray);
                 $args['input']['coupon_code'] = implode(";", $couponArray);
             }
             if (empty($args['input']['cart_id'])) {
@@ -70,6 +72,25 @@ class ApplyCouponToCart
             throw new GraphQlInputException(__($e->getMessage()));
         }
         return $result;
+    }
+
+    /**
+     * To avoid Yopto multi-coupon
+     * @param $couponArray
+     * @return void
+     * @throws GraphQlInputException
+     */
+    public function validateYoptoCoupon($couponArray)
+    {
+        $yoptoCoupon = 0;
+        foreach ($couponArray as $coupon) {
+            if (str_contains($coupon, 'loyalty')) {
+                $yoptoCoupon++;
+            }
+        }
+        if ($yoptoCoupon > 1) {
+            throw new GraphQlInputException(__('Coupon code quantity limit has been reached.'));
+        }
     }
 
     /**
