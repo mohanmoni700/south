@@ -9,6 +9,7 @@ use Corra\Spreedly\Gateway\Config\Config;
 use Corra\Spreedly\Gateway\Helper\SubjectReader;
 use Corra\Spreedly\Model\TokenProvider;
 use Magento\Framework\HTTP\PhpEnvironment\RemoteAddress;
+use Magento\Directory\Model\Region;
 
 class AuthorizeDataBuilder extends AbstractDataBuilder
 {
@@ -87,6 +88,56 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
     private const CUSTOMER_EMAIL = "email";
 
     /**
+     * Billing address of the customer
+     */
+    private const BILLING_ADDRESS = "billing_address";
+
+    /**
+     * Shipping address of the customer
+     */
+    private const SHIPPING_ADDRESS = "shipping_address";
+
+    /**
+     *  Name in the address
+     */
+    private const NAME = "name";
+
+    /**
+     * Address1 in the address
+     */
+    private const ADDRESS1 = "address1";
+
+    /**
+     * Address2 in the address
+     */
+    private const ADDRESS2 = "address2";
+
+    /**
+     * City in address
+     */
+    private const CITY = "city";
+
+    /**
+     * State in address
+     */
+    private const STATE = "state";
+
+    /**
+     * Zip in address
+     */
+    private const ZIP = "zip";
+
+    /**
+     * Country in address
+     */
+    private const COUNTRY = "country";
+
+    /**
+     * phone number in address
+     */
+    private const PHONE_NUMBER = "phone_number";
+
+    /**
      * @var array
      */
     protected $additionalInformationList = [
@@ -96,8 +147,10 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
         'cc_exp_month',
         'cc_exp_year'
     ];
-    /** @var RemoteAddress  */
+    /** @var RemoteAddress */
     private RemoteAddress $remoteAddress;
+
+    private Region $region;
 
     /**
      * @param SubjectReader $subjectReader
@@ -106,14 +159,16 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
      * @param RemoteAddress $remoteAddress
      */
     public function __construct(
-        SubjectReader $subjectReader,
-        Config $config,
-        TokenProvider $tokenProvider,
-        RemoteAddress $remoteAddress
+        SubjectReader  $subjectReader,
+        Config         $config,
+        TokenProvider  $tokenProvider,
+        Region         $region,
+        RemoteAddress  $remoteAddress
     )
     {
         parent::__construct($subjectReader, $config, $tokenProvider);
         $this->remoteAddress = $remoteAddress;
+        $this->region = $region;
     }
 
     /**
@@ -143,6 +198,7 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
 
         $order = $paymentDO->getOrder();
         $billingAddress = $order->getBillingAddress();
+        $shippingAddress = $order->getShippingAddress();
         $vaultPaymentToken = $payment->getExtensionAttributes()->getVaultPaymentToken();
         $vaultGatewayToken = $vaultPaymentToken ? $vaultPaymentToken->getGatewayToken() : '';
 
@@ -194,7 +250,7 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
                     self::CURRENCY_CODE => $order->getCurrencyCode(),
                     self::ORDER_ID => $order->getOrderIncrementId(),
                     self::CUSTOMER_IP => $ip,
-                    self::CUSTOMER_EMAIL => $billingAddress->getEmail() ?? null
+                    self::CUSTOMER_EMAIL => $billingAddress->getEmail() ?? null,
                 ]
             ];
         }
@@ -203,6 +259,42 @@ class AuthorizeDataBuilder extends AbstractDataBuilder
             $payment->unsAdditionalInformation($additionalInformationKey);
         }
 
+        //Adding Billing Address to the request
+        $result[self::TRANSACTION_ROOT_ELEMENT][self::BILLING_ADDRESS] = [
+            self::NAME => $billingAddress->getFirstname() .' '. $billingAddress->getLastname(),
+            self::ADDRESS1 => $billingAddress->getStreetLine1(),
+            self::ADDRESS2 => $billingAddress->getStreetLine2(),
+            self::CITY => $billingAddress->getCity(),
+            self::STATE => $this->getRegion($billingAddress->getRegionCode(), $billingAddress->getCountryId()),
+            self::ZIP => $billingAddress->getPostcode(),
+            self::COUNTRY => $billingAddress->getCountryId(),
+            self::PHONE_NUMBER => $billingAddress->getTelephone()
+        ];
+
+        //Adding shipping address to the request
+        if (isset($shippingAddress)) {
+            $result[self::TRANSACTION_ROOT_ELEMENT][self::SHIPPING_ADDRESS] = [
+                self::NAME => $shippingAddress->getFirstname().' '.$shippingAddress->getLastname(),
+                self::ADDRESS1 => $shippingAddress->getStreetLine1(),
+                self::ADDRESS2 => $shippingAddress->getStreetLine2(),
+                self::CITY => $shippingAddress->getCity(),
+                self::STATE => $this->getRegion($shippingAddress->getRegionCode(), $shippingAddress->getCountryId()),
+                self::ZIP => $shippingAddress->getPostcode(),
+                self::COUNTRY => $shippingAddress->getCountryId(),
+                self::PHONE_NUMBER => $shippingAddress->getTelephone()
+            ];
+        }
+
         return $result;
+    }
+
+    /**
+     * @param $regionCode
+     * @param $countryCode
+     * @return string
+     */
+    public function getRegion($regionCode, $countryCode)
+    {
+        return $this->region->loadByCode($regionCode, $countryCode)->getName();
     }
 }
