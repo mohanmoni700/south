@@ -3447,6 +3447,11 @@
         // Mobile Mega menu
 
         .sw-megamenu{
+            &.navigation.active{
+                height: ~'calc(100% - 168px)' !important;
+                overflow: auto;
+                top: 16.8rem !important;
+            }
             li.level0.fullwidth{
                 &.active{
                     .submenu.level0{
@@ -3600,7 +3605,7 @@
                             &.active{
                                 display: block;
                                 position: fixed;
-                                top:19.0rem;
+                                top:20.0rem;
                                 left:0;
                                 width: 100%;
                                 height: ~'calc(100% - 190px)';
@@ -3615,7 +3620,7 @@
                                     ul{
                                         padding: 5px 0;
                                         li{
-                                            margin-bottom: 1.5rm;
+                                            margin-bottom: 1.5rem;
                                             &.first{
                                                 margin-top: 1.5rem;
                                             }
@@ -3768,6 +3773,20 @@
                 .fieldset {
                     padding: 0 20px;
                 }
+            }
+        }
+        .sw-megamenu{
+            &.navigation.active{
+                height: ~'calc(100% - 16.4rem)' !important;
+                top: 16.4rem !important;
+            }
+        }
+    }
+    @media only screen and (max-width: 560px){
+        .sw-megamenu{
+            &.navigation.active{
+                height: ~'calc(100% - 18.0rem)' !important;
+                top: 18.0rem !important;
             }
         }
     }
