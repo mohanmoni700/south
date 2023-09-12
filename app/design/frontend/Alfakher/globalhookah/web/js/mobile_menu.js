@@ -13,8 +13,10 @@ require(['jquery',
                 $('.level1.parent.current .subchildmenu').toggle();
             });
             // New code for mobile menu
-            $('.level0.parent > a').off('click').on('click', function (e) {    
-                e.preventDefault();           
+            $('.level0.parent > a').off('click').on('click', function (e) {  
+                e.preventDefault(); 
+                $('.level0.parent > .level-top').removeClass('ui-state-active'); 
+                 $('.submenu').removeClass('opened');                          
                 $(this).addClass('ui-state-active').parent().find('.submenu').addClass('opened');
             });
             $('.tabs-content .pagebuilder-column-group .pagebuilder-column:first-child ul').prepend('<li class="first"><div class="close-submenu">Close</div><div class="parent-name"></div></li>');

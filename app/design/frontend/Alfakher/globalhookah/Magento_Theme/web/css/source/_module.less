@@ -2350,6 +2350,19 @@
             li.level0{
                 margin-right: 2.3rem;
             }
+            .shopbybrands {
+                .brandcollection {
+                    .branditem {
+                        &:hover{
+                            a {
+                                .brandname{
+                                    color: #316BB2;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
     }
@@ -3445,6 +3458,9 @@
                     cursor: pointer;
                 }
                 .submenu{
+                    &.opened{
+                        overflow: hidden;
+                    }
                     .container{
                         position: relative;
                         &::before{
@@ -3506,6 +3522,11 @@
                                 display: none;
 
                             }
+                        }
+                        figure,
+                        .marketing-content{
+                            display: none;
+
                         }
                     }
                     .ui-tabs{
