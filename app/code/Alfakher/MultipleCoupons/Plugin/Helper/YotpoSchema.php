@@ -24,7 +24,7 @@ class YotpoSchema
             return str_contains($coupon, 'loyalty');
         });
         if (count($loyaltyCoupon)) {
-            $result['coupon_code'] = $loyaltyCoupon[0];
+            $result['coupon_code'] = reset($loyaltyCoupon);
         }
         return $result;
     }
