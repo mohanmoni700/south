@@ -72,14 +72,18 @@ class UpdateStock extends Command
         try {
             $collection = $this->productCollectionFactory->create();
             $collection->addAttributeToFilter('status', ['eq' => 1]);
-            $collection->addAttributeToFilter('type_id', array('eq' => 'grouped'));
+            $collection->addAttributeToFilter('type_id', array('in' => ['grouped', 'configurable']));
             $collection->addAttributeToSelect('*');
             $size = $collection->getSize();
             foreach ($collection as $product) {
+                /** If parent product is set as OOS manually then ignore the product */
+                if (empty($this->getParentProductStockStatus($product->getEntityId()))) {
+                    continue;
+                }
                 $children = $this->getChildProducts($product->getEntityId());
                 $childProductId = [];
                 foreach ($children as $child) {
-                    $childProductId[] = $child['linked_product_id'];
+                    $childProductId[] = $child['child_id'];
                 }
                 $stockData = $this->getStockItem($childProductId);
                 if (!empty($stockData) && (count($childProductId) == count($stockData))) {
@@ -92,7 +96,7 @@ class UpdateStock extends Command
                     $output->writeln($product->getEntityId() . ' successfully updated as In-Stock');
                 }
             }
-            $output->writeln($size . ' Products successfully updated: ');
+            $output->writeln($size . ' Products successfully updated');
         } catch (\Exception $e) {
             $output->writeln('Error: ' . $e->getMessage());
         }
@@ -112,6 +116,21 @@ class UpdateStock extends Command
         $query = "SELECT product_id , qty, is_in_stock  FROM " .
             $this->resource->getTableName('cataloginventory_stock_item') . " WHERE " .
             "(qty <= 0 OR is_in_stock = 0) AND product_id IN (" . $productIds . ")";
+        return $this->resource->getConnection()->fetchAll($query);
+    }
+
+    /**
+     * Get the product status
+     * @param $productId
+     * @return array|false
+     */
+    public function getParentProductStockStatus($productId)
+    {
+        if (empty($productId)) {
+            return false;
+        }
+        $query = "SELECT is_in_stock FROM " . $this->resource->getTableName('cataloginventory_stock_item') .
+            " WHERE product_id = " . $productId . " AND is_in_stock = 1";
         return $this->resource->getConnection()->fetchAll($query);
     }
 
@@ -136,8 +155,8 @@ class UpdateStock extends Command
      */
     public function getChildProducts($productId)
     {
-        $query = "select linked_product_id FROM " . $this->resource->getTableName('catalog_product_link') .
-            " WHERE product_id = " . $productId;
+        $query = "select child_id FROM " . $this->resource->getTableName('catalog_product_relation') .
+            " WHERE parent_id = " . $productId;
         return $this->resource->getConnection()->fetchAll($query);
     }
 }
