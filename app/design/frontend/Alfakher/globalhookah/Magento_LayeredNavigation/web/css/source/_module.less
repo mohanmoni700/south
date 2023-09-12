@@ -326,7 +326,7 @@
 
         .count {
             .lib-css(color, @text__color__muted);
-
+            padding-left:2rem;
             &:before {
                 content: '(';
             }
@@ -601,15 +601,16 @@
             }
 
             .filter-subtitle {
-                //  .lib-css(background, @toolbar-background);
                 display: block;
                 height: 3.75rem;
                 left: 0;
+                font-size:1.6rem;
+                font-weight: 700;
                 line-height: 1;
                 padding: 18px 20px;
                 position: fixed;
                 right: 0;
-                top: 0;
+                top: 1rem;
                 z-index: 1;
             }
 
@@ -621,6 +622,7 @@
                 overflow: auto;
                 padding: 0 20px 20px 20px;
                 position: fixed;
+                margin-top:2rem;
                 right: 0;
                 top: 3.75rem;
                 z-index: 10;
@@ -744,10 +746,11 @@
             .sidebar {
                 .block.filter {
                     .filter-options-title {
+                        padding-top: 3rem;
                         &::after {
-                            height: 0.625rem;
-                            top: 1.5rem;
-                            width: 0.688rem;
+                            height: 1.3rem;
+                            width: 1.3rem;
+                            top: 3rem;
                         }
                     }
                 }
