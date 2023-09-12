@@ -103,7 +103,11 @@
             width: 10rem;
         }
     }
-
+    select:not([disabled]) {
+        &:focus {
+           box-shadow: unset;
+        }
+    }
     .sorter-action {
         vertical-align: top;
         .lib-icon-font(
