@@ -11,8 +11,14 @@ use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 
 class ProductAlertStatus implements ResolverInterface
 {
+    /**
+     * @var ProductAlertStockGuestUserFactory
+     */
     protected ProductAlertStockGuestUserFactory $guestSubscriptionFactory;
 
+    /**
+     * @param ProductAlertStockGuestUserFactory $guestSubscriptionFactory
+     */
     public function __construct(
         ProductAlertStockGuestUserFactory $guestSubscriptionFactory
     ) {

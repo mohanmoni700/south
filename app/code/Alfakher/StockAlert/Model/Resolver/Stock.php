@@ -7,11 +7,26 @@ namespace Alfakher\StockAlert\Model\Resolver;
 use Alfakher\StockAlert\Model\ProductAlertStockGuestUserFactory;
 use Alfakher\StockAlert\Helper\Data;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\GraphQl\Config\Element\Field;
+use Magento\Framework\GraphQl\Query\Resolver\Value;
+use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
 
 class Stock implements \Magento\Framework\GraphQl\Query\ResolverInterface
 {
+    /**
+     * @var ProductAlertStockGuestUserFactory
+     */
     protected ProductAlertStockGuestUserFactory $guestSubscriptionDataFactory;
 
+    /**
+     * @var Data
+     */
+    private Data $helper;
+
+    /**
+     * @param ProductAlertStockGuestUserFactory $guestSubscriptionDataFactory
+     * @param Data $helper
+     */
     public function __construct(
         ProductAlertStockGuestUserFactory $guestSubscriptionDataFactory,
         Data $helper
@@ -20,10 +35,20 @@ class Stock implements \Magento\Framework\GraphQl\Query\ResolverInterface
         $this->helper = $helper;
     }
 
+    /**
+     * Resolve function
+     *
+     * @param Field $field
+     * @param $context
+     * @param ResolveInfo $info
+     * @param array|null $value
+     * @param array|null $args
+     * @return array|Value|mixed
+     */
     public function resolve(
-        \Magento\Framework\GraphQl\Config\Element\Field $field,
+        Field $field,
         $context,
-        \Magento\Framework\GraphQl\Schema\Type\ResolveInfo $info,
+        ResolveInfo $info,
         array $value = null,
         array $args = null
     ) {

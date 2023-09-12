@@ -9,6 +9,8 @@ use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 class ProductAlertStockGuestUser extends AbstractDb
 {
     /**
+     * ResourceModel Constructor
+     *
      * @return void
      */
     protected function _construct()

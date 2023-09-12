@@ -17,13 +17,26 @@ class ProductAlertStockGuestUserRepository implements ProductAlertStockGuestUser
      */
     private ProductAlertStockGuestUserResource $resource;
 
-    public function __construct(ProductAlertStockGuestUserResource $resource)
-    {
+    /**
+     * @var ProductAlertStockGuestUser
+     */
+    private ProductAlertStockGuestUser $productAlertStockGuestUserModel;
+
+    /**
+     * @param ProductAlertStockGuestUserResource $resource
+     * @param ProductAlertStockGuestUser $productAlertStockGuestUserModel
+     */
+    public function __construct(
+        ProductAlertStockGuestUserResource $resource,
+        ProductAlertStockGuestUser $productAlertStockGuestUserModel
+    ) {
         $this->resource = $resource;
+        $this->productAlertStockGuestUserModel = $productAlertStockGuestUserModel;
     }
 
     /**
      * @inheritdoc
+     *
      * @throws AlreadyExistsException
      */
     public function save(ProductAlertStockGuestUserInterface $productAlert): ProductAlertStockGuestUserInterface
@@ -32,8 +45,14 @@ class ProductAlertStockGuestUserRepository implements ProductAlertStockGuestUser
         return $productAlert;
     }
 
-    public function getById(int $id): Data\ProductAlertStockGuestUserInterface
+    /**
+     * Get data by id
+     *
+     * @param int $id
+     * @return ProductAlertStockGuestUser
+     */
+    public function getById(int $id): ProductAlertStockGuestUser
     {
-        // TODO: Implement getById() method.
+        return $this->productAlertStockGuestUserModel->load($id);
     }
 }

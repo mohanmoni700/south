@@ -10,8 +10,17 @@ use Alfakher\StockAlert\Model\ResourceModel\ProductAlertStockGuestUser as Produc
 
 class Collection extends AbstractCollection
 {
+
+    /**
+     * @var string
+     */
     protected $_idFieldName = 'alert_stock_id';
 
+    /**
+     * Collection Constructor
+     *
+     * @return void
+     */
     protected function _construct()
     {
         $this->_init(

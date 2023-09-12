@@ -3,7 +3,6 @@
 namespace Alfakher\StockAlert\Helper;
 
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Registry;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\RequestInterface;
 
@@ -15,27 +14,19 @@ class Data
     private RequestInterface $request;
 
     /**
-     * @var Registry
-     */
-    private Registry $registry;
-
-    /**
      * @var StoreManagerInterface
      */
     private StoreManagerInterface $storeManager;
 
     /**
      * @param StoreManagerInterface $storeManager
-     * @param Registry $registry
      * @param RequestInterface $request
      */
     public function __construct(
         StoreManagerInterface $storeManager,
-        Registry $registry,
         RequestInterface $request
     ) {
         $this->storeManager = $storeManager;
-        $this->registry = $registry;
         $this->request = $request;
     }
 

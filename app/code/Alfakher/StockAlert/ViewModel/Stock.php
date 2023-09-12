@@ -6,9 +6,7 @@ namespace Alfakher\StockAlert\ViewModel;
 
 use Magento\Customer\Model\Session;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Framework\Registry;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Catalog\Model\Session as CatalogSession;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\App\RequestInterface;
 
@@ -20,31 +18,34 @@ class Stock implements \Magento\Framework\View\Element\Block\ArgumentInterface
     private Session $customerSession;
 
     /**
-     * @var Registry
-     */
-    private Registry $coreRegistry;
-
-    /**
      * @var StoreManagerInterface
      */
     private StoreManagerInterface $storeManager;
 
-    private CatalogSession $session;
+    /**
+     * @var ScopeConfigInterface
+     */
     private ScopeConfigInterface $scopeConfig;
+
+    /**
+     * @var RequestInterface
+     */
     private RequestInterface $request;
 
+    /**
+     * @param Session $customerSession
+     * @param StoreManagerInterface $storeManager
+     * @param ScopeConfigInterface $scopeConfig
+     * @param RequestInterface $request
+     */
     public function __construct(
         Session               $customerSession,
-        Registry              $coreRegistry,
         StoreManagerInterface $storeManager,
-        CatalogSession $session,
         ScopeConfigInterface $scopeConfig,
         RequestInterface $request
     ) {
         $this->customerSession = $customerSession;
-        $this->coreRegistry = $coreRegistry;
         $this->storeManager = $storeManager;
-        $this->session = $session;
         $this->scopeConfig = $scopeConfig;
         $this->request = $request;
     }
