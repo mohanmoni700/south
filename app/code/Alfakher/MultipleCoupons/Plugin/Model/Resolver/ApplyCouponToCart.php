@@ -40,7 +40,7 @@ class ApplyCouponToCart
         GraphQlApplyCouponToCart $subject,
         callable $proceed,
         Field $field,
-        $context,
+                                 $context,
         ResolveInfo $info,
         array $value = null,
         array $args = null
@@ -52,8 +52,7 @@ class ApplyCouponToCart
             if(!empty($requestedCoupon)) {
                 $couponArray = $this->validateCode($requestedCoupon);
                 $couponQty = count($couponArray);
-                //To validate the yopto coupon
-                $this->validateYoptoCoupon($couponArray);
+                $this->validateOneCoupon($couponArray);
                 $args['input']['coupon_code'] = implode(";", $couponArray);
             }
             if (empty($args['input']['cart_id'])) {
@@ -75,22 +74,24 @@ class ApplyCouponToCart
     }
 
     /**
-     * To avoid Yopto multi-coupon
      * @param $couponArray
      * @return void
      * @throws GraphQlInputException
      */
-    public function validateYoptoCoupon($couponArray)
-    {
-        $yoptoCoupon = 0;
+    public function validateOneCoupon($couponArray){
+        $magentoCoupon = 0;
+        $yotpoCoupon = 0;
         foreach ($couponArray as $coupon) {
             if (str_contains($coupon, 'loyalty')) {
-                $yoptoCoupon++;
+                $yotpoCoupon++;
+            } else {
+                $magentoCoupon++;
             }
         }
-        if ($yoptoCoupon > 1) {
+        if ($yotpoCoupon > 1 || $magentoCoupon > 1) {
             throw new GraphQlInputException(__('Coupon code quantity limit has been reached.'));
         }
+
     }
 
     /**
