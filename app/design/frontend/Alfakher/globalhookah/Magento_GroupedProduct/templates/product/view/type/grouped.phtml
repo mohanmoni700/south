@@ -310,6 +310,20 @@ if (col1Div) {
   h2Element.classList.add('Description-product-page');
   col1Div.insertBefore(h2Element, col1Div.firstChild);
 
+  var ReadMore = document.createElement('button');
+  ReadMore.classList.add('showMore');
+  ReadMore.textContent = 'showMore';
+
+
+  var ReadLess = document.createElement('button');
+  ReadLess.classList.add('showLess');
+  ReadLess.classList.add('hidden');
+  ReadLess.textContent = 'showLess';
+
+
+
+  col1Div.append(ReadMore);
+  col1Div.append(ReadLess);
 }
   var inputValues = {};
   $(".col.qty .control.qty .input-text.qty").each(function() {
@@ -332,6 +346,24 @@ if (col1Div) {
                      });
                      $("#Product_price_grouped").html('$' + totalSum.toFixed(2));
   });
+  var contentDiv = $('.description');
+    var readMoreBtn = $('.showMore');
+    var readLessBtn = $('.showLess');
+
+    // Show more content
+    readMoreBtn.on('click', function() {
+        contentDiv.css('max-height', 'none');
+        readMoreBtn.addClass('hidden');
+        readLessBtn.removeClass('hidden');
+    });
+
+    // Show less content
+    readLessBtn.on('click', function() {
+        contentDiv.css('max-height', '200px');
+        readLessBtn.addClass('hidden');
+        readMoreBtn.removeClass('hidden');
+    });
+
 });
 
             $(".col.qty .control.qty .input-text.qty").on("change paste keyup", function (e) {
