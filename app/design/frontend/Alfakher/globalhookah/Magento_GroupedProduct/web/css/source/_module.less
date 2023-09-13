@@ -28,6 +28,7 @@
                 }
                 > tr {
                     > td {
+                        border: none !important;
                         .price {
                             color: @tableprice_clr;
                     font-size: @font-size__base;
@@ -187,6 +188,12 @@
     .table-wrapper {
         border-bottom: unset;
     }
+
+    .product-info-main {
+        .stock.available {
+            width: unset;
+        }
+    }
 }
 .box-tocart {
     .fieldset {
@@ -246,6 +253,7 @@
         display: flex !important;
         justify-content: space-between !important;
         align-items: center;
+        width: 64rem;
         .availability {
             color: #316bb2;
             font-weight: 600;
@@ -300,11 +308,13 @@ display: none;
         border: 1px solid;
 }
 .showMore:hover{
-        background: transparent linear-gradient(153deg, #229B62 0%, #346DB0 100%) 0% 0% no-repeat padding-box;
+        background: transparent linear-gradient(153deg,
+        #229B62 0%, #346DB0 100%) 0% 0% no-repeat padding-box;
         color: #ffffff;
 }
 .showLess:hover{
-    background: transparent linear-gradient(153deg, #229B62 0%, #346DB0 100%) 0% 0% no-repeat padding-box;
+    background: transparent linear-gradient(153deg,
+    #229B62 0%, #346DB0 100%) 0% 0% no-repeat padding-box;
     color: #ffffff;
 }
 
@@ -326,3 +336,20 @@ display: none;
 	border-radius: 10px;
 	background-color: #316BB2;
 }
+
+
+.Description-product-page {
+    font-size: 20px;
+    color: #316BB2;
+}
+
+.Description-product-page::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 0.5em;
+    border-top: 1px solid black;
+    z-index: -1;
+  }

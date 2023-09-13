@@ -167,9 +167,11 @@
             </tr>
             <tr class="table-variant-row col item ">
                         <td class="variant col item">Variant</td>
+                        <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
                         <td >Unit Price</td>
                         <td class="col qty">Qty</td>
                         <td class="col qty">Total Price</td>
+                        <?php endif; ?>
                     </tr>
                 <?php foreach ($sortedProducts as $_item): ?>
                     <?php $productAvailableQty = $_helperB2b->getStockQty($_item->getId()); ?>
