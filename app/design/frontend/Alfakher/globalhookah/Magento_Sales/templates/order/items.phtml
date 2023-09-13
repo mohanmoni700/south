@@ -13,8 +13,8 @@ if ($order->getExciseTax() > 0) {
 }
 ?>
 <div class="table-wrapper order-items">
-    <table class="data table table-order-items" id="my-orders-table"
-    summary="<?= $block->escapeHtml(__('Items Ordered')) ?>">
+    <table class="data table table-order-items" id="my-orders-table" aria-describedby="Items Ordered">
+        <th></th>
         <caption class="table-caption"><?= $block->escapeHtml(__('Items Ordered')) ?></caption>
         <thead>
             <?php if ($block->isPagerDisplayed()): ?>
