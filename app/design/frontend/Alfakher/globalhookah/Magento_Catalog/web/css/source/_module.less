@@ -1447,6 +1447,11 @@
 //  _____________________________________________
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .filter-options-content {
+        .items {
+            max-height: unset !important;
+        }
+    }
     .viewingproducts {
         right:0;
     }
