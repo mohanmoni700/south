@@ -8,6 +8,7 @@ use Alfakher\StockAlert\Api\Data\ProductAlertStockGuestUserInterface;
 use Alfakher\StockAlert\Api\ProductAlertStockGuestUserRepositoryInterface;
 use Alfakher\StockAlert\Model\ResourceModel\ProductAlertStockGuestUser as ProductAlertStockGuestUserResource;
 use Alfakher\StockAlert\Model\ResourceModel\ProductAlertStockGuestUser\Collection as CollectionFactory;
+use Alfakher\StockAlert\Model\ProductAlertStockGuestUser;
 use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\NoSuchEntityException;
 
@@ -58,11 +59,12 @@ class ProductAlertStockGuestUserRepository implements ProductAlertStockGuestUser
      * Get data by id
      *
      * @param int $id
-     * @return ProductAlertStockGuestUser
+     * @return ProductAlertStockGuestUserInterface
      */
-    public function getById(int $id): ProductAlertStockGuestUser
+    public function getById(int $id): ProductAlertStockGuestUserInterface
     {
-        return $this->productAlertStockGuestUserModel->load($id);
+        $model = $this->productAlertStockGuestUserModel->create();
+        return $this->resource->load($model, $id);
     }
 
     /**

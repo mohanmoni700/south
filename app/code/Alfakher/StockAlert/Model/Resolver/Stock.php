@@ -77,9 +77,6 @@ class Stock implements \Magento\Framework\GraphQl\Query\ResolverInterface
             $dataModel->setStoreId($storeId);
             $dataModel->setWebsiteId($websiteId);
             $this->productAlertRepository->save($dataModel);
-
-//            $dataModel->save();
-
             // Update the result with success message and ID
             $result['message'] = 'Subscription added successfully';
             $result['id'] = $dataModel->getId();
