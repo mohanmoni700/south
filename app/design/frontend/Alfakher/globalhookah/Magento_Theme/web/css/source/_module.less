@@ -2349,20 +2349,7 @@
             }
             li.level0{
                 margin-right: 2.3rem;
-            }
-            .shopbybrands {
-                .brandcollection {
-                    .branditem {
-                        &:hover{
-                            a {
-                                .brandname{
-                                    color: #316BB2;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+            }           
         }
 
     }
@@ -2944,44 +2931,6 @@
             }
         }
     }
-    .category-brand-descreption {
-        background: #FFF8E5;
-        margin: 0px -25%;       
-        .content {
-            max-width: 1310px;
-            margin: 0 auto;
-            padding: 7.5rem 2.0rem;
-            .descreption-title{
-                .lib-font-size(40);
-                margin-bottom: 3.5rem;
-                font-weight: @font-weight__bold;
-            }
-            p{
-                .lib-font-size(16);
-                font-weight: 500;
-            }
-            .moretext{
-                display: none;
-            }
-            .moreless-button{
-                width: 17.2rem;
-                border:1px solid #000;
-                color: @color-black;
-                .lib-font-size(16);
-                font-weight: @font-weight__semibold;
-                text-align: center;
-                padding: 1.5rem 0;
-                cursor: pointer;
-                border-radius: 4.0rem;
-                margin-top:5.5rem;
-                &:hover{
-                    border: 1px solid #229B62;
-                    background: #229B62;
-                    color: @color-white;
-                }
-            }
-        }
-    } 
 }
 
 & when (@media-target = 'desktop'), (@media-target = 'all') {
@@ -3875,30 +3824,5 @@
                 .lib-font-size(8);
             }
         }
-    }
-    @media only screen and (max-width: 1310px){
-        .category-brand-descreption {
-            margin: 0px -20px;
-        } 
-    }
-    @media(max-width: 768px){       
-        .category-brand-descreption {              
-            .content {               
-                padding: 3.0rem 2.0rem;
-                .descreption-title{
-                    .lib-font-size(30);
-                    margin-bottom: 2.5rem;                   
-                }  
-            }
-        } 
-    }
-    @media (max-width: 599px) {
-        .category-brand-descreption {
-            .content {
-                .descreption-title {
-                    .lib-font-size(20);
-                }
-            }
-        }
-    }
+    }  
 }
