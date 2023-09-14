@@ -60,7 +60,7 @@
     }
     .page-wrapper {
         #amasty-shopby-product-list {
-            padding-bottom: 40px;
+            padding-bottom: 7rem;
             position: relative;
             @media only screen and (max-width: 767px) {
                 padding-bottom: 4rem;
@@ -2664,6 +2664,32 @@
         }
         .category-banner {
             padding: 0 15px;
+        }
+    }
+    @media only screen and (min-width: 1440px) and (max-width: 1920px) { 
+        .catalog-category-view {
+            .page-main {
+                .breadcrumbs , .category-banner{
+                    max-width: 100%;
+                    padding: 10px 72px;
+                }
+                .category-banner {
+                    grid-template-columns: 0.86fr 4fr;
+                    .site-container {
+                        width: 30rem;
+                    }
+                }
+            }
+            #maincontent {
+                max-width: 100%;
+                padding: 10px 72px;
+            }
+        }
+        .category-description {
+            [data-content-type='row'][data-appearance='contained'] {
+                max-width: 100%;
+                padding: 10px 72px;
+            }
         }
     }
     @media only screen and (max-width: 1290px) and (min-width: 1024px) {
