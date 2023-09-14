@@ -8,9 +8,15 @@ use Alfakher\StockAlert\Model\ProductAlertStockGuestUserFactory;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Alfakher\StockAlert\Api\ProductAlertStockGuestUserRepositoryInterface;
 
 class ProductAlertStatus implements ResolverInterface
 {
+    /**
+     * @var ProductAlertStockGuestUserRepositoryInterface
+     */
+    protected ProductAlertStockGuestUserRepositoryInterface $guestSubscriptionRepository;
+
     /**
      * @var ProductAlertStockGuestUserFactory
      */
@@ -18,11 +24,14 @@ class ProductAlertStatus implements ResolverInterface
 
     /**
      * @param ProductAlertStockGuestUserFactory $guestSubscriptionFactory
+     * @param ProductAlertStockGuestUserRepositoryInterface $guestSubscriptionRepository
      */
     public function __construct(
-        ProductAlertStockGuestUserFactory $guestSubscriptionFactory
+        ProductAlertStockGuestUserFactory $guestSubscriptionFactory,
+        ProductAlertStockGuestUserRepositoryInterface $guestSubscriptionRepository
     ) {
         $this->guestSubscriptionFactory = $guestSubscriptionFactory;
+        $this->guestSubscriptionRepository = $guestSubscriptionRepository;
     }
 
     /**
@@ -47,14 +56,9 @@ class ProductAlertStatus implements ResolverInterface
         $productId = $args['input']['product_id'];
 
         // Load the product alert entry using email, name, and product id
-        $guestSubscriptionModel = $this->guestSubscriptionFactory->create();
-        $collection = $guestSubscriptionModel->getCollection();
-        $collection->addFieldToFilter('name', $name)
-            ->addFieldToFilter('email_id', $email)
-            ->addFieldToFilter('product_id', $productId);
-
+        $guestSubscriptionModel = $this->guestSubscriptionRepository->get($email, $name, $productId);
         // Check if any record exists with the given criteria
-        $status = $collection->getSize() > 0 ? 'You are already Subscribed' : 'Not Subscribed';
+        $status = $guestSubscriptionModel ? 'You are already Subscribed' : 'Not Subscribed';
 
         return ['status' => $status];
     }

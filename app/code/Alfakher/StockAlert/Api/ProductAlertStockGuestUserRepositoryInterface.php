@@ -25,4 +25,14 @@ interface ProductAlertStockGuestUserRepositoryInterface
      * @throws NoSuchEntityException
      */
     public function getById(int $id): Data\ProductAlertStockGuestUserInterface;
+
+    /**
+     * Retrieve a product alert entry by email, name, and product id.
+     *
+     * @param string $email
+     * @param string $name
+     * @param int $productId
+     * @return ProductAlertStockGuestUserInterface|null
+     */
+    public function get(string $email, string $name, int $productId): ?ProductAlertStockGuestUserInterface;
 }

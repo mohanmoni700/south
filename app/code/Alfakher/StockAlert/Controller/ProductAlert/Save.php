@@ -6,15 +6,14 @@ namespace Alfakher\StockAlert\Controller\ProductAlert;
 
 use Alfakher\StockAlert\Api\Data\ProductAlertStockGuestUserInterface;
 use Alfakher\StockAlert\Api\ProductAlertStockGuestUserRepositoryInterface;
-use Alfakher\StockAlert\Model\ProductAlertStockGuestUserFactory;
-use Magento\Framework\App\Action\Action;
-use Magento\Framework\App\Action\Context;
+use Alfakher\StockAlert\Model\ProductAlertStockGuestUserRepository;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Data\Form\FormKey\Validator;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Alfakher\StockAlert\Helper\Data;
+use Magento\Framework\Message\ManagerInterface;
 
-class Save extends Action
+class Save implements \Magento\Framework\App\Action\HttpPostActionInterface
 {
     /**
      * @var Validator
@@ -32,39 +31,44 @@ class Save extends Action
     private ProductAlertStockGuestUserInterface $guestSubscriptionDataFactory;
 
     /**
-     * @var ProductAlertStockGuestUserFactory
-     */
-    private ProductAlertStockGuestUserFactory $productAlertStockGuestUserFactory;
-
-    /**
      * @var Data
      */
-    private Data $data;
+    private Data $helper;
+
+    /**
+     * @var ManagerInterface
+     */
+    private ManagerInterface $messageManager;
+
+    /**
+     * @var ProductAlertStockGuestUserRepository
+     */
+    private ProductAlertStockGuestUserRepository $productAlertRepository;
 
     /**
      * Save Controller
      *
-     * @param Context $context
      * @param Validator $formKeyValidator
+     * @param ManagerInterface $messageManager
      * @param ProductAlertStockGuestUserRepositoryInterface $guestSubscriptionRepository
      * @param ProductAlertStockGuestUserInterface $guestSubscriptionDataFactory
-     * @param ProductAlertStockGuestUserFactory $productAlertStockGuestUserFactory
-     * @param Data $data
+     * @param ProductAlertStockGuestUserRepository $productAlertRepository
+     * @param Data $helper
      */
     public function __construct(
-        Context $context,
-        Validator $formKeyValidator,
+        Validator                                     $formKeyValidator,
+        ManagerInterface                              $messageManager,
         ProductAlertStockGuestUserRepositoryInterface $guestSubscriptionRepository,
-        ProductAlertStockGuestUserInterface $guestSubscriptionDataFactory,
-        ProductAlertStockGuestUserFactory $productAlertStockGuestUserFactory,
-        Data $data
+        ProductAlertStockGuestUserInterface           $guestSubscriptionDataFactory,
+        ProductAlertStockGuestUserRepository          $productAlertRepository,
+        Data                                          $helper
     ) {
-        parent::__construct($context);
         $this->formKeyValidator = $formKeyValidator;
+        $this->messageManager = $messageManager;
         $this->guestSubscriptionDataFactory = $guestSubscriptionDataFactory;
         $this->guestSubscriptionRepository = $guestSubscriptionRepository;
-        $this->productAlertStockGuestUserFactory = $productAlertStockGuestUserFactory;
-        $this->data = $data;
+        $this->productAlertRepository = $productAlertRepository;
+        $this->helper = $helper;
     }
 
     /**
@@ -77,15 +81,15 @@ class Save extends Action
     {
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
         if (!$this->formKeyValidator->validate($this->getRequest())) {
-            $this->messageManager->addError(__('Invalid form key. Please try again.'));
+            $this->messageManager->addErrorMessage(__('Invalid form key. Please try again.'));
             return $resultRedirect->setPath('*/*/');
         }
 
         $name = $this->getRequest()->getPost('name');
         $email = $this->getRequest()->getPost('email');
-        $storeId = $this->data->getStoreId();
-        $websiteId = $this->data->getWebsiteId();
-        $productId = $this->data->getProductId();
+        $storeId = $this->helper->getStoreId();
+        $websiteId = $this->helper->getWebsiteId();
+        $productId = $this->helper->getProductId();
 
         $data = [
             'name' => $name,
@@ -96,17 +100,13 @@ class Save extends Action
             'status' => 1
         ];
         try {
-            $guestSubscriptionModel = $this->productAlertStockGuestUserFactory->create();
-            $collection = $guestSubscriptionModel->getCollection();
-            $collection->addFieldToFilter('name', $name)
-                ->addFieldToFilter('email_id', $email)
-                ->addFieldToFilter('product_id', $productId);
-            if ($collection->getSize() > 0) {
-                $this->messageManager->addSuccess(__('You are already subscribed to alerts for this product.'));
+            $productAlert = $this->productAlertRepository->get($email, $name, $productId);
+            if ($productAlert !== null) {
+                $this->messageManager->addSuccessMessage(__('You are already subscribed to alerts for this product.'));
             } else {
                 $dataModel = $this->guestSubscriptionDataFactory->setData($data);
                 $this->guestSubscriptionRepository->save($dataModel);
-                $this->messageManager->addSuccess(__('Alert subscription has been saved.'));
+                $this->messageManager->addSuccessMessage(__('Alert subscription has been saved.'));
             }
             return $resultRedirect->setPath('catalog/product/view', ['id' => $productId]);
         } catch (\Exception $e) {

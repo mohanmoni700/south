@@ -6,7 +6,8 @@ namespace Alfakher\StockAlert\Model;
 
 use Alfakher\StockAlert\Api\Data\ProductAlertStockGuestUserInterface;
 
-class ProductAlertStockGuestUser extends \Magento\Framework\Model\AbstractExtensibleModel implements ProductAlertStockGuestUserInterface
+class ProductAlertStockGuestUser extends \Magento\Framework\Model\AbstractExtensibleModel
+    implements ProductAlertStockGuestUserInterface
 {
     /**
      * Constructor
@@ -30,9 +31,9 @@ class ProductAlertStockGuestUser extends \Magento\Framework\Model\AbstractExtens
      * Set Alert stock Id
      *
      * @param int $alertStockId
-     * @return ProductAlertStockGuestUser
+     * @return Data\ProductAlertStockGuestUser
      */
-    public function setAlertStockId(int $alertStockId): ProductAlertStockGuestUser
+    public function setAlertStockId(int $alertStockId): Data\ProductAlertStockGuestUser
     {
         return $this->setData(self::ALERT_STOCK_ID, $alertStockId);
     }

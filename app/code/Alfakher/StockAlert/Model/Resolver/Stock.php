@@ -4,12 +4,13 @@ declare(strict_types=1);
 
 namespace Alfakher\StockAlert\Model\Resolver;
 
-use Alfakher\StockAlert\Model\ProductAlertStockGuestUserFactory;
+use Alfakher\StockAlert\Model\ProductAlertStockGuestUser as ProductAlertStockGuestUserFactory;
 use Alfakher\StockAlert\Helper\Data;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
+use Alfakher\StockAlert\Api\ProductAlertStockGuestUserRepositoryInterface;
 
 class Stock implements \Magento\Framework\GraphQl\Query\ResolverInterface
 {
@@ -24,15 +25,23 @@ class Stock implements \Magento\Framework\GraphQl\Query\ResolverInterface
     private Data $helper;
 
     /**
+     * @var ProductAlertStockGuestUserRepositoryInterface
+     */
+    private ProductAlertStockGuestUserRepositoryInterface $productAlertRepository;
+
+    /**
      * @param ProductAlertStockGuestUserFactory $guestSubscriptionDataFactory
      * @param Data $helper
+     * @param ProductAlertStockGuestUserRepositoryInterface $productAlertRepository
      */
     public function __construct(
         ProductAlertStockGuestUserFactory $guestSubscriptionDataFactory,
-        Data $helper
+        Data $helper,
+        ProductAlertStockGuestUserRepositoryInterface $productAlertRepository
     ) {
         $this->guestSubscriptionDataFactory = $guestSubscriptionDataFactory;
         $this->helper = $helper;
+        $this->productAlertRepository = $productAlertRepository;
     }
 
     /**
@@ -67,7 +76,9 @@ class Stock implements \Magento\Framework\GraphQl\Query\ResolverInterface
             $dataModel->setName($name);
             $dataModel->setStoreId($storeId);
             $dataModel->setWebsiteId($websiteId);
-            $dataModel->save();
+            $this->productAlertRepository->save($dataModel);
+
+//            $dataModel->save();
 
             // Update the result with success message and ID
             $result['message'] = 'Subscription added successfully';
