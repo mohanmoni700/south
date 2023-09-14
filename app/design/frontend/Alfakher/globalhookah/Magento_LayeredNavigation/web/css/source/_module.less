@@ -271,9 +271,11 @@
 
     .filter-content {
         position: relative;
-        margin-top: 5.2rem;
+        margin-top: 3.2rem;
     }
-
+    .filter-options-details {
+        border-bottom: 1px solid @border_color;
+    }
     .filter-options-content {
         .filter-count-label {
             &:extend(.abs-visually-hidden all);
@@ -314,7 +316,7 @@
                 margin-bottom: 1rem;
 
                 &:last-child {
-                    margin-bottom: 0;
+                    margin-bottom: 2rem;
                 }
             }
         }
@@ -395,6 +397,9 @@
 .media-width(@extremum, @break) when (@extremum ='max') and (@break =@screen__m) {
     .cate-filter {
         display: none;
+    }
+    .filter-options-details {
+        border-bottom: none;
     }
     .filter {
         &.block {
@@ -539,6 +544,9 @@
                 }
             }
         }
+        .filter-content {
+            margin-top: 5.2rem;
+        }
     }
 
     body {
@@ -629,6 +637,10 @@
                     .item {
                         margin-bottom: 0.875rem;
                     }
+                }
+                .filter-options-details {
+                    border-top: 1px solid @border_color;
+                    border-bottom: none;
                 }
             }
         }
