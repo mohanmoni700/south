@@ -797,7 +797,7 @@ define([
         ],
         'validate-currency-dollar': [
             function (v) {
-                return $.mage.isEmptyNoTrim(v) || /^\$?\-?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d*(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2})?)$/.test(v); //eslint-disable-line max-len
+                return $.mage.isEmptyNoTrim(v) || /^\$?\-?([1-9]\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]\d*(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2})?)$/.test(v); //eslint-disable-line max-len
 
             },
             $.mage.__('Please enter a valid $ amount. For example $100.00.')
