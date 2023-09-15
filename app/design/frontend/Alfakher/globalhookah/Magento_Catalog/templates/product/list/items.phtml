@@ -272,7 +272,7 @@ $_item = null;
                                                     value="<?= $block->escapeHtmlAttr($_item->getId()) ?>" />
                                                 <label class="label"
                                                        for="related-checkbox<?= $block->escapeHtmlAttr($_item->getId())
-                                                        ?>"><span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                                        ?>"><span>Add to Cart</span>
                                                 </label>
                                             </div>
                                         <?php endif; ?>
@@ -284,11 +284,16 @@ $_item = null;
                                             <?php if ($showCart):?>
                                                 <div class="actions-primary">
                                                 <?php if ($_item->isSaleable()):?>
-                                                    <?php if (!$_item->getTypeInstance()->isPossibleBuyFromList($_item)):?>
+                                                    <?php
+                                                    if (!$_item->getTypeInstance()->isPossibleBuyFromList($_item)):?>
                                                         <button
                                                                 class="action tocart primary"
-                                                                data-mage-init='{"redirectUrl": {"url": "<?= $block->escapeUrl($block->getAddToCartUrl($_item)) ?>"}}' type="button" title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>">
-                                                            <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                                                data-mage-init='{"redirectUrl": {"url": "
+                                                                <?= $block->escapeUrl
+                                                                ($block->getAddToCartUrl($_item)) ?>"
+                                                                }
+                                                            }' type="button" title="Add to Cart">
+                                                            <span>Add to Cart</span>
                                                         </button>
                                                     <?php else :?>
                                                         <?php
@@ -298,22 +303,28 @@ $_item = null;
                                                             $block->escapeUrl($block->getAddToCartUrl($_item)),
                                                             ['product' => $_item->getEntityId()]
                                                         );
-                                                        $value = $postArray['data'][ActionInterface::PARAM_NAME_URL_ENCODED];
+                                                        $value =
+                                                        $postArray['data'][ActionInterface::PARAM_NAME_URL_ENCODED];
                                                         ?>
                                                         <form data-role="tocart-form"
-                                                              data-product-sku="<?= $block->escapeHtmlAttr($_item->getSku()) ?>"
-                                                              action="<?= $block->escapeUrl($block->getAddToCartUrl($_item)) ?>"
+                                                              data-product-sku="
+                                                              <?= $block->escapeHtmlAttr($_item->getSku()) ?>"
+                                                              action="
+                                                              <?= $block->escapeUrl($block->getAddToCartUrl($_item)) ?>"
                                                               method="post">
                                                             <input type="hidden" name="product"
-                                                                   value="<?= /* @noEscape */ (int)$_item->getEntityId() ?>">
+                                                                   value="
+                                                                   <?= /* @noEscape */ (int)$_item->getEntityId() ?>">
                                                             <input type="hidden"
-                                                                   name="<?= /* @noEscape */ ActionInterface::PARAM_NAME_URL_ENCODED?>"
+                                                                   name="
+                                                                   <?= /* @noEscape */ ActionInterface::
+                                                                   PARAM_NAME_URL_ENCODED?>"
                                                                    value="<?= /* @noEscape */ $value ?>">
                                                             <?= $block->getBlockHtml('formkey') ?>
                                                             <button type="submit"
-                                                                    title="<?= $block->escapeHtmlAttr(__('Add to Cart')) ?>"
+                                                                    title="Add to Cart"
                                                                     class="action tocart primary">
-                                                                <span><?= $block->escapeHtml(__('Add to Cart')) ?></span>
+                                                                <span>Add to Cart</span>
                                                             </button>
                                                         </form>
                                                     <?php endif; ?>
@@ -335,7 +346,8 @@ $_item = null;
                                                 <div class="secondary-addto-links actions-secondary"
                                                      data-role="add-to-links">
                                                     <?php if ($addToBlock = $block->getChildBlock('addto')):?>
-                                                        <?php $childHtml = $addToBlock->setProduct($_item)->getChildHtml(); ?>
+                                                        <?php
+                                                        $childHtml = $addToBlock->setProduct($_item)->getChildHtml(); ?>
                                                         <?php $doc = new DOMDocument();
     $doc->loadHTML($childHtml);
     $xpath = new DOMXPath($doc);
