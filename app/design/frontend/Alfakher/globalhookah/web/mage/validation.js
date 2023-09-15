@@ -52,7 +52,7 @@ define([
              * @param {String} value
              */
             parseNumber: function (value) {
-                var isDot, isComa;
+                let isDot, isComa;
 
                 if (typeof value !== 'string') {
                     return parseFloat(value);
@@ -109,36 +109,36 @@ define([
      */
     creditCartTypes = {
         'SO': [
-            new RegExp('^(6334[5-9]([0-9]{11}|[0-9]{13,14}))|(6767([0-9]{12}|[0-9]{14,15}))$'),
-            new RegExp('^([0-9]{3}|[0-9]{4})?$'),
+            new RegExp('^(6334[5-9](\\d{11}|\\d{13,14}))|(6767(\\d{12}|\\d{14,15}))$'),
+            new RegExp('^(\\d{3}|\\d{4})?$'),
             true
         ],
         'SM': [
-            new RegExp('(^(5[0678])[0-9]{11,18}$)|(^(6[^05])[0-9]{11,18}$)|' +
-                '(^(601)[^1][0-9]{9,16}$)|(^(6011)[0-9]{9,11}$)|(^(6011)[0-9]{13,16}$)|' +
-                '(^(65)[0-9]{11,13}$)|(^(65)[0-9]{15,18}$)|(^(49030)[2-9]([0-9]{10}$|[0-9]{12,13}$))|' +
-                '(^(49033)[5-9]([0-9]{10}$|[0-9]{12,13}$))|(^(49110)[1-2]([0-9]{10}$|[0-9]{12,13}$))|' +
-                '(^(49117)[4-9]([0-9]{10}$|[0-9]{12,13}$))|(^(49118)[0-2]([0-9]{10}$|[0-9]{12,13}$))|' +
-                '(^(4936)([0-9]{12}$|[0-9]{14,15}$))'), new RegExp('^([0-9]{3}|[0-9]{4})?$'),
+            new RegExp('(^(5[0678])\d{11,18}$)|(^(6[^05])\d{11,18}$)|' +
+                '(^(601)[^1]\d{9,16}$)|(^(6011)\d{9,11}$)|(^(6011)\d{13,16}$)|' +
+                '(^(65)\d{11,13}$)|(^(65)\d{15,18}$)|(^(49030)[2-9](\d{10}$|\d{12,13}$))|' +
+                '(^(49033)[5-9](\d{10}$|\d{12,13}$))|(^(49110)[1-2](\d{10}$|\d{12,13}$))|' +
+                '(^(49117)[4-9](\d{10}$|\d{12,13}$))|(^(49118)[0-2](\d{10}$|\d{12,13}$))|' +
+                '(^(4936)(\d{12}$|\d{14,15}$))'), new RegExp('^(\d{3}|\d{4})?$'),
             true
         ],
-        'VI': [new RegExp('^4[0-9]{12}([0-9]{3})?$'), new RegExp('^[0-9]{3}$'), true],
+        'VI': [new RegExp('^4\d{12}(\d{3})?$'), new RegExp('^\d{3}$'), true],
         'MC': [
-            new RegExp('^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$'),
-            new RegExp('^[0-9]{3}$'),
+            new RegExp('^(?:5[1-5]\d{2}|222[1-9]|22[3-9]\d|2[3-6]\d{2}|27[01]\d|2720)\d{12}$'),
+            new RegExp('^\d{3}$'),
             true
         ],
-        'AE': [new RegExp('^3[47][0-9]{13}$'), new RegExp('^[0-9]{4}$'), true],
-        'DI': [new RegExp('^(6011(0|[2-4]|74|7[7-9]|8[6-9]|9)|6(4[4-9]|5))\\d*$'), new RegExp('^[0-9]{3}$'), true],
-        'JCB': [new RegExp('^35(2[8-9]|[3-8])\\d*$'), new RegExp('^[0-9]{3}$'), true],
-        'DN': [new RegExp('^(3(0[0-5]|095|6|[8-9]))\\d*$'), new RegExp('^[0-9]{3}$'), true],
+        'AE': [new RegExp('^3[47]\d{13}$'), new RegExp('^\d{4}$'), true],
+        'DI': [new RegExp('^(6011(0|[2-4]|74|7[7-9]|8[6-9]|9)|6(4[4-9]|5))\\d*$'), new RegExp('^\d{3}$'), true],
+        'JCB': [new RegExp('^35(2[8-9]|[3-8])\\d*$'), new RegExp('^\d{3}$'), true],
+        'DN': [new RegExp('^(3(0[0-5]|095|6|[8-9]))\\d*$'), new RegExp('^\d{3}$'), true],
         'UN': [
             new RegExp('^(622(1(2[6-9]|[3-9])|[3-8]|9([[0-1]|2[0-5]))|62[4-6]|628([2-8]))\\d*?$'),
-            new RegExp('^[0-9]{3}$'),
+            new RegExp('^\d{3}$'),
             true
         ],
-        'MI': [new RegExp('^(5(0|[6-9])|63|67(?!59|6770|6774))\\d*$'), new RegExp('^[0-9]{3}$'), true],
-        'MD': [new RegExp('^6759(?!24|38|40|6[3-9]|70|76)|676770|676774\\d*$'), new RegExp('^[0-9]{3}$'), true]
+        'MI': [new RegExp('^(5(0|[6-9])|63|67(?!59|6770|6774))\\d*$'), new RegExp('^\d{3}$'), true],
+        'MD': [new RegExp('^6759(?!24|38|40|6[3-9]|70|76)|676770|676774\\d*$'), new RegExp('^\d{3}$'), true]
     };
 
     /**
@@ -148,7 +148,7 @@ define([
      */
     function validateCreditCard(s) {
         // remove non-numerics
-        var v = '0123456789',
+        let v = '0123456789',
             w = '',
             i, j, k, m, c, a, x;
 
@@ -204,7 +204,7 @@ define([
      * @returns {float}
      */
     function resolveModulo(qty, qtyIncrements) {
-        var divideEpsilon = 10000,
+        let divideEpsilon = 10000,
             epsilon,
             remainder;
 
@@ -300,7 +300,7 @@ define([
         ],
         'vinUS': [
             function (v) {
-                var i, n, d, f, cd, cdv, LL, VL, FL, rs;
+                let i, n, d, f, cd, cdv, LL, VL, FL, rs;
 
                 /* eslint-disable max-depth */
                 if (v.length !== 17) {
@@ -356,7 +356,7 @@ define([
         ],
         'dateITA': [
             function (value, element) {
-                var check = false,
+                let check = false,
                     re = /^\d{1,2}\/\d{1,2}\/\d{4}$/,
                     adata, gg, mm, aaaa, xdata;
 
@@ -467,7 +467,7 @@ define([
         /* eslint-enable max-len */
         'credit-card-types': [
             function (value, element, param) {
-                var validTypes;
+                let validTypes;
 
                 if (/[^0-9-]+/.test(value)) {
                     return false;
@@ -557,7 +557,7 @@ define([
         'ipv4': [
             function (value, element) {
                 return this.optional(element) ||
-                    /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/i.test(value);
+                    /^(25[0-5]|2[0-4]\d|[01]?\d?)\.(25[0-5]|2[0-4]\d|[01]?\d?)\.(25[0-5]|2[0-4]\d|[01]?\d?)\.(25[0-5]|2[0-4]\d|[01]?\d?)$/i.test(value);
             },
             $.mage.__('Please enter a valid IP v4 address.')
         ],
@@ -652,7 +652,7 @@ define([
         ],
         'validate-password': [
             function (v) {
-                var pass;
+                let pass;
 
                 if (v == null) {
                     return false;
@@ -670,7 +670,7 @@ define([
         ],
         'validate-admin-password': [
             function (v) {
-                var pass;
+                let pass;
 
                 if (v == null) {
                     return false;
@@ -681,7 +681,7 @@ define([
                     return true;
                 }
 
-                if (!/[a-z]/i.test(v) || !/[0-9]/.test(v)) {
+                if (!/[a-z]/i.test(v) || !/\d/.test(v)) {
                     return false;
                 }
 
@@ -695,7 +695,7 @@ define([
         ],
         'validate-customer-password': [
             function (v, elm) {
-                var validator = this,
+                let validator = this,
                     counter = 0,
                     passwordMinLength = $(elm).data('password-min-length'),
                     passwordMinCharacterSets = $(elm).data('password-min-character-sets'),
@@ -776,7 +776,7 @@ define([
         ],
         'validate-date-au': [
             function (v) {
-                var regex, d;
+                let regex, d;
 
                 if ($.mage.isEmptyNoTrim(v)) {
                     return true;
@@ -797,7 +797,7 @@ define([
         ],
         'validate-currency-dollar': [
             function (v) {
-                return $.mage.isEmptyNoTrim(v) || /^\$?\-?([1-9]{1}[0-9]{0,2}(\,[0-9]{3})*(\.[0-9]{0,2})?|[1-9]{1}\d*(\.[0-9]{0,2})?|0(\.[0-9]{0,2})?|(\.[0-9]{1,2})?)$/.test(v); //eslint-disable-line max-len
+                return $.mage.isEmptyNoTrim(v) || /^\$?\-?([1-9]{1}\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]{1}\d*(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2})?)$/.test(v); //eslint-disable-line max-len
 
             },
             $.mage.__('Please enter a valid $ amount. For example $100.00.')
@@ -841,7 +841,7 @@ define([
         'validate-css-length': [
             function (v) {
                 if (v !== '') {
-                    return (/^[0-9]*\.*[0-9]+(px|pc|pt|ex|em|mm|cm|in|%)?$/).test(v);
+                    return (/^\d*\.*\d+(px|pc|pt|ex|em|mm|cm|in|%)?$/).test(v);
                 }
 
                 return true;
@@ -863,7 +863,7 @@ define([
         ],
         'validate-number-range': [
             function (v, elm, param) {
-                var numValue, dataAttrRange, classNameRange, result, range, m, classes, ii;
+                let numValue, dataAttrRange, classNameRange, result, range, m, classes, ii;
 
                 if ($.mage.isEmptyNoTrim(v)) {
                     return true;
@@ -916,7 +916,7 @@ define([
         ],
         'validate-forbidden-extensions': [
             function (v, elem) {
-                var forbiddenExtensions = $(elem).attr('data-validation-params'),
+                let forbiddenExtensions = $(elem).attr('data-validation-params'),
                     forbiddenExtensionsArray = forbiddenExtensions.split(','),
                     extensionsArray = v.split(','),
                     result = true;
@@ -984,7 +984,7 @@ define([
         ],
         'validate-range': [
             function (v, elm) {
-                var minValue, maxValue, ranges, reRange, result, values,
+                let minValue, maxValue, ranges, reRange, result, values,
                     i, name, validRange, minValidRange, maxValidRange;
 
                 if ($.mage.isEmptyNoTrim(v)) {
@@ -1052,7 +1052,7 @@ define([
         ],
         'validate-date': [
             function (value, params, additionalParams) {
-                var test = moment(value, utils.convertToMomentFormat(additionalParams.dateFormat));
+                let test = moment(value, utils.convertToMomentFormat(additionalParams.dateFormat));
 
                 return $.mage.isEmptyNoTrim(value) || test.isValid();
             },
@@ -1061,7 +1061,7 @@ define([
         ],
         'validate-date-range': [
             function (v, elm) {
-                var m = /\bdate-range-(\w+)-(\w+)\b/.exec(elm.className),
+                let m = /\bdate-range-(\w+)-(\w+)\b/.exec(elm.className),
                     currentYear, normalizedTime, dependentElements;
 
                 if (!m || m[2] === 'to' || $.mage.isEmptyNoTrim(v)) {
@@ -1093,7 +1093,7 @@ define([
         ],
         'validate-cpassword': [
             function () {
-                var conf = $('#confirmation').length > 0 ? $('#confirmation') : $($('.validate-cpassword')[0]),
+                let conf = $('#confirmation').length > 0 ? $('#confirmation') : $($('.validate-cpassword')[0]),
                     pass = false,
                     passwordElements, i, passwordElement;
 
@@ -1138,7 +1138,7 @@ define([
         ],
         'validate-one-required': [
             function (v, elm) {
-                var p = $(elm).parent(),
+                let p = $(elm).parent(),
                     options = p.find('input');
 
                 return options.map(function (el) {
@@ -1155,7 +1155,7 @@ define([
         ],
         'required-file': [
             function (v, elm) {
-                var result = !$.mage.isEmptyNoTrim(v),
+                let result = !$.mage.isEmptyNoTrim(v),
                     ovId;
 
                 if (!result) {
@@ -1184,7 +1184,7 @@ define([
         ],
         'validate-optional-datetime': [
             function (v, elm, param) {
-                var dateTimeParts = $('.datetime-picker[id^="options_' + param + '"]'),
+                let dateTimeParts = $('.datetime-picker[id^="options_' + param + '"]'),
                     hasWithValue = false,
                     hasWithNoValue = false,
                     pattern = /day_part$/i,
@@ -1206,7 +1206,7 @@ define([
         ],
         'validate-required-datetime': [
             function (v, elm, param) {
-                var dateTimeParts = $('.datetime-picker[id^="options_' + param + '"]'),
+                let dateTimeParts = $('.datetime-picker[id^="options_' + param + '"]'),
                     i;
 
                 for (i = 0; i < dateTimeParts.length; i++) {
@@ -1221,7 +1221,7 @@ define([
         ],
         'validate-one-required-by-name': [
             function (v, elm, selector) {
-                var name = elm.name.replace(/([\\"])/g, '\\$1'),
+                let name = elm.name.replace(/([\\"])/g, '\\$1'),
                     container = this.currentForm;
 
                 selector = selector === true ? 'input[name="' + name + '"]:checked' : selector;
@@ -1241,7 +1241,7 @@ define([
                 return true;
             },
             function () {
-                var message = $.mage.__('Please enter a value less than or equal to %s.');
+                let message = $.mage.__('Please enter a value less than or equal to %s.');
 
                 return message.replace('%s', this.lteToVal);
             }
@@ -1257,14 +1257,14 @@ define([
                 return true;
             },
             function () {
-                var message = $.mage.__('Please enter a value greater than or equal to %s.');
+                let message = $.mage.__('Please enter a value greater than or equal to %s.');
 
                 return message.replace('%s', this.gteToVal);
             }
         ],
         'validate-emails': [
             function (value) {
-                var validRegexp, emails, i;
+                let validRegexp, emails, i;
 
                 if ($.mage.isEmpty(value)) {
                     return true;
@@ -1329,7 +1329,7 @@ define([
              * @return {Boolean}
              */
             function (value, element, params) {
-                var ccType;
+                let ccType;
 
                 if (value && params) {
                     ccType = $(params).val();
@@ -1357,7 +1357,7 @@ define([
              * @return {Boolean}
              */
             function (value, element, params) {
-                var isValid = false,
+                let isValid = false,
                     month, year, currentTime, currentMonth, currentYear;
 
                 if (value && params) {
@@ -1385,7 +1385,7 @@ define([
              * @return {*}
              */
             function (value, element, params) {
-                var ccType;
+                let ccType;
 
                 if (value && params) {
                     ccType = $(params).val();
@@ -1414,8 +1414,8 @@ define([
         ],
         'validate-length': [
             function (v, elm) {
-                let reMax = new RegExp(/^maximum-length-[0-9]+$/),
-                    reMin = new RegExp(/^minimum-length-[0-9]+$/),
+                let reMax = new RegExp(/^maximum-length-\d+$/),
+                    reMin = new RegExp(/^minimum-length-\d+$/),
                     validator = this,
                     result = true,
                     length = 0;
@@ -1458,7 +1458,7 @@ define([
         ],
         'validate-per-page-value-list': [
             function (v) {
-                var isValid = true,
+                let isValid = true,
                     values = v.split(','),
                     i;
 
@@ -1467,7 +1467,7 @@ define([
                 }
 
                 for (i = 0; i < values.length; i++) {
-                    if (!/^[0-9]+$/.test(values[i])) {
+                    if (!/^\d+$/.test(values[i])) {
                         isValid = false;
                     }
                 }
@@ -1478,7 +1478,7 @@ define([
         ],
         'validate-per-page-value': [
             function (v, elm) {
-                var values;
+                let values;
 
                 if ($.mage.isEmpty(v)) {
                     return false;
@@ -1491,21 +1491,15 @@ define([
         ],
         'validate-new-password': [
             function (v) {
-                if ($.validator.methods['validate-password'] && !$.validator.methods['validate-password'](v)) {
-                    return false;
-                }
-
-                if ($.mage.isEmpty(v) && v !== '') {
-                    return false;
-                }
-
-                return true;
+                return !($.validator.methods['validate-password'] &&
+                    !$.validator.methods['validate-password'](v) &&
+                    ($.mage.isEmpty(v) && v !== ''));
             },
             $.mage.__('Please enter 6 or more characters. Leading and trailing spaces will be ignored.')
         ],
         'required-if-not-specified': [
             function (value, element, params) {
-                var valid = false,
+                let valid = false,
                     alternate = $(params),
                     alternateValue;
 
@@ -1531,7 +1525,7 @@ define([
         ],
         'required-if-all-sku-empty-and-file-not-loaded': [
             function (value, element, params) {
-                var valid = false,
+                let valid = false,
                     alternate = $(params.specifiedId),
                     alternateValue;
 
@@ -1588,7 +1582,7 @@ define([
         ],
         'required-number-if-specified': [
             function (value, element, params) {
-                var valid = true,
+                let valid = true,
                     dependent = $(params),
                     depeValue;
 
@@ -1607,7 +1601,7 @@ define([
         ],
         'datetime-validation': [
             function (value, element) {
-                var isValid = true;
+                let isValid = true;
 
                 if ($(element).val().length === 0) {
                     isValid = false;
@@ -1694,7 +1688,7 @@ define([
 
     $.each(rules, function (i, rule) {
         rule.unshift(i);
-        $.validator.addMethod.apply($.validator, rule);
+        $.validator.addMethod(...rule);
     });
     $.validator.addClassRules({
         'required-option': {
@@ -1738,7 +1732,7 @@ define([
          * @param {*} message
          */
         showLabel: function (element, message) {
-            var label, elem;
+            let label, elem;
 
             showLabel.call(this, element, message);
 
@@ -1761,7 +1755,7 @@ define([
      * @return {Boolean} validation result
      */
     $.validator.validateElement = function (element) {
-        var form, validator, valid, classes;
+        let form, validator, valid, classes;
 
         element = $(element);
         form = element.get(0).form;
@@ -1804,7 +1798,7 @@ define([
      * @returns {*}
      */
     $.validator.validateSingleElement = function (element, config) {
-        var errors = {},
+        let errors = {},
             valid = true,
             validateConfig = {
                 errorElement: 'label',
@@ -1874,7 +1868,7 @@ define([
              * @param {*} element
              */
             errorPlacement: function (error, element) {
-                var errorPlacement = element,
+                let errorPlacement = element,
                     fieldWrapper;
 
                 // logic for date-picker error placement
@@ -1965,7 +1959,7 @@ define([
          * @param {Object} validation
          */
         listenFormValidateHandler: function (event, validation) {
-            var firstActive = $(validation.errorList[0].element || []),
+            let firstActive = $(validation.errorList[0].element || []),
                 lastActive = $(validation.findLastActive() ||
                     validation.errorList.length && validation.errorList[0].element || []),
                 windowHeight = $(window).height(),

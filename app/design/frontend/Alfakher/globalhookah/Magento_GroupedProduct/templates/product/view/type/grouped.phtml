@@ -20,9 +20,11 @@
     <div id="validation-message-box"></div>
     <div class="table-wrapper grouped">
     <?php if ($is_mobile):?>
-        <table class="table data grouped tableGroupedMobile"
+        <table class="table data grouped"
         id="super-product-table"
+        aria-describedby="Grouped product items"
         data-mage-init='{ "Magento_GroupedProduct/js/product-ids-resolver": {} }'>
+        <th></th>
         <caption class="table-caption"><?= $block->escapeHtml(__('Grouped product items')) ?></caption>
         <?php if ($_hasAssociatedProducts): ?>
              <?php $sortedProducts = $block->getSortedProducts();
