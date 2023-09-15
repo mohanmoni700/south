@@ -114,31 +114,31 @@ define([
             true
         ],
         'SM': [
-            new RegExp('(^(5[0678])\d{11,18}$)|(^(6[^05])\d{11,18}$)|' +
-                '(^(601)[^1]\d{9,16}$)|(^(6011)\d{9,11}$)|(^(6011)\d{13,16}$)|' +
-                '(^(65)\d{11,13}$)|(^(65)\d{15,18}$)|(^(49030)[2-9](\d{10}$|\d{12,13}$))|' +
-                '(^(49033)[5-9](\d{10}$|\d{12,13}$))|(^(49110)[1-2](\d{10}$|\d{12,13}$))|' +
-                '(^(49117)[4-9](\d{10}$|\d{12,13}$))|(^(49118)[0-2](\d{10}$|\d{12,13}$))|' +
-                '(^(4936)(\d{12}$|\d{14,15}$))'), new RegExp('^(\d{3}|\d{4})?$'),
+            new RegExp('(^(5[0678])\\d{11,18}$)|(^(6[^05])\\d{11,18}$)|' +
+                '(^(601)[^1]\\d{9,16}$)|(^(6011)\\d{9,11}$)|(^(6011)\\d{13,16}$)|' +
+                '(^(65)\\d{11,13}$)|(^(65)\\d{15,18}$)|(^(49030)[2-9](\\d{10}$|\\d{12,13}$))|' +
+                '(^(49033)[5-9](\\d{10}$|\\d{12,13}$))|(^(49110)[1-2](\\d{10}$|\\d{12,13}$))|' +
+                '(^(49117)[4-9](\\d{10}$|\\d{12,13}$))|(^(49118)[0-2](\\d{10}$|\\d{12,13}$))|' +
+                '(^(4936)(\\d{12}$|\\d{14,15}$))'), new RegExp('^(\\d{3}|\\d{4})?$'),
             true
         ],
-        'VI': [new RegExp('^4\d{12}(\d{3})?$'), new RegExp('^\d{3}$'), true],
+        'VI': [new RegExp('^4\\d{12}(\\d{3})?$'), new RegExp('^\\d{3}$'), true],
         'MC': [
-            new RegExp('^(?:5[1-5]\d{2}|222[1-9]|22[3-9]\d|2[3-6]\d{2}|27[01]\d|2720)\d{12}$'),
-            new RegExp('^\d{3}$'),
+            new RegExp('^(?:5[1-5]\\d{2}|222[1-9]|22[3-9]\\d|2[3-6]\\d{2}|27[01]\\d|2720)\\d{12}$'),
+            new RegExp('^\\d{3}$'),
             true
         ],
-        'AE': [new RegExp('^3[47]\d{13}$'), new RegExp('^\d{4}$'), true],
-        'DI': [new RegExp('^(6011(0|[2-4]|74|7[7-9]|8[6-9]|9)|6(4[4-9]|5))\\d*$'), new RegExp('^\d{3}$'), true],
-        'JCB': [new RegExp('^35(2[8-9]|[3-8])\\d*$'), new RegExp('^\d{3}$'), true],
-        'DN': [new RegExp('^(3(0[0-5]|095|6|[8-9]))\\d*$'), new RegExp('^\d{3}$'), true],
+        'AE': [new RegExp('^3[47]\\d{13}$'), new RegExp('^\\d{4}$'), true],
+        'DI': [new RegExp('^(6011(0|[2-4]|74|7[7-9]|8[6-9]|9)|6(4[4-9]|5))\\d*$'), new RegExp('^\\d{3}$'), true],
+        'JCB': [new RegExp('^35(2[8-9]|[3-8])\\d*$'), new RegExp('^\\d{3}$'), true],
+        'DN': [new RegExp('^(3(0[0-5]|095|6|[8-9]))\\d*$'), new RegExp('^\\d{3}$'), true],
         'UN': [
             new RegExp('^(622(1(2[6-9]|[3-9])|[3-8]|9([[0-1]|2[0-5]))|62[4-6]|628([2-8]))\\d*?$'),
-            new RegExp('^\d{3}$'),
+            new RegExp('^\\d{3}$'),
             true
         ],
-        'MI': [new RegExp('^(5(0|[6-9])|63|67(?!59|6770|6774))\\d*$'), new RegExp('^\d{3}$'), true],
-        'MD': [new RegExp('^6759(?!24|38|40|6[3-9]|70|76)|676770|676774\\d*$'), new RegExp('^\d{3}$'), true]
+        'MI': [new RegExp('^(5(0|[6-9])|63|67(?!59|6770|6774))\\d*$'), new RegExp('^\\d{3}$'), true],
+        'MD': [new RegExp('^6759(?!24|38|40|6[3-9]|70|76)|676770|676774\\d*$'), new RegExp('^\\d{3}$'), true]
     };
 
     /**
@@ -281,20 +281,20 @@ define([
         ],
         'zip-range': [
             function (value, element) {
-                return this.optional(element) || /^90[2-5]-\d{2}-\d{4}$/.test(value);
+                return this.optional(element) || /^90[2-5]-\\d{2}-\\d{4}$/.test(value);
             },
             $.mage.__('Your ZIP-code must be in the range 902xx-xxxx to 905-xx-xxxx')
         ],
         'integer': [
             function (value, element) {
-                return this.optional(element) || /^-?\d+$/.test(value);
+                return this.optional(element) || /^-?\\d+$/.test(value);
             },
             $.mage.__('A positive or negative non-decimal number please')
         ],
         'phone':[
             function (value, element) {
-                return (this.optional(element) || /^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}$/.test(value)||
-                    /^\+?\d+$/.test(value) || /^\+\d{1,4}\s\d+$/.test(value)) && (value.length <= 17)
+                return (this.optional(element) || /^(\+\\d{1,2}\s)?\(?\\d{3}\)?[\s.-]\\d{3}[\s.-]\\d{4}$/.test(value)||
+                    /^\+?\\d+$/.test(value) || /^\+\\d{1,4}\s\\d+$/.test(value)) && (value.length <= 17)
             },
             $.mage.__('please enter a valid phone number')
         ],
@@ -357,7 +357,7 @@ define([
         'dateITA': [
             function (value, element) {
                 let check = false,
-                    re = /^\d{1,2}\/\d{1,2}\/\d{4}$/,
+                    re = /^\\d{1,2}\/\\d{1,2}\/\\d{4}$/,
                     adata, gg, mm, aaaa, xdata;
 
                 if (re.test(value)) {
@@ -385,19 +385,19 @@ define([
         ],
         'dateNL': [
             function (value, element) {
-                return this.optional(element) || /^\d\d?[\.\/-]\d\d?[\.\/-]\d\d\d?\d?$/.test(value);
+                return this.optional(element) || /^\\d\\d?[\.\/-]\\d\\d?[\.\/-]\\d\\d\\d?\\d?$/.test(value);
             },
             'Vul hier een geldige datum in.'
         ],
         'time': [
             function (value, element) {
-                return this.optional(element) || /^([01]\d|2[0-3])(:[0-5]\d){0,2}$/.test(value);
+                return this.optional(element) || /^([01]\\d|2[0-3])(:[0-5]\\d){0,2}$/.test(value);
             },
             $.mage.__('Please enter a valid time, between 00:00 and 23:59')
         ],
         'time12h': [
             function (value, element) {
-                return this.optional(element) || /^((0?[1-9]|1[012])(:[0-5]\d){0,2}(\s[AP]M))$/i.test(value);
+                return this.optional(element) || /^((0?[1-9]|1[012])(:[0-5]\\d){0,2}(\s[AP]M))$/i.test(value);
             },
             $.mage.__('Please enter a valid time, between 00:00 am and 12:00 pm')
         ],
@@ -406,21 +406,21 @@ define([
                 phoneNumber = phoneNumber.replace(/\s+/g, '');
 
                 return this.optional(element) || phoneNumber.length > 9 &&
-                    phoneNumber.match(/^(1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/);
+                    phoneNumber.match(/^(1-?)?(\([2-9]\\d{2}\)|[2-9]\\d{2})-?[2-9]\\d{2}-?\\d{4}$/);
             },
             $.mage.__('Please specify a valid phone number')
         ],
         'phoneUK': [
             function (phoneNumber, element) {
                 return this.optional(element) || phoneNumber.length > 9 &&
-                    phoneNumber.match(/^(\(?(0|\+44)[1-9]{1}\d{1,4}?\)?\s?\d{3,4}\s?\d{3,4})$/);
+                    phoneNumber.match(/^(\(?(0|\+44)[1-9]{1}\\d{1,4}?\)?\s?\\d{3,4}\s?\\d{3,4})$/);
             },
             $.mage.__('Please specify a valid phone number')
         ],
         'mobileUK': [
             function (phoneNumber, element) {
                 return this.optional(element) || phoneNumber.length > 9 &&
-                    phoneNumber.match(/^((0|\+44)7\d{3}\s?\d{6})$/);
+                    phoneNumber.match(/^((0|\+44)7\\d{3}\s?\\d{6})$/);
             },
             $.mage.__('Please specify a valid mobile number')
         ],
@@ -453,13 +453,13 @@ define([
         'email2': [
             function (value, element) {
                 return this.optional(element) ||
-                    /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)*(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i.test(value);
+                    /^((([a-z]|\\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)*(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i.test(value);
             },
             $.validator.messages.email
         ],
         'url2': [
             function (value, element) {
-                return this.optional(element) || /^(https?|ftp):\/\/(((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.(\d|[1-9]\d|1\d\d|2[0-4]\d|25[0-5]))|((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)*(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\d*)?)(\/((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
+                return this.optional(element) || /^(https?|ftp):\/\/(((([a-z]|\\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:)*@)?(((\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5])\.(\\d|[1-9]\\d|1\\d\\d|2[0-4]\\d|25[0-5]))|((([a-z]|\\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)*(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?)(:\\d*)?)(\/((([a-z]|\\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)+(\/(([a-z]|\\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)*)*)?)?(\?((([a-z]|\\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|[\uE000-\uF8FF]|\/|\?)*)?(\#((([a-z]|\\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(%[\da-f]{2})|[!\$&'\(\)\*\+,;=]|:|@)|\/|\?)*)?$/i.test(value);
             },
             $.validator.messages.url
         ],
@@ -472,7 +472,7 @@ define([
                 if (/[^0-9-]+/.test(value)) {
                     return false;
                 }
-                value = value.replace(/\D/g, '');
+                value = value.replace(/\\D/g, '');
 
                 validTypes = 0x0000;
 
@@ -557,13 +557,13 @@ define([
         'ipv4': [
             function (value, element) {
                 return this.optional(element) ||
-                    /^(25[0-5]|2[0-4]\d|[01]?\d?)\.(25[0-5]|2[0-4]\d|[01]?\d?)\.(25[0-5]|2[0-4]\d|[01]?\d?)\.(25[0-5]|2[0-4]\d|[01]?\d?)$/i.test(value);
+                    /^(25[0-5]|2[0-4]\\d|[01]?\\d?)\.(25[0-5]|2[0-4]\\d|[01]?\\d?)\.(25[0-5]|2[0-4]\\d|[01]?\\d?)\.(25[0-5]|2[0-4]\\d|[01]?\\d?)$/i.test(value);
             },
             $.mage.__('Please enter a valid IP v4 address.')
         ],
         'ipv6': [
             function (value, element) {
-                return this.optional(element) || /^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\d{2})|(2[0-4]\d)|(\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$/i.test(value);
+                return this.optional(element) || /^((([0-9A-Fa-f]{1,4}:){7}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}:[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){5}:([0-9A-Fa-f]{1,4}:)?[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){4}:([0-9A-Fa-f]{1,4}:){0,2}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){3}:([0-9A-Fa-f]{1,4}:){0,3}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){2}:([0-9A-Fa-f]{1,4}:){0,4}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){6}((\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\b))|(([0-9A-Fa-f]{1,4}:){0,5}:((\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\b))|(::([0-9A-Fa-f]{1,4}:){0,5}((\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\b)\.){3}(\b((25[0-5])|(1\\d{2})|(2[0-4]\\d)|(\\d{1,2}))\b))|([0-9A-Fa-f]{1,4}::([0-9A-Fa-f]{1,4}:){0,5}[0-9A-Fa-f]{1,4})|(::([0-9A-Fa-f]{1,4}:){0,6}[0-9A-Fa-f]{1,4})|(([0-9A-Fa-f]{1,4}:){1,7}:))$/i.test(value);
             },
             $.mage.__('Please enter a valid IP v6 address.')
         ],
@@ -615,26 +615,26 @@ define([
         ],
         'validate-street': [
             function (v) {
-                return $.mage.isEmptyNoTrim(v) || /^[ \w]{3,}([A-Za-z]\.)?([ \w]*\#\d+)?(\r\n| )[ \w]{3,}/.test(v);
+                return $.mage.isEmptyNoTrim(v) || /^[ \w]{3,}([A-Za-z]\.)?([ \w]*\#\\d+)?(\r\n| )[ \w]{3,}/.test(v);
             },
             $.mage.__('Please use only letters (a-z or A-Z), numbers (0-9), spaces and "#" in this field.')
         ],
         'validate-phoneStrict': [
             function (v) {
-                return $.mage.isEmptyNoTrim(v) || /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/.test(v);
+                return $.mage.isEmptyNoTrim(v) || /^(\()?\\d{3}(\))?(-|\s)?\\d{3}(-|\s)\\d{4}$/.test(v);
             },
             $.mage.__('Please enter a valid phone number. For example (123) 456-7890 or 123-456-7890.')
         ],
         'validate-phoneLax': [
             function (v) {
                 return $.mage.isEmptyNoTrim(v) ||
-                    /^((\d[\-. ]?)?((\(\d{3}\))|\d{3}))?[\-. ]?\d{3}[\-. ]?\d{4}$/.test(v);
+                    /^((\\d[\-. ]?)?((\(\\d{3}\))|\\d{3}))?[\-. ]?\\d{3}[\-. ]?\\d{4}$/.test(v);
             },
             $.mage.__('Please enter a valid phone number. For example (123) 456-7890 or 123-456-7890.')
         ],
         'validate-fax': [
             function (v) {
-                return $.mage.isEmptyNoTrim(v) || /^(\()?\d{3}(\))?(-|\s)?\d{3}(-|\s)\d{4}$/.test(v);
+                return $.mage.isEmptyNoTrim(v) || /^(\()?\\d{3}(\))?(-|\s)?\\d{3}(-|\s)\\d{4}$/.test(v);
             },
             $.mage.__('Please enter a valid fax number (Ex: 123-456-7890).')
         ],
@@ -681,7 +681,7 @@ define([
                     return true;
                 }
 
-                if (!/[a-z]/i.test(v) || !/\d/.test(v)) {
+                if (!/[a-z]/i.test(v) || !/\\d/.test(v)) {
                     return false;
                 }
 
@@ -708,7 +708,7 @@ define([
                     return result;
                 }
 
-                if (pass.match(/\d+/)) {
+                if (pass.match(/\\d+/)) {
                     counter++;
                 }
 
@@ -741,14 +741,14 @@ define([
                 }
                 v = (v || '').replace(/^\s+/, '').replace(/\s+$/, '');
 
-                return (/^(http|https|ftp):\/\/(([A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))(\.[A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))*)(:(\d+))?(\/[A-Z0-9~](([A-Z0-9_~-]|\.)*[A-Z0-9~]|))*\/?(.*)?$/i).test(v); //eslint-disable-line max-len
+                return (/^(http|https|ftp):\/\/(([A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))(\.[A-Z0-9]([A-Z0-9_-]*[A-Z0-9]|))*)(:(\\d+))?(\/[A-Z0-9~](([A-Z0-9_~-]|\.)*[A-Z0-9~]|))*\/?(.*)?$/i).test(v); //eslint-disable-line max-len
 
             },
             $.mage.__('Please enter a valid URL. Protocol is required (http://, https:// or ftp://).')
         ],
         'validate-clean-url': [
             function (v) {
-                return $.mage.isEmptyNoTrim(v) || /^(http|https|ftp):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+.(com|org|net|dk|at|us|tv|info|uk|co.uk|biz|se)$)(:(\d+))?\/?/i.test(v) || /^(www)((\.[A-Z0-9][A-Z0-9_-]*)+.(com|org|net|dk|at|us|tv|info|uk|co.uk|biz|se)$)(:(\d+))?\/?/i.test(v); //eslint-disable-line max-len
+                return $.mage.isEmptyNoTrim(v) || /^(http|https|ftp):\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+.(com|org|net|dk|at|us|tv|info|uk|co.uk|biz|se)$)(:(\\d+))?\/?/i.test(v) || /^(www)((\.[A-Z0-9][A-Z0-9_-]*)+.(com|org|net|dk|at|us|tv|info|uk|co.uk|biz|se)$)(:(\\d+))?\/?/i.test(v); //eslint-disable-line max-len
 
             },
             $.mage.__('Please enter a valid URL. For example http://www.example.com or www.example.com.')
@@ -762,14 +762,14 @@ define([
         ],
         'validate-ssn': [
             function (v) {
-                return $.mage.isEmptyNoTrim(v) || /^\d{3}-?\d{2}-?\d{4}$/.test(v);
+                return $.mage.isEmptyNoTrim(v) || /^\\d{3}-?\\d{2}-?\\d{4}$/.test(v);
 
             },
             $.mage.__('Please enter a valid social security number (Ex: 123-45-6789).')
         ],
         'validate-zip-us': [
             function (v) {
-                return $.mage.isEmptyNoTrim(v) || /(^\d{5}$)|(^\d{5}-\d{4}$)/.test(v);
+                return $.mage.isEmptyNoTrim(v) || /(^\\d{5}$)|(^\\d{5}-\\d{4}$)/.test(v);
 
             },
             $.mage.__('Please enter a valid zip code (Ex: 90602 or 90602-1234).')
@@ -781,7 +781,7 @@ define([
                 if ($.mage.isEmptyNoTrim(v)) {
                     return true;
                 }
-                regex = /^(\d{2})\/(\d{2})\/(\d{4})$/;
+                regex = /^(\\d{2})\/(\\d{2})\/(\\d{4})$/;
 
                 if ($.mage.isEmpty(v) || !regex.test(v)) {
                     return false;
@@ -797,7 +797,7 @@ define([
         ],
         'validate-currency-dollar': [
             function (v) {
-                return $.mage.isEmptyNoTrim(v) || /^\$?\-?([1-9]\d{0,2}(\,\d{3})*(\.\d{0,2})?|[1-9]\d*(\.\d{0,2})?|0(\.\d{0,2})?|(\.\d{1,2})?)$/.test(v); //eslint-disable-line max-len
+                return $.mage.isEmptyNoTrim(v) || /^\$?\-?([1-9]\\d{0,2}(\,\\d{3})*(\.\\d{0,2})?|[1-9]\\d*(\.\\d{0,2})?|0(\.\\d{0,2})?|(\.\\d{1,2})?)$/.test(v); //eslint-disable-line max-len
 
             },
             $.mage.__('Please enter a valid $ amount. For example $100.00.')
@@ -841,7 +841,7 @@ define([
         'validate-css-length': [
             function (v) {
                 if (v !== '') {
-                    return (/^\d*\.*\d+(px|pc|pt|ex|em|mm|cm|in|%)?$/).test(v);
+                    return (/^\\d*\.*\\d+(px|pc|pt|ex|em|mm|cm|in|%)?$/).test(v);
                 }
 
                 return true;
@@ -851,7 +851,7 @@ define([
         // Additional methods
         'validate-number': [
             function (v) {
-                return $.mage.isEmptyNoTrim(v) || !isNaN($.mage.parseNumber(v)) && /^\s*-?\d*(\.\d*)?\s*$/.test(v);
+                return $.mage.isEmptyNoTrim(v) || !isNaN($.mage.parseNumber(v)) && /^\s*-?\\d*(\.\\d*)?\s*$/.test(v);
             },
             $.mage.__('Please enter a valid number in this field.')
         ],
@@ -875,8 +875,8 @@ define([
                     return false;
                 }
 
-                dataAttrRange = /^(-?[\d.,]+)?-(-?[\d.,]+)?$/;
-                classNameRange = /^number-range-(-?[\d.,]+)?-(-?[\d.,]+)?$/;
+                dataAttrRange = /^(-?[\\d.,]+)?-(-?[\\d.,]+)?$/;
+                classNameRange = /^number-range-(-?[\\d.,]+)?-(-?[\\d.,]+)?$/;
                 result = true;
                 range = param;
 
@@ -910,7 +910,7 @@ define([
         ],
         'validate-digits': [
             function (v) {
-                return $.mage.isEmptyNoTrim(v) || !/[^\d]/.test(v);
+                return $.mage.isEmptyNoTrim(v) || !/[^\\d]/.test(v);
             },
             $.mage.__('Please enter a valid number in this field.')
         ],
@@ -949,8 +949,8 @@ define([
                     return false;
                 }
 
-                dataAttrRange = /^(-?\d+)?-(-?\d+)?$/;
-                classNameRange = /^digits-range-(-?\d+)?-(-?\d+)?$/;
+                dataAttrRange = /^(-?\\d+)?-(-?\\d+)?$/;
+                classNameRange = /^digits-range-(-?\\d+)?-(-?\\d+)?$/;
                 result = true;
                 range = param;
 
@@ -992,7 +992,7 @@ define([
                 } else if ($.validator.methods['validate-digits'] && $.validator.methods['validate-digits'](v)) {
                     minValue = maxValue = $.mage.parseNumber(v);
                 } else {
-                    ranges = /^(-?\d+)?-(-?\d+)?$/.exec(v);
+                    ranges = /^(-?\\d+)?-(-?\\d+)?$/.exec(v);
 
                     if (ranges) {
                         minValue = $.mage.parseNumber(ranges[1]);
@@ -1005,7 +1005,7 @@ define([
                         return false;
                     }
                 }
-                reRange = /^range-(-?\d+)?-(-?\d+)?$/;
+                reRange = /^range-(-?\\d+)?-(-?\\d+)?$/;
                 result = true;
                 values = $(elm).prop('class').split(' ');
 
@@ -1414,8 +1414,8 @@ define([
         ],
         'validate-length': [
             function (v, elm) {
-                let reMax = new RegExp(/^maximum-length-\d+$/),
-                    reMin = new RegExp(/^minimum-length-\d+$/),
+                let reMax = new RegExp(/^maximum-length-\\d+$/),
+                    reMin = new RegExp(/^minimum-length-\\d+$/),
                     validator = this,
                     result = true,
                     length = 0;
@@ -1449,7 +1449,7 @@ define([
         'not-negative-amount': [
             function (v) {
                 if (v.length) {
-                    return (/^\s*\d+([,.]\d+)*\s*%?\s*$/).test(v);
+                    return (/^\s*\\d+([,.]\\d+)*\s*%?\s*$/).test(v);
                 }
 
                 return true;
@@ -1467,7 +1467,7 @@ define([
                 }
 
                 for (i = 0; i < values.length; i++) {
-                    if (!/^\d+$/.test(values[i])) {
+                    if (!/^\\d+$/.test(values[i])) {
                         isValid = false;
                     }
                 }
