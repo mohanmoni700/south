@@ -7,4 +7,8 @@
     <type name="Yotpo\Loyalty\Helper\Schema">
         <plugin name="alfakher_multiplecoupons_filter_yotpo_coupons_" type="Alfakher\MultipleCoupons\Plugin\Helper\YotpoSchema"/>
     </type>
+    <!-- Bundle Parent Product Discount-->
+    <type name="Magento\Quote\Model\Quote\Item\AbstractItem">
+        <plugin name="bundle_parent_discount" type="Alfakher\MultipleCoupons\Plugin\Model\Quote\ChildCondition"/>
+    </type>
 </config>
