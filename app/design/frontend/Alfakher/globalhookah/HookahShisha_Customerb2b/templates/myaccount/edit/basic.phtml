@@ -7,6 +7,7 @@
 $viewModel = $block->getViewModel();
 $actionURL = "#";
 $formDisable = 1;
+const MOBILE_NUMBER = 'Mobile Number';
 ?>
 <?php $hub_mobile_number = $block->getCustomer()->getCustomAttribute('hub_mobile_number');?>
 <?php $_company = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Company::class) ?>
@@ -61,7 +62,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                         placeholder="<?php /* @noEscape */ __('Email') ?>"
                         autocomplete="off" 
                         value="<?= /* @noEscape */ $block->escapeHtml($block->getCustomer()->getEmail()) ?>" 
-                        title="<?php /* @noEscape */ __('Email') ?>" 
+                        title="<?php /* @noEscape */ __('Email') ?>"
                         class="input-text"
                         disabled="disabled"
                         readonly="readonly"/>
@@ -84,7 +85,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
         </div> 
         <div class="field">
             <label for="hub_mobile_number" class="label">
-                <span><?= $block->escapeHtml(__('Mobile Number')) ?>                    
+                <span><?= $block->escapeHtml(__(MOBILE_NUMBER)) ?>
                 </span>
             </label>
             <?php $hub_mobile_number = $hub_mobile_number ? $hub_mobile_number->getValue() : "" ?> 
@@ -92,9 +93,9 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                 <input type="text" 
                         name="hub_mobile_number" 
                         id="hub_mobile_number" 
-                        placeholder="<?= $block->escapeHtml(__('Mobile Number')) ?>"
-                        value="<?= /* @noEscape */ $hub_mobile_number ?>" 
-                        title="<?php /* @noEscape */ __('Mobile Number') ?>" 
+                        placeholder="<?= $block->escapeHtml(__(MOBILE_NUMBER)) ?>"
+                        value="<?= /* @noEscape */ $hub_mobile_number ?>"
+                        title="<?php /* @noEscape */ __(MOBILE_NUMBER) ?>"
                         class="input-text" />
             </div>
         </div>
@@ -288,7 +289,7 @@ script;
         $scriptString .= <<<script
             $(document).ready(function(){
                 setTimeout(function(){
-                    $("#form-validate :input").prop("disabled", true);
+                    $("#form-validate :input:not(:checkbox):not(:button)").prop("disabled", true);
                 }, 1000);
             });});
 script;
