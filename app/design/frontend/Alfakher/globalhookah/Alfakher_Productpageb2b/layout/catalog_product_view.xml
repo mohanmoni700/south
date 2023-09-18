@@ -12,7 +12,6 @@
         <referenceBlock name="product.attributes.exclude.pagebuilder" remove="true" />
         <!-- removed tab from PDP 16 March KM -->
 
-        <referenceBlock name="product.attributes" remove="true" />
         <!-- SEO Schema Start -->
         <block class="Alfakher\Productpageb2b\Block\Product\ViewDetailRenderer" name="product.info.seo" template="Alfakher_Productpageb2b::product/view/seoschema.phtml"  />
         <!-- SEO Schema End -->
@@ -20,8 +19,15 @@
     <move element="view.details.link" destination="product.info.price" after="product.info.review"/>
     <referenceContainer name="product.info.main">
             <container name="col1" htmlTag="div" htmlClass="product column-1" after="-" />
-            <container name="col2" htmlTag="div" htmlClass="product column-2" after="col1" />
+    </referenceContainer>
+
+        <referenceContainer name="content.aside">
+            <container name="col2" htmlTag="div" htmlClass="product column-2" before="catalog.product.related" />
+            <block class = "Alfakher\Productpageb2b\Block\Product\ProductDetail" name="product.infoabc.attributes" template="Alfakher_Productpageb2b::product/view/attributes.phtml"  />
         </referenceContainer>
       <move element="product.info.description" destination="col1" after="product.info.price" />
+      <move element="product.infoabc.attributes" destination="col2" before="catalog.product.related" />
+      <move element="product.infoabc.attributes" destination="page.wrapper" after="main.content"/>
+
 
 </page>
