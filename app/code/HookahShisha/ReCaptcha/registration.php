@@ -1,8 +1,7 @@
 <?php
 /**
  * @category  HookahShisha
- * @package   HookahShisha_Sales
- * @author    Janis Verins <info@corra.com
+ * @package   HookahShisha_ReCaptcha
  */
 declare(strict_types=1);
 
