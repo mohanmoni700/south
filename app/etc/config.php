@@ -1112,6 +1112,7 @@ return [
         'HookahShisha_Order' => 1,
         'HookahShisha_OrderGraphQl' => 1,
         'HookahShisha_QuoteGraphQl' => 1,
+        'HookahShisha_ReCaptcha' => 1,
         'HookahShisha_Removefreegift' => 1,
         'HookahShisha_RmaGraphQl' => 1,
         'HookahShisha_Sales' => 1,
