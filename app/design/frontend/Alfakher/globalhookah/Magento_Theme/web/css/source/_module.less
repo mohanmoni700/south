@@ -1543,6 +1543,59 @@
             overflow: hidden;
         }
     }
+    // Brand Page css chanhed due to conflicts on the SSB-182 branch
+    @media only  screen and (max-width: 1920px) and (min-width: 1440px){
+        .catalog-category-view {
+            .category-view {
+                .page-main{
+                    max-width: 100%;
+                    padding: 1.0rem 7.2rem;
+                }
+            }
+        }
+        .category-brand-descreption {
+            .content{
+                max-width: 100% !important;
+                padding: 7.2rem 16.5% !important;
+                
+            }
+        }
+    }
+    @media only screen and (max-width:1199px) and (min-width: 768px){
+        .shopbybrands {
+            .brandcollection {
+                .branditem{
+                    width: ~'calc(33% - 1.8rem)' !important;
+                    margin: 0 2.7rem 2.7rem 0;
+                    &:nth-child(3n){
+                        margin-right: 0 !important;
+                    }
+                    &:nth-child(4n){
+                        margin-right: 2.7rem !important;
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 767px) {
+        .shopbybrands {
+            .brandcollection {
+                .branditem{
+                    width: ~'calc(50% - 0.8rem)' !important;
+                    margin: 0 1.6rem 1.6rem 0;
+                    &:nth-child(2n){
+                        margin-right: 0 !important;
+                    }
+                    &:nth-child(3n){
+                        margin-right: 1.6rem !important;
+                    }
+                    &:nth-child(4n){
+                        margin-right: 0 !important;
+                    }
+                }
+            }
+        }
+    }
 }
 
 
@@ -1821,6 +1874,25 @@
                     transform: translate(-50%, 0);
                     width: auto;
                 }
+            }
+        }
+    }
+    .category-brand-descreption {
+        .content {
+            padding: 3.6rem 2rem;
+            .descreption-title{
+                .lib-font-size(24);
+                margin-bottom: 1.6rem;
+            }
+            p{
+                .lib-font-size(14);
+            }
+            .moreless-button{
+                .lib-font-size(14);
+                width: 13.8rem;
+                padding: 1.2rem 2.7rem;
+                margin-top: 1.4rem;
+                line-height: 1;
             }
         }
     }
@@ -2330,7 +2402,7 @@
                     }
                     .submenu-single-link-with-one-tab {
                         position: absolute;
-                        left: -31.5%;
+                        left: 2.0rem;
                         top: 6rem;
                     }
                     div[data-content-type='tabs'] {
