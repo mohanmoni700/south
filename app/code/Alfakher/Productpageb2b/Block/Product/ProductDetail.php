@@ -16,7 +16,7 @@ class ProductDetail extends Template
     /**
      * @var StoreManagerInterface
      */
-    protected $_storeManager;
+    protected $storeManager;
     /**
      * @var ProductRepositoryInterface
      */
@@ -25,7 +25,7 @@ class ProductDetail extends Template
     /**
      * @var \Magento\Framework\Registry
      */
-    protected $_coreRegistry;
+    protected $coreRegistry;
 
     /**
      * @param Context $context
@@ -41,9 +41,9 @@ class ProductDetail extends Template
         \Magento\Store\Model\StoreManagerInterface $storemanager,
         array $data = []
     ) {
-        $this->_coreRegistry = $coreRegistry;
+        $this->coreRegistry = $coreRegistry;
         $this->productRepository = $productRepository;
-        $this->_storeManager = $storemanager;
+        $this->storeManager = $storemanager;
         parent::__construct($context, $data);
     }
 
@@ -54,11 +54,11 @@ class ProductDetail extends Template
      */
     public function getProduct()
     {
-        if (!$this->_coreRegistry->registry('product') && $this->getProductId()) {
+        if (!$this->coreRegistry->registry('product') && $this->getProductId()) {
             $product = $this->productRepository->getById($this->getProductId());
-            $this->_coreRegistry->register('product', $product);
+            $this->coreRegistry->register('product', $product);
         }
-        return $this->_coreRegistry->registry('product');
+        return $this->coreRegistry->registry('product');
     }
 
     /**
@@ -83,6 +83,7 @@ class ProductDetail extends Template
 
         $product = $this->getProduct();
 
-        return $store->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $product->getImage();
+        return $store->getBaseUrl(
+        \Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $product->getImage();
     }
 }

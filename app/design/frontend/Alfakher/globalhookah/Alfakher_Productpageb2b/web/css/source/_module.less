@@ -1,19 +1,49 @@
 .main_wrapper {
     margin: 0 auto;
-    max-width: 1310px;
-    padding: 0 15px;
+    max-width: 130rem;
+    padding: 0 1.3rem;
     width: 100%;
     .product_attributes {
+        overflow-x: scroll;
         .Product_attributes_head {
-            height: 60px;
+            height: 6rem;
             background: transparent linear-gradient(148deg, #229B62 0%, #346DB0 100%);
             display: flex;
             align-items: center;
-            padding-left: 32px;
+            padding-left: 3rem;
             span {
                 font-size: 16px;
                 font-weight: bold;
                 color: #ffff;
+            }
+        }
+        table {
+            tr {
+                border-bottom: 1px solid #C7D2EC;
+                td{
+                    padding: 1.7rem 3rem;
+                    font-size: 16px;
+                    font-weight: 600;
+                }
+                .td_first {
+                    width: 20%;
+                }
+            }
+        }
+        &::-webkit-scrollbar{
+            display: none;
+        }
+    }
+}
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .main_wrapper {
+        .product_attributes {
+            table {
+                tr {
+                    td{
+                        padding: 1.7rem 0.3rem;
+                    }
+                }
             }
         }
     }

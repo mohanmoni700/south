@@ -3,9 +3,7 @@
  * Copyright © Magento, Inc. All rights reserved.
  * See COPYING.txt for license details.
  */
-
 // phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
-
 /**
  * Product additional attributes template
  *
@@ -15,15 +13,22 @@
 <?php
     $_helper = $this->helper(Magento\Catalog\Helper\Output::class);
     $_product = $block->getProduct();
-    $attributeValue = $_product->getData('gh_charcoal_shape');
-    if ($attributeValue !== null && $attributeValue !== '') {
-        echo 'Attribute Value: ' . $attributeValue;
-    } else {
-        echo 'Attribute Value not available or empty.';
-    }
-    $attributeCodes = ['gh_charcoal_shape'];
+    $attributeCodes = [
+    'product_brand',
+    'product_is_returnable',
+    'Product_Material',
+    'producttype',
+    'product_manufacturer',
+    'product_charcoal_shape',
+    'first_to_sell',
+    'country_of_manufature',
+    'product_super_pack_quantity',
+    'product_more_flovour',
+    'product_color',
+    'product_hookah',
+    'product_rating',
+    'product_style'];
 ?>
-
 <div class ="main_wrapper">
 <div class="product_attributes">
 <div class = "Product_attributes_head">
@@ -31,20 +36,22 @@
 Al Fakher Tobacco Specs
 </span>
 </div>
-
-
 <table id="t">
+<caption></caption>
   <tbody>
+    <th></th>
+    <th></th>
   <?php foreach ($attributeCodes as $attributeCode): ?>
     <tr>
-      <td class="w"><?php echo $attributeCode; ?>:</td>
+      <td class="td_first">
+      <?= /* @noEscape */  $attributeCode; ?>
       <td>
-                        <?php
-                            $attributeValue = $_product->getData($attributeCode);
-                            if ($attributeValue !== null && $attributeValue !== '') {
-                                echo $attributeValue;
-                            }
-                        ?>
+        <?php
+        $attributeValue = $_product->getData($attributeCode);
+        if ($attributeValue !== null && $attributeValue !== '') {
+             /* @noEscape */  $attributeValue;
+        }
+        ?>
         </td>
     </tr>
     <?php endforeach; ?>
@@ -52,21 +59,3 @@ Al Fakher Tobacco Specs
 </table>
 </div>
 </div>
-
-
-
-<?php if ($_additional = $block->getAdditionalData()) :?>
-    <div class="additional-attributes-wrapper table-wrapper">
-        <table class="data table additional-attributes" id="product-attribute-specs-table">
-            <caption class="table-caption"><?= $block->escapeHtml(__('More Information')) ?></caption>
-            <tbody>
-            <?php foreach ($_additional as $_data) :?>
-                <tr>
-                    <th class="col label" scope="row"><?= $block->escapeHtml($_data['label']) ?></th>
-                    <td class="col data" data-th="<?= $block->escapeHtmlAttr($_data['label']) ?>"><?= /* @noEscape */ $_helper->productAttribute($_product, $_data['value'], $_data['code']) ?></td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-<?php endif;?>

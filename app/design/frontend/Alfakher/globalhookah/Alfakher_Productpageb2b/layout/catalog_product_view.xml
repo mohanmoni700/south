@@ -23,11 +23,11 @@
 
         <referenceContainer name="content.aside">
             <container name="col2" htmlTag="div" htmlClass="product column-2" before="catalog.product.related" />
-            <block class = "Alfakher\Productpageb2b\Block\Product\ProductDetail" name="product.infoabc.attributes" template="Alfakher_Productpageb2b::product/view/attributes.phtml"  />
+            <block class = "Alfakher\Productpageb2b\Block\Product\ProductDetail" name="product.infoContent.attributes" template="Alfakher_Productpageb2b::product/view/attributes.phtml"  />
         </referenceContainer>
       <move element="product.info.description" destination="col1" after="product.info.price" />
-      <move element="product.infoabc.attributes" destination="col2" before="catalog.product.related" />
-      <move element="product.infoabc.attributes" destination="page.wrapper" after="main.content"/>
+      <move element="product.infoContent.attributes" destination="col2" before="catalog.product.related" />
+      <move element="product.infoContent.attributes" destination="page.wrapper" after="main.content"/>
 
 
 </page>
