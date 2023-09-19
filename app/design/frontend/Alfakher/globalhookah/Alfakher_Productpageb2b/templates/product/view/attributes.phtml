@@ -46,13 +46,11 @@ Al Fakher Tobacco Specs
       <td class="td_first">
       <?= /* @noEscape */  $attributeCode; ?>
       <td>
-        <?php
-        $attributeValue = $_product->getData($attributeCode);
-        if ($attributeValue !== null && $attributeValue !== '') {
-             /* @noEscape */  $attributeValue;
-        }
-        ?>
+        <?php $attributeValue = $_product->getData($attributeCode); ?>
+        <?php if ($attributeValue !== null && $attributeValue !== '') :?>
+            <?= /* @noEscape */  $attributeValue; ?>
         </td>
+        <?php endif; ?>
     </tr>
     <?php endforeach; ?>
   </tbody>

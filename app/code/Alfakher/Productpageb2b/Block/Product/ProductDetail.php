@@ -2,8 +2,8 @@
 
 namespace Alfakher\Productpageb2b\Block\Product;
 
-use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Model\Product;
+use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Review\Model\Review;
@@ -13,77 +13,40 @@ use Magento\Review\Model\Review;
  */
 class ProductDetail extends Template
 {
-    /**
-     * @var StoreManagerInterface
+   /**
+     * @var Product
      */
-    protected $storeManager;
-    /**
-     * @var ProductRepositoryInterface
-     */
-    protected $productRepository;
+    protected $_product = null;
 
     /**
+     * Core registry
+     *
      * @var \Magento\Framework\Registry
      */
-    protected $coreRegistry;
+    protected $_coreRegistry = null;
 
     /**
-     * @param Context $context
-     * @param \Magento\Framework\Registry $coreRegistry
-     * @param ProductRepositoryInterface|\Magento\Framework\Pricing\PriceCurrencyInterface $productRepository
-     * @param \Magento\Store\Model\StoreManagerInterface $storemanager
-     * @param array $data = []
+     * @param \Magento\Framework\View\Element\Template\Context $context
+     * @param \Magento\Framework\Registry $registry
+     * @param array $data
      */
     public function __construct(
-        Context $context,
-        \Magento\Framework\Registry $coreRegistry,
-        ProductRepositoryInterface $productRepository,
-        \Magento\Store\Model\StoreManagerInterface $storemanager,
+        \Magento\Framework\View\Element\Template\Context $context,
+        \Magento\Framework\Registry $registry,
         array $data = []
     ) {
-        $this->coreRegistry = $coreRegistry;
-        $this->productRepository = $productRepository;
-        $this->storeManager = $storemanager;
+        $this->_coreRegistry = $registry;
         parent::__construct($context, $data);
     }
 
     /**
-     * Retrieve current product model
-     *
-     * @return \Magento\Catalog\Model\Product
+     * @return Product
      */
     public function getProduct()
     {
-        if (!$this->coreRegistry->registry('product') && $this->getProductId()) {
-            $product = $this->productRepository->getById($this->getProductId());
-            $this->coreRegistry->register('product', $product);
+        if (!$this->_product) {
+            $this->_product = $this->_coreRegistry->registry('product');
         }
-        return $this->coreRegistry->registry('product');
-    }
-
-    /**
-     * Get review product list url
-     *
-     * @param bool $useDirectLink allows to use direct link for product reviews page
-     * @return string
-     */
-    public function getViewDetailsUrl($useDirectLink = false)
-    {
-        $product = $this->getProduct();
-        return $product->getUrlModel()->getUrl($product, ['_ignore_category' => true]);
-    }
-    /**
-     * Get product image url
-     *
-     * @return string
-     */
-    public function getProductImageUrl()
-    {
-        $store = $this->_storeManager->getStore();
-
-        $product = $this->getProduct();
-
-        return $store->getBaseUrl(
-        \Magento\Framework\UrlInterface::URL_TYPE_MEDIA) . 'catalog/product' . $product->getImage();
+        return $this->_product;
     }
 }
