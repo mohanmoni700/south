@@ -66,21 +66,7 @@ class SalesRule
                     $rule = $rule->load($ruleId);
 
                     //Get All Quote Items and validate only the non-promo item
-                    $isValid = true;
-                    foreach ($quote->getAllVisibleItems() as $quoteItem) {
-                        $parentId = $quoteItem->getParentItemId();
-                        if (!isset($parentId)) {
-                            if ($rule->getId()
-                                && $rule->getActions()->validate($quoteItem)
-                                && $this->isPromoItem($quoteItem->getSku())) {
-                                return true;
-                            }
-                            $isValid = false;
-                        }
-                    }
-
-                    //To check all the products in the cart
-                    return $isValid;
+                    return $this->isValidPromoItem($quote, $rule);
                 }
             }
         } catch (\Exception $exception) {
@@ -127,5 +113,28 @@ class SalesRule
             }
         }
         return false;
+    }
+
+    /**
+     * To validate the promo item
+     * @param $quote
+     * @param $rule
+     * @return bool
+     */
+    private function isValidPromoItem($quote, $rule)
+    {
+        //Get All items to check promo item
+        foreach ($quote->getAllVisibleItems() as $quoteItem) {
+            $parentId = $quoteItem->getParentItemId();
+            if (!isset($parentId)) {
+                if ($rule->getId()
+                    && $rule->getActions()->validate($quoteItem)
+                    && $this->isPromoItem($quoteItem->getSku())) {
+                    return true;
+                }
+                return false;
+            }
+        }
+        return true;
     }
 }
