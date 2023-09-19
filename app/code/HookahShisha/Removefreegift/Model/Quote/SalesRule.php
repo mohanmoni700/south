@@ -4,29 +4,39 @@ declare(strict_types=1);
 
 namespace HookahShisha\Removefreegift\Model\Quote;
 
-use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\SalesRule\Model\RuleFactory;
 use Amasty\Promo\Model\ResourceModel\Rule\CollectionFactory;
 use Magento\SalesRule\Model\Rule;
+use Magento\Checkout\Model\Session;
+use Magento\Quote\Model\QuoteFactory;
 
 class SalesRule
 {
-    protected CartRepositoryInterface $quoteRepository;
     protected RuleFactory $ruleFactory;
+
     protected CollectionFactory $collectionFactory;
 
+    protected Session $checkoutSession;
+
+    protected QuoteFactory $quoteFactory;
+
+
     /**
-     * @param CartRepositoryInterface $quoteRepository
+     * @param CollectionFactory $collectionFactory
+     * @param Session $checkoutSession
+     * @param QuoteFactory $quoteFactory
+     * @param RuleFactory $ruleFactory
      */
     public function __construct(
-        CartRepositoryInterface $quoteRepository,
-        CollectionFactory       $collectionFactory,
-        RuleFactory             $ruleFactory
-    )
-    {
-        $this->quoteRepository = $quoteRepository;
+        CollectionFactory $collectionFactory,
+        Session           $checkoutSession,
+        QuoteFactory      $quoteFactory,
+        RuleFactory       $ruleFactory
+    ) {
         $this->ruleFactory = $ruleFactory;
         $this->collectionFactory = $collectionFactory;
+        $this->checkoutSession = $checkoutSession;
+        $this->quoteFactory = $quoteFactory;
     }
 
     /**
@@ -37,33 +47,41 @@ class SalesRule
     public function getSalesRuleIdByQuote($quoteId, $ruleRowId)
     {
         try {
-            //Get the quote
-            $quote = $this->quoteRepository->get($quoteId);
-
             //Get Rule Id By AmproRule Id
             $rule = $this->ruleFactory->create();
             $ruleId = $this->getRuleIdByRowId($rule, $ruleRowId);
 
-            //Check whether the rule id already applied
-            if (isset($ruleId) && !$this->isQuoteRuleExist($quote->getAppliedRuleIds(), $ruleId)) {
-                $rule = $rule->load($ruleId);
+            //Check promo rule id exist
+            if (isset($ruleId)) {
+                //Get the quote
+                $quote = $this->checkoutSession->getQuote();
 
-                //Get All Quote Items and validate only the non-promo item
-                $isValid = true;
-                foreach ($quote->getAllVisibleItems() as $quoteItem) {
-                    $parentId = $quoteItem->getParentItemId();
-                    if (!isset($parentId)) {
-                        if ($rule->getId()
-                            && $rule->getActions()->validate($quoteItem)
-                            && $this->isPromoItem($quoteItem->getSku())) {
-                            return true;
-                        }
-                        $isValid = false;
-                    }
+                //if quote not exist
+                if (!isset($quote)) {
+                    $quote = $this->quoteFactory->create()->load($quoteId);
                 }
 
-                //To check all the products in the cart
-                return $isValid;
+                //Check whether the rule id already applied
+                if (!$this->isQuoteRuleExist($quote->getAppliedRuleIds(), $ruleId)) {
+                    $rule = $rule->load($ruleId);
+
+                    //Get All Quote Items and validate only the non-promo item
+                    $isValid = true;
+                    foreach ($quote->getAllVisibleItems() as $quoteItem) {
+                        $parentId = $quoteItem->getParentItemId();
+                        if (!isset($parentId)) {
+                            if ($rule->getId()
+                                && $rule->getActions()->validate($quoteItem)
+                                && $this->isPromoItem($quoteItem->getSku())) {
+                                return true;
+                            }
+                            $isValid = false;
+                        }
+                    }
+
+                    //To check all the products in the cart
+                    return $isValid;
+                }
             }
         } catch (\Exception $exception) {
             //In case of exception also it should return as true
@@ -102,7 +120,7 @@ class SalesRule
 
     private function isQuoteRuleExist($appliedRuleIds, $ruleId)
     {
-        if (isset($appliedRuleIds) && !empty($appliedRuleIds)) {
+        if (!empty($appliedRuleIds)) {
             $appliedRuleIds = explode(',', $appliedRuleIds);
             if (in_array($ruleId, $appliedRuleIds)) {
                 return true;
