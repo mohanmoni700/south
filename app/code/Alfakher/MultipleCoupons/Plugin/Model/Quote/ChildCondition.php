@@ -77,10 +77,11 @@ class ChildCondition
             if (!empty($appliedRuleIds)) {
                 $productCondition = $this->getProductCondition($appliedRuleIds);
                 foreach ($productCondition as $ruleCondition) {
+                    $skuList = $ruleCondition['value'] ? explode(',', $ruleCondition['value']) : [];
                     if (isset($ruleCondition['type'])
                         && str_ends_with($ruleCondition['type'], self::PRODUCT_CONDITION)
                         && $ruleCondition['attribute_scope'] == self::ATTRIBUTE_SCOPE
-                        && $ruleCondition['value'] == $sku
+                        && ($ruleCondition['value'] == $sku || in_array($sku, $skuList))
                         && in_array($ruleCondition['operator'], self::OPERATOR)
                     ) {
                         return true;
