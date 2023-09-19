@@ -1,0 +1,137 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="md_subscribenow" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="email" translate="label" type="text" sortOrder="7" showInDefault="1" showInStore="1" showInWebsite="1">
+                <label>Email Configuration</label>
+
+                <field id="subscription_email_sender" type="select" translate="label" sortOrder="1" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Subscription Email Sender</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+
+                <field id="allow_new_subscription_mail" type="select" translate="label" sortOrder="2" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Send New Subscription Email?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="new_subscription_template" translate="label" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>New Subscription Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="allow_new_subscription_mail">1</field>
+                    </depends>
+                </field>
+
+                <field id="new_subscription_copyto" translate="label" type="text" sortOrder="4" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Send New Subscription Email Copy To</label>
+                    <comment><![CDATA[Please write comma separated email address]]></comment>
+                    <backend_model>Magedelight\Subscribenow\Model\System\Config\Backend\Emailvalid</backend_model>
+                    <depends>
+                        <field id="allow_new_subscription_mail">1</field>
+                    </depends>
+                </field>
+
+                <field id="allow_update_subscription_mail" type="select" translate="label" sortOrder="5" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Send Subscription Update Email?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="subscription_update_template" translate="label comment" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Subscription Profile Update Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="allow_update_subscription_mail">1</field>
+                    </depends>
+                </field>
+
+                <field id="subscription_update_copyto" translate="label" type="text" sortOrder="7" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Send Subscription Update Email Copy To</label>
+                    <comment><![CDATA[Please write comma separated email address]]></comment>
+                    <backend_model>Magedelight\Subscribenow\Model\System\Config\Backend\Emailvalid</backend_model>
+                    <depends>
+                        <field id="allow_update_subscription_mail">1</field>
+                    </depends>
+                </field>
+
+                <field id="allow_payment_failed_mail" type="select" translate="label" sortOrder="8" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Send Payment Failed Email?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="payment_fail_template" translate="label comment" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Payment Failed Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="allow_payment_failed_mail">1</field>
+                    </depends>
+                </field>
+
+                <field id="payment_fail_template_copyto" translate="label" type="text" sortOrder="10" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Send Payment Failed Email Copy To</label>
+                    <comment><![CDATA[Please write comma separated email address]]></comment>
+                    <backend_model>Magedelight\Subscribenow\Model\System\Config\Backend\Emailvalid</backend_model>
+                    <depends>
+                        <field id="allow_payment_failed_mail">1</field>
+                    </depends>
+                </field>
+
+                <field id="allow_subscription_reminder_mail" type="select" translate="label" sortOrder="14" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Send Subscription Reminder Email?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="subscription_reminder_template" translate="label comment" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Subscription Reminder Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="allow_subscription_reminder_mail">1</field>
+                    </depends>
+                </field>
+
+                <field id="subscription_reminder_template_copyto" translate="label" type="text" sortOrder="16" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Subscription Reminder Email Copy To</label>
+                    <comment><![CDATA[Please write comma separated email address]]></comment>
+                    <backend_model>Magedelight\Subscribenow\Model\System\Config\Backend\Emailvalid</backend_model>
+                    <depends>
+                        <field id="allow_subscription_reminder_mail">1</field>
+                    </depends>
+                </field>
+
+                <field id="allow_ewallet_topup_reminder_mail" type="select" translate="label" sortOrder="17" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Send E-Wallet Topup Reminder?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="subscription_ewallet_topup_reminder_template" translate="label comment" type="select" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>E-Wallet Topup Reminder Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="allow_ewallet_topup_reminder_mail">1</field>
+                    </depends>
+                </field>
+
+                <field id="subscription_ewallet_reminder_template_copyto" translate="label" type="text" sortOrder="19" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>E-Wallet Topup Reminder Email Copy To</label>
+                    <comment><![CDATA[Please write comma separated email address]]></comment>
+                    <backend_model>Magedelight\Subscribenow\Model\System\Config\Backend\Emailvalid</backend_model>
+                    <depends>
+                        <field id="allow_ewallet_topup_reminder_mail">1</field>
+                    </depends>
+                </field>
+
+                <field id="allow_subscription_renew_mail" type="select" translate="label" sortOrder="20" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Send Subscription Renew Email?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="allow_subscription_order_mail" type="select" translate="label" sortOrder="21" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Send Subscription Order Email?</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+            </group>
+
+        </section>
+    </system>
+</config>
