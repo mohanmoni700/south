@@ -100,15 +100,15 @@ class ChildCondition
     private function getProductCondition($ruleIds)
     {
         $ruleIds = explode(',', $ruleIds);
-        $productCondition = [];
         foreach ($ruleIds as $ruleId) {
             $rule = $this->rule->create()->load($ruleId);
             $actionSerialized = $rule->getData('actions_serialized');
             if (!empty($actionSerialized)) {
                 $condition = $this->json->unserialize($actionSerialized);
-                $productCondition = $condition['conditions'] ?? [];
+                //Return the first rule id as it is the last rule id applied
+                return $condition['conditions'] ?? [];
             }
         }
-        return $productCondition;
+        return [];
     }
 }
