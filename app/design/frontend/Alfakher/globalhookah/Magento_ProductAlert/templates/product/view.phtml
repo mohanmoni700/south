@@ -1,0 +1,22 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php /* @var $block \Magento\ProductAlert\Block\Product\View */?>
+<div class="product alert <?= $block->getHtmlClass() ?>">
+<div class="actions">
+    <div class = "Product_grouped_totals">
+        <span>Total</span>
+        <span id = "Product_price_grouped">$0.00</span>
+    </div>
+    <div class = "product_notify_me">
+        <a href="<?= $block->escapeUrl($block->getSignupUrl()) ?>"
+        title="<?= $block->escapeHtml(__('NOTIFY WHEN BACK IN STOCK')) ?>" class="action alert">
+        <span><?= $block->escapeHtml(__('NOTIFY WHEN BACK IN STOCK')) ?></span>
+        </a>
+    </div>
+</div>
+</div>
+

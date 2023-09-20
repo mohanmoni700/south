@@ -242,6 +242,11 @@
                                         <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
                                     </div>
                                 <?php endif; ?>
+                                <?php else: ?>
+                                    <td> <div class="stock unavailable"
+                                    title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
+                                        <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
+                                    </div></td>
                             <?php endif; ?>
                         </td>
                         <td class="col qty">
@@ -254,7 +259,6 @@
                             <?= /* @noEscape */'$'.(float)$block->getProductPrice($_item)* (int)$_item->getQty().'.00'?>
                                 <?php endif; ?>
                             <?php endif; ?>
-
                             <?php /* bv_op; date : 10-2-22; Start */ ?>
                             <div class="bv-special-price-<?= $block->escapeHtmlAttr($_item->getId()) ?>"></div>
                             <?php /* bv_op; date : 10-2-22; End */ ?>
