@@ -281,7 +281,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
 </script>
 <?php
     $scriptString = <<<script
-        require(['jquery',], function($,customerData){
+        require(['jquery', 'Magento_Customer/js/customer-data','jquery/ui','mage/mage'], function($,customerData){
 script;
 ?>
 <?php if ($formDisable == 1): ?>
@@ -291,7 +291,41 @@ script;
                 setTimeout(function(){
                     $("#form-validate :input:not(:checkbox):not(:button)").prop("disabled", true);
                 }, 1000);
-            });});
+            });
+
+            //right before the form submits, we re-enable the fields, to make them submit.
+            $("#form-validate").submit(function( event ) {
+                if($('#form-validate').valid()){
+                    $("body").trigger('processStart');
+                    $("#form-validate :input").prop("disabled", false);
+                }
+            });
+
+            $("#country").change(function () {
+                onCountryChange();
+            });
+        function onCountryChange() {
+            require(['jquery'], function($){
+                var countryval = $('#country option:selected').val();
+                if(countryval=='US'){
+                    $('#region_id_label').children('span').html("$regionStateLabel");
+                    $('#region_id').attr('placeholder',"$regionStateLabel");
+                    $('.vat-tax-id').show();
+                    $('.tin-number').show();
+                    $('.tobacco-permit-number').show();
+                }else{
+                    $('#region_id_label').children('span').html("$regionProvinceLabel");
+                    $('#region').attr('placeholder',"$regionProvinceLabel");
+                    $('.vat-tax-id').hide();
+                    $('#vat_tax_id').val('');
+                    $('.tin-number').hide();
+                    $('#tin_number').val('');
+                    $('.tobacco-permit-number').hide();
+                    $('#tobacco_permit_number').val('');
+                }
+            });
+        }
+        });
 script;
     ?>
 <?php endif; ?>
