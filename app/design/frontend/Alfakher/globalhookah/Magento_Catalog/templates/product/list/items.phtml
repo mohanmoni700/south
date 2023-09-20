@@ -219,12 +219,12 @@ $_item = null;
                                     <span class="product-item-brand">
                                     <?= $block->escapeHtml($_item->getAttributeText('brand')) ?>
                                     </span>
-                                    <strong class="product name product-item-name"><a
+                                    <span class="product name product-item-name"><a
                                                 class="product-item-link"
                                                 title="<?= $block->escapeHtmlAttr($_item->getName()) ?>"
                                                 href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>">
                                             <?= $block->escapeHtml($_item->getName()) ?></a>
-                                    </strong>
+                                    </span>
                                     <!-- if documents approved then only show price start[BS] -->
                                     <?php
                                     /*
@@ -404,12 +404,12 @@ $_item = null;
                     responsive: [{
                         breakpoint: 1224,
                         settings: {
-                            slidesToShow: 4,
+                            slidesToShow: 3,
                             slidesToScroll: 1
                             }
                         },
                         {
-                        breakpoint: 768,
+                        breakpoint: 800,
                         settings: {
                             slidesToShow: 3,
                             slidesToScroll: 1
@@ -418,14 +418,14 @@ $_item = null;
                          {
                         breakpoint: 600,
                         settings: {
-                            slidesToShow: 1,
+                            slidesToShow: 2,
                             slidesToScroll: 1
                             }
                         },
                         {
                         breakpoint: 425,
                         settings: {
-                            slidesToShow: 1,
+                            slidesToShow: 1.5,
                             slidesToScroll: 1
                         }
                     }]
