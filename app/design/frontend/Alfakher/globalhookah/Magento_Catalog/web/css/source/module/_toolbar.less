@@ -94,15 +94,11 @@
         border-right: 0;
         border-top: 0;
         font-weight: 600;
+        text-align: center;
         border-bottom: 0;
         border-width: 0.063rem;
         margin: 0 ;
         height: 3rem;
-        padding-right: 2.25rem;
-        width: 12.25rem;
-        @media only screen and (max-width: 1199px) and  (min-width: 992px) {
-            width: 12rem;
-        }
     }
     select:not([disabled]) {
         &:focus {
@@ -201,6 +197,15 @@
 
     .sorter {
         float: right;
+        display: flex;
+        select {
+            padding: 0.5rem 2.5rem 0.5rem 0.5rem;
+            text-indent: 0;
+        }
+    }
+    .sorter-label {
+        flex-basis: 10rem;
+        padding-top: 0.5rem;
     }
 
     .modes {
