@@ -2206,6 +2206,7 @@
                             .lib-font-size(18);
                         }
                         .row-without-tabs{
+                            padding: 1.5rem 0;
                             .pagebuilder-column{
                                 border-right:1px solid  #e0e0e0;
                             }
@@ -2228,15 +2229,20 @@
                         }
                         .marketing-content {
                             text-align: center;
+                            margin-top:1.5rem ;
                             p {
-                                padding: 0.5rem 0.5rem 0.5rem 2.0rem;
+                                padding: 0;
                                 font-weight: 400;
+                                margin: 0;
                                 a{
-                                    text-decoration: underline;
+                                    text-decoration: none;
                                     text-transform: capitalize;
                                     font-weight: 700;
                                     .lib-font-size(13);
                                     line-height: 1;
+                                    &:hover{
+                                        color: #0065b3;
+                                    }
                                 }
                             }
                         }
@@ -2309,6 +2315,10 @@
                             border: none !important;
                             top:0;
                             .pagebuilder-column{
+                                border-right: 1px solid #e0e0e0;
+                                &:last-child{
+                                    border-right: none;
+                                }
                                 > div{
                                     ul{
                                         padding: 0.5rem 0;
@@ -2344,13 +2354,23 @@
                                         }
                                     }
                                 }
-                            }
+                            }                            
                         }
                     }
                     .submenu-single-link-with-one-tab {
                         position: absolute;
                         left: 2.0rem;
                         top: 6rem;
+                        p{
+                            a{
+                                font-weight: 400;
+                                padding: 1rem 0.5rem 1rem;
+                            }
+                        }
+                    }
+                    figure{
+                        text-align: center;
+                        padding-top: 1.5rem;
                     }
                     div[data-content-type='tabs'] {
                         .tabs-navigation {
