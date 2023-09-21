@@ -4,8 +4,10 @@
  * See COPYING.txt for license details.
  */
 ?>
+<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php /* @var $block \Magento\ProductAlert\Block\Product\View */?>
 <div class="product alert <?= $block->getHtmlClass() ?>">
+<?php if ($_helperB2b->isCustomerLoggedIn()): ?>
 <div class="actions">
     <div class = "Product_grouped_totals">
         <span>Total</span>
@@ -18,5 +20,72 @@
         </a>
     </div>
 </div>
+<?php else: ?>
+    <div class="actions">
+    <div class = "Product_grouped_totals">
+        <span>Total</span>
+        <span id = "Product_price_grouped">$0.00</span>
+    </div>
+    <div class = "product_notify_me">
+    <a
+        title="<?= $block->escapeHtml(__('NOTIFY WHEN BACK IN STOCK')) ?>" class="action alert notifyme_button">
+        <span><?= $block->escapeHtml(__('NOTIFY WHEN BACK IN STOCK')) ?></span>
+</a>
+<div id="modal">
+    <div class="modal-body-content">
+    <form name="login_form" action="<?= $block->getUrl('notifyme/index/index')?>" method="post" role="form">
+            <div class="modal-body">
+                <div class="form-group">
+                      <input type="text" class="form-control" id="Full Name" placeholder="Full Name">
+                </div>
+
+                <div class="form-group">
+                      <input type="email" class="form-control" id="email" placeholder="Email Id">
+                </div>
+            </div>
+          </form>
+    </div>
 </div>
+    </div>
+</div>
+<?php endif; ?>
+</div>
+
+
+<script type="text/javascript">
+    require([
+        "jquery",
+        "Magento_Ui/js/modal/modal"
+    ],function($, modal) {
+
+        var options = {
+            type: 'popup',
+            responsive: true,
+            title: 'Remind me when the product is back In Stock!',
+            modalClass: 'small-modal',
+            buttons: [
+                {
+            text: $.mage.__('Cancel'),
+            class: 'action-secondary-cancel',
+            click: function () {
+                this.closeModal();
+            }
+        },
+        {
+            text: $.mage.__('NOTIFY ME'),
+            class: 'action-secondary',
+            type: 'submit',
+            click: function () {
+                this.closeModal();
+            }
+        }
+        ],
+        };
+
+        var popup = modal(options, $('#modal'));
+        $(".notifyme_button").click(function() {
+            $('#modal').modal('openModal');
+        });
+    });
+</script>
 

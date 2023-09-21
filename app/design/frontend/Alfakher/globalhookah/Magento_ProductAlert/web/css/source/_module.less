@@ -16,7 +16,7 @@
         }
         button:hover {
             border: 1px solid #000;
-            background: transparent linear-gradient(148deg, #229B62 0%, #346DB0 100%) 0% 0% no-repeat padding-box;
+            background: transparent linear-gradient(148deg, #229B62 0%, #346DB0 100%);
             color: #FFFFFF;
         }
         .Product_grouped_totals {
@@ -44,11 +44,82 @@
             }
 
             &:hover {
-                background: transparent linear-gradient(148deg, #229B62 0%, #346DB0 100%) 0% 0% no-repeat padding-box;
+                background: transparent linear-gradient(148deg, #229B62 0%, #346DB0 100%);
             color: #FFFFFF;
+            }
+            span {
+                white-space: nowrap;
             }
         }
     }
+    }
+}
+
+.small-modal {
+    .modal-inner-wrap {
+        width: 33% !important;
+        height: 39% !important;
+        .modal-header {
+            padding: 6rem 6rem 1rem 6rem;
+            .action-close {
+                display: none;
+            }
+            h1{
+                font-size: 2.8rem;
+                font-family: Quicksand;
+                white-space: revert;
+                text-align: center;
+                line-height: 3.5rem;
+                border-bottom: none !important;
+            }
+
+        }
+        .modal-content {
+            #modal{
+                .modal-body-content {
+                    form{
+                        .modal-body {
+                            padding: 0rem 2rem;
+                            .form-group {
+                                margin-bottom: 1rem;
+                                input {
+                                    border: 1px solid #6D6D6D;
+                                    border-radius: 0.5rem;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .modal-footer {
+            border: none !important;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6%;
+            padding: 0rem 0rem  3rem 0rem;
+            .action-secondary {
+            border: none;
+            background: none;
+        background: white;
+        color: #000;
+        border: 1px solid #000000;
+        border-radius: 6rem;
+        height: 4rem;
+        &:hover {
+            background: transparent linear-gradient(148deg, #229B62 0%, #346DB0 100%);
+            color: #FFFFFF;
+        }
+        }
+
+        .action-secondary-cancel{
+        background: none;
+        border: none;
+        }
+
+        }
     }
 }
 
@@ -67,5 +138,66 @@
             column-gap: 2% !important;
         }
 }
+}
+
+@media only screen and (max-width: 640px) {
+.small-modal {
+    left: 0rem !important;
+    .modal-inner-wrap {
+        width: 100% !important;
+        height: 39% !important;
+        position: absolute !important;
+        bottom: 0rem;
+        .modal-header {
+            padding: 2rem 2rem 0rem 2rem;
+            .action-close {
+                display: none;
+            }
+            h1{
+                font-size: 2rem;
+                line-height: 2rem;
+                border-bottom: none !important;
+            }
+
+        }
+        .modal-footer {
+            padding: 0rem 4rem 2rem 3rem !important;
+            .action-secondary {
+            border: none;
+            background: transparent linear-gradient(148deg, #229B62 0%, #346DB0 100%);
+            color: #FFFFFF;
+            margin-top: 0rem;
+        }
+
+        .action-secondary-cancel{
+        background: none;
+        border: none;
+        width: auto;
+        }
+
+        }
+    }
+}
+
+
 
 }
+@media only screen and (max-width: 1044px) and (min-width:641px) {
+    .small-modal {
+        left: 0rem !important;
+        .modal-inner-wrap {
+            width: 55% !important;
+            height: unset !important;
+            .modal-header {
+                h1{
+                    font-size: 2rem;
+                    line-height: 2rem;
+                }
+            }
+        }
+    }
+}
+
+
+
+
