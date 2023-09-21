@@ -1112,7 +1112,6 @@ return [
         'HookahShisha_Magefan' => 1,
         'HookahShisha_Migration' => 1,
         'HookahShisha_Order' => 1,
-        'HookahShisha_OOSProduct' => 1,
         'HookahShisha_OrderGraphQl' => 1,
         'HookahShisha_QuoteGraphQl' => 1,
         'HookahShisha_Removefreegift' => 1,
