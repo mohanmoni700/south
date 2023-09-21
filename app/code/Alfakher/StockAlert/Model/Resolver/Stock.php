@@ -10,7 +10,7 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Query\Resolver\Value;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
-use Alfakher\StockAlert\Api\ProductAlertStockGuestUserRepositoryInterface;
+use Alfakher\StockAlert\Model\ProductAlertStockGuestUserRepository;
 
 class Stock implements \Magento\Framework\GraphQl\Query\ResolverInterface
 {
@@ -25,23 +25,23 @@ class Stock implements \Magento\Framework\GraphQl\Query\ResolverInterface
     private Data $helper;
 
     /**
-     * @var ProductAlertStockGuestUserRepositoryInterface
+     * @var ProductAlertStockGuestUserRepository
      */
-    private ProductAlertStockGuestUserRepositoryInterface $productAlertRepository;
+    private ProductAlertStockGuestUserRepository $guestUserRepository;
 
     /**
      * @param ProductAlertStockGuestUserFactory $guestSubscriptionDataFactory
      * @param Data $helper
-     * @param ProductAlertStockGuestUserRepositoryInterface $productAlertRepository
+     * @param ProductAlertStockGuestUserRepository $guestUserRepository
      */
     public function __construct(
         ProductAlertStockGuestUserFactory $guestSubscriptionDataFactory,
         Data $helper,
-        ProductAlertStockGuestUserRepositoryInterface $productAlertRepository
+        ProductAlertStockGuestUserRepository $guestUserRepository
     ) {
         $this->guestSubscriptionDataFactory = $guestSubscriptionDataFactory;
         $this->helper = $helper;
-        $this->productAlertRepository = $productAlertRepository;
+        $this->guestUserRepository = $guestUserRepository;
     }
 
     /**
@@ -70,13 +70,15 @@ class Stock implements \Magento\Framework\GraphQl\Query\ResolverInterface
 
             $storeId = $this->helper->getStoreId();
             $websiteId = $this->helper->getWebsiteId();
-            $dataModel = $this->guestSubscriptionDataFactory->create();
-            $dataModel->setProductId($productId);
-            $dataModel->setEmailId($email);
-            $dataModel->setName($name);
-            $dataModel->setStoreId($storeId);
-            $dataModel->setWebsiteId($websiteId);
-            $this->productAlertRepository->save($dataModel);
+            $data = [
+                'product_id' => $productId,
+                'email_id' => $email,
+                'name' => $name,
+                'store_id' => $storeId,
+                'website_id' => $websiteId
+            ];
+            $dataModel = $this->guestSubscriptionDataFactory->setData($data);
+            $this->guestUserRepository->save($dataModel);
             // Update the result with success message and ID
             $result['message'] = 'Subscription added successfully';
             $result['id'] = $dataModel->getId();
