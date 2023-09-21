@@ -40,7 +40,6 @@
                     font-weight: @font-weight__bold;
                         }
                         padding:1rem;
-                        white-space: nowrap;
                         vertical-align: middle;
                         &.col.qty {
                             padding-right: 1.2rem;
@@ -142,6 +141,12 @@
                         white-space: unset;
                     }
                 }
+                .table-row-heading {
+                    padding: 1.2rem 1.2rem 0rem 1.2rem;
+                }
+                .tablerow-mobile {
+                    padding: 0rem 1rem 1rem 1rem;
+                }
                 tr:nth-child(2n+3) {
                     background: unset;
                 }
@@ -210,7 +215,6 @@
         display: flex;
         align-items: center;
         gap: 4rem;
-        border-bottom: 1px solid #C7D2EC;
         .Product_grouped_totals {
             span{
                 font-size: 16px;
@@ -249,6 +253,12 @@
 
 .table-variant-row {
     background: transparent linear-gradient(153deg, #229B62 0%, #346DB0 100%) 0% 0% no-repeat padding-box;
+    .variant.col.item {
+        width: 60rem;
+    }
+    .variant_unit {
+        white-space:nowrap;
+    }
     td {
         letter-spacing: 0px;
         color: #FFFFFF;
@@ -330,7 +340,7 @@ display: none;
 
 .table-wrapper.grouped::-webkit-scrollbar
 {
-	width: 10px;
+	width: 5px;
 	background-color: #ffffff;
 }
 
@@ -340,22 +350,34 @@ display: none;
 	background-color: #316BB2;
 }
 
-
-.Description-product-page {
-    font-size: 20px;
-    color: #316BB2;
+.product.column-1 {
+    position: relative;
+    margin-top: 3rem ;
+    .Description-product-page {
+        font-size: 20px;
+        color: #316BB2;
+    }
+    .Description-product-page::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 11.7rem;
+        right: 0;
+        height: 0.5em;
+        border-top: 1px solid #316BB2;
+        z-index: -1;
+        top: 1.5rem;
+    }
+    .showMore , .showLess{
+        border: none;
+        background: none;
+        font-size: 1.8rem;
+        font-weight: 500;
+        padding: 0rem;
+        color: #316BB2;
+        text-transform: capitalize;
+    }
 }
-
-.Description-product-page::before {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 0.5em;
-    border-top: 1px solid black;
-    z-index: -1;
-  }
 
   @media only screen and (max-width: 1199px) and  (min-width: 767px) {
     .table-wrapper.grouped {

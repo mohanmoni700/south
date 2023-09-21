@@ -103,6 +103,7 @@
                         </td>
 
                         <td class="col qty">
+                        <?php if ($_item->isSaleable()): ?>
                             <div class ="control totalqty price"
                              id="totalqtydrop_<?= $block->escapeHtmlAttr($_item->getId()) ?>"
                              data-product-id="<?=  $block->escapeHtmlAttr($_item->getId()) ?>"
@@ -117,6 +118,7 @@
                             <div class="bv-special-price-<?= $block->escapeHtmlAttr($_item->getId()) ?>"></div>
                             <?php /* bv_op; date : 10-2-22; End */ ?>
                             </div>
+                        <?php endif; ?>
                     </td>
                     <?php endif; ?>
                 <?php endif; ?>
@@ -168,7 +170,7 @@
             <tr class="table-variant-row col item ">
                         <td class="variant col item">Variant</td>
                         <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
-                        <td >Unit Price</td>
+                        <td class = "variant-unit">Unit Price</td>
                         <td class="col qty">Qty</td>
                         <td class="col qty">Total Price</td>
                         <?php endif; ?>
@@ -213,7 +215,7 @@
                             <div class="bv-special-price-<?= $block->escapeHtmlAttr($_item->getId()) ?>"></div>
                             <?php /* bv_op; date : 10-2-22; End */ ?>
 
-                        </td>
+                            </td>
                             <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
                                 <?php if ($_product->isSaleable()): ?>
                                 <td data-th="<?= $block->escapeHtml(__('Qty')) ?>" class="col qty">
