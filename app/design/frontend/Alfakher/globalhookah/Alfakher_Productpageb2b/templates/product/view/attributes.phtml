@@ -42,7 +42,7 @@ Al Fakher Tobacco Specs
     <th></th>
     <th></th>
   <?php foreach ($attributeCodes as $attributeCode): ?>
-    <?php if ($attributeValue = $_product->getData($attributeCode) != NULL) :?>
+    <?php if ($attributeValue = $_product->getData($attributeCode) !== null) :?>
     <tr>
       <td class="td_first">
       <?= /* @noEscape */ str_replace(['_', 'product'], [' ', ''], $attributeCode); ?>
