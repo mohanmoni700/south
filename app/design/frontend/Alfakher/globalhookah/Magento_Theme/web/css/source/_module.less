@@ -2214,7 +2214,7 @@
                                 padding: 1.25rem 0;
                                 width: 100%;
                                 li{
-                                    margin-bottom: 1.5rem;
+                                    margin-bottom: 2.1rem;
                                     a {
                                         color: #333;
                                         .lib-font-size(14);
@@ -2324,7 +2324,7 @@
                                     ul{
                                         padding: 0.5rem 0;
                                         li{
-                                            margin-bottom: 1.2rem;
+                                            margin-bottom: 2.1rem;
                                             a{
                                                 color: #333;
                                                 .lib-font-size(14);
@@ -2354,7 +2354,19 @@
                                         }
                                     }
                                 }
-                            }                            
+                            }   
+                            .pagebuilder-column {
+                                &.marketing-block{
+                                    width: auto !important;
+                                    margin-left: 4.5rem;
+                                }
+                                figure{   
+                                    height: auto !important;                                
+                                    img{
+                                        height: auto !important;
+                                    }
+                                }     
+                            }                         
                         }
                     }
                     .submenu-single-link-with-one-tab {
@@ -2364,13 +2376,15 @@
                         p{
                             a{
                                 font-weight: 400;
-                                padding: 1rem 0.5rem 1rem;
+                                padding: 1.25rem 0.5rem 1.25rem;
                             }
                         }
                     }
-                    figure{
-                        text-align: center;
-                        padding-top: 1.5rem;
+                    .pagebuilder-column {
+                        figure{
+                            text-align: center;
+                            padding-top: 1.5rem;                            
+                        }                       
                     }
                     div[data-content-type='tabs'] {
                         .tabs-navigation {
