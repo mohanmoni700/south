@@ -1542,7 +1542,7 @@
         .page-footer {
             overflow: hidden;
         }
-    }    
+    }
 }
 
 
@@ -2272,7 +2272,7 @@
                                     .lib-font-size(14);
                                     line-height: 3.8rem;
                                     text-decoration: none !important;
-                                    &:after{                                        
+                                    &:after{
                                         -webkit-font-smoothing: antialiased;
                                         -moz-osx-font-smoothing: grayscale;
                                         line-height: inherit;
@@ -2280,7 +2280,7 @@
                                         content: '\e622' !important;
                                         font-family: @icons__font-name;
                                         vertical-align: middle;
-                                        display: inline-block;                                       
+                                        display: inline-block;
                                         overflow: hidden;
                                         speak: none;
                                         text-align: center;
@@ -2317,6 +2317,16 @@
                             top:0;
                             .pagebuilder-column{
                                 border-right: 1px solid #e0e0e0;
+                                &.marketing-block{
+                                    width: auto !important;
+                                    margin-left: 4.5rem;
+                                }
+                                figure{
+                                    height: auto !important;
+                                    img{
+                                        height: auto !important;
+                                    }
+                                }
                                 &:last-child{
                                     border-right: none;
                                 }
@@ -2345,7 +2355,7 @@
                             .pagebuilder-column-group {
                                 .pagebuilder-column{
                                     min-width: 194px;
-                                    ul{                                        
+                                    ul{
                                         width: 100%;
                                     }
                                     &:last-child{
@@ -2354,19 +2364,7 @@
                                         }
                                     }
                                 }
-                            }   
-                            .pagebuilder-column {
-                                &.marketing-block{
-                                    width: auto !important;
-                                    margin-left: 4.5rem;
-                                }
-                                figure{   
-                                    height: auto !important;                                
-                                    img{
-                                        height: auto !important;
-                                    }
-                                }     
-                            }                         
+                            }
                         }
                     }
                     .submenu-single-link-with-one-tab {
@@ -2383,8 +2381,8 @@
                     .pagebuilder-column {
                         figure{
                             text-align: center;
-                            padding-top: 1.5rem;                            
-                        }                       
+                            padding-top: 1.5rem;
+                        }
                     }
                     div[data-content-type='tabs'] {
                         .tabs-navigation {
@@ -2402,7 +2400,7 @@
             }
             li.level0{
                 margin-right: 2.3rem;
-            }           
+            }
         }
 
     }
@@ -3002,7 +3000,7 @@
             .navigation {
                 padding: 0 (@indent__base - @indent__xs);
             }
-        }       
+        }
     }
     @media only screen and (min-width: (@screen__l + 1 )) and (max-width:  1280px) {
         body .page-header {
@@ -3010,7 +3008,7 @@
                 padding: 15px;
             }
         }
-    }  
+    }
     @media only screen and (min-width: @screen__m) and (max-width: 1280px) {
         body .page-header {
             .header-links-wrapper {
@@ -3041,11 +3039,11 @@
             }
         }
     }
-    @media only screen and (max-width: 1199px) and (min-width: 768px) {       
+    @media only screen and (max-width: 1199px) and (min-width: 768px) {
         .shopbybrands{
-            .brandcollection{            
-                .branditem{   
-                    width: ~'calc(33% - 2.7rem)'; 
+            .brandcollection{
+                .branditem{
+                    width: ~'calc(33% - 2.7rem)';
                     &:nth-child(4n){
                         margin-right: 3.6rem;
                     }
@@ -3054,7 +3052,7 @@
                     }
                 }
             }
-        }        
+        }
     }
     // Brand Page css chanhed due to conflicts on the SSB-182 branch
     @media only  screen and (max-width: 1920px) and (min-width: @screen__xl){
@@ -3070,10 +3068,10 @@
             .content{
                 max-width: 100% !important;
                 padding: 7.2rem 16.5% !important;
-                
+
             }
         }
-    }  
+    }
     @media only screen and (max-width:1199px) and (min-width: @screen__m){
         .shopbybrands {
             .brandcollection {
@@ -3082,11 +3080,11 @@
                     margin: 0 2.7rem 2.7rem 0 !important;
                     &:nth-child(3n){
                         margin-right: 0 !important;
-                    }                    
+                    }
                 }
             }
         }
-    } 
+    }
 }
 
 
@@ -3521,7 +3519,7 @@
                         }
                         .submenu-main-link{
                             a{
-                                color: #333;                                
+                                color: #333;
                                 font-weight: 700;
                                 line-height: 2.0rem;
                                 text-decoration: underline;
@@ -3917,8 +3915,8 @@
                 .lib-font-size(8);
             }
         }
-    }  
-    // Brand Page Mobile Devices    
+    }
+    // Brand Page Mobile Devices
     @media only screen and (max-width: (@screen__m - 1)) {
         .shopbybrands {
             .brandcollection {
@@ -3927,7 +3925,7 @@
                     margin: 0 1.6rem 1.6rem 0 !important;
                     &:nth-child(2n){
                         margin-right: 0 !important;
-                    }                    
+                    }
                     &:nth-child(4n){
                         margin-right: 0 !important;
                     }
