@@ -6,6 +6,9 @@
 ?>
 <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php /* @var $block \Magento\ProductAlert\Block\Product\View */?>
+<?php
+$notifyText = __('NOTIFY WHEN BACK IN STOCK');
+?>
 <div class="product alert <?= $block->getHtmlClass() ?>">
 <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
 <div class="actions">
@@ -15,8 +18,8 @@
     </div>
     <div class = "product_notify_me">
         <a href="<?= $block->escapeUrl($block->getSignupUrl()) ?>"
-        title="<?= $block->escapeHtml(__('NOTIFY WHEN BACK IN STOCK')) ?>" class="action alert">
-        <span><?= $block->escapeHtml(__('NOTIFY WHEN BACK IN STOCK')) ?></span>
+        title="<?= $block->escapeHtml($notifyText) ?>" class="action alert">
+        <span><?= $block->escapeHtml($notifyText) ?></span>
         </a>
     </div>
 </div>
@@ -28,8 +31,8 @@
     </div>
     <div class = "product_notify_me">
     <a
-        title="<?= $block->escapeHtml(__('NOTIFY WHEN BACK IN STOCK')) ?>" class="action alert notifyme_button">
-        <span><?= $block->escapeHtml(__('NOTIFY WHEN BACK IN STOCK')) ?></span>
+        title="<?= $block->escapeHtml($notifyText) ?>" class="action alert notifyme_button">
+        <span><?= $block->escapeHtml($notifyText) ?></span>
 </a>
 <div id="modal">
     <div class="modal-body-content">
