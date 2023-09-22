@@ -20,6 +20,8 @@ class SalesRule
 
     protected QuoteFactory $quoteFactory;
 
+    protected $quote;
+
 
     /**
      * @param CollectionFactory $collectionFactory
@@ -54,19 +56,16 @@ class SalesRule
             //Check promo rule id exist
             if (isset($ruleId)) {
                 //Get the quote
-                $quote = $this->checkoutSession->getQuote();
-
-                //if quote not exist
-                if (!isset($quote)) {
-                    $quote = $this->quoteFactory->create()->load($quoteId);
+                if (!$this->quote || ($this->quote->getId() != $this->checkoutSession->getQuote()->getId())){
+                    $this->quote = $this->quoteFactory->create()->load($quoteId);
                 }
 
                 //Check whether the rule id already applied
-                if (!$this->isQuoteRuleExist($quote->getAppliedRuleIds(), $ruleId)) {
+                if (!$this->isQuoteRuleExist($this->quote->getAppliedRuleIds(), $ruleId)) {
                     $rule = $rule->load($ruleId);
 
                     //Get All Quote Items and validate only the non-promo item
-                    return $this->isValidPromoItem($quote, $rule);
+                    return $this->isValidPromoItem($this->quote, $rule);
                 }
             }
         } catch (\Exception $exception) {
