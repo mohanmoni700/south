@@ -461,12 +461,14 @@ $_item = null;
             });
 
             $(".prev-arrow").on("click", function() {
-            // Trigger a click event on button1 using jQuery
             $(".slick-prev").click();
+            $(".prev-arrow").css("opacity", "1");
+            $(".next-arrow").css("opacity", "0.5");
         });
         $(".next-arrow").on("click", function() {
-            // Trigger a click event on button1 using jQuery
             $(".slick-next").click();
+            $(".prev-arrow").css("opacity", "0.5");
+            $(".next-arrow").css("opacity", "1");
         });
         });
     });
