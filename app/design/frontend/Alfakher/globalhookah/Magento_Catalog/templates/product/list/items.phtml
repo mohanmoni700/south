@@ -186,7 +186,12 @@ $_item = null;
             <?php endif; ?>
             <div class="block-title title">
                 <strong id="block-<?= $block->escapeHtmlAttr($class) ?>-heading" role="heading"
-                        aria-level="2"><?= $block->escapeHtml($title) ?></strong>
+                        aria-level="2"><?= $block->escapeHtml($title) ?>
+                    </strong>
+                    <div class = "prev-arrow-main">
+                        <span class="prev-arrow"></span>
+                        <span class="next-arrow"></span>
+                    </div>
             </div>
             <div class="block-content content" aria-labelledby="block-<?= $block->escapeHtmlAttr($class) ?>-heading">
                 <div class="products wrapper grid products-grid products-<?= $block->escapeHtmlAttr($type) ?>">
@@ -454,6 +459,15 @@ $_item = null;
                 .attr('aria-valuenow', calc );
                 $progressBarLabel.text( calc + '% completed' );
             });
+
+            $(".prev-arrow").on("click", function() {
+            // Trigger a click event on button1 using jQuery
+            $(".slick-prev").click();
+        });
+        $(".next-arrow").on("click", function() {
+            // Trigger a click event on button1 using jQuery
+            $(".slick-next").click();
+        });
         });
     });
 </script>
