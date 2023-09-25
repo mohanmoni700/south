@@ -125,7 +125,6 @@
             height: 4rem;
             width: 4rem;
             background: url('@{baseDir}images/prev.svg') no-repeat !important;
-            opacity: 0.5;
            }
            .next-arrow::after{
             content: "";
@@ -173,7 +172,13 @@
         }
     }
 
-    @media only screen and (max-width: 1025px) {
+    .pagebuilder-column.pdp-cms-page-column {
+        padding: 15rem 5rem !important;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @media only screen and (max-width: 1280px) {
         .pagebuilder-column.pdp-cms-page-column-image {
             padding: 0rem 0rem !important;
     }
@@ -183,12 +188,6 @@
         padding: 0rem 2rem 0rem 2rem !important;
         width: 100%;
     }
-    }
-
-    .pagebuilder-column.pdp-cms-page-column {
-        padding: 0rem 5rem !important;
-        align-items: center;
-        justify-content: center;
     }
     .global_block_heading {
         font-size: 4rem;

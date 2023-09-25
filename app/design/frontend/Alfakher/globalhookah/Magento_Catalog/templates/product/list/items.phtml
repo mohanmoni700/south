@@ -408,6 +408,8 @@ $_item = null;
                     slidesToShow: 5.2,
                     slidesToScroll: 1,
                     autoplay: false,
+                    prevArrow: $('.prev-arrow'),
+                    nextArrow: $('.next-arrow'),
                     infinite: false,
                     responsive: [{
                         breakpoint: 1224,
@@ -438,7 +440,25 @@ $_item = null;
                         }
                     }]
                 });
-            }, 2000);
+                let $slider = $('.slick-slider');
+                function updateButtonOpacity() {
+        const currentSlide = $slider.slick('slickCurrentSlide');
+        const slideCount = $slider.slick('getSlick').slideCount;
+        if (currentSlide === 0) {
+            $('.prev-arrow').css('opacity', '0.5');
+        }
+        if (currentSlide === slideCount - 5) {
+            $('.prev-arrow').css('opacity', '1');
+            $('.next-arrow').css('opacity', '0.5');
+        } else {
+            $('.next-arrow').css('opacity', '1');
+        }
+    }
+    updateButtonOpacity();
+    $slider.on('afterChange', function(event, slick, currentSlide){
+        updateButtonOpacity();
+    });
+            }, 0);
         });
     });
 </script>
@@ -459,17 +479,6 @@ $_item = null;
                 .attr('aria-valuenow', calc );
                 $progressBarLabel.text( calc + '% completed' );
             });
-
-            $(".prev-arrow").on("click", function() {
-            $(".slick-prev").click();
-            $(".prev-arrow").css("opacity", "1");
-            $(".next-arrow").css("opacity", "0.5");
-        });
-        $(".next-arrow").on("click", function() {
-            $(".slick-next").click();
-            $(".prev-arrow").css("opacity", "0.5");
-            $(".next-arrow").css("opacity", "1");
-        });
         });
     });
 </script>
