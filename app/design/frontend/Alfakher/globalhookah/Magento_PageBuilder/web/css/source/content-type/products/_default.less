@@ -81,7 +81,7 @@
     .nav-tabs.active {
         border-bottom: 0.3rem solid #316BB2;
         li{
-            font-size: 2.5rem;
+            font-size: 3rem;
             white-space: nowrap;
         }
     }
@@ -90,8 +90,8 @@
         cursor: pointer;
         padding: 1rem 8rem;
         margin-right: 0.5rem;
-        font-size: 2rem;
-       font-weight: 600;
+        font-size: 1.5rem;
+       font-weight: bolder;
        white-space: nowrap;
        text-transform: uppercase;
     }
@@ -104,15 +104,25 @@
 
     .tab-content.active {
         display: block;
+        .product-full-width-section {
+            .pagebuilder-attribute-wrapper {
+                div[data-appearance="contained"] {
+                    margin-left: 7rem !important;
+                    max-width: unset;
+                    margin-right: 7rem !important;
+                }
+            }
+        }
     }
     .tab-links-group {
     display: flex;
     justify-content: space-between;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    max-width: 128rem;
+    margin-left: 7rem;
+    margin-right: 7rem;
+    max-width: unset;
     border-bottom: 0.1px solid #000;
     overflow: scroll;
+    padding-top: 4.5rem;
 }
 
 .tab-links-group::-webkit-scrollbar {
@@ -122,4 +132,39 @@
 
 .product-section-title {
     display: none;
+}
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .tab-content.active {
+        .product-full-width-section {
+            .pagebuilder-attribute-wrapper {
+                div[data-appearance="contained"] {
+                    margin-left: unset !important;
+                    margin-right: unset !important;
+                }
+            }
+        }
+    }
+    .tab-links-group {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: unset;
+        padding-top: 0.5rem;
+    }
+    .tab-link {
+        cursor: pointer;
+        padding: 1rem 3rem;
+        margin-right: 0.5rem;
+        font-size: 1.5rem;
+       font-weight: bolder;
+       white-space: nowrap;
+       text-transform: uppercase;
+    }
+    .nav-tabs.active {
+        border-bottom: 0.3rem solid #316BB2;
+        li{
+            font-size: 2.4rem;
+            white-space: nowrap;
+        }
+    }
+
 }
