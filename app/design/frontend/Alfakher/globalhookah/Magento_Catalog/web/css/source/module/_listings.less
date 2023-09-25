@@ -240,7 +240,7 @@
             }
 
             .price-box {
-                margin: @indent__s 0 20px;
+                margin: @indent__s 0 0;
                 text-align: left;
 
                 .price {
@@ -409,8 +409,8 @@
                 }
             }
             .actions-primary {
-                margin-top: 1rem;
                 text-align: left;
+                margin-top: 1rem;
             }
         }
     }
@@ -679,7 +679,11 @@
 
             &-details {
                 .stock.unavailable {
-                    font-size: 0.813rem;
+                    font-size: 1.2rem;
+                    text-align: left;
+                }
+                .product-item-brand {
+                    .lib-font-size(12);
                 }
                 .product-item-brand {
                     .lib-font-size(12);
