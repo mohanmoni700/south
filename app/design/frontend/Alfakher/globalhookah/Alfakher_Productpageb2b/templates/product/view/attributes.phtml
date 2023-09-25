@@ -28,7 +28,15 @@
     'product_hookah',
     'product_rating',
     'product_style'];
+    $shouldDisplaySpecs = false;
+    foreach ($attributeCodes as $attributeCode) {
+        if ($_product->getData($attributeCode) !== null) {
+            $shouldDisplaySpecs = true;
+            break;
+        }
+    }
 ?>
+<?php if ($shouldDisplaySpecs): ?>
 <div class ="main_wrapper">
 <div class="product_attributes">
 <div class = "Product_attributes_head">
@@ -59,3 +67,5 @@ Al Fakher Tobacco Specs
 </table>
 </div>
 </div>
+<?php endif; ?>
+
