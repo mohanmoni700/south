@@ -369,6 +369,9 @@ $_item = null;
                     </div>
                 </div>
             </div>
+            <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+    <span class="slider__label sr-only">
+</div>
         </div>
         <?php if (!$block->isRedirectToCartEnabled() && $_item):?>
             <script type="text/x-magento-init">
@@ -431,6 +434,26 @@ $_item = null;
                     }]
                 });
             }, 2000);
+        });
+    });
+</script>
+
+<script>
+    require([
+        "jquery"
+    ], function ($) {
+        $(document).ready(function() {
+            var $slider = $('.product-items');
+            var $progressBar = $('.progress');
+            var $progressBarLabel = $( '.slider__label' );
+
+            $slider.on('beforeChange', function(event, slick, currentSlide, nextSlide) {
+                var calc = ( (nextSlide) / (slick.slideCount-1) ) * 100;
+                $progressBar
+                .css('background-size', calc + '% 100%')
+                .attr('aria-valuenow', calc );
+                $progressBarLabel.text( calc + '% completed' );
+            });
         });
     });
 </script>
