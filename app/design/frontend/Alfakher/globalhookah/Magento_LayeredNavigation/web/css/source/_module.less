@@ -117,10 +117,6 @@
                     &:first-child {
                         margin-top: 0;
                     }
-
-                    &:last-child {
-                        margin-bottom: 0;
-                    }
                 }
             }
 
@@ -210,7 +206,7 @@
 
     .block-subtitle {
         display: inline-block;
-        font-size: 0.938rem;
+        font-size: 1.5rem;
         font-weight: @font-weight__bold;
         margin-bottom: @indent__s + 2;
 
@@ -243,7 +239,6 @@
 
         +.filter-actions {
             color: @color-black;
-            font-size: 0.75rem;
             position: absolute;
             right: 0;
             top: @indent__base - 2px;
@@ -251,7 +246,7 @@
             a {
                 color: @color-black;
                 text-decoration: underline;
-                font-size: 0.75rem;
+                font-size: 1.2rem;
 
                 &:hover,
                 &:active {
@@ -276,9 +271,11 @@
 
     .filter-content {
         position: relative;
-        margin-top: 5.2rem;
+        margin-top: 3.2rem;
     }
-
+    .filter-options-details {
+        border-bottom: 1px solid @border_color;
+    }
     .filter-options-content {
         .filter-count-label {
             &:extend(.abs-visually-hidden all);
@@ -295,7 +292,6 @@
         }
 
         .filter-options-content {
-            margin: 0 0 @indent__m;
             overflow: auto;
             scrollbar-color: @button_color_secondary transparent;
             scrollbar-width: thin;
@@ -320,14 +316,14 @@
                 margin-bottom: 1rem;
 
                 &:last-child {
-                    margin-bottom: 0;
+                    margin-bottom: 2rem;
                 }
             }
         }
 
         .count {
             .lib-css(color, @text__color__muted);
-
+            padding-left:2rem;
             &:before {
                 content: '(';
             }
@@ -402,20 +398,26 @@
     .cate-filter {
         display: none;
     }
+    .filter-options-details {
+        border-bottom: none;
+    }
     .filter {
         &.block {
             margin-bottom: 0;
             display: block;
 
             .filter-title {
-                display: block;
-                top: 36px;
+                display: flex;
+                top: 18px;
+                min-height: 1.75rem;
+                border-right: @border-width__base solid @border-color__base;
                 strong {
-                    font-size: 14px;
+                    font-size: 1.6rem;
                     font-weight: @font-weight__bold;
-
+                    margin-left: auto;
+                    margin-right: auto;
                     &:after {
-                        content: ' By (' attr(data-count) ')';
+                        content: ' (' attr(data-count) ')';
                     }
                 }
 
@@ -542,8 +544,15 @@
                 }
             }
         }
+        .filter-content {
+            margin-top: 5.2rem;
+        }
     }
 
+    .filter-current .action.remove {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
     body {
         &.filter-active {
             .page-header {
@@ -573,10 +582,10 @@
             }
 
             .filter-title {
-                height: 3.125rem;
                 left: auto;
-                min-height: 3.125rem;
+                min-height: 1.75rem;
                 position: fixed !important;
+                border-right: none;
                 right: 8px;
                 top: 5px;
                 width: auto;
@@ -600,15 +609,16 @@
             }
 
             .filter-subtitle {
-                //  .lib-css(background, @toolbar-background);
                 display: block;
                 height: 3.75rem;
                 left: 0;
+                font-size:1.6rem;
+                font-weight: 700;
                 line-height: 1;
                 padding: 18px 20px;
                 position: fixed;
                 right: 0;
-                top: 0;
+                top: 1rem;
                 z-index: 1;
             }
 
@@ -620,17 +630,22 @@
                 overflow: auto;
                 padding: 0 20px 20px 20px;
                 position: fixed;
+                margin-top:2rem;
                 right: 0;
                 top: 3.75rem;
                 z-index: 10;
 
                 .filter-options-content {
-                    max-height: 8.5rem;
                     margin-bottom: 0.625rem;
 
                     .item {
                         margin-bottom: 0.875rem;
                     }
+                    max-height:unset;
+                }
+                .filter-options-details {
+                    border-top: 1px solid @border_color;
+                    border-bottom: none;
                 }
             }
         }
@@ -743,10 +758,11 @@
             .sidebar {
                 .block.filter {
                     .filter-options-title {
+                        padding-top: 3rem;
                         &::after {
-                            height: 0.625rem;
-                            top: 1.5rem;
-                            width: 0.688rem;
+                            height: 1.3rem;
+                            width: 1.3rem;
+                            top: 3rem;
                         }
                     }
                 }
