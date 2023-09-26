@@ -1,7 +1,6 @@
 .main_wrapper {
     margin: 0 auto;
-    max-width: 130rem;
-    padding: 0 1.3rem;
+    padding: 0 7rem;
     width: 100%;
     .product_attributes {
         overflow-x: scroll;
@@ -27,10 +26,10 @@
                     padding: 1.7rem 3rem;
                     font-size: 16px;
                     font-weight: 600;
-                    text-align: center;
+                    text-align: left;
                 }
                 .td_first {
-                    width: 20%;
+                    width: 25%;
                     text-transform: capitalize;
                     text-align: left !important;
                 }
@@ -43,6 +42,7 @@
 }
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .main_wrapper {
+        padding: 0 1.6rem !important;
         .product_attributes {
             table {
                 tr {
@@ -55,5 +55,10 @@
                 }
             }
         }
+    }
+}
+@media only screen and (max-width: 1400px) and  (min-width: 768px) {
+    .main_wrapper {
+        padding: 0 2rem !important;
     }
 }

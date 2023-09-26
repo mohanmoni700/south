@@ -34,9 +34,13 @@ $notifyText = __('NOTIFY WHEN BACK IN STOCK');
         title="<?= $block->escapeHtml($notifyText) ?>" class="action alert notifyme_button">
         <span><?= $block->escapeHtml($notifyText) ?></span>
 </a>
+    </div>
+</div>
+<?php endif; ?>
+</div>
 <div id="modal">
     <div class="modal-body-content">
-    <form name="login_form" action="<?= $block->getUrl('notifyme/index/index')?>" method="post" role="form">
+    <form name="login_form" action="<?= $block->getUrl('outofstock/productalert/save')?>" method="post" role="form">
             <div class="modal-body">
                 <div class="form-group">
                       <input type="text" class="form-control" id="Full Name" placeholder="Full Name">
@@ -46,12 +50,12 @@ $notifyText = __('NOTIFY WHEN BACK IN STOCK');
                       <input type="email" class="form-control" id="email" placeholder="Email Id">
                 </div>
             </div>
-          </form>
+            <div class="modal-notify-buttons">
+                <button class="action-secondary-cancel" type = "button">Cancel</button>
+                <button class="action-secondary" type = "submit">NOTIFY ME</button>
+        </div>
+    </form>
     </div>
-</div>
-    </div>
-</div>
-<?php endif; ?>
 </div>
 
 
@@ -66,28 +70,14 @@ $notifyText = __('NOTIFY WHEN BACK IN STOCK');
             responsive: true,
             title: 'Remind me when the product is back In Stock!',
             modalClass: 'small-modal',
-            buttons: [
-                {
-            text: $.mage.__('Cancel'),
-            class: 'action-secondary-cancel',
-            click: function () {
-                this.closeModal();
-            }
-        },
-        {
-            text: $.mage.__('NOTIFY ME'),
-            class: 'action-secondary',
-            type: 'submit',
-            click: function () {
-                this.closeModal();
-            }
-        }
-        ],
         };
 
         var popup = modal(options, $('#modal'));
         $(".notifyme_button").click(function() {
             $('#modal').modal('openModal');
+        });
+        $(".action-secondary-cancel").click(function() {
+            $('#modal').modal('closeModal');
         });
     });
 </script>

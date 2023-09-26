@@ -55,7 +55,7 @@
 .small-modal {
     .modal-inner-wrap {
         width: 33% !important;
-        height: 39% !important;
+        height: 40rem !important;
         .modal-header {
             padding: 6rem 6rem 1rem 6rem;
             .action-close {
@@ -63,7 +63,8 @@
             }
             h1{
                 font-size: 2.8rem;
-                font-family: @font-family-name__secondary;
+                font-family: quicksand;
+                font-weight: 500;;
                 white-space: revert;
                 text-align: center;
                 line-height: 3.5rem;
@@ -76,12 +77,15 @@
                 .modal-body-content {
                     form{
                         .modal-body {
-                            padding: 0rem 2rem;
+                            padding: 0rem 4rem;
                             .form-group {
-                                margin-bottom: 1rem;
+                                margin-bottom: 2.4rem;
                                 input {
-                                    border: 1px solid #6D6D6D;
-                                    border-radius: 0.5rem;
+                                    border: 1px solid #cdcdcd;
+                                    padding-left: 2rem;
+                                    &:hover {
+                                        border-color:#cdcdcd !important ;
+                                    }
                                 }
                             }
                         }
@@ -90,6 +94,9 @@
             }
         }
         .modal-footer {
+            display: none;
+        }
+        .modal-notify-buttons {
             border: none !important;
             text-align: center;
             display: flex;
@@ -104,9 +111,12 @@
         border: 1px solid #000000;
         border-radius: 6rem;
         height: 4rem;
+        width: 35%;
+        font-weight: 400 !important;
         &:hover {
             background: transparent linear-gradient(148deg, #229B62 0%, #346DB0 100%);
             color: #FFFFFF;
+            border: unset;
         }
         }
 
@@ -136,7 +146,7 @@
 }
 }
 
-@media only screen and (max-width: 640px) {
+@media only screen and (max-width: 768px) {
 .small-modal {
     left: 0rem !important;
     .modal-inner-wrap {
@@ -145,7 +155,7 @@
         position: absolute !important;
         bottom: 0rem;
         .modal-header {
-            padding: 2rem 2rem 0rem 2rem;
+            padding: 3rem 2rem 2rem 2rem !important;
             .action-close {
                 display: none;
             }
@@ -156,8 +166,25 @@
             }
 
         }
-        .modal-footer {
-            padding: 0rem 4rem 2rem 3rem !important;
+        .modal-content{
+            #modal {
+                .modal-body-content {
+                    form {
+                        .modal-body {
+                            padding: 0rem 2rem !important;
+                        }
+                        .modal-notify-buttons {
+                            .action-secondary {
+                                white-space: nowrap;
+                                width: 50%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .modal-notify-buttons {
+            padding: 0rem 4rem 0rem 3rem !important;
             .action-secondary {
             border: none;
             background: transparent linear-gradient(148deg, #229B62 0%, #346DB0 100%);
