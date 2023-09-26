@@ -130,7 +130,6 @@
         $(document).ready(function() {
             var productPrice = <?= $productPrice ?>;
             var $qtyInput = $('#qty');
-            console.log($qtyInput);
             var $totalPrice = $('#Product_price_grouped');
             $qtyInput.on('change paste keyup', function() {
                 var quantity = parseInt($qtyInput.val()) || 0;
