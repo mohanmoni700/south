@@ -10,8 +10,8 @@
         $doc_expired = $_helperB2b->getExpiryMsg();
         $IsFinanceVerified=$_helperB2b->getIsFinanceVerified();
 ?>
-<?php if ($_product->isSaleable()):?>
     <?php $productPrice = $_product->getPrice(); ?>
+<?php if ($_product->isSaleable()):?>
 <?php if ($_product->getTypeId() == \Magento\Catalog\Model\Product\Type::TYPE_SIMPLE) :?>
 <div class="box-tocart">
     <?php if ($showCart): ?>

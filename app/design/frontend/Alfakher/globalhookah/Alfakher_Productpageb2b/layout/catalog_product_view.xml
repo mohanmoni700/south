@@ -19,6 +19,9 @@
     <move element="view.details.link" destination="product.info.price" after="product.info.review"/>
     <referenceContainer name="product.info.main">
             <container name="col1" htmlTag="div" htmlClass="product column-1" after="-" />
+            <container name="col3" htmlTag="div" htmlClass="product column-3" before="-" />
+             <block class = "Alfakher\Productpageb2b\Block\Product\ViewDetailRenderer" name="product.infoBrand.attributes" template="Alfakher_Productpageb2b::product/view/brand_attribute.phtml"  />
+
     </referenceContainer>
 
         <referenceContainer name="content.aside">
@@ -27,6 +30,8 @@
         </referenceContainer>
       <move element="product.info.description" destination="col1" after="product.info.price" />
       <move element="product.infoContent.attributes" destination="col2" before="catalog.product.related" />
+      <move element="product.infoBrand.attributes" destination="col3" before="-" />
+
       <move element="product.infoContent.attributes" destination="page.wrapper" after="main.content"/>
 
 

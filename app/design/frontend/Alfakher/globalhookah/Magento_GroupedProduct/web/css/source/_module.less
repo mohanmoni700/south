@@ -220,6 +220,7 @@
     }
 }
 .box-tocart {
+    border-bottom: 1px solid #C7D2EC;
     .fieldset {
         display: flex;
         align-items: center;
@@ -261,11 +262,12 @@
 }
 
 .table-variant-row {
+    height: 5rem;
     background: transparent linear-gradient(153deg, #229B62 0%, #346DB0 100%) 0% 0% no-repeat padding-box;
     .variant.col.item {
-        width: 60rem;
+        width: 45rem;
     }
-    .variant_unit {
+    .variant-unit {
         white-space:nowrap;
     }
     td {
@@ -276,6 +278,11 @@
 }
 
 .product-info-main {
+    .product.attribute.sku {
+        .type {
+            font-size: 1.6rem !important;
+        }
+    }
     .product.attribute.sku:before {
         content: unset !important;
     }
@@ -283,17 +290,23 @@
         display: flex !important;
         justify-content: space-between !important;
         align-items: center;
+        margin-bottom: 2.4rem;
         .availability {
             color: #316bb2;
             font-weight: 600;
+            font-size: 2rem !important;
+        }
+        .stock {
+            font-size: 2rem !important;
         }
     }
     .stock.unavailable {
         display: flex !important;
         justify-content: space-between !important;
         align-items: center;
+        margin-bottom: 2.4rem;
         span {
-            font-size: 1.3rem;
+            font-size: 1.6rem;
         }
     }
     .divider{
@@ -302,18 +315,18 @@
      }
     .product.attribute.sku {
         .type {
-            font-size: 1.2rem !important;
+            font-size: 1.6rem !important;
         }
     }
     .product-info-stock-sku {
         .sku {
             .value {
                 color: #6D6D6D !important;
-                font-size: 1.2rem !important;
+                font-size: 1.6rem !important;
                 vertical-align: unset !important;
             }
             .type {
-                font-size: 1.2rem;
+                font-size: 1.6rem;
             }
         }
     }
@@ -365,6 +378,7 @@ display: none;
     .Description-product-page {
         font-size: 20px;
         color: #316BB2;
+        font-weight: 600;
     }
     .Description-product-page::after {
         content: "";

@@ -40,6 +40,40 @@
         }
     }
 }
+.product-info-main {
+    .page-title-wrapper.product {
+        display: none;
+            }
+            .product.column-3 {
+                .main_wrapper_brand {
+                    display: flex;
+                    flex-direction: column;
+                    color: var(--unnamed-color-316bb2);
+                    .product_brand {
+                        text-align: left;
+                        font-size:1.6rem;
+                        font-weight: 600;
+                        font-style: @font-family__base_secondary;
+                        color: #316BB2;
+                        text-transform: uppercase;
+                        opacity: 1;
+                        margin-bottom: 1rem;
+                    }
+                    .product_heading {
+                        color: var(--unnamed-color-000000);
+                        text-align: left;
+                        font-weight: bold;
+                        font-size: 3.5rem;
+                        font-family:  @font-family__base_secondary;
+                        color: #000000;
+                        text-transform: capitalize;
+                        opacity: 1;
+                        margin-bottom: 2rem;
+
+                    }
+                }
+            }
+}
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .main_wrapper {
         padding: 0 1.6rem !important;
