@@ -42,7 +42,7 @@
                     <div class="actions">
                     <div class = "Product_grouped_totals">
                         <span>Total</span>
-                        <span id = "Product_price_grouped">$<?= $block->escapeHtml($productPrice) ?></span>
+                        <span id="Product_price_grouped">$<?= number_format($productPrice, 2) ?></span>
                     </div>
                         <button type="submit"
                                 title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
@@ -128,12 +128,12 @@
 <script type="text/javascript">
     require(['jquery'], function($) {
         $(document).ready(function() {
-            var productPrice = <?= $productPrice ?>;
-            var $qtyInput = $('#qty');
-            var $totalPrice = $('#Product_price_grouped');
+            let productPrice = <?= $productPrice ?>;
+            let $qtyInput = $('#qty');
+            let $totalPrice = $('#Product_price_grouped');
             $qtyInput.on('change paste keyup', function() {
-                var quantity = parseInt($qtyInput.val()) || 0;
-                var totalPrice = quantity * productPrice;
+                let quantity = parseInt($qtyInput.val()) || 0;
+                let totalPrice = quantity * productPrice;
                 $totalPrice.text(totalPrice.toFixed(2));
             });
         });
