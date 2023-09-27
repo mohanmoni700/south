@@ -1,0 +1,34 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+/**
+ * Product additional attributes template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Attributes
+ */
+?>
+<?php
+    $_helper = $this->helper(Magento\Catalog\Helper\Output::class);
+    $_product = $block->getProduct();
+    $attributeCodes = 'product_brand';
+?>
+
+<div class ="main_wrapper_brand">
+<?php if ($attributeValue = $_product->getData($attributeCodes) !== null) :?>
+      <span class = "product_brand">
+        <?php $attributeValue = $_product->getData($attributeCodes); ?>
+        <?php if ($attributeValue !== null && $attributeValue !== '') :?>
+            <?= /* @noEscape */  $attributeValue; ?>
+        </span>
+        <?php endif; ?>
+    <?php endif; ?>
+    <?php if($_product !== null): ?>
+        <?php $productName = $_product->getName(); ?>
+        <h1 class = "product_heading"><?= /* @noEscape */  $productName; ?></h1>
+        <?php endif ?>
+</div>
+
+
