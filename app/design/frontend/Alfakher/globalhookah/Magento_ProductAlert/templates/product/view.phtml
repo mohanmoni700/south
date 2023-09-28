@@ -7,6 +7,7 @@
 <?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php /* @var $block \Magento\ProductAlert\Block\Product\View */?>
 <?php
+$productId = $block->getCurrentProductId();
 $notifyText = __('NOTIFY WHEN BACK IN STOCK');
 ?>
 <div class="product alert <?= $block->getHtmlClass() ?>">
@@ -40,14 +41,16 @@ $notifyText = __('NOTIFY WHEN BACK IN STOCK');
 </div>
 <div id="modal" style = "display:none;">
     <div class="modal-body-content">
-    <form name="login_form" action="<?= $block->getUrl('outofstock/productalert/save')?>" method="post" role="form">
+    <form name="login_form"
+    action="<?= $block->getUrl("outofstock/productalert/save/", ['product_id' => $productId])?>"
+    method="post" role="form">
             <div class="modal-body">
                 <div class="form-group">
-                      <input type="text" class="form-control" id="Full Name" placeholder="Full Name">
+                      <input type="text" class="form-control" name="name" id="Full Name" placeholder="Full Name">
                 </div>
 
                 <div class="form-group">
-                      <input type="email" class="form-control" id="email" placeholder="Email Id">
+                      <input type="email" class="form-control" name="email" id="email" placeholder="Email Id">
                 </div>
             </div>
             <div class="modal-notify-buttons">
