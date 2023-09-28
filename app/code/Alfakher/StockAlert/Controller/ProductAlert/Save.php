@@ -121,8 +121,6 @@ class Save implements \Magento\Framework\App\Action\HttpPostActionInterface
             }
             return $resultRedirect->setPath('catalog/product/view', ['id' => $productId]);
         } catch (\Exception $e) {
-            var_dump($e->getMessage());
-            die();
             $this->messageManager->addErrorMessage(__('An error occurred while saving the subscription.'));
         }
         return $resultRedirect->setPath('*/*/');
