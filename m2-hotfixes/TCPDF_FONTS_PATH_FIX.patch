@@ -1,0 +1,35 @@
+diff --git a/vendor/tecnickcom/tcpdf/include/tcpdf_fonts.php b/vendor/tecnickcom/tcpdf/include/tcpdf_fonts.php
+index a71c84b7e..854d10a5d 100644
+--- a/vendor/tecnickcom/tcpdf/include/tcpdf_fonts.php
++++ b/vendor/tecnickcom/tcpdf/include/tcpdf_fonts.php
+@@ -1523,10 +1523,10 @@ class TCPDF_FONTS {
+ 	 */
+ 	public static function _getfontpath() {
+ 		if (!defined('K_PATH_FONTS') AND is_dir($fdir = realpath(dirname(__FILE__).'/../fonts'))) {
+-			if (substr($fdir, -1) != '/') {
+-				$fdir .= '/';
+-			}
+-			define('K_PATH_FONTS', $fdir);
++            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
++            $directory = $objectManager->get('\Magento\Framework\Filesystem\DirectoryList');
++            $rootPath  =  $directory->getPath('pub');
++            define ('K_PATH_FONTS', $rootPath.'/media/tcpdf/fonts/');
+ 		}
+ 		return defined('K_PATH_FONTS') ? K_PATH_FONTS : '';
+ 	}
+diff --git a/vendor/tecnickcom/tcpdf/tcpdf_autoconfig.php b/vendor/tecnickcom/tcpdf/tcpdf_autoconfig.php
+index 6ec9ce83b..6a655d734 100644
+--- a/vendor/tecnickcom/tcpdf/tcpdf_autoconfig.php
++++ b/vendor/tecnickcom/tcpdf/tcpdf_autoconfig.php
+@@ -73,7 +73,10 @@ if (!defined('K_PATH_MAIN')) {
+ }
+ 
+ if (!defined('K_PATH_FONTS')) {
+-	define ('K_PATH_FONTS', K_PATH_MAIN.'fonts/');
++    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
++    $directory = $objectManager->get('\Magento\Framework\Filesystem\DirectoryList');
++    $rootPath  =  $directory->getPath('pub');
++    define ('K_PATH_FONTS', $rootPath.'/media/tcpdf/fonts/');
+ }
+ 
+ if (!defined('K_PATH_URL')) {
