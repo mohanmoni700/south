@@ -12,6 +12,7 @@ use Magento\Framework\Data\Form\FormKey\Validator;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Alfakher\StockAlert\Helper\Data;
 use Magento\Framework\Message\ManagerInterface;
+use Magento\Framework\App\Request\Http;
 
 class Save implements \Magento\Framework\App\Action\HttpPostActionInterface
 {
@@ -44,6 +45,10 @@ class Save implements \Magento\Framework\App\Action\HttpPostActionInterface
      * @var ProductAlertStockGuestUserRepository
      */
     private ProductAlertStockGuestUserRepository $productAlertRepository;
+    /**
+     * @var ResultFactory
+     */
+    private $resultFactory;
 
     /**
      * Save Controller
@@ -54,6 +59,7 @@ class Save implements \Magento\Framework\App\Action\HttpPostActionInterface
      * @param ProductAlertStockGuestUserInterface $guestSubscriptionDataFactory
      * @param ProductAlertStockGuestUserRepository $productAlertRepository
      * @param Data $helper
+     * @param ResultFactory $resultFactory
      */
     public function __construct(
         Validator                                     $formKeyValidator,
@@ -61,7 +67,9 @@ class Save implements \Magento\Framework\App\Action\HttpPostActionInterface
         ProductAlertStockGuestUserRepositoryInterface $guestSubscriptionRepository,
         ProductAlertStockGuestUserInterface           $guestSubscriptionDataFactory,
         ProductAlertStockGuestUserRepository          $productAlertRepository,
-        Data                                          $helper
+        Data                                          $helper,
+        ResultFactory                                 $resultFactory,
+        \Magento\Framework\App\Request\Http           $request
     ) {
         $this->formKeyValidator = $formKeyValidator;
         $this->messageManager = $messageManager;
@@ -69,6 +77,8 @@ class Save implements \Magento\Framework\App\Action\HttpPostActionInterface
         $this->guestSubscriptionRepository = $guestSubscriptionRepository;
         $this->productAlertRepository = $productAlertRepository;
         $this->helper = $helper;
+        $this->resultFactory = $resultFactory;
+        $this->request = $request;
     }
 
     /**
@@ -80,16 +90,17 @@ class Save implements \Magento\Framework\App\Action\HttpPostActionInterface
     public function execute()
     {
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-        if (!$this->formKeyValidator->validate($this->getRequest())) {
+        $this->request->getPostValue();
+        if (!$this->formKeyValidator->validate($this->request)) {
             $this->messageManager->addErrorMessage(__('Invalid form key. Please try again.'));
             return $resultRedirect->setPath('*/*/');
         }
 
-        $name = $this->getRequest()->getPost('name');
-        $email = $this->getRequest()->getPost('email');
+        $name = $this->request->getParam('name');
+        $email = $this->request->getParam('email');
         $storeId = $this->helper->getStoreId();
         $websiteId = $this->helper->getWebsiteId();
-        $productId = $this->helper->getProductId();
+        $productId = $this->request->getParam('product_id');
 
         $data = [
             'name' => $name,
@@ -100,7 +111,7 @@ class Save implements \Magento\Framework\App\Action\HttpPostActionInterface
             'status' => 1
         ];
         try {
-            $productAlert = $this->productAlertRepository->get($email, $name, $productId);
+            $productAlert = $this->productAlertRepository->get($email, $name, (int)$productId);
             if ($productAlert !== null) {
                 $this->messageManager->addSuccessMessage(__('You are already subscribed to alerts for this product.'));
             } else {
@@ -110,6 +121,8 @@ class Save implements \Magento\Framework\App\Action\HttpPostActionInterface
             }
             return $resultRedirect->setPath('catalog/product/view', ['id' => $productId]);
         } catch (\Exception $e) {
+            var_dump($e->getMessage());
+            die();
             $this->messageManager->addErrorMessage(__('An error occurred while saving the subscription.'));
         }
         return $resultRedirect->setPath('*/*/');

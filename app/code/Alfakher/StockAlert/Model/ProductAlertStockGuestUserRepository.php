@@ -7,7 +7,7 @@ namespace Alfakher\StockAlert\Model;
 use Alfakher\StockAlert\Api\Data\ProductAlertStockGuestUserInterface;
 use Alfakher\StockAlert\Api\ProductAlertStockGuestUserRepositoryInterface;
 use Alfakher\StockAlert\Model\ResourceModel\ProductAlertStockGuestUser as ProductAlertStockGuestUserResource;
-use Alfakher\StockAlert\Model\ResourceModel\ProductAlertStockGuestUser\Collection as CollectionFactory;
+use Alfakher\StockAlert\Model\ResourceModel\ProductAlertStockGuestUser\CollectionFactory as CollectionFactory;
 use Alfakher\StockAlert\Model\ProductAlertStockGuestUser;
 use Magento\Framework\Exception\AlreadyExistsException;
 use Magento\Framework\Exception\NoSuchEntityException;
@@ -87,6 +87,6 @@ class ProductAlertStockGuestUserRepository implements ProductAlertStockGuestUser
             return $collection->getFirstItem();
         }
 
-        throw new NoSuchEntityException(__('Product alert entry not found.'));
+        return null;
     }
 }

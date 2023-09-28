@@ -57,7 +57,7 @@ class Data
      *
      * @return mixed
      */
-    public function getProductId(): mixed
+    public function getProductId(): ?string
     {
         return $this->request->getParam('product_id');
     }
