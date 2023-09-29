@@ -8,6 +8,7 @@
 <?php /* @var $block \Magento\ProductAlert\Block\Product\View */?>
 <?php
 $productId = $block->getCurrentProductId();
+$_product = $block->getProduct();
 $notifyText = __('NOTIFY WHEN BACK IN STOCK');
 ?>
 <div class="product alert <?= $block->getHtmlClass() ?>">
@@ -26,10 +27,12 @@ $notifyText = __('NOTIFY WHEN BACK IN STOCK');
 </div>
 <?php else: ?>
     <div class="actions">
+    <?php if (isset($_product->isSaleable)):?>
     <div class = "Product_grouped_totals">
         <span>Total</span>
         <span id = "Product_price_grouped">$0.00</span>
     </div>
+    <?php endif; ?>
     <div class = "product_notify_me">
     <a
         title="<?= $block->escapeHtml($notifyText) ?>" class="action alert notifyme_button">
@@ -46,11 +49,13 @@ $notifyText = __('NOTIFY WHEN BACK IN STOCK');
     method="post" role="form">
             <div class="modal-body">
                 <div class="form-group">
-                      <input type="text" class="form-control" name="name" id="Full Name" placeholder="Full Name">
+                      <input type="text" class="form-control" name="name" id="Full Name"
+                       placeholder="Full Name"  data-validate='{"required":true}'>
                 </div>
 
                 <div class="form-group">
-                      <input type="email" class="form-control" name="email" id="email" placeholder="Email Id">
+                      <input type="email" class="form-control" name="email" id="email"
+                       placeholder="Email Id" data-validate='{"required":true, "validate-email":true}'>
                 </div>
             </div>
             <div class="modal-notify-buttons">
@@ -81,6 +86,24 @@ $notifyText = __('NOTIFY WHEN BACK IN STOCK');
         });
         $(".action-secondary-cancel").click(function() {
             $('#modal').modal('closeModal');
+        });
+    });
+</script>
+<script>
+    require([
+        'jquery',
+        'mage/mage'
+    ], function($) {
+        $(document).ready(function() {
+            var dataForm = $('#login_form');
+            dataForm.mage('validation', {});
+
+            dataForm.submit(function(event) {
+                var isValid = dataForm.valid();
+                if (!isValid) {
+                    event.preventDefault(); // Prevent form submission if validation fails
+                }
+            });
         });
     });
 </script>

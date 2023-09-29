@@ -125,6 +125,7 @@
         }
     }
 </script>
+<?php if ($_product->getTypeId() == \Magento\Catalog\Model\Product\Type::TYPE_SIMPLE) :?>
 <script type="text/javascript">
     require(['jquery'], function($) {
         $(document).ready(function() {
@@ -139,3 +140,4 @@
         });
     });
 </script>
+<?php endif; ?>
