@@ -51,19 +51,19 @@
         }
     }
     .viewingproducts {
-        bottom: 60px;
+        bottom: 5rem;
         left: 0;
         margin: 0 auto;
         position: absolute;
-        right: 0;
+        right: 12rem;
         text-align: center;
     }
     .page-wrapper {
         #amasty-shopby-product-list {
-            padding-bottom: 40px;
+            padding-bottom: 7rem;
             position: relative;
             @media only screen and (max-width: 767px) {
-                padding-bottom: 65px;
+                padding-bottom: 4rem;
             }
         }
         .amscroll-load-button {
@@ -753,6 +753,7 @@
         order: 5;
         .clp_faq_toggle {
             display:flex;
+            padding: 0 !important;
             &::after {
                 content:initial;
             }
@@ -761,7 +762,7 @@
             content:initial;
         }
         .clp_faq_inner {
-            padding-left:0;
+            padding: 20px 20px 0 0;
         }
         .pagebuilder-button-secondary {
             background: #FFF8E5;
@@ -770,10 +771,13 @@
             padding: 14px 27px;
             span {
                 .lib-font-size(16);
+                cursor: pointer;
             }
             &:hover {
-                background:#FFF8E5;
-                border: 1px solid #000000;
+                border: 1px solid @button_color;
+                background: @button_color;
+                color: #FFFFFF;
+                text-decoration: none;
             }
         }
         .description-heading {
@@ -782,7 +786,7 @@
             margin-bottom: 3rem;
         }
         .description-button {
-            padding:3rem 0 3rem 0 !important;
+            padding:2rem 0 3rem 0 !important;
         }
     }
 
@@ -1445,6 +1449,14 @@
 //  _____________________________________________
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .filter-options-content {
+        .items {
+            max-height: unset !important;
+        }
+    }
+    .viewingproducts {
+        right:0;
+    }
     .catalog-product-view {
         .column.main {
             .lib-vendor-prefix-display(flex);
@@ -1682,6 +1694,7 @@
     }
     .cat_tite {
         .lib-font-size(22);
+        font-weight: 800;
         margin-bottom: 0;
         text-align: left;
         margin-top: auto;
@@ -1997,7 +2010,6 @@
                 width: 300px;
                 .block-title {
                     border-bottom: none;
-                    font-family: @montserrat_regular;
                     line-height: 1.3;
                     margin: 0;
                     &::before {
@@ -2255,9 +2267,9 @@
                     }
                 }
                 .category-banner-image {
-                    padding: 2rem 2rem 0 2rem;
+                    padding: 0 0 0 2rem;
                     img {
-                        border-radius: 1.5rem;
+                        border-radius: 1rem;
                     }
                 }
             }
@@ -2266,7 +2278,6 @@
                 position: relative;
             }
             .breadcrumbs {
-                margin: 30px auto;
                 order: 1;
             }
             .shorting_main {
@@ -2347,14 +2358,12 @@
                         .lib-css(color, @color-black);
                         .lib-css(cursor, pointer);
                         .lib-css(line-height, @indent__base);
-                        border-top: 1px solid @border_color;
                         font-size: 16px;
                         margin: 0 0 (@indent__base) 0;
                         padding-top: @indent__base;
                         position: relative;
                         &::after {
-                            background-size: contain;
-                            background: url('@{baseDir}images/select_arrow.svg') center no-repeat;
+                            background: url('@{baseDir}images/grey_plus.svg') center no-repeat;
                             content: '';
                             height: 12px;
                             position: absolute;
@@ -2364,7 +2373,7 @@
                             width: 13px;
                         }
                         &.rotate::after {
-                            transform: rotate(180deg);
+                            background: url('@{baseDir}images/grey_minus.svg') center no-repeat;
                         }
                     }
                     .filter-options-content {
@@ -2391,7 +2400,6 @@
         .sidebar {
             .block-title {
                 border-bottom: none;
-                font-family: @montserrat_regular;
                 line-height: 1.3;
                 margin: 0 !important;
                 &::before {
@@ -2403,7 +2411,6 @@
 
     .catalog-category-view .toolbar,
     .catalogsearch-result-index .toolbar {
-        border-bottom: 1px solid @border_color;
         margin-bottom: 0;
         padding: 0 0 @indent__base 0;
     }
@@ -2536,7 +2543,7 @@
     }
     .cat_tite {
         .lib-font-size(28);
-        font-weight: @font-weight__semibold;
+        font-weight: @font-weight__bold;
         margin-top: auto;
         margin-bottom: 0;
     }
@@ -2646,7 +2653,7 @@
         }
         .page-wrapper {
             .breadcrumbs {
-                margin-top: 0;
+                margin-top: 1rem;
                 padding: 0 15px;
                 width: 100%;
             }
@@ -2664,6 +2671,32 @@
         }
         .category-banner {
             padding: 0 15px;
+        }
+    }
+    @media only screen and (min-width: 1440px) and (max-width: 1920px) { 
+        .catalog-category-view {
+            .page-main {
+                .breadcrumbs , .category-banner{
+                    max-width: 100%;
+                    padding: 10px 72px;
+                }
+                .category-banner {
+                    grid-template-columns: 0.86fr 4fr;
+                    .site-container {
+                        width: 30rem;
+                    }
+                }
+            }
+            #maincontent {
+                max-width: 100%;
+                padding: 10px 72px;
+            }
+        }
+        .category-description {
+            [data-content-type='row'][data-appearance='contained'] {
+                max-width: 100%;
+                padding: 10px 72px;
+            }
         }
     }
     @media only screen and (max-width: 1290px) and (min-width: 1024px) {
@@ -2748,6 +2781,7 @@
                         padding: 2rem 0rem 2rem 0;
                         img {
                             border-radius: 0.5rem;
+                            width: 100%;
                         }
                     }
                 }

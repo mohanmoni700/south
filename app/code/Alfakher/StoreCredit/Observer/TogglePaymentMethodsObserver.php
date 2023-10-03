@@ -1,6 +1,7 @@
 <?php
 namespace Alfakher\StoreCredit\Observer;
 
+use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 
 class TogglePaymentMethodsObserver extends \Magento\CustomerBalance\Observer\TogglePaymentMethodsObserver
@@ -8,7 +9,7 @@ class TogglePaymentMethodsObserver extends \Magento\CustomerBalance\Observer\Tog
     /**
      * @inheritDoc
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    public function execute(Observer $observer)
     {
         if (!$this->_customerBalanceData->isEnabled()) {
             return;
