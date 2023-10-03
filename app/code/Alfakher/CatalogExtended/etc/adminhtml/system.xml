@@ -1,0 +1,13 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="catalog">
+            <group id="url" translate="label" type="text" sortOrder="950" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>URL Modification</label>
+                <field id="exclude" translate="label comment" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exclude text from URL</label>
+                    <comment>Configuration to exclude certain texts from url, separate multiple texts by each line</comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
