@@ -38,19 +38,6 @@ class ProductList
         if ($isEnabled) {
             // Modify the collection to move out-of-stock products to the bottom
             $result->getSelect()->order('is_in_stock DESC');
-            foreach ($result as $product) {
-                if ($product->getTypeId() == Configurable::TYPE_CODE) {
-                    $childProducts = $product->getTypeInstance()->getUsedProducts($product);
-                    $inStockChildProducts = array_filter($childProducts, function($childProduct) {
-                        return $childProduct->isAvailable();
-                    });
-
-                    if (!empty($inStockChildProducts)) {
-                        $result->removeItemByKey($product->getId());
-                        $result->addItem($product);
-                    }
-                }
-            }
         }
         return $result;
     }
