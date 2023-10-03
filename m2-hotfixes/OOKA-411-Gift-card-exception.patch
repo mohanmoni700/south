@@ -1,0 +1,13 @@
+diff --git a/vendor/magento/module-gift-card-graph-ql/Model/Resolver/Product/ConfigAttributes.php b/vendor/magento/module-gift-card-graph-ql/Model/Resolver/Product/ConfigAttributes.php
+index bd61efbf2..c1769d1b2 100644
+--- a/vendor/magento/module-gift-card-graph-ql/Model/Resolver/Product/ConfigAttributes.php
++++ b/vendor/magento/module-gift-card-graph-ql/Model/Resolver/Product/ConfigAttributes.php
+@@ -84,7 +84,7 @@ class ConfigAttributes implements ResolverInterface
+      * @param string $configPath
+      * @return bool
+      */
+-    private function overrideValueFromConfig(int $value, int $configValue, string $configPath) : bool
++    private function overrideValueFromConfig($value, $configValue, $configPath) : bool
+     {
+         if ($configValue) {
+             $value = $this->scopeConfig->getValue(

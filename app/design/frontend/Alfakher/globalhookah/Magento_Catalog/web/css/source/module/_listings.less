@@ -149,7 +149,7 @@
                 }
 
                 .actions-secondary {
-                    display: inline-block;
+                    display: none;
                     font-size: 1.4rem;
                     vertical-align: middle;
                     white-space: nowrap;
@@ -215,7 +215,7 @@
             }
 
             .price-box {
-                margin: @indent__s 0 20px;
+                margin: @indent__s 0 0;
                 text-align: left;
 
                 .price {
@@ -379,6 +379,10 @@
                     }
                 }
             }
+            .actions-primary {
+                text-align: left;
+                margin-top: 1rem;
+            }
         }
     }
 
@@ -534,7 +538,7 @@
     .product {
         &-item {
             &-name {
-                .lib-font-size(16);
+                .lib-font-size(14);
                 min-height: 2.875rem;
             }
             .catalog.description-item {
@@ -542,7 +546,11 @@
             }
             &-details {
                 .stock.unavailable {
-                    font-size: 0.813rem;
+                    font-size: 1.2rem;
+                    text-align: left;
+                }
+                .product-item-brand {
+                    .lib-font-size(12);
                 }
             }
         }

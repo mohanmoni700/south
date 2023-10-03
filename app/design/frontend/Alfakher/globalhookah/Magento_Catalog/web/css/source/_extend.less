@@ -1,0 +1,33 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    //  Product Lists
+    .product {
+        &-item {
+            &-name {
+                min-height: 4.6rem !important;
+            }
+        }
+    }
+}
+
+//
+//  Responsive Tablet
+//  ---------------------------------------------
+@media only screen and (max-width: 1199px) and (min-width: 768px) {
+    .product-item-name {
+        min-height: 4.6rem !important;
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .product {
+        &-item {
+            &-name {
+                min-height: 4.6rem !important;
+            }
+        }
+    }
+}

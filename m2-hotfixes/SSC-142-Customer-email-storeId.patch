@@ -1,0 +1,92 @@
+diff --git a/vendor/magento/module-customer/Model/EmailNotification.php b/vendor/magento/module-customer/Model/EmailNotification.php
+index a4f85a9c4..4e387b70b 100755
+--- a/vendor/magento/module-customer/Model/EmailNotification.php
++++ b/vendor/magento/module-customer/Model/EmailNotification.php
+@@ -109,6 +109,11 @@ class EmailNotification implements EmailNotificationInterface
+      */
+     private $emulation;
+ 
++    /**
++     * @var \Magento\Framework\App\State
++     */
++    private $state;
++
+     /**
+      * @param CustomerRegistry $customerRegistry
+      * @param StoreManagerInterface $storeManager
+@@ -137,6 +142,7 @@ class EmailNotification implements EmailNotificationInterface
+         $this->scopeConfig = $scopeConfig;
+         $this->senderResolver = $senderResolver ?? ObjectManager::getInstance()->get(SenderResolverInterface::class);
+         $this->emulation = $emulation ?? ObjectManager::getInstance()->get(Emulation::class);
++        $this->state = ObjectManager::getInstance()->get(\Magento\Framework\App\State::class);
+     }
+ 
+     /**
+@@ -178,7 +184,8 @@ class EmailNotification implements EmailNotificationInterface
+      */
+     private function emailAndPasswordChanged(CustomerInterface $customer, $email): void
+     {
+-        $storeId = $customer->getStoreId();
++        //To resolve storeId issue
++        $storeId = $this->getStoreIdByArea($customer);
+         if ($storeId === null) {
+             $storeId = $this->getWebsiteStoreId($customer);
+         }
+@@ -204,7 +211,8 @@ class EmailNotification implements EmailNotificationInterface
+      */
+     private function emailChanged(CustomerInterface $customer, $email): void
+     {
+-        $storeId = $customer->getStoreId();
++        //To resolve storeId issue
++        $storeId = $this->getStoreIdByArea($customer);
+         if ($storeId === null) {
+             $storeId = $this->getWebsiteStoreId($customer);
+         }
+@@ -229,7 +237,8 @@ class EmailNotification implements EmailNotificationInterface
+      */
+     private function passwordReset(CustomerInterface $customer): void
+     {
+-        $storeId = $customer->getStoreId();
++        //To resolve storeId issue
++        $storeId = $this->getStoreIdByArea($customer);
+         if ($storeId === null) {
+             $storeId = $this->getWebsiteStoreId($customer);
+         }
+@@ -330,7 +339,8 @@ class EmailNotification implements EmailNotificationInterface
+      */
+     public function passwordReminder(CustomerInterface $customer): void
+     {
+-        $storeId = $customer->getStoreId();
++        //To resolve storeId issue
++        $storeId = $this->getStoreIdByArea($customer);
+         if ($storeId === null) {
+             $storeId = $this->getWebsiteStoreId($customer);
+         }
+@@ -354,7 +364,8 @@ class EmailNotification implements EmailNotificationInterface
+      */
+     public function passwordResetConfirmation(CustomerInterface $customer): void
+     {
+-        $storeId = $customer->getStoreId();
++        //To resolve storeId issue
++        $storeId = $this->getStoreIdByArea($customer);
+         if ($storeId === null) {
+             $storeId = $this->getWebsiteStoreId($customer);
+         }
+@@ -412,4 +423,17 @@ class EmailNotification implements EmailNotificationInterface
+             $storeId
+         );
+     }
++
++    /**
++     * Issue Fixed - https://github.com/magento/magento2/issues/5726
++     * @param $customer
++     * @return int
++     */
++    private function getStoreIdByArea($customer)
++    {
++        if ($this->state->getAreaCode() == \Magento\Framework\App\Area::AREA_ADMINHTML) {
++            return $customer->getStoreId();
++        }
++        return $this->storeManager->getStore()->getId();
++    }
+ }
