@@ -216,9 +216,6 @@
 }
 
 @media only screen and (max-width: 1280px) {
-    .pagebuilder-column.pdp-cms-page-column-image {
-        padding: 0rem 0rem !important;
-    }
 
     .catalog-product-view .page-main-details {
         margin: unset !important;
@@ -257,9 +254,19 @@
         letter-spacing: -0.4px;
         font-weight: 600;
     }
-
-    .pagebuilder-column {
-        padding: 0rem 0rem !important;
+    .pdp-cms-block-Product-row2 {
+        .pagebuilder-column-group {
+            .pagebuilder-column {
+                padding: 0rem 0rem !important;
+            }
+        }
+    }
+    .pdp-cms-block-Product-row1 {
+        .pagebuilder-column-group {
+            .pagebuilder-column {
+                padding: 0rem 0rem !important;
+            }
+        }
     }
 }
 
@@ -350,13 +357,21 @@
     .pagebuilder-column.pdp-cms-page-column {
         padding: 0rem 5rem;
     }
-
-    .pagebuilder-column-group {
-        flex-direction: column;
+    .pdp-cms-block-Product-row2 {
+        .pagebuilder-column-group {
+            flex-direction: column;
+        }
+        .pagebuilder-column {
+            width: 100% !important;
+        }
     }
-
-    .pagebuilder-column {
-        width: 100% !important;
+    .pdp-cms-block-Product-row1 {
+        .pagebuilder-column-group {
+            flex-direction: column;
+        }
+        .pagebuilder-column {
+            width: 100% !important;
+        }
     }
 }
 
