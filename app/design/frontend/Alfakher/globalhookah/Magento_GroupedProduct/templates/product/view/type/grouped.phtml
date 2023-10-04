@@ -161,12 +161,14 @@
              <?php $sortedProducts = $block->getSortedProducts();
             ?>
             <tbody>
-            <tr>
+            <?php if ($is_mobile):?>
+            <tr class= "table-grouped-responsive">
             <th></th>
             <th></th>
             <th></th>
             <th></th>
             </tr>
+            <?php endif; ?>
             <tr class="table-variant-row col item ">
                         <td class="variant col item">Variant</td>
                         <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
@@ -252,6 +254,7 @@
                             <?php endif; ?>
                         </td>
                         <td class="col qty">
+                        <?php if ($_product->isSaleable()): ?>
                             <div class ="control totalqty price"
                              id="totalqtydrop_<?= $block->escapeHtmlAttr($_item->getId()) ?>"
                              data-product-id="<?=  $block->escapeHtmlAttr($_item->getId()) ?>"
@@ -265,6 +268,7 @@
                             <div class="bv-special-price-<?= $block->escapeHtmlAttr($_item->getId()) ?>"></div>
                             <?php /* bv_op; date : 10-2-22; End */ ?>
                             </div>
+                            <?php endif; ?>
                     </td>
                     <?php endif; ?>
                 <?php endif; ?>
