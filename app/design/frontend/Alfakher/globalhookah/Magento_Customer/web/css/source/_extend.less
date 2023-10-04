@@ -3,14 +3,20 @@
     .account {
         .nav.items {
             .nav {
+                strong {
+                    &::before {
+                        top: 1.5rem;
+                    }
+                }
+                
                 &.myaccount {
                     a,
                     strong {
                         &:before {
                             background: url('@{baseDir}images/myaccount.svg') no-repeat;
-                            height: 24px;
-                            width: 24px;
-                            top: 12px
+                            height: 2.4rem;
+                            width: 2.4rem;
+                            top: 1.2rem;
                         }
                     }
                 }
@@ -19,10 +25,46 @@
                     strong {
                         &:before {
                             background: url('@{baseDir}images/quotes.svg') no-repeat;
-                            height: 23px;
-                            width: 24px;
-                            top: 12px
+                            height: 2.3rem;
+                            width: 2.4rem;
+                            top: 1.2rem;
                         }
+                    }
+                }
+                &.frontend_mc_info {
+                    a,
+                    strong {
+                        &:before {
+                            background: url('@{baseDir}images/paymentinfo.png') no-repeat;
+                            width: 1.9rem;
+                            height: 1.9rem;
+                            background-size: contain;
+                        }
+                    }
+                    strong {
+                        &:before {
+                            filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+                        }
+                    }
+                }
+            }
+        }
+
+        .field.choice.newsletter {
+            label {
+                display: flex;
+            }
+        }
+
+        .fieldset > .field:not(.choice) {
+            margin-bottom: 2.9rem;
+        }
+
+        .my_account_b2b {
+            li {
+                &.basic_details {
+                    span {
+                        max-width: 10rem;
                     }
                 }
             }
@@ -37,9 +79,16 @@
                 max-width: 650px;
             }
         }
+
+        .account {
+            .fieldset > .field:not(.choice) {
+                margin-bottom: 2rem;
+            }
+        }
+
         .customer-account-create {
             .login-container {
-                padding: 40px 30px 40px 30px;
+                padding: 4rem 3rem 4rem 3rem;
             }
         }
         .customer-account-create,
@@ -123,9 +172,12 @@
         .account {
             .my_account_b2b {
                 li {
-                    width: 33.33%;
+                    width: 50%;
                     > a {
                         width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
                     }
                 }
             }
@@ -174,6 +226,18 @@
                 float: none !important;
             }
         }
+
+        .my_account_b2b {
+            li {
+                width: 50%;
+                > a {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
     }
     .modals-wrapper {
         .modal-popup.popup-reorder-quote {
@@ -215,6 +279,13 @@
                 }
             }
         }
+
+        .columns {
+            .column.main {
+                padding: 0;
+            }
+        }
+
         .field.choice.newsletter {
             label {
                 .lib-vendor-prefix-display(flex);
@@ -394,7 +465,7 @@
                 float: none;
             }
             .field.choice.newsletter {
-                margin-top: 0;
+                margin-block: 0;
             }
             .login-container {
                 .actions-toolbar {
@@ -756,11 +827,7 @@
                     }
                 }
             }
-            .columns {
-                .column.main {
-                    padding: 20px 20px 30px 20px;
-                }
-            }
+
             .column.main {
                 .block:not(.widget) {
                     .block-content {
