@@ -39,7 +39,7 @@ require(['jquery',
             entry: function() {
                 $('.custom.navigation .tab-header:first-child').addClass('ui-tabs-active');
                 $('.custom.navigation .tab-header').on('hover', function() {
-                    var controls = $(this).attr('aria-controls');
+                    let controls = $(this).attr('aria-controls');
                     $(this).parents('.ui-menu-item').find('.tab-header').removeClass('ui-tabs-active');
                     $(this).addClass('ui-tabs-active');
                     $(this).parents('.ui-menu-item').find('.tabs-content').addClass('open');
