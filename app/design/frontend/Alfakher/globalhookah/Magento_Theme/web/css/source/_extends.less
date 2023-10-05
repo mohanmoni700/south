@@ -198,36 +198,45 @@
                     }
 
                     .block-minicart {
-                        right: -80px !important;
+                        right: -2rem !important;
 
                         &::after,
                         &::before {
-                            right: 80px !important;
+                            right: 2rem !important;
                         }
-                    }
+                    }  
+                }
 
-                    &.amquote-cart-wrapper {
-                        order: 1;
-                        padding-bottom: 0;
-                    }
+                .amquote-cart-wrapper {
+                    order: 1;
+                    padding-bottom: 0;
 
                     .amquote-showcart { 
                         display: flex;
-                        gap: 8px;
+                        gap: 0.8rem;
                         
                         &::before {
                             background-image: url('@{baseDir}images/quotes.svg');
-                            height: 24px;
-                            width: 24px;
+                            height: 2.4rem;
+                            width: 2.4rem;
                             margin: 0;
                         }
                         .text {
                             font-size: 1.6rem;
                         }
                         .counter.qty {
-                            min-width: 18px;
-                            top: -10px;
-                            left: 7px;
+                            min-width: 1.8rem;
+                            top: -1rem;
+                            left: 0.7rem;
+                        }
+                    }
+
+                    .block-quotecart {
+                        right: -8rem !important;
+
+                        &::after,
+                        &::before {
+                            right: 8rem !important;
                         }
                     }
                 }
@@ -613,6 +622,11 @@
 
         .about-desc {
             font-size: 1.6rem;
+        }
+    }
+    .g-recaptcha{
+        >div{
+            margin: 0 auto;
         }
     }
 }
