@@ -35,6 +35,13 @@
                     <label>Guest User Document Message</label>
                 </field>
             </group>
+            <group id="my_document" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>My Documents B2B Configuration</label>
+                <field id="is_enabled" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show My Documents in MyAccount page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
         </section>
     </system>
 </config>

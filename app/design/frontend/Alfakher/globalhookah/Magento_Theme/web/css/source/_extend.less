@@ -185,9 +185,6 @@
 
                         &::before {
                             background-image: url('@{baseDir}images/quotes.svg');
-                            height: 24px;
-                            width: 24px;
-                            margin: 0;
                         }
                         .text {
                             font-size: 14px;
@@ -201,13 +198,10 @@
                 }
 
                 .right_section {
-                    padding-bottom: 10px;
-
                     .sign-in {
                         flex-direction: row;
-                        align-items: center;
                         gap: 4px;
-                        order: 2;
+                        align-items: flex-end;
 
                         .sign-up {
                             font-size: 14px;
@@ -1036,33 +1030,6 @@
     }
 }
 
-<<<<<<< HEAD
-//
-//  Desktop large
-//  _____________________________________________
-
-@media only screen and (min-width: 1440px) and (max-width: 1920px) { 
-    body {
-        .page-header {
-            .header.content {
-                max-width: 100%;
-                padding: 10px 72px;
-            }
-            .header-links-wrapper {
-                .header-links { 
-                    max-width: 100%;
-                    padding: 10px 72px;
-                } 
-            }
-        }
-    }
-
-    footer.page-footer {
-        .category-container,
-        .helpful-container {
-            .header {
-                font-size: 2.5rem;
-=======
 @media only screen and (max-width: 768px) {
     body .page-wrapper .page-header {
         .warning-section-wrapper {
@@ -1074,7 +1041,6 @@
                         width: 80% !important;
                     }
                 }
->>>>>>> 6673143c2ccbc62c0f532ea4c43564d678c74e1c
             }
         }
     }
@@ -1086,14 +1052,6 @@
 
 @media only screen and (min-width: 1024px) and (max-width: 1920px) {
     body {
-<<<<<<< HEAD
-        .about-store {
-            max-width: 100%;
-            margin: 0 72px;
-        }
-
-=======
->>>>>>> 6673143c2ccbc62c0f532ea4c43564d678c74e1c
         .bestselling-picks {
             max-width: 100%;
             margin: 0 7.2rem 7.2rem;
@@ -1114,14 +1072,6 @@
 
 @media only screen and (min-width: 1921px) {
     body {
-<<<<<<< HEAD
-        .about-store {
-            max-width: 1280px;
-            margin: 0 auto;
-        }
-        
-=======
->>>>>>> 6673143c2ccbc62c0f532ea4c43564d678c74e1c
         .bestselling-picks {
             max-width: 1280px;
             margin: 0 auto 7.2rem;
@@ -1986,15 +1936,6 @@
                         padding: 1px 3px;
                     }
                 }
-
-                .block-minicart {
-                    right: -20px !important;
-
-                    &::after,
-                    &::before {
-                        right: 20px !important;
-                    }
-                }
             }
         }
         .header-links-wrapper {
@@ -2092,23 +2033,6 @@
                 margin: 0 auto;
                 padding: 0.4rem 1rem !important;
 
-                .heading-section {
-                    h3 {
-                        margin-left: 0.6rem !important;
-                        width: fit-content;
-                    }
-                }
-            }
-        }
-    }
-
-    body .page-wrapper .page-header {
-        .warning-section-wrapper {
-            .warning-section {
-                max-width: 1280px;
-                margin: 0 auto;
-                padding: 0.4rem 1rem !important;
-    
                 .heading-section {
                     h3 {
                         margin-left: 0.6rem !important;
