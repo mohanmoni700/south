@@ -7,6 +7,7 @@
 $viewModel = $block->getViewModel();
 $actionURL = "#";
 $formDisable = 1;
+const MOBILE_NUMBER = 'Mobile Number';
 ?>
 <?php $hub_mobile_number = $block->getCustomer()->getCustomAttribute('hub_mobile_number');?>
 <?php $_company = $block->getLayout()->createBlock(\Magento\Customer\Block\Widget\Company::class) ?>
@@ -34,10 +35,6 @@ $regionProvinceLabel = $block->escapeHtml(__('Province'));
 $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLabel;
 /* End Change the region_id Label if the Country is US for State and Other for the State */
 ?>
-<?php $messageData = $block->getMessagedata(); ?>
-<?php if ($messageData['cstAccountVerified'] == 0 && $messageData['cstDetailsChanged'] == 0): ?>
-    <?php $formDisable = 0; ?>
-<?php endif; ?>
 
 <form class="form-address-edit"
       action="<?= $block->escapeUrl($this->getUrl('customerb2b/account/basicPost')) ?>"
@@ -59,13 +56,13 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
         <div class="field">
             <label for="email_address" class="label"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
             <div class="control">
-                <input type="email" 
-                        name="email" 
-                        id="email_address" 
+                <input type="email"
+                        name="email"
+                        id="email_address"
                         placeholder="<?php /* @noEscape */ __('Email') ?>"
-                        autocomplete="off" 
-                        value="<?= /* @noEscape */ $block->escapeHtml($block->getCustomer()->getEmail()) ?>" 
-                        title="<?php /* @noEscape */ __('Email') ?>" 
+                        autocomplete="off"
+                        value="<?= /* @noEscape */ $block->escapeHtml($block->getCustomer()->getEmail()) ?>"
+                        title="<?php /* @noEscape */ __('Email') ?>"
                         class="input-text"
                         disabled="disabled"
                         readonly="readonly"/>
@@ -85,20 +82,20 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
             <div class="control">
                 <?= $block->getCountryHtmlSelect() ?>
             </div>
-        </div> 
+        </div>
         <div class="field">
             <label for="hub_mobile_number" class="label">
-                <span><?= $block->escapeHtml(__('Mobile Number')) ?>                    
+                <span><?= $block->escapeHtml(__(MOBILE_NUMBER)) ?>
                 </span>
             </label>
-            <?php $hub_mobile_number = $hub_mobile_number ? $hub_mobile_number->getValue() : "" ?> 
+            <?php $hub_mobile_number = $hub_mobile_number ? $hub_mobile_number->getValue() : "" ?>
             <div class="control">
-                <input type="text" 
-                        name="hub_mobile_number" 
-                        id="hub_mobile_number" 
-                        placeholder="<?= $block->escapeHtml(__('Mobile Number')) ?>"
-                        value="<?= /* @noEscape */ $hub_mobile_number ?>" 
-                        title="<?php /* @noEscape */ __('Mobile Number') ?>" 
+                <input type="text"
+                        name="hub_mobile_number"
+                        id="hub_mobile_number"
+                        placeholder="<?= $block->escapeHtml(__(MOBILE_NUMBER)) ?>"
+                        value="<?= /* @noEscape */ $hub_mobile_number ?>"
+                        title="<?php /* @noEscape */ __(MOBILE_NUMBER) ?>"
                         class="input-text" />
             </div>
         </div>
@@ -210,7 +207,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                             title="<?= /* @noEscape */ $block->getAttributeData()->getFrontendLabel('county') ?>"
                             id="county"
                             class="input-text <?= $escaper->escapeHtmlAttr($_county) ?>"/>
-        </div> 
+        </div>
 
 
         <?php if ($viewModel->addressIsVatAttributeVisible()): ?>
@@ -230,12 +227,12 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
             </div>
         <?php endif; ?>
 
-    
+
         <div class="field choice newsletter">
             <input type="checkbox"
                    name="is_subscribed"
                    title="<?= $block
-                    ->escapeHtmlAttr(__('Would you like to join our 
+                    ->escapeHtmlAttr(__('Would you like to join our
                     Monthly Mailing list for discounts and promotions?')) ?>"
                    value="1"
                    id="is_subscribed"
@@ -243,7 +240,7 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
                    class="checkbox"/>
             <label for="is_subscribed" class="label">
                 <span><?= $block->
-                escapeHtml(__('Would you like to join our Monthly 
+                escapeHtml(__('Would you like to join our Monthly
                 Mailing list for discounts and promotions?')) ?></span>
             </label>
         </div>
@@ -284,63 +281,28 @@ $_region = ($block->getCountryId() == 'US')?$regionStateLabel:$regionProvinceLab
 </script>
 <?php
     $scriptString = <<<script
-        require(['jquery','Magento_Customer/js/customer-data','jquery/ui','mage/mage'], function($,customerData){
-    script;
+        require(['jquery', 'Magento_Customer/js/customer-data','jquery/ui','mage/mage'], function($,customerData){
+script;
 ?>
 <?php if ($formDisable == 1): ?>
     <?php
         $scriptString .= <<<script
             $(document).ready(function(){
-                $("#form-validate :input").prop("disabled", true);
                 setTimeout(function(){
-                    $("#form-validate :input").prop("disabled", true);
-                }, 5000);
-            });
-        script;
-    ?>
-<?php endif; ?>
-<?php
-    $scriptString .= <<<script
-            $(document).ready(function(){
-                var sections = ['customer'];
-                customerData.reload(sections, true);
-                jQuery("#form-validate #country").attr("disabled","true");
+                    $("#form-validate :input:not(:checkbox):not(:button)").prop("disabled", true);
+                }, 1000);
             });
 
             //right before the form submits, we re-enable the fields, to make them submit.
             $("#form-validate").submit(function( event ) {
                 if($('#form-validate').valid()){
                     $("body").trigger('processStart');
-                    $("#country").prop( "disabled", false );
+                    $("#form-validate :input").prop("disabled", false);
+                    $("#form-validate :input:is(#telephone)").prop("disabled", false);
                 }
-            });
-
-
-            $("#country").change(function () {
-                onCountryChange();
             });
         });
-        function onCountryChange() {
-            require(['jquery'], function($){
-                var countryval = $('#country option:selected').val();
-                if(countryval=='US'){
-                    $('#region_id_label').children('span').html("$regionStateLabel");
-                    $('#region_id').attr('placeholder',"$regionStateLabel");
-                    $('.vat-tax-id').show();
-                    $('.tin-number').show();
-                    $('.tobacco-permit-number').show();
-                }else{
-                    $('#region_id_label').children('span').html("$regionProvinceLabel");
-                    $('#region').attr('placeholder',"$regionProvinceLabel");
-                    $('.vat-tax-id').hide();
-                    $('#vat_tax_id').val('');
-                    $('.tin-number').hide();
-                    $('#tin_number').val('');
-                    $('.tobacco-permit-number').hide();
-                    $('#tobacco_permit_number').val('');
-                }
-            });
-        }
-    script;
-?>
+script;
+    ?>
+<?php endif; ?>
 <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>

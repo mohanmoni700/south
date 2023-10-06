@@ -42,7 +42,9 @@ $_postName = $block->escapeHtml($_post->getTitle());
                     <span class="posted-icon">
                         <img src="<?= $block->getViewFileUrl('images/calender-icon.svg'); ?>" alt="Calender" />
                     </span>
-                    <span class="value"><?= $block->escapeHtml($_post->getPublishDate()) ?></span>
+                    <span class="value">
+                        <?= $block->escapeHtml(date('d/m/Y', strtotime($_post->getModifiedTime()))) ?>
+                    </span>
                 </div>
             <?php } ?>
              <!-- get Author name start -->
@@ -65,7 +67,7 @@ $_postName = $block->escapeHtml($_post->getTitle());
                     </div>
                     <?php } ?>
                 <?php } ?>
-            <!-- End Author name -->                        
+            <!-- End Author name -->
         </div>
         <div class="post-title-holder clearfix">
             <h2 class="post-title">
