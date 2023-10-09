@@ -81,14 +81,14 @@ use Magento\Framework\App\Action\Action;
                                                     <?php if ($_item->isSaleable()): ?>
                                                         <?php $postParams = $block->getAddToCartPostParams($_item); ?>
                                                         <form data-role="tocart-form" data-product-sku="
-                                                        <?= $block->escapeHtml($_item->getSku()) ?>" 
+                                                        <?= $block->escapeHtml($_item->getSku()) ?>"
                                                         action="<?= $block->escapeUrl($postParams['action']) ?>"
                                                          method="post">
                                                             <input type="hidden" name="product" value="
-                                                            <?= 
+                                                            <?=
                                                             $block->escapeHtmlAttr($postParams['data']['product']) ?>
                                                             ">
-                                                            <input type="hidden" 
+                                                            <input type="hidden"
                                                             name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
                                                              value="
                                             <?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>
@@ -96,7 +96,7 @@ use Magento\Framework\App\Action\Action;
                                                             <?= $block->getBlockHtml('formkey') ?>
                                                             <?php
                                                             ?>
-                                                            <?php if ($IsFinanceVerified == 1): ?> 
+                                                            <?php if ($IsFinanceVerified == 1): ?>
                                                         <?php else: ?>
                                                          <!-- start view details btn -->
                                                             <div class="actions-primary">
@@ -111,11 +111,11 @@ use Magento\Framework\App\Action\Action;
                                                         </form>
                                                     <?php else: ?>
                                                         <?php if ($_item->isAvailable()): ?>
-                                                            <div 
+                                                            <div
                                                             class="stock available">
                                                             <span><?= $block->escapeHtml(__('In stock')) ?></span></div>
                                                         <?php else: ?>
-                                                            <div 
+                                                            <div
                                                             class="stock unavailable">
                                                             <span>
                                                                 <?= $block->escapeHtml(__('Out of stock')) ?>
@@ -126,7 +126,7 @@ use Magento\Framework\App\Action\Action;
                                                 <?php elseif (!$showCart): ?>
                                                 <div class="actions-primary">
                                                     <div class="logged-in-action">
-                                                        <a 
+                                                        <a
                                             href="<?= $block->escapeUrl($block->getUrl('customer/account/login'))
                                                          ?>">
                                                             <?= $block->escapeHtml(__('Signin / Register')) ?>
