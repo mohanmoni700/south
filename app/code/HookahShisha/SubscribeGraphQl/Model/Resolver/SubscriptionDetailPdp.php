@@ -12,7 +12,7 @@ use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magedelight\Subscribenow\Block\Catalog\Product\View\Subscription\BillingPeriod;
 use Magento\Catalog\Model\Product;
-
+use Magento\Bundle\Model\Product\Type;
 class SubscriptionDetailPdp implements ResolverInterface
 {
     /**
@@ -35,6 +35,8 @@ class SubscriptionDetailPdp implements ResolverInterface
      */
     private BillingPeriod $billingPeriod;
 
+    private Type $type;
+
     /**
      *
      * @param ProductRepositoryInterface $productRepository
@@ -46,12 +48,14 @@ class SubscriptionDetailPdp implements ResolverInterface
         ProductRepositoryInterface $productRepository,
         BillingPeriod $billingPeriod,
         FilterBuilder $filterBuilder,
+        Type $type,
         SearchCriteriaBuilder $searchCriteriaBuilder
     ) {
         $this->productRepository = $productRepository;
         $this->billingPeriod = $billingPeriod;
         $this->filterBuilder = $filterBuilder;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->type = $type;
     }
 
     /**
@@ -94,14 +98,18 @@ class SubscriptionDetailPdp implements ResolverInterface
             $finalProduct = $product;
         }
 
-        if ($finalProduct !== null) {
-            $billingPeriod = $this->getBillingPeriod($finalProduct);
+        if (isset($finalProduct)) {
 
+            //Number of child product with discount amount
+            $options = $this->type->getOptionsCollection($finalProduct);
+            $discountAmount = $options->count() * $finalProduct->getDiscountAmount();
+
+            $billingPeriod = $this->getBillingPeriod($finalProduct);
             return [
                 "is_subscription" => $finalProduct->getIsSubscription(),
                 "subscription_type" => $finalProduct->getSubscriptionType(),
                 "discount_type" => $finalProduct->getDiscountType(),
-                "discount_amount" => $finalProduct->getDiscountAmount(),
+                "discount_amount" => $discountAmount,
                 "initial_amount" => $finalProduct->getInitialAmount(),
                 "billing_period_type" => $finalProduct->getBillingPeriodType(),
                 "billing_max_cycles" => $finalProduct->getBillingMaxCycles(),
