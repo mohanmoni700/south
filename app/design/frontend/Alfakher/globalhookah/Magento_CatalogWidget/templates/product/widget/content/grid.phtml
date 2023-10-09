@@ -11,7 +11,6 @@ use Magento\Framework\App\Action\Action;
     $showCart = true;
     $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
     $showCart = $_helperB2b->isCustomerLoggedIn();
-    //$_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
     $docdata = $_helperB2b->getDocMessageData();
     $is_document_upload = $_helperB2b->getDocuments();
     $IsFinanceVerified=$_helperB2b->getIsFinanceVerified();
@@ -44,9 +43,11 @@ use Magento\Framework\App\Action\Action;
                 <ol class="product-items <?= /* @noEscape */ $type ?>">
                     <?php $iterator = 1; ?>
                     <?php foreach ($items as $_item): ?>
-                        <?= /* @noEscape */ ($iterator++ == 1) ? '<li class="product-item">' : '</li><li class="product-item">' ?>
+                        <?= /* @noEscape */ ($iterator++ == 1) ?
+                         '<li class="product-item">' : '</li><li class="product-item">' ?>
                         <div class="product-item-info">
-                            <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>" class="product-item-photo">
+                            <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"
+                             class="product-item-photo">
                                 <?= $block->getImage($_item, $image)->toHtml() ?>
                             </a>
                             <div class="product-item-details">
@@ -79,22 +80,30 @@ use Magento\Framework\App\Action\Action;
                                                 <div class="actions-primary">
                                                     <?php if ($_item->isSaleable()): ?>
                                                         <?php $postParams = $block->getAddToCartPostParams($_item); ?>
-                                                        <form data-role="tocart-form" data-product-sku="<?= $block->escapeHtml($_item->getSku()) ?>" action="<?= $block->escapeUrl($postParams['action']) ?>" method="post">
-                                                            <input type="hidden" name="product" value="<?= $block->escapeHtmlAttr($postParams['data']['product']) ?>">
-                                                            <input type="hidden" name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>" value="<?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>">
+                                                        <form data-role="tocart-form" data-product-sku="
+                                                        <?= $block->escapeHtml($_item->getSku()) ?>" 
+                                                        action="<?= $block->escapeUrl($postParams['action']) ?>"
+                                                         method="post">
+                                                            <input type="hidden" name="product" value="
+                                                            <?= 
+                                                            $block->escapeHtmlAttr($postParams['data']['product']) ?>
+                                                            ">
+                                                            <input type="hidden" 
+                                                            name="<?= /* @noEscape */ Action::PARAM_NAME_URL_ENCODED ?>"
+                                                             value="
+                                            <?= /* @noEscape */ $postParams['data'][Action::PARAM_NAME_URL_ENCODED] ?>
+                                                             ">
                                                             <?= $block->getBlockHtml('formkey') ?>
                                                             <?php
-                                                            /*
-                                                            Here we removed the condition of the Document verified
-                                                            ( $is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
-                                                            */
                                                             ?>
                                                             <?php if ($IsFinanceVerified == 1): ?> 
                                                         <?php else: ?>
                                                          <!-- start view details btn -->
                                                             <div class="actions-primary">
                                                                     <div class="logged-in-action">
-                                                                        <a href="<?= $block->escapeUrl($block->getProductUrl($_item)) ?>"><?= $block->escapeHtml(__('View Details')) ?></a>
+                                                                        <a href="
+                                                        <?= $block->escapeUrl($block->getProductUrl($_item)) ?>"
+                                                        ><?= $block->escapeHtml(__('View Details')) ?></a>
                                                                     </div>
                                                             </div>
                                                         <?php endif; ?>
@@ -102,16 +111,24 @@ use Magento\Framework\App\Action\Action;
                                                         </form>
                                                     <?php else: ?>
                                                         <?php if ($_item->isAvailable()): ?>
-                                                            <div class="stock available"><span><?= $block->escapeHtml(__('In stock')) ?></span></div>
+                                                            <div 
+                                                            class="stock available">
+                                                            <span><?= $block->escapeHtml(__('In stock')) ?></span></div>
                                                         <?php else: ?>
-                                                            <div class="stock unavailable"><span><?= $block->escapeHtml(__('Out of stock')) ?></span></div>
+                                                            <div 
+                                                            class="stock unavailable">
+                                                            <span>
+                                                                <?= $block->escapeHtml(__('Out of stock')) ?>
+                                                            </span></div>
                                                         <?php endif; ?>
                                                     <?php endif; ?>
                                                 </div>
                                                 <?php elseif (!$showCart): ?>
                                                 <div class="actions-primary">
                                                     <div class="logged-in-action">
-                                                        <a href="<?= $block->escapeUrl($block->getUrl('customer/account/login')) ?>">
+                                                        <a 
+                                            href="<?= $block->escapeUrl($block->getUrl('customer/account/login'))
+                                                         ?>">
                                                             <?= $block->escapeHtml(__('Signin / Register')) ?>
                                                         </a>
                                                     </div>
