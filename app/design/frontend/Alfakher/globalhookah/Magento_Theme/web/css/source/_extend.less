@@ -11,6 +11,7 @@
 & when (@media-common = true) {
     body {
         .top_products {
+            margin-top:0;
             div[data-content-type='tabs'] .tabs-navigation li.tab-header.ui-state-active {
                 border:unset;
                 background-color: unset;
@@ -57,12 +58,10 @@
                 }
             }
             .pagebuilder-column {
-                p {
-                    color: @color-black;
-                }
                 margin-top: 4.5rem;
                 h2 {
                     margin-bottom: 3rem;
+                    font-weight: 700;
                 }
                 .top-prod-button {
                     margin-top: 3.5rem;
@@ -82,6 +81,16 @@
                 &:hover {
                     background: #229B62 ;
                     color:#FFFFFF ;
+                }
+            }
+            .product-item-name {
+                font-weight: 700;
+            }
+            .old-price {
+                .price-container {
+                    .price-wrapper {
+                        color:#FC2F29;
+                    }
                 }
             }
         }
@@ -1115,6 +1124,13 @@
             font-size: 4.2rem !important;
         }
     }
+    .top_products {
+        div[data-content-type='tabs'] .tabs-navigation {
+            li.tab-header.ui-state-active .ui-tabs-anchor {
+                padding:  0.6rem 0 !important;
+            }
+        }
+    }
 }
 
 @media only screen and (min-width: 480px) and (max-width: 767px) {
@@ -1166,7 +1182,7 @@
                 padding-top: 5rem;
             }
         }
-        
+
         .banner-wrapper-text-message {
             font-size: 7rem !important;
         }
@@ -1251,7 +1267,7 @@
 //  Desktop large
 //  _____________________________________________
 
-@media only screen and (min-width: 1024px) and (max-width: 1440px) { 
+@media only screen and (min-width: 1024px) and (max-width: 1440px) {
     footer.page-footer {
         .footer.content,
         .copyright_merge {
@@ -1281,7 +1297,7 @@
 //  Desktop large
 //  _____________________________________________
 
-@media only screen and (min-width: 1440px) and (max-width: 1920px) { 
+@media only screen and (min-width: 1440px) and (max-width: 1920px) {
     body {
         .page-header {
             .header.content {
@@ -1289,10 +1305,10 @@
                 padding: 10px 72px;
             }
             .header-links-wrapper {
-                .header-links { 
+                .header-links {
                     max-width: 100%;
                     padding: 10px 72px;
-                } 
+                }
             }
         }
     }
@@ -1881,16 +1897,17 @@
                 background-color: unset;
                 a.tab-title span.tab-title {
                     margin-right: auto;
+                    font-size: 1.3rem;
                 }
                 a.tab-title {
-                    padding: 0rem;
+                    padding: 1rem 0;
                 }
             }
             .tab-title { 
-                font-size: 1rem;
+                font-size: 1.3rem;
             }
             .tab-header {
-                min-width: 7.3125rem;
+                min-width: 8.3125rem;
             }
             div[data-content-type='tabs'] .tabs-navigation {
                 li.tab-header.ui-tabs-active::before {
@@ -1898,8 +1915,11 @@
                 }
                 li.tab-header.ui-state-active .ui-tabs-anchor {
                     border-bottom: 3px solid #169C60 ;
-                    padding: 0.5rem 0;
+                    padding:  0;
                 }
+            }
+            .product-item-brand {
+                font-size:1.2rem;
             }
         }
 
