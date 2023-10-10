@@ -11,12 +11,13 @@
 & when (@media-common = true) {
     body {
         .top_products {
+            margin-top:0;
             div[data-content-type='tabs'] .tabs-navigation li.tab-header.ui-state-active {
                 border:unset;
                 background-color: unset;
                 .ui-tabs-anchor {
                     color: #169C60;
-                    padding: 1.5rem 0;
+                    padding: 0 5rem 1.5rem 0;
                     border-bottom: 5px solid #169C60;
                     font-size: 2rem;
                     font-weight: 600;
@@ -27,9 +28,6 @@
             }
             .tabs-navigation::-webkit-scrollbar {
                 display: none !important;
-            }
-            .tab-header {
-                min-width:14.75rem;
             }
             .tab-title {
                 &::after {
@@ -57,12 +55,10 @@
                 }
             }
             .pagebuilder-column {
-                p {
-                    color: @color-black;
-                }
                 margin-top: 4.5rem;
                 h2 {
                     margin-bottom: 3rem;
+                    font-weight: 700;
                 }
                 .top-prod-button {
                     margin-top: 3.5rem;
@@ -82,6 +78,16 @@
                 &:hover {
                     background: #229B62 ;
                     color:#FFFFFF ;
+                }
+            }
+            .product-item-name {
+                font-weight: 700;
+            }
+            .old-price {
+                .price-container {
+                    .price-wrapper {
+                        color:#FC2F29;
+                    }
                 }
             }
         }
@@ -1085,17 +1091,14 @@
             }
         }
     }
-}
 
-//
-//  Mobile
-//  _____________________________________________
-
-.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
-    .top_sellling {
-        .widget-product-carousel.product-items {
-            .slick-list {
-                padding-right: 10rem !important;
+    .cms-home {
+        .blog-widget-recent {
+            .post-list {
+                .slick-track {
+                    display: flex;
+                    max-width: 1280px !important;
+                }
             }
         }
     }
@@ -1391,11 +1394,6 @@
                         filter: unset;
                         background-image: url(../images/Union_quote.svg);
                     }
-                    .action.print {
-                        span {
-                            color:#316BB2;
-                        }
-                    }
                 }
             }
         }
@@ -1520,7 +1518,7 @@
             p {
                 background-size: 100%;
                 min-width: 5.3rem;
-                max-height: 5.3rem;
+                max-height: 7.3rem;
             }
         }
     }
@@ -1564,9 +1562,17 @@
         .pagebuilder-column {
             p {
                 background-size: 100%;
+                max-height: 14.3rem;
             }
             .pagebuilder-button-link {
                 font-size: 1.7rem;
+            }
+        }
+    }
+    .top_products {
+        div[data-content-type='tabs'] .tabs-navigation {
+            li.tab-header.ui-state-active .ui-tabs-anchor {
+                padding:  0.6rem 0 !important;
             }
         }
     }
@@ -1889,16 +1895,14 @@
                 background-color: unset;
                 a.tab-title span.tab-title {
                     margin-right: auto;
+                    font-size: 1.3rem;
                 }
                 a.tab-title {
-                    padding: 0rem;
+                    padding: 0 3rem 0 0;
                 }
             }
             .tab-title { 
-                font-size: 1rem;
-            }
-            .tab-header {
-                min-width: 7.3125rem;
+                font-size: 1.3rem;
             }
             div[data-content-type='tabs'] .tabs-navigation {
                 li.tab-header.ui-tabs-active::before {
@@ -1906,8 +1910,11 @@
                 }
                 li.tab-header.ui-state-active .ui-tabs-anchor {
                     border-bottom: 3px solid #169C60 ;
-                    padding: 0.5rem 0;
+                    padding: 0 3rem 0 0;
                 }
+            }
+            .product-item-brand {
+                font-size:1.2rem;
             }
         }
 
@@ -2060,6 +2067,11 @@
                     &:before {
                         filter: unset;
                         background-image: url(../images/Union_quote.svg);
+                    }
+                    .action.print {
+                        span {
+                            color:#316BB2;
+                        }
                     }
                 }
             }
@@ -2318,7 +2330,6 @@
             }
         }
     }
-
 
 
 

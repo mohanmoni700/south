@@ -40,7 +40,7 @@ class ApplyCouponToCart
         GraphQlApplyCouponToCart $subject,
         callable $proceed,
         Field $field,
-        $context,
+                                 $context,
         ResolveInfo $info,
         array $value = null,
         array $args = null
