@@ -14,10 +14,12 @@ $notifyText = __('NOTIFY WHEN BACK IN STOCK');
 <div class="product alert <?= $block->getHtmlClass() ?>">
 <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
 <div class="actions">
-    <div class = "Product_grouped_totals">
-        <span>Total</span>
-        <span id = "Product_price_grouped">$0.00</span>
-    </div>
+<?php if (isset($_product->isSaleable)):?>
+                    <div class = "Product_grouped_totals">
+                        <span>Total</span>
+                        <span id = "Product_price_grouped">$0.00</span>
+                    </div>
+                    <?php endif; ?>
     <div class = "product_notify_me">
         <a href="<?= $block->escapeUrl($block->getSignupUrl()) ?>"
         title="<?= $block->escapeHtml($notifyText) ?>" class="action alert">
@@ -106,5 +108,70 @@ $notifyText = __('NOTIFY WHEN BACK IN STOCK');
             });
         });
     });
+</script>
+<script>
+    require([
+        "jquery",
+        "domReady!"
+    ], function ($) {
+var submitButton = $('.action-secondary');
+                var regex = /^[a-zA-Z]+$/;
+        var emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+
+        $('input[type="text"], input[type="email"]').on('input', function() {
+            var inputId = $(this).attr("type");
+            var inputValue = $(this).val();
+
+            if (inputId === "text") {
+                if (regex.test(inputValue)) {
+                    removeErrorMessage($(this));
+                } else {
+                    displayErrorMessage($(this), "Only alphabetic characters are allowed.");
+                }
+            } else if (inputId === "email") {
+                if (emailRegex.test(inputValue)) {
+                    removeErrorMessage($(this));
+                } else {
+                    displayErrorMessage($(this), "Invalid email format.");
+                }
+            }
+var nameError = $('.error-message').text();
+            var nameIsValid = regex.test($('input[type="text"]').val());
+            var emailIsValid = emailRegex.test($('input[type="email"]').val());            
+            if (!nameError) {
+                submitButton.prop('disabled', false);
+            } else {
+                submitButton.prop('disabled', true);
+            }
+        });
+
+        function displayErrorMessage(inputElement, message) {
+            var errorContainer = inputElement.next('.error-message');
+            if (!errorContainer.length) {
+                var errorMessage = $('<div class="error-message">' + message + '</div>');
+                inputElement.after(errorMessage);
+            }
+        }
+
+        function removeErrorMessage(inputElement) {
+            var errorContainer = inputElement.next('.error-message');
+            if (errorContainer.length) {
+                errorContainer.remove();
+            }
+        }
+
+$('#login_form').submit(function(e) {
+                if (!regex.test(inputField.val())) {
+                    e.preventDefault(); // Prevent form submission if input is invalid
+                }
+                var emailInput = $('input[type="email"]').val();
+                var emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+
+                if (!emailRegex.test(emailInput)) {
+                    e.preventDefault();
+                }
+            });
+    });
+
 </script>
 
