@@ -1,0 +1,81 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * Custom product Page Builder attributes template
+ *
+ * @var $block \Magento\PageBuilder\Block\Catalog\Block\Product\View\Attributes
+ */
+?>
+<?php
+    $helper = $this->helper(Magento\Catalog\Helper\Output::class);
+    $product = $block->getProduct();
+?>
+<?php if ($additional = $block->getAdditionalData()) : ?>
+    <div class="pagebuilder-attributes-wrapper">
+        <div>
+    <?php foreach ($additional as $key => $data) : ?>
+        <?php
+               if(
+                ($data['label']) === "What's in the box" ||
+                ($data['label']) === "Assembly and care" ||
+                ($data['label']) === "FAQs" ): ?>
+                <ul class="nav-tabs">
+                <li class="tab-link<?= ($key === 0) ? ' active' : '' ?>" data-tab="tab-<?= $key ?>">
+                    <?= $block->escapeHtml(__($data['label'])) ?>
+                </li>
+                </ul>
+               <div class="tab-content<?= ($key === 0) ? ' active' : '' ?>" id="tab-<?= $key ?>">
+                <div class="product-full-width-section">
+                    <div class="pagebuilder-attribute-wrapper">
+                        <?= /* @noEscape */ $helper->productAttribute($product, $data['value'], $data['code']) ?>
+                    </div>
+                </div>
+            </div>
+            <?php else : ?>
+                <div class="product-full-width-section">
+                <div class="page-main">
+                    <h2 class="product-section-title"><?= $block->escapeHtml(__($data['label'])) ?></h2>
+                </div>
+                <div class="pagebuilder-attribute-wrapper">
+                    <?= /* @noEscape */ $helper->productAttribute($product, $data['value'], $data['code']) ?>
+                </div>
+            </div>
+                <!-- Handle the additional conditions here -->
+                            <?php endif; ?>
+
+        <?php endforeach; ?>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabLinks = document.querySelectorAll('.nav-tabs');
+            const divWrapper = document.createElement('div');
+            divWrapper.classList.add('tab-links-group');
+
+            tabLinks.forEach((ulElement) => {
+            divWrapper.appendChild(ulElement);
+    });
+    const pageWrapper = document.querySelector('.pagebuilder-attributes-wrapper');
+    pageWrapper.insertBefore(divWrapper, pageWrapper.firstChild);
+
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabLinks.forEach((tabLink, index) => {
+                tabLink.addEventListener('click', () => {
+                    tabLinks.forEach(link => link.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    tabLink.classList.add('active');
+                    tabContents[index].classList.add('active');
+                });
+            });
+            tabLinks[0].click();
+        });
+    </script>
+<?php endif; ?>
