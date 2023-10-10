@@ -17,7 +17,7 @@
                 background-color: unset;
                 .ui-tabs-anchor {
                     color: #169C60;
-                    padding: 1.5rem 0;
+                    padding: 0 5rem 1.5rem 0;
                     border-bottom: 5px solid #169C60;
                     font-size: 2rem;
                     font-weight: 600;
@@ -28,9 +28,6 @@
             }
             .tabs-navigation::-webkit-scrollbar {
                 display: none !important;
-            }
-            .tab-header {
-                min-width:14.75rem;
             }
             .tab-title {
                 &::after {
@@ -1094,17 +1091,14 @@
             }
         }
     }
-}
 
-//
-//  Mobile
-//  _____________________________________________
-
-.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
-    .top_sellling {
-        .widget-product-carousel.product-items {
-            .slick-list {
-                padding-right: 10rem !important;
+    .cms-home {
+        .blog-widget-recent {
+            .post-list {
+                .slick-track {
+                    display: flex;
+                    max-width: 1280px !important;
+                }
             }
         }
     }
@@ -1267,7 +1261,7 @@
 //  Desktop large
 //  _____________________________________________
 
-@media only screen and (min-width: 1024px) and (max-width: 1440px) {
+@media only screen and (min-width: 1024px) and (max-width: 1440px) { 
     footer.page-footer {
         .footer.content,
         .copyright_merge {
@@ -1297,7 +1291,7 @@
 //  Desktop large
 //  _____________________________________________
 
-@media only screen and (min-width: 1440px) and (max-width: 1920px) {
+@media only screen and (min-width: 1440px) and (max-width: 1920px) { 
     body {
         .page-header {
             .header.content {
@@ -1406,11 +1400,6 @@
                     &:before {
                         filter: unset;
                         background-image: url(../images/Union_quote.svg);
-                    }
-                    .action.print {
-                        span {
-                            color:#316BB2;
-                        }
                     }
                 }
             }
@@ -1908,14 +1897,11 @@
                     font-size: 1.3rem;
                 }
                 a.tab-title {
-                    padding: 1rem 0;
+                    padding: 0 3rem 0 0;
                 }
             }
             .tab-title { 
                 font-size: 1.3rem;
-            }
-            .tab-header {
-                min-width: 8.3125rem;
             }
             div[data-content-type='tabs'] .tabs-navigation {
                 li.tab-header.ui-tabs-active::before {
@@ -1923,7 +1909,7 @@
                 }
                 li.tab-header.ui-state-active .ui-tabs-anchor {
                     border-bottom: 3px solid #169C60 ;
-                    padding:  0;
+                    padding: 0 3rem 0 0;
                 }
             }
             .product-item-brand {
@@ -2080,6 +2066,11 @@
                     &:before {
                         filter: unset;
                         background-image: url(../images/Union_quote.svg);
+                    }
+                    .action.print {
+                        span {
+                            color:#316BB2;
+                        }
                     }
                 }
             }
@@ -2338,7 +2329,6 @@
             }
         }
     }
-
 
 
 
