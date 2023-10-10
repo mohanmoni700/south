@@ -1,0 +1,25 @@
+<!--@subject  {{trans "Expired Document"}}  @-->
+
+<!--@vars {
+	"var name":"Customer Name",
+	"var documentarray":"Expired Documents"
+
+} @-->
+
+{{template config_path="design/email/header_template"}}
+<p xmlns="http://www.w3.org/1999/html">Dear {{var name}},</p>
+<p>Our records indicate that your Tax License information in our system has expired. In order to maintain an active
+    account your License and/or Tax Documents will need to be updated.</p>
+<p>We request that you please respond to this email with your current documents as soon as possible to prevent your
+    account from being locked.</p>
+<p>While we await your updated business documents, if you have any questions, or would like to speak with a Tax
+    Compliance Specialist, please contact us at your earliest convenience.</p>
+
+
+<div>Hookah Wholesalers<br>
+    800.713.0915<br>
+    or email us:<br>
+    General Inquieries: <a href = "mailto: info@hookahwholesalers.com">info@hookahwholesalers.com</a><br>
+    License / Permits: <a href = "mailto: compliance@hookahwholesalers.com">compliance@hookahwholesalers.com</a></div>
+
+{{template config_path="design/email/footer_template"}}

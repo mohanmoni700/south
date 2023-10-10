@@ -1,0 +1,26 @@
+<?php
+/**
+ * Category banner template
+ *
+ * @var $block Alfakher\AddtocartPriceHide\Block\Index\CategoryBrand
+ */
+$category = $block->getCurrentCategory();
+$blockObj = $block->getLayout()->createBlock('Magento\Catalog\Block\Product\ListProduct');
+$_productCollection = $blockObj->getLoadedProductCollection();
+?>
+
+<?php if ($banner = $category->getCategoryBanner()):?>
+<div class="category-banner">
+    <div class="site-container category_title">
+        <h1 class="cat_tite"><?= /* @noEscape */ $category->getTagLabel(); ?></h1>
+        <div class="category_total">
+        <span class="total-result"><?= $block->escapeHtml(
+                '('.$_productCollection->count().' Results)'
+            ) ?></span>
+        </div>
+    </div>
+    <div class="category-banner-image">
+    <?= /* @noEscape */ $block->getContentFromStaticBlock($category->getCategoryBanner()); ?>
+    </div>
+</div>
+<?php endif; ?>

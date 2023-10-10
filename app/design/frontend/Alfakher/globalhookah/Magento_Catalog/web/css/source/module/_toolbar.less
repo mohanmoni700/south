@@ -93,17 +93,18 @@
         background-image: url('@{baseDir}images/arrow-color.svg');
         border-right: 0;
         border-top: 0;
+        font-weight: 600;
+        text-align: center;
         border-bottom: 0;
         border-width: 0.063rem;
+        margin: 0 ;
         height: 3rem;
-        margin: 0 0 0 7px;
-        padding-right: 2.25rem;
-        width: 15.25rem;
-        @media only screen and (max-width: 1199px) and  (min-width: 992px) {
-            width: 10rem;
+    }
+    select:not([disabled]) {
+        &:focus {
+           box-shadow: unset;
         }
     }
-
     .sorter-action {
         vertical-align: top;
         .lib-icon-font(
@@ -196,6 +197,15 @@
 
     .sorter {
         float: right;
+        display: flex;
+        select {
+            padding: 0.5rem 2.5rem 0.5rem 0.5rem;
+            text-indent: 0;
+        }
+    }
+    .sorter-label {
+        flex-basis: 10rem;
+        padding-top: 0.5rem;
     }
 
     .modes {
@@ -298,11 +308,10 @@
     .toolbar-sorter {
         &.sorter {
             align-items: center;
-            border-left: 1px solid @input-border_color;
             display: flex;
             float: right;
             justify-content: center;
-            min-height: 60px;
+            min-height: 36px;
             padding: 2px 0;
             position: relative;
             text-align: center;
@@ -346,6 +355,7 @@
     .sorter {
         .sorter-label {
             .lib-font-size(16);
+            font-family: @font-family-name__secondary;
             &:after {
                 display: none;
             }
@@ -354,7 +364,7 @@
     .catalog-category-view,
     .catalogsearch-result-index {
         .toolbar {
-            border-top: 1px solid @input-border_color;
+            border-bottom:unset;
             margin-left: -15px;
             margin-right: -15px;
             margin-top: -61px;

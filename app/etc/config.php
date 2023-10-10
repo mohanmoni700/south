@@ -1022,6 +1022,7 @@ return [
         'Vrpayecommerce_Vrpayecommerce' => 1,
         'Alfakher_FinanceVerified' => 1,
         'MageWorx_OrdersBase' => 1,
+        'Alfakher_GroupedProduct' => 1,
         'MageWorx_OrderEditor' => 1,
         'Alfakher_HwCustomerTelephoneUpdate' => 1,
         'Alfakher_KlaviyoCustomCatalog' => 1,
@@ -1090,6 +1091,7 @@ return [
         'Fastly_Cdn' => 1,
         'Fooman_EmailAttachments' => 1,
         'Glew_Service' => 1,
+        'GlobalHookah_SalesExtended' => 1,
         'HookahShisha_Avalara' => 1,
         'HookahShisha_AvalaraExciseGraphQl' => 1,
         'Magefan_Blog' => 1,
@@ -1112,6 +1114,7 @@ return [
         'HookahShisha_Order' => 1,
         'HookahShisha_OrderGraphQl' => 1,
         'HookahShisha_QuoteGraphQl' => 1,
+        'HookahShisha_ReCaptcha' => 1,
         'HookahShisha_Removefreegift' => 1,
         'HookahShisha_RmaGraphQl' => 1,
         'HookahShisha_Sales' => 1,
@@ -1196,6 +1199,7 @@ return [
         'Xtento_OrderImport' => 1,
         'Corra_YotpoLoyaltyExtended' => 1,
         'Yotpo_Yotpo' => 1,
+        'Zoho_Salesiq' => 1,
         'eDevice_IpRecognitionPopup' => 1
     ],
     'admin_user' => [

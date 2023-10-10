@@ -21,6 +21,7 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Exception\SecurityViolationException;
 use Magento\Store\Model\StoreManagerInterface;
+use Alfakher\Productpageb2b\Helper\Data;
 
 /**
  * Post login customer action.
@@ -89,6 +90,10 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
      */
     private $_storemanager;
     /**
+     * @var Data
+     */
+    private $helper;
+    /**
      * [__construct description]
      * @param Context                                                               $context
      * @param Session                                                               $customerSession
@@ -113,6 +118,7 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
         Escaper $escaper,
         CustomerRepositoryInterface $customerRepository,
         Customer $customer,
+        Data  $helper,
         StoreManagerInterface $storemanager,
         \Alfakher\MyDocument\Model\ResourceModel\MyDocument\CollectionFactory $collection,
         JsonFactory $resultJsonFactory
@@ -122,6 +128,7 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
         $this->customer = $customer;
         $this->_storemanager = $storemanager;
         $this->collection = $collection;
+        $this->helper = $helper;
         $this->resultJsonFactory = $resultJsonFactory;
         parent::__construct(
             $context,
@@ -292,7 +299,8 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                         }
                     }
                     $baseurl = $this->_storemanager->getStore()->getBaseUrl();
-                    if (in_array(0, $status) || empty($dataSize) || (in_array("exp", $msg))) {
+                    $myDocumentConfigValue = $this->helper->getConfigValue('hookahshisha/my_document/is_enabled');
+                    if ((in_array(0, $status) || empty($dataSize) || in_array("exp", $msg)) && $myDocumentConfigValue) {
                         $response = [
                             'url' => $baseurl . "mydocument/customer/index",
                         ];
