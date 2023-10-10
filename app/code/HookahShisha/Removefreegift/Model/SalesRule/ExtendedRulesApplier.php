@@ -103,4 +103,43 @@ class ExtendedRulesApplier extends RulesApplier
         }
         return $appliedRuleIds;
     }
+
+
+    /**
+     * Apply Rule
+     *
+     * @param AbstractItem $item
+     * @param Rule $rule
+     * @param \Magento\Quote\Model\Quote\Address $address
+     * @param mixed $couponCode
+     * @return $this
+     */
+    protected function applyRule($item, $rule, $address, $couponCode)
+    {
+        if ($item->getChildren() && $item->isChildrenCalculated()) {
+            $cloneItem = clone $item;
+            /**
+             * validate without children
+             */
+            $applyAll = $rule->getActions()->validate($cloneItem);
+            foreach ($item->getChildren() as $childItem) {
+                if ($applyAll || $rule->getActions()->validate($childItem)) {
+                    $discountData = $this->getDiscountData($childItem, $rule, $address);
+                    $this->setDiscountData($discountData, $childItem);
+                }
+            }
+        } else {
+            $discountData = $this->getDiscountData($item, $rule, $address);
+            $this->setDiscountData($discountData, $item);
+        }
+
+        $this->maintainAddressCouponCode($address, $rule, $couponCode);
+
+        //Ignoring the discount description for promo item
+        if (!$this->ruleHelper->validatePromoItem($rule, $item)) {
+            $this->addDiscountDescription($address, $rule);
+        }
+
+        return $this;
+    }
 }
