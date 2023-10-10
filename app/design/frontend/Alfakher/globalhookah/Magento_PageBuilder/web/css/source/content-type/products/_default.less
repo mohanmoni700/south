@@ -1,0 +1,170 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Default appearance styles
+//  _____________________________________________
+
+& when (@media-common = true) {
+    [data-content-type='row'] {
+        li.product-item {
+            text-align: left;
+        }
+    }
+
+    .pagebuilder-column {
+        .widget-product-grid {
+            .product-item {
+                max-width: 100%;
+                min-width: 50px;
+
+                .price-box {
+                    word-wrap: break-word;
+
+                    .price {
+                        white-space: normal;
+                    }
+                }
+
+                .product-item-actions {
+                    .actions-primary {
+                        display: inline-block;
+                        max-width: 100%;
+                    }
+
+                    .actions-secondary {
+                        display: inline-block;
+                        width: auto;
+                    }
+
+                    .tocart {
+                        max-width: 100%;
+                        white-space: normal;
+                    }
+                }
+            }
+        }
+
+        [data-content-type='products'] {
+            .block.widget {
+                .products-grid {
+                    .widget-product-grid.product-items {
+                        .product-item {
+                            width: 200px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .pagebuilder-attributes-wrapper {
+        background: #FFF8E5;
+    }
+    .nav-tabs {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        width: 40rem;
+       align-items: center;
+       justify-content: center;
+       .active {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+       }
+    }
+    .nav-tabs.active {
+        border-bottom: 0.3rem solid #316BB2;
+        li{
+            font-size: 3rem;
+            white-space: nowrap;
+        }
+    }
+
+    .tab-link {
+        cursor: pointer;
+        padding: 1rem 8rem;
+        margin-right: 0.5rem;
+        font-size: 1.5rem;
+       font-weight: bolder;
+       white-space: nowrap;
+       text-transform: uppercase;
+    }
+
+    .tab-content {
+        display: none;
+        padding: 1rem;
+        margin:2rem 0rem;
+    }
+
+    .tab-content.active {
+        display: block;
+        .product-full-width-section {
+            .pagebuilder-attribute-wrapper {
+                div[data-appearance="contained"] {
+                    margin-left: 7rem !important;
+                    max-width: unset;
+                    margin-right: 7rem !important;
+                }
+            }
+        }
+    }
+    .tab-links-group {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 7rem;
+    margin-right: 7rem;
+    max-width: unset;
+    border-bottom: 0.1px solid #000;
+    overflow: scroll;
+    padding-top: 4.5rem;
+}
+
+.tab-links-group::-webkit-scrollbar {
+    display: none;
+}
+}
+
+.product-section-title {
+    display: none;
+}
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .tab-content.active {
+        .product-full-width-section {
+            .pagebuilder-attribute-wrapper {
+                div[data-appearance="contained"] {
+                    margin-left: unset !important;
+                    margin-right: unset !important;
+                }
+            }
+        }
+    }
+    .tab-links-group {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: unset;
+        padding-top: 0.5rem;
+    }
+    .tab-link {
+        cursor: pointer;
+        padding: 1rem 3rem;
+        margin-right: 0.5rem;
+        font-size: 1.5rem;
+       font-weight: bolder;
+       white-space: nowrap;
+       text-transform: uppercase;
+    }
+    .nav-tabs.active {
+        border-bottom: 0.3rem solid #316BB2;
+        li{
+            font-size: 2.4rem;
+            white-space: nowrap;
+        }
+    }
+
+}
