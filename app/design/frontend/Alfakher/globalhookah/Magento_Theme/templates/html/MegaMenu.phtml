@@ -1,0 +1,33 @@
+<?php
+
+$getLevel2Category = $block->getMainStoreCategories(); ?>
+
+<nav class="navigation sw-megamenu">
+    <ul>
+        <?php foreach($getLevel2Category as $category) { ?>
+            <?php $cat = $block->getCategoryById($category->getId()); ?>
+            <?php  if ($cat->getLandingPage()) : ?>
+                <li class="ui-menu-item level0 fullwidth parent  <?php echo $category->getName(); ?>">
+            <?php else: ?>
+                <li class="ui-menu-item level0 fullwidth no-child <?php echo $category->getName(); ?>">
+            <?php endif; ?>
+                <a href="<?php echo $cat->getUrl(); ?>" class="level-top" title="<?php echo $category->getName(); ?>">
+                <span><?php echo $category->getName(); ?></span>
+                </a>
+                <?php echo $category->getLandingPage(); ?>
+                <?php  if ($cat->getLandingPage()) : ?>
+                <div class="level0 submenu">
+                    <div class="container">
+                        <div class="row">
+                                <?php  echo $block->getContent($cat->getLandingPage()); ?>
+                        </div>
+                    </div>
+                </div>
+                <?php endif; ?>
+            </li>
+        <?php } ?>
+        <li class="ui-menu-item level0 fullwidth no-child rewards">
+            <a class="level-top" href="/rewards" title="rewards"><?= $block->escapeHtml(__('Rewards')); ?></a>
+        </li>
+    </ul>
+</nav>

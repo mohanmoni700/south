@@ -185,9 +185,6 @@
 
                         &::before {
                             background-image: url('@{baseDir}images/quotes.svg');
-                            height: 24px;
-                            width: 24px;
-                            margin: 0;
                         }
                         .text {
                             font-size: 14px;
@@ -201,13 +198,10 @@
                 }
 
                 .right_section {
-                    padding-bottom: 10px;
-
                     .sign-in {
                         flex-direction: row;
-                        align-items: center;
                         gap: 4px;
-                        order: 2;
+                        align-items: flex-end;
 
                         .sign-up {
                             font-size: 14px;
@@ -1248,17 +1242,14 @@
             }
         }
     }
-}
 
-//
-//  Mobile
-//  _____________________________________________
-
-.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
-    .top_sellling {
-        .widget-product-carousel.product-items {
-            .slick-list {
-                padding-right: 10rem !important;
+    .cms-home {
+        .blog-widget-recent {
+            .post-list {
+                .slick-track {
+                    display: flex;
+                    max-width: 1280px !important;
+                }
             }
         }
     }
@@ -1276,6 +1267,13 @@
 
         .banner-wrapper-text-message {
             font-size: 4.2rem !important;
+        }
+    }
+    .top_products {
+        div[data-content-type='tabs'] .tabs-navigation {
+            li.tab-header.ui-state-active .ui-tabs-anchor {
+                padding:  0.6rem 0 !important;
+            }
         }
     }
 }
@@ -1329,7 +1327,7 @@
                 padding-top: 5rem;
             }
         }
-        
+
         .banner-wrapper-text-message {
             font-size: 7rem !important;
         }
@@ -1452,10 +1450,10 @@
                 padding: 10px 72px;
             }
             .header-links-wrapper {
-                .header-links { 
+                .header-links {
                     max-width: 100%;
                     padding: 10px 72px;
-                } 
+                }
             }
         }
     }
@@ -1553,11 +1551,6 @@
                     &:before {
                         filter: unset;
                         background-image: url(../images/Union_quote.svg);
-                    }
-                    .action.print {
-                        span {
-                            color:#316BB2;
-                        }
                     }
                 }
             }
@@ -1683,7 +1676,7 @@
             p {
                 background-size: 100%;
                 min-width: 5.3rem;
-                max-height: 7.3rem;
+                max-height: 5.3rem;
             }
         }
     }
@@ -1727,17 +1720,9 @@
         .pagebuilder-column {
             p {
                 background-size: 100%;
-                max-height: 14.3rem;
             }
             .pagebuilder-button-link {
                 font-size: 1.7rem;
-            }
-        }
-    }
-    .top_products {
-        div[data-content-type='tabs'] .tabs-navigation {
-            li.tab-header.ui-state-active .ui-tabs-anchor {
-                padding:  0.6rem 0 !important;
             }
         }
     }
@@ -2108,15 +2093,6 @@
                         padding: 1px 3px;
                     }
                 }
-
-                .block-minicart {
-                    right: -20px !important;
-
-                    &::after,
-                    &::before {
-                        right: 20px !important;
-                    }
-                }
             }
         }
         .header-links-wrapper {
@@ -2241,23 +2217,6 @@
         }
     }
 
-    body .page-wrapper .page-header {
-        .warning-section-wrapper {
-            .warning-section {
-                max-width: 1280px;
-                margin: 0 auto;
-                padding: 0.4rem 1rem !important;
-    
-                .heading-section {
-                    h3 {
-                        margin-left: 0.6rem !important;
-                        width: fit-content;
-                    }
-                }
-            }
-        }
-    }
-
     .amasty_quote-account-view.account {
         .page-title-wrapper {
             .order-actions-toolbar {
@@ -2265,6 +2224,11 @@
                     &:before {
                         filter: unset;
                         background-image: url(../images/Union_quote.svg);
+                    }
+                    .action.print {
+                        span {
+                            color:#316BB2;
+                        }
                     }
                 }
             }
@@ -2523,7 +2487,6 @@
             }
         }
     }
-
 
 
 
