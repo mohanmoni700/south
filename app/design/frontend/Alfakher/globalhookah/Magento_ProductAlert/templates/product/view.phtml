@@ -72,7 +72,9 @@ $notifyText = __('NOTIFY WHEN BACK IN STOCK');
 <script type="text/javascript">
     require([
         "jquery",
-        "Magento_Ui/js/modal/modal"
+        "Magento_Ui/js/modal/modal",
+        'mage/mage',
+        "domReady!"
     ],function($, modal) {
 
         var options = {
@@ -89,13 +91,6 @@ $notifyText = __('NOTIFY WHEN BACK IN STOCK');
         $(".action-secondary-cancel").click(function() {
             $('#modal').modal('closeModal');
         });
-    });
-</script>
-<script>
-    require([
-        'jquery',
-        'mage/mage'
-    ], function($) {
         $(document).ready(function() {
             var dataForm = $('#login_form');
             dataForm.mage('validation', {});
@@ -107,14 +102,7 @@ $notifyText = __('NOTIFY WHEN BACK IN STOCK');
                 }
             });
         });
-    });
-</script>
-<script>
-    require([
-        "jquery",
-        "domReady!"
-    ], function ($) {
-var submitButton = $('.action-secondary');
+        var submitButton = $('.action-secondary');
                 var regex = /^[a-zA-Z]+$/;
         var emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
 
@@ -172,6 +160,6 @@ $('#login_form').submit(function(e) {
                 }
             });
     });
-
 </script>
+
 
