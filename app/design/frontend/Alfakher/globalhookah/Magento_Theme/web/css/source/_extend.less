@@ -132,6 +132,28 @@
             }
             .header-links-wrapper {
                 .header-links {
+                    padding: 1.2rem 0;
+
+                    .header-item {
+                        border-right: 1px solid #fff;
+                        padding-inline-end: 2rem;
+
+                        &:last-of-type {
+                            border: none;
+                        }
+
+                        &::before {
+                            top: -0.4rem;
+                            height: 2.4rem;
+                            width: 2.4rem;
+                        }
+
+                        .header-text {
+                            font-weight: 500;
+                            font-size: 1.4rem;
+                        }
+                    }
+
                     .tiktok {
                         &::before {
                             background-image: url('@{baseDir}images/tiktok.svg');
@@ -142,6 +164,76 @@
                         &::before {
                             background-image: url('@{baseDir}images/whatsapp.svg');
                             cursor: pointer;
+                        }
+                    }
+
+                    .header-top-right {
+                        width: 100%;
+                        padding-inline-end: 0;
+                        flex-direction: row !important;
+                        justify-content: space-between;
+
+                        .one {
+                            gap: 0;
+
+                            .header-item {
+                                &.email {
+                                    &::before {
+                                        background-image: url('@{baseDir}images/email.svg');
+                                    }
+                                }
+                                &.phone {
+                                    &::before {
+                                        background-image: url('@{baseDir}images/phone.svg');
+                                    }
+                                }
+                            }
+
+                            &:last-child {
+                                border: none;
+                            }
+                        }
+
+                        .two {
+                            display: flex;
+                            gap: 2rem;
+                            
+                            .header-item {
+                                width: auto;
+                                padding-right: 4rem;
+                                margin-right: 0;
+
+                                &:last-child {
+                                    padding-right: 0;
+                                }
+
+                                &.youtube {
+                                    &::before {
+                                        background-image: url('@{baseDir}images/youtube.svg');
+                                    }
+                                }
+                                &.facebook {
+                                    &::before {
+                                        background-image: url('@{baseDir}images/facebook.svg');
+                                    }
+                                }
+                                &.rewards {
+                                    width: auto;
+
+                                    a {
+                                        color: #fff;
+                                        margin-inline-start: 3rem;
+
+                                        &:hover {
+                                            text-decoration: underline;
+                                        }
+                                    }
+
+                                    &::before {
+                                        background-image: url('@{baseDir}images/rewards.svg');
+                                    }
+                                }
+                            }
                         }
                     }
                 }
