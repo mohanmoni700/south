@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body> 
+        <referenceBlock name="sidebar.additional" remove="true"/>
+         <referenceContainer name="columns.top">
+            <block class="Alfakher\MyDocument\Block\Index\Document" name="document.messages" template="Alfakher_AddtocartPriceHide::documentMessage.phtml" before="-"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="Alfakher_AddtocartPriceHide::catalog/product/list/toolbar.phtml">
+            </block>
+        </referenceContainer>
+        <referenceBlock name="catalogsearch.product.addto.compare" remove="true"/> 
+        <move element="document.messages" before="breadcrumbs" destination="blogpost.div" />
+        <move element="breadcrumbs" destination="page.wrapper" before="main.content"/>
+    </body>
+</page>
