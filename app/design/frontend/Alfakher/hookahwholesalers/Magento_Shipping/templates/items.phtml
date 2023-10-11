@@ -16,9 +16,6 @@ $trackingUrlViewModel = $block->getTrackingUrl();
 $_order = $block->getOrder();
 ?>
 <div class="actions-toolbar">
-    <?php if ($_order->getTracksCollection()->count()): ?>
-        <?= $block->getChildHtml('track-all-link') ?>
-    <?php endif; ?>
     <a href="<?= $block->escapeUrl($block->getPrintAllShipmentsUrl($_order)) ?>"
        class="action print"
        target="_blank"
