@@ -17,7 +17,7 @@ $_productCollection = $blockObj->getLoadedProductCollection();
 ?>
 <div class="viewingproducts">
     Viewing <span id="productCount"><?php echo $_productCollection->count(); ?></span>
-     of <span id="totalProductCount"><?php echo $_productCollection->count(); ?></span>
+     of <span id="totalProductCount"><?php echo $_productCollection->getSize(); ?></span>
 </div>
 
 <p class="toolbar-amount" id="toolbar-amount">
