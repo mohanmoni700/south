@@ -10,6 +10,15 @@
 @breadcrumbs-txtclr: #000;
 @breadcrumbs-activeclr: #404040;
 & when (@media-common = true) {
+    .catalogsearch-result-index {
+        .page-wrapper {
+            .breadcrumbs {
+                .items {
+                    padding-top: 1rem;
+                }
+            }
+        }
+    } 
     .breadcrumbs {
         .lib-breadcrumbs();
         margin: 0;
