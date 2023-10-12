@@ -78,7 +78,7 @@
                                 <td data-th="<?= $block->escapeHtml(__('Qty')) ?>" class="col qty">
                                     <?php if ($_item->isSaleable()): ?>
                                         <div class="control qty">
-                                               <input type="text"
+                                               <input type="number"
                                                name="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
                                                data-selector="super_group[<?= $block->
                                                 escapeHtmlAttr($_item->getId()) ?>]"
@@ -231,7 +231,7 @@
                                 <td data-th="<?= $block->escapeHtml(__('Qty')) ?>" class="col qty">
                                     <?php if ($_item->isSaleable()): ?>
                                         <div class="control qty">
-                                               <input type="text"
+                                               <input type="number"
                                                name="super_group[<?= $block->escapeHtmlAttr($_item->getId()) ?>]"
                                                data-selector="super_group[<?= $block->
                                                 escapeHtmlAttr($_item->getId()) ?>]"
@@ -387,7 +387,7 @@ if (col1Div) {
 });
 
             $(".col.qty .control.qty .input-text.qty").on("change paste keyup", function (e) {
-                if (typeof $(this).val() !== 'undefined' && $(this).val() != '' && $(this).val() > 0) {
+                if (typeof $(this).val() !== 'undefined' && $(this).val() != '' && $(this).val() >= 0) {
                     let requestQty = parseInt($(this).val());
                     let productId = $(this).data('product-id');
                     $("#totalqtydrop_"+productId).html(requestQty);
