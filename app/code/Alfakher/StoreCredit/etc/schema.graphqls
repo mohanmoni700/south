@@ -1,0 +1,8 @@
+type Mutation {
+    applyPartialStoreCreditToCart(input: PartialStoreCreditToCartInput!): ApplyStoreCreditToCartOutput @resolver(class: "\\Alfakher\\StoreCredit\\Model\\Resolver\\ApplyPartialStoreCreditToCart") @doc(description: "Apply partial store credit to the specified cart.")
+}
+
+input PartialStoreCreditToCartInput @doc(description: "Defines the input required to run the applyPartialStoreCreditToCart mutation") {
+    cart_id: String! @doc(description: "The unique ID that identifies the customer's cart")
+    amount: Float! @doc(description: "Partial store credit amount to be applied to cart")
+}
