@@ -12,7 +12,6 @@ use Magento\Framework\Translate\Inline\StateInterface;
 
 class ProcessBackInStock
 {
-
     private CollectionFactory $subscriptionCollectionFactory;
     private StockRegistryInterface $stockRegistry;
     private StoreManagerInterface $storeManager;
