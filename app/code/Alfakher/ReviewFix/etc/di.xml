@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Review\Block\Product\ReviewRenderer">
+        <!--ALFA-144 Disabled the yotpo plugin, added new plugin to remove the review summary in pagebuilder action-->
+        <plugin name="yotpo_yotpo_review_block_product_reviewrenderer_plugin" disabled="true" />
+        <plugin name="remove_review_in_pagebuilder_action"
+                type="Alfakher\ReviewFix\Plugin\ReviewRenderer"
+                sortOrder="5"/>
+    </type>
+</config>
