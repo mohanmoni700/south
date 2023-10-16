@@ -1,31 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Alfakher\StockAlert\Observer;
 
-use Alfakher\StockAlert\Model\ResourceModel\ProductAlertStockGuestUser\CollectionFactory;
-use Magento\CatalogInventory\Api\StockRegistryInterface;
-use Magento\Store\Model\ScopeInterface;
-use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\Mail\Template\TransportBuilder;
-use Magento\Framework\Translate\Inline\StateInterface;
+use Alfakher\StockAlert\Model\ResourceModel\ProductAlertStockGuestUser\CollectionFactory as CollectionFactory;
+use Magento\CatalogInventory\Api\StockRegistryInterface as stockRegistry;
+use Magento\Store\Model\ScopeInterface as ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface as StoreManagerInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface as ScopeConfigInterface;
+use Magento\Framework\Mail\Template\TransportBuilder as TransportBuilder;
+use Magento\Framework\Translate\Inline\StateInterface as TranslateStateInterface;
 
 class ProcessBackInStock
 {
     private CollectionFactory $subscriptionCollectionFactory;
-    private StockRegistryInterface $stockRegistry;
+    private stockRegistry $stockRegistry;
     private StoreManagerInterface $storeManager;
     private ScopeConfigInterface $scopeConfig;
     private TransportBuilder $transportBuilder;
-    private StateInterface $inlineTranslation;
+    private TranslateStateInterface $inlineTranslation;
 
     public function __construct(
         CollectionFactory $subscriptionCollectionFactory,
-        StockRegistryInterface $stockRegistry,
+        stockRegistry $stockRegistry,
         StoreManagerInterface $storeManager,
         ScopeConfigInterface $scopeConfig,
         TransportBuilder $transportBuilder,
-        StateInterface $inlineTranslation
+        TranslateStateInterface $inlineTranslation
     ) {
         $this->subscriptionCollectionFactory = $subscriptionCollectionFactory;
         $this->stockRegistry = $stockRegistry;
@@ -72,7 +74,13 @@ class ProcessBackInStock
 
         $storeId = $this->storeManager->getStore()->getId();
 
-        $from = ['email' => 'sender@example.com', 'name' => 'Sender Name'];
+        $sender =  $this->scopeConfig->getValue(
+            "catalog/productalert/email_identity",
+            ScopeInterface::SCOPE_STORE,
+            $storeId
+        );
+
+        $from = ['email' => $sender, 'name' => $sender];
         $to = [$email];
 
         $templateOptions = [

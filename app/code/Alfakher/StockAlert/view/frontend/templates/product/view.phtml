@@ -42,14 +42,14 @@
             $,
             modal
         ) {
-            var options = {
+            let options = {
                 type: 'popup',
                 responsive: true,
                 innerScroll: true,
                 title: 'popup modal title',
             };
 
-            var popup = modal(options, $('#popup-modal'));
+            let popup = modal(options, $('#popup-modal'));
             $("#alert").on('click',function(){
                 $("#popup-modal").modal("openModal");
             });
