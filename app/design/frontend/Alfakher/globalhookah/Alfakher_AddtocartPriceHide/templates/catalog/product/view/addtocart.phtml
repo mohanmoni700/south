@@ -1,0 +1,72 @@
+<?php //phpcs:disable ?>
+<?php /** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php   $_product = $block->getProduct(); ?>
+<?php   $buttonTitle = __('Add to Cart'); ?>
+<?php   $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
+        $showCart = $_helperB2b->isCustomerLoggedIn();
+        $docdata = $_helperB2b->getDocMessageData();
+        $is_document_upload = $_helperB2b->getDocuments();
+        $doc_expired = $_helperB2b->getExpiryMsg();
+        $IsFinanceVerified=$_helperB2b->getIsFinanceVerified();
+?>
+<?php if ($_product->isSaleable()):?>
+<div class="box-tocart">
+    <?php if ($showCart): ?>
+        <?php
+        /*
+        Here we removed the condition of the Document verified
+        ($is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+        */
+        ?>
+        <?php if ($IsFinanceVerified == 1): ?>
+            <div class="fieldset">
+                    <?php if ($block->shouldRenderQuantity()):?>
+                        <div class="field qty">
+                            <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
+                            <div class="control">
+                                <input type="number"
+                                   name="qty"
+                                   id="qty"
+                                   min="0"
+                                   value="<?= $block->getProductDefaultQty() * 1 ?>"
+                                   title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                                   class="input-text qty"
+                                   data-validate="<?=$block->escapeHtml(json_encode($block->getQuantityValidators()))?>"
+                                   />
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <div class="actions">
+                    <div class = "Product_grouped_totals">
+                        <span>Total</span>
+                        <span id = "Product_price_grouped">$0.00</span>
+                    </div>
+                        <button type="submit"
+                                title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                                class="action primary tocart"
+                                id="product-addtocart-button" disabled>
+                            <span><?= $block->escapeHtml($buttonTitle) ?></span>
+                        </button>
+                        <?= $block->getChildHtml('', true) ?>
+                    </div>
+                </div>
+        <?php endif; ?>
+    <?php else: ?>
+    <div class="actions-primary">
+        <div class="logged-in-action">
+                <a
+                href="<?= /* @noEscape */ $block->getUrl('customer/account/login') ?>">
+                <?= $block->escapeHtml(__('Signin / Register')) ?></a>
+        </div>
+    </div>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
+<script type="text/x-magento-init">
+    {
+        "#product_addtocart_form": {
+            "Magento_Catalog/js/validate-product": {}
+        }
+    }
+</script>
