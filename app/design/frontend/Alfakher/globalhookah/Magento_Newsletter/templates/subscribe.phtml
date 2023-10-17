@@ -1,0 +1,145 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Magento\Newsletter\Block\Subscribe $block */
+?>
+<div class="block newsletter">
+    <div class="title"><strong><?= $block->escapeHtml(__('Newsletter')) ?></strong></div>
+    <div class="content">
+        <form class="form subscribe"
+            novalidate
+            action="<?= $block->escapeUrl($block->getFormActionUrl()) ?>"
+            method="post"
+            data-mage-init='{"validation": {"errorClass": "mage-error"}}'
+            id="newsletter-validate-detail">
+            <div class="field newsletter">
+                <div class="control">
+                    <p class="newsletterHead"><?= $block->escapeHtml(__('Join Our Newsletter!')) ?></p>
+                    <p><?= $block->escapeHtml(__('Be the first to know about new arrivals, sales & promos!')) ?></p>
+                    <div id="newslettermsg"> </div>
+                    <div class="action_field">
+                        <label for="newsletter">
+                            <input name="email" type="email" id="newsletter"
+                                   placeholder="<?= $block->escapeHtml(__('Email Address')) ?>"
+                                   data-mage-init='{"mage/trim-input":{}}'
+                                   data-validate="{required:true, 'validate-email':true}"
+                            />
+                        </label>
+                        <div class="actions">
+                            <button class="action primary subscribe-enable"
+                                    title="<?= $block->escapeHtmlAttr(__('Subscribe')) ?>"
+                                    type="submit"
+                                    aria-label="Subscribe">
+                                <?= $block->escapeHtml(__('SUBSCRIBE')) ?>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</div>
+<a href="javascript:" class="top_scroll" id="top-return"><i class="icon-chevron-up"></i></a>
+<script type="text/x-magento-init"> 
+    {   
+        "*": {  
+            "Magento_Newsletter/js/newsletter_subscriber_ajax": { } 
+        }   
+    }   
+</script>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Customer/js/block-submit-on-send": {
+                "formId": "newsletter-validate-detail"
+            }
+        }
+    }
+</script>
+
+<script>
+    require(['jquery'], function($){
+
+        $(document).ready(function(){
+            $(window).scroll(function() {
+                if ($(this).scrollTop() >= 50) {        
+                    $('#top-return').fadeIn(200);    
+                } else {
+                    $('#top-return').fadeOut(200);   
+                }
+            });
+            $('#top-return').click(function() {      
+                $('body,html').animate({
+                    scrollTop : 0                       
+                }, 500);
+            });
+
+            $('.level0.parent > .level-top').click(function() {
+                return false;
+            });
+            $(".ui-menu-item.parent.level1:first-child").addClass('current');
+
+            //passvisible 
+            jQuery(document).on('click','#showlgpass',function(){
+                var vis = jQuery(this).data('vis');
+                if(vis == 0){
+                    jQuery(this).closest('.control').find('input').attr('type','text');
+                    jQuery(this).removeClass('fa-eye-slash').addClass('fa-eye');
+                    jQuery(this).data('vis',1);
+                }else{
+                    jQuery(this).closest('.control').find('input').attr('type','password');
+                    jQuery(this).removeClass('fa-eye').addClass('fa-eye-slash');
+                    jQuery(this).data('vis',0);
+                }
+            });
+
+        });
+
+
+        $(".login.primary").click(function() {
+            $('html,body').animate({
+                scrollTop: $(".login-container").offset().top},
+                'slow');
+        });
+        $('.block-collapsible-nav .block-collapsible-nav-title strong').html($('.block-collapsible-nav .block-collapsible-nav-content strong').html());
+
+        $(window).load(function() {
+            $(".mobile_menu_icon").click(function(){  
+                $(".mobile_menu_icon").toggleClass("change");
+                $("body, html").toggleClass("active-menu");
+                $('body,html').animate({
+                    scrollTop : 0
+                }, 0);
+            });
+
+            // mobile menu custom toggle
+            jQuery('.hamburger_icon').on('click', function () {
+                jQuery('.sw-megamenu').toggleClass('active');
+            });
+        });
+        $(window).on("load resize",function(e){
+            var width = $(this).width();
+            if(width < 1025) {
+                $(".ui-menu-item.parent.level1:first-child").removeClass('current');
+                jQuery('.ui-menu-item.parent.level1 > a span').click(function() {
+                    jQuery(this).closest('li').toggleClass('current');
+                    // return false;
+                });
+            }
+            if(width > 1025) {
+                $(".ui-menu-item.parent.level1:first-child").addClass('current');
+                $(".ui-menu-item.parent.level1").hover(function(){
+                    $(this).closest('ul').find('li').not($(this)).removeClass('current');
+                    $(this).addClass('current');
+                    
+                    }, function(){
+                    $(this).closest('ul').find('li').not($(this)).removeClass('current');
+                });
+            }
+        });
+    });
+</script>
