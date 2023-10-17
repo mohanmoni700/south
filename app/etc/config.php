@@ -1021,6 +1021,7 @@ return [
         'Alfakher_ExciseReport' => 1,
         'Vrpayecommerce_Vrpayecommerce' => 1,
         'Alfakher_FinanceVerified' => 1,
+        'Alfakher_GiftProduct' => 1,
         'MageWorx_OrdersBase' => 1,
         'Alfakher_GroupedProduct' => 1,
         'MageWorx_OrderEditor' => 1,
