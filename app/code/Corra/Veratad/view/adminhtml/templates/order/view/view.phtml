@@ -1,0 +1,40 @@
+<?php
+/**
+ * @var $block \Corra\Veratad\Block\Adminhtml\Order\View\View
+ */
+$detail = $block->getVeratadDetails();
+
+?>
+<?php if ($detail) {?>
+<section class="admin__page-section order-view-account-information">
+<div class="admin__page-section-title">
+    <span class="title"><?= /* @noEscape */ $block->getVeratadInfo() ?></span>
+</div>
+<div class="admin__page-section-content">
+    <div class="admin__page-section-item veratad-information">
+        <div class="admin__table-wrapper">
+            <table class="admin__table-secondary order-varatad-table">
+                <tbody>
+                <tr>
+                    <th id="veratad_details"><?= /* @noEscape */ "Detail" ?></th>
+                    <td><?= /* @noEscape */ $detail['veratad_detail'] ?></td>
+                </tr>
+                <?php if (!empty($detail['veratad_billing_address_status'])): ?>
+                <tr>
+                    <th id="veratad_billing_address_status"><?= /* @noEscape */ "Billing Address Verification" ?></th>
+                    <td><?= /* @noEscape */  $detail['veratad_billing_address_status'] ?></td>
+                </tr>
+                <?php endif; ?>
+                <?php if (!empty($detail['veratad_shipping_address_status'])): ?>
+                <tr>
+                    <th id="veratad_shipping_address_status"><?= /* @noEscape */ "Shipping Address Verification" ?></th>
+                    <td><?= /* @noEscape */  $detail['veratad_shipping_address_status'] ?></td>
+                </tr>
+                <?php endif; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</section>
+<?php } ?>

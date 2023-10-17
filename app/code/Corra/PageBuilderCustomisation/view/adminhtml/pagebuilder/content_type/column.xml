@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
+    <type name="column"
+          label="Column"
+          component="Magento_PageBuilder/js/content-type-collection"
+          preview_component="Magento_PageBuilder/js/content-type/column/preview"
+          master_component="Magento_PageBuilder/js/content-type/master-collection"
+          form="pagebuilder_column_form"
+          menu_section="layout"
+          icon="icon-pagebuilder-column"
+          sortOrder="15"
+          translate="label">
+        <appearances>
+            <appearance default="true"
+                        name="full-height"
+                        preview_template="Magento_PageBuilder/content-type/column/full-height/preview"
+                        master_template="Magento_PageBuilder/content-type/column/full-height/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <attribute name="desktop_fastly_image_parameter" source="data-desktop-fastly-params"/>
+                        <attribute name="mobile_fastly_image_parameter" source="data-mobile-fastly-params"/>
+                    </element>
+                </elements>
+            </appearance>
+            <appearance name="align-top"
+                        preview_template="Magento_PageBuilder/content-type/column/full-height/preview"
+                        master_template="Magento_PageBuilder/content-type/column/full-height/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <attribute name="desktop_fastly_image_parameter" source="data-desktop-fastly-params"/>
+                        <attribute name="mobile_fastly_image_parameter" source="data-mobile-fastly-params"/>
+                    </element>
+                </elements>
+            </appearance>
+            <appearance name="align-center"
+                        preview_template="Magento_PageBuilder/content-type/column/full-height/preview"
+                        master_template="Magento_PageBuilder/content-type/column/full-height/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <attribute name="desktop_fastly_image_parameter" source="data-desktop-fastly-params"/>
+                        <attribute name="mobile_fastly_image_parameter" source="data-mobile-fastly-params"/>
+                    </element>
+                </elements>
+            </appearance>
+            <appearance name="align-bottom"
+                        preview_template="Magento_PageBuilder/content-type/column/full-height/preview"
+                        master_template="Magento_PageBuilder/content-type/column/full-height/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <attribute name="desktop_fastly_image_parameter" source="data-desktop-fastly-params"/>
+                        <attribute name="mobile_fastly_image_parameter" source="data-mobile-fastly-params"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
+</config>

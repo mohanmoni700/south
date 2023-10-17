@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" extends="pagebuilder_base_form">
+    <fieldset name="background">
+        <field name="desktop_fastly_image_parameter" sortOrder="31" formElement="input">
+            <settings>
+                <label translate="true">Desktop Fastly Image parameter</label>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+                <notice translate="true">Please follow the JSON structure {"width": 350, "height": 500,"crop":"16:9"}</notice>
+            </settings>
+        </field>
+        <field name="mobile_fastly_image_parameter" sortOrder="32" formElement="input">
+            <settings>
+                <label translate="true">Mobile Fastly Image parameter</label>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+                <notice translate="true">Please follow the JSON structure {"width": 350, "height": 500,"crop":"16:9"}</notice>
+            </settings>
+        </field>
+        <field name="is_image" sortOrder="90" formElement="checkbox">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="default" xsi:type="string">0</item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>boolean</dataType>
+                <label translate="true">Use Image Tag</label>
+                <dataScope>is_image</dataScope>
+            </settings>
+            <formElements>
+                <checkbox>
+                    <settings>
+                        <valueMap>
+                            <map name="false" xsi:type="string">0</map>
+                            <map name="true" xsi:type="string">1</map>
+                        </valueMap>
+                        <prefer>toggle</prefer>
+                    </settings>
+                </checkbox>
+            </formElements>
+        </field>
+        <field name="image_alt" sortOrder="100" formElement="input">
+            <settings>
+                <label translate="true">Alt text</label>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+                <notice translate="true">Alt text for the image</notice>
+            </settings>
+        </field>
+    </fieldset>
+</form>
