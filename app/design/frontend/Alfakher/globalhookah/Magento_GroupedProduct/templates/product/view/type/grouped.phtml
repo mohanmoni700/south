@@ -396,10 +396,6 @@
                 if (typeof $(this).val() !== 'undefined' && $(this).val() != '' && $(this).val() >= 0) {
                     let requestQty = parseInt($(this).val());
                     let productId = $(this).data('product-id');
-                    console.log(requestQty);
-                    if(requestQty>0) {
-
-                    }
                     $("#totalqtydrop_"+productId).html(requestQty);
                     let priceValue = $(this).parents('td').prev('td').find("span.price").text();
                     let numericPrice = parseFloat(priceValue.replace('$', ''));
