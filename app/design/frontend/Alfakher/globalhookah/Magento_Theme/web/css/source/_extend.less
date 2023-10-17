@@ -342,9 +342,27 @@
     .shop-by-cat {
         margin-bottom: 5.625rem;
         .pagebuilder-column {
+            > div {
+                &:nth-child(2) {
+                    display: none;
+                    
+                }
+            }
+
             &:hover {
                 > div {
-                    top: unset;
+                    &:nth-child(1) {
+                        display: none;
+                    }
+                    &:nth-child(2) {
+                        display: block;
+
+                        img {
+                            display: block;
+                            margin-inline: auto;
+                            top: -2rem;
+                        }
+                    }
                 }
 
                 .pagebuilder-button-link {
@@ -353,9 +371,6 @@
                 }
                 .pagebuilder-button-link {
                     color: @color_primary_hover;
-                }
-                img {
-                    top: -2rem;
                 }
             }
 
@@ -879,89 +894,6 @@
                     width: 4rem;
                     background-image: url('@{baseDir}images/next.svg');
                     background-repeat: no-repeat;
-                }
-            }
-        }
-    }
-
-    .homepage_category_slider { 
-        h2 {
-            font-size: 40px;
-        }
-
-        .pagebuilder-column {
-            &:hover {
-                > div {
-                    top: unset;
-                }
-
-                .pagebuilder-button-link {
-                    font-weight: 600;
-                }
-
-                img {
-                    top: -2rem;
-                }
-            }
-
-            .pagebuilder-button-link {
-                font-weight: 600;
-                white-space: nowrap;
-            }
-
-            img {
-                width: auto !important;
-                border-right: none;
-            }
-
-            p {
-                padding-bottom: 2rem;
-                background-image: url('@{baseDir}images/category-mask.svg');
-                background-repeat: no-repeat;
-                background-position: bottom;
-                background-size: 156px;
-            }
-        }
-
-        .hookahs {
-            &:hover {
-                img {
-                    content: url('@{baseDir}images/hookahs.png');
-                }
-            }
-        }
-        .hookahs-charcoal {
-            &:hover {
-                img {
-                    content: url('@{baseDir}images/charcoal.png');
-                }
-            }
-        }
-        .tobacco-free {
-            &:hover {
-                img {
-                    content: url('@{baseDir}images/tobacco-free.png');
-                }
-            }
-        }
-        .shisha {
-            &:hover {
-                img {
-                    content: url('@{baseDir}images/shisha.png');
-                }
-            }
-        }
-        .accessories {
-            &:hover {
-                img {
-                    content: url('@{baseDir}images/accessories.png');
-                }
-            }
-        }
-        .specials {
-            &:hover {
-                img {
-                    content: url('@{baseDir}images/specials.png');
                 }
             }
         }
@@ -1737,10 +1669,9 @@
                 .pagebuilder-button-link {
                     color: @color-black;
                 }
-
+                
                 img {
                     top: 0;
-                    content: initial;
                 }
             }
             a.pagebuilder-button-link:hover {
@@ -2571,19 +2502,4 @@
             }
         }
     }
-
-
-
-    .hookahs:hover,
-    .hookahs-charcoal:hover,
-    .shisha:hover,
-    .tobacco-free:hover,
-    .accessories:hover,
-    .specials:hover
-    {
-        img {
-            content: unset;
-        }
-    }
-
 }
