@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd" extends="pagebuilder_base_form">
+    <fieldset name="settings" sortOrder="20">
+        <field name="additional_config" sortOrder="100" formElement="textarea">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="valuesForOptions" xsi:type="array">
+                        <item name="textarea" xsi:type="string">textarea</item>
+                    </item>
+                </item>
+            </argument>
+            <settings>
+                <dataType>text</dataType>
+                <label translate="true">Additional Slider Configuration</label>
+                <dataScope>additional_config</dataScope>
+                <notice translate="true">Please follow the JSON structure {"slidesToShow": 3, "slidesToScroll": 1}</notice>
+            </settings>
+        </field>
+    </fieldset>
+</form>

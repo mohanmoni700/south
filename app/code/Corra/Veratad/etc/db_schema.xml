@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author  CORRA
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="sales_order_extended" resource="default" engine="innodb">
+        <column xsi:type="int" name="entity_id" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Entity ID"/>
+        <column xsi:type="int" name="sales_order_id" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="Order ID"/>
+        <column xsi:type="smallint" name="is_age_verified" padding="2" unsigned="true" nullable="false" identity="false"
+                comment="Veratad Age Verified"/>
+        <column xsi:type="varchar" name="veratad_dob" length="255" nullable="true" comment="Veratad DOB"/>
+        <column xsi:type="varchar" name="veratad_billing_address_status" length="255" nullable="true" comment="Veratad Billing Address Status"/>
+        <column xsi:type="varchar" name="veratad_shipping_address_status" length="255" nullable="true" comment="Veratad Shipping Address Status"/>
+        <column xsi:type="varchar" name="veratad_detail" length="255" nullable="true" comment="Veratad Detail"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="entity_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="SALES_ORDER_EXTENDED_SALES_ORDER_ID_SALES_ORDER_ENTITY_ID"
+                    table="sales_order_extended" column="sales_order_id" referenceTable="sales_order"
+                    referenceColumn="entity_id" onDelete="CASCADE"/>
+    </table>
+</schema>

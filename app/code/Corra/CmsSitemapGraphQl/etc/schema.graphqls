@@ -1,0 +1,9 @@
+type Query {
+    CmsSitemapData : [SitemapCmsPages] @resolver(class: "\\Corra\\CmsSitemapGraphQl\\Model\\Resolver\\SitemapCmsPages") @doc(description: "Query which returns the CMS page data for adding in sitemap")
+}
+
+type SitemapCmsPages implements RoutableInterface @doc(description: "CMS page data") {
+    url_key: String @doc(description: "URL key of CMS page")
+    title: String @doc(description: "CMS page title")
+    updated_at: String @doc(description: "CMS page update time")
+}
