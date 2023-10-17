@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body> 
+        <referenceContainer name="page.top">          
+              <block class="Alfakher\Categoryb2b\Block\Megamenu\Menucollection" name="megamenuCustom" template="Magento_Theme::html/MegaMenu.phtml"/>
+        </referenceContainer>
+        <referenceBlock name="megamenu-desktop" remove="true"/>        
+    </body>
+</page>

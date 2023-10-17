@@ -151,9 +151,6 @@
                 .left_section {
                     flex-basis: 72%;
                 }
-                .right_section {
-                    flex-basis: 28%;
-                }
                 .logo {
                      width: 230px;
                      height: auto;
@@ -201,43 +198,52 @@
                     }
 
                     .block-minicart {
-                        right: -80px !important;
+                        right: -2rem !important;
 
                         &::after,
                         &::before {
-                            right: 80px !important;
+                            right: 2rem !important;
                         }
-                    }
+                    }  
+                }
 
-                    &.amquote-cart-wrapper {
-                        order: 1;
-                        padding-bottom: 0;
-                    }
+                .amquote-cart-wrapper {
+                    order: 1;
+                    padding-bottom: 0;
 
                     .amquote-showcart { 
                         display: flex;
-                        gap: 8px;
+                        gap: 0.8rem;
                         
                         &::before {
                             background-image: url('@{baseDir}images/quotes.svg');
-                            height: 24px;
-                            width: 24px;
+                            height: 2.4rem;
+                            width: 2.4rem;
                             margin: 0;
                         }
                         .text {
                             font-size: 1.6rem;
                         }
                         .counter.qty {
-                            min-width: 18px;
-                            top: -10px;
-                            left: 7px;
+                            min-width: 1.8rem;
+                            top: -1rem;
+                            left: 0.7rem;
+                        }
+                    }
+
+                    .block-quotecart {
+                        right: -8rem !important;
+
+                        &::after,
+                        &::before {
+                            right: 8rem !important;
                         }
                     }
                 }
 
                 .right_section {
                     padding-bottom: 10px;
-
+                    flex-basis: 28%;
                     .sign-in {
                         flex-direction: row;
                         align-items: center;
@@ -624,6 +630,13 @@
         }
     }
 }
+@media only screen and (min-width: 1440px) and (max-width: 1920px) {
+    .top_products {
+        .tab-title {
+            font-size:2rem;
+        }
+    }
+}
 @media only screen and (max-width: 768px) {
     body .page-wrapper .page-header {
         .warning-section-wrapper {
@@ -650,6 +663,7 @@
             width: 28% !important;
             img {
                 width: 8.5rem !important;
+                padding: 0 10px;
             }
             &:hover {
                 .pagebuilder-button-link {
@@ -665,9 +679,7 @@
                 text-decoration: none;
                 .lib-font-size(12);
             }
-            img {
-                padding: 0 10px;
-            }
+
             .pagebuilder-button-link {
                 white-space: unset;
                 color: @color-black;
@@ -683,3 +695,20 @@
     }
 }
 
+@media only screen and (max-width: 767px) {
+    .top_products {
+        .product-item-name {
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+    }
+}
+@media only screen and (min-width: 1024px) and (max-width: 1920px) {
+    .top_products {
+        div[data-content-type='tabs'] .tabs-navigation li.tab-header {
+            a.tab-title {
+                font-size:2rem;
+            }
+        }
+    }
+}
