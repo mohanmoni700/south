@@ -16,8 +16,21 @@
 <?php $is_mobile = $_helperB2b->isMobileDevice();?>
 <?php $adminsession = $_helperB2b->getAdminCustomer();?>
 <?php $IsFinanceVerified = $_helperB2b->getIsFinanceVerified();?>
+<?php $notifyText = __('Notify Me'); ?>
 
     <div id="validation-message-box"></div>
+    <table class = "variant-label-table">
+        <caption>variant labels</caption>
+        <th></th>
+<tr class="table-variant-row col item main">
+                        <td class="variant col item main">Variant</td>
+                        <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
+                        <td class = "variant-unit main">Unit Price</td>
+                        <td class="col qty main">Qty</td>
+                        <td class="col qty main">Total Price</td>
+                        <?php endif; ?>
+                    </tr>
+</table>
     <div class="table-wrapper grouped">
     <?php if ($is_mobile):?>
         <table class="table data grouped"
@@ -40,12 +53,12 @@
                     ?>
                       <td data-th="<?= $block->escapeHtml(__('Product Name')) ?>" class="col item">
                         <?php if ($adminsession): ?>
-                            <strong class="product-item-name" title="<?= $block
+                            <strong class="product-item-name main" title="<?= $block
                             ->escapeHtml('Qty : '.$productAvailableQty.' , GrossMargin : ' . $finalGrossMargin.'%') ?>">
                             <?= $block->escapeHtml($_item->getName()) ?>
                             </strong>
                         <?php else: ?>
-                            <strong class="product-item-name"><?= $block->escapeHtml($_item->getName()) ?></strong>
+                            <strong class="product-item-name main"><?= $block->escapeHtml($_item->getName()) ?></strong>
                         <?php endif; ?>
                         </td>
                         <?php
@@ -177,7 +190,7 @@
             <th></th>
             </tr>
             <?php endif; ?>
-            <tr class="table-variant-row col item ">
+            <tr class="table-variant-row col item table ">
                         <td class="variant col item">Variant</td>
                         <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
                         <td class = "variant-unit">Unit Price</td>
@@ -195,12 +208,12 @@
                     ?>
                       <td data-th="<?= $block->escapeHtml(__('Product Name')) ?>" class="col item">
                         <?php if ($adminsession): ?>
-                            <strong class="product-item-name" title="<?= $block
+                            <strong class="product-item-name main" title="<?= $block
                             ->escapeHtml('Qty : '.$productAvailableQty.' , GrossMargin : ' . $finalGrossMargin.'%') ?>">
                             <?= $block->escapeHtml($_item->getName()) ?>
                             </strong>
                         <?php else: ?>
-                            <strong class="product-item-name"><?= $block->escapeHtml($_item->getName()) ?></strong>
+                            <strong class="product-item-name main"><?= $block->escapeHtml($_item->getName()) ?></strong>
                         <?php endif; ?>
                         </td>
                         <?php
@@ -263,6 +276,7 @@
                         </td>
                         <td class="col qty">
                         <?php if ($_product->isSaleable()): ?>
+                            <?php if ($_item->isSaleable()): ?>
                             <div class ="control totalqty price"
                              id="totalqtydrop_<?= $block->escapeHtmlAttr($_item->getId()) ?>"
                              data-product-id="<?=  $block->escapeHtmlAttr($_item->getId()) ?>"
@@ -272,11 +286,25 @@
                             <?= /* @noEscape */'$'.(float)$block->getProductPrice($_item)* (int)$_item->getQty().'.00'?>
                                 <?php endif; ?>
                             <?php endif; ?>
+                            <?php else: ?>
+                                <div>
+                                <a href="
+                                <?=$block->
+                                escapeUrl('productalert/add/stock/product_id/' . 
+                                $_product->getId() .
+                                '/uenc/' .
+                                base64_encode($block->escapeUrl($block->
+                                getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true, '_store' => null]))) )?>"
+        title="<?= $block->escapeHtml($notifyText) ?>" class="action alert notifyme_button">
+        <span><?= $block->escapeHtml($notifyText) ?></span>
+                                </a>
+                                </div>
+                            <?php endif; ?>
+                            <?php endif; ?>
                             <?php /* bv_op; date : 10-2-22; Start */ ?>
                             <div class="bv-special-price-<?= $block->escapeHtmlAttr($_item->getId()) ?>"></div>
                             <?php /* bv_op; date : 10-2-22; End */ ?>
                             </div>
-                            <?php endif; ?>
                     </td>
                     <?php endif; ?>
                 <?php endif; ?>
@@ -323,28 +351,6 @@
     <script>
         require(['jquery'], function ($) {
   $(document).ready(function() {
-    var col1Div = document.querySelector('.column-1');
-if (col1Div) {
-  var h2Element = document.createElement('span');
-  h2Element.textContent = 'Description';
-  h2Element.classList.add('Description-product-page');
-  col1Div.insertBefore(h2Element, col1Div.firstChild);
-
-  var ReadMore = document.createElement('button');
-  ReadMore.classList.add('showMore');
-  ReadMore.textContent = 'showMore';
-
-
-  var ReadLess = document.createElement('button');
-  ReadLess.classList.add('showLess');
-  ReadLess.classList.add('hidden');
-  ReadLess.textContent = 'showLess';
-
-
-
-  col1Div.append(ReadMore);
-  col1Div.append(ReadLess);
-}
   var inputValues = {};
   $(".col.qty .control.qty .input-text.qty").each(function() {
     let requestQty = parseInt($(this).val());
@@ -390,6 +396,10 @@ if (col1Div) {
                 if (typeof $(this).val() !== 'undefined' && $(this).val() != '' && $(this).val() >= 0) {
                     let requestQty = parseInt($(this).val());
                     let productId = $(this).data('product-id');
+                    console.log(requestQty);
+                    if(requestQty>0) {
+
+                    }
                     $("#totalqtydrop_"+productId).html(requestQty);
                     let priceValue = $(this).parents('td').prev('td').find("span.price").text();
                     let numericPrice = parseFloat(priceValue.replace('$', ''));
@@ -397,6 +407,12 @@ if (col1Div) {
                    const totalPrice=  requestQty*roundedPrice
                    const roundetTotalPrice = totalPrice.toFixed(2);
                     $("#totalqtydrop_"+productId).html('$'+ roundetTotalPrice);
+                    if(requestQty>0) {
+                        $("#totalqtydrop_"+productId).addClass('variant-total-price');
+                    }
+                    else {
+                        $("#totalqtydrop_"+productId).removeClass('variant-total-price'); 
+                    }
                     let totalSum = 0;
 
                     $('.totalqty').each(function() {

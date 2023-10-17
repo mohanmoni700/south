@@ -51,6 +51,9 @@
                             padding-right: 1.2rem;
                             text-align: center;
                             width: 140px;
+                            .variant-total-price {
+                                color: red;
+                            }
                             .control.qty {
                                 > span {
                                     clear: right;
@@ -89,7 +92,9 @@
                 font-weight: @font-weight__regular;
                 margin:0;
                 .lib-font-size(14);
-                min-height: auto;
+            }
+            .product-item-name.main {
+                min-height: 0.6rem !important ;
             }
             .control {
                 .qty {
@@ -175,6 +180,9 @@
         }
     }
     .product-add-form {
+        .variant-label-table {
+            display: none;
+        }
         .table-wrapper {
             .table.grouped {
                 tbody {
@@ -278,8 +286,17 @@
     .variant.col.item {
         width: 45rem;
     }
+    .variant.col.item.main {
+        width: 37.5rem;
+    }
+    .variant-unit.main {
+        width: 13rem;
+    }
     .variant-unit {
         white-space:nowrap;
+    }
+    .col.qty.main {
+        width: 11rem;
     }
     td {
         letter-spacing: 0px;
@@ -287,6 +304,10 @@
         padding:8px 8px !important;
     }
 }
+.table-variant-row.col.item.table {
+    display: none;
+} 
+
 
 .product-info-main {
     .product.attribute.sku {
@@ -386,8 +407,9 @@ display: none;
 }
 
 .product.column-1 {
+    border-top: 1px solid #C7D2EC;
     position: relative;
-    margin-top: 3rem ;
+    padding-top: 3rem ;
     .Description-product-page {
         font-size: 2rem;
         color: #316BB2;
@@ -402,7 +424,7 @@ display: none;
         height: 0.5em;
         border-top: 1px solid #316BB2;
         z-index: -1;
-        top: 1.5rem;
+        top: 4.5rem;
     }
     .showMore , .showLess{
         border: none;
@@ -419,6 +441,22 @@ display: none;
     .table-wrapper.grouped {
         overflow-x: hidden;
 }
+.table-variant-row {
+    height: 5rem;
+    background: transparent linear-gradient(153deg, #229B62 0%, #346DB0 100%) 0% 0% no-repeat padding-box;
+    .variant.col.item.main {
+        width: 27.5rem;
+    }
+    .variant-unit.main {
+        width: 13rem;
+    }
+    .variant-unit {
+        white-space:nowrap;
+    }
+    .col.qty.main {
+        width: 11rem;
+    }
+}
 
 .actions {
     .Product_grouped_totals {
@@ -427,6 +465,26 @@ display: none;
 }
 
 }
+@media only screen and (max-width: 1430px) and  (min-width: 1200px) {
+    .table-variant-row {
+        height: 5rem;
+        background: transparent linear-gradient(153deg, #229B62 0%, #346DB0 100%) 0% 0% no-repeat padding-box;
+        .variant.col.item.main {
+            width: 32.5rem;
+        }
+        .variant-unit.main {
+            width: 13rem;
+        }
+        .variant-unit {
+            white-space:nowrap;
+        }
+        .col.qty.main {
+            width: 11rem;
+        }
+    }
+
+}
+
 @media only screen and (max-width: 1400px) and  (min-width: 768px) {
     .catalog-product-view .page-main, .catalog-product-view .page-main-full-width {
         padding: 0rem 2rem;
