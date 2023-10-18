@@ -122,7 +122,7 @@ class GiftCardItemEmailPlugin
             'store_name' => $giftCardOrderItem->getStore()->getName(),
             'is_redeemable' => $isRedeemable,
             'order_item_id' => $giftCardOrderItem->getItemId(),
-            'default_base_url' => $this->storeManagerInterface->getDefaultStoreView()->getBaseUrl()
+            'default_base_url' => $this->scopeConfig->getValue("web/unsecure/base_url")
         ];
 
         $emailIdentity = $this->scopeConfig->getValue(
