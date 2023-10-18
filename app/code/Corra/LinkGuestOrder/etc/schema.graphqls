@@ -1,0 +1,8 @@
+type Mutation {
+   createCustomerOnCheckout (
+       input: CustomerInput!
+       increment_id: String! @doc(description: "The Order Increment id")
+   ): CustomerOutput
+   @resolver(class: "\\Corra\\LinkGuestOrder\\Model\\Resolver\\CreateCustomerOnCheckout")
+   @doc(description:"Create customer account on checkout")
+}

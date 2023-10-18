@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd"
+      extends="pagebuilder_base_form">
+    <fieldset name="general" sortOrder="20">
+        <field name="desktop_fastly_image_parameter" sortOrder="29" formElement="input">
+            <settings>
+                <label translate="true">Desktop Fastly Image parameter</label>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+                <notice translate="true">Please follow the JSON structure {"width": 350, "height": 500,"crop":"16:9"}</notice>
+            </settings>
+        </field>
+        <field name="mobile_fastly_image_parameter" sortOrder="30" formElement="input">
+            <settings>
+                <label translate="true">Mobile Fastly Image parameter</label>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+                <notice translate="true">Please follow the JSON structure {"width": 350, "height": 500,"crop":"16:9"}</notice>
+            </settings>
+        </field>
+        <field name="desktop_image_width" sortOrder="31" formElement="input">
+            <settings>
+                <label translate="true">Desktop Image Width</label>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="desktop_image_height" sortOrder="32" formElement="input">
+            <settings>
+                <label translate="true">Desktop Image Height</label>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="mobile_image_width" sortOrder="33" formElement="input">
+            <settings>
+                <label translate="true">Mobile Image Width</label>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+        <field name="mobile_image_height" sortOrder="34" formElement="input">
+            <settings>
+                <label translate="true">Mobile Image Height</label>
+                <validation>
+                    <rule name="validate-string" xsi:type="boolean">true</rule>
+                </validation>
+            </settings>
+        </field>
+    </fieldset>
+</form>

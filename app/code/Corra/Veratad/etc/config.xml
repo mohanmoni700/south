@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <veratad_settings>
+            <general>
+                <enabled>1</enabled>
+            </general>
+            <agematch>
+                <url>https://production.idresponse.com/process/comprehensive/gateway</url>
+                <agematchservice>AgeMatch5.0</agematchservice>
+                <agematchrules>AgeMatch5_0_RuleSet_ADDR_DOB</agematchrules>
+                <agematchrule_phone>AgeMatch5_0_RuleSet_ADDR_PHONE</agematchrule_phone>
+            </agematch>
+            <data_save>
+                <save_age_verification_order>1</save_age_verification_order>
+                <save_age_verification_customer>1</save_age_verification_customer>
+            </data_save>
+            <content>
+                <agematch_fail_subtitle>We were unable to verify your age. Please edit your details below and try again.
+                </agematch_fail_subtitle>
+                <agematch_success_subtitle>You are age verified!</agematch_success_subtitle>
+            </content>
+        </veratad_settings>
+        <verated_state_ages>
+            <global>
+                <global_age>21+</global_age>
+            </global>
+        </verated_state_ages>
+    </default>
+</config>

@@ -1,0 +1,28 @@
+{
+    "name": "corra/new-relic-reporting-graph-ql",
+    "description": "NewRelic Reporting Support for GraphQl",
+    "type": "magento2-module",
+    "require": {
+        "magento/module-new-relic-reporting": "*"
+    },
+    "authors": [
+        {
+            "name": "CORRA"
+        }
+    ],
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Corra\\NewRelicReportingGraphql\\": ""
+        }
+    },
+    "support": {
+        "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/2058158729/NewRelic+Reporting+of+GraphQl+Transactions"
+    }
+}

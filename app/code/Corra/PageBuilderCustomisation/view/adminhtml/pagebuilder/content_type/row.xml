@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
+    <type name="row"
+          label="Row"
+          component="Magento_PageBuilder/js/content-type-collection"
+          preview_component="Magento_PageBuilder/js/content-type/row/preview"
+          master_component="Magento_PageBuilder/js/content-type/master-collection"
+          form="pagebuilder_row_form"
+          menu_section="layout"
+          icon="icon-pagebuilder-row"
+          sortOrder="1"
+          translate="label">
+        <parents default_policy="deny">
+            <parent name="root-container" policy="allow"/>
+        </parents>
+        <children default_policy="allow">
+            <child name="row" policy="deny"/>
+        </children>
+        <appearances>
+            <appearance default="true"
+                        name="contained"
+                        preview_template="Magento_PageBuilder/content-type/row/contained/preview"
+                        master_template="Magento_PageBuilder/content-type/row/contained/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                    <elements>
+                        <element name="inner">
+                            <attribute name="desktop_fastly_image_parameter" source="data-desktop-fastly-params"/>
+                            <attribute name="mobile_fastly_image_parameter" source="data-mobile-fastly-params"/>
+                        </element>
+                    </elements>
+            </appearance>
+            <appearance name="full-width"
+                        preview_template="Magento_PageBuilder/content-type/row/full-width/preview"
+                        master_template="Magento_PageBuilder/content-type/row/full-width/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <attribute name="desktop_fastly_image_parameter" source="data-desktop-fastly-params"/>
+                        <attribute name="mobile_fastly_image_parameter" source="data-mobile-fastly-params"/>
+                    </element>
+                </elements>
+            </appearance>
+            <appearance name="full-bleed"
+                        preview_template="Magento_PageBuilder/content-type/row/full-bleed/preview"
+                        master_template="Magento_PageBuilder/content-type/row/full-bleed/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="main">
+                        <attribute name="desktop_fastly_image_parameter" source="data-desktop-fastly-params"/>
+                        <attribute name="mobile_fastly_image_parameter" source="data-mobile-fastly-params"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
+</config>

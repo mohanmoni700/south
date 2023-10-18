@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
+    <type name="slide"
+          label="Slide"
+          component="Magento_PageBuilder/js/content-type"
+          preview_component="Magento_PageBuilder/js/content-type/slide/preview"
+          form="pagebuilder_slide_form"
+          menu_section="media"
+          icon="icon-pagebuilder-slider"
+          translate="label">
+        <parents default_policy="deny">
+            <parent name="slider" policy="allow"/>
+        </parents>
+        <children default_policy="deny"/>
+        <appearances>
+            <appearance name="collage-left"
+                        preview_template="Magento_PageBuilder/content-type/slide/collage-left/preview"
+                        master_template="Magento_PageBuilder/content-type/slide/collage-left/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="wrapper">
+                        <attribute name="desktop_fastly_image_parameter" source="data-desktop-fastly-params"/>
+                        <attribute name="mobile_fastly_image_parameter" source="data-mobile-fastly-params"/>
+                        <attribute name="is_image" source="data-is-background-image-alt"/>
+                        <attribute name="image_alt" source="data-background-image-alt"/>
+                    </element>
+                </elements>
+            </appearance>
+            <appearance name="collage-centered"
+                        preview_template="Magento_PageBuilder/content-type/slide/collage-centered/preview"
+                        master_template="Magento_PageBuilder/content-type/slide/collage-centered/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="wrapper">
+                        <attribute name="desktop_fastly_image_parameter" source="data-desktop-fastly-params"/>
+                        <attribute name="mobile_fastly_image_parameter" source="data-mobile-fastly-params"/>
+                        <attribute name="is_image" source="data-is-background-image-alt"/>
+                        <attribute name="image_alt" source="data-background-image-alt"/>
+                    </element>
+                </elements>
+            </appearance>
+            <appearance name="collage-right"
+                        preview_template="Magento_PageBuilder/content-type/slide/collage-right/preview"
+                        master_template="Magento_PageBuilder/content-type/slide/collage-right/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="wrapper">
+                        <attribute name="desktop_fastly_image_parameter" source="data-desktop-fastly-params"/>
+                        <attribute name="mobile_fastly_image_parameter" source="data-mobile-fastly-params"/>
+                        <attribute name="is_image" source="data-is-background-image-alt"/>
+                        <attribute name="image_alt" source="data-background-image-alt"/>
+                    </element>
+                </elements>
+            </appearance>
+            <appearance default="true"
+                        name="poster"
+                        preview_template="Magento_PageBuilder/content-type/slide/poster/preview"
+                        master_template="Magento_PageBuilder/content-type/slide/poster/master"
+                        reader="Magento_PageBuilder/js/master-format/read/configurable">
+                <elements>
+                    <element name="wrapper">
+                        <attribute name="desktop_fastly_image_parameter" source="data-desktop-fastly-params"/>
+                        <attribute name="mobile_fastly_image_parameter" source="data-mobile-fastly-params"/>
+                        <attribute name="is_image" source="data-is-background-image-alt"/>
+                        <attribute name="image_alt" source="data-background-image-alt"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
+</config>
