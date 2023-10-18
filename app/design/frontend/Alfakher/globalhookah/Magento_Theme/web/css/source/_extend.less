@@ -534,50 +534,6 @@
         }
     }
 
-    .hookahs {
-        &:hover {
-            img {
-                content: url('@{baseDir}images/hookahs.png');
-            }
-        }
-    }
-    .hookahs-charcoal {
-        &:hover {
-            img {
-                content: url('@{baseDir}images/charcoal.png');
-            }
-        }
-    }
-    .tobacco-free {
-        &:hover {
-            img {
-                content: url('@{baseDir}images/tobacco-free.png');
-            }
-        }
-    }
-    .shisha {
-        &:hover {
-            img {
-                content: url('@{baseDir}images/shisha.png');
-            }
-        }
-    }
-    .accessories {
-        &:hover {
-            img {
-                content: url('@{baseDir}images/accessories.png');
-            }
-        }
-    }
-    .specials {
-        &:hover {
-            img {
-                content: url('@{baseDir}images/specials.png');
-            }
-        }
-    }
-
-
     .bestselling-picks {
         h2 {
             margin-bottom: 5.6rem;
@@ -1669,9 +1625,14 @@
                 .pagebuilder-button-link {
                     color: @color-black;
                 }
-                
-                img {
-                    top: 0;
+
+                > div {
+                    &:nth-child(1) {
+                        display: block;
+                    }
+                    &:nth-child(2) {
+                        display: none;
+                    }
                 }
             }
             a.pagebuilder-button-link:hover {
