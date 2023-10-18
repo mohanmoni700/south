@@ -35,14 +35,14 @@
 <script>
         require(['jquery'], function ($) {
   $(document).ready(function() {
-    var col1Div = document.querySelector('.column-1');
-if (col1Div) {
-  var h2Element = document.createElement('span');
-  h2Element.textContent = 'Description';
-  h2Element.classList.add('Description-product-page');
-  col1Div.insertBefore(h2Element, col1Div.firstChild);
-}
-});
+    let col1Div = document.querySelector('.column-1');
+      if (col1Div) {
+        let h2Element = document.createElement('span');
+        h2Element.textContent = 'Description';
+        h2Element.classList.add('Description-product-page');
+        col1Div.insertBefore(h2Element, col1Div.firstChild);
+      }
+  });
         });
     </script>
 

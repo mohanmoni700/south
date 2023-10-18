@@ -22,15 +22,15 @@
     <table class = "variant-label-table">
         <caption>variant labels</caption>
         <th></th>
-<tr class="table-variant-row col item main">
-                        <td class="variant col item main">Variant</td>
-                        <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
-                        <td class = "variant-unit main">Unit Price</td>
-                        <td class="col qty main">Qty</td>
-                        <td class="col qty main">Total Price</td>
-                        <?php endif; ?>
-                    </tr>
-</table>
+        <tr class="table-variant-row col item main">
+            <td class="variant col item main">Variant</td>
+            <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
+                <td class = "variant-unit main">Unit Price</td>
+                <td class="col qty main">Qty</td>
+                <td class="col qty main">Total Price</td>
+            <?php endif; ?>
+        </tr>
+    </table>
     <div class="table-wrapper grouped">
     <?php if ($is_mobile):?>
         <table class="table data grouped"
@@ -277,35 +277,36 @@
                         <td class="col qty">
                         <?php if ($_product->isSaleable()): ?>
                             <?php if ($_item->isSaleable()): ?>
-                            <div class ="control totalqty price"
-                             id="totalqtydrop_<?= $block->escapeHtmlAttr($_item->getId()) ?>"
-                             data-product-id="<?=  $block->escapeHtmlAttr($_item->getId()) ?>"
-                             >
+                                <div class ="control totalqty price"
+                                id="totalqtydrop_<?= $block->escapeHtmlAttr($_item->getId()) ?>"
+                                data-product-id="<?=  $block->escapeHtmlAttr($_item->getId()) ?>"
+                                >
                             <?php if ($block->getCanShowProductPrice($_product)): ?>
                             <?php if ($block->getCanShowProductPrice($_item)): ?>
                             <?= /* @noEscape */'$'.(float)$block->getProductPrice($_item)* (int)$_item->getQty().'.00'?>
-                                <?php endif; ?>
                             <?php endif; ?>
-                            <?php else: ?>
-                                <div>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <div>
                                 <a href="
-                                <?=$block->
-                                escapeUrl('productalert/add/stock/product_id/' .
-                                $_product->getId() .
-                                '/uenc/' .
-                                base64_encode($block->escapeUrl($block->
-                                getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true, '_store' => null]))) )?>"
-        title="<?= $block->escapeHtml($notifyText) ?>" class="action alert notifyme_button">
-        <span><?= $block->escapeHtml($notifyText) ?></span>
+                                    <?=$block->
+                                    escapeUrl('productalert/add/stock/product_id/' .
+                                    $_product->getId() .
+                                    '/uenc/' .
+                                    base64_encode($block->escapeUrl($block->
+                                    getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true, '_store' => null]))) )
+                                    ?>"
+                                    title="<?= $block->escapeHtml($notifyText) ?>" class="action alert notifyme_button">
+                                    <span><?= $block->escapeHtml($notifyText) ?></span>
                                 </a>
-                                </div>
+                            </div>
                             <?php endif; ?>
                             <?php endif; ?>
                             <?php /* bv_op; date : 10-2-22; Start */ ?>
                             <div class="bv-special-price-<?= $block->escapeHtmlAttr($_item->getId()) ?>"></div>
                             <?php /* bv_op; date : 10-2-22; End */ ?>
                             </div>
-                    </td>
+                        </td>
                     <?php endif; ?>
                 <?php endif; ?>
             </tr>
