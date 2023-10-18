@@ -1,0 +1,20 @@
+{
+  "name": "corra/module-link-guest-order-graph-ql",
+  "description": "Link Guest Order to Customer once Customer signs up",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*",
+    "magento/module-customer-graph-ql": "*"
+  },
+  "license": [
+    "Proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Corra\\LinkGuestOrder\\": ""
+    }
+  }
+}

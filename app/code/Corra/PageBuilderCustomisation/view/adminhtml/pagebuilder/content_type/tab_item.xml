@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
+    <type name="tab-item">
+        <appearances>
+            <appearance name="default">
+                <elements>
+                    <element name="main">
+                        <attribute name="tab_url" source="data-tab-url"/>
+                        <attribute name="desktop_fastly_image_parameter" source="data-desktop-fastly-params"/>
+                        <attribute name="mobile_fastly_image_parameter" source="data-mobile-fastly-params"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
+</config>
