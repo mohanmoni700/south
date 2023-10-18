@@ -74,10 +74,13 @@ $customerAddressView = $block->getData('customer_address');
         <?php endif ?>
     </div>
 </div>
-
+<?php
+    $helper = $this->helper(Alfakher\AddressModification\Model\Data::class);
+    $disableBUtton = $helper->getDisabledbtn();
+?>
 <div class="actions-toolbar">
     <div class="primary">
-        <?php if (0): ?>
+        <?php if (!$disableBUtton): ?>
             <button type="button" role="add-address"
                 title="<?= $block->escapeHtmlAttr(__('New Address')) ?>"
                 class="action primary add">
