@@ -5,4 +5,11 @@
                 type="Alfakher\StockAlert\Model\ProductAlertStockGuestUser" />
     <preference for="Alfakher\StockAlert\Api\ProductAlertStockGuestUserRepositoryInterface"
                 type="Alfakher\StockAlert\Model\ProductAlertStockGuestUserRepository"/>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="product_stock_alert" xsi:type="object">Alfakher\StockAlert\Console\Command\ProductStockAlert</item>
+            </argument>
+        </arguments>
+    </type>
 </config>
