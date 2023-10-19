@@ -66,17 +66,13 @@ class ProcessBackInStock
     public function execute(Observer $observer)
     {
         $this->logger->info("Stock Alert Cron Started for Guest");
-        $collection = $this->subscriptionCollectionFactory->create();
-        $collection->addFieldToFilter('send_count', 0);
-        $subscriptions = $collection->getItems();
-        $this->processBackInStock($subscriptions);
+        $this->processBackInStock();
     }
 
     /**
-     * @param $subscriptions
      * @return bool
      */
-    public function processBackInStock($subscriptions): bool
+    public function processBackInStock(): bool
     {
         $collection = $this->subscriptionCollectionFactory->create();
         $collection->addFieldToFilter('send_count', 0);
