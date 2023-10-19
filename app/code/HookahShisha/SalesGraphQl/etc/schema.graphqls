@@ -1,4 +1,7 @@
 type OrderTotal @doc(description: "Contains details about the sales total amounts used to calculate the final price") {
-    store_credit: Money! @doc(description: " store credit applied for an order")
+    store_credit: Money! @doc(description: "store credit applied for an order")
     @resolver(class: "HookahShisha\\SalesGraphQl\\Model\\Resolver\\Order\\CustomerBalance")
+}
+type InvoiceTotal {
+    store_credit: Money! @doc(description: "store credit applied for the invoice")
 }
