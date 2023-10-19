@@ -42,12 +42,6 @@ class InvoiceTotal
 
         $result['store_credit'] =
             ['value' => $invoiceModel->getCustomerBalanceAmount() ?? 0, 'currency' => $currency];
-
-
-        $writer = new \Zend_Log_Writer_Stream(BP . '/var/log/invoice.log');
-        $logger = new \Zend_Log();
-        $logger->addWriter($writer);
-        $logger->info(json_encode($result));
         return $result;
     }
 }
