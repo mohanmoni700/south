@@ -1,0 +1,4 @@
+interface CartItemInterface {
+    is_out_stock: Int @doc(description: "Cart item stock status") @resolver(class: "Corra\\QuoteBundleItemStock\\Model\\Resolver\\CartItem\\StockStatus")
+    oos_message: String @doc(description: "Bundle product Oos Message") @resolver(class: "Corra\\QuoteBundleItemStock\\Model\\Resolver\\CartItem\\OosMessageText")
+}

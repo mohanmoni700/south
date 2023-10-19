@@ -1,0 +1,25 @@
+{
+    "name": "corra/module-page-builder-customisation",
+    "description": "Module for adding additional height and width attributes for PageBuilder Images",
+    "type": "magento2-module",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "require": {
+        "magento/module-page-builder": "*"
+    },
+    "authors": [
+        {
+            "name": "CORRA"
+        }
+    ],
+    "autoload": {
+        "files": [
+          "registration.php"
+        ],
+        "psr-4": {
+            "Corra\\PageBuilderCustomisation\\": ""
+        }
+    }
+}
