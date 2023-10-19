@@ -2,9 +2,17 @@
 
 namespace Alfakher\StockAlert\Helper;
 
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Exception\MailException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Store\Model\ScopeInterface as ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\RequestInterface;
+use Magento\Catalog\Api\ProductRepositoryInterface;
+use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\Translate\Inline\StateInterface as TranslateStateInterface;
+use Magento\Framework\Mail\Template\TransportBuilder as TransportBuilder;
+use Alfakher\StockAlert\Logger\Logger;
 
 class Data
 {
@@ -17,17 +25,37 @@ class Data
      * @var StoreManagerInterface
      */
     private StoreManagerInterface $storeManager;
+    private ProductRepositoryInterface $productRepository;
+    private ScopeConfigInterface $scopeConfig;
+    private TranslateStateInterface $inlineTranslation;
+    private TransportBuilder $transportBuilder;
+    private Logger $logger;
 
     /**
      * @param StoreManagerInterface $storeManager
      * @param RequestInterface $request
+     * @param ProductRepositoryInterface $productRepository
+     * @param ScopeConfigInterface $scopeConfig
+     * @param TranslateStateInterface $inlineTranslation
+     * @param TransportBuilder $transportBuilder
+     * @param Logger $logger
      */
     public function __construct(
         StoreManagerInterface $storeManager,
-        RequestInterface $request
+        RequestInterface $request,
+        ProductRepositoryInterface $productRepository,
+        ScopeConfigInterface $scopeConfig,
+        TranslateStateInterface $inlineTranslation,
+        TransportBuilder $transportBuilder,
+        Logger $logger
     ) {
         $this->storeManager = $storeManager;
         $this->request = $request;
+        $this->productRepository = $productRepository;
+        $this->scopeConfig = $scopeConfig;
+        $this->inlineTranslation = $inlineTranslation;
+        $this->transportBuilder = $transportBuilder;
+        $this->logger = $logger;
     }
 
     /**
@@ -60,5 +88,74 @@ class Data
     public function getProductId(): ?string
     {
         return $this->request->getParam('product_id');
+    }
+
+    /**
+     * @param $email
+     * @param int $productId
+     * @return $this
+     * @throws NoSuchEntityException
+     */
+    public function sendBackInStockEmail($email, int $productId, $customerName)
+    {
+        try {
+            $product = $this->productRepository->getById($productId);
+
+            $templateVars = [
+                'customerName' => $customerName,
+                'productName' => $product->getName()
+            ];
+
+            $storeId = $this->storeManager->getStore()->getId();
+
+            $fromEmail = $this->scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE);
+            $fromName = $this->scopeConfig->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE);
+            $from = ['email' => $fromEmail, 'name' => $fromName];
+            $to = [$email];
+
+            $templateOptions = [
+                'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
+                'store' => $storeId
+            ];
+
+            $templateId = $this->scopeConfig->getValue(
+                "catalog/productalert/guest_user_email_template",
+                ScopeInterface::SCOPE_STORE,
+                $storeId
+            );
+
+            $this->inlineTranslation->suspend();
+
+            $this->logger->info("Email Data", [
+                'customer_name' => $customerName,
+                'product_name' => $product->getName(),
+                'email' => $email,
+                'from_email' => $from,
+                'to_email' => $to,
+                'template_id' => $templateId,
+                'store_id' => $storeId
+            ]);
+            $transport = $this->transportBuilder->setTemplateIdentifier($templateId)
+                ->setTemplateOptions($templateOptions)
+                ->setTemplateVars($templateVars)
+                ->setFrom($from)
+                ->addTo($to)
+                ->getTransport();
+
+            $transport->sendMessage();
+            $this->logger->info("Email sent successfully");
+
+            $this->inlineTranslation->resume();
+            return $this;
+        } catch (NoSuchEntityException $e) {
+            $this->logger->info("Error in product",[
+                'product_id' => $productId
+            ]);
+            throw new NoSuchEntityException(__("Requested product does not exist - %1", $productId));
+        } catch (MailException|LocalizedException $e) {
+            $this->logger->info("Error in email data",[
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 }
