@@ -12,24 +12,24 @@ use Alfakher\StockAlert\Helper\Data;
 
 class ProcessBackInStock
 {
-    private CollectionFactory $subscriptionCollectionFactory;
+    private CollectionFactory $stockAlertCollection;
     private stockRegistry $stockRegistry;
     private Logger $logger;
     private Data $helperData;
 
     /**
-     * @param CollectionFactory $subscriptionCollectionFactory
+     * @param CollectionFactory $stockAlertCollection
      * @param stockRegistry $stockRegistry
      * @param Logger $logger
      * @param Data $helperData
      */
     public function __construct(
-        CollectionFactory $subscriptionCollectionFactory,
+        CollectionFactory $stockAlertCollection,
         stockRegistry $stockRegistry,
         Logger $logger,
         Data $helperData
     ) {
-        $this->subscriptionCollectionFactory = $subscriptionCollectionFactory;
+        $this->stockAlertCollection = $stockAlertCollection;
         $this->stockRegistry = $stockRegistry;
         $this->logger = $logger;
         $this->helperData = $helperData;
@@ -50,25 +50,25 @@ class ProcessBackInStock
      */
     public function processBackInStock(): bool
     {
-        $collection = $this->subscriptionCollectionFactory->create();
+        $collection = $this->stockAlertCollection->create();
         $collection->addFieldToFilter('send_count', 0);
-        $subscriptions = $collection->getItems();
-        if ($subscriptions) {
-            foreach ($subscriptions as $subscription) {
-                $productId = (int)$subscription->getData('product_id');
+        $stockAlertProductData = $collection->getItems();
+        if ($stockAlertProductData) {
+            foreach ($stockAlertProductData as $stockAlertProduct) {
+                $productId = (int)$stockAlertProduct->getData('product_id');
                 $this->logger->info("Product Id back in stock", [
                     'product_id' => $productId
                 ]);
                 if ($this->productIsBackInStock($productId)) {
                     $this->helperData->sendBackInStockEmail(
-                        $subscription->getData('email_id'),
-                        (int)$subscription->getData('product_id'),
-                        $subscription->getData('name')
+                        $stockAlertProduct->getData('email_id'),
+                        (int)$stockAlertProduct->getData('product_id'),
+                        $stockAlertProduct->getData('name')
                     );
-                    $subscription->setData('send_date', date('Y-m-d H:i:s'));
-                    $subscription->setData('send_count', (int)$subscription->getData('send_count') + 1);
-                    $subscription->setData('status', 1);
-                    $subscription->save();
+                    $stockAlertProduct->setData('send_date', date('Y-m-d H:i:s'));
+                    $stockAlertProduct->setData('send_count', (int)$stockAlertProduct->getData('send_count') + 1);
+                    $stockAlertProduct->setData('status', 1);
+                    $stockAlertProduct->save();
                 }
             }
             return true;
