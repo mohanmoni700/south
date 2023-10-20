@@ -39,15 +39,15 @@ if ($order->getExciseTax() > 0) {
             </div>
             <?php endif; ?>
             <tr>
-                <th class="col name"><?= $block->escapeHtml(__('Product Name')) ?></th>
-                <th class="col sku"><?= $block->escapeHtml(__('SKU')) ?></th>
-                <th class="col price"><?= $block->escapeHtml(__('Price')) ?></th>
+                <th scope="col" class="col name"><?= $block->escapeHtml(__('Product Name')) ?></th>
+                <th scope="col" class="col sku"><?= $block->escapeHtml(__('SKU')) ?></th>
+                <th scope="col" class="col price"><?= $block->escapeHtml(__('Price')) ?></th>
                 <?php if ($viewModel->canShowTaxColumn($order)): ?>
-                <th class="col tax"><?= $block->escapeHtml(__('Tax')) ?></th>
+                <th scope="col" class="col tax"><?= $block->escapeHtml(__('Tax')) ?></th>
                 <?php endif; ?>
-                <th class="col qty"><?= $block->escapeHtml(__('Qty')) ?></th>
-                <th class="col subtotal"><?= $block->escapeHtml(__('Subtotal')) ?></th>
-                <th class="col action"><?= $block->escapeHtml(__('Action')) ?></th>
+                <th scope="col" class="col qty"><?= $block->escapeHtml(__('Qty')) ?></th>
+                <th scope="col" class="col subtotal"><?= $block->escapeHtml(__('Subtotal')) ?></th>
+                <th scope="col" class="col action"><?= $block->escapeHtml(__('Action')) ?></th>
             </tr>
         </thead>
         <?php $items = $block->getItems(); ?>

@@ -43,8 +43,12 @@ class ProductSearch extends MagentoProductSearch
         Visibility                             $catalogProductVisibility
     ) {
         parent::__construct(
-            $collectionFactory, $searchResultsFactory, $collectionPreProcessor,
-            $collectionPostProcessor, $searchResultsApplierFactory, $searchCriteriaBuilder,
+            $collectionFactory,
+            $searchResultsFactory,
+            $collectionPreProcessor,
+            $collectionPostProcessor,
+            $searchResultsApplierFactory,
+            $searchCriteriaBuilder,
             $catalogProductVisibility
         );
         $this->collectionFactory = $collectionFactory;
@@ -57,6 +61,24 @@ class ProductSearch extends MagentoProductSearch
     }
 
     /**
+     *
+     * @param SearchResultInterface $searchResult
+     * @return false
+     */
+    public function getUrlKeyIfPDP(SearchResultInterface $searchResult)
+    {
+        foreach ($searchResult->getSearchCriteria()->getFilterGroups() as $filterGroup) {
+            foreach ($filterGroup->getFilters() as $filter) {
+                if ($filter->getField() === 'url_key') {
+                    return $filter->getValue();
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     *
      * @param SearchCriteriaInterface $searchCriteria
      * @param SearchResultInterface $searchResult
      * @param array $attributes
@@ -68,8 +90,7 @@ class ProductSearch extends MagentoProductSearch
         SearchResultInterface   $searchResult,
         array                   $attributes = [],
         ContextInterface        $context = null
-    ): SearchResultsInterface
-    {
+    ): SearchResultsInterface {
         /** @var Collection $collection */
         $collection = $this->collectionFactory->create();
 
@@ -82,17 +103,26 @@ class ProductSearch extends MagentoProductSearch
             $this->getSortOrderArray($searchCriteriaForCollection)
         )->apply();
 
-        /** Custom code added to sort product collection by stock_status */
-        $collection->getSelect()->joinLeft(
-            [
-                "stock_data" => "cataloginventory_stock_item"
-            ],
-            'e.entity_id = stock_data.product_id',
-            ['stock_data.is_in_stock']
-        );
-        $collection->getSelect()->reset('order');
-        $collection->getSelect()->order("stock_data.is_in_stock DESC");
-        /** Custom code End Here */
+        /**
+         * if it is pdp it is filtered with urlkey, so when ever we
+         * have url key filter we dont do need stock filters
+         */
+        if ($urlKey = $this->getUrlKeyIfPDP($searchResult)) {
+            $collection->addAttributeToSelect('*')
+                ->addAttributeToFilter('url_key', $urlKey);
+        } else {
+            /** Custom code added to sort product collection by stock_status */
+            $collection->getSelect()->joinLeft(
+                [
+                    "stock_data" => "cataloginventory_stock_item"
+                ],
+                'e.entity_id = stock_data.product_id',
+                ['stock_data.is_in_stock']
+            );
+            $collection->getSelect()->reset('order');
+            $collection->getSelect()->order("stock_data.is_in_stock DESC");
+            /** Custom code End Here */
+        }
 
         $collection->setFlag('search_resut_applied', true);
 
@@ -120,8 +150,7 @@ class ProductSearch extends MagentoProductSearch
         SearchResultInterface $searchResult,
         Collection            $collection,
         array                 $orders
-    ): SearchResultApplierInterface
-    {
+    ): SearchResultApplierInterface {
         return $this->searchResultApplierFactory->create(
             [
                 'collection' => $collection,

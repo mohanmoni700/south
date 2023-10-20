@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Amasty\Promo\Model\Rule\Action\Discount\Spent"
+                type="Corra\AmastyPromoGraphQl\Model\Rule\Action\Discount\Spent"/>
+
+    <!-- To resolve the comma issue in the applied rule ids-->
+    <type name="Magento\SalesRule\Model\Utility">
+        <plugin name="multi_coupon_rule_id" type="Corra\AmastyPromoGraphQl\Plugin\Model\ExtendedUtility" disabled="false"/>
+    </type>
+
+    <!-- To avoid removing the existing no coupon rule ids -->
+    <preference for="Magento\SalesRule\Model\Validator"
+                type="Corra\AmastyPromoGraphQl\Model\ResetValidator"/>
+
+    <!-- To avoid promo products being removed-->
+    <preference for="Magento\SalesRule\Model\Validator" type="Corra\AmastyPromoGraphQl\Model\Rewrite\SalesRule\Model\Validator" />
+
+</config>

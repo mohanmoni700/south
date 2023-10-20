@@ -1,0 +1,120 @@
+<?php
+/** @var \HookahShisha\Customerb2b\Block\Myaccount\Basicdetail $block */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+?>
+<?php $contact = $block->getContactDetail(); ?>
+<?php
+$actionURL = "#";
+$formDisable = 1;
+?>
+<form class="form-address-edit"
+      action="<?= $block->escapeUrl($actionURL) ?>"
+      method="post"
+      id="other-contact-form-validate"
+      enctype="multipart/form-data"
+      data-hasrequired="<?= $escaper->escapeHtmlAttr(__('* Required Fields')) ?>"
+      data-mage-init='{"validation":{}}'>
+    <fieldset class="fieldset">
+        <legend></legend>
+        <?= $block->getBlockHtml('formkey') ?>
+        <input type="hidden" name="id" value="<?= /* @noEscape */ $block->getCustomer()->getId(); ?>">
+        <div class="field contact_name">
+            <?php $contactNameLabel = __('Contact Name'); ?>
+            <label class="label" for="contact_name">
+                <span><?= /* @noEscape */ $escaper->escapeHtmlAttr($contactNameLabel) ?></span>
+            </label>
+            <div class="control">
+                <input type="text"
+                       name="contact_name"
+                       value="<?= /* @noEscape */ $block->escapeHtml($contact['contact_name']) ?>"
+                       placeholder="<?= $escaper->escapeHtmlAttr($contactNameLabel) ?>"
+                       title="<?= /* @noEscape */ $escaper->escapeHtmlAttr($contactNameLabel) ?>"
+                       disabled="disabled"
+                       class="input-text validate-alphanum-with-spaces
+                       minimum-length-1 maximum-length-255 validate-length"
+                       id="contact_name">
+            </div>
+        </div>
+        <!-- changed label for contact number[BS] -->
+        <div class="field contact_phone">
+            <?php $contactPhoneLabel = __('Contact Number'); ?>
+            <label class="label" for="contact_phone">
+                <span><?= /* @noEscape */ $escaper->escapeHtmlAttr($contactPhoneLabel) ?></span>
+            </label>
+            <div class="control">
+                <input type="text"
+                       name="contact_phone"
+                       value="<?= /* @noEscape */ $block->escapeHtml($contact['contact_phone']) ?>"
+                       placeholder="<?= $escaper->escapeHtmlAttr($contactPhoneLabel) ?>"
+                       title="<?= /* @noEscape */ $escaper->escapeHtmlAttr($contactPhoneLabel) ?>"
+                       class="input-text"
+                       disabled="disabled"
+                       id="contact_phone"
+                       data-validate="{'phone': true}">
+            </div>
+        </div>
+        <div class="field">
+            <?php $contactEmaillabel = __('Contact Email'); ?>
+            <label for="contact_email" class="label">
+                <span><?= /* @noEscape */ $block->escapeHtml($contactEmaillabel) ?></span>
+            </label>
+            <div class="control">
+                <input  type="email"
+                        name="contact_email"
+                        id="contact_email"
+                        placeholder="<?= /* @noEscape */ $block->escapeHtml($contactEmaillabel) ?>"
+                        autocomplete="off"
+                        title="<?= /* @noEscape */ $block->escapeHtml($contactEmaillabel) ?>"
+                        class="input-text"
+                        disabled="disabled"
+                        data-validate="{'validate-email': true}"
+                        value="<?= $block->escapeHtml($contact['contact_email']) ?>"
+                />
+
+            </div>
+        </div>
+    </fieldset>
+    <div class="actions-toolbar">
+        <div class="primary">
+            <button type="submit"
+                    class="action save primary"
+                    disabled="disabled"
+                    data-action="save-address"
+                    title="<?= $escaper->escapeHtmlAttr(__('Save other details')) ?>">
+                <span><?= $escaper->escapeHtml(__('Save other details')) ?></span>
+            </button>
+        </div>
+        <div class="secondary">
+            <a class="action back" href="<?= $escaper->escapeUrl($block->getBackUrl()) ?>">
+                <span><?= $escaper->escapeHtml(__('Go back')) ?></span>
+            </a>
+        </div>
+    </div>
+</form>
+<?php if ($formDisable == 1): ?>
+    <?php
+    $scriptString = <<<script
+        require(['jquery'], function($){
+            $(document).ready(function(){
+                $("#other-contact-form-validate :input").prop("disabled", true);
+            });
+        });
+    script; ?>
+    <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+<?php endif; ?>
+
+<?php
+$scriptStrings = <<<script
+    require(['jquery'], function($){
+        jQuery("#other-contact-form-validate .action.save.primary").click(function(e) {
+            if(jQuery('#contact_name').val().length == 0
+                && jQuery('#contact_phone').val().length == 0
+                && jQuery('#contact_email').val().length == 0
+            ) {
+                e.preventDefault();
+            }
+        });
+    });
+    script;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptStrings, false) ?>

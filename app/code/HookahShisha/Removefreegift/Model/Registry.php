@@ -3,19 +3,21 @@ declare(strict_types=1);
 
 namespace HookahShisha\Removefreegift\Model;
 
-use Magento\Catalog\Model\Product;
+use Amasty\Promo\Model\Product;
+use HookahShisha\Removefreegift\Model\Quote\SalesRule;
 use Magento\Checkout\Model\Session;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
 use Magento\Catalog\Model\ProductRepository;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
+use Magento\Framework\Session\SessionManager;
 use Magento\Store\Model\StoreManagerInterface;
 use Amasty\Promo\Helper\Item;
 use Amasty\Promo\Helper\Messages;
 use Magento\Store\Model\Store;
 use Amasty\Promo\Model\DiscountCalculator;
-use Amasty\Promo\Model\ItemRegistry\PromoItemRegistry;
 use Magento\Framework\App\Request\Http;
+use Amasty\Promo\Model\PromoItemRepository;
 
 /**
  * Promo Items Registry
@@ -28,9 +30,9 @@ class Registry extends \Amasty\Promo\Model\Registry
     public const AUTO_ADD_PRODUCT_TYPES = ['simple', 'virtual', 'downloadable', 'bundle'];
 
     /**
-     * @var Session
+     * @var SessionManager
      */
-    protected $checkoutSession;
+    private $checkoutSession;
 
     /**
      * @var ProductCollectionFactory
@@ -67,10 +69,6 @@ class Registry extends \Amasty\Promo\Model\Registry
      */
     protected $discountCalculator;
 
-    /**
-     * @var PromoItemRegistry
-     */
-    protected $promoItemRegistry;
 
     /**
      * @var ProductRepository
@@ -81,44 +79,68 @@ class Registry extends \Amasty\Promo\Model\Registry
      * @var Http
      */
     protected $httprequest;
+    /**
+     * @var Session|SessionManager
+     */
+    protected $resourceSession;
+
+    protected Product $product;
+
+    protected PromoItemRepository $promoItemRepository;
+    private SalesRule $salesRule;
 
     /**
-     * construct method
-     *
-     * @param Session $resourceSession
-     * @param ProductCollectionFactory $productCollectionFactory
+     * @param SessionManager|Session $resourceSession
      * @param ProductRepository $productRepository
      * @param StoreManagerInterface $storeManager
      * @param Item $promoItemHelper
      * @param Messages $promoMessagesHelper
      * @param Store $store
+     * @param Product $product
      * @param DiscountCalculator $discountCalculator
-     * @param PromoItemRegistry $promoItemRegistry
+     * @param PromoItemRepository $promoItemRepository
      * @param Http $httprequest
+     * @param ProductCollectionFactory $productCollectionFactory
      */
     public function __construct(
-        Session $resourceSession,
+        SessionManager           $resourceSession,
+        ProductRepository        $productRepository,
+        StoreManagerInterface    $storeManager,
+        Item                     $promoItemHelper,
+        Messages                 $promoMessagesHelper,
+        Store                    $store,
+        Product                  $product,
+        DiscountCalculator       $discountCalculator,
+        PromoItemRepository      $promoItemRepository,
+        Http                     $httprequest,
         ProductCollectionFactory $productCollectionFactory,
-        ProductRepository $productRepository,
-        StoreManagerInterface $storeManager,
-        Item $promoItemHelper,
-        Messages $promoMessagesHelper,
-        Store $store,
-        DiscountCalculator $discountCalculator,
-        PromoItemRegistry $promoItemRegistry,
-        Http $httprequest
-    ) {
+        SalesRule                $salesRule
+    )
+    {
+        parent::__construct(
+            $resourceSession,
+            $productRepository,
+            $storeManager,
+            $promoItemHelper,
+            $promoMessagesHelper,
+            $store,
+            $product,
+            $discountCalculator,
+            $promoItemRepository
+        );
         $this->checkoutSession = $resourceSession;
-        $this->productCollectionFactory = $productCollectionFactory;
         $this->productRepository = $productRepository;
+        $this->fullDiscountItems = [];
         $this->storeManager = $storeManager;
         $this->promoItemHelper = $promoItemHelper;
         $this->promoMessagesHelper = $promoMessagesHelper;
         $this->store = $store;
-        $this->fullDiscountItems = [];
+        $this->product = $product;
         $this->discountCalculator = $discountCalculator;
-        $this->promoItemRegistry = $promoItemRegistry;
+        $this->promoItemRepository = $promoItemRepository;
+        $this->productCollectionFactory = $productCollectionFactory;
         $this->httprequest = $httprequest;
+        $this->salesRule = $salesRule;
     }
 
     /**
@@ -133,51 +155,36 @@ class Registry extends \Amasty\Promo\Model\Registry
      * @return array|false
      * @throws LocalizedException
      */
-    public function addPromoItem($sku, $qty, $ruleId, $discountData, $type, $discountAmount)
+    public function addPromoItem($sku, $qty, $ruleId, $discountData, $type, $discountAmount, int $quoteId = null)
     {
-        $discountData = $this->getCurrencyDiscount($discountData);
-        $autoAdd = false;
-        $request = $this->httprequest;
-        $graphrequest = $request->getContent();
-        if (is_array($sku) && count($sku) === 1) {
-            // if rule with behavior 'one of' have only single product item,
-            // then behavior should be the same as rule 'all'
-            $sku = $sku[0];
-        }
-        if (!is_array($sku)) {
-            if (!$this->isProductValid($sku)) {
-                return false;
+        //Check Whether the rule id is already applied and, it is the correct rule id
+        if ($this->salesRule->getSalesRuleIdByQuote($quoteId, $ruleId, $sku)) {
+            $discountData = $this->getCurrencyDiscount($discountData);
+            $autoAdd = false;
+            $request = $this->httprequest;
+            $graphrequest = $request->getContent();
+            if (is_array($sku) && count($sku) === 1) {
+                // if rule with behavior 'one of' have only single product item,
+                // then behavior should be the same as rule 'all'
+                $sku = $sku[0];
             }
-            $item = $this->promoItemRegistry->getItemBySkuAndRuleId($sku, $ruleId);
-            if ($item === null && $this->discountCalculator->isEnableAutoAdd($discountData)) {
-                $autoAdd = $this->isProductCanBeAutoAdded($sku);
+
+            if (!$quoteId) {
+                $quoteId = $this->checkoutSession->getQuote()->getId();
             }
-            $item = $this->promoItemRegistry->registerItem(
-                $sku,
-                $qty,
-                $ruleId,
-                $type,
-                $discountData['minimal_price'],
-                $discountData['discount_item'],
-                $discountAmount
-            );
-            if ($autoAdd) {
-                /* condition starts for restrict auto add free gift product during
-                remove free gift item updateCartItems*/
-                /** removed condition for skip adding Free product on updateCartItems action. JIRA ID: OOKA-205 */
-                if (!strpos($graphrequest, "removeItemFromCart") !== false) {
-                    $item->setAutoAdd($autoAdd);
+
+            $promoItemsGroup = $this->promoItemRepository->getItemsByQuoteId((int)$quoteId);
+
+            if (!is_array($sku)) {
+                if (!$this->isProductValid($sku)) {
+                    return false;
                 }
-                /* condition ends for restrict auto add free gift product during remove free gift item*/
-            }
-        } else {
-            foreach ($sku as $key => $skuValue) {
-                if (!$this->isProductValid($skuValue)) {
-                    unset($sku[$key]);
-                    continue;
+                $item = $promoItemsGroup->getItemBySkuAndRuleId($sku, $ruleId);
+                if ($item === null && $this->discountCalculator->isEnableAutoAdd($discountData)) {
+                    $autoAdd = $this->isProductCanBeAutoAdded($sku);
                 }
-                $this->promoItemRegistry->registerItem(
-                    $skuValue,
+                $item = $promoItemsGroup->registerItem(
+                    $sku,
                     $qty,
                     $ruleId,
                     $type,
@@ -185,19 +192,43 @@ class Registry extends \Amasty\Promo\Model\Registry
                     $discountData['discount_item'],
                     $discountAmount
                 );
-            }
-        }
 
-        if ($this->discountCalculator->isFullDiscount($discountData)) {
-            if (!is_array($sku)) {
-                $sku = [$sku];
+                /* condition starts for restrict auto add free gift product
+                   during remove free gift item updateCartItems*/
+                /** removed condition for skip adding Free product on updateCartItems action. JIRA ID: OOKA-205 */
+                if ($autoAdd && !strpos($graphrequest, "removeItemFromCart") !== false) {
+                    $item->setAutoAdd($autoAdd);
+                }
+                /* condition ends for restrict auto add free gift product during remove free gift item*/
+            } else {
+                foreach ($sku as $key => $skuValue) {
+                    if (!$this->isProductValid($skuValue)) {
+                        unset($sku[$key]);
+                        continue;
+                    }
+                    $promoItemsGroup->registerItem(
+                        $skuValue,
+                        $qty,
+                        $ruleId,
+                        $type,
+                        $discountData['minimal_price'],
+                        $discountData['discount_item'],
+                        $discountAmount
+                    );
+                }
             }
 
-            foreach ($sku as $itemSku) {
-                $this->fullDiscountItems[$itemSku]['rule_ids'][$ruleId] = $ruleId;
+            if ($this->discountCalculator->isFullDiscount($discountData)) {
+                if (!is_array($sku)) {
+                    $sku = [$sku];
+                }
+
+                foreach ($sku as $itemSku) {
+                    $this->fullDiscountItems[$itemSku]['rule_ids'][$ruleId] = $ruleId;
+                }
             }
+            $this->checkoutSession->setAmpromoFullDiscountItems($this->fullDiscountItems);
         }
-        $this->checkoutSession->setAmpromoFullDiscountItems($this->fullDiscountItems);
     }
 
     /**
@@ -237,11 +268,11 @@ class Registry extends \Amasty\Promo\Model\Registry
      */
     private function isProductCanBeAutoAdded(string $sku): bool
     {
-        /** @var Product $product */
+        /** @var \Magento\Catalog\Model\Product $product */
         $product = $this->productRepository->get($sku);
 
         if ((in_array($product->getTypeId(), static::AUTO_ADD_PRODUCT_TYPES)
-            && !$product->getTypeInstance(true)->hasRequiredOptions($product))
+                && !$product->getTypeInstance(true)->hasRequiredOptions($product))
             || $product->getTypeId() == \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE
         ) {
             return true;

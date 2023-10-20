@@ -1,0 +1,26 @@
+diff --git a/app/code/Magedelight/Subscribenow/Helper/Shipping.php b/app/code/Magedelight/Subscribenow/Helper/Shipping.php
+index 529144903..088b3e72e 100644
+--- a/app/code/Magedelight/Subscribenow/Helper/Shipping.php
++++ b/app/code/Magedelight/Subscribenow/Helper/Shipping.php
+@@ -132,12 +132,16 @@ class Shipping extends AbstractHelper
+      */
+     public function getCurrentQuote()
+     {
+-        if ($this->isAdmin()) {
+-            $quote = $this->generate->getCurrentQuote();
+-        } else {
+-            $quote = $this->checkoutSession->getQuote();
++        try {
++            if ($this->isAdmin()) {
++                $quote = $this->generate->getCurrentQuote();
++            } else {
++                $quote = $this->checkoutSession->getQuote();
++            }
++            return $quote;
++        } catch (\Exception $e) {
++            return null;
+         }
+-        return $quote;
+     }
+ 
+     /**

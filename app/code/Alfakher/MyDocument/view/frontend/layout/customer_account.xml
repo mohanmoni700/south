@@ -8,7 +8,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceBlock name="customer_account_navigation">
-            <block class="Magento\Framework\View\Element\Html\Link\Current" name="my_document">
+            <block class="Magento\Framework\View\Element\Html\Link\Current" name="my_document" ifconfig="hookahshisha/my_document/is_enabled">
                 <arguments>
                     <argument name="path" xsi:type="string">mydocument/customer/index</argument>
                     <argument name="label" xsi:type="string">My Documents</argument>

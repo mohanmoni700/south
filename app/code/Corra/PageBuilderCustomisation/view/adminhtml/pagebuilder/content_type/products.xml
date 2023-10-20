@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_PageBuilder:etc/content_type.xsd">
+    <type name="products"
+          preview_component="Corra_PageBuilderCustomisation/js/content-type/products/preview">
+        <appearances>
+            <appearance name="carousel">
+                <elements>
+                    <element name="main">
+                        <attribute name="additional_config" source="data-additional-config"/>
+                    </element>
+                </elements>
+            </appearance>
+        </appearances>
+    </type>
+</config>

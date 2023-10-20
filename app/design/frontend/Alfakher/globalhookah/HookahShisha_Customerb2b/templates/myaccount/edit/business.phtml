@@ -16,11 +16,6 @@ $selectedElement = "selected='selected'";
 $country = $block->getLayout()->createBlock(HookahShisha\Customerb2b\Block\Myaccount\BasicDetail::class);
 $count_id=$country->getCountryId();
 ?>
-<?php $messageData = $block->getMessagedata(); ?>
-<?php if ($messageData['comAccountVerified'] == 0 && $messageData['comDetailsChanged'] == 0): ?>
-    <?php $actionURL = $this->getUrl('customerb2b/account/businessPost'); ?>
-    <?php $formDisable = 0; ?>
-<?php endif; ?>
 
 <?php if (!empty($formMessages)): ?>
     <div id="company_edit_form_messages">
@@ -233,7 +228,7 @@ $count_id=$country->getCountryId();
 <?php
     $scriptString = <<<script
         require(['jquery'], function($){
-    script;
+script;
 ?>
 <?php if ($formDisable == 1): ?>
     <?php
@@ -241,7 +236,7 @@ $count_id=$country->getCountryId();
             $(document).ready(function(){
                 $("#company-edit-form :input").prop("disabled", true);
             });
-        script;
+script;
     ?>
 <?php endif; ?>
 <?php

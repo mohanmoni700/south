@@ -1,0 +1,905 @@
+& when (@media-common = true) {
+    /*============= Account style ==============*/
+    .account {
+        .nav.items {
+            .nav {
+                strong {
+                    &::before {
+                        top: 1.5rem;
+                    }
+                }
+                
+                &.myaccount {
+                    a,
+                    strong {
+                        &:before {
+                            background: url('@{baseDir}images/myaccount.svg') no-repeat;
+                            height: 2.4rem;
+                            width: 2.4rem;
+                            top: 1.2rem;
+                        }
+                    }
+                }
+                &.myquotes {
+                    a,
+                    strong {
+                        &:before {
+                            background: url('@{baseDir}images/quotes.svg') no-repeat;
+                            height: 2.3rem;
+                            width: 2.4rem;
+                            top: 1.2rem;
+                        }
+                    }
+                }
+                &.frontend_mc_info {
+                    a,
+                    strong {
+                        &:before {
+                            background: url('@{baseDir}images/paymentinfo.png') no-repeat;
+                            width: 1.9rem;
+                            height: 1.9rem;
+                            background-size: contain;
+                        }
+                    }
+                    strong {
+                        &:before {
+                            filter: invert(100%) sepia(0%) saturate(3643%) hue-rotate(291deg) brightness(118%) contrast(107%);
+                        }
+                    }
+                }
+            }
+        }
+
+        .field.choice.newsletter {
+            label {
+                display: flex;
+            }
+        }
+
+        .fieldset > .field:not(.choice) {
+            margin-bottom: 2.9rem;
+        }
+
+        .my_account_b2b {
+            li {
+                &.basic_details {
+                    span {
+                        max-width: 10rem;
+                    }
+                }
+            }
+        }
+    }
+}
+
+& when (@media-target = 'mobile'), (@media-target = 'all') {
+    @media only screen and (max-width: 1024px) {
+        .customer-account-login {
+            .login-container {
+                max-width: 650px;
+            }
+        }
+
+        .account {
+            .fieldset > .field:not(.choice) {
+                margin-bottom: 2rem;
+            }
+        }
+
+        .customer-account-create {
+            .login-container {
+                padding: 4rem 3rem 4rem 3rem;
+            }
+        }
+        .customer-account-create,
+        .customer-account-login,
+        .customer-account-forgotpassword {
+            div.page.messages {
+                margin: 0 auto;
+                max-width: 650px;
+            }
+        }
+        .login-container {
+            max-width: 650px;
+            .actions-toolbar {
+                .secondary,
+                .primary {
+                    width: auto;
+                }
+            }
+        }
+        .separator:before {
+            width: calc(~'100% - 30px');
+        }
+        .b2b_customer_index {
+            .message.success {
+                max-width: 650px;
+            }
+        }
+    }
+    @media only screen and (max-width: 1024px) {
+        .control.captcha-image {
+            .captcha-img {
+                width: 135px;
+            }
+        }
+    }
+    @media only screen and (max-width: 1199px) and (min-width: 768px) {
+        .account {
+            .toolbar {
+                div.pages {
+                    float: right;
+                    max-width: 280px;
+                    position: relative;
+                    top: 0;
+                    width: auto;
+                }
+                .pages {
+                    ~ .limiter {
+                        margin-top: 10px;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 991px) and (min-width: 768px) {
+        .form-address-edit {
+            .actions-toolbar {
+                .action.primary {
+                    width: 230px;
+                }
+            }
+        }
+        .customer-address-index {
+            .actions-toolbar {
+                .primary {
+                    max-width: 230px;
+                }
+            }
+        }
+        .customer-account-index {
+            .form-address-edit {
+                .actions-toolbar {
+                    .action.primary {
+                        width: 300px;
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 767px) and (min-width: 400px) {
+        .account {
+            .my_account_b2b {
+                li {
+                    width: 50%;
+                    > a {
+                        width: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 360px) {
+        .customer-account-login {
+            .block-content {
+                .fieldset {
+                    padding: 0 15px;
+                }
+            }
+        }
+        .vat-tax-id {
+            .sales-tax-tooltip {
+                span.tooltip-content {
+                    width: 170px;
+                }
+            }
+        }
+        .b2b_customer_index {
+            div.login-container {
+                padding: 60px 20px 35px 20px;
+            }
+        }
+        button.action.primary,
+        button.action-primary {
+            font-size: 15px;
+            letter-spacing: 1px;
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
+    .account {
+        .column.main,
+        .sidebar-additional {
+            margin: 0;
+        }
+        .toolbar {
+            .pages {
+                float: none !important;
+            }
+        }
+
+        .my_account_b2b {
+            li {
+                width: 50%;
+                > a {
+                    width: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                }
+            }
+        }
+    }
+    .modals-wrapper {
+        .modal-popup.popup-reorder-quote {
+            .modal-title {
+                padding-right: 20px;
+            }
+            .actions-toolbar {
+                > .primary {
+                    .action.replace {
+                        margin-left: 0;
+                        margin-top: 10px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+    .page-wrapper {
+        background: @color-white;
+    }
+    .account {
+        .form-address-edit,
+        .form-edit-company {
+            .fieldset {
+                .field:not(.street) {
+                    width: 100%;
+                    &.telephone {
+                        margin-bottom: 30px;
+                    }
+                }
+                .field {
+                    &.country,
+                    &.telephone {
+                        margin-bottom: 20px;
+                    }
+                }
+            }
+        }
+
+        .columns {
+            .column.main {
+                padding: 0;
+            }
+        }
+
+        .field.choice.newsletter {
+            label {
+                .lib-vendor-prefix-display(flex);
+            }
+        }
+        .my_account_b2b {
+            margin: 0 -15px;
+            margin-bottom: 20px;
+            li {
+                &:last-child {
+                    > a {
+                        border-right: 0;
+                    }
+                }
+            }
+        }
+        .columns {
+            flex-wrap: wrap;
+            .column.main {
+                border: 0;
+                padding: 0;
+            }
+            .sidebar-main {
+                border:0;
+            }
+        }
+        .page-main {
+            margin-bottom: 40px;
+        }
+        &.sales-order-history {
+            .columns {
+                .sidebar-main {
+                    border-bottom: solid 1px @color-black;
+                    padding-bottom: 40px;
+                }
+            }
+        }
+        &.sales-order-view,
+        &.sales-order-invoice,
+        .sales-order-shipment,
+        .sales-order-print,
+        .sales-order-printinvoice,
+        .sales-order-printshipment,
+        .sales-order-creditmemo,
+        .sales-order-printcreditmemo,
+        &.magento_rma-returns-returns {
+            .columns {
+                .sidebar-main {
+                    border-bottom: solid 1px @color-black;
+                }
+            }
+        }
+        .my_account_b2b {
+            li {
+                > a {
+                    padding: 15px 9px;
+                    text-align: center;
+                    span {
+                        display: inline-block;
+                    }
+                }
+                &.basic_details {
+                    span {
+                        max-width: 90px;
+                    }
+                }
+                &.business_details {
+                    span {
+                        max-width: 100px;
+                    }
+                }
+                &.other_contact_details {
+                    span {
+                        max-width: 130px;
+                    }
+                }
+            }
+        }
+        .pending {
+            padding-left: 70px;
+            &:before {
+                height: 32px;
+                left: 22px;
+                width: 32px;
+            }
+        }
+        .reject {
+            padding-left: 70px;
+            &:before {
+                height: 20px;
+                left: 28px;
+                width: 20px;
+            }
+        }
+        &.customer-address-form {
+            .form-address-edit {
+                .fieldset {
+                    + .fieldset {
+                        margin-top: 0;
+                    }
+                }
+            }
+        }
+        a.action.return {
+            display: inline-block;
+            margin-top: 20px;
+        }
+    }
+
+    .customer-account-login .page-main,
+    .customer-account-forgotpassword .page-main {
+        background: @color-white;
+    }
+    .customer-account-create,
+    .customer-account-login,
+    .customer-account-forgotpassword {
+        div.page.messages {
+            max-width: calc(~'100% - 30px');
+            .messages {
+                .message {
+                    margin-bottom: 25px;
+                    margin-top: 0;
+                }
+            }
+        }
+    }
+    .b2b_customer_index {
+        .message.success {
+            width: calc(~'100% - 18px');
+        }
+    }
+    .b2b_customer_index {
+        .login-container {
+            padding: 60px 50px 35px 50px;
+            width: calc(~'100% - 18px');
+        }
+        .block-title {
+            strong {
+                text-transform: uppercase;
+            }
+        }
+        .successful_box {
+            .box-account-information {
+                margin-bottom: 30px;
+            }
+        }
+        .page-wrapper {
+            background: @account_bgclr;
+            .page-main {
+                padding-bottom: 0;
+                padding-top: 15px;
+            }
+            .column.main {
+                padding-bottom: 10px;
+            }
+        }
+    }
+    .customer-account-create {
+        .page-wrapper {
+            background: @color-white;
+            .login-container {
+                padding: 0;
+            }
+            .register_nav {
+                margin-left: -5px;
+                margin-right: -5px;
+                width: auto;
+            }
+            fieldset.fieldset {
+                flex-wrap: wrap;
+                > .field:not(.choice) {
+                    margin-bottom: 30px;
+                    width: 100%;
+                }
+            }
+            .action.next.primary {
+                float: none;
+            }
+            .field.choice.newsletter {
+                margin-block: 0;
+            }
+            .login-container {
+                .actions-toolbar {
+                    flex-wrap: wrap;
+                    margin-top: 30px;
+                    &.justify_btn {
+                        margin-top: 25px;
+                        .primary {
+                            &.prev,
+                            &.regis {
+                                min-width: 100%;
+                                width: 100%;
+                            }
+                            min-width: 210px;
+                            width: auto;
+                            float: none;
+                            &.regis {
+                                margin-top: 40px !important;
+                            }
+                        }
+                    }
+                }
+                .action_back {
+                    text-align: center;
+                }
+            }
+            .login-container {
+                margin-bottom: 0;
+                margin-top: 20px;
+            }
+        }
+        .register_nav {
+            li legend.legend {
+                .lib-font-size(12);
+                padding: 0;
+            }
+        }
+        .page-main {
+            > .pending-tooltip {
+                margin-bottom: 10px;
+                margin-top: 10px;
+                top: 0;
+            }
+        }
+    }
+    .control.captcha-image {
+        .captcha-reload {
+            .lib-font-size(10);
+            height: 31px;
+            letter-spacing:0;
+            line-height: 15px;
+            padding: 5px 15px !important;
+        }
+    }
+    .block-content {
+        .register_link {
+            padding-bottom: 0;
+        }
+    }
+    .login-container {
+        box-shadow: none;
+        padding-bottom: 0;
+        padding-top: 0;
+        .fieldset {
+            &:after {
+                text-align: center;
+            }
+        }
+        .block-content {
+            .fieldset {
+                .field {
+                    margin-bottom: 30px;
+                }
+            }
+        }
+    }
+    .customer-account-login {
+        .login-container {
+            .block-customer-login .block-title #block-customer-login-heading {
+                margin-bottom: 20px;
+            }
+        }
+    }
+
+    .account {
+        .messages {
+            margin-bottom: 0;
+        }
+
+        .toolbar {
+            &:extend(.abs-pager-toolbar-mobile all);
+        }
+    }
+
+    .form-address-edit,
+    .form-edit-company {
+        .fieldset {
+            .street {
+                .field.additional {
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+
+    .control.captcha-image {
+        .captcha-img {
+            .lib-css(margin-bottom, @indent__s);
+            display: block;
+        }
+    }
+
+    .customer-account-index {
+        .page-title-wrapper {
+            position: relative;
+        }
+    }
+
+
+    .form.search.advanced {
+        .field.price {
+            .with-addon {
+                .input-text {
+                    flex-basis: auto;
+                    width: 100%;
+                }
+            }
+        }
+    }
+    .table-wrapper.orders-history {
+        .action_primary {
+            display: inline-block;
+        }
+    }
+    .sales-order-history {
+        .page_title {
+            margin-bottom: 10px;
+        }
+        .table-order-items {
+            tr {
+                border-bottom: 1px solid @border-color__base-table;
+            }
+        }
+        .actions-toolbar {
+            > .secondary {
+                width: 100%;
+            }
+        }
+    }
+    .customer-address-index {
+        .actions-toolbar {
+            > .secondary {
+                width: 100%;
+            }
+        }
+        .actions-toolbar {
+            .primary {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+    }
+    .modals-wrapper {
+        .modal-popup.popup-reorder-quote {
+            .modal-inner-wrap {
+                max-width: 100%;
+            }
+        }
+    }
+    
+    .myproduct-pricing {
+        &.table-wrapper {
+            .table.table-myproduct-pricing {
+                >tbody {
+                    >tr {
+                        td.col.action {
+                            &:before {
+                                content: 'Action:';
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .form-create-return {
+        .fieldset .additional {
+            .action.remove.delete {
+                left: auto;
+                right: 0;
+                top: -5px;
+            }
+        }
+    }
+    .form-tracking {
+        #track-info-table td {
+            border: none;
+            display: block;
+            width: 100%;
+        }
+    }
+
+    .magento_rma-returns-history,
+    .magento_customerbalance-info-index,
+    .customer-paymentinfo-index {
+        .page-title-wrapper {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .table-returns,
+        .table-balance-history {
+            tr {
+                border-bottom: 1px solid @border-color__base-table;
+            }
+        }
+    }
+    .magento_rma-returns-returns {
+        .table-order-items.returns {
+            tr {
+                border-bottom: 1px solid @border-color__base-table;
+            }
+        }
+    }
+    #track-info-table {
+        .table-order-items.returns {
+            tr {
+                border-bottom: 1px solid @border-color__base-table;
+            }
+        }
+    }
+    .table-wrapper.returns {
+        .table.table-returns {
+            tr {
+                border-bottom: 1px solid @border-color__base-table;
+            }
+        }
+    }
+    #track-info-table,
+    #my-returns-items-table {
+        tr {
+            border-bottom: 1px solid @border-color__base-table;
+        }
+    }
+    #rma_create_form {
+        > .fieldset {
+            margin-bottom: 0;
+            &:last-of-type {
+                margin-bottom: 20px;
+            }
+        }
+    }
+    .block.block-returns-tracking {
+        margin-bottom: 0;
+    }
+    .block.block-return-details {
+        margin-bottom: 20px;
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+    .login-container {
+        &:extend(.abs-add-clearfix-desktop all);
+
+        .block {
+            &:extend(.abs-blocks-2columns all);
+            .login {
+                .actions-toolbar {
+                    > .primary {
+                        margin-bottom: 0;
+                        margin-right: @indent__l;
+                    }
+
+                    > .secondary {
+                        float: left;
+                    }
+                }
+            }
+        }
+    }
+
+    //  Full name fieldset
+    .fieldset {
+        .fullname {
+            .field {
+                .label {
+                    .lib-css(margin, @form-field-type-label-inline__margin);
+                    .lib-css(padding, @form-field-type-label-inline__padding);
+                    .lib-css(text-align, @form-field-type-label-inline__align);
+                    .lib-css(width, @form-field-type-label-inline__width);
+                    box-sizing: border-box;
+                    float: left;
+                }
+
+                .control {
+                    .lib-css(width, @form-field-type-control-inline__width);
+                    float: left;
+                }
+            }
+        }
+    }
+
+    .form.password.reset,
+    .form.send.confirmation,
+    .form.password.forget,
+    .form.create.account,
+    .form.search.advanced,
+    .form.form-orders-search {
+        min-width: 100%;
+        width: 100%;
+    }
+
+    //
+    //  My account
+    //  ---------------------------------------------
+
+    .account.page-layout-2columns-left {
+        .sidebar-main,
+        .sidebar-additional {
+            width: 22.3%;
+        }
+
+        .column.main {
+            width: 77.7%;
+        }
+    }
+
+    .account {
+        .column.main {
+            .block:not(.widget) {
+                .block-content {
+                    &:extend(.abs-add-clearfix-desktop all);
+
+                    .box {
+                        &:extend(.abs-blocks-2columns all);
+                    }
+                }
+            }
+        }
+
+        .toolbar {
+            &:extend(.abs-pager-toolbar all);
+        }
+    }
+}
+
+& when (@media-target = 'mobile'), (@media-target = 'all') {
+    @media only screen and (max-width: 992px) {
+        .account {
+            .my_account_b2b {
+                li {
+                    > a {
+                        padding: 15px 20px;
+                    }
+                }
+            }
+
+            .column.main {
+                .block:not(.widget) {
+                    .block-content {
+                        div.box {
+                            margin-bottom: 15px;
+                            width: 100%;
+                        }
+                    }
+                }
+            }
+            .block.block-addresses-list {
+                border-color: @color-black;
+                margin-bottom: 30px;
+            }
+            .form-address-edit {
+                .fieldset {
+                    + .fieldset {
+                        margin-top: 0;
+                    }
+                    div.field:not(.street).telephone {
+                        margin-bottom: 20px;
+                    }
+                }
+            }
+            .form-address-edit,
+            .form-edit-company {
+                .actions-toolbar {
+                    margin-top: 40px;
+                }
+            }
+            .registerform {
+                .field_flex {
+                    .field {
+                        width: 100%;
+                    }
+                    .field_block.password .control {
+                        width: 100%;
+                    }
+                }
+            }
+            .page_title {
+                text-align: center;
+            }
+            .form.registerform {
+                .field_flex {
+                    margin-bottom: 60px;
+                }
+            }
+            &.sales-order-view,
+            &.sales-order-invoice,
+            .sales-order-shipment,
+            .sales-order-print,
+            .sales-order-printinvoice,
+            .sales-order-printshipment,
+            .sales-order-creditmemo,
+            .sales-order-printcreditmemo,
+            &.magento_rma-returns-returns {
+                .column.main {
+                    .block:not(.widget) {
+                        .block-content {
+                            div.box {
+                                margin-bottom: 30px;
+                                &:last-child {
+                                    margin-bottom: 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+

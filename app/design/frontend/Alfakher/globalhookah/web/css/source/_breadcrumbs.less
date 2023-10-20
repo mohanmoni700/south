@@ -1,0 +1,76 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+@breadcrumbs-txtclr: #000;
+@breadcrumbs-activeclr: #404040;
+& when (@media-common = true) {
+    .breadcrumbs {
+        .lib-breadcrumbs();
+        margin: 0;
+        padding: 0;
+    }
+    .page-wrapper {
+        .breadcrumbs {
+            padding: 0;
+            a {
+                .lib-font-size(12);
+                color: #6D6D6D;
+                display: inline-block;
+                font-weight: @font-weight__bold;
+                line-height: 24px;
+            }
+            strong {
+                .lib-font-size(12);
+                color: @breadcrumbs-txtclr;
+                display: inline-block;
+                line-height: 24px;
+            }
+            .item {
+                .lib-font-size(12);
+                color: @color-black;
+                font-weight:700;
+                line-height: 24px;
+                text-transform: capitalize;
+                vertical-align: middle;
+                &:not(:last-child) {
+                    &:after {
+                        content:'/';
+                        display: inline-block;
+                        height: 2.3rem;
+                        margin: 0 15px;
+                        position: relative;
+                        vertical-align: middle;
+                        width: 2px;
+                    }
+                }
+            }
+        }
+    }
+
+    @media only screen and (max-width: 1299px) {
+        .page-wrapper {
+            .breadcrumbs {
+                padding: 0 15px;
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .page-wrapper {
+        .breadcrumbs {
+            display: none;
+        }
+    }
+    .product.attribute.description {
+        .pagebuilder-column {
+            padding: 0;
+        }
+    }
+}

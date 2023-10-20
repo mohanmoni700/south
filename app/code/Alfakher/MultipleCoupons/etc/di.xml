@@ -4,4 +4,11 @@
     <type name="Magento\QuoteGraphQl\Model\Resolver\ApplyCouponToCart">
         <plugin name="alfakher_multiplecoupons_apply_coupons_graphql" type="Alfakher\MultipleCoupons\Plugin\Model\Resolver\ApplyCouponToCart"/>
     </type>
+    <type name="Yotpo\Loyalty\Helper\Schema">
+        <plugin name="alfakher_multiplecoupons_filter_yotpo_coupons_" type="Alfakher\MultipleCoupons\Plugin\Helper\YotpoSchema"/>
+    </type>
+    <!-- Bundle Parent Product Discount-->
+    <type name="Magento\Quote\Model\Quote\Item\AbstractItem">
+        <plugin name="bundle_parent_discount" type="Alfakher\MultipleCoupons\Plugin\Model\Quote\ChildCondition"/>
+    </type>
 </config>

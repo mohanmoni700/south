@@ -78,7 +78,7 @@
                                         </span>
                                 <?php if ($block->getDisplayImage() && $_post->isPublishDateEnabled()) { ?>
                                         <span class="post-item-date">
-                                            <?= $block->escapeHtml("/ ".$_post->getPublishDate()." /") ?>
+                                        <?= $block->escapeHtml(date('j M Y', strtotime($_post->getModifiedTime()))) ?>
                                         </span>
                                 <?php } ?>
                                 </div>

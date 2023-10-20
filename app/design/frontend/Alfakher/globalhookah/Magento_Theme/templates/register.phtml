@@ -1,0 +1,177 @@
+<?php
+// phpcs:disable Magento2.Templates.ThisInTemplate
+
+/** @var $block \Magento\Framework\View\Element\Template */
+?>
+<?php $helper = $this->helper(HookahShisha\ChangePassword\Helper\Data::class); ?>
+<?php $helperb2b = $this->helper(\Alfakher\Productpageb2b\Helper\Data::class); ?>
+<?php $yotpotab = $helperb2b->getConfigValue('yotpo_loyalty/advanced/enable_yotpo_tab');?>
+<?php $myDocumentsTab = $helperb2b->getConfigValue('hookahshisha/my_document/is_enabled');?>
+<?php if ($helper->customerLoggedIn()): ?>
+    <?php $values = $helper->CustomerLogin(); ?>
+    <?php $name = $helper->customerFirstName(); ?>
+    <?php $firstStringCharacter = substr($name, 0, 1); ?>
+    <div class="sign-in">
+        <span class="sign-up"><?= $block->escapeHtml(__("My Account"))?></span>
+        <ul class="sign-up-ul customer_logged_in" style="display: none;">
+            <li class="guest-heading" data-bind="scope: 'customer'">
+                <div class="left_circle">
+                     <!-- ko if: customer().firstname  -->
+                        <lable class="cust_short_name" data-bind="text: customer().firstname.charAt(0)"></lable>
+                    <!-- /ko -->
+                    <!-- ko ifnot: customer().firstname -->
+                        <lable class="cust_short_name"><?= $block->escapeHtml(__($firstStringCharacter))?></lable>
+                    <!-- /ko -->
+                </div>
+                <div class="welcome_info">
+                    <lable class="welback"><?= $block->escapeHtml(__('Welcome back!')) ?></lable>
+                     <!-- ko if: customer().firstname  -->
+                        <lable class="guest-content-heading"
+                        data-bind="text: new String('<?= $escaper
+                        ->escapeHtml(__('%1', '%1')) ?>').replace('%1', customer().firstname)">
+                        </lable>
+                    <!-- /ko -->
+                    <!-- ko ifnot: customer().firstname -->
+                        <lable class="cust_short_name"><?= $block->escapeHtml(__($name))?></lable>
+                    <!-- /ko -->
+                </div>
+            </li>
+            <script type="text/x-magento-init">
+            {
+                "*": {
+                    "Magento_Ui/js/core/app": {
+                        "components": {
+                            "customer": {
+                                "component": "Magento_Customer/js/view/customer"
+                            }
+                        }
+                    }
+                }
+            }
+            </script>
+            <li class="guest-content my_account">
+                <a class= "create_an_account_link" href="<?= $block->escapeUrl($block->getUrl("customer/account/"));?>">
+                    <?= $block->escapeHtml(__('My Account'))?>
+                </a>
+            </li>
+            <li class="order_reorder"><a href="<?= $block->escapeUrl($block->getUrl("sales/order/history"));?>">
+                <?= $block->escapeHtml(__('My Orders & Reorders')) ?>
+                </a>
+            </li>
+            <li class="manage_address"><a href="<?= $block->escapeUrl($block->getUrl("customer/address"));?>">
+                <?= $block->escapeHtml(__('Manage Addresses')) ?>
+                </a>
+            </li>
+            <li class="my_payment"><a href="<?= $block->escapeUrl($block->getUrl("customer/paymentinfo"));?>">
+                <?= $block->escapeHtml(__('My Payment Options')) ?>
+                </a>
+            </li>
+            <li class="changepassword"><a href="<?= $block->escapeUrl($block->getUrl("changepassword/index/index"));?>">
+                <?= $block->escapeHtml(__('Change Password')) ?>
+                </a>
+            </li>
+            <?php if ($myDocumentsTab == 1): ?>
+            <li class="documents"><a href="<?= $block->escapeUrl($block->getUrl("mydocument/customer/index"));?>">
+                <?= $block->escapeHtml(__('My Documents')) ?>
+                </a>
+            </li>
+            <?php endif; ?>
+            <li class="product_pricing">
+                <a href="<?= $block->escapeUrl($block->getUrl("customerb2b/account/myproductpricing"));?>">
+                    <?= $block->escapeHtml(__('My Product Pricing')) ?>
+                </a>
+            </li>
+            <?php if ($yotpotab == 1): ?>
+            <li class="product_rewards">
+                <a href="<?= $block->escapeUrl($block->getUrl("custom/customer/yotpo/"));?>">
+                    <?= $block->escapeHtml(__('My Rewards')) ?>
+                </a>
+            </li>
+            <?php endif; ?>
+            <li class="logout">
+                <a class= "sign_in_link" href="<?= $block->escapeUrl($block->getUrl("customer/account/logout"));?>">
+                    <?= $block->escapeHtml(__('Logout')) ?>
+                </a>
+            </li>
+         </ul>
+   </div>
+<?php else: ?>
+     <div class="sign-in">
+     <span class="sign-up"><?= $block->escapeHtml(__('Sign In / Register')) ?></span>
+        <ul class="sign-up-ul" style="display: none;">
+            <li class="guest-heading"><span class="guest-content-heading">Welcome Guest!</span></li>
+            <li class="guest-content">
+                <span class="content-main">
+                    <span class="content-item content-link">
+                        <a class= "sign_in_link"
+                            href="<?= $block->escapeUrl($block->getUrl("customer/account/login")); ?>">
+                            <?= $block->escapeHtml(__('Sign in'))?>
+                        </a>
+                    </span>
+                    <span class="content-item content-text">or</span>
+                <span class="content-item content-link">
+                    <a class= "create_an_account_link"
+                        href="<?= $block->escapeUrl($block->getUrl("customer/account/create"));?>">
+                        <?= $block->escapeHtml(__('Create an Account'))?>
+                    </a>
+                </span>
+                </span>
+            </li>
+        </ul>
+        <div class="sign_in_overlay"></div>
+     </div>
+<?php endif; ?>
+<script>
+require(['jquery'], function($){
+    $(document).ready(function(){
+        $('.sign-in').click(function(event){
+            $('.sign-up-ul').toggle();
+            $('.sign_in_overlay').toggle();
+
+            $('.page-header .header.content .minicart-wrapper').removeClass("active");
+            $('.minicart-wrapper .action.showcart').removeClass("active");
+            $('.page-header .header.content .minicart-wrapper .ui-dialog.ui-widget.mage-dropdown-dialog').hide();
+        });
+        $(".sign-in").on("click", function (event) {
+            event.stopPropagation();
+        });
+        $(document).on('click','.sign_in_overlay',function(){
+            $('.sign-up-ul').hide();
+            $(this).hide();
+        });
+        $('.minicart-wrapper .action.showcart').click(function(event){
+            $(".sign-up-ul").hide();
+        });
+    });
+    $(document).on("click", function () {
+        $(".sign-up-ul").hide();
+    });
+
+   $(document).on("click",".amscroll-load-button",function() {
+        var scroll = $(window).scrollTop();
+        scroll = scroll + 10; //pixels to scroll
+        $('html, body').animate({
+            scrollTop: scroll
+        }, 10);
+    });
+
+});
+</script>
+
+
+<style type="text/css">
+    [data-letters]:before {
+  content:attr(data-letters);
+  display:inline-block;
+  font-size:1em;
+  width:2.5em;
+  height:2.5em;
+  line-height:2.5em;
+  text-align:center;
+  border-radius:50%;
+  background:plum;
+  vertical-align:middle;
+  margin-right:1em;
+  color:white;
+  }
+</style>

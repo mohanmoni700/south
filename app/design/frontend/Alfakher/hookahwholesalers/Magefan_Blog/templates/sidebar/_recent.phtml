@@ -60,7 +60,9 @@
                     <p class="post-shortdata">
                         <span class="post-author"><?= __('By Admin') ?></span>
                         <?php if ($block->getDisplayImage() && $_post->isPublishDateEnabled()) { ?>
-                            <span class="post-item-date">/<?= $block->escapeHtml($_post->getPublishDate()) ?>/</span>
+                            <span class="post-item-date">
+                                /<?= $block->escapeHtml(date('j M Y', strtotime($_post->getModifiedTime()))) ?>/
+                            </span>
                         <?php } ?>
                     </p>
                     <p class="post-shortdata">

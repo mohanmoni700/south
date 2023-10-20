@@ -18,10 +18,10 @@ definitions:
         caches:
           - sonar
         script:
-          - pipe: sonarsource/sonarcloud-scan:1.2.0
+          - pipe: sonarsource/sonarcloud-scan:2.0.0
             variables:
               SONAR_TOKEN: ${SONAR_TOKEN}
-              EXTRA_ARGS: '-Dsonar.sources=./app/code/HookahShisha,./app/design/frontend/Corra/alfakher'
+              EXTRA_ARGS: '-Dsonar.sources=./app/code/Alfakher,./app/code/Corra,./app/code/eDevice,./app/code/HookahShisha,./app/code/MageWorx,./app/code/Ooka,./app/code/Shishaworld,./app/design/frontend'
   services:
     docker:
       memory: 4096
@@ -51,6 +51,6 @@ pipelines:
 
     sonar-cloud-scan:
           - step: *build-test-sonarcloud
-#  pull-requests:
-#        '**':
-#          - step: *build-test-sonarcloud
+  pull-requests:
+        '**':
+          - step: *build-test-sonarcloud

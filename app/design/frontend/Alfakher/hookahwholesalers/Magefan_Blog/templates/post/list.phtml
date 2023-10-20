@@ -14,8 +14,11 @@
  */
 ?>
 <?php
-$_postCollection = $block->getPostCollection();
+$_postCollection = $block->getPostCollection()
+->addOrder('modified_time', 'desc');
+
 ?>
+
 <?php if (!$_postCollection->count()): ?>
     <div class="message info empty">
         <div>

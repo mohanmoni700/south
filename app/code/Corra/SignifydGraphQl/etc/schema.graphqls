@@ -1,0 +1,11 @@
+type Mutation {
+    generateSignifydSessionId(cart_id: String!): SignifydSessionId @resolver(class: "\\Corra\\SignifydGraphQl\\Model\\Resolver\\GenerateSignifydSessionId")
+}
+
+type SignifydSessionId {
+    data_order_session_id: String @doc(description: "Unique session ID to pass to signifyed fingerprint impression tracking code")
+}
+
+type StoreConfig {
+    enable_signifyd : Boolean @doc(description: "Check Signifyd is enabled or not. Config path:  - signifyd/general/enabled")
+}

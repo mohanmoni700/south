@@ -1,0 +1,43 @@
+type Cart {
+    free_items: FreeItems @resolver(class: "\\Corra\\AmastyPromoGraphQl\\Model\\Resolver\\GetFreeGiftPromoItems") @doc(description: "Get Free Gifts or Samples Promo Items")
+    free_gifts_skus: [String] @resolver(class: "\\Corra\\AmastyPromoGraphQl\\Model\\Resolver\\GetFreeGiftSkus") @doc(description: "Get SKU's of  Free Gifts")
+}
+
+type FreeItems @doc(description: "Free Promo Items") {
+    free_gifts: [PromoRule] @doc(description: "List of free gifts")
+    free_samples: [PromoRule] @doc(description: "List of free samples")
+}
+
+type PromoRule {
+    sku: String! @doc(description: "Free Item SKU"),
+    name: String! @doc(description: "Free Item Name"),
+    img: String! @doc(description: "Free Item Image URL"),
+    max_qty: Int @doc(description: "Allowed Maximum Quantity For Purchase of Free Items"),
+    rule_id: Int @doc(description: "Cart Rule Id Related to Free Item Set"),
+    is_added: Int @doc(description: "Indicates Whether Item is Present in the Cart or Not"),
+    allowed_qty: Int @doc(description: "Constant for Allowed Maximum Quantity")
+}
+
+type Mutation {
+    addFreeProductsToCart(input: AddFreeProductsToCartInput): AddFreeProductsToCartOutput @resolver(class: "Corra\\AmastyPromoGraphQl\\Model\\Resolver\\AddFreeProductsToCart")
+}
+
+input AddFreeProductsToCartInput {
+    cart_id: String!
+    cart_items: [FreeProductCartItemInput!]!
+}
+
+input FreeProductCartItemInput {
+    data: CartFreeItemInput!
+}
+
+input CartFreeItemInput {
+    sku: String!
+    quantity: Float!
+    rule_id: Int!
+    max_qty: Int!
+}
+
+type AddFreeProductsToCartOutput {
+    cart: Cart!
+}

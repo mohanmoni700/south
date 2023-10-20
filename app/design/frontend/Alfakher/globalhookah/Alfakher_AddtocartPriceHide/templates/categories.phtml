@@ -1,0 +1,63 @@
+<?php
+/*Get Current Category*/
+$category = $block->getCurrentCategory();
+$subcats = $category->getChildrenCategories();
+?>
+
+<?= /* @noEscape */ $block->getLayout()
+          ->createBlock('Magento\Catalog\Block\Category\View')
+          ->setTemplate('Magento_Catalog::category/description.phtml')
+          ->toHtml();
+?>
+<!-- this condition to check wether sub category exists[BS]start -->
+<?php $size = 0; ?>
+<?php if (!empty($subcats->getData())): ?>
+    <div class="shorting_main">
+        <div class="shorting_slider">
+           <?php foreach ($subcats as $subcat): ?>
+                <?php if ($subcat->getIsActive()): ?>
+                    <?php $subcaturl = $subcat->getUrl(); ?>
+                    <div class="shorting_title">
+                        <a href="<?= /* @noEscape */ $subcaturl?>"><?= /* @noEscape */ $subcat->getName();?></a>
+                    </div>
+                    <?php $size++; ?>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>
+<!-- condition to check wether sub category exists[BS]end -->
+
+<script>
+    require([
+        "jquery",
+        "Magento_PageBuilder/js/resource/slick/slick",
+        "domReady!"
+    ], function ($) {
+        if ($( window ).width() >= 820){
+            if (<?= /* @noEscape */$size ?> >= 7){
+               $arrow = "true";
+            }else{
+                $arrow = "false";
+            }
+        }else{
+            if (<?= /* @noEscape */$size ?> >= 3){
+                $arrow = "true";
+            }else{
+                $arrow = "false";
+            }
+        }
+        if ($arrow == "true" ) {
+                 $('.shorting_slider').slick({
+                    dots: false,
+                    arrows: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: false,
+                    infinite: true,
+                    variableWidth: true
+                });
+        }
+    });
+</script>
+

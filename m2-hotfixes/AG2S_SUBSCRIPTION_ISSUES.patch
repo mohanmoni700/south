@@ -1,0 +1,48 @@
+diff --git a/app/code/Magedelight/Subscribenow/Helper/Data.php b/app/code/Magedelight/Subscribenow/Helper/Data.php
+index 5c5a430cd..53098dbb4 100644
+--- a/app/code/Magedelight/Subscribenow/Helper/Data.php
++++ b/app/code/Magedelight/Subscribenow/Helper/Data.php
+@@ -52,7 +52,7 @@ class Data extends AbstractHelper
+     const XML_PATH_CUSTOMER_ADDRESS_TEMPLATE = 'customer/address_templates/html';
+     const XML_PATH_CAN_UPDATE_BILLING_FREQUENCY = 'md_subscribenow/product_subscription/update_billing_frequency';
+     const XML_PATH_CAN_UPDATE_NEXT_OCCURRENCE_FROM_FREQUENCY = 'product_subscription/update_next_occurrence_on_frequency';
+-    const XML_PATH_SELECT_AUTO_SHIPPING = 'shipping/select_auto_shipping';
++    const XML_PATH_SELECT_AUTO_SHIPPING = 'md_subscribenow/shipping/select_auto_shipping';
+     const XML_PATH_CUSTOMER_GROUP_SUBSCRIPTION  = 'md_subscribenow/general/subscriber_customer_group';
+     const XML_PATH_CUSTOMER_GROUP_SUBSCRIPTION_MSG  = 'md_subscribenow/general/subscription_customer_group_message';
+     const XML_PATH_CUSTOMER_GROUP_VIEW_SUBSCRIPTION = 'md_subscribenow/general/allow_to_view_subscription';
+diff --git a/app/code/Magedelight/Subscribenow/Helper/Shipping.php b/app/code/Magedelight/Subscribenow/Helper/Shipping.php
+index 529144903..4b7191a0a 100644
+--- a/app/code/Magedelight/Subscribenow/Helper/Shipping.php
++++ b/app/code/Magedelight/Subscribenow/Helper/Shipping.php
+@@ -205,7 +205,7 @@ class Shipping extends AbstractHelper
+             Data::XML_PATH_SELECT_AUTO_SHIPPING,
+             ScopeInterface::SCOPE_WEBSITE
+         );
+-        if ($isAutoShipping && $this->generate->getCurrentQuote()) {
++        if ($isAutoShipping) {
+             return true;
+         }
+         return false;
+diff --git a/app/code/Magedelight/Subscribenow/Model/Subscription.php b/app/code/Magedelight/Subscribenow/Model/Subscription.php
+index 9375bc5ae..1bd5025c2 100644
+--- a/app/code/Magedelight/Subscribenow/Model/Subscription.php
++++ b/app/code/Magedelight/Subscribenow/Model/Subscription.php
+@@ -39,6 +39,7 @@ class Subscription
+     const END_TYPE_CYCLE = 'md_end_cycle';
+     const END_TYPE_INFINITE = 'md_end_infinite';
+     const END_TYPE_DATE = 'md_end_date';
++    const BUNDLE_TYPE = 'bundle';
+ 
+     /**
+      * @var Data
+@@ -170,7 +171,8 @@ class Subscription
+         $optionPrice = $this->getOptionPrice($product);
+         $price = $finalPrice;
+ 
+-        if ($this->isSubscriptionProduct($product)) {
++        if ($this->isSubscriptionProduct($product) &&
++            $product->getTypeId() != self::BUNDLE_TYPE) {
+             $price = $finalPrice - $optionPrice;
+             $type = $this->getDiscountType($product);
+             $discount = ($convert) ? $this->service->getConvertedPrice($this->getDiscountAmount($product)) : $this->getDiscountAmount($product);

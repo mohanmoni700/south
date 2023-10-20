@@ -24,8 +24,10 @@
         data-mage-init='{ "Magento_GroupedProduct/js/product-ids-resolver": {} }'>
         <caption class="table-caption"><?= $block->escapeHtml(__('Grouped product items')) ?></caption>
         <?php if ($_hasAssociatedProducts): ?>
+             <?php $sortedProducts = $block->getSortedProducts();
+            ?>
             <tbody>
-                <?php foreach ($_associatedProducts as $_item): ?>
+                <?php foreach ($sortedProducts as $_item): ?>
                     <?php $productAvailableQty = $_helperB2b->getStockQty($_item->getId()); ?>
                     <tr>
                     <?php
@@ -34,7 +36,7 @@
                      $finalGrossMargin = number_format($grossMargin, 2, ".", "");
                     ?>
                       <td data-th="<?= $block->escapeHtml(__('Product Name')) ?>" class="col item">
-                        <?php if ($adminsession): ?>     
+                        <?php if ($adminsession): ?>
                             <strong class="product-item-name" title="<?= $block
                             ->escapeHtml('Qty : '.$productAvailableQty.' , GrossMargin : ' . $finalGrossMargin.'%') ?>">
                             <?= $block->escapeHtml($_item->getName()) ?>
@@ -206,9 +208,7 @@
             /*bv-hd for desktop checkqty*/
             $("[id^='qtytext_']").on("keydown keyup",function(e){
                 var currentId= $(this).attr('id');
-                
                 var regex = new RegExp("^[0-9]+$");
-                
                 if (regex.test(this.value)) {
                     var requestQty = this.value;
                     if(requestQty < 0){
@@ -230,7 +230,7 @@
                 }else{
                      $(this).val(0);
                      $("#"+currentId).blur();
-                }  
+                }
             });
             /*bv-hd for mobile checkqty*/
             $("[id^='qtydrop_']").on('change',function(){
@@ -265,7 +265,7 @@
     }
 
     $(document).ready(function() {
-        $(document).on("click", '#product-addtocart-button', function(e){ 
+        $(document).on("click", '#product-addtocart-button', function(e){
             if(!$(".err-show").valid()){
                 setCaretToPos($(".err-show")[0], 1);
             }

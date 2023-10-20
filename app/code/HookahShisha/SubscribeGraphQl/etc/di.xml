@@ -81,4 +81,8 @@
     </type>
     <preference for="Magedelight\Subscribenow\Model\SubscribeNowRepository"
                 type="HookahShisha\SubscribeGraphQl\Model\SubscribeNowRepository" />
+
+    <!--Subscription shipping address and method fix-->
+    <preference for="Magedelight\Subscribenow\Model\Service\Order\Generate"
+                type="HookahShisha\SubscribeGraphQl\Model\Service\Order\ExtendGenerate"/>
 </config>

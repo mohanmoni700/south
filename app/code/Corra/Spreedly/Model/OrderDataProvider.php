@@ -12,6 +12,7 @@ use Magento\Sales\Model\ResourceModel\Order\CollectionFactory;
 class OrderDataProvider
 {
     private const SIGNIFYD_GUARANTEE = 'APPROVED';
+    private const SIGNIFYD_ACCEPT = 'ACCEPT';
 
     /**
      * @var CollectionFactory
@@ -51,7 +52,7 @@ class OrderDataProvider
                 'sop.parent_id=main_table.entity_id',
                 'parent_id'
             )
-            ->where('scc.guarantee=? OR scc.order_increment IS NULL', self::SIGNIFYD_GUARANTEE)
+            ->where('scc.guarantee IN (\''.self::SIGNIFYD_ACCEPT .'\', \''. self::SIGNIFYD_GUARANTEE. '\') OR scc.order_increment IS NULL')
             ->where(
                 '(sop.method=\'spreedly\')'
             );

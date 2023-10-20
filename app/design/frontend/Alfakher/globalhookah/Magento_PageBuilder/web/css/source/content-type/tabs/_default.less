@@ -1,0 +1,283 @@
+// /**
+//  * Copyright © Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Default appearance styles
+//  _____________________________________________
+
+& when (@media-common = true) {
+    div[data-content-type='tabs'] {
+        .tabs-navigation {
+            display: block;
+            font-size: 0;
+            margin: 0 0 -1px !important;
+            padding: 0 0 0 20px;
+
+            li:first-child {
+                margin-left: 0 !important;
+            }
+
+            li.tab-header {
+                border: 1px solid transparent;
+                border-bottom: 0;
+                border-bottom-left-radius: 0 !important;
+                border-bottom-right-radius: 0 !important;
+                border-top-width: 4px !important;
+                display: inline-block;
+                margin: 0;
+                max-width: 100%;
+                overflow-wrap: break-word;
+                position: relative;
+                word-wrap: break-word;
+                z-index: 1;
+
+                &:not(:first-child) {
+                    margin-left: -1px;
+                }
+
+                a.tab-title {
+                    border-right: 0;
+                    color: @color-black;
+                    cursor: pointer !important;
+                    display: block;
+                    font-weight: @font-weight__regular;
+                    position: relative;
+                    vertical-align: middle;
+                    white-space: normal;
+                    padding: 0 5rem 1.5rem 0;
+
+                    span.tab-title {
+                        display: block;
+                    }
+
+                    &:hover {
+                        text-decoration: none;
+                    }
+                    &::after {
+                        -webkit-transform: translate(0, -50%);
+                        background-color: @color-black;
+                        content: '';
+                        height: 20px;
+                        position: absolute;
+                        right: -2px;
+                        top: 50%;
+                        transform: translate(0, -50%);
+                        width: 1px;
+                    }
+                }
+
+                &:last-child {
+                    border-right: 1px solid transparent;
+                    a.tab-title {
+                        &::after {
+                            display: none;
+                        }
+                    }
+                }
+
+                &.ui-state-active {
+                    background-color: @hookah_primary_light;
+                    border-color: @hookah_theme_color;
+                    z-index: 19;
+                    a.tab-title {
+                        color: @hookah_theme_color;
+                        font-weight: @font-weight__bold;
+                        position: relative;
+                        &::after {
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        .tabs-content {
+            top: -4px;
+            border-top: 5px solid #C7DFCE !important;
+            box-sizing: border-box;
+            padding-top: 30px;
+            position: relative;
+            z-index: 9;
+
+            [data-content-type='tab-item'] {
+                box-sizing: border-box;
+                min-height: inherit;
+
+                &:not(:first-child) {
+                    display: none;
+                }
+            }
+        }
+
+        &.tab-align-left {
+            .tabs-content {
+                border-top-left-radius: 0 !important;
+            }
+        }
+        &.tab-align-right {
+            .tabs-content {
+                border-top-right-radius: 0 !important;
+            }
+        }
+    }
+
+    @media only screen and (max-width: 360px) {
+        div[data-content-type='tabs'] {
+            ul.tabs-navigation {
+                li.tab-header {
+                    a.tab-title {
+                        font-size: 9px;
+                        min-height: 32px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+& when (@media-target = 'desktop'), (@media-target = 'all') {
+    //
+    //  Responsive Tablet
+    //  ---------------------------------------------
+    @media only screen and (max-width: 1399px) and  (min-width: 1280px) {
+        div[data-content-type='tabs'] {
+            .tabs-navigation {
+                li.tab-header {
+                    a.tab-title {
+                        font-size: 16px;
+                        padding: 1.5rem 1.4rem;
+                    }
+                }
+            }
+        }
+    }
+    @media only screen and (max-width: 1279px) and  (min-width: 768px) {
+        div[data-content-type='tabs'] {
+            .tabs-navigation {
+                padding: 0;
+                li.tab-header {
+                    a.tab-title {
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Desktop (style-l.css)
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = (@screen__m)) {
+    .pagebuilder-mobile-only {
+        display: none !important;
+    }
+    div[data-content-type='tabs'] {
+        .tabs-navigation {
+            overflow: auto;
+            scrollbar-color: @button_color_secondary transparent;
+            scrollbar-width: thin;
+            white-space: nowrap;
+            &::-webkit-scrollbar {
+                width: 2px;
+                height: 5px;
+                -webkit-overflow-scrolling: touch;
+            }
+            &::-webkit-scrollbar-thumb {
+                -webkit-overflow-scrolling: touch;
+                background: @button_color_secondary;
+            }
+            &::-webkit-scrollbar-track {
+                -webkit-overflow-scrolling: touch;
+                background-color: @color_ccc;
+                border-left: 1px solid @color_ccc;
+            }
+        }
+        .tabs-content {
+            border-top: 3px solid #C7DFCE !important;
+            top:-2px;
+        }
+    }
+}
+
+
+//
+//  Mobile (style-m.css)
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    [data-content-type='tab-item'] {
+        background-attachment: scroll !important;
+    }
+
+    div[data-content-type='tabs'] {
+        .tabs-navigation {
+            background-color: @hookah_primary_light2;
+            border: solid 1px @hookah_theme_color;
+            border-top: none;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0;
+            li.tab-header {
+                width: 33.33%;
+                border-top: solid 1px @hookah_theme_color;
+                border-left: solid 1px @hookah_theme_color;
+                border-right: none;
+                &:first-child,
+                &:nth-child(4n) {
+                    border-left: none;
+                }
+                &:last-child,
+                &:nth-child(3n) {
+                    border-right: none;
+                }
+                &.ui-tabs-active {
+                    &::before {
+                        background-color: @hookah_theme_color;
+                        content: '';
+                        display: inline-block;
+                        height: 4px;
+                        left: 0;
+                        position: absolute;
+                        top: 0;
+                        width: 100%;
+                    }
+                }
+                a.tab-title {
+                    align-items: center;
+                    display: flex;
+                    flex-wrap: wrap;
+                    font-size: 14px;
+                    font-weight: @font-weight__regular;
+                    height: 100%;
+                    justify-content: center;
+                    min-height: 42px;
+                    text-align: center;
+                    &::after {
+                        display: none;
+                    }
+                }
+            }
+        }
+        .tabs-content {
+            border-top: 3px solid #C7DFCE !important;
+            top:-2px;
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
+    div[data-content-type='tabs'] {
+        .tabs-navigation {
+            li.tab-header {
+                a.tab-title {
+                    font-size: 11px;
+                    min-height: 36px;
+                }
+            }
+        }
+    }
+}

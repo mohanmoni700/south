@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="maintenance_mode_changed">
+        <observer instance="Corra\PwaMaintenanceCheck\Observer\Maintenance\ModeChanged"
+                  name="corra_pwamaintanencecheck_observer_maintenance_mode_changed"/>
+    </event>
+</config>

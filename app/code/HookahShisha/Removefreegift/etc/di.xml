@@ -6,4 +6,6 @@
             <argument name="resourceSession" xsi:type="object">Magento\Checkout\Model\Session\Proxy</argument>
         </arguments>
     </type>
+    <preference for="Magento\SalesRule\Model\RulesApplier"
+                type="HookahShisha\Removefreegift\Model\SalesRule\ExtendedRulesApplier" />
 </config>

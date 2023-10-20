@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1columns" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="columns.top">
+            <block class="Alfakher\MyDocument\Block\Index\Document" name="document.messages" template="Alfakher_AddtocartPriceHide::documentMessage.phtml" before="-"/>
+
+            <block class="Alfakher\AddtocartPriceHide\Block\Index\CategoryBrand" name="category.banner" template="Alfakher_AddtocartPriceHide::category_banner.phtml" after="document.messages"/>
+            
+            <block class="Alfakher\AddtocartPriceHide\Block\Index\CategoryBrand" name="childcategory" template="Alfakher_AddtocartPriceHide::categories.phtml" />
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="Alfakher_AddtocartPriceHide::catalog/product/list/toolbar.phtml">
+            </block>
+        </referenceContainer>
+        <container name="categoryDescription.container" as="someContainer" label="categoryDescription Container" htmlTag="div" htmlClass="categoryDescription-container" before="page.bottom"> 
+        <block class="Alfakher\AddtocartPriceHide\Block\Index\CategoryBrand" name="childcategory" template="Alfakher_AddtocartPriceHide::categories.phtml" />
+        </container>
+        <move element="categoryDescription.container" destination="page.bottom" before="footer.content"/>
+    </body>
+</page>

@@ -53,8 +53,9 @@
                         <!-- for published date start[BS] -->
                         <?php if ($post->isPublishDateEnabled()) { ?>
                             <div class="item post-posed-date">
-                                <span class="value"><?= $block->escapeHtml($post->getPublishDate()) ?></span>
-                            </div>
+                                <span class="value">
+                                    <?= $block->escapeHtml(date('j M Y', strtotime($_post->getModifiedTime()))) ?>
+                                </span>
                         <?php } ?>
                         <!-- for published date end[BS] -->
                     </div>
