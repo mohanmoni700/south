@@ -16,7 +16,10 @@
 <?php $is_mobile = $_helperB2b->isMobileDevice();?>
 <?php $adminsession = $_helperB2b->getAdminCustomer();?>
 <?php $IsFinanceVerified = $_helperB2b->getIsFinanceVerified();?>
-<?php $notifyText = __('Notify Me'); ?>
+<?php $notifyText = __('Notify Me');
+$outofStock = __('Out of stock! ');
+?>
+
 
     <div id="validation-message-box"></div>
     <table class = "variant-label-table">
@@ -111,13 +114,13 @@
                                    <?php else: ?>
                                     <div class="stock unavailable"
                                     title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
-                                        <span><?= $block->escapeHtml(__('Out of stock!')) ?></span>
+                                        <span><?= $block->escapeHtml($outofStock) ?></span>
                                     </div>
                                 <?php endif; ?>
                                 <?php else: ?>
                                     <td> <div class="stock unavailable"
                                     title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
-                                        <span><?= $block->escapeHtml(__('Out of stock!')) ?></span>
+                                        <span><?= $block->escapeHtml($outofStock) ?></span>
                                     </div></td>
                             <?php endif; ?>
                         </td>
@@ -264,13 +267,13 @@
                                    <?php else: ?>
                                     <div class="stock unavailable"
                                     title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
-                                        <span><?= $block->escapeHtml(__('Out of stock!')) ?></span>
+                                        <span><?= $block->escapeHtml($outofStock) ?></span>
                                     </div>
                                 <?php endif; ?>
                                 <?php else: ?>
                                     <td> <div class="stock unavailable"
                                     title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
-                                        <span><?= $block->escapeHtml(__('Out of stock!')) ?></span>
+                                        <span><?= $block->escapeHtml($outofStock) ?></span>
                                     </div></td>
                             <?php endif; ?>
                         </td>
