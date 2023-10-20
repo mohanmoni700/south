@@ -22,7 +22,7 @@
     <table class = "variant-label-table">
         <caption>variant labels</caption>
         <th></th>
-        <tr class="table-variant-row col item main">
+        <tr class="table-variant-row col item main heading">
             <td class="variant col item main">Variant</td>
             <?php if ($_helperB2b->isCustomerLoggedIn()): ?>
                 <td class = "variant-unit main">Unit Price</td>
@@ -111,13 +111,13 @@
                                    <?php else: ?>
                                     <div class="stock unavailable"
                                     title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
-                                        <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
+                                        <span><?= $block->escapeHtml(__('Out of stock!')) ?></span>
                                     </div>
                                 <?php endif; ?>
                                 <?php else: ?>
                                     <td> <div class="stock unavailable"
                                     title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
-                                        <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
+                                        <span><?= $block->escapeHtml(__('Out of stock!')) ?></span>
                                     </div></td>
                             <?php endif; ?>
                         </td>
@@ -200,13 +200,13 @@
                     </tr>
                 <?php foreach ($sortedProducts as $_item): ?>
                     <?php $productAvailableQty = $_helperB2b->getStockQty($_item->getId()); ?>
-                    <tr>
+                    <tr class = "table-variant-row col item main-content">
                     <?php
                     $cost = $_helperB2b->getGrossMargin($_item->getId());
                     $grossMargin = ($_item->getPrice() - $cost) / $_item->getPrice() * 100;
                      $finalGrossMargin = number_format($grossMargin, 2, ".", "");
                     ?>
-                      <td data-th="<?= $block->escapeHtml(__('Product Name')) ?>" class="col item">
+                      <td data-th="<?= $block->escapeHtml(__('Product Name')) ?>" class="variant col item">
                         <?php if ($adminsession): ?>
                             <strong class="product-item-name main" title="<?= $block
                             ->escapeHtml('Qty : '.$productAvailableQty.' , GrossMargin : ' . $finalGrossMargin.'%') ?>">
@@ -227,7 +227,7 @@
                         $expiryMsg=$_helperB2b->getExpiryMsg();
 
                         if ($IsFinanceVerified == 1): ?>
-                            <td>
+                            <td class = "variant-unit main">
                                <?php if ($block->getCanShowProductPrice($_product)): ?>
                                     <?php if ($block->getCanShowProductPrice($_item)): ?>
                                         <?= /* @noEscape */ $block->getProductPrice($_item) ?>
@@ -264,13 +264,13 @@
                                    <?php else: ?>
                                     <div class="stock unavailable"
                                     title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
-                                        <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
+                                        <span><?= $block->escapeHtml(__('Out of stock!')) ?></span>
                                     </div>
                                 <?php endif; ?>
                                 <?php else: ?>
                                     <td> <div class="stock unavailable"
                                     title="<?= $block->escapeHtmlAttr(__('Availability')) ?>">
-                                        <span><?= $block->escapeHtml(__('Out of stock')) ?></span>
+                                        <span><?= $block->escapeHtml(__('Out of stock!')) ?></span>
                                     </div></td>
                             <?php endif; ?>
                         </td>

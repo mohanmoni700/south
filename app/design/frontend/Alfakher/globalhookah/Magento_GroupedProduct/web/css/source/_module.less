@@ -16,6 +16,18 @@
         width: 100%;
         padding: 0rem 7.2rem;
 }
+.fotorama-item {
+    .fotorama__wrap {
+        .fotorama__stage {
+            .fotorama__arr--prev {
+                display: none !important;
+            }
+            .fotorama__arr--next {
+                display: none !important;
+            }
+        }
+    }
+}
     .table-wrapper.grouped {
         max-height: 50rem !important;
         overflow-y: scroll;
@@ -36,6 +48,11 @@
                 .tablerow-mobile {
                     display: flex !important;
                     justify-content: space-between !important;
+                    td {
+                        &:first-child {
+                            padding-top: 11px !important;
+                        }
+                    }
                 }
                 > tr {
                     > td {
@@ -144,6 +161,9 @@
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
     .catalog-product-view .page-main, .catalog-product-view .page-main-full-width {
         padding: 0rem 0rem;
+}
+.table-variant-row.col.item.main.heading {
+    display: none;
 }
     .table-wrapper.grouped {
         max-height: unset;
@@ -280,7 +300,9 @@
         }
 }
 }
-
+.table-variant-row.col.item.main-content {
+    background: none;
+}
 .table-variant-row {
     height: 5rem;
     background: transparent linear-gradient(153deg, #229B62 0%, #346DB0 100%) 0% 0% no-repeat padding-box;
@@ -326,7 +348,6 @@
         display: flex !important;
         justify-content: space-between !important;
         align-items: center;
-        margin-bottom: 2.4rem;
         .availability {
             color: #316bb2;
             font-weight: 600;
@@ -340,7 +361,6 @@
         display: flex !important;
         justify-content: space-between !important;
         align-items: center;
-        margin-bottom: 2.4rem;
         span {
             font-size: 1.6rem;
         }
@@ -505,6 +525,18 @@ tr {
 }
 }
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) { 
+    .fotorama-item {
+        .fotorama__wrap {
+            .fotorama__stage {
+                .fotorama__arr--prev {
+                    display: block !important;
+                }
+                .fotorama__arr--next {
+                    display: block !important;
+                }
+            }
+        }
+    }
     .catalog-product-view .page-main, .catalog-product-view .page-main-full-width {
         padding: 0rem 0rem;
 }
