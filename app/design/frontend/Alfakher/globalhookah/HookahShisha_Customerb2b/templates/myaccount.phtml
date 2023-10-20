@@ -1,0 +1,52 @@
+<?php
+/**
+ * My account form template
+ *
+ * @var $block \HookahShisha\Customerb2b\Block\Myaccount $block
+ * @var \Magento\Framework\Escaper $escaper
+ * @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer
+ */
+?>
+<?php $messageData = $block->getMessageData(); ?>
+<div class="b2b_basic_business_contact">
+    <ul class="my_account_b2b">
+        <li class="basic_details active">
+            <a href="javascript:void(0)"
+            class="b2b_header basic_details_header"
+            data-id="basic_details"><span><?= $block->escapeHtml(__('Basic Details')) ?></span></a>
+        </li>
+        <li class="business_details">
+            <a href="javascript:void(0)"
+            class="b2b_header business_details_header"
+            data-id="business_details"><span><?= $block->escapeHtml(__('Business Details')) ?></span></a>
+        </li>
+    </ul>
+    <div id="basic_details" class="basic_details_tab">
+        <?php $this->getChildBlock('customer_address_edit')->setData('messagedata',$messageData); ?>
+        <?= $this->getChildHtml('customer_address_edit'); ?>
+    </div>
+    <div id="business_details" style="display: none;" class="business_details_tab">
+        <?php $this->getChildBlock('company_profile')->setData('messagedata',$messageData); ?>
+        <?= $this->getChildHtml('company_profile'); ?>
+    </div>
+    <?php
+    $scriptString = <<<script
+        require(['jquery'], function($){
+            $(document).ready(function(){
+               $('.b2b_header').click(function(){
+                    var tab = this;
+                    var displayform = $(tab).data("id");
+                    $(".b2b_header").each(function() {
+                        var hideForm = $(this).data("id");
+                        $("#"+hideForm).hide();
+                        $(this).parent('li').removeClass('active');
+                    });
+                    $("#"+displayform).show();
+                    $(tab).parent('li').addClass('active');
+               });
+            });
+        });
+    script;
+    ?>
+    <?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false) ?>
+</div>

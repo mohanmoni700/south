@@ -77,10 +77,11 @@ class ChildCondition
             if (!empty($appliedRuleIds)) {
                 $productCondition = $this->getProductCondition($appliedRuleIds);
                 foreach ($productCondition as $ruleCondition) {
+                    $skuList = $ruleCondition['value'] ? explode(',', $ruleCondition['value']) : [];
                     if (isset($ruleCondition['type'])
                         && str_ends_with($ruleCondition['type'], self::PRODUCT_CONDITION)
                         && $ruleCondition['attribute_scope'] == self::ATTRIBUTE_SCOPE
-                        && $ruleCondition['value'] == $sku
+                        && ($ruleCondition['value'] == $sku || in_array($sku, $skuList))
                         && in_array($ruleCondition['operator'], self::OPERATOR)
                     ) {
                         return true;
@@ -100,15 +101,15 @@ class ChildCondition
     private function getProductCondition($ruleIds)
     {
         $ruleIds = explode(',', $ruleIds);
-        $productCondition = [];
         foreach ($ruleIds as $ruleId) {
             $rule = $this->rule->create()->load($ruleId);
             $actionSerialized = $rule->getData('actions_serialized');
             if (!empty($actionSerialized)) {
                 $condition = $this->json->unserialize($actionSerialized);
-                $productCondition = $condition['conditions'] ?? [];
+                //Return the first rule id as it is the last rule id applied
+                return $condition['conditions'] ?? [];
             }
         }
-        return $productCondition;
+        return [];
     }
 }

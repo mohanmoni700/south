@@ -1114,6 +1114,7 @@ return [
         'HookahShisha_Order' => 1,
         'HookahShisha_OrderGraphQl' => 1,
         'HookahShisha_QuoteGraphQl' => 1,
+        'HookahShisha_ReCaptcha' => 1,
         'HookahShisha_Removefreegift' => 1,
         'HookahShisha_RmaGraphQl' => 1,
         'HookahShisha_Sales' => 1,
@@ -1198,6 +1199,7 @@ return [
         'Xtento_OrderImport' => 1,
         'Corra_YotpoLoyaltyExtended' => 1,
         'Yotpo_Yotpo' => 1,
+        'Zoho_Salesiq' => 1,
         'eDevice_IpRecognitionPopup' => 1
     ],
     'admin_user' => [

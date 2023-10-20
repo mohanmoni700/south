@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="mage/gallery/gallery.css"/>
+    </head>
+    <body>
+        <referenceBlock name="breadcrumbs" remove="true" />
+            <referenceContainer name="page.top">
+                <block class="Alfakher\Productpageb2b\Block\Product\Breadcrumbs" name="product.view.breadcrumbs" template="Magento_Theme::html/product_breadcrumbs.phtml" />       
+            </referenceContainer>
+        <move element="page.main.title" destination="product.info.main" before="-" />
+        <move element="breadcrumbs" destination="page.wrapper" before="main.content"/>
+        <move element="product.info.stock.sku" destination="product.info.main" before="product.info.price"/>
+        <move element="product.info.grouped.stock" destination="product.info.main" after="product.info.stock.sku"/>
+        <referenceBlock name="product.info.social" remove="true"/>
+    </body>
+</page>

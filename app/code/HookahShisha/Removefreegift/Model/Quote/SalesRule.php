@@ -4,29 +4,39 @@ declare(strict_types=1);
 
 namespace HookahShisha\Removefreegift\Model\Quote;
 
-use Magento\Quote\Api\CartRepositoryInterface;
+use Magento\Quote\Model\QuoteRepository;
 use Magento\SalesRule\Model\RuleFactory;
 use Amasty\Promo\Model\ResourceModel\Rule\CollectionFactory;
 use Magento\SalesRule\Model\Rule;
+use Magento\Checkout\Model\Session;
 
 class SalesRule
 {
-    protected CartRepositoryInterface $quoteRepository;
     protected RuleFactory $ruleFactory;
+
     protected CollectionFactory $collectionFactory;
 
+    protected Session $checkoutSession;
+
+    protected $quote;
+
+    protected QuoteRepository $quoteRepository;
+
     /**
-     * @param CartRepositoryInterface $quoteRepository
+     * @param CollectionFactory $collectionFactory
+     * @param Session $checkoutSession
+     * @param RuleFactory $ruleFactory
      */
     public function __construct(
-        CartRepositoryInterface $quoteRepository,
-        CollectionFactory       $collectionFactory,
-        RuleFactory             $ruleFactory
-    )
-    {
-        $this->quoteRepository = $quoteRepository;
+        CollectionFactory $collectionFactory,
+        Session           $checkoutSession,
+        QuoteRepository   $quoteRepository,
+        RuleFactory       $ruleFactory
+    ) {
         $this->ruleFactory = $ruleFactory;
         $this->collectionFactory = $collectionFactory;
+        $this->checkoutSession = $checkoutSession;
+        $this->quoteRepository = $quoteRepository;
     }
 
     /**
@@ -34,36 +44,27 @@ class SalesRule
      * @param $ruleRowId
      * @return bool|void
      */
-    public function getSalesRuleIdByQuote($quoteId, $ruleRowId)
+    public function getSalesRuleIdByQuote($quoteId, $ruleRowId, $sku)
     {
         try {
-            //Get the quote
-            $quote = $this->quoteRepository->get($quoteId);
-
             //Get Rule Id By AmproRule Id
             $rule = $this->ruleFactory->create();
             $ruleId = $this->getRuleIdByRowId($rule, $ruleRowId);
 
-            //Check whether the rule id already applied
-            if (isset($ruleId) && !$this->isQuoteRuleExist($quote->getAppliedRuleIds(), $ruleId)) {
-                $rule = $rule->load($ruleId);
-
-                //Get All Quote Items and validate only the non-promo item
-                $isValid = true;
-                foreach ($quote->getAllVisibleItems() as $quoteItem) {
-                    $parentId = $quoteItem->getParentItemId();
-                    if (!isset($parentId)) {
-                        if ($rule->getId()
-                            && $rule->getActions()->validate($quoteItem)
-                            && $this->isPromoItem($quoteItem->getSku())) {
-                            return true;
-                        }
-                        $isValid = false;
-                    }
+            //Check promo rule id exist
+            if (isset($ruleId)) {
+                //Get the quote
+                if (!$this->quote || ($this->quote->getId() != $this->checkoutSession->getQuote()->getId())) {
+                    $this->quote = $this->quoteRepository->get($quoteId);
                 }
 
-                //To check all the products in the cart
-                return $isValid;
+                //Check whether the rule id already applied
+                if (!$this->isQuoteRuleExist($this->quote->getAppliedRuleIds(), $ruleId)) {
+                    $rule = $rule->load($ruleId);
+
+                    //Get All Quote Items and validate only the non-promo item
+                    return $this->isValidPromoItem($this->quote, $rule, $sku);
+                }
             }
         } catch (\Exception $exception) {
             //In case of exception also it should return as true
@@ -81,9 +82,9 @@ class SalesRule
         $amPromoRule = $this->collectionFactory->create()
             ->addFieldToFilter('sku', ['finset' => $sku]);
         if ($amPromoRule->getSize() > 0) {
-            return false;
+            return true;
         }
-        return true;
+        return false;
 
     }
 
@@ -102,12 +103,35 @@ class SalesRule
 
     private function isQuoteRuleExist($appliedRuleIds, $ruleId)
     {
-        if (isset($appliedRuleIds) && !empty($appliedRuleIds)) {
+        if (!empty($appliedRuleIds)) {
             $appliedRuleIds = explode(',', $appliedRuleIds);
             if (in_array($ruleId, $appliedRuleIds)) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * To validate the promo item
+     * @param $quote
+     * @param $rule
+     * @return bool
+     */
+    private function isValidPromoItem($quote, $rule, $sku)
+    {
+        //Get All items to check promo item
+        foreach ($quote->getAllVisibleItems() as $quoteItem) {
+            $parentId = $quoteItem->getParentItemId();
+            if (!isset($parentId) && $quoteItem->getSku() == $sku) {
+                if ($rule->getId()
+                    && $rule->getActions()->validate($quoteItem)
+                    && $this->isPromoItem($quoteItem->getSku())) {
+                    return true;
+                }
+                return false;
+            }
+        }
+        return true;
     }
 }

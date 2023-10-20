@@ -37,7 +37,7 @@ $IsFinanceVerified = $_helperB2b->getIsFinanceVerified();
         <?php $filtered = count($block->getLayer()->getState()->getFilters()) ?>
         <div class="block-title filter-title" data-role="title">
             <strong role="heading" aria-level="2" data-role="title"
-                    data-count="<?= /* @noEscape */ count($_filters) ?>"><?= $block->escapeHtml(__('Filters')) ?>
+                    data-count="<?= /* @noEscape */ count($_filters) ?>"><?= $block->escapeHtml(__('Show Filters')) ?>
             </strong>
         </div>
 
@@ -125,20 +125,24 @@ $IsFinanceVerified = $_helperB2b->getIsFinanceVerified();
                     <?php if ($filter->getItemsCount()): ?>
                         <?php /* start Check the document is verified or not [vy]*/?>
                         <?php if ($filter->getName() != "Price"): ?>
+                            <div  class="filter-options-details">
                                     <div role="heading" aria-level="3" class="filter-options-title">
                                         <?= $block->escapeHtml(__($filter->getName())) ?>    
                                     </div>
                                     <div class="filter-options-content">
                                         <?= /* @noEscape */ $block->getChildBlock('renderer')->render($filter) ?> 
                                     </div>
+                            </div>
                         <?php else: ?>
                             <?php if ($IsFinanceVerified == 1): ?>
+                                <div  class="filter-options-details">
                                     <div role="heading" aria-level="3" class="filter-options-title">
                                         <?= $block->escapeHtml(__($filter->getName())) ?>    
                                     </div>
                                     <div class="filter-options-content">
                                         <?= /* @noEscape */ $block->getChildBlock('renderer')->render($filter) ?>     
                                     </div>
+                                </div>
                             <?php endif; ?>   
                             <?php /* end [vy]*/?>
 

@@ -25,3 +25,4 @@ class Post extends \Magefan\Blog\Model\Post {
 	}
 
 }
+
