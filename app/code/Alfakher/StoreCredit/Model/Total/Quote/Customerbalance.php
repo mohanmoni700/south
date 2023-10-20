@@ -1,12 +1,17 @@
 <?php
 
+declare (strict_types=1);
+
 namespace Alfakher\StoreCredit\Model\Total\Quote;
 
 use Magento\Checkout\Model\Session;
 use Magento\CustomerBalance\Helper\Data;
 use Magento\CustomerBalance\Model\BalanceFactory;
 use Magento\Framework\Pricing\PriceCurrencyInterface;
+use Magento\Quote\Api\Data\ShippingAssignmentInterface;
+use Magento\Quote\Model\Quote;
 use Magento\Quote\Model\Quote\Address;
+use Magento\Quote\Model\Quote\Address\Total;
 use Magento\Store\Model\StoreManagerInterface;
 
 class Customerbalance extends \Magento\CustomerBalance\Model\Total\Quote\Customerbalance
@@ -47,9 +52,9 @@ class Customerbalance extends \Magento\CustomerBalance\Model\Total\Quote\Custome
      * @inheritDoc
      */
     public function collect(
-        \Magento\Quote\Model\Quote                          $quote,
-        \Magento\Quote\Api\Data\ShippingAssignmentInterface $shippingAssignment,
-        \Magento\Quote\Model\Quote\Address\Total            $total
+        Quote $quote,
+        ShippingAssignmentInterface $shippingAssignment,
+        Total $total
     )
     {
         if (!$this->_customerBalanceData->isEnabled()) {

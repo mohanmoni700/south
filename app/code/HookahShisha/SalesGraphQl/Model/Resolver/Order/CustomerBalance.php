@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace HookahShisha\SalesGraphQl\Model\Resolver\Order;
 
 use Magento\Framework\Exception\LocalizedException;
