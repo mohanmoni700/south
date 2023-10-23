@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace HookahShisha\SubscribeGraphQl\Model\Resolver;
 
+use Magedelight\Subscribenow\Model\Source\DiscountType;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
@@ -101,8 +102,7 @@ class SubscriptionDetailPdp implements ResolverInterface
         if (isset($finalProduct)) {
 
             //Number of child product with discount amount
-            $options = $this->type->getOptionsCollection($finalProduct);
-            $discountAmount = $options->count() * $finalProduct->getDiscountAmount();
+            $discountAmount = $this->getDiscountAmountByType($finalProduct);
 
             $billingPeriod = $this->getBillingPeriod($finalProduct);
             return [
@@ -145,5 +145,19 @@ class SubscriptionDetailPdp implements ResolverInterface
             $billingPeriodData[$product->getBillingPeriod()]['label'] = $product->getAttributeText('billing_period');
         }
         return $billingPeriodData;
+    }
+
+    /**
+     * @param $product
+     * @return float|int
+     */
+    public function getDiscountAmountByType($product)
+    {
+        if ($product->getDiscountType() == DiscountType::FIXED) {
+            $options = $this->type->getOptionsCollection($product);
+            return $options->count() * $product->getDiscountAmount();
+        } else {
+            return $product->getDiscountAmount();
+        }
     }
 }
