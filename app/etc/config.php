@@ -1156,6 +1156,7 @@ return [
         'Mageplaza_ProductLabelsGraphQl' => 1,
         'Mageplaza_Seo' => 1,
         'Mageplaza_Sitemap' => 1,
+        'Alfakher_ReviewFix' => 1,
         'Alfakher_Seamlesschex' => 1,
         'MagestyApps_WebImages' => 1,
         'HookahShisha_Customization' => 1,
