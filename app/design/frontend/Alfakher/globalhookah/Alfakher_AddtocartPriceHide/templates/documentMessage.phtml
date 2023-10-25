@@ -1,0 +1,19 @@
+<?php
+/* Start Document Verification msgs */
+//helper boolean
+$_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class);
+$IsFinanceVerified = $_helperB2b->getIsFinanceVerified();
+
+//get System config values
+$documents_required_msg = $_helperB2b->getConfigValue(
+    'hookahshisha/productpage/productpageb2b_documents_verification_required'
+);
+
+?>
+<?php if ($_helperB2b->isCustomerLoggedIn() && $IsFinanceVerified != 1): ?>
+    <div class="pending-tooltip">
+        <div class="tooltip-inner">
+            <?= $block->escapeHtml(__($documents_required_msg)) ?>
+        </div>
+    </div>
+<?php endif; ?>
