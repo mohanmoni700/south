@@ -4,7 +4,6 @@ namespace Alfakher\OutOfStockProduct\Plugin;
 
 use Magento\Catalog\Block\Product\ListProduct;
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\ConfigurableProduct\Model\Product\Type\Configurable;
 
 class ProductList
 {
