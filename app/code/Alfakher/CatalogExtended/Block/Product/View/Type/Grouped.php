@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Alfakher\CatalogExtended\Block\Product\View\Type;
 
 use Alfakher\Productpageb2b\Helper\Data;
+use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Block\Product\Context;
 use Magento\Framework\Stdlib\ArrayUtils;
 use Magento\GroupedProduct\Block\Product\View\Type\Grouped as MagentoGrouped;
@@ -19,16 +20,18 @@ class Grouped extends MagentoGrouped
     /**
      * @param Context $context
      * @param ArrayUtils $arrayUtils
+     * @param ProductRepositoryInterface $productRepository
      * @param Data $helperData
      * @param array $data
      */
     public function __construct(
         Context    $context,
         ArrayUtils $arrayUtils,
+        \Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
         Data       $helperData,
         array      $data = []
     ) {
-        parent::__construct($context, $arrayUtils, $data);
+        parent::__construct($context, $arrayUtils, $productRepository, $data);
         $this->helperData = $helperData;
     }
 
