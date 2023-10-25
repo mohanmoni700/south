@@ -158,7 +158,7 @@ class Registry extends \Amasty\Promo\Model\Registry
     public function addPromoItem($sku, $qty, $ruleId, $discountData, $type, $discountAmount, int $quoteId = null)
     {
         //Check Whether the rule id is already applied and, it is the correct rule id
-        if ($this->salesRule->getSalesRuleIdByQuote($quoteId, $ruleId)) {
+        if ($this->salesRule->getSalesRuleIdByQuote($quoteId, $ruleId, $sku)) {
             $discountData = $this->getCurrencyDiscount($discountData);
             $autoAdd = false;
             $request = $this->httprequest;

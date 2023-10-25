@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Magento\Framework\GraphQlSchemaStitching\Reader"
+                 type="Magento\Framework\GraphQlSchemaStitching\Common\Reader">
+        <arguments>
+            <argument name="readers" xsi:type="array">
+                <item name="convertAttributeValuesToTextReader"
+                      xsi:type="object">Corra\AttributesGraphQl\Model\Config\ConvertAttributeValuesToText</item>
+            </argument>
+        </arguments>
+    </virtualType>
+</config>

@@ -1199,6 +1199,7 @@ return [
         'Xtento_OrderImport' => 1,
         'Corra_YotpoLoyaltyExtended' => 1,
         'Yotpo_Yotpo' => 1,
+        'Zoho_Salesiq' => 1,
         'eDevice_IpRecognitionPopup' => 1
     ],
     'admin_user' => [
