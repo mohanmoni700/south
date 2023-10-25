@@ -15,7 +15,12 @@ class Collection
      * @param string $dir
      * @return mixed
      */
-    public function aroundAddAttributeToSort($subject, $proceed, $attribute, $dir = \Magento\Framework\Data\Collection::SORT_ORDER_DESC)
+    public function aroundAddAttributeToSort(
+        $subject,
+        $proceed,
+        $attribute,
+        $dir = \Magento\Framework\Data\Collection::SORT_ORDER_DESC
+    )
     {
         if ($attribute == 'stock_status' && $dir == \Magento\Framework\Data\Collection::SORT_ORDER_ASC) {
             $subject->getSelect()->joinLeft(
