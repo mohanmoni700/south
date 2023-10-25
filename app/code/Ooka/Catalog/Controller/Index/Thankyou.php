@@ -13,6 +13,8 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Sales\Api\OrderItemRepositoryInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
+use Ooka\Catalog\Logger\Logger;
+
 
 /**
  * Thank you class for Trigger third email
@@ -37,6 +39,8 @@ class Thankyou extends Action
      * @var StoreManagerInterface
      */
     protected $storeManager;
+    private Logger $logger;
+
 
     /**
      * @param Context $context
@@ -44,19 +48,24 @@ class Thankyou extends Action
      * @param ScopeConfigInterface $scopeConfig
      * @param OrderItemRepositoryInterface $orderItemRepository
      * @param StoreManagerInterface $storeManager
+     * @param Logger $logger
      */
     public function __construct(
         Context                      $context,
         TransportBuilder             $transportBuilder,
         ScopeConfigInterface         $scopeConfig,
         OrderItemRepositoryInterface $orderItemRepository,
-        StoreManagerInterface        $storeManager
+        StoreManagerInterface        $storeManager,
+        Logger                       $logger
+
     ) {
         parent::__construct($context);
         $this->transportBuilder = $transportBuilder;
         $this->scopeConfig = $scopeConfig;
         $this->orderItemRepositoryInterface = $orderItemRepository;
         $this->storeManager = $storeManager;
+        $this->logger = $logger;
+
     }
 
     /**
@@ -87,7 +96,16 @@ class Thankyou extends Action
             $templateVars = [
                 'name' => 'Recipient Name',
             ];
-
+            $this->logger->info("Email Data", [
+                'order_item_id' => $orderItem,
+                'store_id' => $orderItem->getStoreId(),
+                'store_url' => $storeUrl,
+                'giftcard_sender_name' => $senderName,
+                'giftcard_sender_email' => $senderEmail,
+                'giftcard_recipient_name' => $recipientName,
+                'giftcard_recipient_email' => $recipientEmail,
+                'template_id' => $templateId,
+            ]);
             $transport = $this->transportBuilder
                 ->setTemplateIdentifier($templateId)
                 ->setTemplateOptions([
@@ -100,9 +118,15 @@ class Thankyou extends Action
                 ->getTransport();
 
             $transport->sendMessage();
+            $this->logger->info("Email sent successfully");
+
             $this->messageManager->addSuccessMessage('Thank you for your order');
         } catch (MailException $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
+            $this->logger->info("Email not sent successfully",[
+                'error' => $e->getMessage()]
+            );
+
             $this->messageManager->addErrorMessage('Email Not Sent');
         }
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
