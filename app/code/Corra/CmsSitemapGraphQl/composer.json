@@ -1,0 +1,28 @@
+{
+    "name": "corra/module-cms-sitemap-graph-ql",
+    "description": "GraphQl to fetch the CMS page data for sitemap in pylot projects",
+    "type": "magento2-module",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "require": {
+        "magento/module-cms": "*"
+    },
+    "authors": [
+        {
+            "name": "CORRA"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Corra\\CmsSitemapGraphQl\\": ""
+        }
+    },
+    "support": {
+        "wiki": "https://corratech.jira.com/wiki/spaces/EKC/pages/3789848577/CmsSitemapGraphQl"
+    }
+}

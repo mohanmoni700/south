@@ -1,0 +1,37 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .customer-account-create {
+        .page-title-wrapper {
+            .page-title {
+                display: none;
+            }
+        }
+
+        .registration-form {
+            margin-top: 4rem;
+        }
+
+        .login-container {
+            display: none;
+
+            > * {
+                max-width: 100%;
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________
+
+@media only screen and (max-width: 1024px) {
+.customer-account-create {
+    .registration-form {
+        margin-top: 2rem;
+    }
+}
+}

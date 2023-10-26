@@ -1,0 +1,9 @@
+type Customer {
+    yotpo_identification: YotpoCustomerIdentification @resolver(class: "\\Corra\\YotpoLoyaltyExtended\\Model\\Resolver\\YotpoCustomerDetail") @doc(description: "The contents of the customer's compare list")
+}
+
+type YotpoCustomerIdentification {
+    identity: ID
+    token: String
+    tags: String
+}

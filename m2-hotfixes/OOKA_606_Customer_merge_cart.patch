@@ -1,0 +1,42 @@
+diff --git a/vendor/magento/module-quote/Model/Quote.php b/vendor/magento/module-quote/Model/Quote.php
+index 48cd4b2eb..c61f0b212 100755
+--- a/vendor/magento/module-quote/Model/Quote.php
++++ b/vendor/magento/module-quote/Model/Quote.php
+@@ -367,6 +367,9 @@ class Quote extends AbstractExtensibleModel implements \Magento\Quote\Api\Data\C
+      */
+     private $allowedCountriesReader;
+
++    //Added in order to avoid merge cart infinite loop
++    private static $isTrigger = 0;
++
+     /**
+      * @param \Magento\Framework\Model\Context $context
+      * @param \Magento\Framework\Registry $registry
+@@ -886,6 +889,10 @@ class Quote extends AbstractExtensibleModel implements \Magento\Quote\Api\Data\C
+             $customerId = (int)$customer;
+         }
+         $this->_getResource()->loadByCustomerId($this, $customerId);
++
++        //Added to avoid infinite loop
++        self::$isTrigger = 0;
++
+         $this->_afterLoad();
+         return $this;
+     }
+@@ -2461,11 +2468,15 @@ class Quote extends AbstractExtensibleModel implements \Magento\Quote\Api\Data\C
+     protected function _afterLoad()
+     {
+         // collect totals and save me, if required
+-        if (1 == $this->getTriggerRecollect()) {
++        //Added isTrigger to avoid the infinite loop in the save function
++        if (1 == $this->getTriggerRecollect() && self::$isTrigger == 0) {
++            self::$isTrigger++;
+             $this->collectTotals()
+                 ->setTriggerRecollect(0)
+                 ->save();
+         }
++        //Resetting it if the condition is passed
++        self::$isTrigger = 0;
+         return parent::_afterLoad();
+     }
+

@@ -1021,6 +1021,7 @@ return [
         'Alfakher_ExciseReport' => 1,
         'Vrpayecommerce_Vrpayecommerce' => 1,
         'Alfakher_FinanceVerified' => 1,
+        'Alfakher_GiftProduct' => 1,
         'MageWorx_OrdersBase' => 1,
         'Alfakher_GroupedProduct' => 1,
         'MageWorx_OrderEditor' => 1,
@@ -1156,6 +1157,7 @@ return [
         'Mageplaza_ProductLabelsGraphQl' => 1,
         'Mageplaza_Seo' => 1,
         'Mageplaza_Sitemap' => 1,
+        'Alfakher_ReviewFix' => 1,
         'Alfakher_Seamlesschex' => 1,
         'MagestyApps_WebImages' => 1,
         'HookahShisha_Customization' => 1,
@@ -1199,6 +1201,7 @@ return [
         'Xtento_OrderImport' => 1,
         'Corra_YotpoLoyaltyExtended' => 1,
         'Yotpo_Yotpo' => 1,
+        'Zoho_Salesiq' => 1,
         'eDevice_IpRecognitionPopup' => 1
     ],
     'admin_user' => [
