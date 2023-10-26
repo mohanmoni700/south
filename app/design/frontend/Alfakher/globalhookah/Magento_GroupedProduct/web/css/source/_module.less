@@ -66,7 +66,6 @@
                         vertical-align: middle;
                         &.col.qty {
                             padding-right: 1.2rem;
-                            text-align: center;
                             width: 140px;
                             .variant-total-price {
                                 color: red;
@@ -162,6 +161,13 @@
     .catalog-product-view .page-main, .catalog-product-view .page-main-full-width {
         padding: 0rem 0rem;
 }
+.product.column-1 {
+    padding-top: 0rem ;
+    border-top: unset;
+    .Description-product-page::after {
+        top: 1.5rem;
+    }
+}
 .table-variant-row.col.item.main.heading {
     display: none;
 }
@@ -178,6 +184,15 @@
                     td {
                         display: table-cell;
                         white-space: unset;
+                        .stock {
+                            text-align: center;
+                            span {
+                                width: 100%;
+                            }
+                        }
+                        .control.qty {
+                            text-align: center;
+                        }
                     }
                 }
                 .table-grouped-responsive{
@@ -235,6 +250,7 @@
         }
     }
     .box-tocart {
+        margin: 0rem 0rem !important;
         .fieldset {
             .actions {
                 button {
@@ -264,6 +280,8 @@
         display: flex;
         align-items: center;
         gap: 4rem;
+        margin-bottom: 0rem;
+        
         .Product_grouped_totals {
             span{
                 font-size: 16px;
@@ -307,13 +325,10 @@
     height: 5rem;
     background: transparent linear-gradient(153deg, #229B62 0%, #346DB0 100%) 0% 0% no-repeat padding-box;
     .variant.col.item {
-        width: 45rem;
+        width: 37.5rem;
     }
     .variant.col.item.main {
-        width: 37.5rem;
-    }
-    td.col.item {
-        width: 37.5rem;
+        width: 32.5rem;
     }
     .variant-unit.main {
         width: 13rem;
@@ -330,9 +345,9 @@
         padding:1.3rem 1.3rem !important;
     }
 }
-.table-variant-row.col.item.table {
+tr.table-variant-row.col.item.main.heading {
     display: none;
-} 
+}
 
 
 .product-info-main {
@@ -447,7 +462,7 @@ display: none;
         right: 0;
         height: 0.5em;
         border-top: 1px solid #316BB2;
-        z-index: -1;
+        z-index: 1;
         top: 4.5rem;
     }
     .showMore , .showLess{
