@@ -13,4 +13,6 @@
             </argument>
         </arguments>
     </type>
+    <preference for="Magento\ProductAlert\Model\Observer" type="Alfakher\StockAlert\Model\ProductStockAlert"/>
+    <preference for="Magento\ProductAlert\Model\Email" type="Alfakher\StockAlert\Model\EmailSender"/>
 </config>

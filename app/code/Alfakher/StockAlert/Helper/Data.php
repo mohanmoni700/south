@@ -16,6 +16,9 @@ use Alfakher\StockAlert\Logger\Logger;
 
 class Data
 {
+    public const XML_PATH_EMAIL_STOCK_TEMPLATE = 'catalog/productalert/guest_user_email_template';
+    public const XML_PATH_EMAIL_IDENTITY = 'trans_email/ident_general/email';
+
     /**
      * @var RequestInterface
      */
@@ -107,10 +110,13 @@ class Data
             ];
 
             $storeId = $this->storeManager->getStore()->getId();
+            $sender = $this->scopeConfig->getValue(
+                self::XML_PATH_EMAIL_IDENTITY,
+                ScopeInterface::SCOPE_STORE,
+                $storeId
+            );
 
-            $fromEmail = $this->scopeConfig->getValue('trans_email/ident_general/email', ScopeInterface::SCOPE_STORE);
-            $fromName = $this->scopeConfig->getValue('trans_email/ident_general/name', ScopeInterface::SCOPE_STORE);
-            $from = ['email' => $fromEmail, 'name' => $fromName];
+            $from = ['email' => $sender, 'name' => $sender];
             $to = [$email];
 
             $templateOptions = [
@@ -119,7 +125,7 @@ class Data
             ];
 
             $templateId = $this->scopeConfig->getValue(
-                "catalog/productalert/guest_user_email_template",
+                self::XML_PATH_EMAIL_STOCK_TEMPLATE,
                 ScopeInterface::SCOPE_STORE,
                 $storeId
             );
@@ -138,7 +144,7 @@ class Data
             $transport = $this->transportBuilder->setTemplateIdentifier($templateId)
                 ->setTemplateOptions($templateOptions)
                 ->setTemplateVars($templateVars)
-                ->setFrom($from)
+                ->setFromByScope($from)
                 ->addTo($to)
                 ->getTransport();
 
