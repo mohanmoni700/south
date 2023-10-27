@@ -178,7 +178,7 @@ class ProductAlertStockGuestUser extends \Magento\Framework\Model\AbstractExtens
      */
     public function getSendCount(): int
     {
-        return $this->getData(self::SEND_COUNT);
+        return (int)$this->getData(self::SEND_COUNT);
     }
 
     /**
