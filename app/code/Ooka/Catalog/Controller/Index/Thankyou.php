@@ -7,14 +7,13 @@ namespace Ooka\Catalog\Controller\Index;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\Exception\MailException;
 use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Sales\Api\OrderItemRepositoryInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Ooka\Catalog\Logger\Logger;
-
+use Magento\Framework\Translate\Inline\StateInterface;
 
 /**
  * Thank you class for Trigger third email
@@ -39,7 +38,14 @@ class Thankyou extends Action
      * @var StoreManagerInterface
      */
     protected $storeManager;
+    /**
+     * @var Logger
+     */
     private Logger $logger;
+    /**
+     * @var StateInterface
+     */
+    protected $inlineTranslation;
 
 
     /**
@@ -49,6 +55,7 @@ class Thankyou extends Action
      * @param OrderItemRepositoryInterface $orderItemRepository
      * @param StoreManagerInterface $storeManager
      * @param Logger $logger
+     * @param StateInterface $inlineTranslation
      */
     public function __construct(
         Context                      $context,
@@ -56,7 +63,9 @@ class Thankyou extends Action
         ScopeConfigInterface         $scopeConfig,
         OrderItemRepositoryInterface $orderItemRepository,
         StoreManagerInterface        $storeManager,
-        Logger                       $logger
+        Logger                       $logger,
+        StateInterface               $inlineTranslation
+
 
     ) {
         parent::__construct($context);
@@ -65,7 +74,7 @@ class Thankyou extends Action
         $this->orderItemRepositoryInterface = $orderItemRepository;
         $this->storeManager = $storeManager;
         $this->logger = $logger;
-
+        $this->inlineTranslation = $inlineTranslation;
     }
 
     /**
@@ -118,14 +127,13 @@ class Thankyou extends Action
                 ->getTransport();
 
             $transport->sendMessage();
+            $this->inlineTranslation->resume();
             $this->logger->info("Email sent successfully");
 
             $this->messageManager->addSuccessMessage('Thank you for your order');
-        } catch (MailException $e) {
+        } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
-            $this->logger->info("Email not sent successfully",[
-                'error' => $e->getMessage()]
-            );
+            $this->logger->info($e->getMessage());
 
             $this->messageManager->addErrorMessage('Email Not Sent');
         }
