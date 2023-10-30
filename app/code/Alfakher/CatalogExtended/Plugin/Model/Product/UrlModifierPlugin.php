@@ -31,8 +31,8 @@ class UrlModifierPlugin extends Subject
      * @param FilterManager $filter
      * @param SidResolverInterface $sidResolver
      * @param UrlFinderInterface $urlFinder
-     * @param array $data
      * @param ScopeConfigInterface $scopeConfig
+     * @param array $data
      */
     public function __construct(
         UrlFactory            $urlFactory,
@@ -60,13 +60,13 @@ class UrlModifierPlugin extends Subject
         Subject  $subject,
         callable $proceed,
         Product  $product,
-                 $params = []
+        $params = []
     ): string {
         $routePath = '';
         $routeParams = $params;
         $storeId = $product->getStoreId();
         $categoryId = null;
-        $textToAppend = $this->scopeConfig->getValue(self::PRODUCT_URL_PREFIX_CONFIG, ScopeInterface::SCOPE_STORE);
+        $textToAppend = $this->getProductPrefix();
 
         if (empty($textToAppend)) {
             return $proceed($product, $params);
@@ -160,5 +160,15 @@ class UrlModifierPlugin extends Subject
         }
 
         return [$categoryId, $requestPath, $routeParams];
+    }
+
+    /**
+     * Get prefix for Product URL from configuration
+     *
+     * @return null|string
+     */
+    private function getProductPrefix(): ?string
+    {
+        return $this->scopeConfig->getValue(self::PRODUCT_URL_PREFIX_CONFIG, ScopeInterface::SCOPE_STORE);
     }
 }

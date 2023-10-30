@@ -14,4 +14,8 @@
         <plugin name="modify-product-url"
                 type="Alfakher\CatalogExtended\Plugin\Model\Product\UrlModifierPlugin"/>
     </type>
+    <type name="Magento\Catalog\Helper\Data">
+        <plugin name="modify-category-breadcrumb-path"
+                type="Alfakher\CatalogExtended\Plugin\Data"/>
+    </type>
 </config>
