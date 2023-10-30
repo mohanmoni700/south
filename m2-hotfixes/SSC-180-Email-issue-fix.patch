@@ -1,0 +1,296 @@
+diff --git a/vendor/magento/module-product-alert/Model/Email.php b/vendor/magento/module-product-alert/Model/Email.php
+index 379ae29ef..3069f822a 100644
+--- a/vendor/magento/module-product-alert/Model/Email.php
++++ b/vendor/magento/module-product-alert/Model/Email.php
+@@ -333,65 +333,75 @@ class Email extends AbstractModel
+      */
+     public function send()
+     {
+-        if ($this->_website === null || $this->_customer === null || !$this->isExistDefaultStore()) {
+-            return false;
+-        }
++        try {
++            if ($this->_website === null || $this->_customer === null || !$this->isExistDefaultStore()) {
++                return false;
++            }
+ 
+-        $products = $this->getProducts();
+-        $templateConfigPath = $this->getTemplateConfigPath();
+-        if (!in_array($this->_type, ['price', 'stock']) || count($products) === 0 || !$templateConfigPath) {
+-            return false;
+-        }
++            $products = $this->getProducts();
++            $templateConfigPath = $this->getTemplateConfigPath();
++            if (!in_array($this->_type, ['price', 'stock']) || count($products) === 0 || !$templateConfigPath) {
++                return false;
++            }
+ 
+-        $storeId = (int) $this->getStoreId() ?: (int) $this->_customer->getStoreId();
+-        $store = $this->getStore($storeId);
++            $storeId = (int) $this->getStoreId() ?: (int) $this->_customer->getStoreId();
++            $store = $this->getStore($storeId);
+ 
+-        $this->_appEmulation->startEnvironmentEmulation($storeId);
++            $this->_appEmulation->startEnvironmentEmulation($storeId);
+ 
+-        $block = $this->getBlock();
+-        $block->setStore($store)->reset();
++            $block = $this->getBlock();
++            $block->setStore($store)->reset();
+ 
+-        // Add products to the block
+-        foreach ($products as $product) {
+-            $product->setCustomerGroupId($this->_customer->getGroupId());
+-            $block->addProduct($product);
+-        }
++            // Add products to the block
++            foreach ($products as $product) {
++                $product->setCustomerGroupId($this->_customer->getGroupId());
++                $block->addProduct($product);
++            }
+ 
+-        $templateId = $this->_scopeConfig->getValue(
+-            $templateConfigPath,
+-            ScopeInterface::SCOPE_STORE,
+-            $storeId
+-        );
+-
+-        $alertGrid = $this->_appState->emulateAreaCode(
+-            Area::AREA_FRONTEND,
+-            [$block, 'toHtml']
+-        );
+-        $this->_appEmulation->stopEnvironmentEmulation();
+-
+-        $customerName = $this->_customerHelper->getCustomerName($this->_customer);
+-        $this->_transportBuilder->setTemplateIdentifier(
+-            $templateId
+-        )->setTemplateOptions(
+-            ['area' => Area::AREA_FRONTEND, 'store' => $storeId]
+-        )->setTemplateVars(
+-            [
+-                'customerName' => $customerName,
+-                'alertGrid' => $alertGrid,
+-            ]
+-        )->setFromByScope(
+-            $this->_scopeConfig->getValue(
+-                self::XML_PATH_EMAIL_IDENTITY,
++            $templateId = $this->_scopeConfig->getValue(
++                $templateConfigPath,
+                 ScopeInterface::SCOPE_STORE,
+                 $storeId
+-            ),
+-            $storeId
+-        )->addTo(
+-            $this->_customer->getEmail(),
+-            $customerName
+-        )->getTransport()->sendMessage();
++            );
+ 
+-        return true;
++            $alertGrid = $this->_appState->emulateAreaCode(
++                Area::AREA_FRONTEND,
++                [$block, 'toHtml']
++            );
++            $this->_appEmulation->stopEnvironmentEmulation();
++
++            $name = $this->_customer->getPrefix() . ' ';
++            $name .= $this->_customer->getFirstname() . ' ';
++            $name .= $this->_customer->getMiddlename() . ' ';
++            $name .= $this->_customer->getLastname() . ' ';
++            $name .= $this->_customer->getSuffix();
++
++            $customerName = $name;
++            $email = $this->_customer->getEmail();
++
++            $sender = $this->_scopeConfig->getValue(
++                self::XML_PATH_EMAIL_IDENTITY,
++                ScopeInterface::SCOPE_STORE,
++                $storeId
++            );
++
++            $from = ['email' => $sender, 'name' => $sender];
++
++            $this->_transportBuilder->setTemplateIdentifier(
++                $templateId)
++                ->setTemplateOptions(['area' => Area::AREA_FRONTEND, 'store' => $storeId])
++                ->setTemplateVars([
++                    'customerName' => $customerName,
++                    'alertGrid' => $alertGrid,
++                ])
++                ->setFromByScope($from)
++                ->addTo($email, $customerName)
++                ->getTransport()->sendMessage();
++
++            return true;
++        } catch (\Exception $e) {
++            throw $e;
++        }
+     }
+ 
+     /**
+diff --git a/vendor/magento/module-product-alert/Model/Observer.php b/vendor/magento/module-product-alert/Model/Observer.php
+index 6d718c146..267acf958 100644
+--- a/vendor/magento/module-product-alert/Model/Observer.php
++++ b/vendor/magento/module-product-alert/Model/Observer.php
+@@ -8,6 +8,7 @@ namespace Magento\ProductAlert\Model;
+ use Magento\Backend\App\Area\FrontNameResolver;
+ use Magento\Catalog\Api\ProductRepositoryInterface;
+ use Magento\Catalog\Helper\Data;
++use Magento\Checkout\Exception;
+ use Magento\Customer\Api\CustomerRepositoryInterface;
+ use Magento\Framework\App\Config\ScopeConfigInterface;
+ use Magento\Framework\App\ObjectManager;
+@@ -21,6 +22,8 @@ use Magento\Store\Model\ScopeInterface;
+ use Magento\Store\Model\Store;
+ use Magento\Store\Model\StoreManagerInterface;
+ use Magento\Store\Model\Website;
++use Magento\Customer\Model\CustomerFactory;
++use Magento\Customer\Model\Customer;
+ 
+ /**
+  * ProductAlert observer
+@@ -157,6 +160,7 @@ class Observer
+      * @param TransportBuilder $transportBuilder
+      * @param EmailFactory $emailFactory
+      * @param StateInterface $inlineTranslation
++     * @param CustomerFactory $customerFactory
+      * @param ProductSalability|null $productSalability
+      * @param int $bunchSize
+      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+@@ -173,6 +177,7 @@ class Observer
+         TransportBuilder $transportBuilder,
+         EmailFactory $emailFactory,
+         StateInterface $inlineTranslation,
++        CustomerFactory $customerFactory,
+         ProductSalability $productSalability = null,
+         int $bunchSize = 0
+     ) {
+@@ -187,6 +192,7 @@ class Observer
+         $this->_transportBuilder = $transportBuilder;
+         $this->_emailFactory = $emailFactory;
+         $this->inlineTranslation = $inlineTranslation;
++        $this->customerFactory = $customerFactory;
+         $objectManager = ObjectManager::getInstance();
+         $this->productSalability = $productSalability ?: $objectManager->get(ProductSalability::class);
+         $this->bunchSize = $bunchSize ?: self::DEFAULT_BUNCH_SIZE;
+@@ -346,7 +352,7 @@ class Observer
+                 $this->setAlertStoreId($alert, $email);
+                 try {
+                     if (!$previousCustomer || $previousCustomer->getId() != $alert->getCustomerId()) {
+-                        $customer = $this->customerRepository->getById($alert->getCustomerId());
++                        $customer = $this->customerFactory->create()->load($alert->getCustomerId());
+                         if ($previousCustomer) {
+                             $email->send();
+                         }
+@@ -402,47 +408,52 @@ class Observer
+      */
+     protected function _sendErrorEmail()
+     {
+-        if (count($this->_errors)) {
+-            if (!$this->_scopeConfig->getValue(
+-                self::XML_PATH_ERROR_TEMPLATE,
+-                ScopeInterface::SCOPE_STORE
+-            )
+-            ) {
+-                return $this;
+-            }
+-
+-            $this->inlineTranslation->suspend();
+-
+-            $transport = $this->_transportBuilder->setTemplateIdentifier(
+-                $this->_scopeConfig->getValue(
++        try {
++            if (count($this->_errors)) {
++                if (!$this->_scopeConfig->getValue(
+                     self::XML_PATH_ERROR_TEMPLATE,
+                     ScopeInterface::SCOPE_STORE
+                 )
+-            )->setTemplateOptions(
+-                [
+-                    'area' => FrontNameResolver::AREA_CODE,
+-                    'store' => Store::DEFAULT_STORE_ID,
+-                ]
+-            )->setTemplateVars(
+-                ['warnings' => join("\n", $this->_errors)]
+-            )->setFrom(
+-                $this->_scopeConfig->getValue(
+-                    self::XML_PATH_ERROR_IDENTITY,
+-                    ScopeInterface::SCOPE_STORE
+-                )
+-            )->addTo(
+-                $this->_scopeConfig->getValue(
+-                    self::XML_PATH_ERROR_RECIPIENT,
+-                    ScopeInterface::SCOPE_STORE
+-                )
+-            )->getTransport();
+-
+-            $transport->sendMessage();
++                ) {
++                    return $this;
++                }
+ 
+-            $this->inlineTranslation->resume();
+-            $this->_errors[] = [];
++                $this->inlineTranslation->suspend();
++
++                $transport = $this->_transportBuilder->setTemplateIdentifier(
++                    $this->_scopeConfig->getValue(
++                        self::XML_PATH_ERROR_TEMPLATE,
++                        ScopeInterface::SCOPE_STORE
++                    )
++                )->setTemplateOptions(
++                    [
++                        'area' => FrontNameResolver::AREA_CODE,
++                        'store' => Store::DEFAULT_STORE_ID,
++                    ]
++                )->setTemplateVars(
++                    ['warnings' => join("\n", $this->_errors)]
++                )->setFrom(
++                    $this->_scopeConfig->getValue(
++                        self::XML_PATH_ERROR_IDENTITY,
++                        ScopeInterface::SCOPE_STORE
++                    )
++                )->addTo(
++                    $this->_scopeConfig->getValue(
++                        self::XML_PATH_ERROR_RECIPIENT,
++                        ScopeInterface::SCOPE_STORE
++                    )
++                )->getTransport();
++
++                $transport->sendMessage();
++
++                $this->inlineTranslation->resume();
++                $this->_errors[] = [];
++            }
++            return $this;
++        } catch (\Exception $e) {
++            $this->_errors[] = $e->getMessage();
++            throw $e;
+         }
+-        return $this;
+     }
+ 
+     /**
+@@ -452,11 +463,17 @@ class Observer
+      */
+     public function process()
+     {
+-        /* @var $email Email */
+-        $email = $this->_emailFactory->create();
+-        $this->_processPrice($email);
+-        $this->_processStock($email);
+-        $this->_sendErrorEmail();
++        try {
++            /* @var $email Email */
++            $email = $this->_emailFactory->create();
++
++            $this->_processPrice($email);
++            $this->_processStock($email);
++            $this->_sendErrorEmail();
++        } catch (\Exception $e) {
++            $this->_errors[] = $e->getMessage();
++            throw $e;
++        }
+ 
+         return $this;
+     }
