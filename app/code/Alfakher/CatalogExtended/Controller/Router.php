@@ -15,6 +15,8 @@ class Router implements RouterInterface
 {
     private const CATALOG_URL_EXCLUDE_CONFIG = 'catalog/url/exclude';
 
+    private const CATALOG_PRODUCT_URL_PATH = 'catalog/product/view';
+
     /**
      * @var ActionFactory
      */
@@ -45,7 +47,10 @@ class Router implements RouterInterface
         $pathParts = explode('/', trim($request->getPathInfo(), '/'));
         $textToMatch = $this->scopeConfig->getValue(self::CATALOG_URL_EXCLUDE_CONFIG, ScopeInterface::SCOPE_STORE);
 
-        if (count($pathParts) <= 1 || empty($textToMatch)) {
+        if (count($pathParts) <= 1 ||
+            empty($textToMatch) ||
+            str_contains($request->getPathInfo(), self::CATALOG_PRODUCT_URL_PATH)
+        ) {
             return null;
         }
 

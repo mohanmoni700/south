@@ -10,4 +10,8 @@
             </argument>
         </arguments>
     </type>
+    <type name="Magento\Catalog\Model\Product\Url">
+        <plugin name="modify-product-url"
+                type="Alfakher\CatalogExtended\Plugin\Model\Product\UrlModifierPlugin"/>
+    </type>
 </config>
