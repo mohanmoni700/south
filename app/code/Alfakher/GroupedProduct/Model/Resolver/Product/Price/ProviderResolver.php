@@ -26,9 +26,8 @@ class ProviderResolver extends Provider
      *
      * @param SaleableInterface $product
      * @param string $priceType
-     * @return AmountInterface
      */
-    private function getMinimalProductAmount(SaleableInterface $product, string $priceType): AmountInterface
+    private function getMinimalProductAmount(SaleableInterface $product, string $priceType)
     {
         if (empty($this->minimalProductAmounts[$product->getId()][$priceType])) {
             $products = $product->getTypeInstance()->getAssociatedProducts($product);
@@ -43,8 +42,8 @@ class ProviderResolver extends Provider
                 }
             }
         }
-        $amount = isset($this->minimalProductAmounts[$product->getId()][$priceType]) ?
+
+        return isset($this->minimalProductAmounts[$product->getId()][$priceType]) ?
             $this->minimalProductAmounts[$product->getId()][$priceType] : [];
-        return $amount;
     }
 }
