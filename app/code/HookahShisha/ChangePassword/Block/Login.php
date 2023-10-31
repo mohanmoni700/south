@@ -28,7 +28,6 @@ class Login extends Template
         $this->helper = $helper;
     }
 
-
     /**
      * @inheritDoc
      */
