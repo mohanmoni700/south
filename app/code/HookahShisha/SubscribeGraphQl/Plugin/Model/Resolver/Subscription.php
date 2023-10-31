@@ -9,6 +9,7 @@ use Magedelight\Subscribenow\Model\Service\SubscriptionService;
 use Magedelight\Subscribenow\Model\Source\PurchaseOption;
 use Magedelight\Subscribenow\Model\Subscription as Subject;
 use Magento\Bundle\Model\Product\TypeFactory as BundleTypeFactory;
+use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\Serialize\Serializer\Json as JsonSerializer;
@@ -123,19 +124,12 @@ class Subscription
         }
 
         //Get the bundle product
-        if (!$this->bundleProduct) {
-            $bundleId = $product->getData('parent_product_id');
-
-            if (!isset($bundleId)) {
-               $bundleId = $this->getBundleParentId($product);
-            }
-            $this->bundleProduct = isset($bundleId) ? $this->productFactory->create()->load($bundleId): null;
-        }
+        $this->bundleProduct = $this->getBundleProduct($product);
 
         $optionPrice = $this->getOptionPrice($product);
         $price = $finalPrice;
 
-        if ($this->bundleProduct->getIsSubscription()) {
+        if ($this->bundleProduct && $this->bundleProduct->getIsSubscription()) {
             $price = $finalPrice - $optionPrice;
             $type = $this->getDiscountType($product);
 
@@ -223,10 +217,8 @@ class Subscription
      */
     public function getBundleParentId($product)
     {
-        if ($params = $this->request->getParams()) {
-            if (isset($params['super_group'])) {
-                return false;
-            }
+        if ($params = $this->request->getParams() && isset($params['super_group'])) {
+            return false;
         }
 
         if ($product->getTypeId() == 'bundle') {
@@ -253,6 +245,23 @@ class Subscription
         }
 
         return ($ids && isset($ids[$bundleKey])) ? $ids[$bundleKey] : null;
+    }
+
+    /**
+     * @param $product
+     * @return bool|Product
+     */
+    private function getBundleProduct($product)
+    {
+        if (!$this->bundleProduct) {
+            $bundleId = $product->getData('parent_product_id');
+
+            if (!isset($bundleId)) {
+                $bundleId = $this->getBundleParentId($product);
+            }
+            return isset($bundleId) ? $this->productFactory->create()->load($bundleId): false;
+        }
+        return $this->bundleProduct;
     }
 
 }
