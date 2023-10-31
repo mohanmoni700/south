@@ -10,9 +10,9 @@
             </group>
             <group id="login_success" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Customer Login B2B configuration</label>
-                <field id="redirection" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="redirection" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Login Success Redirection URL</label>
-                    <comment>Provide login success redirection URL, Ex: {base_url}/rewards/ , here {base_url} will be replaced dynamically with correct URL, To redirect to Homepage just enter {base_url}/</comment>
+                    <comment>Provide login success redirection URL, Ex: {base_url}/rewards/ , here {base_url} will be replaced dynamically with correct URL, Default value is set to '{base_url}/' which redirects to Homepage</comment>
                 </field>
             </group>
         </section>
