@@ -300,7 +300,7 @@ class LoginPost extends \Magento\Customer\Controller\Account\LoginPost
                     }
                     $baseurl = $this->_storemanager->getStore()->getBaseUrl();
                     $myDocumentConfigValue = $this->helper->getConfigValue('hookahshisha/my_document/is_enabled');
-                    $postLoginRedirectionUrl = $this->helper->getConfigValue('hookahshisha/login_success/redirection');
+                    $postLoginRedirectionUrl = $this->helper->getConfigValue('login_config/login_success/redirection');
                     if (!empty($postLoginRedirectionUrl)) {
                         $postLoginRedirectionUrl = str_replace("{base_url}/", "", $postLoginRedirectionUrl);
                         $response = [

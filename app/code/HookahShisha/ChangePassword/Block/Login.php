@@ -33,7 +33,7 @@ class Login extends Template
      */
     public function getUrl($route = '', $params = [])
     {
-        $redirectUrl = $this->helper->getConfigValue('hookahshisha/login_success/redirection');
+        $redirectUrl = $this->helper->getConfigValue('login_config/login_success/redirection');
 
         if (!empty($redirectUrl)) {
             $route = str_replace("{base_url}/", "", $redirectUrl);

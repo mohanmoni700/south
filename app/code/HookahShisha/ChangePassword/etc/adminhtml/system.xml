@@ -1,18 +1,24 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
 	<system>
-        <section id="hookahshisha">
-            <group id="reset_password_group" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>Reset Password For Migrate Customer</label>
-                <field id="reset_password_message" translate="label" type="textarea" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Reset Password Header Messaage</label>
-                </field>
-            </group>
+        <section id="login_config" translate="label" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Login Configuration</label>
+            <tab>hookahshisha</tab>
+            <resource>HookahShisha_ChangePassword::login_success_redirection_config</resource>
             <group id="login_success" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
                 <label>Customer Login B2B configuration</label>
                 <field id="redirection" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
                     <label>Login Success Redirection URL</label>
                     <comment>Provide login success redirection URL, Ex: {base_url}/rewards/ , here {base_url} will be replaced dynamically with correct URL, Default value is set to '{base_url}/' which redirects to Homepage</comment>
+                </field>
+            </group>
+        </section>
+        <section id="hookahshisha">
+            <group id="reset_password_group" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Reset Password For Migrate Customer</label>
+                <field id="reset_password_message" translate="label" type="textarea" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Reset Password Header Messaage</label>
                 </field>
             </group>
         </section>
