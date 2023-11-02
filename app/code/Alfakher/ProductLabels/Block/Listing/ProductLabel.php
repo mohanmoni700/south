@@ -24,12 +24,12 @@ class ProductLabel extends Label
             $productTooltip = $this->escapeHtml(isset($productTooltip[$storeCode])
             && $productTooltip[$storeCode] ?
                 $productTooltip[$storeCode] :
-                (isset($productTooltip['admin']) ? $productTooltip['admin'] : ''));
+                ($productTooltip['admin'] ?? ''));
         } else {
             $productTooltip = $this->escapeHtml(isset($listProductTooltip[$storeCode])
             && $listProductTooltip[$storeCode] ?
                 $listProductTooltip[$storeCode] :
-                (isset($productTooltip['admin']) ? $listProductTooltip['admin'] : ''));
+                ($productTooltip['admin'] ?? ''));
         }
 
         return $productTooltip;
