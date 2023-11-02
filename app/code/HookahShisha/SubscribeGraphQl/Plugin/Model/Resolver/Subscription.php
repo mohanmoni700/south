@@ -129,7 +129,8 @@ class Subscription
         $optionPrice = $this->getOptionPrice($product);
         $price = $finalPrice;
 
-        if ($this->bundleProduct && $this->bundleProduct->getIsSubscription()) {
+        if ($this->bundleProduct && $this->bundleProduct->getIsSubscription() &&
+            $product->getPrice() != 0) {
             $price = $finalPrice - $optionPrice;
             $type = $this->getDiscountType($product);
 
