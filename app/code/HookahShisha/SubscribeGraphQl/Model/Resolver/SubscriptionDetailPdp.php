@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace HookahShisha\SubscribeGraphQl\Model\Resolver;
 
 use Magedelight\Subscribenow\Model\Source\DiscountType;
+use Magento\Catalog\Model\Product\Type as ProductType;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
@@ -154,10 +155,11 @@ class SubscriptionDetailPdp implements ResolverInterface
     public function getDiscountAmountByType($product)
     {
         if ($product->getDiscountType() == DiscountType::FIXED) {
-            $options = $this->type->getOptionsCollection($product);
-            return $options->count() * $product->getDiscountAmount();
-        } else {
-            return $product->getDiscountAmount();
+            if ($product->getTypeId() == ProductType::TYPE_BUNDLE) {
+                $options = $this->type->getOptionsCollection($product);
+                return $options->count() * $product->getDiscountAmount();
+            }
         }
+        return $product->getDiscountAmount();
     }
 }
