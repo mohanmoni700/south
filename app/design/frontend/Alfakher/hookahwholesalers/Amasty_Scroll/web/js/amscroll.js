@@ -137,6 +137,7 @@
 
             this._initBackToTop();
             this.initPageStepForwardListener(this.currentPage);
+            this.intialProductCount();
             this._pagePositionAfterStepBack();
         },
 
@@ -709,14 +710,24 @@
             $('.' + this.classes.loadButton + '[amscroll_type="' + position + '"]').on('click', function (item) {
                 var totalProductCount = parseInt(jQuery("#totalProductCount").text());
                 var productCount = parseInt(jQuery("#productCount").text());
+                var InitialproductCount = parseInt(jQuery(".initial-product-count").text());
                 var staticIncrement = 12;
-                if (totalProductCount - productCount >= 12) {
-                    jQuery("#productCount").text(productCount+12);
+                if (totalProductCount - productCount >= InitialproductCount) {
+                    jQuery("#productCount").text(productCount+InitialproductCount);
                 } else {
                     jQuery("#productCount").text(totalProductCount);
                 }
                 self.buttonClick(item);
             });
+        },
+
+        intialProductCount: function() {
+            var initialproductCount = parseInt(jQuery("#productCount").text());
+            const initialProductCountdiv = document.createElement('div');
+            initialProductCountdiv.classList.add('initial-product-count');
+            initialProductCountdiv.textContent = initialproductCount;
+            initialProductCountdiv.style.display = "none";
+            document.getElementById("html-body").appendChild(initialProductCountdiv);
         },
 
         showButton: function (buttonElement) {
