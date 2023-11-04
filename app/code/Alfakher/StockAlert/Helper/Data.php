@@ -28,10 +28,30 @@ class Data
      * @var StoreManagerInterface
      */
     private StoreManagerInterface $storeManager;
+
+    /**
+     * @var ProductRepositoryInterface 
+     */
     private ProductRepositoryInterface $productRepository;
+
+    /**
+     * @var ScopeConfigInterface
+     */
     private ScopeConfigInterface $scopeConfig;
+
+    /**
+     * @var TranslateStateInterface
+     */
     private TranslateStateInterface $inlineTranslation;
+
+    /**
+     * @var TransportBuilder
+     */
     private TransportBuilder $transportBuilder;
+
+    /**
+     * @var Logger
+     */
     private Logger $logger;
 
     /**
@@ -94,8 +114,11 @@ class Data
     }
 
     /**
+     * Send back in stock email
+     *
      * @param $email
      * @param int $productId
+     * @param $customerName
      * @return $this
      * @throws NoSuchEntityException
      */
@@ -154,12 +177,12 @@ class Data
             $this->inlineTranslation->resume();
             return $this;
         } catch (NoSuchEntityException $e) {
-            $this->logger->info("Error in product",[
+            $this->logger->info("Error in product", [
                 'product_id' => $productId
             ]);
             throw new NoSuchEntityException(__("Requested product does not exist - %1", $productId));
         } catch (MailException|LocalizedException $e) {
-            $this->logger->info("Error in email data",[
+            $this->logger->info("Error in email data", [
                 'error' => $e->getMessage()
             ]);
         }

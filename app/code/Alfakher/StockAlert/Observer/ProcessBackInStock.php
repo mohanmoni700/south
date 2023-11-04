@@ -12,9 +12,24 @@ use Alfakher\StockAlert\Helper\Data;
 
 class ProcessBackInStock
 {
+    /**
+     * @var CollectionFactory
+     */
     private CollectionFactory $stockAlertCollection;
+
+    /**
+     * @var stockRegistry
+     */
     private stockRegistry $stockRegistry;
+
+    /**
+     * @var Logger
+     */
     private Logger $logger;
+
+    /**
+     * @var Data
+     */
     private Data $helperData;
 
     /**
@@ -36,6 +51,8 @@ class ProcessBackInStock
     }
 
     /**
+     * Observer for processing back in stock
+     *
      * @param Observer $observer
      * @return void
      */
@@ -46,6 +63,8 @@ class ProcessBackInStock
     }
 
     /**
+     * Function to process back in stock and send email
+     *
      * @return bool
      */
     public function processBackInStock(): bool
@@ -78,7 +97,10 @@ class ProcessBackInStock
     }
 
     /**
+     * Function to check weather product is back in stock
+     *
      * @param int $productId
+     * @return bool|int
      */
     private function productIsBackInStock(int $productId)
     {

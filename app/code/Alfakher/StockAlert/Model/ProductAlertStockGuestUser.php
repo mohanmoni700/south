@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Alfakher\StockAlert\Model;
 
 use Alfakher\StockAlert\Api\Data\ProductAlertStockGuestUserInterface;
+use Magento\Framework\Model\AbstractExtensibleModel;
 
-class ProductAlertStockGuestUser extends \Magento\Framework\Model\AbstractExtensibleModel
-    implements ProductAlertStockGuestUserInterface
+class ProductAlertStockGuestUser extends AbstractExtensibleModel implements ProductAlertStockGuestUserInterface
 {
     /**
      * Constructor

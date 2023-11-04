@@ -60,6 +60,7 @@ class Save implements \Magento\Framework\App\Action\HttpPostActionInterface
      * @param ProductAlertStockGuestUserRepository $productAlertRepository
      * @param Data $helper
      * @param ResultFactory $resultFactory
+     * @param Http $request
      */
     public function __construct(
         Validator                                     $formKeyValidator,
