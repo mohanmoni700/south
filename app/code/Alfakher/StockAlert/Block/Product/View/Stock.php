@@ -12,6 +12,11 @@ namespace Alfakher\StockAlert\Block\Product\View;
  */
 class Stock extends \Magento\ProductAlert\Block\Product\View\Stock
 {
+    /**
+     * Get current product id
+     *
+     * @return mixed
+     */
     public function getCurrentProductId()
     {
         return $this->getProduct()->getEntityId();

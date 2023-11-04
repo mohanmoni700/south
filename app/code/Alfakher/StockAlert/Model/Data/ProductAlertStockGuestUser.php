@@ -193,7 +193,7 @@ class ProductAlertStockGuestUser extends AbstractSimpleObject implements Product
     /**
      * Set Status
      *
-     * @param $status
+     * @param int $status
      * @return ProductAlertStockGuestUser
      */
     public function setStatus($status): ProductAlertStockGuestUser

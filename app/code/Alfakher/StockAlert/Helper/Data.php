@@ -30,7 +30,7 @@ class Data
     private StoreManagerInterface $storeManager;
 
     /**
-     * @var ProductRepositoryInterface 
+     * @var ProductRepositoryInterface
      */
     private ProductRepositoryInterface $productRepository;
 
@@ -116,9 +116,9 @@ class Data
     /**
      * Send back in stock email
      *
-     * @param $email
+     * @param string $email
      * @param int $productId
-     * @param $customerName
+     * @param string $customerName
      * @return $this
      * @throws NoSuchEntityException
      */

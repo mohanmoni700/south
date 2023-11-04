@@ -22,8 +22,8 @@
 <div id="popup-modal" style="display:none;">
     <!-- Popup content for non-logged-in users -->
     <form id="stock-notification-form" method="post"
-          action="<?php echo $block->getUrl('outofstock/productalert/save') ?>">
-        <input type="hidden" name="product_id" value="<?php echo $viewModel->getProductId()?>">
+          action="<?php /* @noEscape */ $block->getUrl('outofstock/productalert/save') ?>">
+        <input type="hidden" name="product_id" value="<?= /* @noEscape */ $viewModel->getProductId()?>">
         <label for="name">Name:</label>
         <input type="text" id="name" name="name">
         <label for="email">Email:</label>
