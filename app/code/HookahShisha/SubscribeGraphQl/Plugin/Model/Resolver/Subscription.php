@@ -28,18 +28,18 @@ class Subscription
     private BundleTypeFactory $bundleTypeFactory;
     private $bundleParentId = null;
 
-
     /**
      * @param JsonSerializer $jsonSerializer
      */
     public function __construct(
-        JsonSerializer $jsonSerializer,
+        JsonSerializer      $jsonSerializer,
         SubscriptionService $service,
-        Http $request,
-        BundleTypeFactory $bundleTypeFactory,
-        ProductFactory $productFactory,
-        DiscountService $discountService
-    ) {
+        Http                $request,
+        BundleTypeFactory   $bundleTypeFactory,
+        ProductFactory      $productFactory,
+        DiscountService     $discountService
+    )
+    {
         $this->jsonSerializer = $jsonSerializer;
         $this->discountService = $discountService;
         $this->service = $service;
@@ -49,13 +49,13 @@ class Subscription
     }
 
     public function aroundIsSubscriptionProduct(
-        Subject    $subject,
+        Subject  $subject,
         callable $proceed,
-        $product
+                 $product
     )
     {
         if ($product->getTypeId() !== "simple") {
-           return $proceed($product);
+            return $proceed($product);
         } else {
             if ($product->hasSkipDiscount() && $product->getSkipDiscount()) {
                 return false;
@@ -105,12 +105,13 @@ class Subscription
      * @return mixed
      */
     public function aroundGetSubscriptionDiscount(
-        Subject $subject,
+        Subject  $subject,
         callable $proceed,
-        $finalPrice,
-        $product,
-        $convert = false
-    ) {
+                 $finalPrice,
+                 $product,
+                 $convert = false
+    )
+    {
         if (!$subject->helper->isModuleEnable()) {
             return $finalPrice;
         }
@@ -129,8 +130,8 @@ class Subscription
         $optionPrice = $this->getOptionPrice($product);
         $price = $finalPrice;
 
-        if ($this->bundleProduct && $this->bundleProduct->getIsSubscription() &&
-            $product->getPrice() != 0) {
+        if ((($this->bundleProduct && $this->bundleProduct->getIsSubscription()) ||
+                $product->getIsSubscription()) && $product->getPrice() != 0) {
             $price = $finalPrice - $optionPrice;
             $type = $this->getDiscountType($product);
 
@@ -256,11 +257,7 @@ class Subscription
     {
         if (!$this->bundleProduct) {
             $bundleId = $product->getData('parent_product_id');
-
-            if (!isset($bundleId)) {
-                $bundleId = $this->getBundleParentId($product);
-            }
-            return isset($bundleId) ? $this->productFactory->create()->load($bundleId): false;
+            return isset($bundleId) ? $this->productFactory->create()->load($bundleId) : false;
         }
         return $this->bundleProduct;
     }
