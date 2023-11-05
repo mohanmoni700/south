@@ -255,11 +255,8 @@ class Subscription
      */
     private function getBundleProduct($product)
     {
-        if (!$this->bundleProduct) {
-            $bundleId = $product->getData('parent_product_id');
-            return isset($bundleId) ? $this->productFactory->create()->load($bundleId) : false;
-        }
-        return $this->bundleProduct;
+        $bundleId = $product->getData('parent_product_id');
+        return isset($bundleId) ? $this->productFactory->create()->load($bundleId) : false;
     }
 
 }
