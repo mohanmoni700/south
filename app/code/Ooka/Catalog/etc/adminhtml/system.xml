@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="ooka" translate="label" sortOrder="10">
+            <label>OOKA</label>
+        </tab>
+        <section id="annual_bundle" translate="label" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="0">
+            <label>Annual Bundle Configuration</label>
+            <tab>ooka</tab>
+            <resource>Ooka_Catalog::config_bundle</resource>
+            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                <label>Annual Bundle</label>
+                <field id="bundle_config" translate="label" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Annual Bundle Configuration</label>
+                    <frontend_model>Ooka\Catalog\Block\Adminhtml\Form\Field\BundleConfig</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                </field>
+                <field id="is_notify" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Is Notify Customer</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>
+
+
+
