@@ -225,6 +225,7 @@
             padding: 0 5px;
         }
         .product.attribute.description {
+            margin-top: 1.8rem;
             .description {
                 background: @hookah_theme_color_extra_light;
                 padding: 40px 0;
@@ -970,6 +971,9 @@
     }
 
     .product-info-main {
+        .product.attribute.overview {
+            display: none;
+        }
         .page-title-wrapper {
             .page-title {
                 line-height: @line-height__base;
@@ -998,15 +1002,13 @@
                 vertical-align: top;
                 .availability {
                     .lib-font-size(16);
+                    color: #316BB2;
                 }
                 .stock {
                     color: @color_primary;
                     .lib-font-size(16);
                     font-weight: @font-weight__bold;
                 }
-            }
-            &.unavailable {
-                text-transform: uppercase;
             }
         }
 
