@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Alfakher\CatalogExtended\Controller\Index;
 
 class Index extends \Magento\Framework\App\Action\Action
