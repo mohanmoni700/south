@@ -9,6 +9,7 @@ use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Catalog\Block\Product\Context;
 use Magento\Framework\Stdlib\ArrayUtils;
 use Magento\GroupedProduct\Block\Product\View\Type\Grouped as MagentoGrouped;
+use Magento\Catalog\Api\ProductRepositoryInterface as ProductRepo;
 
 class Grouped extends MagentoGrouped
 {
@@ -27,7 +28,7 @@ class Grouped extends MagentoGrouped
     public function __construct(
         Context    $context,
         ArrayUtils $arrayUtils,
-        \Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
+        ProductRepo $productRepository,
         Data       $helperData,
         array      $data = []
     ) {
