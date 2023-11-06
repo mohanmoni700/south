@@ -1,0 +1,71 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+/**
+ * Product additional attributes template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Attributes
+ */
+?>
+<?php
+    $_helper = $this->helper(Magento\Catalog\Helper\Output::class);
+    $_product = $block->getProduct();
+    $attributeCodes = [
+    'product_brand',
+    'product_is_returnable',
+    'Product_Material',
+    'producttype',
+    'product_manufacturer',
+    'product_charcoal_shape',
+    'first_to_sell',
+    'country_of_manufature',
+    'product_super_pack_quantity',
+    'product_more_flovour',
+    'product_color',
+    'product_hookah',
+    'product_rating',
+    'product_style'];
+    $shouldDisplaySpecs = false;
+    foreach ($attributeCodes as $attributeCode) {
+        if ($_product->getData($attributeCode) !== null) {
+            $shouldDisplaySpecs = true;
+            break;
+        }
+    }
+?>
+<?php if ($shouldDisplaySpecs): ?>
+<div class ="main_wrapper">
+<div class="product_attributes">
+<div class = "Product_attributes_head">
+<span>
+Al Fakher Tobacco Specs
+</span>
+</div>
+<table id="t">
+<caption></caption>
+  <tbody>
+    <th></th>
+    <th></th>
+  <?php foreach ($attributeCodes as $attributeCode): ?>
+    <?php if ($attributeValue = $_product->getData($attributeCode) !== null) :?>
+    <tr>
+      <td class="td_first">
+      <?= /* @noEscape */ str_replace(['_', 'product'], [' ', ''], $attributeCode); ?>
+      <td>
+        <?php $attributeValue = $_product->getData($attributeCode); ?>
+        <?php if ($attributeValue !== null && $attributeValue !== '') :?>
+            <?= /* @noEscape */  $attributeValue; ?>
+        </td>
+        <?php endif; ?>
+    </tr>
+    <?php endif; ?>
+    <?php endforeach; ?>
+  </tbody>
+</table>
+</div>
+</div>
+<?php endif; ?>
+

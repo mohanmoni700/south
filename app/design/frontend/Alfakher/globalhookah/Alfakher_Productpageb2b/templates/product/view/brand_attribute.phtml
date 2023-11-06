@@ -1,0 +1,49 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+// phpcs:disable Magento2.Templates.ThisInTemplate.FoundThis
+/**
+ * Product additional attributes template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Attributes
+ */
+?>
+<?php
+    $_helper = $this->helper(Magento\Catalog\Helper\Output::class);
+    $_product = $block->getProduct();
+    $attributeCodes = 'brand';
+?>
+
+<div class ="main_wrapper_brand">
+<?php if ($attributeValue = $_product->getData($attributeCodes) !== null) :?>
+      <span class = "product_brand">
+        <?php $attributeValue = $_product->getResource()
+        ->getAttribute($attributeCodes)->getFrontend()
+        ->getValue($_product); ?>
+        <?php if ($attributeValue !== null && $attributeValue !== '') :?>
+            <?= /* @noEscape */  $attributeValue; ?>
+        </span>
+        <?php endif; ?>
+    <?php endif; ?>
+    <?php if($_product !== null): ?>
+        <?php $productName = $_product->getName(); ?>
+        <h1 class = "product_heading"><?= /* @noEscape */  $productName; ?></h1>
+        <?php endif ?>
+</div>
+<script>
+        require(['jquery'], function ($) {
+  $(document).ready(function() {
+    let col1Div = document.querySelector('.column-1');
+      if (col1Div) {
+        let h2Element = document.createElement('span');
+        h2Element.textContent = 'Description';
+        h2Element.classList.add('Description-product-page');
+        col1Div.insertBefore(h2Element, col1Div.firstChild);
+      }
+  });
+        });
+    </script>
+
+
