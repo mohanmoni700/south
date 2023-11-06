@@ -54,7 +54,9 @@ class SetPaymentMethodOnCart
             }
         }
 
-        if ($paymentMethod === ConfigProvider::CC_VAULT_CODE) {
+        if ($paymentMethod === ConfigProvider::CC_VAULT_CODE &&
+            isset($paymentData[ConfigProvider::CC_VAULT_CODE][PaymentTokenInterface::PUBLIC_HASH]))
+        {
             $publicHash = $paymentData[ConfigProvider::CC_VAULT_CODE][PaymentTokenInterface::PUBLIC_HASH];
 
             $payment->setAdditionalInformation([

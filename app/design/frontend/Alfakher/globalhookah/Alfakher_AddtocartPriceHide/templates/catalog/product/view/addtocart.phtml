@@ -10,8 +10,62 @@
         $doc_expired = $_helperB2b->getExpiryMsg();
         $IsFinanceVerified=$_helperB2b->getIsFinanceVerified();
 ?>
+    <?php $productPrice = $_product->getPrice(); ?>
 <?php if ($_product->isSaleable()):?>
+<?php if ($_product->getTypeId() == \Magento\Catalog\Model\Product\Type::TYPE_SIMPLE) :?>
 <div class="box-tocart">
+    <?php if ($showCart): ?>
+        <?php
+        /*
+        Here we removed the condition of the Document verified
+        ($is_document_upload $doc_expired) and uploaded($IsFinanceVerified)
+        */
+        ?>
+        <?php if ($IsFinanceVerified == 1): ?>
+            <div class="fieldset">
+                    <?php if ($block->shouldRenderQuantity()):?>
+                        <div class="field qty">
+                            <label class="label" for="qty"><span><?= $block->escapeHtml(__('Qty')) ?></span></label>
+                            <div class="control">
+                                <input type="number"
+                                   name="qty"
+                                   id="qty"
+                                   min="0"
+                                   value="<?= $block->getProductDefaultQty() * 1 ?>"
+                                   title="<?= $block->escapeHtmlAttr(__('Qty')) ?>"
+                                   class="input-text qty"
+                                   data-validate="<?=$block->escapeHtml(json_encode($block->getQuantityValidators()))?>"
+                                   />
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                    <div class="actions">
+                    <div class = "Product_grouped_totals">
+                        <span>Total</span>
+                        <span id="Product_price_grouped">$<?= number_format($productPrice, 2) ?></span>
+                    </div>
+                        <button type="submit"
+                                title="<?= $block->escapeHtmlAttr($buttonTitle) ?>"
+                                class="action primary tocart"
+                                id="product-addtocart-button" disabled>
+                            <span><?= $block->escapeHtml($buttonTitle) ?></span>
+                        </button>
+                        <?= $block->getChildHtml('', true) ?>
+                    </div>
+                </div>
+        <?php endif; ?>
+    <?php else: ?>
+    <div class="actions-primary">
+        <div class="logged-in-action">
+                <a
+                href="<?= /* @noEscape */ $block->getUrl('customer/account/login') ?>">
+                <?= $block->escapeHtml(__('Signin / Register')) ?></a>
+        </div>
+    </div>
+    <?php endif; ?>
+</div>
+<?php else: ?>
+    <div class="box-tocart">
     <?php if ($showCart): ?>
         <?php
         /*
@@ -63,6 +117,7 @@
     <?php endif; ?>
 </div>
 <?php endif; ?>
+<?php endif; ?>
 <script type="text/x-magento-init">
     {
         "#product_addtocart_form": {
@@ -70,3 +125,19 @@
         }
     }
 </script>
+<?php if ($_product->getTypeId() == \Magento\Catalog\Model\Product\Type::TYPE_SIMPLE) :?>
+<script type="text/javascript">
+    require(['jquery'], function($) {
+        $(document).ready(function() {
+            let productPrice = <?= $productPrice ?>;
+            let $qtyInput = $('#qty');
+            let $totalPrice = $('#Product_price_grouped');
+            $qtyInput.on('change paste keyup', function() {
+                let quantity = parseInt($qtyInput.val()) || 0;
+                let totalPrice = quantity * productPrice;
+                $totalPrice.text(totalPrice.toFixed(2));
+            });
+        });
+    });
+</script>
+<?php endif; ?>
