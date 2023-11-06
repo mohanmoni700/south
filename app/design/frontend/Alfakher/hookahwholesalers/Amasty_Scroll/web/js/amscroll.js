@@ -710,7 +710,7 @@
             $('.' + this.classes.loadButton + '[amscroll_type="' + position + '"]').on('click', function (item) {
                 var totalProductCount = parseInt(jQuery("#totalProductCount").text());
                 var productCount = parseInt(jQuery("#productCount").text());
-                var InitialproductCount = parseInt(jQuery(".initial-product-count").text());
+                const InitialproductCount = parseInt(jQuery(".initial-product-count").text());
                 var staticIncrement = 12;
                 if (totalProductCount - productCount >= InitialproductCount) {
                     jQuery("#productCount").text(productCount+InitialproductCount);
@@ -722,7 +722,7 @@
         },
 
         intialProductCount: function() {
-            var initialproductCount = parseInt(jQuery("#productCount").text());
+            const initialproductCount = parseInt(jQuery("#productCount").text());
             const initialProductCountdiv = document.createElement('div');
             initialProductCountdiv.classList.add('initial-product-count');
             initialProductCountdiv.textContent = initialproductCount;
