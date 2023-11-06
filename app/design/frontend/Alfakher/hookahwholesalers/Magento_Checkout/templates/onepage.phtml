@@ -54,6 +54,11 @@ script;
     ], function ($, customerData,quote,_,) {
         $(document).ready(function () {
             $(document).ajaxComplete(function (event, xhr, settings) {
+                const applyDiscountButton = $('.action-cancel');
+                const yotpoDiscountButton = $('.yotpo-remove-tag-button');
+                applyDiscountButton.click(function() {
+                    yotpoDiscountButton.trigger('click');
+                });
                 let isAmastyQuoteItem = customerData.get('is_amasty_quote_item')();
                 if (isAmastyQuoteItem !== null && isAmastyQuoteItem) {
                     $('.yotpo-widget-instance').hide();
