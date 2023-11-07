@@ -4,4 +4,14 @@
         <plugin name="alfakher_ordercomment-display_comment" type="Alfakher\OrderComment\Plugin\Block\Adminhtml\SalesOrderViewInfo" sortOrder="8888" />
     </type>
     <preference for="Magento\Sales\Model\Order\Payment" type="Alfakher\OrderComment\Model\Order\Payment" />
+    <type name="Magento\Sales\Controller\Adminhtml\Order\AddComment">
+        <plugin name="set_order_status"
+                type="Alfakher\OrderComment\Plugin\Order\SetStatusParam"
+                sortOrder="5"/>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\View\History">
+        <plugin name="set_empty_order_status"
+                type="Alfakher\OrderComment\Plugin\Order\SetEmptyStatus"
+                sortOrder="5"/>
+    </type>
 </config>
