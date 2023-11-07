@@ -24,5 +24,12 @@
             </argument>
         </arguments>
     </type>
-
+    <!-- Plugin to show Out of stock products at the bottom of the page -->
+    <type name="Magento\Catalog\Block\Product\ListProduct">
+        <plugin name="out_of_stock_product_at_bottom_list_plugin" type="Alfakher\OutOfStockProduct\Plugin\ProductList" sortOrder="10"/>
+    </type>
+    <!--  Plugin to show OOS Bundled products at the bottom of the page  -->
+    <type name="Magento\Catalog\Model\ResourceModel\Product\Collection">
+        <plugin name="sort_out_of_stock_bundled_products" type="Alfakher\OutOfStockProduct\Plugin\Catalog\Model\ResourceModel\Product\Collection"/>
+    </type>
 </config>
