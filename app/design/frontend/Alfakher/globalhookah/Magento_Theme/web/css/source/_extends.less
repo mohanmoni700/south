@@ -43,7 +43,7 @@
                 .row-full-width-inner {
                     padding: 1.2rem 0;
                     display: flex;
-                    flex-direction: row;
+                    align-items: center;
                     justify-content: space-between;
 
                     p {
@@ -110,28 +110,39 @@
                     .two {
                         flex-direction: row !important;
                         gap: 2rem;
+
+                        > div {
+                            border-right: 1px solid @color-white;
+
+                            &:last-child {
+                                border: none;
+                            }
+
+                            p {
+                                height: 2.4rem;
+                                padding-right: 2rem;
+
+                                a {
+                                    margin: 0;
+                                }
+                            }
+                        }
                         
                         .header-item {
                             width: auto;
-                            padding-right: 4rem;
                             margin-right: 0;
 
-                            &:last-child {
-                                padding-right: 0;
-                            }
-
-                            &.youtube {
-                                &::before {
-                                    background-image: url('@{baseDir}images/youtube.svg');
-                                }
-                            }
-                            &.facebook {
-                                &::before {
-                                    background-image: url('@{baseDir}images/facebook.svg');
-                                }
-                            }
                             &.rewards {
+                                padding: 0;
                                 width: auto;
+
+                                p {
+                                    padding: 0;
+                                    
+                                    a {
+                                        margin-inline-start: 3rem;
+                                    }
+                                }
 
                                 &::before {
                                     background-image: url('@{baseDir}images/rewards.svg');
