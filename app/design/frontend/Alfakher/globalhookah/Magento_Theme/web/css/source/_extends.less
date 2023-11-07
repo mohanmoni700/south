@@ -40,106 +40,101 @@
                 }
             }
             .header-links-wrapper {
-                .header-links {
-                    padding: 12px 0;
+                .row-full-width-inner {
+                    padding: 1.2rem 0;
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: space-between;
+
+                    p {
+                        margin-bottom: 0;
+
+                        a {
+                            color: @color-white;
+                            margin-inline-start: 3rem;
+
+                            &:hover {
+                                color: @color-white;
+                                text-decoration: underline;
+                            }
+                        }
+                    }
 
                     .header-item {
-                        border-right: 1px solid #fff;
-                        padding-inline-end: 20px;
+                        position: relative;
+                        border-right: 1px solid @color-white;
+                        padding-inline-end: 2rem;
 
                         &:last-of-type {
                             border: none;
                         }
 
                         &::before {
-                            height: 24px;
-                            top: -4px;
-                            width: 24px;
+                            content: "";
+                            position: absolute;
+                            height: 2.4rem;
+                            top: -0.4rem;
+                            width: 2.4rem;
                         }
 
                         .header-text {
                             font-weight: 500;
-                            font-size: 14px;
+                            font-size: 1.4rem;
                         }
                     }
 
-                    .tiktok {
-                        &::before {
-                            background-image: url('@{baseDir}images/tiktok.svg');
-                            cursor: pointer;
-                        }
-                    }
-                    .whatsapp {
-                        &::before {
-                            background-image: url('@{baseDir}images/whatsapp.svg');
-                            cursor: pointer;
-                        }
-                    }
+                    .one {
+                        flex-direction: row !important;
+                        gap: 0;
 
-                    .header-top-right {
-                        width: 100%;
-                        padding-inline-end: 0;
-                        justify-content: space-between;
-
-                        .one {
-                            gap: 0;
-
-                            .header-item {
-                                &.email {
-                                    &::before {
-                                        background-image: url('@{baseDir}images/email.svg');
-                                    }
-                                }
-                                &.phone {
-                                    &::before {
-                                        background-image: url('@{baseDir}images/phone.svg');
-                                    }
+                        .header-item {
+                            &.email {
+                                &::before {
+                                    background-image: url('@{baseDir}images/email.svg');
                                 }
                             }
+                            &.phone {
+                                padding-left: 1.5rem;
+
+                                &::before {
+                                    background-image: url('@{baseDir}images/phone.svg');
+                                }
+                            }
+                        }
+
+                        &:last-child {
+                            border: none;
+                        }
+                    }
+
+                    .two {
+                        flex-direction: row !important;
+                        gap: 2rem;
+                        
+                        .header-item {
+                            width: auto;
+                            padding-right: 4rem;
+                            margin-right: 0;
 
                             &:last-child {
-                                border: none;
+                                padding-right: 0;
                             }
-                        }
 
-                        .two {
-                            display: flex;
-                            gap: 20px;
-                            
-                            .header-item {
+                            &.youtube {
+                                &::before {
+                                    background-image: url('@{baseDir}images/youtube.svg');
+                                }
+                            }
+                            &.facebook {
+                                &::before {
+                                    background-image: url('@{baseDir}images/facebook.svg');
+                                }
+                            }
+                            &.rewards {
                                 width: auto;
-                                padding-right: 40px;
-                                margin-right: 0;
 
-                                &:last-child {
-                                    padding-right: 0;
-                                }
-
-                                &.youtube {
-                                    &::before {
-                                        background-image: url('@{baseDir}images/youtube.svg');
-                                    }
-                                }
-                                &.facebook {
-                                    &::before {
-                                        background-image: url('@{baseDir}images/facebook.svg');
-                                    }
-                                }
-                                &.rewards {
-                                    width: auto;
-
-                                    a {
-                                        color: #fff;
-                                        margin-inline-start: 30px;
-
-                                        &:hover {
-                                            text-decoration: underline;
-                                        }
-                                    }
-
-                                    &::before {
-                                        background-image: url('@{baseDir}images/rewards.svg');
-                                    }
+                                &::before {
+                                    background-image: url('@{baseDir}images/rewards.svg');
                                 }
                             }
                         }

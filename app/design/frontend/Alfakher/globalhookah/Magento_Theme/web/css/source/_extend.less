@@ -1430,7 +1430,7 @@
                 padding: 10px 72px;
             }
             .header-links-wrapper {
-                .header-links {
+                .row-full-width-inner {
                     max-width: 100%;
                     padding: 10px 72px;
                 }
@@ -1860,35 +1860,6 @@
     }
 }
 
-//  Desktop large
-//  _____________________________________________
-
-@media only screen and (min-width: 1440px) and (max-width: 1920px) {
-    body {
-        .page-header {
-            .header.content {
-                max-width: 100%;
-                padding: 10px 72px;
-            }
-            .header-links-wrapper {
-                .header-links {
-                    max-width: 100%;
-                    padding: 10px 72px;
-                }
-            }
-        }
-    }
-
-    footer.page-footer {
-        .category-container,
-        .helpful-container {
-            .header {
-                font-size: 2.5rem;
-            }
-        }
-    }
-}
-
 //
 //  Mobile (screen-xxs)
 //  _____________________________________________
@@ -2072,7 +2043,7 @@
             }
         }
         .header-links-wrapper {
-            display: none;
+            display: none !important;
         }
 
         .right_section {
