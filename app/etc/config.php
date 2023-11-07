@@ -1153,6 +1153,7 @@ return [
         'Magefan_YouTubeWidget' => 1,
         'Mageplaza_MultipleCoupons' => 1,
         'Alfakher_MultipleCoupons' => 1,
+        'Alfakher_ProductLabels' => 1,
         'Mageplaza_ProductLabels' => 1,
         'Mageplaza_ProductLabelsGraphQl' => 1,
         'Mageplaza_Seo' => 1,
