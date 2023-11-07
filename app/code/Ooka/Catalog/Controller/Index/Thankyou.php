@@ -7,25 +7,20 @@ namespace Ooka\Catalog\Controller\Index;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\Mail\Template\TransportBuilder;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Sales\Api\OrderItemRepositoryInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Ooka\Catalog\Logger\Logger;
-use Magento\Framework\Translate\Inline\StateInterface;
+use Magento\Framework\MessageQueue\PublisherInterface;
 
 /**
- * Thank you class for Trigger third email
+ * Thank you class for Trigger thank you email
  */
 class Thankyou extends Action
 {
     private const XML_PATH_GIFTCARD_EMAIL_TEMPLATE = "giftcard/thankyou_giftcardaccount_email/thankyou_template";
 
-    /**
-     * @var TransportBuilder
-     */
-    protected TransportBuilder $transportBuilder;
     /**
      * @var ScopeConfigInterface
      */
@@ -33,7 +28,7 @@ class Thankyou extends Action
     /**
      * @var OrderItemRepositoryInterface
      */
-    protected $orderItemRepository;
+    protected $orderItemRepo;
     /**
      * @var StoreManagerInterface
      */
@@ -43,38 +38,32 @@ class Thankyou extends Action
      */
     private Logger $logger;
     /**
-     * @var StateInterface
+     * @var PublisherInterface
      */
-    protected $inlineTranslation;
-
+    protected $publisher;
 
     /**
      * @param Context $context
-     * @param TransportBuilder $transportBuilder
      * @param ScopeConfigInterface $scopeConfig
-     * @param OrderItemRepositoryInterface $orderItemRepository
+     * @param OrderItemRepositoryInterface $orderItemRepo
      * @param StoreManagerInterface $storeManager
      * @param Logger $logger
-     * @param StateInterface $inlineTranslation
+     * @param PublisherInterface $publisher
      */
     public function __construct(
         Context                      $context,
-        TransportBuilder             $transportBuilder,
         ScopeConfigInterface         $scopeConfig,
-        OrderItemRepositoryInterface $orderItemRepository,
+        OrderItemRepositoryInterface $orderItemRepo,
         StoreManagerInterface        $storeManager,
         Logger                       $logger,
-        StateInterface               $inlineTranslation
-
-
+        PublisherInterface           $publisher
     ) {
         parent::__construct($context);
-        $this->transportBuilder = $transportBuilder;
         $this->scopeConfig = $scopeConfig;
-        $this->orderItemRepositoryInterface = $orderItemRepository;
+        $this->orderItemRepo = $orderItemRepo;
         $this->storeManager = $storeManager;
         $this->logger = $logger;
-        $this->inlineTranslation = $inlineTranslation;
+        $this->publisher = $publisher;
     }
 
     /**
@@ -83,7 +72,7 @@ class Thankyou extends Action
     public function execute()
     {
         $itemId = $this->getRequest()->getParam('order_item_id');
-        $orderItem = $this->orderItemRepositoryInterface->get($itemId);
+        $orderItem = $this->orderItemRepo->get($itemId);
         $storeId = $orderItem->getStoreId();
         $storeUrl = $this->storeManager->getStore($storeId)->getBaseUrl();
         $senderName = $orderItem->getProductOptionByCode('giftcard_sender_name');
@@ -94,19 +83,8 @@ class Thankyou extends Action
         try {
 
             $templateId = $this->getGiftcardConfig($storeId);
-            $sender = [
-                'name' => $senderName,
-                'email' => $senderEmail,
-            ];
-            $receiver = [
-                'name' => $recipientName,
-                'email' => $recipientEmail,
-            ];
-            $templateVars = [
-                'name' => 'Recipient Name',
-            ];
-            $this->logger->info("Email Data", [
-                'order_item_id' => $orderItem,
+
+            $details = ['order_item_id' => $itemId,
                 'store_id' => $orderItem->getStoreId(),
                 'store_url' => $storeUrl,
                 'giftcard_sender_name' => $senderName,
@@ -114,23 +92,15 @@ class Thankyou extends Action
                 'giftcard_recipient_name' => $recipientName,
                 'giftcard_recipient_email' => $recipientEmail,
                 'template_id' => $templateId,
-            ]);
-            $transport = $this->transportBuilder
-                ->setTemplateIdentifier($templateId)
-                ->setTemplateOptions([
-                    'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
-                    'store' => $storeId,
-                ])
-                ->setTemplateVars($templateVars)
-                ->setFrom($receiver)
-                ->addTo($sender['email'], $receiver['name'])
-                ->getTransport();
+            ];
 
-            $transport->sendMessage();
-            $this->inlineTranslation->resume();
-            $this->logger->info("Email sent successfully");
+            $this->publisher->publish(
+                'notifycustomer.thankyoumail',
+                json_encode($details)
+            );
 
-            $this->messageManager->addSuccessMessage('Thank you for your order');
+            $this->logger->info("Email Data", $details);
+
         } catch (\Exception $e) {
             $this->messageManager->addErrorMessage($e->getMessage());
             $this->logger->info($e->getMessage());
