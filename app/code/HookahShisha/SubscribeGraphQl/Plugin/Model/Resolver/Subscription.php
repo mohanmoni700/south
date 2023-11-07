@@ -13,6 +13,7 @@ use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\Framework\App\Request\Http;
 use Magento\Framework\Serialize\Serializer\Json as JsonSerializer;
+use Magento\Framework\Session\SessionManagerInterface;
 
 class Subscription
 {
@@ -23,37 +24,37 @@ class Subscription
     private $parentProduct = null;
     private $skipProductTrialValidation = false;
     private ProductFactory $productFactory;
-    private $bundleProduct = false;
     private Http $request;
     private BundleTypeFactory $bundleTypeFactory;
-    private $bundleParentId = null;
+    const BUNDLE = 'BUNDLE';
+    private SessionManagerInterface $sessionManager;
 
     /**
      * @param JsonSerializer $jsonSerializer
      */
     public function __construct(
-        JsonSerializer      $jsonSerializer,
-        SubscriptionService $service,
-        Http                $request,
-        BundleTypeFactory   $bundleTypeFactory,
-        ProductFactory      $productFactory,
-        DiscountService     $discountService
-    )
-    {
+        JsonSerializer          $jsonSerializer,
+        SubscriptionService     $service,
+        Http                    $request,
+        BundleTypeFactory       $bundleTypeFactory,
+        ProductFactory          $productFactory,
+        SessionManagerInterface $sessionManager,
+        DiscountService         $discountService
+    ) {
         $this->jsonSerializer = $jsonSerializer;
         $this->discountService = $discountService;
         $this->service = $service;
         $this->productFactory = $productFactory;
         $this->request = $request;
         $this->bundleTypeFactory = $bundleTypeFactory;
+        $this->sessionManager = $sessionManager;
     }
 
     public function aroundIsSubscriptionProduct(
         Subject  $subject,
         callable $proceed,
-                 $product
-    )
-    {
+        $product
+    ) {
         if ($product->getTypeId() !== "simple") {
             return $proceed($product);
         } else {
@@ -75,7 +76,6 @@ class Subscription
 
             return false;
         }
-
     }
 
     /**
@@ -107,11 +107,10 @@ class Subscription
     public function aroundGetSubscriptionDiscount(
         Subject  $subject,
         callable $proceed,
-                 $finalPrice,
-                 $product,
-                 $convert = false
-    )
-    {
+        $finalPrice,
+        $product,
+        $convert = false
+    ) {
         if (!$subject->helper->isModuleEnable()) {
             return $finalPrice;
         }
@@ -124,14 +123,12 @@ class Subscription
             $this->skipProductTrialValidation = true;
         }
 
-        //Get the bundle product
-        $this->bundleProduct = $this->getBundleProduct($product);
-
         $optionPrice = $this->getOptionPrice($product);
         $price = $finalPrice;
 
-        if ((($this->bundleProduct && $this->bundleProduct->getIsSubscription()) ||
-                $product->getIsSubscription()) && $product->getPrice() != 0) {
+        $this->parentProduct = $this->getBundleProduct($product);
+
+        if ($product->getPrice() != 0 && $subject->isSubscriptionProduct($product) || $this->parentProduct) {
             $price = $finalPrice - $optionPrice;
             $type = $this->getDiscountType($product);
 
@@ -195,8 +192,8 @@ class Subscription
      */
     private function getDiscountType($product)
     {
-        if ($this->bundleProduct) {
-            return $this->bundleProduct->getDiscountType();
+        if ($this->parentProduct) {
+            return $this->parentProduct->getDiscountType();
         }
         return $product->getDiscountType();
     }
@@ -207,46 +204,10 @@ class Subscription
      */
     private function getDiscountAmount($product)
     {
-        if ($this->bundleProduct) {
-            return $this->bundleProduct->getDiscountAmount();
+        if ($this->parentProduct) {
+            return $this->parentProduct->getDiscountAmount();
         }
         return $product->getDiscountAmount();
-    }
-
-    /**
-     * @param $product
-     * @return mixed|null
-     */
-    public function getBundleParentId($product)
-    {
-        if ($params = $this->request->getParams() && isset($params['super_group'])) {
-            return false;
-        }
-
-        if ($product->getTypeId() == 'bundle') {
-            $this->bundleParentId = $product->getId();
-        }
-
-        $ids = [];
-        if ($product->hasCustomOption('bundle_identity') &&
-            $bundleIdentity = $product->getCustomOption('bundle_identity')->getValue()
-        ) {
-            $ids = explode('_', $bundleIdentity, 2);
-        }
-
-        if (!$ids) {
-            $ids = $this->bundleTypeFactory->create()->getParentIdsByChild($product->getId());
-        }
-
-        $bundleKey = 0;
-        if ($ids) {
-            $idsFlip = array_flip($ids);
-            if (isset($idsFlip[$this->bundleParentId])) {
-                $bundleKey = $idsFlip[$this->bundleParentId];
-            }
-        }
-
-        return ($ids && isset($ids[$bundleKey])) ? $ids[$bundleKey] : null;
     }
 
     /**
@@ -256,7 +217,27 @@ class Subscription
     private function getBundleProduct($product)
     {
         $bundleId = $product->getData('parent_product_id');
+        $bundleKey = self::BUNDLE . $product->getId();
+        $bundle = $this->sessionManager->getData($bundleKey);
+
+        //Get the parent product from the session
+        $bundleData = isset($bundle) ? $this->jsonSerializer->unserialize($bundle) : null;
+        if (isset($bundleData[$bundleKey]) && !isset($bundleId)) {
+            $bundleId = $bundleData[$bundleKey];
+            foreach ($this->sessionManager->getData() as $key => $value) {
+                if (strpos($key, self::BUNDLE) === 0) {
+                    $this->sessionManager->unsetData($key);
+                }
+            }
+        } elseif (isset($bundleId)) {
+            $bundleData[$bundleKey] = $bundleId;
+            //Setting the data in the session
+            $this->sessionManager->setData(
+                $bundleKey,
+                $this->jsonSerializer->serialize($bundleData)
+            );
+        }
+
         return isset($bundleId) ? $this->productFactory->create()->load($bundleId) : false;
     }
-
 }
