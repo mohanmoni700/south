@@ -1,0 +1,33 @@
+diff --git a/app/code/Tabby/Checkout/Model/Method/Checkout.php b/app/code/Tabby/Checkout/Model/Method/Checkout.php
+index 6409ca16f..10cdc55d5 100644
+--- a/app/code/Tabby/Checkout/Model/Method/Checkout.php
++++ b/app/code/Tabby/Checkout/Model/Method/Checkout.php
+@@ -663,6 +663,9 @@ class Checkout extends AbstractMethod
+         }
+ 
+         $invoice = $this->_registry->registry('current_invoice');
++        if (!$invoice) {
++            $invoice = $payment->getOrder()->getInvoiceCollection()->getFirstItem();
++        }
+         $data = [
+             "amount" => $payment->formatAmount($this->getTabbyPrice($invoice, 'grand_total')),
+             "tax_amount" => $payment->formatAmount($this->getTabbyPrice($invoice, 'tax_amount')),
+@@ -1094,7 +1097,7 @@ class Checkout extends AbstractMethod
+ 
+         try {
+             $result = $this->_checkoutApi->createSession($this->getInfoInstance()->getOrder()->getStoreId(), $data);
+-            
++
+             if ($result && property_exists($result, 'status') && $result->status == 'created') {
+                 if (property_exists($result->configuration->available_products, $this->_codeTabby)) {
+                     // register new payment id for order
+@@ -1108,8 +1111,7 @@ class Checkout extends AbstractMethod
+             } else {
+                 throw new LocalizedException(__("Response not have status field or payment rejected"));
+             }
+-            
+-            
++
+         } catch (\Exception $e) {
+             $this->_ddlog->log("error", "createSession exception", $e, $data);
+             // be silent, no exception require here. just redirect to checkout again
