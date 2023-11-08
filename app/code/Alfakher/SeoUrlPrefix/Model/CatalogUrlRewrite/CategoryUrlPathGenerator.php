@@ -22,11 +22,6 @@ class CategoryUrlPathGenerator extends CategoryPathGenerator
     public const PREFIX_STORES = 'hookahshisha/prefix_add_seo/seo_stores';
 
     /**
-     * Prefix category route
-     */
-    public const CATEGORY_PREFIX = 'c/';
-
-    /**
      * Minimal category level that can be considered for generate path
      */
     public const MINIMAL_CATEGORY_LEVEL_FOR_PROCESSING = 3;
@@ -35,6 +30,14 @@ class CategoryUrlPathGenerator extends CategoryPathGenerator
      * XML path for category url suffix
      */
     public const XML_PATH_CATEGORY_URL_SUFFIX = 'catalog/seo/category_url_suffix';
+
+    /**
+     * @var array
+     */
+    public array $categoryPathPrefix = [
+        'hookah_wholesalers_store_view' => 'c/',
+        'global_hookah_store_view' => 'collections/'
+    ];
 
     /**
      * Cache for category rewrite suffix
@@ -86,21 +89,20 @@ class CategoryUrlPathGenerator extends CategoryPathGenerator
         $rootId = "";
         $storeDetails = $this->scopeConfig->getValue(self::PREFIX_STORES);
         $storeIds = $storeDetails ? explode(',', $storeDetails) : [];
-        
+
         $storeid ="";
+        $storeCode = '';
         $storeManagerDataList = $this->storeManager->getStores();
         foreach ($storeManagerDataList as $key => $value) {
-            if (in_array($key, $storeIds)) {
+            if (in_array($key, $storeIds) && $key == $category->getStoreId()) {
                 $storeid = $key;
+                $storeCode = $value->getCode();
                 $rootId = $this->storeManager->getStore($storeid)->getRootCategoryId();
             }
         }
 
         $All_Id = [];
         $All_Id = $category->getParentIds();
-
-        $storeId = $category->getStoreId();
-        $prifix = $storeId == $storeid ? self::CATEGORY_PREFIX : '';
 
         if (in_array($category->getParentId(), [Category::ROOT_CATEGORY_ID, Category::TREE_ROOT_ID])) {
             return '';
@@ -119,9 +121,9 @@ class CategoryUrlPathGenerator extends CategoryPathGenerator
             $parentPath = $this->getUrlPath($parentCategory);
 
             $first = strtok($parentPath, '/');
-            if ($first == 'c') {
+            if ($first == 'c' || $first == 'collections') {
                 $string_path = str_split($parentPath);
-                array_splice($string_path, 0, 2);
+                array_splice($string_path, 0, (strlen($first) + 1));
                 $new_path = implode("", $string_path);
                 $path = $new_path === '' ? $path : $new_path . '/' . $path;
 
@@ -130,8 +132,10 @@ class CategoryUrlPathGenerator extends CategoryPathGenerator
             }
         }
 
+
         if (in_array($rootId, $All_Id)) {
-            return self::CATEGORY_PREFIX . $path;
+            $prefix = $this->categoryPathPrefix[$storeCode] ?? '';
+            return $prefix . $path;
         } else {
             return $path;
         }
