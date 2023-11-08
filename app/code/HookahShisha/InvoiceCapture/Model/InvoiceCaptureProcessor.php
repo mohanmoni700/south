@@ -18,7 +18,8 @@ use Magento\Sales\Model\Order\Email\Sender\InvoiceSender;
 class InvoiceCaptureProcessor
 {
     public const ONLINE_PAYMENT_METHOD = [
-        "spreedly"
+        "spreedly",
+        "tabby_installments"
     ];
 
     /**
