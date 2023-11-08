@@ -1151,6 +1151,26 @@
 }
 
 //
+//  Desktop
+//  _____________________________________________
+
+@media only screen and (min-width: 1024px) and (max-width: 1920px) { 
+    body {
+        .bestselling-picks {
+            max-width: 100%;
+            margin: 0 7.2rem 7.2rem;
+
+            .comman_arrow {
+                .slick-prev,
+                .slick-next {
+                    display: block !important;
+                }
+            }
+        }
+    }
+}
+
+//
 //  Desktop large
 //  _____________________________________________
 
@@ -1237,10 +1257,6 @@
 }
 
 @media only screen and (min-width: 1024px) and (max-width: 1440px) {
-    .header-links-wrapper {
-        padding: 0 1.5rem;
-    }
-
     .banner-row-wrapper {
         max-width: 100%;
         margin: 2rem;
@@ -2404,15 +2420,6 @@
             .h2_heading_builder {
                 font-size: 2.4rem;
                 margin: 0;
-            }
-        }
-    }
-
-    .accessories_wholesale {
-        .pagebuilder-column {
-            &.site-container {
-                max-width: 1280px;
-                margin: 0 auto;
             }
         }
     }

@@ -708,7 +708,23 @@
         }
     }
 }
+
+@media only screen and (max-width: 1024px) {
+    .accessories_wholesale {
+        .pagebuilder-column {
+            &.site-container {
+                max-width: 1280px;
+                margin: 0 auto;
+            }
+        }
+    }
+}
+
 @media only screen and (min-width: 1024px) and (max-width: 1920px) {
+    .header-links-wrapper {
+        padding: 0 1.5rem;
+    }
+    
     .top_products {
         div[data-content-type='tabs'] .tabs-navigation li.tab-header {
             a.tab-title {
