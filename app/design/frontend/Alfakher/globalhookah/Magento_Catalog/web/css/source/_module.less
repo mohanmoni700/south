@@ -299,6 +299,69 @@
         }
     }
 
+        // shop by brands design
+        .shopbybrands {
+            h1 {
+                a {
+                    color: @color-black;
+                    .lib-font-size(40);
+                    font-weight: bold;
+                    text-align: center;
+                    margin-bottom: 3.6rem;
+    
+                    &:hover {
+                        text-decoration: none;
+                        cursor: default;
+                    }
+                }
+            } 
+    
+            .pagebuilder-column-group {
+                margin-bottom: 3.6rem;
+                
+                .pagebuilder-column {
+                    padding: 0 2rem;
+                    flex-basis: 50%;
+    
+                    .brand-image {
+                        width: 100%;
+                        float: left;
+                        background: #f6f6f6;
+                        padding: 3rem;
+    
+                        img {
+                            position: relative;
+                            top: 0;
+                            transition: ease-in-out 0.5s;
+                        }
+                    }
+                    .brandname {
+                        .lib-font-size(16);
+                        font-weight:  @font-weight__semibold;
+                        margin-top: 2.0rem;
+    
+                        a {
+                            color: @color-black;
+                        }
+                    }
+        
+                    &:hover {
+                        .brand-image {
+                            img {
+                                top: -2.0rem;
+                            }
+                        }
+                        .brandname {
+                            a {
+                                color: @color_primary;
+                                text-decoration: none;
+                            }
+                        }
+                    }
+                } 
+            }     
+        }
+
     .clp_faq_main {
         
         color: @font-gray;
@@ -1452,6 +1515,21 @@
 //  _____________________________________________
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    // shop by brands design
+    .shopbybrands {
+        h1 {
+            a {
+                .lib-font-size(30);
+            }
+        }
+
+        .pagebuilder-column-group {
+            .pagebuilder-column {
+                padding: 0 1rem;
+            }
+        }
+    }
+
     .filter-options-content {
         .items {
             max-height: unset !important;
@@ -2019,6 +2097,17 @@
                         display: none;
                     }
                 }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum ='min') and (@break =@screen__l) {
+    // shop by brands design
+    .shopbybrands {
+        .pagebuilder-column-group {
+            .pagebuilder-column {
+                flex-basis: 25%;
             }
         }
     }
