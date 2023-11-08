@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Alfakher\SeoUrlPrefix\Model\CatalogUrlRewrite;
 
 use Magento\CatalogUrlRewrite\Model\ProductUrlPathGenerator as ProductPathGenerator;
+use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\CatalogUrlRewrite\Model\CategoryUrlPathGenerator;
@@ -18,10 +19,13 @@ class ProductUrlPathGenerator extends ProductPathGenerator
     public const PREFIX_STORES = 'hookahshisha/prefix_add_seo/seo_stores';
 
     /**
-     * Prefix product route
+     * @var array
      */
-    public const PRODUCT_PREFIX = 'p/';
-    
+    public array $productPathPrefix = [
+        'hookah_wholesalers_store_view' => 'p/',
+        'global_hookah_store_view' => 'product/'
+    ];
+
     /**
      * @param StoreManagerInterface $storeManager
      * @param ScopeConfigInterface $scopeConfig
@@ -53,14 +57,20 @@ class ProductUrlPathGenerator extends ProductPathGenerator
 
         $path = $product->getData('url_path');
 
-        $prefix = in_array($storeId, $storeIds) ? self::PRODUCT_PREFIX : '';
+        try {
+            $storeCode = $this->storeManager->getStore($storeId)->getCode();
+        } catch (NoSuchEntityException $e) {
+            return parent::getUrlPath($product, $category, $storeId);
+        }
+
+        $prefix = in_array($storeId, $storeIds) ? $this->productPathPrefix[$storeCode] ?? '' : '';
 
         if ($path === null) {
             $path = $product->getUrlKey()
                 ? $this->prepareProductUrlKey($product)
                 : $this->prepareProductDefaultUrlKey($product);
         }
-        $path = $prefix.$path;
+        $path = $prefix . $path;
 
         return $category === null
             ? $path
