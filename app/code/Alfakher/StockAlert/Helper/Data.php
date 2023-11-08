@@ -1,23 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Alfakher\StockAlert\Helper;
 
+use Magento\Catalog\Model\Product;
+use Magento\Framework\App\Area;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\MailException;
 use Magento\Framework\Exception\NoSuchEntityException;
-use Magento\Store\Model\ScopeInterface as ScopeInterface;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\Translate\Inline\StateInterface as TranslateStateInterface;
 use Magento\Framework\Mail\Template\TransportBuilder as TransportBuilder;
 use Alfakher\StockAlert\Logger\Logger;
 
 class Data
 {
-    public const XML_PATH_EMAIL_STOCK_TEMPLATE = 'catalog/productalert/guest_user_email_template';
-    public const XML_PATH_EMAIL_IDENTITY = 'trans_email/ident_general/email';
+    /**
+     * Product collection which of back in stock
+     *
+     * @var array
+     */
+    protected $_stockProducts = [];
 
     /**
      * @var RequestInterface
@@ -35,11 +41,6 @@ class Data
     private ProductRepositoryInterface $productRepository;
 
     /**
-     * @var ScopeConfigInterface
-     */
-    private ScopeConfigInterface $scopeConfig;
-
-    /**
      * @var TranslateStateInterface
      */
     private TranslateStateInterface $inlineTranslation;
@@ -55,30 +56,35 @@ class Data
     private Logger $logger;
 
     /**
+     * @var EmailData
+     */
+    private EmailData $emailDataHelper;
+
+    /**
      * @param StoreManagerInterface $storeManager
      * @param RequestInterface $request
      * @param ProductRepositoryInterface $productRepository
-     * @param ScopeConfigInterface $scopeConfig
      * @param TranslateStateInterface $inlineTranslation
      * @param TransportBuilder $transportBuilder
      * @param Logger $logger
+     * @param EmailData $emailDataHelper
      */
     public function __construct(
         StoreManagerInterface $storeManager,
         RequestInterface $request,
         ProductRepositoryInterface $productRepository,
-        ScopeConfigInterface $scopeConfig,
         TranslateStateInterface $inlineTranslation,
         TransportBuilder $transportBuilder,
-        Logger $logger
+        Logger $logger,
+        EmailData $emailDataHelper
     ) {
         $this->storeManager = $storeManager;
         $this->request = $request;
         $this->productRepository = $productRepository;
-        $this->scopeConfig = $scopeConfig;
         $this->inlineTranslation = $inlineTranslation;
         $this->transportBuilder = $transportBuilder;
         $this->logger = $logger;
+        $this->emailDataHelper = $emailDataHelper;
     }
 
     /**
@@ -126,32 +132,26 @@ class Data
     {
         try {
             $product = $this->productRepository->getById($productId);
+            $storeId = $this->storeManager->getStore()->getId();
+            $store = $this->storeManager->getStore($storeId);
+            $alertGrid = $this->emailDataHelper->getAlertGrid($store, $product);
 
             $templateVars = [
                 'customerName' => $customerName,
-                'productName' => $product->getName()
+                'alertGrid' => $alertGrid,
             ];
 
-            $storeId = $this->storeManager->getStore()->getId();
-            $sender = $this->scopeConfig->getValue(
-                self::XML_PATH_EMAIL_IDENTITY,
-                ScopeInterface::SCOPE_STORE,
-                $storeId
-            );
+            $sender = $this->emailDataHelper->getSender($storeId);
 
             $from = ['email' => $sender, 'name' => $sender];
             $to = [$email];
 
             $templateOptions = [
-                'area' => \Magento\Framework\App\Area::AREA_FRONTEND,
+                'area' => Area::AREA_FRONTEND,
                 'store' => $storeId
             ];
 
-            $templateId = $this->scopeConfig->getValue(
-                self::XML_PATH_EMAIL_STOCK_TEMPLATE,
-                ScopeInterface::SCOPE_STORE,
-                $storeId
-            );
+            $templateId = $this->emailDataHelper->getTemplateId($storeId);
 
             $this->inlineTranslation->suspend();
 

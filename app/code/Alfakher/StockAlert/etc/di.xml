@@ -13,4 +13,8 @@
             </argument>
         </arguments>
     </type>
+
+    <type name="Magento\ProductAlert\Model\Observer">
+        <plugin name="guest_user_stock_alert" sortOrder="100" type="Alfakher\StockAlert\Plugin\StockAlertObserver"/>
+    </type>
 </config>
