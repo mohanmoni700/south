@@ -362,6 +362,50 @@
             }     
         }
 
+        .category-brand-description {
+            background: #FFF8E5;
+            margin: 0 -8.8rem;     
+
+            .content {
+                padding: 7.2rem 9.6rem;
+
+                .descreption-title {
+                    p {
+                        .lib-font-size(40);
+                        margin-bottom: 3.5rem;
+                        font-weight: @font-weight__bold;
+                    }
+                }
+
+                p {
+                    .lib-font-size(16);
+                    font-weight: 500;
+                }
+
+                .pagebuilder-button-secondary {
+                    width: 17.2rem;
+                    border: 1px solid #000;
+                    color: @color-black;
+                    .lib-font-size(16);
+                    font-weight: @font-weight__semibold;
+                    text-align: center;
+                    padding: 1.5rem 0;
+                    cursor: pointer;
+                    background-color: transparent;
+                    border-radius: 4.0rem;
+                    margin-top: 2rem;
+                    display: inline-block;
+
+                    &:hover {
+                        border: 1px solid #229B62;
+                        background: #229B62;
+                        color: @color-white;
+                        text-decoration: none;
+                    }
+                }
+            }
+        } 
+
     .clp_faq_main {
         
         color: @font-gray;
@@ -2848,6 +2892,19 @@
         }
     }
     @media only screen and (max-width: 767px) {
+        .category-brand-description {              
+            .content {
+                padding-block: 3rem;
+
+                .descreption-title {
+                    p {
+                        .lib-font-size(30);
+                        margin-bottom: 2.5rem; 
+                    }                  
+                }  
+            }
+        }
+
         .catalog-category-view,
         .catalogsearch-result-index {
             .page-main {
@@ -2918,6 +2975,24 @@
                         max-height: 170px;
                         min-height: 170px;
                     }
+                }
+            }
+        }
+
+        .category-brand-description {
+            .content {
+                .descreption-title {
+                    p {
+                        .lib-font-size(20);
+                    }
+                }
+
+                .pagebuilder-button-secondary {
+                    font-size: 1.4rem;
+                    width: 13.8rem;
+                    padding: 1.2rem 2.7rem;
+                    margin-top: 1.4rem;
+                    line-height: 1;
                 }
             }
         }
