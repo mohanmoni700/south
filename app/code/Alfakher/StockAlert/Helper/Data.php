@@ -88,7 +88,7 @@ class Data
      */
     public function getStoreId(): int
     {
-        return $this->storeManager->getStore()->getId();
+        return (int)$this->storeManager->getStore()->getId();
     }
 
     /**
@@ -99,7 +99,7 @@ class Data
      */
     public function getWebsiteId(): int
     {
-        return $this->storeManager->getStore()->getWebsiteId();
+        return (int)$this->storeManager->getStore()->getWebsiteId();
     }
 
     /**
