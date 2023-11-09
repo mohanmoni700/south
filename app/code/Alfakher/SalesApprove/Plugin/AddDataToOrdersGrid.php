@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Alfakher\SalesApprove\Plugin;
 
 use Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory;
