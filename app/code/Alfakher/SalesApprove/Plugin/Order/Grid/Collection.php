@@ -12,6 +12,21 @@ use Magento\Sales\Model\ResourceModel\Order\Grid\Collection as Subject;
 class Collection
 {
     /**
+     * Filter field name
+     */
+    const GUARANTEE = 'guarantee';
+
+    /**
+     * Filter condition value
+     */
+    const APPROVED = 'APPROVED';
+
+    /**
+     * Filter condition value
+     */
+    const ACCEPT = 'ACCEPT';
+
+    /**
      * @param Subject $subject
      * @param callable $proceed
      * @param $field
@@ -24,8 +39,8 @@ class Collection
         $field,
         $condition = null
     ) {
-        if ($field == 'guarantee' && $condition['eq'] == 'APPROVED') {
-            $condition = ['in' => ['APPROVED', 'ACCEPT']];
+        if ($field == self::GUARANTEE && $condition['eq'] == self::APPROVED) {
+            $condition = ['in' => [self::APPROVED, self::ACCEPT]];
         }
         return $proceed($field, $condition);
     }
