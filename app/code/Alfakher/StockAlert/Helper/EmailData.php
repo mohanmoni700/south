@@ -24,17 +24,12 @@ class EmailData
      *
      * @var array
      */
-    protected $_stockProducts = [];
+    protected $stockProducts = [];
 
     /**
      * @var Stock
      */
-    protected $_stockBlock;
-
-    /**
-     * @var State
-     */
-    protected $_appState;
+    protected $stockBlock;
 
     /**
      * @var StoreData
@@ -74,10 +69,10 @@ class EmailData
      */
     public function getStockBlock()
     {
-        if ($this->_stockBlock === null) {
-            $this->_stockBlock = $this->productAlertData->createBlock(Stock::class);
+        if ($this->stockBlock === null) {
+            $this->stockBlock = $this->productAlertData->createBlock(Stock::class);
         }
-        return $this->_stockBlock;
+        return $this->stockBlock;
     }
 
     /**
@@ -139,7 +134,7 @@ class EmailData
      */
     public function addStockProduct(Product $product)
     {
-        $this->_stockProducts[$product->getId()] = $product;
+        $this->stockProducts[$product->getId()] = $product;
         return $this;
     }
 }

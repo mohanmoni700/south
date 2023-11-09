@@ -15,7 +15,7 @@ class StockAlertObserver
      *
      * @var array
      */
-    protected $_errors = [];
+    protected $errors = [];
 
     /**
      * @var ProcessBackInStock
@@ -44,7 +44,7 @@ class StockAlertObserver
         try {
             $this->processBackInStock->execute();
         } catch (Exception $e) {
-            $this->_errors[] = $e->getMessage();
+            $this->errors[] = $e->getMessage();
             throw $e;
         }
 

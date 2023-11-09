@@ -19,13 +19,6 @@ use Alfakher\StockAlert\Logger\Logger;
 class Data
 {
     /**
-     * Product collection which of back in stock
-     *
-     * @var array
-     */
-    protected $_stockProducts = [];
-
-    /**
      * @var RequestInterface
      */
     private RequestInterface $request;
