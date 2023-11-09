@@ -105,27 +105,12 @@ class Price
             && $oldBundleOption = $bundleProduct->getData('subscription_bundle_option')
         ) {
             $selectProductOptionId = $selectionProduct->getOptionId();
-            if (in_array($selectProductOptionId, array_keys($oldBundleOption))) {
-                $optionData = $oldBundleOption[$selectProductOptionId];
-
-                if ($optionData && !empty($optionData['value'])
-                    && $optionDataValue = $optionData['value'][0]
-                ) {
-                    $qty = !empty($optionDataValue['qty']) ? $optionDataValue['qty'] : 0;
-
-                    //Calculated the price based on the product discount
-                    $bundleDiscount = $bundleProduct->getDiscountAmount();
-                    $price = $selectionProduct->getFinalPrice();
-                    if (isset($bundleDiscount)) {
-                        $price = $selectionProduct->getPrice() - $bundleDiscount;
-                    }
-
-                    if ($qty && $price) {
-                        return max(0, $price);
-                    }
-                }
-            }
-            $result = 0;
+            return $this->getBundlePrice(
+                $selectProductOptionId,
+                $oldBundleOption,
+                $bundleProduct,
+                $selectionProduct
+            );
         } elseif (!$bundleProduct->getSkipBundleDiscount()
             && $this->subscription->isSubscriptionProduct($bundleProduct)
             && $bundleProduct->getData('subscription_type') == PurchaseOption::EITHER
@@ -133,5 +118,43 @@ class Price
             return $this->subscription->getFinalPrice($bundleProduct, $result);
         }
         return $result;
+    }
+
+    /**
+     * To get the bundle price
+     *
+     * @param $selectProductOptionId
+     * @param $oldBundleOption
+     * @param $bundleProduct
+     * @param $selectionProduct
+     * @return int|mixed
+     */
+    private function getBundlePrice(
+        $selectProductOptionId,
+        $oldBundleOption,
+        $bundleProduct,
+        $selectionProduct
+    ) {
+        if (in_array($selectProductOptionId, array_keys($oldBundleOption))) {
+            $optionData = $oldBundleOption[$selectProductOptionId];
+
+            if ($optionData && !empty($optionData['value'])
+                && $optionDataValue = $optionData['value'][0]
+            ) {
+                $qty = !empty($optionDataValue['qty']) ? $optionDataValue['qty'] : 0;
+
+                //Calculated the price based on the product discount
+                $bundleDiscount = $bundleProduct->getDiscountAmount();
+                $price = $selectionProduct->getFinalPrice();
+                if (isset($bundleDiscount)) {
+                    $price = $selectionProduct->getPrice() - $bundleDiscount;
+                }
+
+                if ($qty && $price) {
+                    return max(0, $price);
+                }
+            }
+        }
+        return 0;
     }
 }
