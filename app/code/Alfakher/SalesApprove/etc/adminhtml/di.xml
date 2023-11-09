@@ -19,4 +19,8 @@
                 sortOrder="10"
                 disabled="false"/>
     </type>
+
+    <type name="Magento\Sales\Model\ResourceModel\Order\Grid\Collection">
+        <plugin name="signifyd_connect_order_grid_collection" type="Alfakher\SalesApprove\Plugin\Order\Grid\Collection" />
+    </type>
 </config>
