@@ -13,7 +13,7 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Sales\Api\OrderItemRepositoryInterface;
 use Magento\Store\Model\ScopeInterface;
 use Magento\Framework\Serialize\Serializer\Json as JsonHelper;
-use Psr\Log\LoggerInterface;
+use Ooka\Catalog\Logger\Logger;
 
 /**
  * Class GiftCardMailConsumer used to process getting thank you email
@@ -44,7 +44,7 @@ class GiftCardMailConsumer
      */
     private $orderItemRepositoryInterface;
     /**
-     * @var LoggerInterface
+     * @var Logger
      */
     private $logger;
 
@@ -54,7 +54,7 @@ class GiftCardMailConsumer
      * @param ScopeConfigInterface $scopeConfig
      * @param OrderItemRepositoryInterface $orderItemRepository
      * @param JsonHelper $jsonHelper
-     * @param LoggerInterface $logger
+     * @param Logger $logger
      */
     public function __construct(
         Emulation                    $appEmulation,
@@ -62,7 +62,7 @@ class GiftCardMailConsumer
         ScopeConfigInterface         $scopeConfig,
         OrderItemRepositoryInterface $orderItemRepository,
         JsonHelper                   $jsonHelper,
-        LoggerInterface              $logger
+        Logger                       $logger
     ) {
         $this->appEmulation = $appEmulation;
         $this->transportBuilder = $transportBuilder;
@@ -75,12 +75,15 @@ class GiftCardMailConsumer
     /**
      * Function for getting thank you email
      *
-     * @param array $request
+     * @param string $request
      * @return true|void
      */
 
     public function process($request)
     {
+        $this->logger->info('== GIFT CARD MAIL CONSUMER PROCESS STARTED ==');
+        $this->logger->info('Published Data: ' . $request);
+
         try {
             $request = $this->jsonHelper->unserialize($request);
             $itemId = $request['order_item_id'];
@@ -106,8 +109,6 @@ class GiftCardMailConsumer
                 'name' => $recipientName
             ];
 
-            $this->appEmulation->stopEnvironmentEmulation();
-
             $transport = $this->transportBuilder
                 ->setTemplateIdentifier($templateId)
                 ->setTemplateOptions([
@@ -120,10 +121,16 @@ class GiftCardMailConsumer
                 ->getTransport();
             $transport->sendMessage();
 
+            $this->logger->info('== GIFT CARD MAIL CONSUMER PROCESS COMPLETED ==');
+
+            $this->appEmulation->stopEnvironmentEmulation();
+
             return true;
         } catch (\Exception $exception) {
             $this->logger->error("An exception occurred: " . $exception->getMessage());
         }
+
+        $this->logger->info('== GIFT CARD MAIL CONSUMER PROCESS FAILED WITH ERROR ==');
     }
 
     /**
