@@ -21,8 +21,14 @@
                 </field>
             </group>
         </section>
+        <section id="giftcard">
+            <group id="thankyou_giftcardaccount_email" translate="label" type="text" sortOrder="400" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Thank you Email Sent from Reciepent</label>
+                <field id="thankyou_template" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Thank you Gift Card Template</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+        </section>
     </system>
 </config>
-
-
-
