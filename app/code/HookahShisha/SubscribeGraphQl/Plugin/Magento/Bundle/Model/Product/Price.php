@@ -87,6 +87,19 @@ class Price
             $selectionProduct->setSkipValidateTrial(1);
         }
 
+        return $this->calculateFinalPrice($bundleProduct, $selectionProduct, $result);
+    }
+
+    /**
+     *To calculate the final price
+     *
+     * @param $bundleProduct
+     * @param $selectionProduct
+     * @param $result
+     * @return float|int|mixed
+     */
+    private function calculateFinalPrice($bundleProduct, $selectionProduct, $result)
+    {
         if ($bundleProduct->hasData('is_subscription_recurring_order')
             && $bundleProduct->getData('is_subscription_recurring_order')
             && $oldBundleOption = $bundleProduct->getData('subscription_bundle_option')
@@ -119,7 +132,6 @@ class Price
         ) {
             return $this->subscription->getFinalPrice($bundleProduct, $result);
         }
-
         return $result;
     }
 }
