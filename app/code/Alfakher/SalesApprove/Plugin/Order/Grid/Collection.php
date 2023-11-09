@@ -14,17 +14,17 @@ class Collection
     /**
      * Filter field name
      */
-    const GUARANTEE = 'guarantee';
+    public const GUARANTEE = 'guarantee';
 
     /**
      * Filter condition value
      */
-    const APPROVED = 'APPROVED';
+    public const APPROVED = 'APPROVED';
 
     /**
      * Filter condition value
      */
-    const ACCEPT = 'ACCEPT';
+    public const ACCEPT = 'ACCEPT';
 
     /**
      * @param Subject $subject
