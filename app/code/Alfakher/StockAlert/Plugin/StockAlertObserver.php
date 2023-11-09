@@ -35,11 +35,11 @@ class StockAlertObserver
      * Run process for guest user stock alert
      *
      * @param Observer $subject
-     * @param $proceed
+     * @param $result
      * @return $this
      * @throws Exception
      */
-    public function afterProcess(Observer $subject, $proceed)
+    public function afterProcess(Observer $subject, $result)
     {
         try {
             $this->processBackInStock->execute();
@@ -48,6 +48,6 @@ class StockAlertObserver
             throw $e;
         }
 
-        return $this;
+        return $result;
     }
 }
