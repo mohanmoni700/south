@@ -56,7 +56,7 @@ class ProcessBackInStock
      * @param Observer $observer
      * @return void
      */
-    public function execute(Observer $observer)
+    public function execute()
     {
         $this->logger->info("Stock Alert Cron Started for Guest");
         $this->processBackInStock();
