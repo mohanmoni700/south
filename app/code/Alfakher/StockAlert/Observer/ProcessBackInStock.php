@@ -12,6 +12,8 @@ use Alfakher\StockAlert\Helper\Data;
 
 class ProcessBackInStock
 {
+    public const PAGE_SIZE = '50';
+
     /**
      * @var CollectionFactory
      */
@@ -71,6 +73,7 @@ class ProcessBackInStock
     {
         $collection = $this->stockAlertCollection->create();
         $collection->addFieldToFilter('send_count', 0);
+        $collection->setPageSize(self::PAGE_SIZE);
         $stockAlertProductData = $collection->getItems();
         if ($stockAlertProductData) {
             foreach ($stockAlertProductData as $stockAlertProduct) {
@@ -82,7 +85,8 @@ class ProcessBackInStock
                     $this->helperData->sendBackInStockEmail(
                         $stockAlertProduct->getData('email_id'),
                         (int)$stockAlertProduct->getData('product_id'),
-                        $stockAlertProduct->getData('name')
+                        $stockAlertProduct->getData('name'),
+                        $stockAlertProduct->getData('store_id')
                     );
                     $stockAlertProduct->setData('send_date', date('Y-m-d H:i:s'));
                     $stockAlertProduct->setData('send_count', (int)$stockAlertProduct->getData('send_count') + 1);

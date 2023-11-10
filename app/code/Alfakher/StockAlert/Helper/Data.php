@@ -118,14 +118,14 @@ class Data
      * @param string $email
      * @param int $productId
      * @param string $customerName
+     * @param $storeId
      * @return $this
      * @throws NoSuchEntityException
      */
-    public function sendBackInStockEmail($email, int $productId, $customerName)
+    public function sendBackInStockEmail($email, int $productId, $customerName, $storeId)
     {
         try {
             $product = $this->productRepository->getById($productId);
-            $storeId = $this->storeManager->getStore()->getId();
             $store = $this->storeManager->getStore($storeId);
             $alertGrid = $this->emailDataHelper->getAlertGrid($store, $product);
 
