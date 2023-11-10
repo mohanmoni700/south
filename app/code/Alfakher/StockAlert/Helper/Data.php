@@ -161,7 +161,7 @@ class Data
                 ->setTemplateOptions($templateOptions)
                 ->setTemplateVars($templateVars)
                 ->setFromByScope($from)
-                ->addTo($to)
+                ->addTo($email, $customerName)
                 ->getTransport();
 
             $transport->sendMessage();
