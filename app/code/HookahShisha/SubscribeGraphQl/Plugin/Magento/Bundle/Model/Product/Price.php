@@ -8,6 +8,7 @@ use Magedelight\Subscribenow\Helper\Data;
 use Magedelight\Subscribenow\Model\Subscription;
 use Magedelight\Subscribenow\Model\Source\PurchaseOption;
 use HookahShisha\SubscribeGraphQl\Model\Storage;
+use Magento\Bundle\Model\Product\Type;
 
 /**
  * Subscribe now
@@ -76,7 +77,7 @@ class Price
         }
 
         $discountRate = floatval($this->storage->get('subscribe_order_product_discount_rate'));
-        if ($discountRate) {
+        if ($discountRate && $bundleProduct->getTypeId() != Type::TYPE_CODE) {
             $productPrice = $result;
             $discount = $productPrice * $discountRate;
             return $productPrice - $discount;
