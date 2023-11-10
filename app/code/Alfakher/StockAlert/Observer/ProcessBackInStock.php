@@ -12,7 +12,7 @@ use Alfakher\StockAlert\Helper\Data;
 
 class ProcessBackInStock
 {
-    public const PAGE_SIZE = '50';
+    public const PAGE_SIZE = 50;
 
     /**
      * @var CollectionFactory
