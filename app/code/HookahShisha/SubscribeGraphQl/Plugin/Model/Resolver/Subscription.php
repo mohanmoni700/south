@@ -9,6 +9,7 @@ use Magedelight\Subscribenow\Model\Service\SubscriptionService;
 use Magedelight\Subscribenow\Model\Source\PurchaseOption;
 use Magedelight\Subscribenow\Model\Subscription as Subject;
 use Magento\Bundle\Model\Product\TypeFactory as BundleTypeFactory;
+use Magento\Bundle\Model\Selection;
 use Magento\Catalog\Model\Product;
 use Magento\Catalog\Model\ProductFactory;
 use Magento\Framework\App\Request\Http;
@@ -26,8 +27,10 @@ class Subscription
     private ProductFactory $productFactory;
     private Http $request;
     private BundleTypeFactory $bundleTypeFactory;
-    const BUNDLE = 'BUNDLE';
+    const BUNDLE = 'BUNDLE_PRODUCT';
+    const CACHE_OPTION = 'CACHE_PRODUCT';
     private SessionManagerInterface $sessionManager;
+    private Selection $selection;
 
     /**
      * @param JsonSerializer $jsonSerializer
@@ -39,6 +42,7 @@ class Subscription
         BundleTypeFactory       $bundleTypeFactory,
         ProductFactory          $productFactory,
         SessionManagerInterface $sessionManager,
+        Selection               $selection,
         DiscountService         $discountService
     ) {
         $this->jsonSerializer = $jsonSerializer;
@@ -48,6 +52,7 @@ class Subscription
         $this->request = $request;
         $this->bundleTypeFactory = $bundleTypeFactory;
         $this->sessionManager = $sessionManager;
+        $this->selection = $selection;
     }
 
     public function aroundIsSubscriptionProduct(
@@ -127,6 +132,9 @@ class Subscription
         $price = $finalPrice;
 
         $this->parentProduct = $this->getBundleProduct($product);
+        if (!$this->parentProduct) {
+            $this->parentProduct = $this->getParentProduct($product);
+        }
 
         if ($product->getPrice() != 0 && $subject->isSubscriptionProduct($product) || $this->parentProduct) {
             $price = $finalPrice - $optionPrice;
@@ -211,6 +219,8 @@ class Subscription
     }
 
     /**
+     *To get the bundle product
+     *
      * @param $product
      * @return bool|Product
      */
@@ -218,26 +228,56 @@ class Subscription
     {
         $bundleId = $product->getData('parent_product_id');
         $bundleKey = self::BUNDLE . $product->getId();
-        $bundle = $this->sessionManager->getData($bundleKey);
+        $sessionBundleId = $this->sessionManager->getData($bundleKey);
 
         //Get the parent product from the session
-        $bundleData = isset($bundle) ? $this->jsonSerializer->unserialize($bundle) : null;
-        if (isset($bundleData[$bundleKey]) && !isset($bundleId)) {
-            $bundleId = $bundleData[$bundleKey];
+        if (!isset($sessionBundleId) && isset($bundleId)) {
+            $this->sessionManager->setData(
+                $bundleKey,
+                $bundleId
+            );
+        } elseif (isset($sessionBundleId)) {
+            $bundleId = $sessionBundleId;
             foreach ($this->sessionManager->getData() as $key => $value) {
                 if (strpos($key, self::BUNDLE) === 0) {
                     $this->sessionManager->unsetData($key);
                 }
             }
-        } elseif (isset($bundleId)) {
-            $bundleData[$bundleKey] = $bundleId;
-            //Setting the data in the session
-            $this->sessionManager->setData(
-                $bundleKey,
-                $this->jsonSerializer->serialize($bundleData)
-            );
         }
 
+        return isset($bundleId) ? $this->productFactory->create()->load($bundleId) : false;
+    }
+
+    /**
+     *To get the bundle in case of cart
+     *
+     * @param $product
+     * @return false|Product
+     */
+    private function getParentProduct($product)
+    {
+        $optionIds = $product->getData('_cache_instance_used_selections_ids');
+        if ($product->getTypeId() == 'bundle' && isset($optionIds)) {
+            foreach ($optionIds as $optionId) {
+                $productOption = $this->selection->load($optionId);
+                $cacheKey = self::CACHE_OPTION . $productOption->getProductId();
+                $cacheData = $this->sessionManager->getData($cacheKey);
+                if (!isset($cacheData)) {
+                    $this->sessionManager->setData(
+                        $cacheKey,
+                        $product->getId()
+                    );
+                }
+            }
+        } elseif ($product->getTypeId() == 'simple') {
+            $cacheKey = self::CACHE_OPTION . $product->getId();
+            $bundleId = $this->sessionManager->getData($cacheKey);
+            foreach ($this->sessionManager->getData() as $key => $value) {
+                if (strpos($key, self::CACHE_OPTION) === 0) {
+                    $this->sessionManager->unsetData($key);
+                }
+            }
+        }
         return isset($bundleId) ? $this->productFactory->create()->load($bundleId) : false;
     }
 }
