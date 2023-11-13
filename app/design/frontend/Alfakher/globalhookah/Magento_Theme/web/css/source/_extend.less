@@ -176,19 +176,6 @@
                         .one {
                             gap: 0;
 
-                            .header-item {
-                                &.email {
-                                    &::before {
-                                        background-image: url('@{baseDir}images/email.svg');
-                                    }
-                                }
-                                &.phone {
-                                    &::before {
-                                        background-image: url('@{baseDir}images/phone.svg');
-                                    }
-                                }
-                            }
-
                             &:last-child {
                                 border: none;
                             }
@@ -210,16 +197,11 @@
                                     width: auto;
 
                                     a {
-                                        color: #fff;
-                                        margin-inline-start: 3rem;
+                                        color: @color-white;
 
                                         &:hover {
                                             text-decoration: underline;
                                         }
-                                    }
-
-                                    &::before {
-                                        background-image: url('@{baseDir}images/rewards.svg');
                                     }
                                 }
                             }

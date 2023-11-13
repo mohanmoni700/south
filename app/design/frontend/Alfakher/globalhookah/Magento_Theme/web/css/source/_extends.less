@@ -47,11 +47,13 @@
                     justify-content: space-between;
 
                     p {
+                        display: flex;
+                        align-items: center;
+                        gap: 1rem;
                         margin-bottom: 0;
 
                         a {
                             color: @color-white;
-                            margin-inline-start: 3rem;
 
                             &:hover {
                                 color: @color-white;
@@ -69,14 +71,6 @@
                             border: none;
                         }
 
-                        &::before {
-                            content: "";
-                            position: absolute;
-                            height: 2.4rem;
-                            top: -0.4rem;
-                            width: 2.4rem;
-                        }
-
                         .header-text {
                             font-weight: 500;
                             font-size: 1.4rem;
@@ -85,22 +79,7 @@
 
                     .one {
                         flex-direction: row !important;
-                        gap: 0;
-
-                        .header-item {
-                            &.email {
-                                &::before {
-                                    background-image: url('@{baseDir}images/email.svg');
-                                }
-                            }
-                            &.phone {
-                                padding-left: 1.5rem;
-
-                                &::before {
-                                    background-image: url('@{baseDir}images/phone.svg');
-                                }
-                            }
-                        }
+                        gap: 2rem;
 
                         &:last-child {
                             border: none;
@@ -138,14 +117,6 @@
 
                                 p {
                                     padding: 0;
-                                    
-                                    a {
-                                        margin-inline-start: 3rem;
-                                    }
-                                }
-
-                                &::before {
-                                    background-image: url('@{baseDir}images/rewards.svg');
                                 }
                             }
                         }
