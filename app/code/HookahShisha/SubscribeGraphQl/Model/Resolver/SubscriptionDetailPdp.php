@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace HookahShisha\SubscribeGraphQl\Model\Resolver;
 
+use Magedelight\Subscribenow\Model\Source\DiscountType;
+use Magento\Catalog\Model\Product\Type as ProductType;
 use Magento\Framework\GraphQl\Query\ResolverInterface;
 use Magento\Framework\GraphQl\Config\Element\Field;
 use Magento\Framework\GraphQl\Schema\Type\ResolveInfo;
@@ -12,7 +14,7 @@ use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magedelight\Subscribenow\Block\Catalog\Product\View\Subscription\BillingPeriod;
 use Magento\Catalog\Model\Product;
-
+use Magento\Bundle\Model\Product\Type;
 class SubscriptionDetailPdp implements ResolverInterface
 {
     /**
@@ -35,6 +37,8 @@ class SubscriptionDetailPdp implements ResolverInterface
      */
     private BillingPeriod $billingPeriod;
 
+    private Type $type;
+
     /**
      *
      * @param ProductRepositoryInterface $productRepository
@@ -46,12 +50,14 @@ class SubscriptionDetailPdp implements ResolverInterface
         ProductRepositoryInterface $productRepository,
         BillingPeriod $billingPeriod,
         FilterBuilder $filterBuilder,
+        Type $type,
         SearchCriteriaBuilder $searchCriteriaBuilder
     ) {
         $this->productRepository = $productRepository;
         $this->billingPeriod = $billingPeriod;
         $this->filterBuilder = $filterBuilder;
         $this->searchCriteriaBuilder = $searchCriteriaBuilder;
+        $this->type = $type;
     }
 
     /**
@@ -94,14 +100,17 @@ class SubscriptionDetailPdp implements ResolverInterface
             $finalProduct = $product;
         }
 
-        if ($finalProduct !== null) {
-            $billingPeriod = $this->getBillingPeriod($finalProduct);
+        if (isset($finalProduct)) {
 
+            //Number of child product with discount amount
+            $discountAmount = $this->getDiscountAmountByType($finalProduct);
+
+            $billingPeriod = $this->getBillingPeriod($finalProduct);
             return [
                 "is_subscription" => $finalProduct->getIsSubscription(),
                 "subscription_type" => $finalProduct->getSubscriptionType(),
                 "discount_type" => $finalProduct->getDiscountType(),
-                "discount_amount" => $finalProduct->getDiscountAmount(),
+                "discount_amount" => $discountAmount,
                 "initial_amount" => $finalProduct->getInitialAmount(),
                 "billing_period_type" => $finalProduct->getBillingPeriodType(),
                 "billing_max_cycles" => $finalProduct->getBillingMaxCycles(),
@@ -137,5 +146,20 @@ class SubscriptionDetailPdp implements ResolverInterface
             $billingPeriodData[$product->getBillingPeriod()]['label'] = $product->getAttributeText('billing_period');
         }
         return $billingPeriodData;
+    }
+
+    /**
+     * @param $product
+     * @return float|int
+     */
+    public function getDiscountAmountByType($product)
+    {
+        if ($product->getDiscountType() == DiscountType::FIXED) {
+            if ($product->getTypeId() == ProductType::TYPE_BUNDLE) {
+                $options = $this->type->getOptionsCollection($product);
+                return $options->count() * $product->getDiscountAmount();
+            }
+        }
+        return $product->getDiscountAmount();
     }
 }
