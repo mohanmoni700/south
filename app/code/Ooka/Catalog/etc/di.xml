@@ -5,4 +5,15 @@
     <preference for="Magento\GiftCard\Model\Catalog\Product\Type\Giftcard"
                 type="Ooka\Catalog\Model\Rewrite\Product\Type\GiftcardAmount" />
 
+    <type name="Magento\GiftCard\Model\GiftCardItemEmail">
+        <plugin name="get_order_item_id_giftcard_eamil_send" type="Ooka\Catalog\Plugin\GiftCardItemEmailPlugin" sortOrder="1"/>
+    </type>
+    <type name="Ooka\Catalog\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">thankyouemailLogger</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="system" xsi:type="object">Ooka\Catalog\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

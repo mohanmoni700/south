@@ -13,6 +13,7 @@ use Magento\Customer\Model\CustomerFactory;
 use Magento\Directory\Model\CurrencyFactory;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Framework\Event\ManagerInterface as EventManager;
+use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Framework\Registry;
@@ -27,19 +28,39 @@ use Magento\Sales\Model\OrderFactory;
 
 class ExtendGenerate extends Generate
 {
+    /**
+     * @var StoreManagerInterface
+     */
     private StoreManagerInterface $storeManager;
 
+    /**
+     * @var EventManager
+     */
     private EventManager $eventManager;
 
+    /**
+     * @var CartManagementInterface
+     */
     private CartManagementInterface $cartManagement;
 
+    /**
+     * @var OrderRepositoryInterface
+     */
     private OrderRepositoryInterface $orderRepository;
 
+    /**
+     * @var PaymentService
+     */
     private PaymentService $paymentService;
 
+    /**
+     * @var OrderFactory
+     */
     private OrderFactory $orderFactory;
 
     /**
+     * Generate the order for the subscription
+     *
      * @param StoreManagerInterface $storeManager
      * @param CustomerFactory $customer
      * @param CartManagementInterface $cartManagement
@@ -57,21 +78,21 @@ class ExtendGenerate extends Generate
      * @param OrderFactory $orderFactory
      */
     public function __construct(
-        StoreManagerInterface $storeManager,
-        CustomerFactory $customer,
-        CartManagementInterface $cartManagement,
-        CartRepositoryInterface $cartRepository,
-        OrderRepositoryInterface $orderRepository,
-        SearchCriteriaBuilder $searchCriteriaBuilder,
+        StoreManagerInterface      $storeManager,
+        CustomerFactory            $customer,
+        CartManagementInterface    $cartManagement,
+        CartRepositoryInterface    $cartRepository,
+        OrderRepositoryInterface   $orderRepository,
+        SearchCriteriaBuilder      $searchCriteriaBuilder,
         ProductRepositoryInterface $productRepository,
-        PaymentService $paymentService,
-        SubscribeHelper $subscribeHelper,
-        OrderSenderFactory $orderSenderFactory,
-        Registry $registry,
-        EventManager $eventManager,
-        CurrencyFactory $currencyFactory,
-        HistoryFactory $historyFactory,
-        OrderFactory $orderFactory
+        PaymentService             $paymentService,
+        SubscribeHelper            $subscribeHelper,
+        OrderSenderFactory         $orderSenderFactory,
+        Registry                   $registry,
+        EventManager               $eventManager,
+        CurrencyFactory            $currencyFactory,
+        HistoryFactory             $historyFactory,
+        OrderFactory               $orderFactory
     ) {
         parent::__construct(
             $storeManager,
@@ -98,6 +119,8 @@ class ExtendGenerate extends Generate
     }
 
     /**
+     * To get the Billing Address
+     *
      * @return mixed
      */
     public function getProfileBillingAddress()
@@ -117,6 +140,8 @@ class ExtendGenerate extends Generate
     }
 
     /**
+     * To get the Shipping Address
+     *
      * @return mixed
      */
     public function getProfileShippingAddress()
@@ -136,10 +161,12 @@ class ExtendGenerate extends Generate
     }
 
     /**
+     * Generated the order
+     *
      * @return mixed
      * @throws LocalizedException
      * @throws NoSuchEntityException
-     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     * @throws CouldNotSaveException
      */
     public function generateOrder()
     {
@@ -195,6 +222,9 @@ class ExtendGenerate extends Generate
             $order = $this->cartManagement->submit($cart);
             $_order = $this->orderRepository->get($order->getId());
             $_order->setCustomerIsGuest(false);
+
+            //Update the shipping price to 0.
+            $_order = $this->updateShippingMethod($_order);
             $this->orderRepository->save($_order);
 
             if (null == $order) {
@@ -203,10 +233,10 @@ class ExtendGenerate extends Generate
 
             /** Add Order Comment With Profile Id */
             if ($order->getEntityId()) {
-                $profile_id = '<a href="'.$this->storeManager->getStore()->getBaseUrl().
-                    'subscribenow/account/summary/id/'.$this->getProfile()->getSubscriptionId().'/">' .
-                    $this->getProfile()->getProfileId().'</a>';
-                $comment = __("Order has been placed from Subscription profile ".$profile_id.".");
+                $profile_id = '<a href="' . $this->storeManager->getStore()->getBaseUrl() .
+                    'subscribenow/account/summary/id/' . $this->getProfile()->getSubscriptionId() . '/">' .
+                    $this->getProfile()->getProfileId() . '</a>';
+                $comment = __("Order has been placed from Subscription profile " . $profile_id . ".");
                 $status = $order->getStatus();
                 $history = $this->historyFactory->create();
                 $history->setComment($comment);
@@ -231,11 +261,48 @@ class ExtendGenerate extends Generate
     }
 
     /**
+     * To get Order by Id
+     *
      * @return Order
      */
     public function getOrderById()
     {
         $incrementId = $this->getProfile()->getInitialOrderId();
         return $this->orderFactory->create()->loadByIncrementId($incrementId);
+    }
+
+    /**
+     * To update the shipping method
+     *
+     * @param $order
+     * @return mixed
+     */
+    public function updateShippingMethod($order)
+    {
+        $order->setShippingDescription($order->getShippingDescription())
+            ->setData('shipping_method', $order->getShippingMethod())
+            ->setShippingAmount(0.00)
+            ->setBaseShippingAmount(0.00)
+            ->setShippingInclTax(0.00)
+            ->setBaseShippingInclTax(0.00)
+            ->setShippingTaxAmount(0.00)
+            ->setBaseShippingTaxAmount(0.00);
+
+        $grandTotal = $order->getSubtotalInclTax()
+            + $order->getShippingInclTax()
+            + $order->getTaxAmount()
+            - abs($order->getDiscountAmount())
+            - abs($order->getGiftCardsAmount())
+            - abs($order->getCustomerBalanceAmount());
+        $baseGrandTotal = $order->getBaseSubtotalInclTax()
+            + $order->getBaseShippingInclTax()
+            + $order->getBaseTaxAmount()
+            - abs($order->getBaseDiscountAmount())
+            - abs($order->getBaseGiftCardsAmount())
+            - abs($order->getBaseCustomerBalanceAmount());
+
+        $order->setGrandTotal($grandTotal)
+            ->setBaseGrandTotal($baseGrandTotal);
+        return $order;
     }
 }
