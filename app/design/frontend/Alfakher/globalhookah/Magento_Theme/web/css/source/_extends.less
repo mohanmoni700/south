@@ -46,6 +46,10 @@
                     align-items: center;
                     justify-content: space-between;
 
+                    figure {
+                        height: 2.4rem;
+                    }
+
                     p {
                         display: flex;
                         align-items: center;
@@ -79,7 +83,8 @@
 
                     .one {
                         flex-direction: row !important;
-                        gap: 2rem;
+                        align-items: center;
+                        gap: 1rem;
 
                         &:last-child {
                             border: none;
@@ -88,13 +93,14 @@
 
                     .two {
                         flex-direction: row !important;
-                        gap: 2rem;
+                        align-items: center;
+                        gap: 0;
 
-                        > div {
-                            border-right: 1px solid @color-white;
+                        > figure {
+                            border-right: 1px solid @color-white !important;
 
-                            &:last-child {
-                                border: none;
+                            &:last-of-type {
+                                border: none !important;
                             }
 
                             p {
