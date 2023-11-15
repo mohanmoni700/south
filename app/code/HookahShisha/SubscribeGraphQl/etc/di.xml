@@ -52,6 +52,11 @@
                 sortOrder="10"
         />
     </type>
+    <type name="Magedelight\Subscribenow\Plugin\Magento\Bundle\Model\Product\Price">
+        <plugin name="subscribe_order_bundel_product_set_discount"
+                type="HookahShisha\SubscribeGraphQl\Plugin\Magento\Bundle\Model\Product\Price"
+                sortOrder="10" />
+    </type>
     <type name="Magedelight\Subscribenow\Block\Adminhtml\ProductSubscribers\View\Tab\Grid\RelatedOrders">
         <plugin name="set_grand_total_in_grid"
                 type="HookahShisha\SubscribeGraphQl\Plugin\Block\Adminhtml\ProductSubscribers\View\Tab\Grid\RelatedOrders" />
@@ -80,17 +85,4 @@
     <!--Subscription shipping address and method fix-->
     <preference for="Magedelight\Subscribenow\Model\Service\Order\Generate"
                 type="HookahShisha\SubscribeGraphQl\Model\Service\Order\ExtendGenerate"/>
-
-    <!--Disabling the plugin and re-using it-->
-    <type name="Magento\Bundle\Model\Product\Price">
-        <plugin name="md_subscribenow_bundle_recurrence_price" disabled="true"/>
-    </type>
-    <type name="Magento\Bundle\Model\Product\Price">
-        <plugin name="bundle_recurrence_price"
-                type="HookahShisha\SubscribeGraphQl\Plugin\Magento\Bundle\Model\Product\Price"
-                sortOrder="1"/>
-    </type>
-    <!--End of Disabling the plugin and re-using it-->
-
-
 </config>
