@@ -1,0 +1,117 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// phpcs:disable Generic.Files.LineLength.TooLong
+
+/** @var \Magento\Customer\Block\Form\Login $block */
+?>
+<?php $checkmigratedcustomerurl = $block->getUrl('changepassword/ajax/checkmigratedcustomer'); ?>
+<?php $loginUrl=$block->getUrl('customer/account/loginPost'); ?>
+<?php
+$helper = $this->helper('HookahShisha\ChangePassword\Helper\Data');
+?>
+<?php $getResetHeaderMessageConfig=$helper->getResetHeaderMessageConfig();?>
+
+<div class="block block-customer-login">
+    <div class="block-title">
+        <div class="separator"><span class="user_icon"></span> </div>
+        <strong id="block-customer-login-heading" role="heading" aria-level="2"><?= $block->escapeHtml(__('Registered Customer')) ?></strong>
+    </div>
+    <div class="block-content" aria-labelledby="block-customer-login-heading" id="customer-login">
+        <div class="response-msg"></div>
+        <div id="migrate-customer-header-text"></div>
+        <form class="form form-login"
+        id="login-form" method="post" 
+        data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>" 
+        data-mage-init='{"validation":{}}' >
+            <?= $block->getBlockHtml('formkey') ?>
+            <fieldset class="fieldset login" data-hasrequired="<?= $block->escapeHtml(__('* Required Fields')) ?>">
+                <?php /*<div class="field note"><?= //$block->escapeHtml(__('If you have an account, sign in with your email address.')) ?></div> */?>
+                <div class="field email required">
+                    <label class="label" for="email"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
+                    <div class="control">
+                        <input name="login[username]" value="<?= $block->escapeHtmlAttr($block->getUsername()) ?>"
+                            <?php if ($block->isAutocompleteDisabled()): ?> autocomplete="off"<?php endif; ?>
+                               id="email" type="email" class="input-text"
+                               placeholder="Email"
+                               title="<?= $block->escapeHtmlAttr(__('Email')) ?>"
+                               data-validate="{required:true, 'validate-email':true}" required>
+                    </div>
+                </div>
+                <div class="field password required">
+                    <div class="lable_n_link">
+                        <label for="pass" class="label"><span><?= $block->escapeHtml(__('Password*')) ?></span></label>
+                        <div class="actions-toolbar">
+                            <div class="secondary"><a class="action remind" href="<?= $block->escapeUrl($block->getForgotPasswordUrl()) ?>"><span><?= $block->escapeHtml(__('Forgot Your Password?')) ?></span></a></div>
+                        </div>
+                    </div>
+                    <div class="control">
+                        <input name="login[password]" type="password"
+                            <?php if ($block->isAutocompleteDisabled()): ?> autocomplete="off"<?php endif; ?>
+                               class="input-text" id="pass"
+                               placeholder="Password"
+                               title="<?= $block->escapeHtmlAttr(__('Password')) ?>"
+                               data-validate="{required:true}" required>
+                    </div>
+                </div>
+                <!-- bv-hd migrate customer customization -->
+                <input type="hidden" name="login[migrate_customer]" id="migrate_customer" value="0" data-validate="{required:false}">
+                <!-- bv-hd migrate customer customization -->
+                <?php /*<div class="field choice" data-bind="scope: 'showPassword'">
+                    <!-- ko template: getTemplate() --><!-- /ko -->
+                </div> */ ?> 
+                <?= $block->getChildHtml('form_additional_info') ?>
+                <div class="actions-toolbar">
+                    <div class="primary"><button type="submit" class="action login primary" name="send" id="send2" disabled="disabled"><span><?= $block->escapeHtml(__('Sign In')) ?></span></button></div>
+                    <?php /* <div class="secondary"><a class="action remind" href="<?= $block->escapeUrl($block->getForgotPasswordUrl()) ?>"><span><?= $block->escapeHtml(__('Forgot Your Password?')) ?></span></a></div> */?>
+                </div>
+            </fieldset>
+            <div class="register_link"> Don't have an account? <a href="<?= $block->escapeUrl($block->getUrl("customer/account/create"));?>"><?= $block->escapeHtml(__('Register Here')) ?> </a></div>
+        </form>
+    </div>
+
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Customer/js/block-submit-on-send": {
+                    "formId": "login-form"
+                },
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "showPassword": {
+                            "component": "Magento_Customer/js/show-password",
+                            "passwordSelector": "#pass"
+                        }
+                    }
+                }
+            }
+        } 
+    </script>
+    <!-- bv_vv; 18-02-2022; check for migrated customer; start-->
+    <script type="text/x-magento-init">
+    {
+        "*": {
+            "HookahShisha_ChangePassword/js/checkmigratedcustomer": {
+                "email": "#email",
+                "passwordSelector": "#customer-login .password",
+                "checkmigratedcustomerurl": "<?= $block->escapeUrl($checkmigratedcustomerurl); ?>",
+                "submitButton": "#send2",
+                "migratedcustomer": "#migrate_customer",
+                "loginUrl":"<?= $block->escapeUrl($loginUrl); ?>",
+                "getResetHeaderMessageConfig":"<?= $block->escapeHtml($getResetHeaderMessageConfig) ?>"
+            }
+        }
+    }
+    </script>
+    <!-- bv_vv; 18-02-2022; check for migrated customer; end-->
+    <script type="text/x-magento-init">
+    {
+        "#login-form": {
+        "validation": {}
+        }
+    }
+    </script>
+</div>

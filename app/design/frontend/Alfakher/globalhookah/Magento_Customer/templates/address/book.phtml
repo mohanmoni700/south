@@ -1,11 +1,15 @@
 <?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
 /** @var \Magento\Customer\Block\Address\Book $block */
-// phpcs:disable Magento2.Files.LineLength, Generic.Files.LineLength
 ?>
 <div class="block block-addresses-default">
-    <div class="block-title h1"><strong><?= $block->escapeHtml(__('Manage Addresses')) ?></strong></div>
+    <div class="block-title"><strong><?= $block->escapeHtml(__('Manage Addresses')) ?></strong></div>
     <div class="block-content">
-        <?php if ($_pAddsses = $block->getDefaultBilling()): ?>
+        <?php if ($_pAddsses = $block->getDefaultBilling()) : ?>
             <div class="box box-address-billing">
                 <strong class="box-title">
                     <span><?= $block->escapeHtml(__('Default Billing Address')) ?></span>
@@ -15,15 +19,24 @@
                         <address>
                             <?= $block->getAddressHtml($block->getAddressById($_pAddsses)) ?>
                         </address>
-                    </div>
-                    <div class="box-actions">
-                        <a class="action edit" href="<?= $block->escapeUrl($block->getAddressEditUrl($_pAddsses)) ?>">
-                            <span><?= $block->escapeHtml(__('Edit')) ?></span>
-                        </a>
+                        <div class ="additional-addresses">
+                        <div class = "customer_actions manage_default">
+                                <form>
+                                    <a title="<?= $escaper->escapeHtml(__('Set Default')) ?>"
+                                    class="action address default-billing"
+                                    href="<?= $this->getUrl('customer/address/setdefault',
+                                    ['_secure' => true, 'shipId' => $_pAddsses]); ?>"
+                                    data-address="<?= $escaper->escapeHtmlAttr($_pAddsses) ?>"
+                                    >
+                                        <span><?= $block->escapeHtml(__('Make Default Shipping')) ?></span>
+                                    </a>
+                                </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        <?php else: ?>
+        <?php else : ?>
             <div class="box box-billing-address">
                 <strong class="box-title"><span><?= $block->escapeHtml(__('Default Billing Address')) ?></span></strong>
                 <div class="box-content">
@@ -32,7 +45,7 @@
             </div>
         <?php endif ?>
 
-        <?php if ($_pAddsses = $block->getDefaultShipping()): ?>
+        <?php if ($_pAddsses = $block->getDefaultShipping()) : ?>
             <div class="box box-address-shipping">
                 <strong class="box-title">
                     <span><?= $block->escapeHtml(__('Default Shipping Address')) ?></span>
@@ -42,17 +55,29 @@
                     <address>
                         <?= $block->getAddressHtml($block->getAddressById($_pAddsses)) ?>
                     </address>
-                </div>
-                <div class="box-actions">
-                    <a class="action edit" href="<?= $block->escapeUrl($block->getAddressEditUrl($_pAddsses)) ?>">
-                        <span><?= $block->escapeHtml(__('Edit')) ?></span>
-                    </a>
+                    <div class ="additional-addresses">
+                        <div class = "customer_actions manage_default">
+                                <form>
+                                    <a class="action address default-shipping"
+                                        href=
+                                        "<?= $this->getUrl('customer/address/setdefault',
+                                        ['_secure' => true, 'billId' => $_pAddsses]); ?>"
+                                        data-address="<?= $escaper->escapeHtmlAttr($_pAddsses) ?>"
+                                    >
+                                     <span><?= $block->escapeHtml(__('Make Default Billing')) ?></span>
+                                    </a>
+                                </form>
+                        </div>
+                    </div>
+                   
                 </div>
             </div>
             </div>
-        <?php else: ?>
+        <?php else : ?>
             <div class="box box-shipping-address">
-                <strong class="box-title"><span><?= $block->escapeHtml(__('Default Shipping Address')) ?></span></strong>
+                <strong class="box-title">
+                    <span><?= $block->escapeHtml(__('Default Shipping Address')) ?>
+                </span></strong>
                 <div class="box-content">
                     <p><?= $block->escapeHtml(__('You have no default shipping address in your address book.')) ?></p>
                 </div>
