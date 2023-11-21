@@ -52,7 +52,7 @@ class UpdateOrderStatus implements DataPatchInterface
         $data = [];
         $states = [
             'pending_international_order' => [
-                'pending_international_order' => __('Pending International Order'),
+                'label' => __('Pending International Order'),
                 'state' => 'on_hold',
                 'statuses' => ['pending_international_order' => ['default' => '1']],
                 'visible_on_front' => true,
