@@ -1,0 +1,101 @@
+diff --git a/app/code/Magedelight/Subscribenow/Model/Subscription.php b/app/code/Magedelight/Subscribenow/Model/Subscription.php
+index 9375bc5ae..885c54917 100644
+--- a/app/code/Magedelight/Subscribenow/Model/Subscription.php
++++ b/app/code/Magedelight/Subscribenow/Model/Subscription.php
+@@ -12,6 +12,7 @@
+ 
+ namespace Magedelight\Subscribenow\Model;
+ 
++use HookahShisha\SubscribeGraphQl\Model\Storage;
+ use Magedelight\Subscribenow\Helper\Data;
+ use Magedelight\Subscribenow\Model\Service\SubscriptionService;
+ use Magedelight\Subscribenow\Model\Service\DiscountService;
+@@ -40,6 +41,7 @@ class Subscription
+     const END_TYPE_INFINITE = 'md_end_infinite';
+     const END_TYPE_DATE = 'md_end_date';
+ 
++    public const SUBSCRIPTION = 'SUBSCRIPTION_';
+     /**
+      * @var Data
+      */
+@@ -96,6 +98,11 @@ class Subscription
+      */
+     private $dateTime;
+ 
++    /**
++     * @var Storage
++     */
++    private Storage $storage;
++
+     /**
+      * Subscription constructor
+      *
+@@ -111,16 +118,17 @@ class Subscription
+      * @param DateTime $dateTime
+      */
+     public function __construct(
+-        Data $helper,
+-        Json $serialize,
+-        SubscriptionService $service,
+-        Http $request,
++        Data                    $helper,
++        Json                    $serialize,
++        SubscriptionService     $service,
++        Http                    $request,
+         CartRepositoryInterface $quoteRepository,
+-        PriceHelper $priceHelper,
+-        BundleTypeFactory $bundleTypeFactory,
+-        DiscountService $discountService,
+-        Registry $registry,
+-        DateTime $dateTime
++        PriceHelper             $priceHelper,
++        BundleTypeFactory       $bundleTypeFactory,
++        DiscountService         $discountService,
++        Storage                 $storage,
++        Registry                $registry,
++        DateTime                $dateTime
+     ) {
+         $this->helper = $helper;
+         $this->serialize = $serialize;
+@@ -132,6 +140,7 @@ class Subscription
+         $this->discountService = $discountService;
+         $this->registry = $registry;
+         $this->dateTime = $dateTime;
++        $this->storage = $storage;
+     }
+ 
+     /**
+@@ -154,6 +163,23 @@ class Subscription
+      * @return float Price
+      */
+     public function getSubscriptionDiscount($finalPrice, $product, $convert = false)
++    {
++        $cacheKey = self::SUBSCRIPTION . md5($finalPrice . $convert . $this->serialize->serialize($product));
++        if (!$this->storage->get($cacheKey)) {
++            $value = $this->calculateSubscriptionDiscount($finalPrice, $product, $convert);
++            $this->storage->set($cacheKey, $value);
++        }
++        return $this->storage->get($cacheKey);
++    }
++
++    /**
++     * To calculate the subscription discount
++     * @param $finalPrice
++     * @param $product
++     * @param $convert
++     * @return int|mixed
++     */
++    private function calculateSubscriptionDiscount($finalPrice, $product, $convert = false)
+     {
+         if (!$this->helper->isModuleEnable()) {
+             return $finalPrice;
+@@ -173,7 +199,8 @@ class Subscription
+         if ($this->isSubscriptionProduct($product)) {
+             $price = $finalPrice - $optionPrice;
+             $type = $this->getDiscountType($product);
+-            $discount = ($convert) ? $this->service->getConvertedPrice($this->getDiscountAmount($product)) : $this->getDiscountAmount($product);
++            $discount = ($convert) ? $this->service->getConvertedPrice($this->getDiscountAmount($product)) :
++                $this->getDiscountAmount($product);
+ 
+             $price = $this->discountService->calculateDiscountByValue($price, $type, $discount);
+             $price += $optionPrice;
