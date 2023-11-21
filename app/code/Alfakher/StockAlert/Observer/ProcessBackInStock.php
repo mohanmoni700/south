@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Alfakher\StockAlert\Observer;
 
 use Alfakher\StockAlert\Model\ResourceModel\ProductAlertStockGuestUser\CollectionFactory as CollectionFactory;
+use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\CatalogInventory\Api\StockRegistryInterface as stockRegistry;
 use Magento\Framework\Event\Observer;
 use Alfakher\StockAlert\Logger\Logger;
@@ -35,21 +36,29 @@ class ProcessBackInStock
     private Data $helperData;
 
     /**
+     * @var ProductRepositoryInterface
+     */
+    private ProductRepositoryInterface $productRepository;
+
+    /**
      * @param CollectionFactory $stockAlertCollection
      * @param stockRegistry $stockRegistry
      * @param Logger $logger
      * @param Data $helperData
+     * @param ProductRepositoryInterface $productRepository
      */
     public function __construct(
         CollectionFactory $stockAlertCollection,
         stockRegistry $stockRegistry,
         Logger $logger,
-        Data $helperData
+        Data $helperData,
+        ProductRepositoryInterface $productRepository
     ) {
         $this->stockAlertCollection = $stockAlertCollection;
         $this->stockRegistry = $stockRegistry;
         $this->logger = $logger;
         $this->helperData = $helperData;
+        $this->productRepository = $productRepository;
     }
 
     /**
@@ -81,12 +90,17 @@ class ProcessBackInStock
                 $this->logger->info("Product Id back in stock", [
                     'product_id' => $productId
                 ]);
+
+                $storeId = $stockAlertProduct->getData('store_id');
+                //Loading product with store id
+                $product = $this->productRepository->getById($productId, false, $storeId);
+
                 if ($this->productIsBackInStock($productId)) {
                     $this->helperData->sendBackInStockEmail(
                         $stockAlertProduct->getData('email_id'),
-                        (int)$stockAlertProduct->getData('product_id'),
+                        $product,
                         $stockAlertProduct->getData('name'),
-                        $stockAlertProduct->getData('store_id')
+                        $storeId
                     );
                     $stockAlertProduct->setData('send_date', date('Y-m-d H:i:s'));
                     $stockAlertProduct->setData('send_count', (int)$stockAlertProduct->getData('send_count') + 1);

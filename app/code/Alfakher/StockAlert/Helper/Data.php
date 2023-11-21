@@ -11,10 +11,10 @@ use Magento\Framework\Exception\MailException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\RequestInterface;
-use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\Translate\Inline\StateInterface as TranslateStateInterface;
 use Magento\Framework\Mail\Template\TransportBuilder as TransportBuilder;
 use Alfakher\StockAlert\Logger\Logger;
+use Magento\Store\Model\App\Emulation;
 
 class Data
 {
@@ -27,11 +27,6 @@ class Data
      * @var StoreManagerInterface
      */
     private StoreManagerInterface $storeManager;
-
-    /**
-     * @var ProductRepositoryInterface
-     */
-    private ProductRepositoryInterface $productRepository;
 
     /**
      * @var TranslateStateInterface
@@ -54,30 +49,35 @@ class Data
     private EmailData $emailDataHelper;
 
     /**
+     * @var Emulation
+     */
+    private Emulation $emulation;
+
+    /**
      * @param StoreManagerInterface $storeManager
      * @param RequestInterface $request
-     * @param ProductRepositoryInterface $productRepository
      * @param TranslateStateInterface $inlineTranslation
      * @param TransportBuilder $transportBuilder
      * @param Logger $logger
      * @param EmailData $emailDataHelper
+     * @param Emulation $emulation
      */
     public function __construct(
         StoreManagerInterface $storeManager,
         RequestInterface $request,
-        ProductRepositoryInterface $productRepository,
         TranslateStateInterface $inlineTranslation,
         TransportBuilder $transportBuilder,
         Logger $logger,
-        EmailData $emailDataHelper
+        EmailData $emailDataHelper,
+        Emulation $emulation
     ) {
         $this->storeManager = $storeManager;
         $this->request = $request;
-        $this->productRepository = $productRepository;
         $this->inlineTranslation = $inlineTranslation;
         $this->transportBuilder = $transportBuilder;
         $this->logger = $logger;
         $this->emailDataHelper = $emailDataHelper;
+        $this->emulation = $emulation;
     }
 
     /**
@@ -116,16 +116,17 @@ class Data
      * Send back in stock email
      *
      * @param string $email
-     * @param int $productId
+     * @param $product
      * @param string $customerName
      * @param $storeId
      * @return $this
      * @throws NoSuchEntityException
      */
-    public function sendBackInStockEmail($email, int $productId, $customerName, $storeId)
+    public function sendBackInStockEmail($email, $product, $customerName, $storeId)
     {
         try {
-            $product = $this->productRepository->getById($productId);
+            $this->emulation->startEnvironmentEmulation($storeId);
+
             $store = $this->storeManager->getStore($storeId);
             $alertGrid = $this->emailDataHelper->getAlertGrid($store, $product);
 
@@ -165,16 +166,14 @@ class Data
                 ->getTransport();
 
             $transport->sendMessage();
+            $this->emulation->stopEnvironmentEmulation();
             $this->logger->info("Email sent successfully");
 
             $this->inlineTranslation->resume();
             return $this;
         } catch (NoSuchEntityException $e) {
-            $this->logger->info("Error in product", [
-                'product_id' => $productId
-            ]);
-            throw new NoSuchEntityException(__("Requested product does not exist - %1", $productId));
-        } catch (MailException|LocalizedException $e) {
+            throw new NoSuchEntityException(__("Requested product does not exist - %1"));
+        } catch (MailException | LocalizedException $e) {
             $this->logger->info("Error in email data", [
                 'error' => $e->getMessage()
             ]);
