@@ -6,13 +6,15 @@
 
 /** @var $block \Magento\ProductAlert\Block\Email\Stock */
 ?>
-<?php if ($_products = $block->getProducts()) : ?>
+<?php if ($_products = $block->getProducts()): ?>
     <p><?= $block->escapeHtml(__('In stock alert! We wanted you to know that these products are now available:')) ?></p>
     <table>
-        <?php foreach ($_products as $_product) : ?>
+        <?php foreach ($_products as $_product): ?>
             <tr>
                 <td class="col photo">
-                    <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>" title="<?= $block->escapeHtml($_product->getName()) ?>" class="product photo">
+                    <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>"
+                       title="<?= $block->escapeHtml($_product->getName()) ?>"
+                       class="product photo">
                         <img src="<?= $block->getImageUrl($_product, 'product_thumbnail_image')?>"
                              alt="<?= $_product->getName() ?>" />
                     </a>
@@ -20,10 +22,11 @@
                 <td class="col item">
                     <p>
                         <strong class="product name">
-                            <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>"><?= $block->escapeHtml($_product->getName()) ?></a>
+                            <a href="<?= $block->escapeUrl($_product->getProductUrl()) ?>">
+                                <?= $block->escapeHtml($_product->getName()) ?></a>
                         </strong>
                     </p>
-                    <?php if ($shortDescription = $block->getFilteredContent($_product->getShortDescription())) : ?>
+                    <?php if ($shortDescription = $block->getFilteredContent($_product->getShortDescription())): ?>
                         <p><small><?= /* @noEscape */  $shortDescription ?></small></p>
                     <?php endif; ?>
                     <?=
@@ -36,10 +39,15 @@
                         ]
                     );
                     ?>
-                    <p><small><a href="<?= $block->escapeUrl($block->getProductUnsubscribeUrl($_product->getId())) ?>"><?= $block->escapeHtml(__('Click here to stop alerts for this product.')) ?></a></small></p>
+                    <p><small><a href="<?= $block->escapeUrl($block->getProductUnsubscribeUrl($_product->getId())) ?>">
+                                <?= $block->escapeHtml(__('Click here to stop alerts for this product.')) ?>
+                            </a>
+                        </small>
+                    </p>
                 </td>
             </tr>
         <?php endforeach; ?>
     </table>
-    <p><a href="<?= $block->escapeUrl($block->getUnsubscribeUrl()) ?>"><?= $block->escapeHtml(__('Unsubscribe from all stock alerts')) ?></a></p>
+    <p><a href="<?= $block->escapeUrl($block->getUnsubscribeUrl()) ?>">
+            <?= $block->escapeHtml(__('Unsubscribe from all stock alerts')) ?></a></p>
 <?php endif; ?>
