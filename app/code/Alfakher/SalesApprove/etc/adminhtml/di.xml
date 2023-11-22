@@ -12,4 +12,15 @@
 	</type>
 
  	<preference for="Magento\Sales\Block\Adminhtml\Order\Create" type="Alfakher\SalesApprove\Block\Adminhtml\Order\Create"/>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <plugin name="signifyd_guarantee_filter_sales_order_grid"
+                type="Alfakher\SalesApprove\Plugin\AddDataToOrdersGrid"
+                sortOrder="10"
+                disabled="false"/>
+    </type>
+
+    <type name="Magento\Sales\Model\ResourceModel\Order\Grid\Collection">
+        <plugin name="signifyd_connect_order_grid_collection" type="Alfakher\SalesApprove\Plugin\Order\Grid\Collection" />
+    </type>
 </config>

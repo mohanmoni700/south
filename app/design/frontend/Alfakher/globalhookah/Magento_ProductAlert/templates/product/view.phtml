@@ -1,0 +1,163 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php $_helperB2b = $this->helper(Alfakher\Productpageb2b\Helper\Data::class); ?>
+<?php /* @var $block \Magento\ProductAlert\Block\Product\View */?>
+<?php
+$productId = $block->getCurrentProductId();
+$_product = $block->getProduct();
+$notifyText = __('NOTIFY WHEN BACK IN STOCK');
+?>
+<div class="product alert <?= $block->getHtmlClass() ?>">
+<?php if ($_helperB2b->isCustomerLoggedIn()): ?>
+<div class="actions">
+<?php if (isset($_product->isSaleable)):?>
+                    <div class = "Product_grouped_totals">
+                        <span>Total</span>
+                        <span id = "Product_price_grouped">$0.00</span>
+                    </div>
+                    <?php endif; ?>
+    <div class = "product_notify_me">
+        <a href="<?= $block->escapeUrl($block->getSignupUrl()) ?>"
+        title="<?= $block->escapeHtml($notifyText) ?>" class="action alert">
+        <span><?= $block->escapeHtml($notifyText) ?></span>
+        </a>
+    </div>
+</div>
+<?php else: ?>
+    <div class="actions">
+    <?php if (isset($_product->isSaleable)):?>
+    <div class = "Product_grouped_totals">
+        <span>Total</span>
+        <span id = "Product_price_grouped">$0.00</span>
+    </div>
+    <?php endif; ?>
+    <div class = "product_notify_me">
+    <a
+        title="<?= $block->escapeHtml($notifyText) ?>" class="action alert notifyme_button">
+        <span><?= $block->escapeHtml($notifyText) ?></span>
+</a>
+    </div>
+</div>
+<?php endif; ?>
+</div>
+<div id="modal" style = "display:none;">
+    <div class="modal-body-content">
+    <form name="login_form"
+    action="<?= $block->getUrl("outofstock/productalert/save/", ['product_id' => $productId])?>"
+    method="post" role="form">
+            <div class="modal-body">
+                <div class="form-group">
+                      <input type="text" class="form-control" name="name" id="Full Name"
+                       placeholder="Full Name"  data-validate='{"required":true}' required>
+                </div>
+
+                <div class="form-group">
+                      <input type="email" class="form-control" name="email" id="email"
+                       placeholder="Email Id" data-validate='{"required":true, "validate-email":true}' required>
+                </div>
+            </div>
+            <div class="modal-notify-buttons">
+                <button class="action-secondary-cancel" type = "button">Cancel</button>
+                <button class="action-secondary" type = "submit">NOTIFY ME</button>
+        </div>
+    </form>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    require([
+        "jquery",
+        "Magento_Ui/js/modal/modal",
+    ],function($, modal) {
+
+        var options = {
+            type: 'popup',
+            responsive: true,
+            title: 'Remind me when the product is back In Stock!',
+            modalClass: 'small-modal',
+        };
+
+        var popup = modal(options, $('#modal'));
+        $(".notifyme_button").click(function() {
+            $('#modal').modal('openModal');
+        });
+        $(".action-secondary-cancel").click(function() {
+            $('#modal').modal('closeModal');
+        });
+        $(document).ready(function() {
+            var dataForm = $('#login_form');
+            dataForm.mage('validation', {});
+
+            dataForm.submit(function(event) {
+                var isValid = dataForm.valid();
+                if (!isValid) {
+                    event.preventDefault(); // Prevent form submission if validation fails
+                }
+            });
+        });
+        var submitButton = $('.action-secondary');
+                var regex = /^[a-zA-Z]+$/;
+        var emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+
+        $('input[type="text"], input[type="email"]').on('input', function() {
+            var inputId = $(this).attr("type");
+            var inputValue = $(this).val();
+
+            if (inputId === "text") {
+                if (regex.test(inputValue)) {
+                    removeErrorMessage($(this));
+                } else {
+                    displayErrorMessage($(this), "Only alphabetic characters are allowed.");
+                }
+            } else if (inputId === "email") {
+                if (emailRegex.test(inputValue)) {
+                    removeErrorMessage($(this));
+                } else {
+                    displayErrorMessage($(this), "Invalid email format.");
+                }
+            }
+var nameError = $('.error-message').text();
+            var nameIsValid = regex.test($('input[type="text"]').val());
+            var emailIsValid = emailRegex.test($('input[type="email"]').val());
+            if (!nameError) {
+                submitButton.prop('disabled', false);
+            } else {
+                submitButton.prop('disabled', true);
+            }
+        });
+
+        function displayErrorMessage(inputElement, message) {
+            var errorContainer = inputElement.next('.error-message');
+            if (!errorContainer.length) {
+                var errorMessage = $('<div class="error-message">' + message + '</div>');
+                inputElement.after(errorMessage);
+            }
+        }
+
+        function removeErrorMessage(inputElement) {
+            var errorContainer = inputElement.next('.error-message');
+            if (errorContainer.length) {
+                errorContainer.remove();
+            }
+        }
+
+$('#login_form').submit(function(e) {
+                if (!regex.test(inputField.val())) {
+                    e.preventDefault(); // Prevent form submission if input is invalid
+                }
+                var emailInput = $('input[type="email"]').val();
+                var emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+
+                if (!emailRegex.test(emailInput)) {
+                    e.preventDefault();
+                }
+            });
+    });
+</script>
+
+

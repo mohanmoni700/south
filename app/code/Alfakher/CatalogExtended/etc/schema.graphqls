@@ -1,0 +1,7 @@
+interface ProductInterface {
+    primary_category: BreadCrumbDefaultCategory @doc(description: "Primary Category")  @resolver(class: "Alfakher\\CatalogExtended\\Model\\Resolver\\PrimaryCategory")
+}
+type BreadCrumbDefaultCategory {
+    name: String
+    url_path: String
+}

@@ -1,0 +1,35 @@
+type Mutation {
+veratadAgeVerification(input: VeratadAgeVerificationInput!): VeratadAgeVerificationOutput @resolver(class: "\\Corra\\Veratad\\Model\\Resolver\\AgeVerification")
+}
+
+input VeratadAgeVerificationInput {
+firstname: String!
+lastname: String!
+street: String!
+city: String
+region: String
+postcode: String!
+telephone: String
+email: String
+age: String
+dob: String!
+}
+
+type VeratadAgeVerificationOutput {
+action: Boolean @doc(description: "Response Action PASS/ FAIL")
+detail : String @doc(description: "Information about success / failure message")
+}
+
+type Customer {
+veratad_info: VeratadCustomerInfo @resolver(class: "\\Corra\\Veratad\\Model\\Resolver\\VeratadCustomerDetail") @doc(description: "The contents of the customer's Veratad Info")
+}
+
+type VeratadCustomerInfo {
+age_verification_override: Boolean @doc(description: "Indicates whether the customer is manually age verification Override or not")
+is_ageverified: Boolean @doc(description: "Indicates whether the customer is ageverified or not")
+}
+
+input PlaceOrderInput {
+veratad_dob: String
+is_ageverified: Boolean @doc(description: "Indicates whether the customer is ageverified or not")
+}
