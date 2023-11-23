@@ -1,0 +1,15 @@
+diff --git a/vendor/magento/module-customer/view/frontend/web/js/customer-data.js b/vendor/magento/module-customer/view/frontend/web/js/customer-data.js
+index c4c011c69..eda6d6584 100644
+--- a/vendor/magento/module-customer/view/frontend/web/js/customer-data.js
++++ b/vendor/magento/module-customer/view/frontend/web/js/customer-data.js
+@@ -163,8 +163,8 @@ define([
+             _.each(sections, function (sectionData, sectionName) {
+                 sectionId = sectionData['data_id'];
+                 sectionDataIds[sectionName] = sectionId;
+-                storage.set(sectionName, sectionData);
+-                storageInvalidation.remove(sectionName);
++                storage?.set(sectionName, sectionData);
++                storageInvalidation?.remove(sectionName);
+                 buffer.notify(sectionName, sectionData);
+             });
+             $.cookieStorage.set('section_data_ids', sectionDataIds);
