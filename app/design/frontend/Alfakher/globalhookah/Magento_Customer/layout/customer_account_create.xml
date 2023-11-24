@@ -22,13 +22,9 @@
                 </arguments>
                 <action method="setTemplate">
                     <argument name="template" xsi:type="string">HookahShisha_Customerb2b::form/register.phtml</argument>
-                </action>
-              
-            </referenceBlock>
-           
+                </action>     
+            </referenceBlock>  
         </referenceContainer>
-      
-
         <referenceBlock name="login_as_customer_opt_in_create" remove="true"/>
         <move element="page.main.title" destination="customer.register.container" before="-"/>
         <move element="customer_form_register" destination="customer.register.container" />
