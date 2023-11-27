@@ -8,6 +8,7 @@
             
             <block class="Alfakher\AddtocartPriceHide\Block\Index\CategoryBrand" name="childcategory" template="Alfakher_AddtocartPriceHide::categories.phtml" />
         </referenceContainer>
+        <referenceBlock name="document.messages" remove="true"/>
         <referenceContainer name="content">
             <block class="Magento\Catalog\Block\Product\ProductList\Toolbar" name="product_list_toolbar" template="Alfakher_AddtocartPriceHide::catalog/product/list/toolbar.phtml">
             </block>

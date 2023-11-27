@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="page.top">
+            <block class="Alfakher\MyDocument\Block\Index\Document" name="document.messages" template="Alfakher_AddtocartPriceHide::documentMessage.phtml" before="product.view.breadcrumbs"/>
+        </referenceContainer>
+        <referenceBlock name="document.messages" remove="true"/>
+    </body>
+</page>
