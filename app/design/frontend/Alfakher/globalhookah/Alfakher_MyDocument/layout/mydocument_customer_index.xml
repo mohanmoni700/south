@@ -1,25 +1,6 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd">
-<update handle="customer_account"/>
-<body>
-	<referenceContainer name="main.content">
-		<block class="Alfakher\MyDocument\Block\Index\Document" name="document.messages" template="Alfakher_MyDocument::mydocuments/documentMessage.phtml" before="-"/>
-	</referenceContainer>
-	<referenceBlock name="document.messages" remove="true"/>
-	<referenceBlock name="page.main.title">
-		<action method="setPageTitle">
-		<argument translate="true" name="title" xsi:type="string">My Documents</argument>
-		</action>
-	</referenceBlock>
-	<referenceContainer name="content">
-		<block class="Alfakher\MyDocument\Block\Index\Data" name="cutomermydocument" template="Alfakher_MyDocument::mydocument.phtml" cacheable="false">
-		<!--  for non usa document  -->
-		<block class="Alfakher\MyDocument\Block\Index\Data" name="my_document_non_usa" template="Alfakher_MyDocument::mydocumentnonusa.phtml"> </block>
-		<!--  for usa document  -->
-		<block class="Alfakher\MyDocument\Block\Index\Data" name="my_document_usa" template="Alfakher_MyDocument::mydocumentusa.phtml"> </block>
-		</block>
-	</referenceContainer>
-	<!-- bv_op; date : 10-2-22; adding below line; Start -->
-	<referenceBlock name="page.main.title" remove="true"/>
-	<!-- bv_op; date : 10-2-22; adding below line; End -->
-</body>
+	<update handle="customer_account" />
+	<body>
+		<referenceBlock name="document.messages" remove="true" />
+	</body>
 </page>

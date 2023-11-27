@@ -8,14 +8,14 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <body>
         <referenceContainer name="alert.urls">
-            <!-- <block class="Alfakher\StockAlert\Block\Product\View\Stock" name="productalert.stock" as="productalert_stock" template="Magento_ProductAlert::product/view.phtml">
+            <block class="Alfakher\StockAlert\Block\Product\View\Stock" name="productalert.stock" as="productalert_stock" template="Magento_ProductAlert::product/view.phtml">
                 <action method="setHtmlClass">
                     <argument name="value" xsi:type="string">stock</argument>
                 </action>
                 <action method="setSignupLabel">
                     <argument translate="true" name="value" xsi:type="string">Notify me when this product is in stock</argument>
                 </action>
-            </block> -->
+            </block>
         </referenceContainer>
         <move element="productalert.stock" destination="product.info.main" after="-" />
 
