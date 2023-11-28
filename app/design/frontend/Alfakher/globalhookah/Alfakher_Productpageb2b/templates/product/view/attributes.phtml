@@ -14,20 +14,22 @@
     $_helper = $this->helper(Magento\Catalog\Helper\Output::class);
     $_product = $block->getProduct();
     $attributeCodes = [
-    'product_brand',
-    'product_is_returnable',
-    'Product_Material',
-    'producttype',
-    'product_manufacturer',
-    'product_charcoal_shape',
-    'first_to_sell',
-    'country_of_manufature',
-    'product_super_pack_quantity',
-    'product_more_flovour',
-    'product_color',
-    'product_hookah',
-    'product_rating',
-    'product_style'];
+    'vase_style_title',
+    'vase_style',
+    'screw_on_vase_capability_title',
+    'screw_on_vase_capability',
+    'multi_hose_capability_title',
+    'multi_hose_capability',
+    'included_accessories_title',
+    'included_accessories',
+    'colors_title',
+    'colors',
+    'hookah_brand_title',
+    'hookah_brand',
+    'hookah_size_title',
+    'hookah_size',
+    'hookah_country_of_manufacture_title',
+    'hookah_country_of_manufacture'];
     $shouldDisplaySpecs = false;
     foreach ($attributeCodes as $attributeCode) {
         if ($_product->getData($attributeCode) !== null) {
