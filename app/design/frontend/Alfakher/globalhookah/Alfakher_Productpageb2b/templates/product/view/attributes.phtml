@@ -68,12 +68,8 @@ Al Fakher Tobacco Specs
     <th></th>
     <th></th>
     <tr>
-    <?php
-        if ($attributeVaseValue !== null
-        && $attributeVaseValue !== ''
-        && $attributeVaseTitle !== null
-        && $attributeVaseTitle !== '') :?>
-        
+    <?php if (!empty($attributeVaseValue) && !empty($attributeVaseTitle)) :?>
+       
       <td class="td_first">
         <?= /* @noEscape */  $attributeVaseTitle; ?>
       </td>
@@ -83,12 +79,8 @@ Al Fakher Tobacco Specs
     <?php endif; ?>
     </tr>
     <tr>
-    <?php
-        if ($attributeScrewValue !== null
-        && $attributeScrewValue !== ''
-        && $attributeScrewTitle !== null
-        && $attributeScrewTitle !== '') :?>
-        
+    <?php if (!empty($attributeScrewValue) && !empty($attributeScrewTitle)) :?>
+         
       <td class="td_first">
         <?= /* @noEscape */  $attributeScrewTitle; ?>
       </td>
@@ -99,10 +91,7 @@ Al Fakher Tobacco Specs
     </tr>
     <tr>
     <?php
-        if ($attributeMultiValue !== null
-        && $attributeMultiValue !== ''
-        && $attributeMultiTitle !== null
-        && $attributeMultiTitle !== '') :?>
+        if (!empty($attributeMultiValue) && !empty($attributeMultiTitle)) :?>
         
       <td class="td_first">
         <?= /* @noEscape */  $attributeMultiTitle; ?>
@@ -113,12 +102,8 @@ Al Fakher Tobacco Specs
     <?php endif; ?>
     </tr>
     <tr>
-    <?php
-        if ($attributeAccessoriesValue !== null
-        && $attributeAccessoriesValue !== ''
-        && $attributeAccessoriesTitle !== null
-        && $attributeAccessoriesTitle !== '') :?>
-        
+    <?php if (!empty($attributeAccessoriesValue) && !empty($attributeAccessoriesTitle)) :?>
+         
       <td class="td_first">
         <?= /* @noEscape */  $attributeAccessoriesTitle; ?>
       </td>
@@ -128,12 +113,8 @@ Al Fakher Tobacco Specs
     <?php endif; ?>
     </tr>
     <tr>
-    <?php
-        if ($attributeColorValue !== null
-        && $attributeColorValue !== ''
-        && $attributeColorTitle !== null
-        && $attributeColorTitle !== '') :?>
-        
+    <?php if (!empty($attributeColorValue) && !empty($attributeColorTitle)) :?>
+     
       <td class="td_first">
         <?= /* @noEscape */  $attributeColorTitle; ?>
       </td>
@@ -143,12 +124,8 @@ Al Fakher Tobacco Specs
     <?php endif; ?>
     </tr>
     <tr>
-    <?php
-        if ($attributeBrandValue !== null
-        && $attributeBrandValue !== ''
-        && $attributeBrandTitle !== null
-        && $attributeBrandTitle !== '') :?>
-        
+    <?php if (!empty($attributeBrandValue) && !empty($attributeBrandTitle)) :?>
+          
       <td class="td_first">
         <?= /* @noEscape */  $attributeBrandTitle; ?>
       </td>
@@ -158,12 +135,8 @@ Al Fakher Tobacco Specs
     <?php endif; ?>
     </tr>
     <tr>
-    <?php
-        if ($attributeSizeValue !== null
-        && $attributeSizeValue !== ''
-        && $attributeSizeTitle !== null
-        && $attributeSizeTitle !== '') :?>
-        
+    <?php if (!empty($attributeSizeValue) && !empty($attributeSizeTitle)) :?>
+         
       <td class="td_first">
         <?= /* @noEscape */  $attributeSizeTitle; ?>
       </td>
@@ -173,11 +146,7 @@ Al Fakher Tobacco Specs
     <?php endif; ?>
     </tr>
     <tr>
-    <?php
-        if ($attributeCountryValue !== null
-        && $attributeCountryValue !== ''
-        && $attributeCountryTitle !== null
-        && $attributeCountryTitle !== '') :?>
+    <?php if (!empty($attributeCountryValue) && !empty($attributeCountryTitle)) :?>
         
       <td class="td_first">
         <?= /* @noEscape */  $attributeCountryTitle; ?>
