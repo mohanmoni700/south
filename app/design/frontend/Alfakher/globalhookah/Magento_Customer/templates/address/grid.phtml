@@ -5,6 +5,9 @@
  */
 
 /** @var \Magento\Customer\Block\Address\Grid $block */
+
+/** @var \Alfakher\CheckoutCustomization\Model\Address $addressViewModel */
+$addressViewModel = $block->getAddress();
 $customerAddressView = $block->getData('customer_address');
 ?>
 
@@ -16,6 +19,7 @@ $customerAddressView = $block->getData('customer_address');
                 <div class="data table table-additional-addresses-items history" id="additional-addresses-table">
                    
                     <?php foreach ($_pAddsses as $address) : ?>
+                        <?php if ($addressViewModel->getAddressDataAndStatus($address->getId())): ?>
                         <div class="address_list">
                         <address>
                             <div class="customer_name">
@@ -67,6 +71,7 @@ $customerAddressView = $block->getData('customer_address');
                            
                         </address>
                     </div>
+                    <?php endif ?>
                     <?php endforeach; ?>
                    
                 </div>
