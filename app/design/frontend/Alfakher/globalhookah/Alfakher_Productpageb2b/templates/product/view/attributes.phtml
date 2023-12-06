@@ -13,30 +13,6 @@
 <?php
     $_helper = $this->helper(Magento\Catalog\Helper\Output::class);
     $_product = $block->getProduct();
-    $attributeCodes = [
-    'vase_style_title',
-    'vase_style',
-    'screw_on_vase_capability_title',
-    'screw_on_vase_capability',
-    'multi_hose_capability_title',
-    'multi_hose_capability',
-    'included_accessories_title',
-    'included_accessories',
-    'colors_title',
-    'colors',
-    'hookah_brand_title',
-    'hookah_brand',
-    'hookah_size_title',
-    'hookah_size',
-    'hookah_country_of_manufacture_title',
-    'hookah_country_of_manufacture'];
-    $shouldDisplaySpecs = false;
-    foreach ($attributeCodes as $attributeCode) {
-        if ($_product->getData($attributeCode) !== null) {
-            $shouldDisplaySpecs = true;
-            break;
-        }
-    }
 ?>
   <?php $attributeVaseTitle = $_product->getData('vase_style_title') ?>
   <?php $attributeVaseValue = $_product->getData('vase_style') ?>
@@ -54,6 +30,21 @@
   <?php $attributeSizeValue = $_product->getData('hookah_size') ?>
   <?php $attributeCountryTitle = $_product->getData('hookah_country_of_manufacture_title') ?>
   <?php $attributeCountryValue = $_product->getData('hookah_country_of_manufacture') ?>
+  <?php
+    $shouldDisplaySpecs = false;
+    if ((!empty($attributeVaseTitle) && !empty($attributeVaseValue)) ||
+    (!empty($attributeScrewTitle) && !empty($attributeScrewValue)) ||
+    (!empty($attributeMultiTitle) && !empty($attributeMultiValue)) ||
+    (!empty($attributeAccessoriesTitle) && !empty($attributeAccessoriesValue)) ||
+    (!empty($attributeColorTitle) && !empty($attributeColorValue)) ||
+    (!empty($attributeBrandTitle)) && (!empty($attributeBrandValue)) ||
+    (!empty($attributeSizeTitle)) && (!empty($attributeSizeValue)) ||
+    (!empty($attributeCountryTitle)) && (!empty($attributeCountryValue))
+    ){
+      $shouldDisplaySpecs = true;
+    }
+  
+  ?>
 <?php if ($shouldDisplaySpecs): ?>
 <div class ="main_wrapper">
 <div class="product_attributes">
