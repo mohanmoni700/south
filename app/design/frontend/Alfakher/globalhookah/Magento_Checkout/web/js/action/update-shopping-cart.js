@@ -5,15 +5,17 @@
 
 define([
     'Magento_Ui/js/modal/alert',
+    'Magento_Ui/js/modal/confirm',
     'jquery',
     'jquery-ui-modules/widget',
     'mage/validation'
-], function (alert, $) {
+], function (alert, confirm, $) {
     'use strict';
 
     $.widget('mage.updateShoppingCart', {
         options: {
             validationURL: '',
+            message: '',
             eventName: 'updateCartItemQty',
             updateCartActionContainer: '',
             messageCookieName: 'update_cart_message'
@@ -42,14 +44,23 @@ define([
          */
         onSubmit: function (event) {
             let action = this.element.find(this.options.updateCartActionContainer).val();
+            let self = this;
 
-            if (!this.options.validationURL || action === 'empty_cart') {
+            if (!self.options.validationURL || action === 'empty_cart') {
                 return true;
             }
 
-            if (this.isValid() && this.hasFormDataChanged()) {
-                event.preventDefault();
-                this.validateItems(this.options.validationURL, this.element.serialize());
+            if (self.isValid() && self.hasFormDataChanged()) {
+                confirm({
+                    content: "Are you sure you would like to update the shopping cart?",
+                    actions: {
+                        /** @inheritdoc */
+                        confirm: function () {
+                            event.preventDefault();
+                            self.validateItems(self.options.validationURL, self.element.serialize());
+                        },
+                    }
+                });
             }
 
             return false;
@@ -119,8 +130,7 @@ define([
          * Form validation succeed.
          */
         onSuccess: function () {
-            let successMessage = 'The requested quantity is updated.';
-            this.storeMessage('success', successMessage);
+            this.storeMessage('success', this.options.message);
             this.submitForm();
         },
 
@@ -179,12 +189,9 @@ define([
         /**
          * Displays a page message.
          *
-         * @param {String} type - Message type (e.g., 'success', 'error').
-         * @param {String} content - Message content.
          */
-        showPageMessage: function (type, content) {
-            $(".page.messages").html('<div class="message-' + type + ' ' + type +' message">' +
-                '<div>' + content + '</div></div>');
+        showPageMessage: function () {
+            $(".page.messages").html(this.options.message);
             $(".page.messages").delay(200).fadeIn().delay(4000).fadeOut();
         }
     });
