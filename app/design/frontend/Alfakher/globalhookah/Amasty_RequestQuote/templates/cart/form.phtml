@@ -6,7 +6,12 @@
 <form action="<?= $escaper->escapeUrl($block->getUrl('amasty_quote/cart/updatePost')) ?>"
           method="post"
           id="form-validate"
-          data-mage-init='{"validation":{}}'
+          data-mage-init='{"Magento_Checkout/js/action/update-shopping-cart":
+              {"validationURL" : "<?= $block->escapeUrl($block->getUrl('checkout/cart/updateItemQty')) ?>",
+                "message" : "<div class=\"messages\"><div class=\"message-success success message\">
+\<div>The requested quantity is updated.</div></div></div>",
+                "updateCartActionContainer": "#update_cart_action_container"}
+          }'
           class="form form-cart amasty-quote-update"
           enctype="multipart/form-data">
     <?= $block->getBlockHtml('formkey') ?>
