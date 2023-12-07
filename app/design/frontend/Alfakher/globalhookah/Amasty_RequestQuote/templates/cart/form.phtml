@@ -132,15 +132,15 @@
             modalClass: "confirm",
             actions: {
                 confirm: function () {
-                    var params = $(e.currentTarget).data('post');
-                    var formTemplate = '<form action="<%- data.action %>" method="post">'
+                    let params = $(e.currentTarget).data('post');
+                    let formTemplate = '<form action="<%- data.action %>" method="post">'
                         + '<% _.each(data.data, function(value, index) { %>'
                         + '<input name="<%- index %>" value="<%- value %>">'
                         + '<% }) %></form>';
 
-                    var formKeyInputSelector = 'input[name="form_key"]';
+                    let formKeyInputSelector = 'input[name="form_key"]';
 
-                    var formKey = $(formKeyInputSelector).val();
+                    let formKey = $(formKeyInputSelector).val();
                     if (formKey) {
                         params.data.form_key = formKey;
                     }
