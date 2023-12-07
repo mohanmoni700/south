@@ -3,6 +3,15 @@
 ?>
 <?php $mergedCells = ($block->getTaxHelper()->displayCartBothPrices() ? 2 : 1); ?>
 <?= $block->getChildHtml('form_before') ?>
+<div class="page messages">
+    <div class="messages">
+        <div class="message-success success message">
+            <div>
+                The requested quantity is updated.
+            </div> 
+        </div>
+    </div>
+</div>
 <form action="<?= $escaper->escapeUrl($block->getUrl('amasty_quote/cart/updatePost')) ?>"
           method="post"
           id="form-validate"

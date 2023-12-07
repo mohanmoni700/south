@@ -5,12 +5,20 @@
 ?>
 <?php $mergedCells = ($this->helper(Magento\Tax\Helper\Data::class)->displayCartBothPrices() ? 2 : 1); ?>
 <?= $block->getChildHtml('form_before') ?>
+<div class="page messages">
+    <div class="messages">
+        <div class="message-success success message">
+            <div>
+                The requested quantity is updated.
+            </div> 
+        </div>
+    </div>
+</div>
 <form action="<?= $block->escapeUrl($block->getUrl('checkout/cart/updatePost')) ?>"
           method="post"
           id="form-validate"
           data-mage-init='{"Magento_Checkout/js/action/update-shopping-cart":
               {"validationURL" : "<?= $block->escapeUrl($block->getUrl('checkout/cart/updateItemQty')) ?>",
-                "message" : "<div class=\"messages\"><div class=\"message-success success message\"><div>The requested quantity is updated.</div></div></div>",
                 "updateCartActionContainer": "#update_cart_action_container"}
           }'
           class="form form-cart">

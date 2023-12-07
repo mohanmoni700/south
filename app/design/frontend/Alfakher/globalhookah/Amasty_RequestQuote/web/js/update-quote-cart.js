@@ -13,6 +13,7 @@ define([
                 actions: {
                     confirm: function () {
                         $('#form-validate').submit();
+                        $('.page.messages').show();
                     }
                 }
             });

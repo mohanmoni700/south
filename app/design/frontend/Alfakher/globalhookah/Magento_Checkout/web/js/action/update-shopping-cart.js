@@ -17,8 +17,7 @@ define([
             validationURL: '',
             message: '',
             eventName: 'updateCartItemQty',
-            updateCartActionContainer: '',
-            messageCookieName: 'update_cart_message'
+            updateCartActionContainer: ''
         },
 
         /** @inheritdoc */
@@ -28,12 +27,6 @@ define([
             });
 
             this.initialFormData = this.element.serialize();
-            // Check for stored messages and display them
-            let storedMessage = this.getStoredMessage();
-            if (storedMessage) {
-                this.showPageMessage(storedMessage.type, storedMessage.content);
-                this.clearStoredMessage();
-            }
         },
 
         /**
@@ -130,8 +123,8 @@ define([
          * Form validation succeed.
          */
         onSuccess: function () {
-            this.storeMessage('success', this.options.message);
             this.submitForm();
+            $('.page.messages').show();
         },
 
         /**
@@ -157,42 +150,6 @@ define([
                     $(document.body).trigger('processStart');
                 })
                 .trigger('submit');
-        },
-
-        /**
-         * Store a message in a cookie.
-         *
-         * @param {String} type - Message type (e.g., 'success', 'error').
-         * @param {String} content - Message content.
-         */
-        storeMessage: function (type, content) {
-            $.mage.cookies.set(this.options.messageCookieName, JSON.stringify({ type: type, content: content }), { lifetime: 3600 });
-        },
-
-        /**
-         * Get the stored message from the cookie.
-         *
-         * @returns {Object|null} - Stored message, or null if not found.
-         */
-        getStoredMessage: function () {
-            let storedMessage = $.mage.cookies.get(this.options.messageCookieName);
-            return storedMessage ? JSON.parse(storedMessage) : null;
-        },
-
-        /**
-         * Clear the stored message from the cookie.
-         */
-        clearStoredMessage: function () {
-            $.mage.cookies.set(this.options.messageCookieName, '', { lifetime: -1 });
-        },
-
-        /**
-         * Displays a page message.
-         *
-         */
-        showPageMessage: function () {
-            $(".page.messages").html(this.options.message);
-            $(".page.messages").delay(200).fadeIn().delay(4000).fadeOut();
         }
     });
 
