@@ -16,7 +16,7 @@
 <?php $is_mobile = $_helperB2b->isMobileDevice();?>
 <?php $adminsession = $_helperB2b->getAdminCustomer();?>
 <?php $IsFinanceVerified = $_helperB2b->getIsFinanceVerified();?>
-<?php $notifyText = __('Notify Me');
+<?php $notifyText = __('Notify Me 3');
 $outofStock = __('Out of stock! ');
 ?>
 
@@ -293,8 +293,8 @@ $outofStock = __('Out of stock! ');
                             <div>
                                 <a href="
                                     <?=$block->
-                                    escapeUrl('productalert/add/stock/product_id/' .
-                                    $_product->getId() .
+                                    getUrl('productalert/add/stock/product_id/' .
+                                    $_item->getId() .
                                     '/uenc/' .
                                     base64_encode($block->escapeUrl($block->
                                     getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true, '_store' => null]))) )
