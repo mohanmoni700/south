@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * Category view template
+ *
+ * @var $block \Magento\Catalog\Block\Category\View
+ */
+?>
+<?php if ($block->isContentMode() || $block->isMixedMode()) :?>
+    <div class="category-cms">
+        <?= $block->getCmsBlockHtml() ?>
+    </div>
+<?php endif; ?>
+
+
+<?php
+/**
+ * Check if category display mode is "Static Block Only"
+ * And remove the filter,sort and product-count blocks
+ *
+ */
+?>
+<?php if ($block->isContentMode()) : ?>
+    <script>
+        require(['jquery'], function ($) {
+            $(document).ready(function() {
+                $("#maincontent").hide();
+            });
+        });
+    </script>
+<?php endif; ?>
+

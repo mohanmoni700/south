@@ -1,0 +1,14 @@
+diff --git a/vendor/magento/module-customer-balance-graph-ql/Model/Resolver/GetAppliedStoreCreditFromCart.php b/vendor/magento/module-customer-balance-graph-ql/Model/Resolver/GetAppliedStoreCreditFromCart.php
+index 52a6a9e6c..bcb982d01 100644
+--- a/vendor/magento/module-customer-balance-graph-ql/Model/Resolver/GetAppliedStoreCreditFromCart.php
++++ b/vendor/magento/module-customer-balance-graph-ql/Model/Resolver/GetAppliedStoreCreditFromCart.php
+@@ -104,7 +104,8 @@ class GetAppliedStoreCreditFromCart implements ResolverInterface
+             'applied_balance' => [
+                 'value' => $balanceApplied,
+                 'currency' => $currentCurrency->getCode()
+-            ]
++            ],
++            'is_partial' => $quote->getStorecreditType() == 'partial'
+         ];
+     }
+ 

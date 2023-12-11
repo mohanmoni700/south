@@ -1,0 +1,13 @@
+diff --git a/vendor/magento/module-customer-balance-graph-ql/Model/Resolver/RemoveStoreCreditFromCart.php b/vendor/magento/module-customer-balance-graph-ql/Model/Resolver/RemoveStoreCreditFromCart.php
+index 8f013ae51..a63e281a2 100644
+--- a/vendor/magento/module-customer-balance-graph-ql/Model/Resolver/RemoveStoreCreditFromCart.php
++++ b/vendor/magento/module-customer-balance-graph-ql/Model/Resolver/RemoveStoreCreditFromCart.php
+@@ -72,6 +72,8 @@ class RemoveStoreCreditFromCart implements ResolverInterface
+     {
+         $quote->setUseCustomerBalance(false);
+         $quote->collectTotals();
++        $quote->setStorecreditPartialAmount(0);
++        $quote->setStorecreditType('');
+         $quote->save();
+     }
+ }
