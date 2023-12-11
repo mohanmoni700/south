@@ -40,106 +40,89 @@
                 }
             }
             .header-links-wrapper {
-                .header-links {
-                    padding: 12px 0;
+                .row-full-width-inner {
+                    padding: 1.2rem 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+
+                    figure {
+                        height: 2.4rem;
+                    }
+
+                    p {
+                        display: flex;
+                        align-items: center;
+                        gap: 1rem;
+                        margin-bottom: 0;
+
+                        a {
+                            color: @color-white;
+
+                            &:hover {
+                                color: @color-white;
+                                text-decoration: underline;
+                            }
+                        }
+                    }
 
                     .header-item {
-                        border-right: 1px solid #fff;
-                        padding-inline-end: 20px;
+                        position: relative;
+                        border-right: 1px solid @color-white;
+                        padding-inline-end: 2rem;
 
                         &:last-of-type {
                             border: none;
                         }
 
-                        &::before {
-                            height: 24px;
-                            top: -4px;
-                            width: 24px;
-                        }
-
                         .header-text {
                             font-weight: 500;
-                            font-size: 14px;
+                            font-size: 1.4rem;
                         }
                     }
 
-                    .tiktok {
-                        &::before {
-                            background-image: url('@{baseDir}images/tiktok.svg');
-                            cursor: pointer;
-                        }
-                    }
-                    .whatsapp {
-                        &::before {
-                            background-image: url('@{baseDir}images/whatsapp.svg');
-                            cursor: pointer;
+                    .one {
+                        flex-direction: row !important;
+                        align-items: center;
+                        gap: 1rem;
+
+                        &:last-child {
+                            border: none;
                         }
                     }
 
-                    .header-top-right {
-                        width: 100%;
-                        padding-inline-end: 0;
-                        justify-content: space-between;
+                    .two {
+                        flex-direction: row !important;
+                        align-items: center;
+                        gap: 0;
 
-                        .one {
-                            gap: 0;
+                        > figure {
+                            border-right: 1px solid @color-white !important;
 
-                            .header-item {
-                                &.email {
-                                    &::before {
-                                        background-image: url('@{baseDir}images/email.svg');
-                                    }
-                                }
-                                &.phone {
-                                    &::before {
-                                        background-image: url('@{baseDir}images/phone.svg');
-                                    }
-                                }
+                            &:last-of-type {
+                                border: none !important;
                             }
 
-                            &:last-child {
-                                border: none;
+                            p {
+                                height: 2.4rem;
+                                padding-right: 2rem;
+
+                                a {
+                                    margin: 0;
+                                }
                             }
                         }
+                        
+                        .header-item {
+                            width: auto;
+                            margin-right: 0;
 
-                        .two {
-                            display: flex;
-                            gap: 20px;
-                            
-                            .header-item {
+                            &.rewards {
+                                padding: 0;
                                 width: auto;
-                                padding-right: 40px;
-                                margin-right: 0;
 
-                                &:last-child {
-                                    padding-right: 0;
-                                }
-
-                                &.youtube {
-                                    &::before {
-                                        background-image: url('@{baseDir}images/youtube.svg');
-                                    }
-                                }
-                                &.facebook {
-                                    &::before {
-                                        background-image: url('@{baseDir}images/facebook.svg');
-                                    }
-                                }
-                                &.rewards {
-                                    width: auto;
-
-                                    a {
-                                        color: #fff;
-                                        margin-inline-start: 30px;
-
-                                        &:hover {
-                                            text-decoration: underline;
-                                        }
-                                    }
-
-                                    &::before {
-                                        background-image: url('@{baseDir}images/rewards.svg');
-                                    }
+                                p {
+                                    padding: 0;
                                 }
                             }
                         }
@@ -702,7 +685,23 @@
         }
     }
 }
+
+@media only screen and (max-width: 1024px) {
+    .accessories_wholesale {
+        .pagebuilder-column {
+            &.site-container {
+                max-width: 1280px;
+                margin: 0 auto;
+            }
+        }
+    }
+}
+
 @media only screen and (min-width: 1024px) and (max-width: 1920px) {
+    .header-links-wrapper {
+        padding: 0 1.5rem;
+    }
+    
     .top_products {
         div[data-content-type='tabs'] .tabs-navigation li.tab-header {
             a.tab-title {
