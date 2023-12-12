@@ -1,5 +1,5 @@
 diff --git a/app/code/Magedelight/Subscribenow/Model/Subscription.php b/app/code/Magedelight/Subscribenow/Model/Subscription.php
-index 9375bc5ae..c003de2c0 100644
+index 9375bc5ae..a06de5008 100644
 --- a/app/code/Magedelight/Subscribenow/Model/Subscription.php
 +++ b/app/code/Magedelight/Subscribenow/Model/Subscription.php
 @@ -12,6 +12,7 @@
@@ -66,15 +66,16 @@ index 9375bc5ae..c003de2c0 100644
      }
  
      /**
-@@ -154,6 +164,24 @@ class Subscription
+@@ -154,6 +164,26 @@ class Subscription
       * @return float Price
       */
      public function getSubscriptionDiscount($finalPrice, $product, $convert = false)
 +    {
++        $isSubscription = $this->isSubscriptionProduct($product);
 +        $hashString = $finalPrice . $convert . $this->serialize->serialize($product->getData());
-+        $cacheKey = self::SUBSCRIPTION . md5($hashString);
++        $cacheKey = self::SUBSCRIPTION . $isSubscription. md5($hashString);
 +        if (!$this->storage->get($cacheKey)) {
-+            $value = $this->calculateSubscriptionDiscount($finalPrice, $product, $convert);
++            $value = $this->calculateSubscriptionDiscount($finalPrice, $product, $isSubscription, $convert);
 +            $this->storage->set($cacheKey, $value);
 +        }
 +        return $this->storage->get($cacheKey);
@@ -84,20 +85,20 @@ index 9375bc5ae..c003de2c0 100644
 +     * To calculate the subscription discount
 +     * @param $finalPrice
 +     * @param $product
-+     * @param $convert
++     * @param $isSubscription
++     * @param bool $convert
 +     * @return int|mixed
 +     */
-+    private function calculateSubscriptionDiscount($finalPrice, $product, $convert = false)
++    private function calculateSubscriptionDiscount($finalPrice, $product, $isSubscription, $convert = false)
      {
          if (!$this->helper->isModuleEnable()) {
              return $finalPrice;
-@@ -170,10 +198,12 @@ class Subscription
+@@ -170,10 +200,11 @@ class Subscription
          $optionPrice = $this->getOptionPrice($product);
          $price = $finalPrice;
  
 -        if ($this->isSubscriptionProduct($product)) {
-+        if ($this->isSubscriptionProduct($product) &&
-+            $product->getTypeId() != self::BUNDLE_TYPE) {
++        if ($isSubscription && $product->getTypeId() != self::BUNDLE_TYPE) {
              $price = $finalPrice - $optionPrice;
              $type = $this->getDiscountType($product);
 -            $discount = ($convert) ? $this->service->getConvertedPrice($this->getDiscountAmount($product)) : $this->getDiscountAmount($product);
