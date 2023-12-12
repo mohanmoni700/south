@@ -6,6 +6,9 @@
 <?php $helper = $this->helper(HookahShisha\ChangePassword\Helper\Data::class); ?>
 <?php $helperb2b = $this->helper(\Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php $yotpotab = $helperb2b->getConfigValue('yotpo_loyalty/advanced/enable_yotpo_tab');?>
+<?php
+$isMyProductPricingEnabled = $helperb2b->getConfigValue('hookahshisha/my_product_pricing_configuration/is_disable');
+?>
 <?php if ($helper->customerLoggedIn()): ?>
     <?php $values = $helper->CustomerLogin(); ?>
     <?php $name = $helper->customerFirstName(); ?>
@@ -25,7 +28,7 @@
                 <div class="welcome_info">
                     <lable class="welback"><?= $block->escapeHtml(__('Welcome back!')) ?></lable>
                      <!-- ko if: customer().firstname  -->
-                        <lable class="guest-content-heading" 
+                        <lable class="guest-content-heading"
                         data-bind="text: new String('<?= $escaper
                         ->escapeHtml(__('%1', '%1')) ?>').replace('%1', customer().firstname)">
                         </lable>
@@ -50,7 +53,7 @@
             </script>
             <li class="guest-content my_account">
                 <a class= "create_an_account_link" href="<?= $block->escapeUrl($block->getUrl("customer/account/"));?>">
-                    <?= $block->escapeHtml(__('My Account'))?>        
+                    <?= $block->escapeHtml(__('My Account'))?>
                 </a>
             </li>
             <li class="order_reorder"><a href="<?= $block->escapeUrl($block->getUrl("sales/order/history"));?>">
@@ -68,12 +71,14 @@
             <li class="documents"><a href="<?= $block->escapeUrl($block->getUrl("mydocument/customer/index"));?>">
                 <?= $block->escapeHtml(__('My Documents')) ?>
                 </a>
-            </li>   
+            </li>
+            <?php if ($isMyProductPricingEnabled): ?>
             <li class="product_pricing">
                 <a href="<?= $block->escapeUrl($block->getUrl("customerb2b/account/myproductpricing"));?>">
                     <?= $block->escapeHtml(__('My Product Pricing')) ?>
                 </a>
-            </li>       
+            </li>    
+            <?php endif; ?>
             <?php if ($yotpotab == 1): ?>
             <li class="product_rewards">
                 <a href="<?= $block->escapeUrl($block->getUrl("custom/customer/yotpo/"));?>">
@@ -98,14 +103,14 @@
             <li class="guest-content">
                 <span class="content-main">
                     <span class="content-item content-link">
-                        <a class= "sign_in_link" 
+                        <a class= "sign_in_link"
                             href="<?= $block->escapeUrl($block->getUrl("customer/account/login")); ?>">
                             <?= $block->escapeHtml(__('Sign in'))?>
                         </a>
                     </span>
                     <span class="content-item content-text"><?= $block->escapeHtml(__('or')) ?></span>
                 <span class="content-item content-link">
-                    <a class= "create_an_account_link" 
+                    <a class= "create_an_account_link"
                         href="<?= $block->escapeUrl($block->getUrl("customer/account/create"));?>">
                         <?= $block->escapeHtml(__('Create an Account'))?>
                     </a>
@@ -122,7 +127,7 @@ require(['jquery'], function($){
         $('.sign-in').click(function(event){
             $('.sign-up-ul').toggle();
             $('.sign_in_overlay').toggle();
-            
+
             $('.page-header .header.content .minicart-wrapper').removeClass("active");
             $('.minicart-wrapper .action.showcart').removeClass("active");
             $('.page-header .header.content .minicart-wrapper .ui-dialog.ui-widget.mage-dropdown-dialog').hide();
