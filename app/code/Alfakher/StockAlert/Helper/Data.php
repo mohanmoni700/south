@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Alfakher\StockAlert\Helper;
 
-use Magento\Catalog\Model\Product;
 use Magento\Framework\App\Area;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\MailException;
@@ -138,7 +137,6 @@ class Data
             $sender = $this->emailDataHelper->getSender($storeId);
 
             $from = ['email' => $sender, 'name' => $sender];
-            $to = [$email];
 
             $templateOptions = [
                 'area' => Area::AREA_FRONTEND,
@@ -149,15 +147,6 @@ class Data
 
             $this->inlineTranslation->suspend();
 
-            $this->logger->info("Email Data", [
-                'customer_name' => $customerName,
-                'product_name' => $product->getName(),
-                'email' => $email,
-                'from_email' => $from,
-                'to_email' => $to,
-                'template_id' => $templateId,
-                'store_id' => $storeId
-            ]);
             $transport = $this->transportBuilder->setTemplateIdentifier($templateId)
                 ->setTemplateOptions($templateOptions)
                 ->setTemplateVars($templateVars)
@@ -167,12 +156,8 @@ class Data
 
             $transport->sendMessage();
             $this->emulation->stopEnvironmentEmulation();
-            $this->logger->info("Email sent successfully");
-
             $this->inlineTranslation->resume();
             return $this;
-        } catch (NoSuchEntityException $e) {
-            throw new NoSuchEntityException(__("Requested product does not exist - %1"));
         } catch (MailException | LocalizedException $e) {
             $this->logger->info("Error in email data", [
                 'error' => $e->getMessage()
