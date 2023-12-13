@@ -1120,6 +1120,7 @@ return [
         'HookahShisha_RmaGraphQl' => 1,
         'HookahShisha_Sales' => 1,
         'HookahShisha_SalesGraphQl' => 1,
+        'HookahShisha_SocialLogin' => 1,
         'Magedelight_Base' => 1,
         'HookahShisha_SwatchData' => 1,
         'HookahShisha_SwatchesGraphQl' => 1,
