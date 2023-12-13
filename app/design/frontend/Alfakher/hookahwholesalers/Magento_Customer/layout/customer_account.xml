@@ -21,60 +21,60 @@
         <!-- bv_op; commenting the below line; date : 11-2-22; Start -->
         <!-- <referenceBlock name="page.main.title" remove="true"/> -->
         <!-- bv_op; commenting the below line; date : 11-2-22; End -->
- 
+
  	   <!-- Store credit -->
- 
+
        <referenceBlock name="customer-account-navigation-customer-balance-link" remove="false"/>
-     
+
        <!-- Downloadable product link -->
-     
+
        <referenceBlock name="customer-account-navigation-downloadable-products-link" remove="true"/>
-     
+
        <!-- Subscription link -->
-     
+
        <referenceBlock name="customer-account-navigation-newsletter-subscriptions-link" remove="true"/>
-     
+
        <!-- Billing agreement link -->
-     
+
        <referenceBlock name="customer-account-navigation-billing-agreements-link" remove="true"/>
-     
+
        <!-- Product review link -->
-     
+
        <referenceBlock name="customer-account-navigation-product-reviews-link" remove="true"/>
-     
+
        <!-- My credit card link -->
-     
+
        <referenceBlock name="customer-account-navigation-my-credit-cards-link" remove="true"/>
-     
-     
+
+
        <!-- Account edit link -->
-     
+
        <referenceBlock name="customer-account-navigation-account-edit-link" remove="true"/>
-     
-     
+
+
        <!-- Orders link -->
-     
+
        <referenceBlock name="customer-account-navigation-orders-link" remove="true"/>
-     
+
        <!-- Wish list link -->
-     
+
        <referenceBlock name="customer-account-navigation-wish-list-link" remove="true"/>
-     
+
        <!-- Gift card link -->
-     
+
        <referenceBlock name="customer-account-navigation-gift-card-link" remove="true"/>
-     
+
        <!-- Order by SKU -->
-     
+
        <referenceBlock name="customer-account-navigation-checkout-sku-link" remove="true"/>
        <referenceBlock name="customer-account-navigation-magento-invitation-link" remove="true"/>
-     
+
        <!-- Gift registry -->
-     
+
        <referenceBlock name="customer-account-navigation-giftregistry-link" remove="true"/>
-     
+
        <!-- Reward points -->
-     
+
        <referenceBlock name="customer-account-navigation-reward-link" remove="true"/>
 
         <referenceBlock name="customer-account-navigation-product-reviews-link" remove="true"/>
@@ -85,7 +85,10 @@
         <referenceBlock name="customer-account-navigation-delimiter-2" remove="true"/>
 
         <referenceBlock name="customer_account_navigation">
-            <block class="Magento\Framework\View\Element\Html\Link\Current" name="customer-account-navigation-custom" after="my_document">
+            <block class="Magento\Framework\View\Element\Html\Link\Current"
+                   name="customer-account-navigation-custom"
+                   after="my_document"
+                   ifconfig="hookahshisha/my_product_pricing_configuration/is_disable">
                 <arguments>
                     <argument name="path" xsi:type="string">customerb2b/account/myproductpricing</argument>
                     <argument name="label" xsi:type="string">My Product Pricing</argument>

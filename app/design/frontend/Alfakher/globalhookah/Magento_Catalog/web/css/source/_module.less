@@ -299,6 +299,106 @@
         }
     }
 
+        // shop by brands design
+        .shopbybrands {
+            h1 {
+                color: @color-black;
+                .lib-font-size(40);
+                font-weight: bold;
+                text-align: center;
+                margin-bottom: 3.6rem;
+            } 
+    
+            .pagebuilder-column-group {
+                margin-bottom: 3.6rem;
+                
+                .pagebuilder-column {
+                    padding: 0 2rem;
+                    flex-basis: 50%;
+    
+                    .brand-image {
+                        width: 100%;
+                        float: left;
+                        background: #f6f6f6;
+                        padding: 3rem;
+    
+                        img {
+                            position: relative;
+                            top: 0;
+                            transition: ease-in-out 0.5s;
+                        }
+                    }
+                    .brandname {
+                        .lib-font-size(16);
+                        font-weight:  @font-weight__semibold;
+                        margin-top: 2.0rem;
+    
+                        a {
+                            color: @color-black;
+                        }
+                    }
+        
+                    &:hover {
+                        .brand-image {
+                            img {
+                                top: -2.0rem;
+                            }
+                        }
+                        .brandname {
+                            a {
+                                color: @color_primary;
+                                text-decoration: none;
+                            }
+                        }
+                    }
+                } 
+            }     
+        }
+
+        .category-brand-description {
+            background: #FFF8E5;
+            margin: 0 -8.8rem;     
+
+            .content {
+                padding: 7.2rem 9.6rem;
+
+                .descreption-title {
+                    p {
+                        .lib-font-size(40);
+                        margin-bottom: 3.5rem;
+                        font-weight: @font-weight__bold;
+                    }
+                }
+
+                p {
+                    .lib-font-size(16);
+                    font-weight: 500;
+                }
+
+                .pagebuilder-button-secondary {
+                    width: 17.2rem;
+                    border: 1px solid #000;
+                    color: @color-black;
+                    .lib-font-size(16);
+                    font-weight: @font-weight__semibold;
+                    text-align: center;
+                    padding: 1.5rem 0;
+                    cursor: pointer;
+                    background-color: transparent;
+                    border-radius: 4.0rem;
+                    margin-top: 2rem;
+                    display: inline-block;
+
+                    &:hover {
+                        border: 1px solid #229B62;
+                        background: #229B62;
+                        color: @color-white;
+                        text-decoration: none;
+                    }
+                }
+            }
+        } 
+
     .clp_faq_main {
         
         color: @font-gray;
@@ -1452,6 +1552,21 @@
 //  _____________________________________________
 
 .media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    // shop by brands design
+    .shopbybrands {
+        h1 {
+            a {
+                .lib-font-size(30);
+            }
+        }
+
+        .pagebuilder-column-group {
+            .pagebuilder-column {
+                padding: 0 1rem;
+            }
+        }
+    }
+
     .filter-options-content {
         .items {
             max-height: unset !important;
@@ -2019,6 +2134,17 @@
                         display: none;
                     }
                 }
+            }
+        }
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum ='min') and (@break =@screen__l) {
+    // shop by brands design
+    .shopbybrands {
+        .pagebuilder-column-group {
+            .pagebuilder-column {
+                flex-basis: 25%;
             }
         }
     }
@@ -2759,6 +2885,19 @@
         }
     }
     @media only screen and (max-width: 767px) {
+        .category-brand-description {              
+            .content {
+                padding-block: 3rem;
+
+                .descreption-title {
+                    p {
+                        .lib-font-size(30);
+                        margin-bottom: 2.5rem; 
+                    }                  
+                }  
+            }
+        }
+
         .catalog-category-view,
         .catalogsearch-result-index {
             .page-main {
@@ -2829,6 +2968,24 @@
                         max-height: 170px;
                         min-height: 170px;
                     }
+                }
+            }
+        }
+
+        .category-brand-description {
+            .content {
+                .descreption-title {
+                    p {
+                        .lib-font-size(20);
+                    }
+                }
+
+                .pagebuilder-button-secondary {
+                    font-size: 1.4rem;
+                    width: 13.8rem;
+                    padding: 1.2rem 2.7rem;
+                    margin-top: 1.4rem;
+                    line-height: 1;
                 }
             }
         }

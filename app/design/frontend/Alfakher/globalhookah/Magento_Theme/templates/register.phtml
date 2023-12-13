@@ -7,6 +7,9 @@
 <?php $helperb2b = $this->helper(\Alfakher\Productpageb2b\Helper\Data::class); ?>
 <?php $yotpotab = $helperb2b->getConfigValue('yotpo_loyalty/advanced/enable_yotpo_tab');?>
 <?php $myDocumentsTab = $helperb2b->getConfigValue('hookahshisha/my_document/is_enabled');?>
+<?php
+$isMyProductPricingEnabled = $helperb2b->getConfigValue('hookahshisha/my_product_pricing_configuration/is_disable');
+?>
 <?php if ($helper->customerLoggedIn()): ?>
     <?php $values = $helper->CustomerLogin(); ?>
     <?php $name = $helper->customerFirstName(); ?>
@@ -76,11 +79,13 @@
                 </a>
             </li>
             <?php endif; ?>
+            <?php if ($isMyProductPricingEnabled): ?>
             <li class="product_pricing">
                 <a href="<?= $block->escapeUrl($block->getUrl("customerb2b/account/myproductpricing"));?>">
                     <?= $block->escapeHtml(__('My Product Pricing')) ?>
                 </a>
             </li>
+            <?php endif; ?>
             <?php if ($yotpotab == 1): ?>
             <li class="product_rewards">
                 <a href="<?= $block->escapeUrl($block->getUrl("custom/customer/yotpo/"));?>">

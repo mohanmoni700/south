@@ -13,29 +13,38 @@
 <?php
     $_helper = $this->helper(Magento\Catalog\Helper\Output::class);
     $_product = $block->getProduct();
-    $attributeCodes = [
-    'product_brand',
-    'product_is_returnable',
-    'Product_Material',
-    'producttype',
-    'product_manufacturer',
-    'product_charcoal_shape',
-    'first_to_sell',
-    'country_of_manufature',
-    'product_super_pack_quantity',
-    'product_more_flovour',
-    'product_color',
-    'product_hookah',
-    'product_rating',
-    'product_style'];
-    $shouldDisplaySpecs = false;
-    foreach ($attributeCodes as $attributeCode) {
-        if ($_product->getData($attributeCode) !== null) {
-            $shouldDisplaySpecs = true;
-            break;
-        }
-    }
 ?>
+  <?php $attributeVaseTitle = $_product->getData('vase_style_title') ?>
+  <?php $attributeVaseValue = $_product->getData('vase_style') ?>
+  <?php $attributeScrewTitle = $_product->getData('screw_on_vase_capability_title') ?>
+  <?php $attributeScrewValue = $_product->getData('screw_on_vase_capability') ?>
+  <?php $attributeMultiTitle = $_product->getData('multi_hose_capability_title') ?>
+  <?php $attributeMultiValue = $_product->getData('multi_hose_capability') ?>
+  <?php $attributeAccessoriesTitle = $_product->getData('included_accessories_title') ?>
+  <?php $attributeAccessoriesValue = $_product->getData('included_accessories') ?>
+  <?php $attributeColorTitle = $_product->getData('colors_title') ?>
+  <?php $attributeColorValue = $_product->getData('colors') ?>
+  <?php $attributeBrandTitle = $_product->getData('hookah_brand_title') ?>
+  <?php $attributeBrandValue = $_product->getData('hookah_brand') ?>
+  <?php $attributeSizeTitle = $_product->getData('hookah_size_title') ?>
+  <?php $attributeSizeValue = $_product->getData('hookah_size') ?>
+  <?php $attributeCountryTitle = $_product->getData('hookah_country_of_manufacture_title') ?>
+  <?php $attributeCountryValue = $_product->getData('hookah_country_of_manufacture') ?>
+  <?php
+    $shouldDisplaySpecs = false;
+    if ((!empty($attributeVaseTitle) && !empty($attributeVaseValue)) ||
+    (!empty($attributeScrewTitle) && !empty($attributeScrewValue)) ||
+    (!empty($attributeMultiTitle) && !empty($attributeMultiValue)) ||
+    (!empty($attributeAccessoriesTitle) && !empty($attributeAccessoriesValue)) ||
+    (!empty($attributeColorTitle) && !empty($attributeColorValue)) ||
+    (!empty($attributeBrandTitle)) && (!empty($attributeBrandValue)) ||
+    (!empty($attributeSizeTitle)) && (!empty($attributeSizeValue)) ||
+    (!empty($attributeCountryTitle)) && (!empty($attributeCountryValue))
+    ){
+      $shouldDisplaySpecs = true;
+    }
+  
+  ?>
 <?php if ($shouldDisplaySpecs): ?>
 <div class ="main_wrapper">
 <div class="product_attributes">
@@ -49,20 +58,95 @@ Al Fakher Tobacco Specs
   <tbody>
     <th></th>
     <th></th>
-  <?php foreach ($attributeCodes as $attributeCode): ?>
-    <?php if ($attributeValue = $_product->getData($attributeCode) !== null) :?>
     <tr>
+    <?php if (!empty($attributeVaseValue) && !empty($attributeVaseTitle)) :?>
+       
       <td class="td_first">
-      <?= /* @noEscape */ str_replace(['_', 'product'], [' ', ''], $attributeCode); ?>
+        <?= /* @noEscape */  $attributeVaseTitle; ?>
+      </td>
       <td>
-        <?php $attributeValue = $_product->getData($attributeCode); ?>
-        <?php if ($attributeValue !== null && $attributeValue !== '') :?>
-            <?= /* @noEscape */  $attributeValue; ?>
-        </td>
-        <?php endif; ?>
-    </tr>
+        <?= /* @noEscape */  $attributeVaseValue; ?>
+      </td>
     <?php endif; ?>
-    <?php endforeach; ?>
+    </tr>
+    <tr>
+    <?php if (!empty($attributeScrewValue) && !empty($attributeScrewTitle)) :?>
+         
+      <td class="td_first">
+        <?= /* @noEscape */  $attributeScrewTitle; ?>
+      </td>
+      <td>
+        <?= /* @noEscape */  $attributeScrewValue; ?>
+      </td>
+    <?php endif; ?>
+    </tr>
+    <tr>
+    <?php
+        if (!empty($attributeMultiValue) && !empty($attributeMultiTitle)) :?>
+        
+      <td class="td_first">
+        <?= /* @noEscape */  $attributeMultiTitle; ?>
+      </td>
+      <td>
+        <?= /* @noEscape */  $attributeMultiValue; ?>
+      </td>
+    <?php endif; ?>
+    </tr>
+    <tr>
+    <?php if (!empty($attributeAccessoriesValue) && !empty($attributeAccessoriesTitle)) :?>
+         
+      <td class="td_first">
+        <?= /* @noEscape */  $attributeAccessoriesTitle; ?>
+      </td>
+      <td>
+        <?= /* @noEscape */  $attributeAccessoriesValue; ?>
+      </td>
+    <?php endif; ?>
+    </tr>
+    <tr>
+    <?php if (!empty($attributeColorValue) && !empty($attributeColorTitle)) :?>
+     
+      <td class="td_first">
+        <?= /* @noEscape */  $attributeColorTitle; ?>
+      </td>
+      <td>
+        <?= /* @noEscape */  $attributeColorValue; ?>
+      </td>
+    <?php endif; ?>
+    </tr>
+    <tr>
+    <?php if (!empty($attributeBrandValue) && !empty($attributeBrandTitle)) :?>
+          
+      <td class="td_first">
+        <?= /* @noEscape */  $attributeBrandTitle; ?>
+      </td>
+      <td>
+        <?= /* @noEscape */  $attributeBrandValue; ?>
+      </td>
+    <?php endif; ?>
+    </tr>
+    <tr>
+    <?php if (!empty($attributeSizeValue) && !empty($attributeSizeTitle)) :?>
+         
+      <td class="td_first">
+        <?= /* @noEscape */  $attributeSizeTitle; ?>
+      </td>
+      <td>
+        <?= /* @noEscape */  $attributeSizeValue; ?>
+      </td>
+    <?php endif; ?>
+    </tr>
+    <tr>
+    <?php if (!empty($attributeCountryValue) && !empty($attributeCountryTitle)) :?>
+        
+      <td class="td_first">
+        <?= /* @noEscape */  $attributeCountryTitle; ?>
+      </td>
+      <td>
+        <?= /* @noEscape */  $attributeCountryValue; ?>
+      </td>
+    <?php endif; ?>
+    </tr>
   </tbody>
 </table>
 </div>

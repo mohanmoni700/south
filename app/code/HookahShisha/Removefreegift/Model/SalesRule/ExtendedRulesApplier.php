@@ -64,6 +64,9 @@ class ExtendedRulesApplier extends RulesApplier
         $address = $item->getAddress();
         $appliedRuleIds = [];
         $this->discountAggregator = [];
+        if ($item->getExtensionAttributes()) {
+            $item->getExtensionAttributes()->setDiscounts(null);
+        }
         /* @var $rule Rule */
         foreach ($rules as $rule) {
             if (!$this->validatorUtility->canProcessRule($rule, $address)) {
@@ -116,7 +119,9 @@ class ExtendedRulesApplier extends RulesApplier
      */
     protected function applyRule($item, $rule, $address, $couponCode)
     {
-        if ($item->getChildren() && $item->isChildrenCalculated()) {
+        if ($item->getChildren() && $item->isChildrenCalculated() &&
+            $item->getProduct()->getTypeId() != 'bundle'
+        ) {
             $cloneItem = clone $item;
             /**
              * validate without children
