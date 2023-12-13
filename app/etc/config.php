@@ -1186,6 +1186,7 @@ return [
         'Shishaworld_OrderItemExcludingTaxPrice' => 1,
         'Alfakher_SignifydHoldOrder' => 1,
         'Smartwave_Megamenu' => 1,
+        'SouthSmoke_AdditionalCharges' => 1,
         'Splitit_PaymentGateway' => 1,
         'Alfakher_Tabby' => 1,
         'Temando_ShippingRemover' => 1,

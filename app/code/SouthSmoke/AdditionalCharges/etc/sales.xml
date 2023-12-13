@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Sales:etc/sales.xsd">
+    <section name="quote">
+        <group name="totals">
+            <item name="compliance_insurance" instance="SouthSmoke\AdditionalCharges\Model\Total\ComplianceInsurance" sort_order="170"/>
+            <item name="shipping_insurance" instance="SouthSmoke\AdditionalCharges\Model\Total\ShippingInsurance" sort_order="180"/>
+        </group>
+    </section>
+    <section name="order_invoice">
+        <group name="totals">
+            <item name="compliance_insurance" instance="SouthSmoke\AdditionalCharges\Model\Invoice\Total\ComplianceInsurance" sort_order="170"/>
+            <item name="shipping_insurance" instance="SouthSmoke\AdditionalCharges\Model\Invoice\Total\ShippingInsurance" sort_order="180"/>
+        </group>
+    </section>
+    <section name="order_creditmemo">
+        <group name="totals">
+            <item name="compliance_insurance" instance="SouthSmoke\AdditionalCharges\Model\Creditmemo\Total\ComplianceInsurance" sort_order="170"/>
+            <item name="shipping_insurance" instance="SouthSmoke\AdditionalCharges\Model\Creditmemo\Total\ShippingInsurance" sort_order="180"/>
+        </group>
+    </section>
+</config>
