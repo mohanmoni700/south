@@ -130,7 +130,7 @@ use Magento\Framework\App\Action\Action;
         </div>
     </div>
     <?php if ($block->getBlockHtml('formkey')): ?>
-    <script>
+       <script type="text/x-magento-init">
     {
         ".block.widget [data-role=tocart-form]": {
             "Magento_Catalog/js/validate-product": {}
