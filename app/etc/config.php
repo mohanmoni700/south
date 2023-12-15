@@ -29,7 +29,7 @@ return [
             'hookah_company' => [
                 'website_id' => '5',
                 'code' => 'hookah_company',
-                'name' => 'Hookah-company.com (B2C)',
+                'name' => 'South Smoke (B2C)',
                 'sort_order' => '20',
                 'default_group_id' => '5',
                 'is_default' => '0'
@@ -119,7 +119,7 @@ return [
             5 => [
                 'group_id' => '5',
                 'website_id' => '5',
-                'name' => 'Hookah-company.com (B2C) Store',
+                'name' => 'South Smoke (B2C) Store',
                 'root_category_id' => '2',
                 'default_store_id' => '5',
                 'code' => 'hookah_company_store'
@@ -214,7 +214,7 @@ return [
                 'code' => 'hookah_company_store_view',
                 'website_id' => '5',
                 'group_id' => '5',
-                'name' => 'Hookah-company.com (B2C) Store View',
+                'name' => 'South Smoke (B2C) Store View',
                 'sort_order' => '0',
                 'is_active' => '1'
             ],
