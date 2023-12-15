@@ -28,8 +28,8 @@ return [
             ],
             'hookah_company' => [
                 'website_id' => '5',
-                'code' => 'South Smoke (B2C)',
-                'name' => 'Hookah-company.com (B2C)',
+                'code' => 'hookah_company',
+                'name' => 'South Smoke (B2C)',
                 'sort_order' => '20',
                 'default_group_id' => '5',
                 'is_default' => '0'
