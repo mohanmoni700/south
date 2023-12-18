@@ -1,98 +1,98 @@
 <?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
 
 /** @var \Magento\Customer\Block\Address\Grid $block */
-// phpcs:disable Magento2.Templates.ThisInTemplate
+
+/** @var \Alfakher\CheckoutCustomization\Model\Address $addressViewModel */
+$addressViewModel = $block->getAddress();
 $customerAddressView = $block->getData('customer_address');
 ?>
 
 <div class="block block-addresses-list">
     <div class="block-title"><strong><?= $block->escapeHtml(__('Additional Address')) ?></strong></div>
     <div class="block-content">
-        <?php if ($_pAddsses = $block->getAdditionalAddresses()): ?>
+        <?php if ($_pAddsses = $block->getAdditionalAddresses()) : ?>
             <div class="table-wrapper additional-addresses">
                 <div class="data table table-additional-addresses-items history" id="additional-addresses-table">
                    
-                    <?php foreach ($_pAddsses as $address): ?>
+                    <?php foreach ($_pAddsses as $address) : ?>
                         <div class="address_list">
                         <address>
                             <div class="customer_name">
-                            <b data-th="<?= $block->escapeHtml(__('First Name')) ?>"
-                                class="col firstname"><?= $block->escapeHtml($address->getFirstname()) ?></b>
-                            <b data-th="<?= $block->escapeHtml(__('Last Name')) ?>"
-                                class="col lastname"><?= $block->escapeHtml($address->getLastname()) ?>
-                            </b>
+                            <b data-th="<?= $block->escapeHtml(__('First Name')) ?>" class="col firstname"><?= $block->escapeHtml($address->getFirstname()) ?></b>
+                            <b data-th="<?= $block->escapeHtml(__('Last Name')) ?>" class="col lastname"><?= $block->escapeHtml($address->getLastname()) ?></b>
                             </div>
                             <div class="customer_info">
                             <div class="streetaddress">
-                            <span data-th="<?= $block->escapeHtml(__('Street Address')) ?>"
-                                class="col streetaddress"><?= $block->escapeHtml($block->getStreetAddress($address)) ?>
-                            </span>
-                            <span data-th="<?= $block->escapeHtml(__('City')) ?>"
-                                    class="col city"><?= $block->escapeHtml($address->getCity()) ?>
-                            </span>
-                            <span data-th="<?= $block->escapeHtml(__('State')) ?>"
-                                class="col block state"><?= $block->escapeHtml($address->getRegion()->getRegion()) ?>
-                            </span>
-                            <span data-th="<?= $block->escapeHtml(__('Zip/Postal Code')) ?>"
-                                class="col zip"><?= $block->escapeHtml($address->getPostcode()) ?>
-                            </span>
+                            <span data-th="<?= $block->escapeHtml(__('Street Address')) ?>" class="col streetaddress"><?= $block->escapeHtml($block->getStreetAddress($address)) ?></span>
+                            <span data-th="<?= $block->escapeHtml(__('City')) ?>" class="col city"><?= $block->escapeHtml($address->getCity()) ?></span>
+                            <span data-th="<?= $block->escapeHtml(__('State')) ?>" class="col block state"><?= $block->escapeHtml($address->getRegion()->getRegion()) ?></span>
+                            <span data-th="<?= $block->escapeHtml(__('Zip/Postal Code')) ?>" class="col zip"><?= $block->escapeHtml($address->getPostcode()) ?></span>
                             </div>
-                            <span data-th="<?= $block->escapeHtml(__('Country')) ?>"
-                                class="col block country"><?= $block->escapeHtml($block
-                                        ->getCountryByCode($address->getCountryId())) ?>
-                            </span>
-                            <span data-th="<?= $block->escapeHtml(__('Phone')) ?>"
-                                class="col block phone">Tel: <?= $block->escapeHtml($address->getTelephone()) ?>
-                            </span>
+                            <span data-th="<?= $block->escapeHtml(__('Country')) ?>" class="col block country"><?= $block->escapeHtml($block->getCountryByCode($address->getCountryId())) ?></span>
+                            <span data-th="<?= $block->escapeHtml(__('Phone')) ?>" class="col block phone">Tel: <?= $block->escapeHtml($address->getTelephone()) ?></span>
                             </div>
-
+                        <div class = "customer_info_request_new">
+                            <div class = "customer_actions">
+                                <form>
+                                    <a class="action address default-shipping"
+                                    href="<?= $this->getUrl('customer/address/setdefault',
+                                    ['_secure' => true, 'billId' => $address->getId()]); ?>"
+                                    data-address="<?= $escaper->escapeHtmlAttr($address->getId()) ?>"
+                                    >
+                                        <span><?= $block->escapeHtml(__('Make Default Billing')) ?></span>
+                                    </a>
+                                    <a
+                                    title="<?= $escaper->escapeHtml(__('Set Default')) ?>"
+                                    class="action address default-billing"
+                                    href="<?= $this->getUrl('customer/address/setdefault',
+                                    ['_secure' => true, 'shipId' => $address->getId()]); ?>"
+                                    data-address="<?= $escaper->escapeHtmlAttr($address->getId()) ?>"
+                                    >
+                                        <span><?= $block->escapeHtml(__('Make Default Shipping')) ?></span>
+                                    </a>
+                                </form>
+                            </div>
                             <div data-th="<?= $block->escapeHtml(__('Actions')) ?>" class="customer_actions">
-                                <a class="action edit"
-                                    href="<?= $block->escapeUrl($block
-                                        ->getUrl('customer/address/edit', ['id' => $address->getId()])) ?>">
-                                    <span><?= $block->escapeHtml(__('Edit')) ?></span>
-                                </a>
-                                <a class="action delete" href="#"
-                                    role="delete-address"
-                                    data-address="<?= $block->escapeHtmlAttr($address->getId()) ?>">
-                                    <span><?= $block->escapeHtml(__('Delete')) ?></span>
-                                </a>
+                                <a
+                                class="action delete"
+                                href="#"
+                                role="delete-address"
+                                data-address="<?= $block->escapeHtmlAttr($address->getId()) ?>"
+                                >
+                                <span><?= $block->escapeHtml(__('Delete')) ?></span>
+                            </a>
                             </div>
+                        </div>
+                           
                         </address>
                     </div>
                     <?php endforeach; ?>
                    
                 </div>
             </div>
-            <?php if ($block->getChildHtml('pager')): ?>
+            <?php if ($block->getChildHtml('pager')) : ?>
                 <div class="customer-addresses-toolbar toolbar bottom"><?= $block->getChildHtml('pager') ?></div>
             <?php endif ?>
-        <?php else: ?>
-            <p class="empty">
-                <?= $block->escapeHtml(__('You have no other address entries in your address book.')) ?>
-            </p>
+        <?php else : ?>
+            <p class="empty"><?= $block->escapeHtml(__('You have no other address entries in your address book.')) ?></p>
         <?php endif ?>
     </div>
 </div>
-<?php
-    $helper = $this->helper(Alfakher\AddressModification\Model\Data::class);
-    $disableBUtton = $helper->getDisabledbtn();
-?>
+
 <div class="actions-toolbar">
     <div class="primary">
-        <?php if (!$disableBUtton): ?>
-            <button type="button" role="add-address"
-                title="<?= $block->escapeHtmlAttr(__('New Address')) ?>"
-                class="action primary add">
-                <span><?= $block->escapeHtml(__('New Address')) ?></span>
-            </button>
-          <?php endif ?>  
-    </div>
-    <div class="secondary">
-        <a class="action back"
-            href="<?= $block->escapeUrl($block->getUrl('customer/account')) ?>">
-            <span><?= $block->escapeHtml(__('Back')) ?></span>
-        </a>
+        <button
+        type="button"
+        role="add-address"
+        title="<?= $block->escapeHtmlAttr(__('Request New Address')) ?>"
+        class="action primary add">
+        <span><?= $block->escapeHtml(__('Request New Address')) ?>
+    </span>
+</button>
     </div>
 </div>
 <script type="text/x-magento-init">

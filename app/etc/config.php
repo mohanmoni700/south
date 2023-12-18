@@ -1016,6 +1016,7 @@ return [
         'Alfakher_CmsCanonical' => 1,
         'Alfakher_CompanyImport' => 1,
         'ShipperHQ_Shipper' => 1,
+        'Alfakher_CustomerExtended' => 1,
         'Alfakher_Customersavepayment' => 1,
         'Alfakher_DocumentStatus' => 1,
         'Alfakher_ExciseReport' => 1,
