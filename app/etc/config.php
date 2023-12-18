@@ -1046,6 +1046,7 @@ return [
         'Alfakher_ShippingEdit' => 1,
         'Signifyd_Connect' => 1,
         'Alfakher_SlopePayment' => 1,
+        'Alfakher_StockAlert' => 1,
         'Alfakher_StoreCredit' => 1,
         'Tabby_Checkout' => 1,
         'Alfakher_WarehouseShipping' => 1,
