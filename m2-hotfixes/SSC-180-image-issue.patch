@@ -1,0 +1,57 @@
+diff --git a/vendor/magento/module-catalog/Block/Product/ImageFactory.php b/vendor/magento/module-catalog/Block/Product/ImageFactory.php
+index d43a77695..05b7bddca 100644
+--- a/vendor/magento/module-catalog/Block/Product/ImageFactory.php
++++ b/vendor/magento/module-catalog/Block/Product/ImageFactory.php
+@@ -15,6 +15,7 @@ use Magento\Catalog\Model\View\Asset\PlaceholderFactory;
+ use Magento\Framework\ObjectManagerInterface;
+ use Magento\Framework\View\ConfigInterface;
+ use Magento\Catalog\Helper\Image as ImageHelper;
++use Magento\Catalog\Helper\ImageFactory as ImageHelperFactory;
+ 
+ /**
+  * Create imageBlock from product and view.xml
+@@ -58,13 +59,15 @@ class ImageFactory
+         ConfigInterface $presentationConfig,
+         AssetImageFactory $viewAssetImageFactory,
+         PlaceholderFactory $viewAssetPlaceholderFactory,
+-        ParamsBuilder $imageParamsBuilder
++        ParamsBuilder $imageParamsBuilder,
++        ImageHelperFactory $imageFactory
+     ) {
+         $this->objectManager = $objectManager;
+         $this->presentationConfig = $presentationConfig;
+         $this->viewAssetPlaceholderFactory = $viewAssetPlaceholderFactory;
+         $this->viewAssetImageFactory = $viewAssetImageFactory;
+         $this->imageParamsBuilder = $imageParamsBuilder;
++        $this->imageFactory = $imageFactory;
+     }
+ 
+     /**
+@@ -165,7 +168,7 @@ class ImageFactory
+                 'image_url' => $imageAsset->getUrl(),
+                 'width' => $imageMiscParams['image_width'],
+                 'height' => $imageMiscParams['image_height'],
+-                'label' => $this->getLabel($product, $imageMiscParams['image_type']),
++                'label' => $this->getLabel($product, $imageMiscParams['image_type'] ?? ($this->getProductImage($product) ?? '')),
+                 'ratio' => $this->getRatio($imageMiscParams['image_width'] ?? 0, $imageMiscParams['image_height'] ?? 0),
+                 'custom_attributes' => $this->filterCustomAttributes($attributes),
+                 'class' => $this->getClass($attributes),
+@@ -175,4 +178,18 @@ class ImageFactory
+ 
+         return $this->objectManager->create(ImageBlock::class, $data);
+     }
++
++    /**
++     * Retrieve product image
++     *
++     * @param \Magento\Catalog\Model\Product $product
++     * @param string $imageId
++     * @return string
++     */
++    public function getProductImage($product, $imageId = 'product_thumbnail_image')
++    {
++        return $this->imageFactory->create()
++            ->init($product, $imageId)
++            ->getUrl();
++    }
+ }

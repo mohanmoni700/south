@@ -1,0 +1,139 @@
+diff --git a/vendor/magento/module-product-alert/Model/Email.php b/vendor/magento/module-product-alert/Model/Email.php
+index 379ae29ef..b02209982 100644
+--- a/vendor/magento/module-product-alert/Model/Email.php
++++ b/vendor/magento/module-product-alert/Model/Email.php
+@@ -49,7 +49,7 @@ class Email extends AbstractModel
+ 
+     const XML_PATH_EMAIL_STOCK_TEMPLATE = 'catalog/productalert/email_stock_template';
+ 
+-    const XML_PATH_EMAIL_IDENTITY = 'catalog/productalert/email_identity';
++    const XML_PATH_EMAIL_IDENTITY = 'trans_email/ident_general/email';
+ 
+     /**
+      * Type
+@@ -333,65 +333,75 @@ class Email extends AbstractModel
+      */
+     public function send()
+     {
+-        if ($this->_website === null || $this->_customer === null || !$this->isExistDefaultStore()) {
+-            return false;
+-        }
++        try {
++            if ($this->_website === null || $this->_customer === null || !$this->isExistDefaultStore()) {
++                return false;
++            }
+ 
+-        $products = $this->getProducts();
+-        $templateConfigPath = $this->getTemplateConfigPath();
+-        if (!in_array($this->_type, ['price', 'stock']) || count($products) === 0 || !$templateConfigPath) {
+-            return false;
+-        }
++            $products = $this->getProducts();
++            $templateConfigPath = $this->getTemplateConfigPath();
++            if (!in_array($this->_type, ['price', 'stock']) || count($products) === 0 || !$templateConfigPath) {
++                return false;
++            }
+ 
+-        $storeId = (int) $this->getStoreId() ?: (int) $this->_customer->getStoreId();
+-        $store = $this->getStore($storeId);
++            $storeId = (int) $this->getStoreId() ?: (int) $this->_customer->getStoreId();
++            $store = $this->getStore($storeId);
+ 
+-        $this->_appEmulation->startEnvironmentEmulation($storeId);
++            $this->_appEmulation->startEnvironmentEmulation($storeId);
+ 
+-        $block = $this->getBlock();
+-        $block->setStore($store)->reset();
++            $block = $this->getBlock();
++            $block->setStore($store)->reset();
+ 
+-        // Add products to the block
+-        foreach ($products as $product) {
+-            $product->setCustomerGroupId($this->_customer->getGroupId());
+-            $block->addProduct($product);
+-        }
++            // Add products to the block
++            foreach ($products as $product) {
++                $product->setCustomerGroupId($this->_customer->getGroupId());
++                $block->addProduct($product);
++            }
+ 
+-        $templateId = $this->_scopeConfig->getValue(
+-            $templateConfigPath,
+-            ScopeInterface::SCOPE_STORE,
+-            $storeId
+-        );
+-
+-        $alertGrid = $this->_appState->emulateAreaCode(
+-            Area::AREA_FRONTEND,
+-            [$block, 'toHtml']
+-        );
+-        $this->_appEmulation->stopEnvironmentEmulation();
+-
+-        $customerName = $this->_customerHelper->getCustomerName($this->_customer);
+-        $this->_transportBuilder->setTemplateIdentifier(
+-            $templateId
+-        )->setTemplateOptions(
+-            ['area' => Area::AREA_FRONTEND, 'store' => $storeId]
+-        )->setTemplateVars(
+-            [
+-                'customerName' => $customerName,
+-                'alertGrid' => $alertGrid,
+-            ]
+-        )->setFromByScope(
+-            $this->_scopeConfig->getValue(
+-                self::XML_PATH_EMAIL_IDENTITY,
++            $templateId = $this->_scopeConfig->getValue(
++                $templateConfigPath,
+                 ScopeInterface::SCOPE_STORE,
+                 $storeId
+-            ),
+-            $storeId
+-        )->addTo(
+-            $this->_customer->getEmail(),
+-            $customerName
+-        )->getTransport()->sendMessage();
++            );
+ 
+-        return true;
++            $alertGrid = $this->_appState->emulateAreaCode(
++                Area::AREA_FRONTEND,
++                [$block, 'toHtml']
++            );
++            $this->_appEmulation->stopEnvironmentEmulation();
++
++            $name = $this->_customer->getPrefix() . ' ';
++            $name .= $this->_customer->getFirstname() . ' ';
++            $name .= $this->_customer->getMiddlename() . ' ';
++            $name .= $this->_customer->getLastname() . ' ';
++            $name .= $this->_customer->getSuffix();
++
++            $customerName = $name;
++            $email = $this->_customer->getEmail();
++
++            $sender = $this->_scopeConfig->getValue(
++                self::XML_PATH_EMAIL_IDENTITY,
++                ScopeInterface::SCOPE_STORE,
++                $storeId
++            );
++
++            $from = ['email' => $sender, 'name' => $sender];
++
++            $this->_transportBuilder->setTemplateIdentifier(
++                $templateId)
++                ->setTemplateOptions(['area' => Area::AREA_FRONTEND, 'store' => $storeId])
++                ->setTemplateVars([
++                    'customerName' => $customerName,
++                    'alertGrid' => $alertGrid,
++                ])
++                ->setFromByScope($from)
++                ->addTo($email, $customerName)
++                ->getTransport()->sendMessage();
++
++            return true;
++        } catch (\Exception $e) {
++            throw $e;
++        }
+     }
+ 
+     /**

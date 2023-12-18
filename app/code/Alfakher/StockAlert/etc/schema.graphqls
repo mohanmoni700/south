@@ -1,0 +1,31 @@
+type Query {
+    getProductAlertStatus(input: ProductAlertStatusInput!): ProductAlertStatusOutput @resolver(class: "Alfakher\\StockAlert\\Model\\Resolver\\ProductAlertStatus") @doc(description: "Get the status of a product alert.")
+}
+
+input ProductAlertStatusInput {
+    email: String! @doc(description: "The customer's email.")
+    name: String! @doc(description: "The customer's name.")
+    product_id: Int! @doc(description: "The product id.")
+}
+
+type ProductAlertStatusOutput {
+    status: String! @doc(description: "The status of the product alert.")
+}
+
+type Mutation {
+    ProductAlertNotifyInStock(input: SubmitInput): ProductAlertNotifyInStockOutput @resolver(class: "Alfakher\\StockAlert\\Model\\Resolver\\Stock") @doc(description: "Guest add new Stock alert.")
+}
+
+input SubmitInput {
+    product_id: Int! @doc(description: "The product id."),
+    email: String! @doc(description: "The customer Email."),
+    name: String! @doc(description: "The customer Name"),
+}
+
+type ProductAlertNotifyInStockOutput {
+    message: String @doc(description: "Success or error Message")
+    id: Int @doc(description: "The Question id")
+}
+
+
+
